@@ -1,2 +1,0 @@
-C:\Repos\PnP\Solutions\PowerShell.Commands\Setup\bin\Release\OfficeDevPnPPowerShellSetup.msi
-C:\Repos\PnP\Solutions\PowerShell.Commands\Setup\bin\Release\OfficeDevPnPPowerShellSetup.wixpdb
