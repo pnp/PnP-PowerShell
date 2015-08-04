@@ -1,6 +1,0 @@
-obj\Release\Product.wixobj
-C:\Repos\PnP\Solutions\PowerShell.Commands\Setup\bin\Release\OfficeDevPnPPowerShellSetup.msi
-C:\Repos\PnP\Solutions\PowerShell.Commands\Setup\bin\Release\OfficeDevPnPPowerShellSetup.wixpdb
-obj\Release\OfficeDevPnP.PowerShell.Setup.wixproj.BindContentsFileListnull.txt
-obj\Release\OfficeDevPnP.PowerShell.Setup.wixproj.BindOutputsFileListnull.txt
-obj\Release\OfficeDevPnP.PowerShell.Setup.wixproj.BindBuiltOutputsFileListnull.txt
