@@ -1,0 +1,8 @@
+C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\bin\Debug15\OfficeDevPnP.PowerShell.CmdletHelpGenerator.exe.config
+C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\bin\Debug15\OfficeDevPnP.PowerShell.CmdletHelpGenerator.exe
+C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\bin\Debug15\OfficeDevPnP.PowerShell.CmdletHelpGenerator.pdb
+C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\bin\Debug15\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\bin\Debug15\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
+C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\obj\Debug15\OfficeDevPnP.PowerShell.CmdletHelpGenerator.csprojResolveAssemblyReference.cache
+C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\obj\Debug15\OfficeDevPnP.PowerShell.CmdletHelpGenerator.exe
+C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\obj\Debug15\OfficeDevPnP.PowerShell.CmdletHelpGenerator.pdb

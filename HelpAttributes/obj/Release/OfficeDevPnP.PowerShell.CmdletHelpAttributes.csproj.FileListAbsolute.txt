@@ -1,0 +1,5 @@
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\bin\Release\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\bin\Release\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\obj\Release\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\obj\Release\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\obj\Release\OfficeDevPnP.PowerShell.CmdletHelpAttributes.csprojResolveAssemblyReference.cache

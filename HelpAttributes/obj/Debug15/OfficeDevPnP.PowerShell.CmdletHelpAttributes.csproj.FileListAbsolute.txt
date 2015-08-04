@@ -1,0 +1,4 @@
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\bin\Debug15\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\bin\Debug15\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\obj\Debug15\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\obj\Debug15\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
