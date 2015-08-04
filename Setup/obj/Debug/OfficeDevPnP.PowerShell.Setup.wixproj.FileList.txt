@@ -1,0 +1,6 @@
+C:\Repos\PnP\Solutions\PowerShell.Commands\Setup\bin\Debug\OfficeDevPnPPowerShellSetup.msi
+C:\Repos\PnP\Solutions\PowerShell.Commands\Setup\bin\Debug\OfficeDevPnPPowerShellSetup.wixpdb
+obj\Debug\Product.wixobj
+obj\Debug\OfficeDevPnP.PowerShell.Setup.wixproj.BindContentsFileListnull.txt
+obj\Debug\OfficeDevPnP.PowerShell.Setup.wixproj.BindOutputsFileListnull.txt
+obj\Debug\OfficeDevPnP.PowerShell.Setup.wixproj.BindBuiltOutputsFileListnull.txt

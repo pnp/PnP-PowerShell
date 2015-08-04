@@ -1,0 +1,13 @@
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\Microsoft.SharePoint.Client.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\Microsoft.SharePoint.Client.Runtime.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\Microsoft.SharePoint.Client.Taxonomy.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\Microsoft.SharePoint.Client.UserProfiles.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\Microsoft.SharePoint.Client.WorkflowServices.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\bin\Release\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\OfficeDevPnP.PowerShell.Commands.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\OfficeDevPnP.PowerShell.Commands.dll-help.xml
+C:\Repos\PnP\OfficeDevPnP.Core\OfficeDevPnP.Core\bin\Release\OfficeDevPnP.Core.dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\ModuleFiles\OfficeDevPnP.PowerShell.Commands.Format.ps1xml
+C:\Repos\PnP\OfficeDevPnP.Core\OfficeDevPnP.Core\bin\Release\Newtonsoft.Json.Dll
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\ModuleFiles\OfficeDevPnP.PowerShell.Commands.psd1
+C:\Repos\PnP\Solutions\PowerShell.Commands\Commands\bin\Release\Microsoft.Online.SharePoint.Client.Tenant.dll
