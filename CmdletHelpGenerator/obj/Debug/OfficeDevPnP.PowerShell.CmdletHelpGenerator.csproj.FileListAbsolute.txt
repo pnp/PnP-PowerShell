@@ -7,3 +7,12 @@ C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\obj\Debug\OfficeD
 C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpGenerator.exe
 C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpGenerator.pdb
 C:\Repos\PnP\Solutions\PowerShell.Commands\CmdletHelpGenerator\bin\Debug\System.Management.Automation.dll
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\bin\Debug\OfficeDevPnP.PowerShell.CmdletHelpGenerator.exe.config
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\bin\Debug\OfficeDevPnP.PowerShell.CmdletHelpGenerator.exe
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\bin\Debug\OfficeDevPnP.PowerShell.CmdletHelpGenerator.pdb
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\bin\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\bin\Debug\System.Management.Automation.dll
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\bin\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpGenerator.csprojResolveAssemblyReference.cache
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpGenerator.exe
+C:\Repos\PnP-PowerShell\CmdletHelpGenerator\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpGenerator.pdb

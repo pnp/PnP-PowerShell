@@ -4,11 +4,12 @@
 Returns a taxonomy item
 ##Syntax
 ```powershell
-Get-SPOTaxonomyItem -Term [<String>]
+Get-SPOTaxonomyItem -Term <String>
 ```
-&nbsp;
+
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-Term|String|True|The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL
+|Term|String|True|The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL|
+<!-- Ref: 5961C9B229E06A6C7354638D9518A359 -->

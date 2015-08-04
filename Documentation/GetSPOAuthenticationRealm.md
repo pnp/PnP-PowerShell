@@ -4,17 +4,18 @@
 Gets the authentication realm for the current web
 ##Syntax
 ```powershell
-Get-SPOAuthenticationRealm [-Url [<String>]]
+Get-SPOAuthenticationRealm [-Url <String>]
 ```
-&nbsp;
+
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-Url|String|False|
+|Url|String|False||
 ##Examples
 
 ###Example 1
     
 PS:> Get-SPOAuthenticationRealm -Url https://contoso.sharepoint.com
 
+<!-- Ref: 712DE16D6AD9904B0EDA012A289F3477 -->

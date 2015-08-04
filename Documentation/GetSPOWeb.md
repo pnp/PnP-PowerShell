@@ -4,11 +4,12 @@
 Returns the current web object
 ##Syntax
 ```powershell
-Get-SPOWeb [-Identity [<WebPipeBind>]]
+Get-SPOWeb [-Identity <WebPipeBind>]
 ```
-&nbsp;
+
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-Identity|WebPipeBind|False|
+|Identity|WebPipeBind|False||
+<!-- Ref: 9E65C7F9A055C0B8C7EC0E1B8128E6E2 -->

@@ -6,3 +6,4 @@ Returns the current site collection from the context.
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+<!-- Ref: 0AD28DC12C9F0CC582E69C716FAEF15A -->

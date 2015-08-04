@@ -4,11 +4,12 @@
 Returns a taxonomy session
 ##Syntax
 ```powershell
-Get-SPOTaxonomySession [-Web [<WebPipeBind>]]
+Get-SPOTaxonomySession [-Web <WebPipeBind>]
 ```
-&nbsp;
+
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+<!-- Ref: B824B21FF036DB705C3C4CD32DC99AD2 -->
