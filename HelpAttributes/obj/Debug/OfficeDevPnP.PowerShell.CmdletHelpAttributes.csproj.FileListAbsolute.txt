@@ -2,3 +2,8 @@ C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\bin\Debug\OfficeDevPnP
 C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\bin\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
 C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
 C:\Repos\PnP\Solutions\PowerShell.Commands\HelpAttributes\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
+C:\Repos\PnP-PowerShell\HelpAttributes\bin\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP-PowerShell\HelpAttributes\bin\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb
+C:\Repos\PnP-PowerShell\HelpAttributes\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.csprojResolveAssemblyReference.cache
+C:\Repos\PnP-PowerShell\HelpAttributes\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.dll
+C:\Repos\PnP-PowerShell\HelpAttributes\obj\Debug\OfficeDevPnP.PowerShell.CmdletHelpAttributes.pdb

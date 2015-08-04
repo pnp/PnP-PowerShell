@@ -11,3 +11,4 @@ Parameter|Type|Required|Description
 ###Example 1
     PS:> Get-SPOHealthScore
 
+<!-- Ref: F98A85C85EA87FC264E3C159EF2AFAFF -->

@@ -4,14 +4,15 @@
 Returns a web part property
 ##Syntax
 ```powershell
-Get-SPOWebPartProperty -PageUrl [<String>] -Identity [<GuidPipeBind>] [-Key [<String>]] [-Web [<WebPipeBind>]]
+Get-SPOWebPartProperty -PageUrl <String> -Identity <GuidPipeBind> [-Key <String>] [-Web <WebPipeBind>]
 ```
-&nbsp;
+
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-Identity|GuidPipeBind|True|
-Key|String|False|
-PageUrl|String|True|
-Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.
+|Identity|GuidPipeBind|True||
+|Key|String|False||
+|PageUrl|String|True||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+<!-- Ref: CE476C20D4E1691A37E470D92A548641 -->

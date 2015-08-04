@@ -4,14 +4,14 @@
 Returns a time zone ID
 ##Syntax
 ```powershell
-Get-SPOTimeZoneId [-Match [<String>]]
+Get-SPOTimeZoneId [-Match <String>]
 ```
-&nbsp;
+
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-Match|String|False|
+|Match|String|False||
 ##Examples
 
 ###Example 1
@@ -23,3 +23,4 @@ This will return all time zone IDs in use by Office 365.
     PS:> Get-SPOTimeZoneId -Match Stockholm
 This will return the time zone IDs for Stockholm
     
+<!-- Ref: 5F689A30354CFD1105A857BA9A1CBF1B -->
