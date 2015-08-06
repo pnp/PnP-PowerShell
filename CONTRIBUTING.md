@@ -43,6 +43,6 @@ Notice the [CmdletHelp("")] and [CmdletExample()] class attributes that describe
 A few notes:
 * Every new cmdlet should provide help and examples. 
 * Most cmdlets will extend SPOWebCmdlet which provides a few helper objects for you to use. 
-* Cmdlets will have to work both on-premises and in the cloud. You can use compiler directives (CLIENTSDKV15 and CLIENTSDKV16) to buFolffild different cmdlets for the different targets.
+* Cmdlets will have to work both on-premises and in the cloud. You can use preprocessor variables ("CLIENTSDKV15" and "CLIENTSDKV16") to build different cmdlets for the different targets.
 * The verb of a cmdlet (get-, add-, etc.) should follow acceptable cmdlet standards and should be part of one of the built in verbs classes (VerbsCommon, VerbsData, etc.)
  
