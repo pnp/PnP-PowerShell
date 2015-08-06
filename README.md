@@ -9,8 +9,9 @@ This solution shows how you can build a library of PowerShell commands that act 
 -  SharePoint 2013 on-premises
 
 ### Prerequisites ###
-In order to build the setup project the Wix toolset needs to be installed. You can obtain this from http://wix.codeplex.com.
-In order to generate the generate the Cmdlet help you need Windows Management Framework v4.0 you can download it from http://www.microsoft.com/en-us/download/details.aspx?id=40855
+In order to build the setup project the WiX toolset needs to be installed. You can obtain this from http://wix.codeplex.com. If you use Visual Studio 2015 you will need at least WiX 3.10, which can be downloaded from here: http://wixtoolset.org/releases/
+
+In order to generate the generate the Cmdlet help you need Windows Management Framework v4.0 which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
 
 ### Solution ###
 Solution | Author(s)
