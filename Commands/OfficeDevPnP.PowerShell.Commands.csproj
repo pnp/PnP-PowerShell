@@ -311,6 +311,7 @@
     <Compile Include="Taxonomy\NewTermGroup.cs" />
     <Compile Include="Taxonomy\GetTermGroup.cs" />
     <Compile Include="Taxonomy\ImportTermSet.cs" />
+    <Compile Include="UserProfiles\SetUserProfileProperty.cs" />
     <Compile Include="WebParts\GetWebPartProperty.cs" />
     <Compile Include="Branding\RemoveJavaScriptLink.cs" />
     <Compile Include="Branding\AddJavaScriptLink.cs" />

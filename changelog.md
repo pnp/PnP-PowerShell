@@ -1,5 +1,8 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-08-07**
+
+* Added Set-SPOUserProfileProperty (only available for SharePoint Online due to limitations of the On-Premises CSOM SDK)
 **2015-07-22**
 
 * Added Remove-SPOGroup cmdlet
