@@ -155,6 +155,7 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[New&#8209;SPOPersonalSite](NewSPOPersonalSite.md)** |Office365 only: Creates a personal / OneDrive For Business site
+**[Set&#8209;SPOUserProfileProperty](SetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
 **[Get&#8209;SPOUserProfileProperty](GetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
 ##Utilities
 Cmdlet|Description
