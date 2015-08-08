@@ -1,7 +1,10 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Search.Administration;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Enums;
+using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 
 namespace OfficeDevPnP.PowerShell.Commands.Search
 {
@@ -15,6 +18,10 @@ namespace OfficeDevPnP.PowerShell.Commands.Search
         Code = @"PS:> Set-SPOSearchConfiguration -Configuration $config -Scope Site",
         Remarks = "Sets the search configuration for the current site collection",
         SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Set-SPOSearchConfiguration -Configuration $config -Scope Subscription",
+        Remarks = "Sets the search configuration for the current tenant",
+        SortOrder = 3)]
     public class SetSearchConfiguration : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -35,6 +42,16 @@ namespace OfficeDevPnP.PowerShell.Commands.Search
                 case SearchConfigurationScope.Site:
                     {
                         ClientContext.Site.SetSearchConfiguration(Configuration);
+                        break;
+                    }
+                case SearchConfigurationScope.Subscription:
+                    {
+                        if (!ClientContext.Url.ToLower().Contains("-admin"))
+                        {
+                            throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
+                        }
+
+                        ClientContext.ImportSearchSettings(Configuration, SearchObjectLevel.SPSiteSubscription);
                         break;
                     }
             }

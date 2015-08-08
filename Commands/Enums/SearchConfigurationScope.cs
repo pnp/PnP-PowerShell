@@ -3,6 +3,7 @@
     public enum SearchConfigurationScope
     {
         Web,
-        Site
+        Site,
+        Subscription
     }
 }
