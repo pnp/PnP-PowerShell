@@ -1,5 +1,5 @@
 #Connect-SPOnline
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-08-05*
 
 Connects to a SharePoint site and creates an in-memory context
 ##Syntax

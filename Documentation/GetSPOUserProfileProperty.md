@@ -1,5 +1,5 @@
 #Get-SPOUserProfileProperty
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-08-07*
 
 Office365 only: Uses the tenant API to retrieve site information.
 
