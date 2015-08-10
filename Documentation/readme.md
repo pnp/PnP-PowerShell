@@ -170,6 +170,7 @@ Cmdlet|Description
 **[Set&#8209;SPOWebPartProperty](SetSPOWebPartProperty.md)** |Sets a web part property
 **[Add&#8209;SPOWebPartToWebPartPage](AddSPOWebPartToWebPartPage.md)** |Adds a webpart to a web part page in a specified zone
 **[Add&#8209;SPOWebPartToWikiPage](AddSPOWebPartToWikiPage.md)** |Adds a webpart to a wiki page in a specified table row and column
+**[Get&#8209;SPOWebPartXml](GetSPOWebPartXml.md)** |Returns the webpart XML of a webpart registered on a site
 ##Webs
 Cmdlet|Description
 :-----|:----------

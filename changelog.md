@@ -1,5 +1,9 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-08-10**
+
+* Added Get-SPOWebPartXml cmdlet to export webpart XML from a page.
+
 **2015-08-07**
 
 * Added Set-SPOUserProfileProperty (only available for SharePoint Online due to limitations of the On-Premises CSOM SDK)
