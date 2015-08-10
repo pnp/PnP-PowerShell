@@ -14,10 +14,10 @@ Code = @"PS:> Add-SPOWebPartToWikiPage -PageUrl ""/sites/demo/sitepages/home.asp
 Remarks = @"This will add the webpart as defined by the XML in the listview.webpart file to the specified page in the first row and the first column of the HTML table present on the page", SortOrder = 1)]
     [CmdletExample(
   Code = @"PS:> Add-SPOWebPartToWikiPage -PageUrl ""/sites/demo/sitepages/home.aspx"" -XML $webpart -Row 1 -Column 1",
-  Remarks = @"This will add the webpart as defined by the XML in the $webpart variable to the specified page in the first row and the first column of the HTML table present on the page", SortOrder = 1)]
+  Remarks = @"This will add the webpart as defined by the XML in the $webpart variable to the specified page in the first row and the first column of the HTML table present on the page", SortOrder = 2)]
     public class AddWebPartToWikiPage : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "Full server relative url of the webpart page, e.g. /sites/demo/sitepages/home.aspx")]
         public string PageUrl = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = "XML")]

@@ -1,2 +1,2 @@
 ﻿$name = "officedevpnppowershellcommands16"
-Uninstall-ChocolateyPackage $name 'msi' "https://github.com/OfficeDev/PnP/blob/master/Binaries/PowerShell.Commands/PnPPowerShellCommands16.msi?raw=true /qn"
+Uninstall-ChocolateyPackage $name 'msi' "https://github.com/OfficeDev/PnP-PowerShell/releases/download/v1.2/PnPPowerShellCommands16.msi /qn"
