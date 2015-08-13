@@ -58,9 +58,6 @@
   <Choose>
     <When Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
       <ItemGroup>
-        <Reference Include="OfficeDevPnP.Core">
-          <HintPath>..\packages\OfficeDevPnPCore16.1.4.0815.0\lib\net45\OfficeDevPnP.Core.dll</HintPath>
-        </Reference>
         <Reference Include="Microsoft.Office.SharePoint.Tools, Version=16.1.3912.1204, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
           <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.Office.SharePoint.Tools.dll</HintPath>
           <Private>True</Private>
@@ -80,10 +77,6 @@
         <Reference Include="Microsoft.Office.Client.TranslationServices, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.Office.Client.TranslationServices.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Online.SharePoint.Client.Tenant, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.Online.SharePoint.Client.Tenant.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.SharePoint.Client.DocumentManagement, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
           <SpecificVersion>False</SpecificVersion>
@@ -112,6 +105,14 @@
         <Reference Include="Microsoft.SharePoint.Client.WorkflowServices, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.SharePoint.Client.WorkflowServices.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Online.SharePoint.Client.Tenant, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.Online.SharePoint.Client.Tenant.dll</HintPath>
+        </Reference>
+        <Reference Include="OfficeDevPnP.Core, Version=1.5.915.0, Culture=neutral, processorArchitecture=MSIL">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>..\packages\OfficeDevPnPCore16.1.4.0815.1\lib\net45\OfficeDevPnP.Core.dll</HintPath>
         </Reference>
       </ItemGroup>
     </When>
@@ -173,6 +174,10 @@
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\ReferenceAssemblies\15\Microsoft.Office.Client.Education.dll</HintPath>
         </Reference>
+        <Reference Include="OfficeDevPnP.Core, Version=1.5.915.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\packages\OfficeDevPnPCore15.1.4.0815.1\lib\net45\OfficeDevPnP.Core.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -193,6 +198,7 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
