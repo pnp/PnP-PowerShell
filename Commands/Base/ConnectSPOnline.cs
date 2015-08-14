@@ -44,7 +44,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false, ParameterSetName = "Main", HelpMessage = "If you want to connect to your on-premises SharePoint farm using ADFS")]
         public SwitchParameter UseAdfs;
-        
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
         public int MinimalHealthScore = -1;
 
@@ -141,7 +141,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                 }
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck);
             }
-
+            WriteVerbose(string.Format("PnP PowerShell Cmdlets ({0}): Connected to {1}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(), Url));
         }
 
         private PSCredential GetCredentials()

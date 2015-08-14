@@ -1,5 +1,9 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-08-14**
+
+* Modified Connect-SPOnline to output version number when specifying -Verbose parameter
+
 **2015-08-10**
 
 * Added Get-SPOWebPartXml cmdlet to export webpart XML from a page.
