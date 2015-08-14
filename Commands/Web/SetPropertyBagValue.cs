@@ -39,7 +39,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSetName == "Web")
+            if (!this.MyInvocation.BoundParameters.ContainsKey("Folder"))
             {
                 if (!Indexed)
                 {
