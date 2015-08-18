@@ -27,7 +27,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         Code = @"PS:> Set-SPOTraceLog -Off",
         Remarks = @"This turns off trace logging. It will flush any remaining messages to the log file.",
         SortOrder = 3)]
-    public class SPOTraceLog : PSCmdlet
+    public class SetTraceLog : PSCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "Turn on tracing to log file")]
         public SwitchParameter On;
