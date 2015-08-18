@@ -22,6 +22,7 @@ Cmdlet|Description
 **[Connect&#8209;SPOnline](ConnectSPOnline.md)** |Connects to a SharePoint site and creates an in-memory context
 **[Execute&#8209;SPOQuery](ExecuteSPOQuery.md)** |Executes any queued actions / changes on the SharePoint Client Side Object Model Context
 **[Get&#8209;SPOStoredCredential](GetSPOStoredCredential.md)** |Returns a stored credential from the Windows Credential Manager
+**[Set&#8209;SPOTraceLog](SetSPOTraceLog.md)** |Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets utilizes the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.
 ##Branding
 Cmdlet|Description
 :-----|:----------

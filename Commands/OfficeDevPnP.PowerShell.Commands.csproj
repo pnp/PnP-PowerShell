@@ -110,10 +110,6 @@
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\packages\Microsoft.SharePointOnline.CSOM.16.1.3912.1204\lib\net45\Microsoft.Online.SharePoint.Client.Tenant.dll</HintPath>
         </Reference>
-        <Reference Include="OfficeDevPnP.Core, Version=1.5.915.0, Culture=neutral, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\packages\OfficeDevPnPCore16.1.4.0815.1\lib\net45\OfficeDevPnP.Core.dll</HintPath>
-        </Reference>
       </ItemGroup>
     </When>
     <Otherwise>
@@ -198,7 +194,10 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-  
+    <Reference Include="OfficeDevPnP.Core, Version=1.5.915.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\PnP-Sites-Core\Core\OfficeDevPnP.Core\bin\Debug\OfficeDevPnP.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -262,6 +261,7 @@
     <Compile Include="Base\SPOnlineConnectionHelper.cs" />
     <Compile Include="Base\ConnectSPOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
+    <Compile Include="Base\SPOTraceLog.cs" />
     <Compile Include="Branding\GetJavaScriptLink.cs" />
     <Compile Include="Branding\ApplyProvisioningTemplate.cs" />
     <Compile Include="Branding\GetProvisioningTemplate.cs" />
