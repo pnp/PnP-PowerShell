@@ -32,13 +32,13 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "Turn on tracing to log file")]
         public SwitchParameter On;
 
-        [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "The path and filename of the file to write the trace log to")]
+        [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "The path and filename of the file to write the trace log to.")]
         public string LogFile;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'ActivityTracing', 'All', 'Critical', 'Error', 'Information', 'Off', 'Verbose', 'Warning'. Defaults to 'Information'.")]
         public SourceLevels Level = SourceLevels.Information;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "If specified the trace log entries will be delimited with this value")]
+        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "If specified the trace log entries will be delimited with this value.")]
         public string Delimiter;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "Indents in the tracelog will be with this amount of characters. Defaults to 4.")]
@@ -47,7 +47,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "Auto flush the trace log. Defaults to true.")]
         public bool AutoFlush = true;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Off", HelpMessage = "Turn off tracing to log file")]
+        [Parameter(Mandatory = true, ParameterSetName = "Off", HelpMessage = "Turn off tracing to log file.")]
         public SwitchParameter Off;
 
         private const string LISTENERNAME = "PNPPOWERSHELLTRACELISTENER";
