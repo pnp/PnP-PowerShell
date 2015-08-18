@@ -1,5 +1,9 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-08-18**
+
+* Added Set-SPOTraceLog cmdlet
+
 **2015-08-15**
 
 * Added -Recurse parameter to Get-SPOSubWebs cmdlet to recursively retrieve all subwebs
