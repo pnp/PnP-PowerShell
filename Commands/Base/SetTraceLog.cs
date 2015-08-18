@@ -21,7 +21,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level All -Delimiter "",""",
-        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will write the entires as comma separated. All events are captured.",
+        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will write the entries as comma separated. All events are captured.",
         SortOrder = 3)]
     [CmdletExample(
         Code = @"PS:> Set-SPOTraceLog -Off",
