@@ -30,13 +30,14 @@ Please see following page for additional insights on the model.
 
 
 ##Code contributions
-In order to succesfully compile the PnP PowerShell solution you will _also_ have to download the PnP-Sites-Core repository, as the PowerShell solution depends on it. In order to succesfully 
+In order to succesfully compile the PnP PowerShell solution you will _also_ have to download the [PnP-Sites-Core](https://github.com/OfficeDev/PnP-Sites-Core) repository and make the dev branch available. The PowerShell solution depends on it. In order to succesfully 
 compile it, make sure that PnP-Sites-Core is located at the same level as PnP-PowerShell.
 
 So:
-
+```
 c:\[YOUR REPO FOLDER]\PnP-Sites-Core
 c:\[YOUR REPO FOLDER]\PnP-PowerShell
+```
 
 The reason for this is that the PnP-PowerShell library will have references to the release and debug builds of the PnP-Sites-Core library.
 
@@ -75,8 +76,9 @@ public class MyCmdlet : SPOWebCmdlet
    // cmdlet code omitted
 }
 #endif
+```
 
-if only parts of a cmdlet require different behaviour based upon the different version of the SDK, you are recommended to use the #CLIENTSDKV15 preprocess variable through your code to exclude or include certain code.
+If only parts of a cmdlet require different behaviour based upon the different version of the SDK, you are recommended to use the #CLIENTSDKV15 preprocessor variable throughout your code to exclude or include certain code.
 
 ##Documentation contributions
 If you want to contribute to cmdlet documentation, please do not make a pull request to modify the actual files in the Documentation folder itself. Those files
@@ -86,5 +88,3 @@ corresponding class where the cmdlet is being implemented and add the comments t
 https://github.com/OfficeDev/PnP-PowerShell/blob/dev/Commands/Fields/AddField.cs
 
 Notice the [CmdletHelp("")] and [CmdletExample()] class attributes that describe the cmdlet.
-
-##Cmdlet contributions
