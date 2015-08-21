@@ -16,12 +16,12 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will capture events of at least 'Information' level.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level All",
-        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will capture all events.",
+        Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level Debug",
+        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will capture debug events.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level All -Delimiter "",""",
-        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will write the entries as comma separated. All events are captured.",
+        Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level Debug -Delimiter "",""",
+        Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will write the entries as comma separated. Debug events are captured.",
         SortOrder = 3)]
     [CmdletExample(
         Code = @"PS:> Set-SPOTraceLog -Off",
@@ -35,8 +35,8 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "The path and filename of the file to write the trace log to.")]
         public string LogFile;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'ActivityTracing', 'All', 'Critical', 'Error', 'Information', 'Off', 'Verbose', 'Warning'. Defaults to 'Information'.")]
-        public SourceLevels Level = SourceLevels.Information;
+        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.")]
+        public Core.Diagnostics.LogLevel Level = Core.Diagnostics.LogLevel.Information;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "If specified the trace log entries will be delimited with this value.")]
         public string Delimiter;
@@ -74,16 +74,16 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                     DelimitedListTraceListener delimitedListener = new DelimitedListTraceListener(LogFile);
                     delimitedListener.Delimiter = Delimiter;
                     delimitedListener.TraceOutputOptions = TraceOptions.DateTime;
-                    delimitedListener.Filter = new EventTypeFilter(Level);
                     delimitedListener.Name = LISTENERNAME;
                     Trace.Listeners.Add(delimitedListener);
+                    Core.Diagnostics.Log.LogLevel = Level;
                 }
                 else
                 {
                     TextWriterTraceListener listener = new TextWriterTraceListener(LogFile);
-                    listener.Filter = new EventTypeFilter(Level);
                     listener.Name = LISTENERNAME;
                     Trace.Listeners.Add(listener);
+                    Core.Diagnostics.Log.LogLevel = Level;
                 }
                 Trace.AutoFlush = AutoFlush;
                 Trace.IndentSize = IndentSize;
