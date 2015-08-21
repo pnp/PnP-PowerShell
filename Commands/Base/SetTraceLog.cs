@@ -35,8 +35,8 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "The path and filename of the file to write the trace log to.")]
         public string LogFile;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'ActivityTracing', 'All', 'Critical', 'Error', 'Information', 'Off', 'Verbose', 'Warning'. Defaults to 'Information'.")]
-        public OfficeDevPnP.Core.Diagnostics.LogLevel Level = OfficeDevPnP.Core.Diagnostics.LogLevel.Information;
+        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.")]
+        public Core.Diagnostics.LogLevel Level = Core.Diagnostics.LogLevel.Information;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "If specified the trace log entries will be delimited with this value.")]
         public string Delimiter;
@@ -76,14 +76,14 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                     delimitedListener.TraceOutputOptions = TraceOptions.DateTime;
                     delimitedListener.Name = LISTENERNAME;
                     Trace.Listeners.Add(delimitedListener);
-                    OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
+                    Core.Diagnostics.Log.LogLevel = Level;
                 }
                 else
                 {
                     TextWriterTraceListener listener = new TextWriterTraceListener(LogFile);
                     listener.Name = LISTENERNAME;
                     Trace.Listeners.Add(listener);
-                    OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
+                    Core.Diagnostics.Log.LogLevel = Level;
                 }
                 Trace.AutoFlush = AutoFlush;
                 Trace.IndentSize = IndentSize;

@@ -19,7 +19,7 @@ Parameter|Type|Required|Description
 |AutoFlush|Boolean|False|Auto flush the trace log. Defaults to true.|
 |Delimiter|String|False|If specified the trace log entries will be delimited with this value.|
 |IndentSize|Int32|False|Indents in the tracelog will be with this amount of characters. Defaults to 4.|
-|Level|LogLevel|False|The level of events to capture. Possible values are 'ActivityTracing', 'All', 'Critical', 'Error', 'Information', 'Off', 'Verbose', 'Warning'. Defaults to 'Information'.|
+|Level|LogLevel|False|The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.|
 |LogFile|String|True|The path and filename of the file to write the trace log to.|
 |Off|SwitchParameter|True|Turn off tracing to log file.|
 |On|SwitchParameter|True|Turn on tracing to log file|
@@ -30,14 +30,14 @@ Parameter|Type|Required|Description
 This turns on trace logging to the file 'traceoutput.txt' and will capture events of at least 'Information' level.
 
 ###Example 2
-    PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level All
-This turns on trace logging to the file 'traceoutput.txt' and will capture all events.
+    PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level Debug
+This turns on trace logging to the file 'traceoutput.txt' and will capture debug events.
 
 ###Example 3
-    PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level All -Delimiter ","
-This turns on trace logging to the file 'traceoutput.txt' and will write the entries as comma separated. All events are captured.
+    PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level Debug -Delimiter ","
+This turns on trace logging to the file 'traceoutput.txt' and will write the entries as comma separated. Debug events are captured.
 
 ###Example 4
     PS:> Set-SPOTraceLog -Off
 This turns off trace logging. It will flush any remaining messages to the log file.
-<!-- Ref: D0C790D18EDE35B67AFAF50386E3BB79 -->
+<!-- Ref: B2AEB5C5A31FAA8E2671C0AB197595B8 -->
