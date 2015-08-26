@@ -32,7 +32,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "Turn on tracing to log file")]
         public SwitchParameter On;
 
-        [Parameter(Mandatory = true, ParameterSetName = "On", HelpMessage = "The path and filename of the file to write the trace log to.")]
+        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The path and filename of the file to write the trace log to.")]
         public string LogFile;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.")]
@@ -56,11 +56,6 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
 
             if (ParameterSetName == "On")
             {
-                if (!System.IO.Path.IsPathRooted(LogFile))
-                {
-                    LogFile = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogFile);
-                }
-
                 var existingListener = Trace.Listeners[LISTENERNAME];
                 if (existingListener != null)
                 {
@@ -69,20 +64,34 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                     Trace.Listeners.Remove(existingListener);
                 }
 
-                if (!string.IsNullOrEmpty(Delimiter))
+                if (!string.IsNullOrEmpty(LogFile))
                 {
-                    DelimitedListTraceListener delimitedListener = new DelimitedListTraceListener(LogFile);
-                    delimitedListener.Delimiter = Delimiter;
-                    delimitedListener.TraceOutputOptions = TraceOptions.DateTime;
-                    delimitedListener.Name = LISTENERNAME;
-                    Trace.Listeners.Add(delimitedListener);
-                    Core.Diagnostics.Log.LogLevel = Level;
+                    if (!System.IO.Path.IsPathRooted(LogFile))
+                    {
+                        LogFile = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogFile);
+                    }
+                    if (!string.IsNullOrEmpty(Delimiter))
+                    {
+                        DelimitedListTraceListener delimitedListener = new DelimitedListTraceListener(LogFile);
+                        delimitedListener.Delimiter = Delimiter;
+                        delimitedListener.TraceOutputOptions = TraceOptions.DateTime;
+                        delimitedListener.Name = LISTENERNAME;
+                        Trace.Listeners.Add(delimitedListener);
+                        Core.Diagnostics.Log.LogLevel = Level;
+                    }
+                    else
+                    {
+                        TextWriterTraceListener listener = new TextWriterTraceListener(LogFile);
+                        listener.Name = LISTENERNAME;
+                        Trace.Listeners.Add(listener);
+                        Core.Diagnostics.Log.LogLevel = Level;
+                    }
                 }
                 else
                 {
-                    TextWriterTraceListener listener = new TextWriterTraceListener(LogFile);
-                    listener.Name = LISTENERNAME;
-                    Trace.Listeners.Add(listener);
+                    ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
+                    consoleListener.Name = LISTENERNAME;
+                    Trace.Listeners.Add(consoleListener);
                     Core.Diagnostics.Log.LogLevel = Level;
                 }
                 Trace.AutoFlush = AutoFlush;
@@ -90,9 +99,13 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
             }
             else
             {
-                Trace.Flush();
-                Trace.Listeners[LISTENERNAME].Close();
-                Trace.Listeners.Remove(LISTENERNAME);
+                try
+                {
+                    Trace.Flush();
+                    Trace.Listeners[LISTENERNAME].Close();
+                    Trace.Listeners.Remove(LISTENERNAME);
+                }
+                catch (Exception) { }
             }
         }
     }
