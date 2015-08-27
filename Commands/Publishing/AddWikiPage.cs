@@ -13,10 +13,10 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
-        [Parameter(Mandatory = false, ParameterSetName = "WithContent")]
+        [Parameter(Mandatory = true, ParameterSetName = "WithContent")]
         public string Content = null;
 
-        [Parameter(Mandatory = false, ParameterSetName = "WithLayout")]
+        [Parameter(Mandatory = true, ParameterSetName = "WithLayout")]
         public WikiPageLayout Layout;
 
         protected override void ExecuteCmdlet()
