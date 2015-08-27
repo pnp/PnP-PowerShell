@@ -1,5 +1,5 @@
 #Get-SPOProvisioningTemplate
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-08-27*
 
 Generates a provisioning template from a web
 ##Syntax
