@@ -69,6 +69,9 @@ SortOrder = 5)]
         [Parameter(Mandatory = false, HelpMessage = "If specified the files making up the composed look (background image, font file and color file) will be saved.")]
         public SwitchParameter PersistComposedLookFiles;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified all site groups and its members will be included in the template")]
+        public SwitchParameter IncludeSiteGroups;
+
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
@@ -119,6 +122,7 @@ SortOrder = 5)]
             }
             var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
 
+            creationInformation.IncludeSiteGroups = IncludeSiteGroups;
             creationInformation.PersistComposedLookFiles = PersistComposedLookFiles;
             creationInformation.FileConnector = new FileSystemConnector(path, "");
 
@@ -165,6 +169,11 @@ SortOrder = 5)]
                 case XMLPnPSchemaVersion.V201505:
                     {
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
+                        break;
+                    }
+                case XMLPnPSchemaVersion.V201508:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
                         break;
                     }
             }
