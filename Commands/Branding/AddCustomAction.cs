@@ -4,13 +4,17 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Enums;
+using System.Linq;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOCustomAction")]
-    [CmdletHelp("Adds a custom action to a web", Category =  "Branding")]
+    [CmdletHelp("Adds a custom action to a web", Category = "Branding")]
     public class AddCustomAction : SPOWebCmdlet
     {
+        [Parameter(Mandatory = true)]
+        public string Name = string.Empty;
+
         [Parameter(Mandatory = true)]
         public string Title = string.Empty;
 
@@ -23,14 +27,26 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Parameter(Mandatory = true)]
         public string Location = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public int Sequence = 0;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public string Url = string.Empty;
 
         [Parameter(Mandatory = false)]
-        public List<PermissionKind> Rights = new List<PermissionKind>();
+        public string ImageUrl = string.Empty;
+
+        [Parameter(Mandatory = false)]
+        public string CommandUIExtension = string.Empty;
+
+        [Parameter(Mandatory = false)]
+        public string RegistrationId = string.Empty;
+
+        [Parameter(Mandatory = false)]
+        public PermissionKind[] Rights;
+
+        [Parameter(Mandatory = false)]
+        public UserCustomActionRegistrationType RegistrationType;
 
         [Parameter(Mandatory = false)]
         public CustomActionScope Scope = CustomActionScope.Web;
@@ -39,16 +55,29 @@ namespace OfficeDevPnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             var permissions = new BasePermissions();
-            foreach (var kind in Rights)
+            if (Rights != null)
             {
-                permissions.Set(kind);
+                foreach (var kind in Rights)
+                {
+                    permissions.Set(kind);
+                }
             }
-            var ca = new CustomActionEntity { Description = Description, Location = Location, Group = Group, Sequence = Sequence, Title = Title, Url = Url, Rights = new BasePermissions() };
 
-            foreach (var permission in Rights)
+            var ca = new CustomActionEntity
             {
-                ca.Rights.Set(permission);
-            }
+                Name = Name,
+                ImageUrl = ImageUrl,
+                CommandUIExtension = CommandUIExtension,
+                RegistrationId = RegistrationId,
+                RegistrationType = RegistrationType,
+                Description = Description,
+                Location = Location,
+                Group = Group,
+                Sequence = Sequence,
+                Title = Title,
+                Url = Url,
+                Rights = permissions
+            };
 
             if (Scope == CustomActionScope.Web)
             {
