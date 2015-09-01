@@ -1,5 +1,10 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-09-02**
+
+* Started adding unit tests
+* Added warning when using Install-SPOSolution to documentation. The cmdlet can potentially clear the composed look gallery.
+
 **2015-08-18**
 
 * Added Set-SPOTraceLog cmdlet
