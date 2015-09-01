@@ -119,7 +119,7 @@ Cmdlet|Description
 **[Set&#8209;SPOAppSideLoading](SetSPOAppSideLoading.md)** |Enables the App Side Loading Feature on a site
 **[Get&#8209;SPOSite](GetSPOSite.md)** |Returns the current site collection from the context.
 **[Uninstall&#8209;SPOSolution](UninstallSPOSolution.md)** |Uninstalls a sandboxed solution from a site collection
-**[Install&#8209;SPOSolution](InstallSPOSolution.md)** |Installs a sandboxed solution to a site collection
+**[Install&#8209;SPOSolution](InstallSPOSolution.md)** |Installs a sandboxed solution to a site collection. WARNING! This method can delete your composed look gallery due to the method used to activate the solution. We recommend you to only to use this cmdlet if you are okay with that.
 ##Taxonomy
 Cmdlet|Description
 :-----|:----------

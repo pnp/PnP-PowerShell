@@ -9,11 +9,11 @@ namespace OfficeDevPnP.PowerShell.Commands
     [CmdletHelp("Adds a link to a JavaScript snippet/block to a web or site collection", DetailedDescription = "Specify a scope as 'Site' to add the custom action to all sites in a site collection.", Category = "Branding")]
     public class AddJavaScriptBlock : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the script block. Can be used to identiy the script with other cmdlets or coded solutions")]
         [Alias("Key")]
         public string Name = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The javascript block to add")]
         public string Script = null;
 
         [Parameter(Mandatory = false)]
@@ -23,7 +23,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Alias("AddToSite")]
         public SwitchParameter SiteScoped;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The scope of the script to add to. Either Web or Site, defaults to Web.")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
