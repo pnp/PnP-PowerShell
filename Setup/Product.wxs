@@ -52,17 +52,9 @@
 
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFilesFolder">
-        <Directory Id="APPFOLDER" Name="OfficeDevPnP">
-          <Directory Id="PowerShell" Name="PowerShell">
-            <Directory Id="Modules" Name="Modules">
-              <Directory Id="APPLICATIONFOLDER" Name="OfficeDevPnP.PowerShell.Commands" >
-                <Directory Id="Modules2" Name="Modules">
-                  <Directory Id="MODULEFOLDER" Name="OfficeDevPnP.PowerShell.Commands"></Directory>
-                </Directory>
-              </Directory>
-            </Directory>
-          </Directory>
+      <Directory Id="APPLICATIONFOLDER" Name="OfficeDevPnP.PowerShell.Commands" >
+        <Directory Id="Modules2" Name="Modules">
+          <Directory Id="MODULEFOLDER" Name="OfficeDevPnP.PowerShell.Commands"></Directory>
         </Directory>
       </Directory>
     </Directory>
