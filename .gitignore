@@ -197,6 +197,9 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+# App.Config files
+[Aa]pp.[Cc]onfig
+
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 

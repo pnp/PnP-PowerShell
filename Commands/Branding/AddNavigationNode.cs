@@ -11,16 +11,16 @@ namespace OfficeDevPnP.PowerShell.Commands
     [CmdletHelp("Adds a menu item to either the quicklaunch or top navigation", Category = "Branding")]
     public class AddNavigationNode : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The location of the node to add. Either TopNavigationBar, QuickLaunch or SearchNav")]
         public NavigationType Location;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The title of the node to add")]
         public string Title;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The url to navigate to when clicking the new menu item.")]
         public string Url;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Optionally value of a header entry to add the menu item to.")]
         public string Header;
 
         protected override void ExecuteCmdlet()

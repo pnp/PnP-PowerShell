@@ -11,11 +11,11 @@ namespace OfficeDevPnP.PowerShell.Commands
     [CmdletHelp("Adds an item to a list", Category = "Lists")]
     [CmdletExample(
         Code = @"Add-SPOListItem -List ""Demo List"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}", 
-        Remarks = @"Adds a new list item to the ""Demo List"", and sets both the Title and Category fields with the specified values.",
+        Remarks = @"Adds a new list item to the ""Demo List"", and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"Add-SPOListItem -List ""Demo List"" -ContentType ""Company"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}", 
-        Remarks = @"Adds a new list item to the ""Demo List"", sets the content type to ""Company"" and sets both the Title and Category fields with the specified values.",
+        Remarks = @"Adds a new list item to the ""Demo List"", sets the content type to ""Company"" and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 2)]
     public class AddListItem : SPOWebCmdlet
     {
@@ -25,7 +25,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type.")]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names")]
         public Hashtable Values;
 
         protected override void ExecuteCmdlet()

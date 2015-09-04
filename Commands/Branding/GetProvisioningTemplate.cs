@@ -67,7 +67,7 @@ SortOrder = 5)]
         public SwitchParameter IncludeSiteCollectionTermGroup;
 
         [Parameter(Mandatory = false, HelpMessage = "If specified the files making up the composed look (background image, font file and color file) will be saved.")]
-        public SwitchParameter PersistComposedLookFiles;
+        public SwitchParameter PersistComposedLookFiles;        
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
