@@ -1,10 +1,10 @@
 #New-SPOTenantSite
-*Topic automatically generated on: 2015-08-31*
+*Topic automatically generated on: 2015-09-04*
 
 Creates a new site collection for the current tenant
 ##Syntax
 ```powershell
-New-SPOTenantSite -Title <String> -Url <String> [-Description <String>] [-Owner <String>] [-Lcid <UInt32>] [-Template <String>] -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>] [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite [<SwitchParameter>]] [-Wait [<SwitchParameter>]]
+New-SPOTenantSite -Title <String> -Url <String> [-Description <String>] [-Owner <String>] [-Lcid <UInt32>] [-Template <String>] -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>] [-StorageQuotaWarningLevel <Int64>] [-Wait [<SwitchParameter>]]
 ```
 
 
@@ -19,7 +19,6 @@ Parameter|Type|Required|Description
 |Description|String|False||
 |Lcid|UInt32|False|Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft: http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911.|
 |Owner|String|False|Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.|
-|RemoveDeletedSite|SwitchParameter|False||
 |ResourceQuota|Double|False|Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.|
 |ResourceQuotaWarningLevel|Double|False||
 |StorageQuota|Int64|False|Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.|
@@ -29,4 +28,4 @@ Parameter|Type|Required|Description
 |Title|String|True||
 |Url|String|True|Specifies the full URL of the new site collection. It must be in a valid managed path in the company's site. For example, for company contoso, valid managed paths are https://contoso.sharepoint.com/sites and https://contoso.sharepoint.com/teams.|
 |Wait|SwitchParameter|False||
-<!-- Ref: CFDB1532E8D59909B43B03BCB77DD58E -->
+<!-- Ref: 8EB1AEBA152F0494431380B86AE10B9F -->
