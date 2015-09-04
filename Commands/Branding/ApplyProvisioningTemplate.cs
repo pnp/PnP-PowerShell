@@ -88,7 +88,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
                     WriteProgress(new ProgressRecord(0, string.Format("Applying template to {0}", SelectedWeb.Url), message) { PercentComplete = (100 / total) * step });
                 };
 
-                applyingInformation.MessageDelegate = (message, type) =>
+                applyingInformation.MessagesDelegate = (message, type) =>
                 {
                     if (type == ProvisioningMessageType.Warning)
                     {
