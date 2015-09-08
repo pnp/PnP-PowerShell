@@ -167,6 +167,11 @@ SortOrder = 5)]
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
                         break;
                     }
+                case XMLPnPSchemaVersion.V201508:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
+                        break;
+                    }
             }
             var _outputStream = formatter.ToFormattedTemplate(template);
             StreamReader reader = new StreamReader(_outputStream);
