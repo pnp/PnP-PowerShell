@@ -66,6 +66,9 @@ SortOrder = 5)]
         [Parameter(Mandatory = false, HelpMessage = "If specified, all the site collection term groups will be included. Overridden by IncludeAllTermGroups.")]
         public SwitchParameter IncludeSiteCollectionTermGroup;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified all site groups will be included.")]
+        public SwitchParameter IncludeSiteGroups;
+
         [Parameter(Mandatory = false, HelpMessage = "If specified the files making up the composed look (background image, font file and color file) will be saved.")]
         public SwitchParameter PersistComposedLookFiles;        
 
@@ -120,6 +123,8 @@ SortOrder = 5)]
             var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
 
             creationInformation.PersistComposedLookFiles = PersistComposedLookFiles;
+            creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+
             creationInformation.FileConnector = new FileSystemConnector(path, "");
 
             creationInformation.BaseTemplate = this.SelectedWeb.GetBaseTemplate();
