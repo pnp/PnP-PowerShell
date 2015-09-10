@@ -14,12 +14,13 @@ namespace OfficeDevPnP.PowerShell.Commands
         SortOrder = 1)]
     public class SetHomePage : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The root folder relative path of the homepage", Position=0, ValueFromPipeline=true)]
-        public string Path = string.Empty;
+        [Parameter(Mandatory = true, HelpMessage = "The root folder relative url of the homepage", Position = 0, ValueFromPipeline = true)]
+        [Alias("Path")]
+        public string RootFolderRelativeUrl = string.Empty;
 
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.SetHomePage(Path);
+            SelectedWeb.SetHomePage(RootFolderRelativeUrl);
         }
     }
 
