@@ -257,6 +257,125 @@ namespace OfficeDevPnP.PowerShell.Tests
                 }
             }
         }
+
+        [TestMethod]
+        public void SetHomePageTest()
+        {
+            using (var context = TestCommon.CreateClientContext())
+            {
+
+                context.Load(context.Web, w => w.RootFolder.WelcomePage);
+                context.ExecuteQueryRetry();
+                var existingHomePageUrl = context.Web.RootFolder.WelcomePage;
+
+                using (var scope = new PSTestScope(true))
+                {
+                    var results = scope.ExecuteCommand("Set-SPOHomePage",
+                        new CommandParameter("RootFolderRelativeUrl", "sitepages/demo.aspx"));
+
+                    context.Load(context.Web, w => w.RootFolder.WelcomePage);
+                    context.ExecuteQuery();
+                    var homePageUrl = context.Web.RootFolder.WelcomePage;
+                    Assert.IsTrue(homePageUrl == "sitepages/demo.aspx");
+
+
+                    context.Web.RootFolder.WelcomePage = existingHomePageUrl;
+                    context.Web.RootFolder.Update();
+                    context.ExecuteQueryRetry();
+                }
+            }
+        }
+
+        [TestMethod]
+        public void GetHomePageTest()
+        {
+            using (var context = TestCommon.CreateClientContext())
+            {
+
+                context.Load(context.Web, w => w.RootFolder.WelcomePage);
+                context.ExecuteQueryRetry();
+                var existingHomePageUrl = context.Web.RootFolder.WelcomePage;
+
+                using (var scope = new PSTestScope(true))
+                {
+                    var results = scope.ExecuteCommand("Get-SPOHomePage");
+
+                    Assert.IsInstanceOfType(results.FirstOrDefault().BaseObject, typeof(string));
+                    Assert.IsTrue((results.FirstOrDefault().BaseObject as string).ToLowerInvariant() == existingHomePageUrl.ToLowerInvariant());
+                }
+            }
+        }
+
+        [TestMethod]
+        public void SetMasterPageTest()
+        {
+            using (var context = TestCommon.CreateClientContext())
+            {
+
+                context.Load(context.Web, w => w.MasterUrl, w => w.CustomMasterUrl);
+                context.ExecuteQueryRetry();
+                var existingMasterUrl = context.Web.MasterUrl;
+                var existingCustomMasterUrl = context.Web.CustomMasterUrl;
+
+                using (var scope = new PSTestScope(true))
+                {
+                    var results = scope.ExecuteCommand("Set-SPOMasterPage",
+                        new CommandParameter("MasterPageServerRelativeUrl", "/sites/tests/_catalogs/default.master"),
+                        new CommandParameter("CustomMasterPageServerRelativeUrl", "/sites/tests/_catalogs/custom.master"));
+
+                    context.Load(context.Web, w => w.MasterUrl, w => w.CustomMasterUrl);
+                    context.ExecuteQuery();
+                    Assert.IsTrue(context.Web.MasterUrl == "/sites/tests/_catalogs/default.master");
+                    Assert.IsTrue(context.Web.CustomMasterUrl == "/sites/tests/_catalogs/custom.master");
+
+                    context.Web.MasterUrl = existingMasterUrl;
+                    context.Web.CustomMasterUrl = existingCustomMasterUrl;
+                    context.Web.Update();
+                    context.ExecuteQueryRetry();
+                }
+            }
+        }
+
+        [TestMethod]
+        public void SetMinimalDownloadStrategyTest()
+        {
+            bool isActive = false;
+            using (var context = TestCommon.CreateClientContext())
+            {
+                isActive = context.Web.IsFeatureActive(OfficeDevPnP.Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
+
+                using (var scope = new PSTestScope(true))
+                {
+                    if (isActive)
+                    {
+                        // Deactivate
+                        scope.ExecuteCommand("Set-SPOMinimalDownloadStrategy",
+                            new CommandParameter("Off"),
+                            new CommandParameter("Force"));
+
+                    }
+                    else
+                    {
+                        scope.ExecuteCommand("Set-SPOMinimalDownloadStrategy",
+                            new CommandParameter("On"));
+                    }
+                }
+            }
+            using (var context = TestCommon.CreateClientContext())
+            {
+                var featureActive = context.Web.IsFeatureActive(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
+                if (isActive)
+                {
+                    Assert.IsFalse(featureActive);
+                    context.Web.ActivateFeature(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
+                }
+                else
+                {
+                    Assert.IsTrue(featureActive);
+                    context.Web.DeactivateFeature(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
+                }
+            }
+        }
     }
 }
 
