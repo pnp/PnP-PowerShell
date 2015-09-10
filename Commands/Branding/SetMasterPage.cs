@@ -9,7 +9,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
         Code = @"
-    PS:> Set-SPOMasterPage -MasterPageUrl /sites/projects/_catalogs/masterpage/oslo.master
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
 ", SortOrder = 1)]
     public class SetMasterPage : SPOWebCmdlet
     {
@@ -19,15 +19,15 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         [Parameter(Mandatory = false)]
         [Alias("CustomMasterPageUrl")]
-        public string CustomMasterServerRelativePageUrl = null;
+        public string CustomMasterPageServerRelativeUrl = null;
 
         protected override void ExecuteCmdlet()
         {
             if (!string.IsNullOrEmpty(MasterPageServerRelativeUrl))
                 SelectedWeb.SetMasterPageByUrl(MasterPageServerRelativeUrl);
 
-            if (!string.IsNullOrEmpty(CustomMasterServerRelativePageUrl))
-                SelectedWeb.SetCustomMasterPageByUrl(CustomMasterServerRelativePageUrl);
+            if (!string.IsNullOrEmpty(CustomMasterPageServerRelativeUrl))
+                SelectedWeb.SetCustomMasterPageByUrl(CustomMasterPageServerRelativeUrl);
 
         }
     }
