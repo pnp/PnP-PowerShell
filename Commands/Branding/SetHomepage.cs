@@ -8,13 +8,13 @@ namespace OfficeDevPnP.PowerShell.Commands
     [CmdletHelp("Sets the home page of the current web.", Category = "Branding")]
     [CmdletExample(
         Code = @"
-    PS:> Set-SPOHomePage -Path SitePages/Home.aspx
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
 ",
         Remarks = "Sets the home page to the home.aspx file which resides in the SitePages library",
         SortOrder = 1)]
     public class SetHomePage : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The root folder relative url of the homepage", Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'", Position = 0, ValueFromPipeline = true)]
         [Alias("Path")]
         public string RootFolderRelativeUrl = string.Empty;
 
