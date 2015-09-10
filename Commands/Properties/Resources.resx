@@ -150,9 +150,6 @@
   <data name="ListNotFound" xml:space="preserve">
     <value>List not found</value>
   </data>
-  <data name="MDSFeatureGuid" xml:space="preserve">
-    <value>87294c72-f260-42f3-a41b-981a2ffce37a</value>
-  </data>
   <data name="NoConnection" xml:space="preserve">
     <value>No connection, please connect first with Connect-SPOnline</value>
   </data>
