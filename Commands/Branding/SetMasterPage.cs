@@ -5,7 +5,7 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOMasterPage")]
-    [CmdletHelp("Sets the default master page of the current web.", 
+    [CmdletHelp("Sets the default master page of the current web.",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
         Code = @"
@@ -14,19 +14,21 @@ namespace OfficeDevPnP.PowerShell.Commands
     public class SetMasterPage : SPOWebCmdlet
     {
         [Parameter(Mandatory = false)]
-        public string MasterPageUrl = null;
+        [Alias("MasterPageUrl")]
+        public string MasterPageServerRelativeUrl = null;
 
         [Parameter(Mandatory = false)]
-        public string CustomMasterPageUrl = null;
+        [Alias("CustomMasterPageUrl")]
+        public string CustomMasterServerRelativePageUrl = null;
 
         protected override void ExecuteCmdlet()
         {
-            if(!string.IsNullOrEmpty(MasterPageUrl))
-                SelectedWeb.SetMasterPageByUrl(MasterPageUrl);
+            if (!string.IsNullOrEmpty(MasterPageServerRelativeUrl))
+                SelectedWeb.SetMasterPageByUrl(MasterPageServerRelativeUrl);
 
-            if (!string.IsNullOrEmpty(CustomMasterPageUrl))
-                SelectedWeb.SetCustomMasterPageByUrl(CustomMasterPageUrl);
-            
+            if (!string.IsNullOrEmpty(CustomMasterServerRelativePageUrl))
+                SelectedWeb.SetCustomMasterPageByUrl(CustomMasterServerRelativePageUrl);
+
         }
     }
 }
