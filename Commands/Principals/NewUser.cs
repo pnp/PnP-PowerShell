@@ -8,7 +8,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Principals
     [CmdletHelp("Adds a user to the build-in Site User Info List and returns a user object",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
-        Code = @"PS:> New-SPOUser -LogonName user@company.com",
+        Code = @"PS:> New-SPOUser -LoginName user@company.com",
         SortOrder = 1)]
     public class NewUser : SPOWebCmdlet
     {
