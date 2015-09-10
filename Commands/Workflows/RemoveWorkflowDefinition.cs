@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Remove, "SPOWorkflowDefinition")]
-    [CmdletHelp("Removes a workflow definition", Category = "Workflows")]
+    [CmdletHelp("Removes a workflow definition",
+        Category = CmdletHelpCategory.Workflows)]
 
     public class RemoveWorkflowDefinition : SPOWebCmdlet
     {

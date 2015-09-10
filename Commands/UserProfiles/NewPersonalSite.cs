@@ -9,7 +9,8 @@ namespace OfficeDevPnP.PowerShell.Commands.UserProfiles
 {
 
     [Cmdlet(VerbsCommon.New, "SPOPersonalSite")]
-    [CmdletHelp(@"Office365 only: Creates a personal / OneDrive For Business site", Category = "User Profiles")]
+    [CmdletHelp(@"Office365 only: Creates a personal / OneDrive For Business site",
+        Category = CmdletHelpCategory.UserProfiles)]
 
     public class NewPersonalSite : SPOAdminCmdlet
     {

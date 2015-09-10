@@ -17,7 +17,8 @@ using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
     [Cmdlet("Apply", "SPOProvisioningTemplate")]
-    [CmdletHelp("Applies a provisioning template to a web", Category = "Branding")]
+    [CmdletHelp("Applies a provisioning template to a web", 
+        Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
      Code = @"
     PS:> Apply-SPOProvisioningTemplate -Path template.xml

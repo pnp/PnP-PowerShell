@@ -21,7 +21,8 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning template from a web", Category = "Branding")]
+    [CmdletHelp("Generates a provisioning template from a web", 
+        Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
        Code = @"
     PS:> Get-SPOProvisioningTemplate -Out template.xml

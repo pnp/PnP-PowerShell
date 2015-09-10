@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOIndexedProperty")]
-    [CmdletHelp("Removes a key from propertybag to be indexed by search. The key and it's value retain in the propertybag, however it will not be indexed anymore.", Category = "Webs")]
+    [CmdletHelp("Removes a key from propertybag to be indexed by search. The key and it's value retain in the propertybag, however it will not be indexed anymore.",
+        Category = CmdletHelpCategory.Webs)]
     public class RemovedIndexedProperty : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

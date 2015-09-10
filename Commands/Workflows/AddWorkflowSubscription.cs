@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Add, "SPOWorkflowSubscription")]
-    [CmdletHelp("Adds a workflow subscription to a list", Category = "Workflows")]
+    [CmdletHelp("Adds a workflow subscription to a list",
+        Category = CmdletHelpCategory.Workflows)]
     public class AddWorkflowSubscription : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The name of the subscription")]

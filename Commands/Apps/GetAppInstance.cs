@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOAppInstance")]
-    [CmdletHelp("Returns a SharePoint AddIn Instance", Category = "Apps")]
+    [CmdletHelp("Returns a SharePoint AddIn Instance", 
+        Category = CmdletHelpCategory.Apps)]
     [CmdletExample(
         Code = @"PS:> Get-SPOAppInstance",
         Remarks = @"This will return all addin instances in the site.

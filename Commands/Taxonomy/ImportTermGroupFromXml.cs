@@ -18,7 +18,8 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsData.Import, "SPOTermGroupFromXml", SupportsShouldProcess = true)]
-    [CmdletHelp("Imports a taxonomy TermGroup from either the input or from an XML file.", Category = "Taxonomy")]
+    [CmdletHelp("Imports a taxonomy TermGroup from either the input or from an XML file.",
+        Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(
         Code = @"PS:> Import-SPOTermGroupFromXml -Xml $xml", 
         Remarks = "Imports the XML based termgroup information located in the $xml variable",

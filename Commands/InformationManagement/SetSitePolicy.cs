@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOSitePolicy")]
-    [CmdletHelp("Sets a site policy", Category = "Information Management")]
+    [CmdletHelp("Sets a site policy", 
+        Category = CmdletHelpCategory.InformationManagement)]
     [CmdletExample(
       Code = @"PS:> Set-SPOSitePolicy -Name ""Contoso HBI""",
       Remarks = @"This applies a site policy with the name ""Contoso HBI"" to the current site. The policy needs to be available in the site.", SortOrder = 1)]

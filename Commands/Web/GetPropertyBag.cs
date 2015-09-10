@@ -7,7 +7,8 @@ using System;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOPropertyBag")]
-    [CmdletHelp("Returns the property bag values.", Category = "Webs")]
+    [CmdletHelp("Returns the property bag values.",
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
        Code = @"PS:> Get-SPOPropertyBag",
        Remarks = "This will return all web property bag values",

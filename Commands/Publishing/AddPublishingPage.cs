@@ -6,7 +6,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOPublishingPage")]
     [CmdletHelp("Adds a publishing page",
-      Category = "Publishing")]
+      Category = CmdletHelpCategory.Publishing)]
     public class AddPublishingPage : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]

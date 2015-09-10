@@ -8,7 +8,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsLifecycle.Stop, "SPOWorkflowInstance")]
-    [CmdletHelp("Stops a workflow instance", Category = "Workflows")]
+    [CmdletHelp("Stops a workflow instance",
+        Category = CmdletHelpCategory.Workflows)]
 
     public class StopWorkflowInstance : SPOWebCmdlet
     {

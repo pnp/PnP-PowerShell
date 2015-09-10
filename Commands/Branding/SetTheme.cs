@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOTheme")]
-    [CmdletHelp("Sets the theme of the current web.", Category = "Branding")]
+    [CmdletHelp("Sets the theme of the current web.", 
+        Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
         Code = @"PS:> Set-SPOTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor",
         SortOrder = 1)]

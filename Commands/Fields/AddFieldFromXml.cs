@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOFieldFromXml")]
-    [CmdletHelp("Adds a field to a list or as a site column based upon a CAML/XML field definition", Category = "Fields")]
+    [CmdletHelp("Adds a field to a list or as a site column based upon a CAML/XML field definition",
+        Category = CmdletHelpCategory.Fields)]
     public class AddFieldFromXml : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

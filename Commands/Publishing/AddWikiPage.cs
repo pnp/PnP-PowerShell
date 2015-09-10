@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOWikiPage")]
-    [CmdletHelp("Adds a wiki page", Category = "Publishing")]
+    [CmdletHelp("Adds a wiki page",
+        Category = CmdletHelpCategory.Publishing)]
     public class AddWikiPage : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]

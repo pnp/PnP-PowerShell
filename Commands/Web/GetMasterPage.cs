@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOMasterPage")]
-    [CmdletHelp("Returns the URLS of the default Master Page and the custom Master Page.", Category = "Webs")]
+    [CmdletHelp("Returns the URLS of the default Master Page and the custom Master Page.", 
+        Category = CmdletHelpCategory.Webs)]
     public class GetMasterPage : SPOWebCmdlet
     {
 

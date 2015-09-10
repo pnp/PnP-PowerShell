@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOMasterPage")]
-    [CmdletHelp("Sets the default master page of the current web.", Category = "Branding")]
+    [CmdletHelp("Sets the default master page of the current web.", 
+        Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
         Code = @"
     PS:> Set-SPOMasterPage -MasterPageUrl /sites/projects/_catalogs/masterpage/oslo.master

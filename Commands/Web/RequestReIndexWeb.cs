@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Request, "SPOReIndexWeb")]
-    [CmdletHelp("Marks the web for full indexing during the next incremental crawl", Category = "Webs")]
+    [CmdletHelp("Marks the web for full indexing during the next incremental crawl",
+        Category = CmdletHelpCategory.Webs)]
     public class RequestReIndexWeb : SPOWebCmdlet
     {
 

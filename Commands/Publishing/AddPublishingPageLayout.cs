@@ -6,7 +6,7 @@ namespace OfficeDevPnP.PowerShell.Commands.PageLayout
 {
     [Cmdlet(VerbsCommon.Add, "SPOPublishingPageLayout")]
     [CmdletHelp("Adds a publishing page layout",
-      Category = "Publishing")]
+      Category = CmdletHelpCategory.Publishing)]
     public class AddPublishingPageLayout : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Path to the file which will be uploaded")]

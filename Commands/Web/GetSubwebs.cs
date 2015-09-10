@@ -7,7 +7,8 @@ using System.Collections.Generic;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOSubWebs")]
-    [CmdletHelp("Returns the subwebs", Category = "Webs")]
+    [CmdletHelp("Returns the subwebs", 
+        Category = CmdletHelpCategory.Webs)]
     public class GetSubWebs : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

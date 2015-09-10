@@ -10,7 +10,8 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "SPOSearchConfiguration")]
-    [CmdletHelp("Returns the search configuration", Category = "Search")]
+    [CmdletHelp("Returns the search configuration", 
+        Category = CmdletHelpCategory.Search)]
     [CmdletExample(
         Code = @"PS:> Get-SPOSearchConfiguration",
         Remarks = "Returns the search configuration for the current web",

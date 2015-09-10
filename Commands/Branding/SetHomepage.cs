@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOHomePage")]
-    [CmdletHelp("Sets the home page of the current web.", Category = "Branding")]
+    [CmdletHelp("Sets the home page of the current web.", 
+        Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
         Code = @"
     PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx

@@ -9,7 +9,8 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Set, "SPOSearchConfiguration")]
-    [CmdletHelp("Returns the search configuration", Category = "Search")]
+    [CmdletHelp("Returns the search configuration",
+        Category = CmdletHelpCategory.Search)]
     [CmdletExample(
         Code = @"PS:> Set-SPOSearchConfiguration -Configuration $config",
         Remarks = "Sets the search configuration for the current web",

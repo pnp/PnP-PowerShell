@@ -8,7 +8,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebPart")]
-    [CmdletHelp("Returns a webpart definition object", Category = "Web Parts")]
+    [CmdletHelp("Returns a webpart definition object",
+        Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(
         Code = @"PS:> Get-SPOWebPart -PageUrl ""/sites/demo/sitepages/home.aspx""",
         Remarks = @"Returns all webparts defined on the given page.", SortOrder = 1)]

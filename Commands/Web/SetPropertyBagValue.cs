@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOPropertyBagValue")]
-    [CmdletHelp("Sets a property bag value", Category = "Webs")]
+    [CmdletHelp("Sets a property bag value",
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
       Code = @"PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue",
       Remarks = "This sets or adds a value to the current web property bag",

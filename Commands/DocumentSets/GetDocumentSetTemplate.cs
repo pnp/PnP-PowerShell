@@ -13,7 +13,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Get,"SPODocumentSetTemplate")]
-    [CmdletHelp("Retrieves a document set template", Category = "Document Sets")]
+    [CmdletHelp("Retrieves a document set template", 
+        Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(
         Code = @"PS:> Get-SPODocumentSetTemplate -Identity ""Test Document Set""",
         SortOrder = 1)]

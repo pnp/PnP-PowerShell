@@ -7,9 +7,10 @@ using OfficeDevPnP.PowerShell.Commands.Base;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "SPOTenantSite")]
-    [CmdletHelp("Creates a new site collection for the current tenant", DetailedDescription = @"
-The New-SPOTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
-Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx ", Category = "Tenant Administration")]
+    [CmdletHelp("Creates a new site collection for the current tenant", 
+        DetailedDescription = @"The New-SPOTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
+Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx ", 
+        Category = CmdletHelpCategory.TenantAdmin)]
     public class NewTenantSite : SPOAdminCmdlet
     {
         [Parameter(Mandatory = true)]

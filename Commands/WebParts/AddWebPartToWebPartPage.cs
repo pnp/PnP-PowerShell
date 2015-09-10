@@ -8,7 +8,8 @@ using File = System.IO.File;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOWebPartToWebPartPage")]
-    [CmdletHelp("Adds a webpart to a web part page in a specified zone", Category = "Web Parts")]
+    [CmdletHelp("Adds a webpart to a web part page in a specified zone",
+        Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(
    Code = @"PS:> Add-SPOWebPartToWebPartPage -PageUrl ""/sites/demo/sitepages/home.aspx"" -Path ""c:\myfiles\listview.webpart"" -ZoneId ""Header"" -ZoneIndex 1 ",
    Remarks = @"This will add the webpart as defined by the XML in the listview.webpart file to the specified page in the specified zone and with the order index of 1", SortOrder = 1)]
