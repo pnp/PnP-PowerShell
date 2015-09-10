@@ -24,11 +24,11 @@ namespace OfficeDevPnP.PowerShell.Commands
         {
             if (On)
             {
-                SelectedWeb.Features.Add(new Guid(Resources.MDSFeatureGuid), Force, FeatureDefinitionScope.None);
+                SelectedWeb.Features.Add(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID, Force, FeatureDefinitionScope.None);
             }
             else
             {
-                SelectedWeb.Features.Remove(new Guid(Resources.MDSFeatureGuid), Force);
+                SelectedWeb.Features.Remove(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID, Force);
             }
             ClientContext.ExecuteQueryRetry();
         }
