@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOIndexedPropertyKeys")]
-    [CmdletHelp("Returns the keys of the property bag values that have been marked for indexing by search", Category = "Webs")]
+    [CmdletHelp("Returns the keys of the property bag values that have been marked for indexing by search",
+        Category = CmdletHelpCategory.Webs)]
     public class GetIndexedProperties : SPOWebCmdlet
     {
         protected override void ExecuteCmdlet()

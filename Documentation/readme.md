@@ -29,6 +29,7 @@ Cmdlet|Description
 **[Remove&#8209;SPOCustomAction](RemoveSPOCustomAction.md)** |Removes a custom action
 **[Get&#8209;SPOCustomAction](GetSPOCustomAction.md)** |Returns all or a specific custom action(s)
 **[Add&#8209;SPOCustomAction](AddSPOCustomAction.md)** |Adds a custom action to a web
+**[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOHomePage](SetSPOHomePage.md)** |Sets the home page of the current web.
 **[Add&#8209;SPOJavaScriptBlock](AddSPOJavaScriptBlock.md)** |Adds a link to a JavaScript snippet/block to a web or site collection
 **[Get&#8209;SPOJavaScriptLink](GetSPOJavaScriptLink.md)** |Returns all or a specific custom action(s) with location type ScriptLink
@@ -136,8 +137,12 @@ Cmdlet|Description
 ##Tenant Administration
 Cmdlet|Description
 :-----|:----------
+**[Set&#8209;SPOTenantSite](SetSPOTenantSite.md)** |Office365 only: Uses the tenant API to set site information.
+**[Get&#8209;SPOTenantSite](GetSPOTenantSite.md)** |Office365 only: Uses the tenant API to retrieve site information. 
+**[Remove&#8209;SPOTenantSite](RemoveSPOTenantSite.md)** |Office365 only: Removes a site collection from the current tenant
 **[New&#8209;SPOTenantSite](NewSPOTenantSite.md)** |Creates a new site collection for the current tenant
 **[Get&#8209;SPOTimeZoneId](GetSPOTimeZoneId.md)** |Returns a time zone ID
+**[Get&#8209;SPOWebTemplates](GetSPOWebTemplates.md)** |Office365 only: Returns the available web templates.
 ##User and group management
 Cmdlet|Description
 :-----|:----------
@@ -151,6 +156,8 @@ Cmdlet|Description
 ##User Profiles
 Cmdlet|Description
 :-----|:----------
+**[New&#8209;SPOPersonalSite](NewSPOPersonalSite.md)** |Office365 only: Creates a personal / OneDrive For Business site
+**[Set&#8209;SPOUserProfileProperty](SetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
 **[Get&#8209;SPOUserProfileProperty](GetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
 ##Utilities
 Cmdlet|Description
@@ -176,7 +183,6 @@ Cmdlet|Description
 **[Set&#8209;SPOFileCheckedIn](SetSPOFileCheckedIn.md)** |Checks in a file
 **[Set&#8209;SPOFileCheckedOut](SetSPOFileCheckedOut.md)** |Checks out a file
 **[Add&#8209;SPOFolder](AddSPOFolder.md)** |Creates a folder within a parent folder
-**[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOIndexedProperties](SetSPOIndexedProperties.md)** |Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, e.g. only the properties you define with the cmdlet will be indexed.
 **[Remove&#8209;SPOIndexedProperty](RemoveSPOIndexedProperty.md)** |Removes a key from propertybag to be indexed by search. The key and it's value retain in the propertybag, however it will not be indexed anymore.
 **[Add&#8209;SPOIndexedProperty](AddSPOIndexedProperty.md)** |Marks the value of the propertybag key to be indexed by search.

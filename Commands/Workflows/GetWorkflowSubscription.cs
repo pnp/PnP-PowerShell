@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "SPOWorkflowSubscription")]
-    [CmdletHelp("Returns a workflow subscriptions from a list", Category = "Workflows")]
+    [CmdletHelp("Returns a workflow subscriptions from a list",
+        Category = CmdletHelpCategory.Workflows)]
 
     public class GetWorkflowSubscription : SPOWebCmdlet
     {

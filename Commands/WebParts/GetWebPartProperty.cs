@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebPartProperty")]
-    [CmdletHelp("Returns a web part property", Category = "Web Parts")]
+    [CmdletHelp("Returns a web part property", 
+        Category = CmdletHelpCategory.WebParts)]
     public class GetWebPartProperty : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]

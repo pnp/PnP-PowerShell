@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOWeb")]
-    [CmdletHelp("Returns the current web object", Category = "Webs")]
+    [CmdletHelp("Returns the current web object",
+        Category = CmdletHelpCategory.Webs)]
     public class GetWeb : SPOCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position=0)]

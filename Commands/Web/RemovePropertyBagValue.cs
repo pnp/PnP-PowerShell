@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOPropertyBagValue", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    [CmdletHelp("Removes a value from the property bag", Category = "Webs")]
+    [CmdletHelp("Removes a value from the property bag",
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = @"PS:> Remove-SPOPropertyBagValue -Key MyKey",
         Remarks = "This will remove the value with key MyKey from the current web property bag",

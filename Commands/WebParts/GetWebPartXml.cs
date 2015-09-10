@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 namespace OfficeDevPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebPartXml")]
-    [CmdletHelp("Returns the webpart XML of a webpart registered on a site", Category = "Web Parts")]
+    [CmdletHelp("Returns the webpart XML of a webpart registered on a site",
+        Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(
         Code = @"PS:> Get-SPOWebPartXml -PageUrl ""/sites/demo/sitepages/home.aspx"" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
         Remarks = @"Returns the webpart XML for a given webpart on a page.", SortOrder = 1)]

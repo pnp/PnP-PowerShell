@@ -13,7 +13,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 
     [Cmdlet(VerbsCommon.Get, "SPOTenantSite", SupportsShouldProcess = true)]
     [CmdletHelp(@"Office365 only: Uses the tenant API to retrieve site information.
-", Category = "Tenant Administration")]
+", Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(Code = @"
 PS:> Get-SPOTenantSite", Remarks = "Returns all site collections", SortOrder = 1)]
     [CmdletExample(Code = @"

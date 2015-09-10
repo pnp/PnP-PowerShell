@@ -12,8 +12,8 @@ namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPODefaultColumnValues")]
     [CmdletHelp("Sets default column values for a document library", 
-        DetailedDescription="Sets default column values for a document library, per folder, or for the root folder if the folder parameter has not been specified. Supports both text and taxonomy fields.", 
-        Category = "Lists")]
+        DetailedDescription="Sets default column values for a document library, per folder, or for the root folder if the folder parameter has not been specified. Supports both text and taxonomy fields.",
+        Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = "PS:> Set-SPODefaultColumnValues -List Documents -Field TaxKeyword -Value \"Company|Locations|Stockholm\"", 
         SortOrder = 1, 

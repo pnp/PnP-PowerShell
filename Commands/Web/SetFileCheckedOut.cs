@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet("Set", "SPOFileCheckedOut")]
-    [CmdletHelp("Checks out a file", Category = "Webs")]
+    [CmdletHelp("Checks out a file",
+        Category = CmdletHelpCategory.Webs)]
     public class SetFileCheckedOut : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]

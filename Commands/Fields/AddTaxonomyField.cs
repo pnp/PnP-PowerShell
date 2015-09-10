@@ -8,7 +8,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOTaxonomyField")]
-    [CmdletHelp("Adds a taxonomy field to a list or as a site column.", Category = "Fields")]
+    [CmdletHelp("Adds a taxonomy field to a list or as a site column.",
+        Category = CmdletHelpCategory.Fields)]
     public class AddTaxonomyField : SPOWebCmdlet
     {
         [Parameter(Mandatory = false)]

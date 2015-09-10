@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "SPOGroup", DefaultParameterSetName = "All")]
-    [CmdletHelp("Removes a group.", Category = "User and group management")]
+    [CmdletHelp("Removes a group.",
+        Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
         Code = @"PS:> Remove-SPOGroup -Identity ""My Users""",
         SortOrder = 1)]

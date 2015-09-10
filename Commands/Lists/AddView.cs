@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOView")]
-    [CmdletHelp("Adds a view to a list", Category = "Lists")]
+    [CmdletHelp("Adds a view to a list",
+        Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = @"Add-SPOView -List ""Demo List"" -Title ""Demo View"" -Fields ""Title"",""Address""",
         SortOrder = 1)]

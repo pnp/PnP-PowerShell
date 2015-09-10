@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Add, "SPOWorkflowDefinition")]
-    [CmdletHelp("Adds a workflow definition", Category = "Workflows")]
+    [CmdletHelp("Adds a workflow definition",
+        Category = CmdletHelpCategory.Workflows)]
     [CmdletExample(
         Code = @"Add-SPOWorkflowDefinition -Definition $wfdef", 
         Remarks = "Adds an existing workflow definition, retrieved by Get-SPOWorkflowDefinition, to a site.",

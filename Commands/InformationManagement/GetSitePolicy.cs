@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOSitePolicy")]
-    [CmdletHelp("Retrieves all or a specific site policy", Category = "Information Management")]
+    [CmdletHelp("Retrieves all or a specific site policy",
+        Category = CmdletHelpCategory.InformationManagement)]
     [CmdletExample(
      Code = @"PS:> Get-SPOSitePolicy",
      Remarks = @"Retrieves the current applied site policy.", SortOrder = 1)]

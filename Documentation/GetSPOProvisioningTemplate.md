@@ -1,10 +1,10 @@
 #Get-SPOProvisioningTemplate
-*Topic automatically generated on: 2015-08-27*
+*Topic automatically generated on: 2015-09-08*
 
 Generates a provisioning template from a web
 ##Syntax
 ```powershell
-Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-PersistComposedLookFiles [<SwitchParameter>]] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
+Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-PersistComposedLookFiles [<SwitchParameter>]] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
 ```
 
 
@@ -15,6 +15,7 @@ Parameter|Type|Required|Description
 |Force|SwitchParameter|False|Overwrites the output file if it exists.|
 |IncludeAllTermGroups|SwitchParameter|False|If specified, all term groups will be included. Overrides IncludeSiteCollectionTermGroup.|
 |IncludeSiteCollectionTermGroup|SwitchParameter|False|If specified, all the site collection term groups will be included. Overridden by IncludeAllTermGroups.|
+|IncludeSiteGroups|SwitchParameter|False|If specified all site groups will be included.|
 |Out|String|False|Filename to write to, optionally including full path|
 |PersistComposedLookFiles|SwitchParameter|False|If specified the files making up the composed look (background image, font file and color file) will be saved.|
 |Schema|XMLPnPSchemaVersion|False|The schema of the output to use, defaults to the latest schema|
@@ -50,4 +51,4 @@ Extracts a provisioning template in XML format from the current web and includes
     PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistComposedLookFiles
 
 Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.
-<!-- Ref: D1522D31189471F80B5474E4C97FB2AE -->
+<!-- Ref: 4F8F26DB9F9B001D49A6DBF6872E4152 -->

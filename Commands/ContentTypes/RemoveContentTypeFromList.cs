@@ -7,7 +7,8 @@ namespace OfficeDevPnP.PowerShell.Commands
 {
 
     [Cmdlet(VerbsCommon.Remove, "SPOContentTypeFromList")]
-    [CmdletHelp("Removes a content type from a list", Category = "Content Types")]
+    [CmdletHelp("Removes a content type from a list", 
+        Category = CmdletHelpCategory.ContentTypes)]
     public class RemoveContentTypeFromList : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]

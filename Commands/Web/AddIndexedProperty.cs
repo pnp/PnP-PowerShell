@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOIndexedProperty")]
-    [CmdletHelp("Marks the value of the propertybag key to be indexed by search.", Category = "Webs")]
+    [CmdletHelp("Marks the value of the propertybag key to be indexed by search.",
+        Category = CmdletHelpCategory.Webs)]
     public class AddIndexedProperty : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

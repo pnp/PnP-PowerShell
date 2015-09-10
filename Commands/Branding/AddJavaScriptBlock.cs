@@ -6,7 +6,9 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOJavaScriptBlock")]
-    [CmdletHelp("Adds a link to a JavaScript snippet/block to a web or site collection", DetailedDescription = "Specify a scope as 'Site' to add the custom action to all sites in a site collection.", Category = "Branding")]
+    [CmdletHelp("Adds a link to a JavaScript snippet/block to a web or site collection", 
+        DetailedDescription = "Specify a scope as 'Site' to add the custom action to all sites in a site collection.", 
+        Category = CmdletHelpCategory.Branding)]
     public class AddJavaScriptBlock : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The name of the script block. Can be used to identiy the script with other cmdlets or coded solutions")]

@@ -1,5 +1,5 @@
 #Get-SPOList
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-10*
 
 Returns a List object
 ##Syntax
@@ -7,9 +7,6 @@ Returns a List object
 Get-SPOList [-Web <WebPipeBind>] [-Identity <ListPipeBind>]
 ```
 
-
-##Detailed Description
-Returns a list object.
 
 ##Parameters
 Parameter|Type|Required|Description
@@ -29,4 +26,4 @@ Returns a list with the given id.
 ###Example 3
     PS:> Get-SPOList -Identity /Lists/Announcements
 Returns a list with the given url.
-<!-- Ref: C705FE92BB372ABCF5C54CC60A860E15 -->
+<!-- Ref: A78A6AA20C4E2D00C8BE62A524816B03 -->

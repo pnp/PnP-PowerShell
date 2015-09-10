@@ -5,7 +5,8 @@ using System.Management.Automation;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOSite")]
-    [CmdletHelp("Returns the current site collection from the context.", Category="Sites")]
+    [CmdletHelp("Returns the current site collection from the context.",
+        Category = CmdletHelpCategory.Sites)]
     public class GetSite : SPOCmdlet
     {
         protected override void ExecuteCmdlet()

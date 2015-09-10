@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Execute", "SPOQuery")]
-    [CmdletHelp("Executes any queued actions / changes on the SharePoint Client Side Object Model Context", Category = "Base Cmdlets")]
+    [CmdletHelp("Executes any queued actions / changes on the SharePoint Client Side Object Model Context", 
+        Category = CmdletHelpCategory.Base)]
     public class ExecuteSPOQuery : SPOCmdlet
     {
         protected override void ProcessRecord()

@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands.Principals
 {
     [Cmdlet("New", "SPOGroup")]
-    [CmdletHelp("Adds a user to the build-in Site User Info List and returns a user object", Category = "User and group management")]
+    [CmdletHelp("Adds a user to the build-in Site User Info List and returns a user object",
+        Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
         Code = @"PS:> New-SPOUser -LogonName user@company.com",
         SortOrder = 1)]

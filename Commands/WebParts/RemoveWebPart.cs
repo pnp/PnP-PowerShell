@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOWebPart")]
-    [CmdletHelp("Removes a webpart from a page", Category = "Web Parts")]
+    [CmdletHelp("Removes a webpart from a page",
+        Category = CmdletHelpCategory.WebParts)]
     public class RemoveWebPart : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "ID")]

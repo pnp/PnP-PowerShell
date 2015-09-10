@@ -18,7 +18,8 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsData.Export, "SPOTermGroupToXml", SupportsShouldProcess = true)]
-    [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.", Category = "Taxonomy")]
+    [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.",
+        Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(
         Code = @"PS:> Export-SPOTermGroupToXml", 
         Remarks = "Exports all term groups in the default site collection term store to the standard output",

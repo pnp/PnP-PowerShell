@@ -8,6 +8,7 @@ using System.Text;
 using System.Xml.Linq;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using System.Text.RegularExpressions;
+using System.Runtime.Serialization;
 
 namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 {
@@ -82,7 +83,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                             copyright = a.Copyright;
                             version = a.Version;
                             detaileddescription = a.DetailedDescription;
-                            category = a.Category;
+                            category = ToEnumString(a.Category);
                         }
                         if (attr is CmdletExampleAttribute)
                         {
@@ -386,7 +387,6 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                             docBuilder.AppendFormat("<!-- Ref: {0} -->", newHashCode); // Add hashcode of generated text to the file as hidden entry
                             if (newHashCode != existingHashCode)
                             {
-
                                 System.IO.File.WriteAllText(mdFilePath, docHeaderBuilder.Append(docBuilder).ToString());
                             }
                         }
@@ -433,7 +433,6 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                 {
                     System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
                 }
-
             }
         }
 
@@ -455,7 +454,20 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
             return sb.ToString();
         }
 
-
+        public static string ToEnumString<T>(T type)
+        {
+            var enumType = typeof(T);
+            var name = Enum.GetName(enumType, type);
+            try
+            {
+                var enumMemberAttribute = ((EnumMemberAttribute[])enumType.GetField(name).GetCustomAttributes(typeof(EnumMemberAttribute), true)).Single();
+                return enumMemberAttribute.Value;
+            }
+            catch
+            {
+                return name;
+            }
+        }
 
         private class SyntaxItem
         {

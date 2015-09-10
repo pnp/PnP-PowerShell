@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "SPOUserFromGroup")]
-    [CmdletHelp("Removes a user from a group", Category = "User and group management")]
+    [CmdletHelp("Removes a user from a group",
+        Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
         Code = @"PS:> Remove-SPOUserFromGroup -LoginName user@company.com -GroupName 'Marketing Site Members'",
         SortOrder = 1)]

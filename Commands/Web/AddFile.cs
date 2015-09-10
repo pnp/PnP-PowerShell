@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOFile")]
-    [CmdletHelp("Uploads a file to Web", Category = "Webs")]
+    [CmdletHelp("Uploads a file to Web", 
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = @"PS:> Add-SPOFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage", 
         Remarks = "This will upload the file company.master to the masterpage catalog",

@@ -8,7 +8,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "SPOListPermission")]
-    [CmdletHelp("Sets list permissions", Category = "Lists")]
+    [CmdletHelp("Sets list permissions",
+        Category = CmdletHelpCategory.Lists)]
     public class SetListPermission : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

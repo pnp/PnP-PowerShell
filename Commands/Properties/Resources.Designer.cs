@@ -170,15 +170,6 @@ namespace OfficeDevPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 87294c72-f260-42f3-a41b-981a2ffce37a.
-        /// </summary>
-        internal static string MDSFeatureGuid {
-            get {
-                return ResourceManager.GetString("MDSFeatureGuid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No connection, please connect first with Connect-SPOnline.
         /// </summary>
         internal static string NoConnection {

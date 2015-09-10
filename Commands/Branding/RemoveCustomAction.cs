@@ -8,7 +8,8 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOCustomAction", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
-    [CmdletHelp("Removes a custom action", Category = "Branding")]
+    [CmdletHelp("Removes a custom action", 
+        Category = CmdletHelpCategory.Branding)]
     public class RemoveCustomAction : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]

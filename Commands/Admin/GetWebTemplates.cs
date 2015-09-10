@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebTemplates")]
-    [CmdletHelp(@"Office365 only: Returns the available web templates.", Category = "Tenant Administration")]
+    [CmdletHelp(@"Office365 only: Returns the available web templates.", Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
         Code = @"PS:> Get-SPOWebTemplates", SortOrder = 1)]
     [CmdletExample(

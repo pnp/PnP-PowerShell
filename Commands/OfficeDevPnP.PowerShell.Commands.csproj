@@ -389,8 +389,8 @@
     <Compile Include="Web\RemovePropertyBagValue.cs" />
     <Compile Include="Web\RequestReIndexWeb.cs" />
     <Compile Include="Web\GetMasterPage.cs" />
-    <Compile Include="Web\GetHomepage.cs" />
-    <Compile Include="Branding\SetMDS.cs" />
+    <Compile Include="Branding\GetHomepage.cs" />
+    <Compile Include="Branding\SetMinimalDownloadStrategy.cs" />
     <Compile Include="Branding\SetHomepage.cs" />
     <Compile Include="Web\SetPropertyBagValue.cs" />
     <Compile Include="Web\SetIndexedProperties.cs" />
