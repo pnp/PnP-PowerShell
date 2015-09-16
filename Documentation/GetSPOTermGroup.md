@@ -1,5 +1,5 @@
 #Get-SPOTermGroup
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Returns a taxonomy term group
 ##Syntax

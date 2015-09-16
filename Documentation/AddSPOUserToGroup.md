@@ -1,5 +1,5 @@
 #Add-SPOUserToGroup
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a user to a group
 ##Syntax
@@ -17,10 +17,14 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Add-SPOUserToGroup -LoginName user@company.com -Identity 'Marketing Site Members'
+```powershell
+PS:> Add-SPOUserToGroup -LoginName user@company.com -Identity 'Marketing Site Members'
+```
 
 
 ###Example 2
-    PS:> Add-SPOUserToGroup -LoginName user@company.com -Identity 5
+```powershell
+PS:> Add-SPOUserToGroup -LoginName user@company.com -Identity 5
+```
 Add the specified user to the group with Id 5
-<!-- Ref: C691521D4DC3CFBD805874987C0E70DC -->
+<!-- Ref: AEBF39E1EBD06652C06A891CCF874EEB -->

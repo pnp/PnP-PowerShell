@@ -1,5 +1,5 @@
 #Get-SPOWebPart
-*Topic automatically generated on: 2015-08-10*
+*Topic automatically generated on: 2015-09-17*
 
 Returns a webpart definition object
 ##Syntax
@@ -17,10 +17,14 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOWebPart -PageUrl "/sites/demo/sitepages/home.aspx"
+```powershell
+PS:> Get-SPOWebPart -PageUrl "/sites/demo/sitepages/home.aspx"
+```
 Returns all webparts defined on the given page.
 
 ###Example 2
-    PS:> Get-SPOWebPart -PageUrl "/sites/demo/sitepages/home.aspx" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82
+```powershell
+PS:> Get-SPOWebPart -PageUrl "/sites/demo/sitepages/home.aspx" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82
+```
 Returns a specific webpart defined on the given page.
-<!-- Ref: 1B038C86EFF907F85423A2ED3A6BE051 -->
+<!-- Ref: 787541FD1FE913FB563EA3B96819A0A7 -->

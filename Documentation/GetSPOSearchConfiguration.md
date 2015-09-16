@@ -1,5 +1,5 @@
 #Get-SPOSearchConfiguration
-*Topic automatically generated on: 2015-08-31*
+*Topic automatically generated on: 2015-09-17*
 
 Returns the search configuration
 ##Syntax
@@ -16,14 +16,20 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOSearchConfiguration
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
 Returns the search configuration for the current web
 
 ###Example 2
-    PS:> Get-SPOSearchConfiguration -Scope Site
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
 Returns the search configuration for the current site collection
 
 ###Example 3
-    PS:> Get-SPOSearchConfiguration -Scope Subscription
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
 Returns the search configuration for the current tenant
-<!-- Ref: 70F8EEE409C9A02BB2CBC837AEF3E6EA -->
+<!-- Ref: 5E20751162392B69F5FA629D919CD7D6 -->

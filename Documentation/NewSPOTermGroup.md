@@ -1,5 +1,5 @@
 #New-SPOTermGroup
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Creates a taxonomy term group
 ##Syntax

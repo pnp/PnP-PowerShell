@@ -19,12 +19,16 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    
+```powershell
+
 PS:> Get-SPOTenantSite
+```
 Returns all site collections
 
 ###Example 2
-    
+```powershell
+
 PS:> Get-SPOTenantSite -Url http://tenant.sharepoint.com/sites/projects
+```
 Returns information about the project site.
-<!-- Ref: 44F4BF36B9350277563D39D96EE848CA -->
+<!-- Ref: 773B891876B16627E5057C43C52F3BB0 -->

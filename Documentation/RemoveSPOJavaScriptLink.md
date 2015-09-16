@@ -1,5 +1,5 @@
 #Remove-SPOJavaScriptLink
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Removes a JavaScript link or block from a web or sitecollection
 ##Syntax

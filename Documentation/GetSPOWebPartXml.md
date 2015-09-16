@@ -1,5 +1,5 @@
 #Get-SPOWebPartXml
-*Topic automatically generated on: 2015-08-10*
+*Topic automatically generated on: 2015-09-17*
 
 Returns the webpart XML of a webpart registered on a site
 ##Syntax
@@ -17,6 +17,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOWebPartXml -PageUrl "/sites/demo/sitepages/home.aspx" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82
+```powershell
+PS:> Get-SPOWebPartXml -PageUrl "/sites/demo/sitepages/home.aspx" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82
+```
 Returns the webpart XML for a given webpart on a page.
-<!-- Ref: D9FF86CEB8E35A66E42337F2552BED44 -->
+<!-- Ref: 7C0E7D39B1D8B0333EFE46CE9E314C69 -->

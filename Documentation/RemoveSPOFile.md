@@ -1,5 +1,5 @@
 #Remove-SPOFile
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Removes a file.
 ##Syntax
@@ -17,6 +17,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:>Remove-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
+```powershell
+PS:>Remove-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
+```
 
-<!-- Ref: A14A2234B2C046B5DEB48F99F0D4D831 -->
+<!-- Ref: E0FF22761EE1BB010EB0D6FD53DD5181 -->

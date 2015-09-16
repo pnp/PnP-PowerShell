@@ -1,5 +1,5 @@
 #Add-SPOJavaScriptLink
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a link to a JavaScript file to a web or sitecollection
 ##Syntax

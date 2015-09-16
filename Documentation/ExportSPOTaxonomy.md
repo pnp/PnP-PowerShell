@@ -1,5 +1,5 @@
 #Export-SPOTaxonomy
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Exports a taxonomy to either the output or to a file.
 ##Syntax
@@ -20,14 +20,20 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Export-SPOTaxonomy
+```powershell
+PS:> Export-SPOTaxonomy
+```
 Exports the full taxonomy to the standard output
 
 ###Example 2
-    PS:> Export-SPOTaxonomy -Path c:\output.txt
+```powershell
+PS:> Export-SPOTaxonomy -Path c:\output.txt
+```
 Exports the full taxonomy the file output.txt
 
 ###Example 3
-    PS:> Export-SPOTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254 
+```powershell
+PS:> Export-SPOTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254 
+```
 Exports the term set with the specified id
-<!-- Ref: E187B77114E04142E6AA134F53A5E76B -->
+<!-- Ref: A7BE0E849C60873AC14A271B1C433877 -->

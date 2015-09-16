@@ -1,5 +1,5 @@
 #Import-SPOAppPackage
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a SharePoint Addin to a site
 ##Syntax
@@ -22,12 +22,16 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Import-SPOAppPackage -Path c:\files\demo.app -LoadOnly
+```powershell
+PS:> Import-SPOAppPackage -Path c:\files\demo.app -LoadOnly
+```
 This will load the addin in the demo.app package, but will not install it to the site.
  
 
 ###Example 2
-    PS:> Import-SPOAppPackage -Path c:\files\demo.app -Force
+```powershell
+PS:> Import-SPOAppPackage -Path c:\files\demo.app -Force
+```
 This load first activate the addin sideloading feature, upload and install the addin, and deactivate the addin sideloading feature.
     
-<!-- Ref: 8C94D6F50F27D77EF509C8FDB6C51887 -->
+<!-- Ref: 505B48DB4361442C0AF509F92BCA7806 -->

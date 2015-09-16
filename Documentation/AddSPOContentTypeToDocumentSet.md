@@ -17,16 +17,22 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Add-SPOContentTypeToDocumentSet -ContentType "Test CT" -DocumentSet "Test Document Set"
+```powershell
+PS:> Add-SPOContentTypeToDocumentSet -ContentType "Test CT" -DocumentSet "Test Document Set"
+```
 This will add the content type called 'Test CT' to the document set called ''Test Document Set'
 
 ###Example 2
-    PS:> $docset = Get-SPODocumentSetTemplate -Identity "Test Document Set"
+```powershell
+PS:> $docset = Get-SPODocumentSetTemplate -Identity "Test Document Set"
 PS:> $ct = Get-SPOContentType -Identity "Test CT"
 PS:> Add-SPOContentTypeToDocumentSet -ContentType $ct -DocumentSet $docset
+```
 This will add the content type called 'Test CT' to the document set called ''Test Document Set'
 
 ###Example 3
-    PS:> Add-SPOContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B
+```powershell
+PS:> Add-SPOContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B
+```
 This will add the content type called 'Test CT' to the document set called ''Test Document Set'
-<!-- Ref: ADE2C9A81E436041200D5033D6B85FFE -->
+<!-- Ref: AB9CD6A1C0000AAF913177585DF2FABE -->

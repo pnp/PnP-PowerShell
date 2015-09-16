@@ -17,8 +17,10 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    
+```powershell
+
     PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
 
+```
 
-<!-- Ref: 9B1EBF854FE2BC848F52F9C81926C32C -->
+<!-- Ref: 32528467FDAD4E8CEEC9C7299736653A -->

@@ -1,5 +1,5 @@
 #Set-SPOSitePolicy
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Sets a site policy
 ##Syntax
@@ -16,6 +16,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Set-SPOSitePolicy -Name "Contoso HBI"
+```powershell
+PS:> Set-SPOSitePolicy -Name "Contoso HBI"
+```
 This applies a site policy with the name "Contoso HBI" to the current site. The policy needs to be available in the site.
-<!-- Ref: 147B898C7DBB475910D0C13F064D069E -->
+<!-- Ref: 6EB5B3F979DAC86BF44873C1A44CCAC5 -->

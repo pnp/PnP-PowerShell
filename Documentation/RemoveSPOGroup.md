@@ -1,5 +1,5 @@
 #Remove-SPOGroup
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Removes a group.
 ##Syntax
@@ -17,6 +17,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Remove-SPOGroup -Identity "My Users"
+```powershell
+PS:> Remove-SPOGroup -Identity "My Users"
+```
 
-<!-- Ref: 6676EE210DD19F365519626B1F0C6895 -->
+<!-- Ref: 57137694056FA802D6C4B1DFD8AB9BD1 -->

@@ -18,14 +18,18 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    
+```powershell
+
     PS:> Apply-SPOProvisioningTemplate -Path template.xml
 
+```
 Applies a provisioning template in XML format to the current web.
 
 ###Example 2
-    
+```powershell
+
     PS:> Apply-SPOProvisioningTemplate -Path template.xml -ResourceFolder c:\provisioning\resources
 
+```
 Applies a provisioning template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.
-<!-- Ref: A70F2D55302A9EDA7F7309B8999F311E -->
+<!-- Ref: 4AFD13517ECFCA84BF003915DBF14A41 -->

@@ -1,5 +1,5 @@
 #Get-SPOList
-*Topic automatically generated on: 2015-09-10*
+*Topic automatically generated on: 2015-09-17*
 
 Returns a List object
 ##Syntax
@@ -16,14 +16,20 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOList
+```powershell
+PS:> Get-SPOList
+```
 Returns all lists in the current web
 
 ###Example 2
-    PS:> Get-SPOList -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+```powershell
+PS:> Get-SPOList -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+```
 Returns a list with the given id.
 
 ###Example 3
-    PS:> Get-SPOList -Identity /Lists/Announcements
+```powershell
+PS:> Get-SPOList -Identity /Lists/Announcements
+```
 Returns a list with the given url.
-<!-- Ref: A78A6AA20C4E2D00C8BE62A524816B03 -->
+<!-- Ref: 2EE8ED1EC2D58CE06A48DC8E981A7EC9 -->

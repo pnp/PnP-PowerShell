@@ -15,7 +15,9 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    
-PS:> Get-SPOAuthenticationRealm -Url https://contoso.sharepoint.com
+```powershell
 
-<!-- Ref: 70702D603C80D61A2E013F4A6F2D61CA -->
+PS:> Get-SPOAuthenticationRealm -Url https://contoso.sharepoint.com
+```
+
+<!-- Ref: 185A77005FF8A1C4244DFFF364892297 -->

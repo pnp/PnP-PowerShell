@@ -1,5 +1,5 @@
 #Uninstall-SPOSolution
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Uninstalls a sandboxed solution from a site collection
 ##Syntax

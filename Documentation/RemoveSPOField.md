@@ -1,5 +1,5 @@
 #Remove-SPOField
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Removes a field from a list or a site
 ##Syntax

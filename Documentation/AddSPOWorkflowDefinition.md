@@ -1,5 +1,5 @@
 #Add-SPOWorkflowDefinition
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a workflow definition
 ##Syntax
@@ -17,6 +17,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    Add-SPOWorkflowDefinition -Definition $wfdef
+```powershell
+Add-SPOWorkflowDefinition -Definition $wfdef
+```
 Adds an existing workflow definition, retrieved by Get-SPOWorkflowDefinition, to a site.
-<!-- Ref: 829C93535F592E7303A24B62662CA574 -->
+<!-- Ref: 087049D985E311E82D7AEF26411669D0 -->

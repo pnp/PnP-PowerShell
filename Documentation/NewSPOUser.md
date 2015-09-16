@@ -1,5 +1,5 @@
 #New-SPOUser
-*Topic automatically generated on: 2015-09-11*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a user to the build-in Site User Info List and returns a user object
 ##Syntax
@@ -16,6 +16,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> New-SPOUser -LoginName user@company.com
+```powershell
+PS:> New-SPOUser -LoginName user@company.com
+```
 
-<!-- Ref: BCEFCCDCBBF1AD3ABCDB2CEBE9B6BFB9 -->
+<!-- Ref: FB080507EA19D03B6909F1ADC1DFFC66 -->

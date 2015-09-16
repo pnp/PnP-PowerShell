@@ -1,5 +1,5 @@
 #Remove-SPOWeb
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Removes a subweb in the current web
 ##Syntax
@@ -17,6 +17,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Remove-SPOWeb -Url projectA
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
 Remove a web
-<!-- Ref: C6660CDE893236DADFC3A598B0F6FDCC -->
+<!-- Ref: EE8CCB62ECA3834879A288FF8BAB0430 -->

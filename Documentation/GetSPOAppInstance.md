@@ -1,5 +1,5 @@
 #Get-SPOAppInstance
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Returns a SharePoint AddIn Instance
 ##Syntax
@@ -16,12 +16,16 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOAppInstance
+```powershell
+PS:> Get-SPOAppInstance
+```
 This will return all addin instances in the site.
  
 
 ###Example 2
-    PS:> Get-SPOnlineAppInstance -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+```powershell
+PS:> Get-SPOnlineAppInstance -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+```
 This will return an addin instance with the specified id.
     
-<!-- Ref: 70635E3E1E7531EA87239DCA4B688E1B -->
+<!-- Ref: ABFC555B372CF2A22E6B11651298993B -->

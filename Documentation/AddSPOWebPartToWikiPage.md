@@ -1,5 +1,5 @@
 #Add-SPOWebPartToWikiPage
-*Topic automatically generated on: 2015-08-10*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a webpart to a wiki page in a specified table row and column
 ##Syntax
@@ -26,10 +26,14 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Add-SPOWebPartToWikiPage -PageUrl "/sites/demo/sitepages/home.aspx" -Path "c:\myfiles\listview.webpart" -Row 1 -Column 1
+```powershell
+PS:> Add-SPOWebPartToWikiPage -PageUrl "/sites/demo/sitepages/home.aspx" -Path "c:\myfiles\listview.webpart" -Row 1 -Column 1
+```
 This will add the webpart as defined by the XML in the listview.webpart file to the specified page in the first row and the first column of the HTML table present on the page
 
 ###Example 2
-    PS:> Add-SPOWebPartToWikiPage -PageUrl "/sites/demo/sitepages/home.aspx" -XML $webpart -Row 1 -Column 1
+```powershell
+PS:> Add-SPOWebPartToWikiPage -PageUrl "/sites/demo/sitepages/home.aspx" -XML $webpart -Row 1 -Column 1
+```
 This will add the webpart as defined by the XML in the $webpart variable to the specified page in the first row and the first column of the HTML table present on the page
-<!-- Ref: 08DBE5307A2E5130656BF838E4E2CD39 -->
+<!-- Ref: E8D7E616ADAE07583A5DB80C54B23C8F -->
