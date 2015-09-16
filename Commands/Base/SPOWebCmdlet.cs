@@ -34,7 +34,7 @@ namespace OfficeDevPnP.PowerShell.Commands
             {
                 web = web.GetWebById(Web.Id);
                 SPOnlineConnection.CurrentConnection.CloneContext(web.Url);
-                
+
                 web = SPOnlineConnection.CurrentConnection.Context.Web;
             }
             else if (!string.IsNullOrEmpty(Web.Url))
@@ -46,11 +46,9 @@ namespace OfficeDevPnP.PowerShell.Commands
             else if (Web.Web != null)
             {
                 web = Web.Web;
-                if (!web.IsPropertyAvailable("Url"))
-                {
-                    ClientContext.Load(web, w => w.Url);
-                    ClientContext.ExecuteQueryRetry();
-                }
+
+                web.EnsureProperty(w => w.Url);
+
                 SPOnlineConnection.CurrentConnection.CloneContext(web.Url);
                 web = SPOnlineConnection.CurrentConnection.Context.Web;
             }

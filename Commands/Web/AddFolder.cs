@@ -21,12 +21,8 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (!SelectedWeb.IsPropertyAvailable("ServerRelativeUrl"))
-            {
-                ClientContext.Load(SelectedWeb, w => w.ServerRelativeUrl);
-                ClientContext.ExecuteQueryRetry();
-            }
-
+            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            
             Folder folder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder));
             ClientContext.Load(folder, f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
