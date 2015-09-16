@@ -16,15 +16,19 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    
+```powershell
+
 PS:> $web = Get-SPOWeb
 PS:> Get-SPOProperty -ClientObject $web -Property Id, Lists
 PS:> $web.Lists
+```
 Will load both the Id and Lists properties of the specified Web object.
 
 ###Example 2
-    
+```powershell
+
 PS:> $list = Get-SPOList -Identity 'Site Assets'
 PS:> Get-SPOProperty -ClientObject $list -Property Views
+```
 Will load the views object of the specified list object and return its value to the output.
-<!-- Ref: 97C4909D3A502A63A42087BA80AA02D2 -->
+<!-- Ref: 97B7F0B07628DEA282A02CC22E41C874 -->
