@@ -1,5 +1,5 @@
 #Add-SPOView
-*Topic automatically generated on: 2015-09-09*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a view to a list
 ##Syntax
@@ -23,6 +23,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    Add-SPOView -List "Demo List" -Title "Demo View" -Fields "Title","Address"
+```powershell
+Add-SPOView -List "Demo List" -Title "Demo View" -Fields "Title","Address"
+```
 
-<!-- Ref: 00EC1D6AB0A5A66362E8C514DF80F34A -->
+<!-- Ref: E1405B85AF2E93F22C14250FE700E71B -->

@@ -1,5 +1,5 @@
 #Add-SPOWebPartToWebPartPage
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a webpart to a web part page in a specified zone
 ##Syntax
@@ -25,10 +25,14 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Add-SPOWebPartToWebPartPage -PageUrl "/sites/demo/sitepages/home.aspx" -Path "c:\myfiles\listview.webpart" -ZoneId "Header" -ZoneIndex 1 
+```powershell
+PS:> Add-SPOWebPartToWebPartPage -PageUrl "/sites/demo/sitepages/home.aspx" -Path "c:\myfiles\listview.webpart" -ZoneId "Header" -ZoneIndex 1 
+```
 This will add the webpart as defined by the XML in the listview.webpart file to the specified page in the specified zone and with the order index of 1
 
 ###Example 2
-    PS:> Add-SPOWebPartToWebPartPage -PageUrl "/sites/demo/sitepages/home.aspx" -XML $webpart -ZoneId "Header" -ZoneIndex 1 
+```powershell
+PS:> Add-SPOWebPartToWebPartPage -PageUrl "/sites/demo/sitepages/home.aspx" -XML $webpart -ZoneId "Header" -ZoneIndex 1 
+```
 This will add the webpart as defined by the XML in the $webpart variable to the specified page in the specified zone and with the order index of 1
-<!-- Ref: CF7E91E6DD1F2DB6DA2A1ADA824DF9AB -->
+<!-- Ref: E84EA6F633BDB656F3880A4358FE912E -->

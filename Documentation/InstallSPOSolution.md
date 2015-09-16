@@ -1,5 +1,5 @@
 #Install-SPOSolution
-*Topic automatically generated on: 2015-09-02*
+*Topic automatically generated on: 2015-09-17*
 
 Installs a sandboxed solution to a site collection. WARNING! This method can delete your composed look gallery due to the method used to activate the solution. We recommend you to only to use this cmdlet if you are okay with that.
 ##Syntax

@@ -1,5 +1,5 @@
 #Remove-SPOTenantSite
-*Topic automatically generated on: 2015-06-03*
+*Topic automatically generated on: 2015-09-17*
 
 Office365 only: Removes a site collection from the current tenant
 ##Syntax

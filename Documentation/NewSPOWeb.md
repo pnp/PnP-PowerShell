@@ -1,5 +1,5 @@
 #New-SPOWeb
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Creates a new subweb to the current web
 ##Syntax
@@ -22,6 +22,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> New-SPOWeb -Title "Project A Web" -Url projectA -Description "Information about Project A" -Locale 1033 -Template "STS#0"
+```powershell
+PS:> New-SPOWeb -Title "Project A Web" -Url projectA -Description "Information about Project A" -Locale 1033 -Template "STS#0"
+```
 Creates a new subweb under the current web with url projectA
-<!-- Ref: 49D059B0569AFDB136EF488CD9875FC8 -->
+<!-- Ref: A9DDA39690676187496B16E46F27F259 -->

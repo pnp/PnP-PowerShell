@@ -1,5 +1,5 @@
 #Get-SPOProvisioningTemplate
-*Topic automatically generated on: 2015-09-08*
+*Topic automatically generated on: 2015-09-17*
 
 Generates a provisioning template from a web
 ##Syntax
@@ -23,32 +23,42 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    
+```powershell
+
     PS:> Get-SPOProvisioningTemplate -Out template.xml
 
+```
 Extracts a provisioning template in XML format from the current web.
 
 ###Example 2
-    
+```powershell
+
     PS:> Get-SPOProvisioningTemplate -Out template.xml -Schema V201503
 
+```
 Extracts a provisioning template in XML format from the current web and saves it in the V201503 version of the schema.
 
 ###Example 3
-    
+```powershell
+
     PS:> Get-SPOProvisioningTemplate -Out template.xml -IncludeAllTermGroups
 
+```
 Extracts a provisioning template in XML format from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.
 
 ###Example 4
-    
+```powershell
+
     PS:> Get-SPOProvisioningTemplate -Out template.xml -IncludeSiteCollectionTermGroup
 
+```
 Extracts a provisioning template in XML format from the current web and includes the term group currently (if set) assigned to the site collection.
 
 ###Example 5
-    
+```powershell
+
     PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistComposedLookFiles
 
+```
 Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.
-<!-- Ref: 4F8F26DB9F9B001D49A6DBF6872E4152 -->
+<!-- Ref: 24F2A6EBED64CFE671E889A1AC23CFB1 -->

@@ -1,5 +1,5 @@
 #Get-SPOSitePolicy
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Retrieves all or a specific site policy
 ##Syntax
@@ -17,14 +17,20 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOSitePolicy
+```powershell
+PS:> Get-SPOSitePolicy
+```
 Retrieves the current applied site policy.
 
 ###Example 2
-    PS:> Get-SPOSitePolicy -AllAvailable
+```powershell
+PS:> Get-SPOSitePolicy -AllAvailable
+```
 Retrieves all available site policies.
 
 ###Example 3
-    PS:> Get-SPOSitePolicy -Name "Contoso HBI"
+```powershell
+PS:> Get-SPOSitePolicy -Name "Contoso HBI"
+```
 Retrieves an available site policy with the name "Contoso HBI".
-<!-- Ref: 4CF07ACD35E51BC5B900A22EC60C5468 -->
+<!-- Ref: A637E1E0EA1673DC2CA4A0522F90AE23 -->

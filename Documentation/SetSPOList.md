@@ -1,5 +1,5 @@
 #Set-SPOList
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Updates list settings
 ##Syntax
@@ -21,6 +21,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    Set-SPOList -Identity "Demo List" -EnableContentTypes $true
+```powershell
+Set-SPOList -Identity "Demo List" -EnableContentTypes $true
+```
 Switches the Enable Content Type switch on the list
-<!-- Ref: 4CFFF24C99E21FE541CCB80B693160BA -->
+<!-- Ref: 077745A49181423A0E42D338D8C53A9B -->

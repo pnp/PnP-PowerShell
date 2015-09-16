@@ -1,5 +1,5 @@
 #Add-SPOHtmlPublishingPageLayout
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a HTML based publishing page layout
 ##Syntax

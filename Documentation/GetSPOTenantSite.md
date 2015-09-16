@@ -1,5 +1,5 @@
 #Get-SPOTenantSite
-*Topic automatically generated on: 2015-06-03*
+*Topic automatically generated on: 2015-09-17*
 
 Office365 only: Uses the tenant API to retrieve site information.
 
@@ -19,12 +19,16 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    
+```powershell
+
 PS:> Get-SPOTenantSite
+```
 Returns all site collections
 
 ###Example 2
-    
+```powershell
+
 PS:> Get-SPOTenantSite -Url http://tenant.sharepoint.com/sites/projects
+```
 Returns information about the project site.
-<!-- Ref: F10FD49F4107100F7BA44DE5A40A7CA2 -->
+<!-- Ref: 773B891876B16627E5057C43C52F3BB0 -->

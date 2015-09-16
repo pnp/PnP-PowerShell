@@ -1,5 +1,5 @@
 #Apply-SPOProvisioningTemplate
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Applies a provisioning template to a web
 ##Syntax
@@ -18,14 +18,18 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    
+```powershell
+
     PS:> Apply-SPOProvisioningTemplate -Path template.xml
 
+```
 Applies a provisioning template in XML format to the current web.
 
 ###Example 2
-    
+```powershell
+
     PS:> Apply-SPOProvisioningTemplate -Path template.xml -ResourceFolder c:\provisioning\resources
 
+```
 Applies a provisioning template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.
-<!-- Ref: B3060EE6EAE36E608D8B128473568B37 -->
+<!-- Ref: 4AFD13517ECFCA84BF003915DBF14A41 -->

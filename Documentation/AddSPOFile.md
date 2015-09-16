@@ -1,5 +1,5 @@
 #Add-SPOFile
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Uploads a file to Web
 ##Syntax
@@ -23,10 +23,14 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Add-SPOFile -Path c:\temp\company.master -Folder "_catalogs/masterpage
+```powershell
+PS:> Add-SPOFile -Path c:\temp\company.master -Folder "_catalogs/masterpage
+```
 This will upload the file company.master to the masterpage catalog
 
 ###Example 2
-    PS:> Add-SPOFile -Path .\displaytemplate.html -Folder "_catalogs/masterpage/display templates/test
+```powershell
+PS:> Add-SPOFile -Path .\displaytemplate.html -Folder "_catalogs/masterpage/display templates/test
+```
 This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder not exists it will create it.
-<!-- Ref: 82448B195892DA04EBE1DEB1E02ADBF9 -->
+<!-- Ref: 825066CC1FF5DC1A5C1F310CC79DC591 -->

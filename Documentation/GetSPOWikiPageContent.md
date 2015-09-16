@@ -1,5 +1,5 @@
 #Get-SPOWikiPageContent
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Gets the contents/source of a wiki page
 ##Syntax

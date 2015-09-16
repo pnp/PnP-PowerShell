@@ -1,5 +1,5 @@
 #Set-SPOTenantSite
-*Topic automatically generated on: 2015-06-03*
+*Topic automatically generated on: 2015-09-17*
 
 Office365 only: Uses the tenant API to set site information.
 ##Syntax

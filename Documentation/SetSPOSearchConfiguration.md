@@ -1,5 +1,5 @@
 #Set-SPOSearchConfiguration
-*Topic automatically generated on: 2015-08-31*
+*Topic automatically generated on: 2015-09-17*
 
 Returns the search configuration
 ##Syntax
@@ -17,14 +17,20 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Set-SPOSearchConfiguration -Configuration $config
+```powershell
+PS:> Set-SPOSearchConfiguration -Configuration $config
+```
 Sets the search configuration for the current web
 
 ###Example 2
-    PS:> Set-SPOSearchConfiguration -Configuration $config -Scope Site
+```powershell
+PS:> Set-SPOSearchConfiguration -Configuration $config -Scope Site
+```
 Sets the search configuration for the current site collection
 
 ###Example 3
-    PS:> Set-SPOSearchConfiguration -Configuration $config -Scope Subscription
+```powershell
+PS:> Set-SPOSearchConfiguration -Configuration $config -Scope Subscription
+```
 Sets the search configuration for the current tenant
-<!-- Ref: 4DFAF0185ABB7F6BA79FF55644AAF448 -->
+<!-- Ref: ECD4917FC84C59312125E710B12D5D7B -->

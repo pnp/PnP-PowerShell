@@ -1,5 +1,5 @@
 #Add-SPOWorkflowSubscription
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a workflow subscription to a list
 ##Syntax

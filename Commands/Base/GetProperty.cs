@@ -25,7 +25,7 @@ PS:> $list = Get-SPOList -Identity 'Site Assets'
 PS:> Get-SPOProperty -ClientObject $list -Property Views",
         Remarks = "Will load the views object of the specified list object and return its value to the output.",
         SortOrder = 2)]
-    public class EnsureProperty : SPOWebCmdlet
+    public class EnsureProperty : SPOCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public ClientObject ClientObject;

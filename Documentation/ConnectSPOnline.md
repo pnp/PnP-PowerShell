@@ -1,5 +1,5 @@
 #Connect-SPOnline
-*Topic automatically generated on: 2015-09-08*
+*Topic automatically generated on: 2015-09-17*
 
 Connects to a SharePoint site and creates an in-memory context
 ##Syntax
@@ -50,22 +50,30 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Connect-SPOnline -Url https://yourtenant.sharepoint.com -Credentials (Get-Credential)
+```powershell
+PS:> Connect-SPOnline -Url https://yourtenant.sharepoint.com -Credentials (Get-Credential)
+```
 This will prompt for username and password and creates a context for the other PowerShell commands to use.
  
 
 ###Example 2
-    PS:> Connect-SPOnline -Url http://yourlocalserver -CurrentCredentials
+```powershell
+PS:> Connect-SPOnline -Url http://yourlocalserver -CurrentCredentials
+```
 This will use the current user credentials and connects to the server specified by the Url parameter.
     
 
 ###Example 3
-    PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials 'O365Creds'
+```powershell
+PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials 'O365Creds'
+```
 This will use credentials from the Windows Credential Manager, as defined by the label 'O365Creds'.
     
 
 ###Example 4
-    PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs
+```powershell
+PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs
+```
 This will prompt for username and password and creates a context using ADFS to authenticate.
     
-<!-- Ref: 3B22375ECB3827FD78FDD02BD95C1871 -->
+<!-- Ref: DAA902D637E523D2A86531C3ADACD028 -->

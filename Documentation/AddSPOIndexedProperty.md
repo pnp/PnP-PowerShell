@@ -1,5 +1,5 @@
 #Add-SPOIndexedProperty
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Marks the value of the propertybag key to be indexed by search.
 ##Syntax

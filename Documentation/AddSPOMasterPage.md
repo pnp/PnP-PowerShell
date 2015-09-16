@@ -1,5 +1,5 @@
 #Add-SPOMasterPage
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a Masterpage
 ##Syntax
@@ -21,6 +21,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Add-SPOMasterPage -SourceFilePath "page.master" -Title "MasterPage" -Description "MasterPage for Web" -DestinationFolderHierarchy "SubFolder"
+```powershell
+PS:> Add-SPOMasterPage -SourceFilePath "page.master" -Title "MasterPage" -Description "MasterPage for Web" -DestinationFolderHierarchy "SubFolder"
+```
 Adds a MasterPage to the web
-<!-- Ref: 72CB7D6F751E26E90B1A180874BE70B8 -->
+<!-- Ref: F5054304EDC1C1DA6EA9F733A9AB6647 -->

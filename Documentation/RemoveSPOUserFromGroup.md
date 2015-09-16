@@ -1,5 +1,5 @@
 #Remove-SPOUserFromGroup
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Removes a user from a group
 ##Syntax
@@ -17,6 +17,8 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Remove-SPOUserFromGroup -LoginName user@company.com -GroupName 'Marketing Site Members'
+```powershell
+PS:> Remove-SPOUserFromGroup -LoginName user@company.com -GroupName 'Marketing Site Members'
+```
 
-<!-- Ref: 31C6FF545C90EE57BAF1AA570E8DF456 -->
+<!-- Ref: 2A7AE38C1FF2B8E342B719C932F1B7BB -->

@@ -1,5 +1,5 @@
 #Set-SPOPropertyBagValue
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Sets a property bag value
 ##Syntax
@@ -24,14 +24,20 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue
+```powershell
+PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue
+```
 This sets or adds a value to the current web property bag
 
 ###Example 2
-    PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue -Folder /
+```powershell
+PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue -Folder /
+```
 This sets or adds a value to the root folder of the current web
 
 ###Example 3
-    PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue -Folder /MyFolder
+```powershell
+PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue -Folder /MyFolder
+```
 This sets or adds a value to the folder MyFolder which is located in the root folder of the current web
-<!-- Ref: 0CB7EB11699F831B85ACEFF7C6EEA1CB -->
+<!-- Ref: 6690DBDE1EC4EFDE287F392BE497F457 -->

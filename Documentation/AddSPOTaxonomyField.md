@@ -1,5 +1,5 @@
 #Add-SPOTaxonomyField
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Adds a taxonomy field to a list or as a site column.
 ##Syntax

@@ -1,5 +1,5 @@
 #Set-SPOGroup
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-17*
 
 Updates a group
 ##Syntax

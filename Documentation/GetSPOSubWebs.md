@@ -1,5 +1,5 @@
 #Get-SPOSubWebs
-*Topic automatically generated on: 2015-08-15*
+*Topic automatically generated on: 2015-09-17*
 
 Returns the subwebs
 ##Syntax
