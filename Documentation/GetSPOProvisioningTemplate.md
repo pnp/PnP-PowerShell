@@ -1,5 +1,5 @@
 #Get-SPOProvisioningTemplate
-*Topic automatically generated on: 2015-09-08*
+*Topic automatically generated on: 2015-09-17*
 
 Generates a provisioning template from a web
 ##Syntax
@@ -51,4 +51,4 @@ Extracts a provisioning template in XML format from the current web and includes
     PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistComposedLookFiles
 
 Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.
-<!-- Ref: 4F8F26DB9F9B001D49A6DBF6872E4152 -->
+<!-- Ref: 3027C2B21C42ED72C0D41ABD8906C7F9 -->

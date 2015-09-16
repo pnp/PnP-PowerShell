@@ -1,5 +1,5 @@
 #Set-SPOMasterPage
-*Topic automatically generated on: 2015-09-10*
+*Topic automatically generated on: 2015-09-17*
 
 Sets the default master page of the current web.
 ##Syntax
@@ -21,4 +21,4 @@ Parameter|Type|Required|Description
     PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
 
 
-<!-- Ref: 1274EB88287F617673769489F2359220 -->
+<!-- Ref: 9B1EBF854FE2BC848F52F9C81926C32C -->
