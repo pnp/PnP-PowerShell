@@ -377,7 +377,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                             {
                                 docBuilder.AppendFormat("{0}\n", example.Introduction);
                                 docBuilder.AppendFormat("###Example {0}\n", examplesCount);
-                                docBuilder.AppendFormat("    {0}\n", example.Code.Replace("\r\n", "\n"));
+                                docBuilder.AppendFormat("```powershell\n{0}\n```\n", example.Code);
                                 docBuilder.AppendFormat("{0}\n", example.Remarks);
                                 examplesCount++;
                             }
