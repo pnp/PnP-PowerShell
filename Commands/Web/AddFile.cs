@@ -50,12 +50,8 @@ namespace OfficeDevPnP.PowerShell.Commands
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            if (!SelectedWeb.IsPropertyAvailable("ServerRelativeUrl"))
-            {
-                ClientContext.Load(SelectedWeb, w => w.ServerRelativeUrl);
-                ClientContext.ExecuteQueryRetry();
-            }
-
+            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            
             var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
             //var folder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder));
             //ClientContext.Load(folder, f => f.ServerRelativeUrl);

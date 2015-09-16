@@ -17,7 +17,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
     [Cmdlet("Apply", "SPOProvisioningTemplate")]
-    [CmdletHelp("Applies a provisioning template to a web", 
+    [CmdletHelp("Applies a provisioning template to a web",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
      Code = @"
@@ -44,11 +44,8 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            if (!SelectedWeb.IsPropertyAvailable("Url"))
-            {
-                ClientContext.Load(SelectedWeb, w => w.Url);
-                ClientContext.ExecuteQueryRetry();
-            }
+            SelectedWeb.EnsureProperty(w => w.Url);
+
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

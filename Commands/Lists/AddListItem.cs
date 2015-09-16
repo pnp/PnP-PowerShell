@@ -61,11 +61,8 @@ namespace OfficeDevPnP.PowerShell.Commands
                     }
                     if (ct != null)
                     {
-                        if (!ct.IsPropertyAvailable("StringId"))
-                        {
-                            ClientContext.Load(ct, c => c.StringId);
-                            ClientContext.ExecuteQueryRetry();
-                        }
+                        ct.EnsureProperty(w => w.StringId);
+                        
                         item["ContentTypeId"] = ct.StringId;
                         item.Update();
                         ClientContext.ExecuteQueryRetry();

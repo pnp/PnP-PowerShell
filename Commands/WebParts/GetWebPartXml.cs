@@ -36,11 +36,8 @@ namespace OfficeDevPnP.PowerShell.Commands.WebParts
                 ServerRelativePageUrl = "/" + ServerRelativePageUrl;
             }
 
-            if (!SelectedWeb.IsPropertyAvailable("ServerRelativeUrl"))
-            {
-                ClientContext.Load(SelectedWeb, w => w.ServerRelativeUrl);
-                ClientContext.ExecuteQueryRetry();
-            }
+            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            
             var uri = new Uri(ClientContext.Url);
 
             var hostUri = uri.Host;

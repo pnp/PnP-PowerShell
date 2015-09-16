@@ -1,6 +1,11 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-09-17**
+
+* Added Get-SPOProperty to dynamically load specified properties from objects.
+
 **2015-09-10**
+
 * Renamed Path parameter of Set-SPOHomePage to RootFolderRelativeUrl. Set Path as parameter alias.
 
 **2015-09-02**

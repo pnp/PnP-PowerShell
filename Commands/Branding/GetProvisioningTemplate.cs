@@ -116,11 +116,8 @@ SortOrder = 5)]
 
         private string GetProvisioningTemplateXML(XMLPnPSchemaVersion schema, string path)
         {
-            if (!this.SelectedWeb.IsPropertyAvailable("Url"))
-            {
-                ClientContext.Load(this.SelectedWeb, w => w.Url);
-                ClientContext.ExecuteQueryRetry();
-            }
+            SelectedWeb.EnsureProperty(w => w.Url);
+            
             var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
 
             creationInformation.PersistComposedLookFiles = PersistComposedLookFiles;
