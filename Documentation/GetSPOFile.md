@@ -1,5 +1,5 @@
 #Get-SPOFile
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Downloads a file.
 ##Syntax
@@ -40,4 +40,3 @@ Downloads the file and saves it to c:\temp\company.spcolor
 PS:> Get-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -AsString
 ```
 Downloads the file and outputs its contents to the console
-<!-- Ref: B3CDF301AA6863A4C8A764EBA48FDA31 -->

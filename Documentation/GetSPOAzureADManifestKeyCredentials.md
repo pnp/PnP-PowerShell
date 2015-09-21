@@ -1,5 +1,5 @@
 #Get-SPOAzureADManifestKeyCredentials
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Creates the JSON snippet that is required for the manifest json file for Azure WebApplication / WebAPI apps
 ##Syntax
@@ -25,4 +25,3 @@ Output the JSON snippet which needs to be replaced in the application manifest f
 PS:> Get-SPOAzureADManifestKeyCredentials -CertPath .\mycert.cer | Set-Clipboard
 ```
 Output the JSON snippet which needs to be replaced in the application manifest file and copies it to the clipboard
-<!-- Ref: 80154FB913EEDA2FC8761052D38B1023 -->

@@ -1,5 +1,5 @@
 #Add-SPOFieldToContentType
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds an existing site column to a content type
 ##Syntax
@@ -23,4 +23,3 @@ Parameter|Type|Required|Description
 PS:> Add-SPOFieldToContentType -Field "Project_Name" -ContentType "Project Document"
 ```
 This will add an existing site column with an internal name of "Project_Name" to a content type called "Project Document"
-<!-- Ref: 53F6A3C71B5A7C4CC9E9B3D3C9DA8741 -->

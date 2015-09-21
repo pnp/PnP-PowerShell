@@ -1,5 +1,5 @@
 #Add-SPOContentTypeToList
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a new content type to a list
 ##Syntax
@@ -22,4 +22,3 @@ Parameter|Type|Required|Description
 PS:> Add-SPOContentTypeToList -List "Documents" -ContentType "Project Document" -DefaultContentType
 ```
 This will add an existing content type to a list and sets it as the default content type
-<!-- Ref: 1DCA6AC33BEFB573BFCB181F9F7F49AE -->

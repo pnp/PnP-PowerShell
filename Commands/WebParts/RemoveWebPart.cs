@@ -15,21 +15,22 @@ namespace OfficeDevPnP.PowerShell.Commands
         public GuidPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = "NAME")]
-        public string Name = string.Empty;
+        [Alias("Name")]
+        public string Title = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ID")]
-        [Parameter(Mandatory = true, ParameterSetName = "NAME")]
-        public string PageUrl = string.Empty;
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Alias("PageUrl")]
+        public string ServerRelativePageUrl = string.Empty;
 
         protected override void ExecuteCmdlet()
         {
             if (ParameterSetName == "NAME")
             {
-                SelectedWeb.DeleteWebPart(PageUrl, Name);
+                SelectedWeb.DeleteWebPart(ServerRelativePageUrl, Title);
             }
             else
             {
-                var wps = SelectedWeb.GetWebParts(PageUrl);
+                var wps = SelectedWeb.GetWebParts(ServerRelativePageUrl);
                 var wp = from w in wps where w.Id == Identity.Id select w;
                 if(wp.Any())
                 {

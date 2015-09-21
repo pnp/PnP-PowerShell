@@ -1,5 +1,5 @@
 #Get-SPOAuthenticationRealm
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Gets the authentication realm for the current web
 ##Syntax
@@ -20,4 +20,3 @@ Parameter|Type|Required|Description
 PS:> Get-SPOAuthenticationRealm -Url https://contoso.sharepoint.com
 ```
 
-<!-- Ref: 185A77005FF8A1C4244DFFF364892297 -->

@@ -13,6 +13,7 @@ using OfficeDevPnP.Core.Utilities;
 using System.Xml.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
+using System.Collections;
 
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
@@ -23,14 +24,25 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
      Code = @"
     PS:> Apply-SPOProvisioningTemplate -Path template.xml
 ",
-     Remarks = "Applies a provisioning template in XML format to the current web.",
+     Remarks = @"Applies a provisioning template in XML format to the current web.
+",
      SortOrder = 1)]
     [CmdletExample(
      Code = @"
     PS:> Apply-SPOProvisioningTemplate -Path template.xml -ResourceFolder c:\provisioning\resources
 ",
-     Remarks = "Applies a provisioning template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.",
+     Remarks = @"Applies a provisioning template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.
+",
      SortOrder = 2)]
+
+    [CmdletExample(
+     Code = @"
+    PS:> Apply-SPOProvisioningTemplate -Path template.xml -Parameters @{""ListTitle""=""Projects"";""parameter2""=""a second value""}
+",
+     Remarks = @"Applies a provisioning template in XML format to the current web. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.
+
+For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.",
+     SortOrder = 3)]
     public class ApplyProvisioningTemplate : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the provisioning template.")]
@@ -41,6 +53,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
 
         [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)")]
         public SwitchParameter OverwriteSystemPropertyBagValues;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.")]
+        public Hashtable Parameters;
 
         protected override void ExecuteCmdlet()
         {
@@ -78,6 +93,13 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
                 }
                 provisioningTemplate.Connector = fileSystemConnector;
 
+                if (Parameters != null)
+                {
+                    foreach (var parameter in Parameters.Keys)
+                    {
+                        provisioningTemplate.Parameters.Add(parameter.ToString(), Parameters[parameter].ToString());
+                    }
+                }
 
                 var applyingInformation = new ProvisioningTemplateApplyingInformation();
 

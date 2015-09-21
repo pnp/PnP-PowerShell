@@ -1,5 +1,5 @@
 #Disable-SPOFeature
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Disables a feature
 ##Syntax
@@ -34,4 +34,3 @@ PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
 PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
 ```
 
-<!-- Ref: 2961D6506EAC073D40FD495BDDCE2C8E -->

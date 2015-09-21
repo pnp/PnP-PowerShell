@@ -1,5 +1,5 @@
 #Set-SPOTheme
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Sets the theme of the current web.
 ##Syntax
@@ -23,4 +23,3 @@ Parameter|Type|Required|Description
 PS:> Set-SPOTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor
 ```
 
-<!-- Ref: 0868331CE23672086BD71DC75FA91E83 -->

@@ -1,5 +1,5 @@
 #Import-SPOTermSet
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Imports a taxonomy term set from a file in the standard format.
 ##Syntax
@@ -53,4 +53,3 @@ Creates (or updates) the term set specified in the import file, in the term stor
 PS:> Import-SPOTermSet -GroupName 'Standard Terms' -Path 'C:\\Temp\\ImportTermSet.csv' -IsOpen $true -Contact 'user@example.org' -Owner 'user@example.org'
 ```
 Creates (or updates) the term set specified in the import file, setting the IsOpen, Contact, and Owner properties as specified.
-<!-- Ref: 4A66E35D2B32423F751CB32809407A19 -->

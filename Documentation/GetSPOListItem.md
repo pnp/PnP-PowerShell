@@ -1,5 +1,5 @@
 #Get-SPOListItem
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Retrieves list items
 ##Syntax
@@ -48,4 +48,3 @@ Retrieves all list items, but only includes the values of the Title and GUID fie
 PS:> Get-SPOListItem -List Tasks -Query "<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3</Value></Eq></Where></Query></View>"
 ```
 Retrieves all list items based on the CAML query specified.
-<!-- Ref: 76FB23FBED40808F8D06368873E0FF45 -->

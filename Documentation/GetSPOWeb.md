@@ -1,5 +1,5 @@
 #Get-SPOWeb
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns the current web object
 ##Syntax
@@ -12,4 +12,3 @@ Get-SPOWeb [-Identity <WebPipeBind>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|WebPipeBind|False||
-<!-- Ref: 9E65C7F9A055C0B8C7EC0E1B8128E6E2 -->

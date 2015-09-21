@@ -1,5 +1,5 @@
 #Get-SPOSearchConfiguration
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns the search configuration
 ##Syntax
@@ -32,4 +32,3 @@ Returns the search configuration for the current site collection
 PS:> Get-SPOSearchConfiguration -Scope Subscription
 ```
 Returns the search configuration for the current tenant
-<!-- Ref: 5E20751162392B69F5FA629D919CD7D6 -->

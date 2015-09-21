@@ -1,5 +1,5 @@
 #Get-SPOPropertyBag
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns the property bag values.
 ##Syntax
@@ -45,4 +45,3 @@ This will return the value of the key vti_mykey from the folder MyFolder which i
 PS:> Get-SPOPropertyBag -Folder / -Key vti_mykey
 ```
 This will return the value of the key vti_mykey from the root folder of the current web
-<!-- Ref: C3E3D8746B84D7944A526116116D7E3A -->

@@ -1,5 +1,5 @@
 #Set-SPOHomePage
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Sets the home page of the current web.
 ##Syntax
@@ -22,4 +22,3 @@ Parameter|Type|Required|Description
 
 ```
 Sets the home page to the home.aspx file which resides in the SitePages library
-<!-- Ref: 6FFD52F678D1E24DFBCBCA30F633E11A -->

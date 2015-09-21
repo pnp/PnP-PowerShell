@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using System.Text.RegularExpressions;
 using System.Runtime.Serialization;
+using System.IO;
 
 namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 {
@@ -294,28 +295,32 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                     // Markdown from CmdletInfo
                     if (generateMarkdown)
                     {
+                        var originalMd = string.Empty;
+                        var newMd = string.Empty;
+
                         if (!string.IsNullOrEmpty(cmdletInfo.Verb) && !string.IsNullOrEmpty(cmdletInfo.Noun))
                         {
                             string mdFilePath = string.Format("{0}\\Documentation\\{1}{2}.md", solutionDir, cmdletInfo.Verb, cmdletInfo.Noun);
                             toc.Add(cmdletInfo);
-                            var existingHashCode = string.Empty;
+                            //var existingHashCode = string.Empty;
                             if (System.IO.File.Exists(mdFilePath))
                             {
-                                // Calculate hashcode
-                                var existingFileText = System.IO.File.ReadAllText(mdFilePath);
-                                var refPosition = existingFileText.IndexOf("<!-- Ref:");
-                                if (refPosition > -1)
-                                {
-                                    var refEndPosition = existingFileText.IndexOf("-->", refPosition);
-                                    if (refEndPosition > -1)
-                                    {
-                                        var refCode = existingFileText.Substring(refPosition + 9, refEndPosition - refPosition - 9).Trim();
-                                        if (!string.IsNullOrEmpty(refCode))
-                                        {
-                                            existingHashCode = refCode;
-                                        }
-                                    }
-                                }
+                                originalMd = System.IO.File.ReadAllText(mdFilePath);
+                                //// Calculate hashcode
+                                //var existingFileText = System.IO.File.ReadAllText(mdFilePath);
+                                //var refPosition = existingFileText.IndexOf("<!-- Ref:");
+                                //if (refPosition > -1)
+                                //{
+                                //    var refEndPosition = existingFileText.IndexOf("-->", refPosition);
+                                //    if (refEndPosition > -1)
+                                //    {
+                                //        var refCode = existingFileText.Substring(refPosition + 9, refEndPosition - refPosition - 9).Trim();
+                                //        if (!string.IsNullOrEmpty(refCode))
+                                //        {
+                                //            existingHashCode = refCode;
+                                //        }
+                                //    }
+                                //}
                             }
                             var docHeaderBuilder = new StringBuilder();
 
@@ -382,12 +387,21 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                                 examplesCount++;
                             }
 
-                            var newHashCode = CalculateMD5Hash(docBuilder.ToString());
+                            newMd = docBuilder.ToString();
 
-                            docBuilder.AppendFormat("<!-- Ref: {0} -->", newHashCode); // Add hashcode of generated text to the file as hidden entry
-                            if (newHashCode != existingHashCode)
+                            DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
+
+                            var diffResults = dmp.diff_main(newMd, originalMd);
+
+                            foreach (var result in diffResults)
                             {
-                                System.IO.File.WriteAllText(mdFilePath, docHeaderBuilder.Append(docBuilder).ToString());
+                                if (!result.text.Contains("*Topic automatically generated on"))
+                                {
+                                    if (result.operation != DiffMatchPatch.Operation.EQUAL)
+                                    {
+                                        System.IO.File.WriteAllText(mdFilePath, docHeaderBuilder.Append(docBuilder).ToString());
+                                    }
+                                }
                             }
                         }
                     }
@@ -398,12 +412,14 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
             if (generateMarkdown)
             {
+                var originalMd = string.Empty;
+                var newMd = string.Empty;
+
                 // Create the readme.md
-                var existingHashCode = string.Empty;
                 var readmePath = string.Format("{0}\\Documentation\\readme.md", solutionDir);
                 if (System.IO.File.Exists(readmePath))
                 {
-                    existingHashCode = CalculateMD5Hash(System.IO.File.ReadAllText(readmePath));
+                    originalMd = System.IO.File.ReadAllText(readmePath);
                 }
                 var docBuilder = new StringBuilder();
 
@@ -428,30 +444,38 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                     }
                 }
 
-                var newHashCode = CalculateMD5Hash(docBuilder.ToString());
-                if (newHashCode != existingHashCode)
+                newMd = docBuilder.ToString();
+                DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
+
+                var diffResults = dmp.diff_main(newMd, originalMd);
+
+                foreach (var result in diffResults)
                 {
-                    System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
+                    if (!result.text.Contains("*Topic automatically generated on"))
+                    {
+                        if (result.operation != DiffMatchPatch.Operation.EQUAL)
+                        {
+                            System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
+                        }
+                    }
                 }
             }
-        }
 
-        private static string CalculateMD5Hash(string input)
-        {
-            // From http://blogs.msdn.com/b/csharpfaq/archive/2006/10/09/how-do-i-calculate-a-md5-hash-from-a-string_3f00_.aspx
+            DirectoryInfo di = new DirectoryInfo(string.Format("{0}\\Documentation", solutionDir));
+            var mdFiles = di.GetFiles("*.md");
 
-            // step 1, calculate MD5 hash from input
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-            byte[] hash = md5.ComputeHash(inputBytes);
-
-            // step 2, convert byte array to hex string
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
+            // Clean up old MD files
+            foreach (var mdFile in mdFiles)
             {
-                sb.Append(hash[i].ToString("X2"));
+                if (mdFile.Name.ToLowerInvariant() != "readme.md")
+                {
+                    var index = toc.FindIndex(t => string.Format("{0}{1}.md", t.Verb, t.Noun) == mdFile.Name);
+                    if (index == -1)
+                    {
+                        mdFile.Delete();
+                    }
+                }
             }
-            return sb.ToString();
         }
 
         public static string ToEnumString<T>(T type)

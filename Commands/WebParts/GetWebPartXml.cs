@@ -17,7 +17,7 @@ namespace OfficeDevPnP.PowerShell.Commands.WebParts
     [CmdletHelp("Returns the webpart XML of a webpart registered on a site",
         Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOWebPartXml -PageUrl ""/sites/demo/sitepages/home.aspx"" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
+        Code = @"PS:> Get-SPOWebPartXml -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
         Remarks = @"Returns the webpart XML for a given webpart on a page.", SortOrder = 1)]
     public class GetWebPartXml : SPOWebCmdlet
     {
@@ -26,7 +26,7 @@ namespace OfficeDevPnP.PowerShell.Commands.WebParts
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Id of the webpart. Use Get-SPOWebPart to retrieve all webpart Ids")]
+        [Parameter(Mandatory = true, HelpMessage = "Id of the webpart. Use Get-SPOWebPart to retrieve all webpart Ids")]
         public GuidPipeBind Identity;
 
         protected override void ExecuteCmdlet()

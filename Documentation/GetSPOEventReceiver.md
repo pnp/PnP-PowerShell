@@ -1,5 +1,5 @@
 #Get-SPOEventReceiver
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns all or a specific event receiver
 ##Syntax
@@ -39,4 +39,3 @@ This will return all registered event receivers in the list with the name Projec
 PS:> Get-SPOEventReceiver -List "ProjectList" -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
 ```
 This will return a specific registered event receiver in the list with the name ProjectList
-<!-- Ref: 782D99C83A829578F8D5F68041FFEB09 -->

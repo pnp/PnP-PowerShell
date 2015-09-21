@@ -1,5 +1,5 @@
 #Get-SPOStoredCredential
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns a stored credential from the Windows Credential Manager
 ##Syntax
@@ -20,4 +20,3 @@ Parameter|Type|Required|Description
 PS:> Get-SPOnlineStoredCredential -Name O365
 ```
 Returns the credential associated with the specified identifier
-<!-- Ref: 06CDD105B8D118C47F445D534751FD0C -->

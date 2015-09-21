@@ -1,5 +1,5 @@
 #Get-SPOGroup
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns a specific group or all groups.
 ##Syntax
@@ -50,4 +50,3 @@ This will return the group called 'My Site Users' if available
 PS:> Get-SPOGroup -AssociatedMemberGroup
 ```
 This will return the current members group for the site
-<!-- Ref: 1947B74E2E1E1EA2318C17E452788796 -->

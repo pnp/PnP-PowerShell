@@ -1,5 +1,5 @@
 #Export-SPOTaxonomy
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Exports a taxonomy to either the output or to a file.
 ##Syntax
@@ -36,4 +36,3 @@ Exports the full taxonomy the file output.txt
 PS:> Export-SPOTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254 
 ```
 Exports the term set with the specified id
-<!-- Ref: A7BE0E849C60873AC14A271B1C433877 -->

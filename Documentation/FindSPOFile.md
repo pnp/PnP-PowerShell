@@ -1,5 +1,5 @@
 #Find-SPOFile
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Finds a file in the virtual file system of the web.
 ##Syntax
@@ -20,4 +20,3 @@ Parameter|Type|Required|Description
 PS:> Find-SPOFile -Match *.master
 ```
 Will return all masterpages located in the current web.
-<!-- Ref: 8A1A13A2C21B039744C1790C781CCEB9 -->

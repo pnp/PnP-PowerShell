@@ -1,5 +1,5 @@
 #Connect-SPOnline
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Connects to a SharePoint site and creates an in-memory context
 ##Syntax
@@ -76,4 +76,3 @@ PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials (Get-Credential) 
 ```
 This will prompt for username and password and creates a context using ADFS to authenticate.
     
-<!-- Ref: DAA902D637E523D2A86531C3ADACD028 -->

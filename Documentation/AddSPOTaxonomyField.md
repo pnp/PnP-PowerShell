@@ -1,5 +1,5 @@
 #Add-SPOTaxonomyField
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a taxonomy field to a list or as a site column.
 ##Syntax
@@ -23,4 +23,3 @@ Parameter|Type|Required|Description
 |TermPathDelimiter|String|False||
 |TermSetPath|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: 4418E10730E580E51267711CB9DCB25A -->

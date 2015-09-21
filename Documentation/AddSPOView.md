@@ -1,5 +1,5 @@
 #Add-SPOView
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a view to a list
 ##Syntax
@@ -27,4 +27,3 @@ Parameter|Type|Required|Description
 Add-SPOView -List "Demo List" -Title "Demo View" -Fields "Title","Address"
 ```
 
-<!-- Ref: E1405B85AF2E93F22C14250FE700E71B -->

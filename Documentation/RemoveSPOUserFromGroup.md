@@ -1,5 +1,5 @@
 #Remove-SPOUserFromGroup
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Removes a user from a group
 ##Syntax
@@ -21,4 +21,3 @@ Parameter|Type|Required|Description
 PS:> Remove-SPOUserFromGroup -LoginName user@company.com -GroupName 'Marketing Site Members'
 ```
 
-<!-- Ref: 2A7AE38C1FF2B8E342B719C932F1B7BB -->

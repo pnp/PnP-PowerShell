@@ -1,5 +1,5 @@
 #Get-SPODocumentSetTemplate
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Retrieves a document set template
 ##Syntax
@@ -26,4 +26,3 @@ PS:> Get-SPODocumentSetTemplate -Identity "Test Document Set"
 PS:> Get-SPODocumentSetTemplate -Identity "0x0120D520005DB65D094035A241BAC9AF083F825F3B"
 ```
 
-<!-- Ref: C4B3611CDE4F176047B894E55788169A -->

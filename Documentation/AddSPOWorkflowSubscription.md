@@ -1,5 +1,5 @@
 #Add-SPOWorkflowSubscription
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a workflow subscription to a list
 ##Syntax
@@ -21,4 +21,3 @@ Parameter|Type|Required|Description
 |StartOnCreated|SwitchParameter|False||
 |TaskListName|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: 8155A3EB9A0DDA956896C9EE033836B0 -->

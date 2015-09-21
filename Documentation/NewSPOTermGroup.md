@@ -1,5 +1,5 @@
 #New-SPOTermGroup
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Creates a taxonomy term group
 ##Syntax
@@ -15,4 +15,3 @@ Parameter|Type|Required|Description
 |GroupId|Guid|False|GUID to use for the term group; if not specified, or the empty GUID, a random GUID is generated and used.|
 |GroupName|String|True|Name of the taxonomy term group to create.|
 |TermStoreName|String|False|Term store to check; if not specified the default term store is used.|
-<!-- Ref: AB4D0A2FE3E9B05E19184AA5470B29DD -->
