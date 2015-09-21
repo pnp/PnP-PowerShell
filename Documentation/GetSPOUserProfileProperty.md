@@ -1,5 +1,5 @@
 #Get-SPOUserProfileProperty
-*Topic automatically generated on: 2015-09-18*
+*Topic automatically generated on: 2015-09-21*
 
 Office365 only: Uses the tenant API to retrieve site information.
 
@@ -31,4 +31,3 @@ Returns the profile properties for the specified user
 PS:> Get-SPOUserProfileProperty -Account 'user@domain.com','user2@domain.com'
 ```
 Returns the profile properties for the specified users
-<!-- Ref: C61E0015D3B554134384C26CFB5E724C -->

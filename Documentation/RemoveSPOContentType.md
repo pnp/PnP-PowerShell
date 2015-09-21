@@ -1,5 +1,5 @@
 #Remove-SPOContentType
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Removes a content type
 ##Syntax
@@ -21,4 +21,3 @@ Parameter|Type|Required|Description
 PS:> Remove-SPOContentType -Identity "Project Document"
 ```
 
-<!-- Ref: C432EB77D4B51560935B6BE7F85156AF -->

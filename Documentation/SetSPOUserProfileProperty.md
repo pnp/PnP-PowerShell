@@ -1,5 +1,5 @@
 #Set-SPOUserProfileProperty
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Office365 only: Uses the tenant API to retrieve site information.
 
@@ -39,4 +39,3 @@ Sets the SPS-Location property for the user as specified by the Account paramete
 PS:> Set-SPOUserProfileProperty -Account 'user@domain.com' -Property 'MyProperty' -Values 'Value 1','Value 2'
 ```
 Sets the MyProperty multi value property for the user as specified by the Account parameter
-<!-- Ref: D051A4F05E8E63FF191C0B6B70476AE3 -->

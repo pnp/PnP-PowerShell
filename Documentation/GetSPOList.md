@@ -1,5 +1,5 @@
 #Get-SPOList
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns a List object
 ##Syntax
@@ -32,4 +32,3 @@ Returns a list with the given id.
 PS:> Get-SPOList -Identity /Lists/Announcements
 ```
 Returns a list with the given url.
-<!-- Ref: 2EE8ED1EC2D58CE06A48DC8E981A7EC9 -->

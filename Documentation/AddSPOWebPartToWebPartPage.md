@@ -35,4 +35,3 @@ This will add the webpart as defined by the XML in the listview.webpart file to 
 PS:> Add-SPOWebPartToWebPartPage -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -XML $webpart -ZoneId "Header" -ZoneIndex 1 
 ```
 This will add the webpart as defined by the XML in the $webpart variable to the specified page in the specified zone and with the order index of 1
-<!-- Ref: 9B4F8C728AB3CBBB57E0AE7006DB3634 -->

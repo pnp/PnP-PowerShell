@@ -27,4 +27,3 @@ Returns all webparts defined on the given page.
 PS:> Get-SPOWebPart -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82
 ```
 Returns a specific webpart defined on the given page.
-<!-- Ref: 80378AEB6D551C752FE2C451885CCB57 -->

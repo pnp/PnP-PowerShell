@@ -45,4 +45,3 @@ Applies a provisioning template in XML format to the current web. Any resources 
 Applies a provisioning template in XML format to the current web. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.
 
 For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.
-<!-- Ref: 2E08BE7DBB113A2E343DC67205153A7E -->

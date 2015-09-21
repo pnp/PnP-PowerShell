@@ -1,5 +1,5 @@
 #Add-SPOFile
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Uploads a file to Web
 ##Syntax
@@ -33,4 +33,3 @@ This will upload the file company.master to the masterpage catalog
 PS:> Add-SPOFile -Path .\displaytemplate.html -Folder "_catalogs/masterpage/display templates/test
 ```
 This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder not exists it will create it.
-<!-- Ref: 825066CC1FF5DC1A5C1F310CC79DC591 -->

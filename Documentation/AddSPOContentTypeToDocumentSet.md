@@ -1,5 +1,5 @@
 #Add-SPOContentTypeToDocumentSet
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a content type to a document set
 ##Syntax
@@ -35,4 +35,3 @@ This will add the content type called 'Test CT' to the document set called ''Tes
 PS:> Add-SPOContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B
 ```
 This will add the content type called 'Test CT' to the document set called ''Test Document Set'
-<!-- Ref: AB9CD6A1C0000AAF913177585DF2FABE -->

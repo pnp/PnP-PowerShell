@@ -36,4 +36,3 @@ This will add the webpart as defined by the XML in the listview.webpart file to 
 PS:> Add-SPOWebPartToWikiPage -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -XML $webpart -Row 1 -Column 1
 ```
 This will add the webpart as defined by the XML in the $webpart variable to the specified page in the first row and the first column of the HTML table present on the page
-<!-- Ref: 96DDE870533786CC767EEC04C9765591 -->

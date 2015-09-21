@@ -1,5 +1,5 @@
 #Add-SPOUserToGroup
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a user to a group
 ##Syntax
@@ -27,4 +27,3 @@ PS:> Add-SPOUserToGroup -LoginName user@company.com -Identity 'Marketing Site Me
 PS:> Add-SPOUserToGroup -LoginName user@company.com -Identity 5
 ```
 Add the specified user to the group with Id 5
-<!-- Ref: AEBF39E1EBD06652C06A891CCF874EEB -->

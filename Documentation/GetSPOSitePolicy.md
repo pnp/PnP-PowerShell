@@ -1,5 +1,5 @@
 #Get-SPOSitePolicy
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Retrieves all or a specific site policy
 ##Syntax
@@ -33,4 +33,3 @@ Retrieves all available site policies.
 PS:> Get-SPOSitePolicy -Name "Contoso HBI"
 ```
 Retrieves an available site policy with the name "Contoso HBI".
-<!-- Ref: A637E1E0EA1673DC2CA4A0522F90AE23 -->

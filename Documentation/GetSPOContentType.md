@@ -1,5 +1,5 @@
 #Get-SPOContentType
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Retrieves a content type
 ##Syntax
@@ -21,4 +21,3 @@ Parameter|Type|Required|Description
 PS:> Get-SPOContentType -Identity "Project Document"
 ```
 This will get a listing of content types within the current context
-<!-- Ref: 10CEC4183A76B3C0BDDB35F985597491 -->

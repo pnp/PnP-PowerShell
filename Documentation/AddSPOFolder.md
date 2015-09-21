@@ -1,5 +1,5 @@
 #Add-SPOFolder
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Creates a folder within a parent folder
 ##Syntax
@@ -21,4 +21,3 @@ Parameter|Type|Required|Description
 PS:> Add-SPOFolder -Name NewFolder -Folder _catalogs/masterpage/newfolder
 ```
 
-<!-- Ref: 297531C738759AE3CC07EBD3BF770B96 -->

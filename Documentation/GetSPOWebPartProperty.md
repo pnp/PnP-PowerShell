@@ -28,4 +28,3 @@ Returns all properties of the webpart.
 PS:> Get-SPOWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key "Title"
 ```
 Returns the title property of the webpart.
-<!-- Ref: 9C12A5C5B403A7BCBB76049298A599EF -->

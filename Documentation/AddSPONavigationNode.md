@@ -1,5 +1,5 @@
 #Add-SPONavigationNode
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a menu item to either the quicklaunch or top navigation
 ##Syntax
@@ -16,4 +16,3 @@ Parameter|Type|Required|Description
 |Title|String|True|The title of the node to add|
 |Url|String|False|The url to navigate to when clicking the new menu item.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: C5514F3902410BBEE1C311F50F70675B -->

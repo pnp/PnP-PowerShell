@@ -1,5 +1,5 @@
 #Get-SPOProperty
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.
 ##Syntax
@@ -31,4 +31,3 @@ PS:> $list = Get-SPOList -Identity 'Site Assets'
 PS:> Get-SPOProperty -ClientObject $list -Property Views
 ```
 Will load the views object of the specified list object and return its value to the output.
-<!-- Ref: 97B7F0B07628DEA282A02CC22E41C874 -->

@@ -1,5 +1,5 @@
 #Get-SPOFeature
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns all activated or a specific activated feature
 ##Syntax
@@ -39,4 +39,3 @@ This will return a specific activated web scoped feature
 PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
 ```
 This will return a specific activated site scoped feature
-<!-- Ref: F7C0A4B0F8DF525527C979A1A6A41F12 -->

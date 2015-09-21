@@ -1,5 +1,5 @@
 #Get-SPOTimeZoneId
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns a time zone ID
 ##Syntax
@@ -27,4 +27,3 @@ PS:> Get-SPOTimeZoneId -Match Stockholm
 ```
 This will return the time zone IDs for Stockholm
     
-<!-- Ref: 4254ACEC0B7C1E22FD9CB457FECAA4BC -->

@@ -1,5 +1,5 @@
 #Import-SPOTermGroupFromXml
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Imports a taxonomy TermGroup from either the input or from an XML file.
 ##Syntax
@@ -31,4 +31,3 @@ Imports the XML based termgroup information located in the $xml variable
 PS:> Import-SPOTermGroupFromXml -Path input.xml
 ```
 Imports the XML file specified by the path.
-<!-- Ref: 02553FC5C145DF688CA1AF2FC2DE3AE3 -->

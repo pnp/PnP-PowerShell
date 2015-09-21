@@ -1,5 +1,5 @@
 #Set-SPODefaultColumnValues
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Sets default column values for a document library
 ##Syntax
@@ -32,4 +32,3 @@ Sets a default value for the enterprise keywords field on a library to a term ca
 PS:> Set-SPODefaultColumnValues -List Documents -Field MyTextField -Value "DefaultValue"
 ```
 Sets a default value for the MyTextField text field on a library to a value of "DefaultValue"
-<!-- Ref: 0DEF4BE0A44B91362A7A70C95D1DBF65 -->

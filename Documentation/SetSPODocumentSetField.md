@@ -1,5 +1,5 @@
 #Set-SPODocumentSetField
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Sets a site column from the avaiable content types to a document set
 ##Syntax
@@ -31,4 +31,3 @@ This will set the field, available in one the available content types, as a Shar
 PS:> Set-SPODocumentSetField -Field "Test Field" -DocumentSet "Test Document Set" -RemoveAsSharedField -RemoveAsWelcomePageField
 ```
 This will remove the field, available in one the available content types, as a Shared Field and as a Welcome Page Field.
-<!-- Ref: 1DE41F67E00DA84B4260D7196849608F -->

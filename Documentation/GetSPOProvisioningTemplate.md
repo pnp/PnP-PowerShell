@@ -1,5 +1,5 @@
 #Get-SPOProvisioningTemplate
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Generates a provisioning template from a web
 ##Syntax
@@ -61,4 +61,3 @@ Extracts a provisioning template in XML format from the current web and includes
 
 ```
 Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.
-<!-- Ref: 24F2A6EBED64CFE671E889A1AC23CFB1 -->

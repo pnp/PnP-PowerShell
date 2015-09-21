@@ -1,5 +1,5 @@
 #Set-SPOSearchConfiguration
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns the search configuration
 ##Syntax
@@ -33,4 +33,3 @@ Sets the search configuration for the current site collection
 PS:> Set-SPOSearchConfiguration -Configuration $config -Scope Subscription
 ```
 Sets the search configuration for the current tenant
-<!-- Ref: ECD4917FC84C59312125E710B12D5D7B -->

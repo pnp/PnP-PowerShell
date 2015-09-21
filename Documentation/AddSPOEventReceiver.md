@@ -1,5 +1,5 @@
 #Add-SPOEventReceiver
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a new event receiver
 ##Syntax
@@ -26,4 +26,3 @@ Parameter|Type|Required|Description
 PS:> Add-SPOEventReceiver -List "ProjectList" -Name "TestEventReceiver" -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType ItemAdded -Synchronization Asynchronous
 ```
 This will add a new event receiver that is executed after an item has been added to the ProjectList list
-<!-- Ref: 8D62B993FE46984402011C6756281E15 -->

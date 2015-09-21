@@ -1,5 +1,5 @@
 #Remove-SPOPropertyBagValue
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Removes a value from the property bag
 ##Syntax
@@ -34,4 +34,3 @@ This will remove the value with key MyKey from the folder MyFolder which is loca
 PS:> Remove-SPOPropertyBagValue -Key MyKey -Folder /
 ```
 This will remove the value with key MyKey from the root folder of the current web
-<!-- Ref: C41109F5DC32823A38591F0F84F8467F -->

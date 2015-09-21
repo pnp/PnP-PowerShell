@@ -1,5 +1,5 @@
 #Set-SPOTraceLog
-*Topic automatically generated on: 2015-09-18*
+*Topic automatically generated on: 2015-09-21*
 
 Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets utilizes the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.
 ##Syntax
@@ -48,4 +48,3 @@ This turns on trace logging to the file 'traceoutput.txt' and will write the ent
 PS:> Set-SPOTraceLog -Off
 ```
 This turns off trace logging. It will flush any remaining messages to the log file.
-<!-- Ref: BEDFE3FDA3FE90FA0CE23FD694F9290A -->

@@ -1,5 +1,5 @@
 #New-SPOTenantSite
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Creates a new site collection for the current tenant
 ##Syntax
@@ -28,4 +28,3 @@ Parameter|Type|Required|Description
 |Title|String|True||
 |Url|String|True|Specifies the full URL of the new site collection. It must be in a valid managed path in the company's site. For example, for company contoso, valid managed paths are https://contoso.sharepoint.com/sites and https://contoso.sharepoint.com/teams.|
 |Wait|SwitchParameter|False||
-<!-- Ref: 1D727E4D3F5D9367E779AA032BFDA397 -->

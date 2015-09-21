@@ -1,5 +1,5 @@
 #Add-SPOMasterPage
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a Masterpage
 ##Syntax
@@ -25,4 +25,3 @@ Parameter|Type|Required|Description
 PS:> Add-SPOMasterPage -SourceFilePath "page.master" -Title "MasterPage" -Description "MasterPage for Web" -DestinationFolderHierarchy "SubFolder"
 ```
 Adds a MasterPage to the web
-<!-- Ref: F5054304EDC1C1DA6EA9F733A9AB6647 -->

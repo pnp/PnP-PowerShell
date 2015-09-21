@@ -1,5 +1,5 @@
 #Set-SPOPropertyBagValue
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Sets a property bag value
 ##Syntax
@@ -40,4 +40,3 @@ This sets or adds a value to the root folder of the current web
 PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue -Folder /MyFolder
 ```
 This sets or adds a value to the folder MyFolder which is located in the root folder of the current web
-<!-- Ref: 6690DBDE1EC4EFDE287F392BE497F457 -->

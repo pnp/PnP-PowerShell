@@ -1,5 +1,5 @@
 #Add-SPOContentType
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a new content type
 ##Syntax
@@ -24,4 +24,3 @@ Parameter|Type|Required|Description
 PS:> Add-SPOContentType -Name "Project Document" -Description "Use for Contoso projects" -Group "Contoso Content Types" -ParentContentType $ct
 ```
 This will add a new content type based on the parent content type stored in the $ct variable.
-<!-- Ref: D337000716733488E9537A3DF218C8A9 -->

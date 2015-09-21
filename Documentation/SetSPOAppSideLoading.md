@@ -1,5 +1,5 @@
 #Set-SPOAppSideLoading
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Enables the App Side Loading Feature on a site
 ##Syntax
@@ -18,4 +18,3 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Off|SwitchParameter|True||
 |On|SwitchParameter|True||
-<!-- Ref: A04E12AFE452E050AC81321B26F2A7E1 -->

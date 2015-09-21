@@ -1,5 +1,5 @@
 #Add-SPOPublishingPageLayout
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a publishing page layout
 ##Syntax
@@ -17,4 +17,3 @@ Parameter|Type|Required|Description
 |SourceFilePath|String|True|Path to the file which will be uploaded|
 |Title|String|True|Title for the page layout|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: BDB66B883C42D79B8DEEC7AD4ED18910 -->
