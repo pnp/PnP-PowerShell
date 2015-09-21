@@ -1,5 +1,9 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-09-21**
+
+* Added -Parameters parameter to Apply-SPOProvisioningTemplate. See help for the cmdlet for more info.
+
 **2015-09-17**
 
 * Added Get-SPOProperty to dynamically load specified properties from objects.
