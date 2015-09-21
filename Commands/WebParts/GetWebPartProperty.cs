@@ -9,10 +9,19 @@ namespace OfficeDevPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Get, "SPOWebPartProperty")]
     [CmdletHelp("Returns a web part property", 
         Category = CmdletHelpCategory.WebParts)]
+    [CmdletExample(
+        Code = @"PS:> Get-SPOWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914",
+        Remarks = "Returns all properties of the webpart.",
+        SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Get-SPOWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key ""Title""",
+        Remarks = "Returns the title property of the webpart.",
+        SortOrder = 2)]
     public class GetWebPartProperty : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]
-        public string PageUrl = string.Empty;
+        [Alias("PageUrl")]
+        public string ServerRelativePageUrl = string.Empty;
 
         [Parameter(Mandatory = true)]
         public GuidPipeBind Identity;
@@ -22,7 +31,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            var properties = SelectedWeb.GetWebPartProperties(Identity.Id, PageUrl);
+            var properties = SelectedWeb.GetWebPartProperties(Identity.Id, ServerRelativePageUrl);
             var values = properties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
             if (!string.IsNullOrEmpty(Key))
             {

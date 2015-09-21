@@ -1,10 +1,10 @@
 #Get-SPOWebPartProperty
-*Topic automatically generated on: 2015-09-17*
+*Topic automatically generated on: 2015-09-21*
 
 Returns a web part property
 ##Syntax
 ```powershell
-Get-SPOWebPartProperty -PageUrl <String> -Identity <GuidPipeBind> [-Key <String>] [-Web <WebPipeBind>]
+Get-SPOWebPartProperty -ServerRelativePageUrl <String> -Identity <GuidPipeBind> [-Key <String>] [-Web <WebPipeBind>]
 ```
 
 
@@ -13,6 +13,19 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|GuidPipeBind|True||
 |Key|String|False||
-|PageUrl|String|True||
+|ServerRelativePageUrl|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: CE476C20D4E1691A37E470D92A548641 -->
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914
+```
+Returns all properties of the webpart.
+
+###Example 2
+```powershell
+PS:> Get-SPOWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key "Title"
+```
+Returns the title property of the webpart.
+<!-- Ref: 9C12A5C5B403A7BCBB76049298A599EF -->

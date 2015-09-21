@@ -3,6 +3,7 @@
 **2015-09-21**
 
 * Added -Parameters parameter to Apply-SPOProvisioningTemplate. See help for the cmdlet for more info.
+* Renamed PageUrl parameter of Webpart cmdlets to ServerRelativePageUrl. Set PageUrl as parameter alias to not break existing scripts.
 
 **2015-09-17**
 
