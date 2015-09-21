@@ -27,6 +27,14 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
+            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
+            if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
+            {
+                ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
+            }
+
+
             var definitions = SelectedWeb.GetWebParts(ServerRelativePageUrl);
 
             if (Identity != null)

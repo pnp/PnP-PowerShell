@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using File = System.IO.File;
+using System;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {
@@ -39,6 +40,14 @@ Remarks = @"This will add the webpart as defined by the XML in the listview.webp
 
         protected override void ExecuteCmdlet()
         {
+            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
+            if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
+            {
+                ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
+            }
+
+
             WebPartEntity wp = null;
 
             switch (ParameterSetName)

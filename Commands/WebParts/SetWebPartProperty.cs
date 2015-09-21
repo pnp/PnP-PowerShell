@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {
@@ -25,6 +26,14 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
+            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
+            if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
+            {
+                ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
+            }
+
+
             if (Value.BaseObject is string)
             {
                 SelectedWeb.SetWebPartProperty(Key, Value.ToString(), Identity.Id, ServerRelativePageUrl);
