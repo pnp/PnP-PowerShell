@@ -9,7 +9,7 @@ Remove-SPOWebPart -Identity <GuidPipeBind> -ServerRelativePageUrl <String> [-Web
 
 
 ```powershell
-Remove-SPOWebPart -Name <String> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
+Remove-SPOWebPart -Title <String> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
 ```
 
 
@@ -17,7 +17,7 @@ Remove-SPOWebPart -Name <String> -ServerRelativePageUrl <String> [-Web <WebPipeB
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|GuidPipeBind|True||
-|Name|String|True||
 |ServerRelativePageUrl|String|True||
+|Title|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: BB23C4F1B5D04A3FD182E08560F933A5 -->
+<!-- Ref: 185AB6DF99861860DBCEF56A9A981255 -->
