@@ -6,14 +6,14 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOEventReceiver")]
-    [CmdletHelp("Adds a new event receiver", 
+    [CmdletHelp("Adds a new event receiver",
         Category = CmdletHelpCategory.EventReceivers)]
     [CmdletExample(
       Code = @"PS:> Add-SPOEventReceiver -List ""ProjectList"" -Name ""TestEventReceiver"" -Url https://yourserver.azurewebsites.net/eventreceiver.svc -EventReceiverType ItemAdded -Synchronization Asynchronous",
       Remarks = @"This will add a new event receiver that is executed after an item has been added to the ProjectList list", SortOrder = 1)]
     public class AddEventReceiver : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName = "List")]
+        [Parameter(Mandatory = false)]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]
@@ -38,7 +38,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSetName == "List")
+            if (this.MyInvocation.BoundParameters.ContainsKey("List"))
             {
                 var list = List.GetList(SelectedWeb);
                 WriteObject(list.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
