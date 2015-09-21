@@ -23,7 +23,7 @@ namespace OfficeDevPnP.PowerShell.Tests
             }
         }
         [TestMethod]
-        public void GetSPOWebPartTest()
+        public void GetWebPartTest()
         {
             using (var scope = new PSTestScope(true))
             {
@@ -38,7 +38,7 @@ namespace OfficeDevPnP.PowerShell.Tests
         }
 
         [TestMethod]
-        public void GetSPOWebPartPropertyTest()
+        public void GetWebPartPropertyTest()
         {
             using (var scope = new PSTestScope(true))
             {
@@ -67,7 +67,7 @@ namespace OfficeDevPnP.PowerShell.Tests
         }
 
         [TestMethod]
-        public void GetSPOWebPartXmlTest()
+        public void GetWebPartXmlTest()
         {
             using (var scope = new PSTestScope(true))
             {
@@ -196,9 +196,6 @@ namespace OfficeDevPnP.PowerShell.Tests
                             break;
                         }
                     }
-
-
-
                 }
             }
         }

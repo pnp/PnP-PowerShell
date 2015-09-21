@@ -12,6 +12,7 @@ namespace OfficeDevPnP.PowerShell.Tests
         private const string CTName1 = "UnitTestCT1";
         private const string CTName2 = "UnitTestCT2";
         private const string CTName3 = "UnitTestCT3";
+        private const string CTName4 = "UnitTestCT4";
 
         private const string ListName = "UnitTestCTList";
         private List ctList;
@@ -87,12 +88,18 @@ namespace OfficeDevPnP.PowerShell.Tests
             using (var scope = new PSTestScope(true))
             {
                 var results = scope.ExecuteCommand("Add-SPOContentType",
-                    new CommandParameter("Name", CTName2),
+                    new CommandParameter("Name", CTName4),
                     new CommandParameter("Group", "UnitTestCTGroup"));
 
-                Assert.IsTrue(results.Count > 0);
+                Assert.IsTrue(results.Any());
                 Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Microsoft.SharePoint.Client.ContentType));
 
+                using (var ctx = TestCommon.CreateClientContext())
+                {
+                    var ct = ctx.Web.GetContentTypeByName(CTName4);
+                    ct.DeleteObject();
+                    ctx.ExecuteQueryRetry();
+                }
             }
         }
 

@@ -7,7 +7,7 @@ namespace OfficeDevPnP.PowerShell.Tests
     public class ListsTests
     {
         [TestMethod]
-        public void GetSPOListTest()
+        public void GetListTest()
         {
             using (var scope = new PSTestScope(true))
             {
