@@ -15,7 +15,8 @@ namespace OfficeDevPnP.PowerShell.Commands
         public GuidPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = "NAME")]
-        public string Name = string.Empty;
+        [Alias("Name")]
+        public string Title = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         [Alias("PageUrl")]
@@ -25,7 +26,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         {
             if (ParameterSetName == "NAME")
             {
-                SelectedWeb.DeleteWebPart(ServerRelativePageUrl, Name);
+                SelectedWeb.DeleteWebPart(ServerRelativePageUrl, Title);
             }
             else
             {
