@@ -36,7 +36,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             var web = SelectedWeb.CreateWeb(Title, Url, Description, Template, Locale, !BreakInheritance,InheritNavigation);
-            ClientContext.Load(web, w => w.Id, w => w.Url);
+            ClientContext.Load(web, w => w.Id, w => w.Url, w => w.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
             WriteObject(web);
         }
