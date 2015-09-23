@@ -28,6 +28,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpAttributes
                 return description;
             }
         }
+        
     }
 
 }

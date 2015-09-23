@@ -64,7 +64,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                     var category = string.Empty;
                     var attrs = t.GetCustomAttributes();
                     var examples = new List<CmdletExampleAttribute>();
-
+                    var relatedLinks = new List<CmdletRelatedLinkAttribute>();
                     //System.Attribute.GetCustomAttributes(t); 
 
                     // Get info from attributes
@@ -90,6 +90,11 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                         {
                             var a = (CmdletExampleAttribute)attr;
                             examples.Add(a);
+                        }
+                        if (attr is CmdletRelatedLinkAttribute)
+                        {
+                            var l = (CmdletRelatedLinkAttribute)attr;
+                            relatedLinks.Add(l);
                         }
                     }
 
@@ -294,15 +299,20 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
                     // Related links
                     var relatedLinksElement = new XElement(maml + "relatedLinks");
-                    var navigationLinksElement = new XElement(maml + "navigationLink");
-                    relatedLinksElement.Add(navigationLinksElement);
-                    var linkText = new XElement(maml + "linkText");
-                    linkText.Value = "Online Version:";
-                    navigationLinksElement.Add(linkText);
-                    var uriElement = new XElement(maml + "uri");
-                    uriElement.Value = "http://aka.ms/officedevpnp";
-                    navigationLinksElement.Add(uriElement);
+                    relatedLinks.Insert(0, new CmdletRelatedLinkAttribute() { Text = "Online Version", Url = "http://aka.ms/officedevpnp" });
 
+                    foreach (var link in relatedLinks)
+                    {
+                        var navigationLinksElement = new XElement(maml + "navigationLink");
+                        var linkText = new XElement(maml + "linkText");
+                        linkText.Value = link.Text + ":";
+                        navigationLinksElement.Add(linkText);
+                        var uriElement = new XElement(maml + "uri");
+                        uriElement.Value = link.Url;
+                        navigationLinksElement.Add(uriElement);
+
+                        relatedLinksElement.Add(navigationLinksElement);
+                    }
                     commandElement.Add(relatedLinksElement);
 
                     // Markdown from CmdletInfo
