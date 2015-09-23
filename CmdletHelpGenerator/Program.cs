@@ -292,6 +292,19 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                     }
                     commandElement.Add(examplesElement);
 
+                    // Related links
+                    var relatedLinksElement = new XElement(maml + "relatedLinks");
+                    var navigationLinksElement = new XElement(maml + "navigationLink");
+                    relatedLinksElement.Add(navigationLinksElement);
+                    var linkText = new XElement(maml + "linkText");
+                    linkText.Value = "Online Version:";
+                    navigationLinksElement.Add(linkText);
+                    var uriElement = new XElement(maml + "uri");
+                    uriElement.Value = "http://aka.ms/officedevpnp";
+                    navigationLinksElement.Add(uriElement);
+
+                    commandElement.Add(relatedLinksElement);
+
                     // Markdown from CmdletInfo
                     if (generateMarkdown)
                     {
