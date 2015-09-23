@@ -299,7 +299,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
                     // Related links
                     var relatedLinksElement = new XElement(maml + "relatedLinks");
-                    relatedLinks.Insert(0, new CmdletRelatedLinkAttribute() { Text = "Online Version", Url = "http://aka.ms/officedevpnp" });
+                    relatedLinks.Insert(0, new CmdletRelatedLinkAttribute() { Text = "Office 365 Developer Patterns and Practices", Url = "http://aka.ms/officedevpnp" });
 
                     foreach (var link in relatedLinks)
                     {
