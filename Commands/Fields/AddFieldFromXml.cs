@@ -8,6 +8,9 @@ namespace OfficeDevPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Add, "SPOFieldFromXml")]
     [CmdletHelp("Adds a field to a list or as a site column based upon a CAML/XML field definition",
         Category = CmdletHelpCategory.Fields)]
+    [CmdletRelatedLink(
+        Text = "Field CAML",
+        Url = "http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx")]
     public class AddFieldFromXml : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
