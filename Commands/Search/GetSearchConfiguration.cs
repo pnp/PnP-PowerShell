@@ -10,7 +10,7 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "SPOSearchConfiguration")]
-    [CmdletHelp("Returns the search configuration", 
+    [CmdletHelp("Returns the search configuration",
         Category = CmdletHelpCategory.Search)]
     [CmdletExample(
         Code = @"PS:> Get-SPOSearchConfiguration",
@@ -24,39 +24,62 @@ namespace OfficeDevPnP.PowerShell.Commands.Search
         Code = @"PS:> Get-SPOSearchConfiguration -Scope Subscription",
         Remarks = "Returns the search configuration for the current tenant",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription",
+        Remarks = "Returns the search configuration for the current tenant and saves it to the specified file",
+        SortOrder = 4)]
     public class GetSearchConfiguration : SPOWebCmdlet
     {
         [Parameter(Mandatory = false)]
         public SearchConfigurationScope Scope = SearchConfigurationScope.Web;
 
+        [Parameter(Mandatory = false)]
+        public string Path;
+
         protected override void ExecuteCmdlet()
         {
+            string configoutput = string.Empty;
+
             switch (Scope)
             {
                 case SearchConfigurationScope.Web:
                     {
-                        WriteObject(this.SelectedWeb.GetSearchConfiguration());
+                        configoutput = this.SelectedWeb.GetSearchConfiguration();
                         break;
                     }
                 case SearchConfigurationScope.Site:
                     {
-                        WriteObject(ClientContext.Site.GetSearchConfiguration());
+                        configoutput = ClientContext.Site.GetSearchConfiguration();
                         break;
                     }
                 case SearchConfigurationScope.Subscription:
-                {
-                    if (!ClientContext.Url.ToLower().Contains("-admin"))
                     {
-                        throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
-                    }
+                        if (!ClientContext.Url.ToLower().Contains("-admin"))
+                        {
+                            throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
+                        }
 
-                    SearchObjectOwner owningScope = new SearchObjectOwner(ClientContext, SearchObjectLevel.SPSiteSubscription);
-                    var config = new SearchConfigurationPortability(ClientContext);
-                    ClientResult<string> configuration = config.ExportSearchConfiguration(owningScope);                
-                    ClientContext.ExecuteQueryRetry(10, 60*5*1000);
-                    WriteObject(configuration.Value);
+                        SearchObjectOwner owningScope = new SearchObjectOwner(ClientContext, SearchObjectLevel.SPSiteSubscription);
+                        var config = new SearchConfigurationPortability(ClientContext);
+                        ClientResult<string> configuration = config.ExportSearchConfiguration(owningScope);
+                        ClientContext.ExecuteQueryRetry(10, 60 * 5 * 1000);
+
+                        configoutput = configuration.Value;
+                    }
                     break;
+            }
+
+            if (Path != null)
+            {
+                if (!System.IO.Path.IsPathRooted(Path))
+                {
+                    Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                 }
+                System.IO.File.WriteAllText(Path, configoutput);
+            }
+            else
+            {
+                WriteObject(configoutput);
             }
         }
     }

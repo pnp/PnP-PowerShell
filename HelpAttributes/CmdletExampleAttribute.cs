@@ -2,7 +2,7 @@
 
 namespace OfficeDevPnP.PowerShell.CmdletHelpAttributes
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct,
+    [AttributeUsage(AttributeTargets.Class,
                       AllowMultiple = true)]
     public sealed class CmdletExampleAttribute : Attribute
     {

@@ -23,16 +23,32 @@ namespace OfficeDevPnP.PowerShell.Commands.Search
         Code = @"PS:> Set-SPOSearchConfiguration -Configuration $config -Scope Subscription",
         Remarks = "Sets the search configuration for the current tenant",
         SortOrder = 3)]
+    [CmdletExample(
+          Code = @"PS:> Set-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription",
+        Remarks = "Reads the search configuratino from the specified XML file and sets it for the current tenant",
+        SortOrder = 4)]
+
     public class SetSearchConfiguration : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "Config", HelpMessage = "Search configuration string")]
         public string Configuration;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ParameterSetName = "Path", HelpMessage = "Path to a search configuration")]
+        public string Path;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SearchConfigurationScope Scope = SearchConfigurationScope.Web;
 
         protected override void ExecuteCmdlet()
         {
+            if (ParameterSetName == "Path")
+            {
+                if (!System.IO.Path.IsPathRooted(Path))
+                {
+                    Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+                }
+                Configuration = System.IO.File.ReadAllText(Path);
+            }
             switch (Scope)
             {
                 case SearchConfigurationScope.Web:

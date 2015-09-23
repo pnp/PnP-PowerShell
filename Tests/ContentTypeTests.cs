@@ -16,7 +16,6 @@ namespace OfficeDevPnP.PowerShell.Tests
 
         private const string ListName = "UnitTestCTList";
         private List ctList;
-        private ContentType ctTest;
 
         [TestInitialize]
         public void Initialize()
