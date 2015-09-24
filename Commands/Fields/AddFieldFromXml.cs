@@ -8,6 +8,16 @@ namespace OfficeDevPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Add, "SPOFieldFromXml")]
     [CmdletHelp("Adds a field to a list or as a site column based upon a CAML/XML field definition",
         Category = CmdletHelpCategory.Fields)]
+    [CmdletExample(
+        Code = @"PS:> $xml = '<Field Type=""Text"" Name=""PSCmdletTest"" DisplayName=""PSCmdletTest"" ID=""{27d81055-f208-41c9-a976-61c5473eed4a}"" Group=""Test"" Required=""FALSE"" StaticName=""PSCmdletTest"" />'
+PS:> Add-SPOFieldFromXml -FieldXml $xml",
+        Remarks = "Adds a field with the specified field CAML code to the site.",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> $xml = '<Field Type=""Text"" Name=""PSCmdletTest"" DisplayName=""PSCmdletTest"" ID=""{27d81055-f208-41c9-a976-61c5473eed4a}"" Group=""Test"" Required=""FALSE"" StaticName=""PSCmdletTest"" />'
+PS:> Add-SPOFieldFromXml -List ""Demo List"" -FieldXml $xml",
+        Remarks = "Adds a field with the specified field CAML code to the site.",
+        SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "Field CAML",
         Url = "http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx")]
