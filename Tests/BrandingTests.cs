@@ -150,7 +150,6 @@ namespace OfficeDevPnP.PowerShell.Tests
         }
 
         [TestMethod]
-        [Ignore]
         public void GetProvisioningTemplateTest()
         {
             using (var scope = new PSTestScope(true))
@@ -162,6 +161,35 @@ namespace OfficeDevPnP.PowerShell.Tests
                 Assert.IsTrue(results.FirstOrDefault().BaseObject.GetType() == typeof(string));
             }
         }
+
+        [TestMethod]
+        public void ApplyProvisioningTemplateTest()
+        {
+            using (var scope = new PSTestScope(true))
+            {
+                var results = scope.ExecuteCommand("Apply-SPOProvisioningTemplate",
+                    new CommandParameter("Path", "..\\..\\Resources\\template.xml")
+                    );
+
+
+                using (var ctx = TestCommon.CreateClientContext())
+                {
+                    var succeeded = false;
+                    try
+                    {
+                        var field = ctx.Web.Fields.GetByInternalNameOrTitle("PnPPowerShellTemplateTest");
+                        ctx.ExecuteQueryRetry();
+                        succeeded = true;
+                        field.DeleteObject();
+                        ctx.ExecuteQueryRetry();
+                    }
+                    catch { }
+
+                    Assert.IsTrue(succeeded);
+                }
+            }
+        }
+
 
         [TestMethod]
         public void RemoveCustomActionTest()

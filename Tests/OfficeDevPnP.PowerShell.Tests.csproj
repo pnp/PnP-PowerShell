@@ -214,6 +214,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\template.xml" />
     <Content Include="Resources\webpart.xml" />
   </ItemGroup>
   <ItemGroup>
