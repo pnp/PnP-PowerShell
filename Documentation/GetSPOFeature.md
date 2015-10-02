@@ -1,5 +1,5 @@
 #Get-SPOFeature
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-10-02*
 
 Returns all activated or a specific activated feature
 ##Syntax
@@ -17,18 +17,1317 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOFeature
+```powershell
+PS:> Get-SPOFeature
+```
 This will return all activated web scoped features
 
 ###Example 2
-    PS:> Get-SPOFeature -Scope Site
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
 This will return all activated site scoped features
 
 ###Example 3
-    PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
 This will return a specific activated web scoped feature
 
 ###Example 4
-    PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
 This will return a specific activated site scoped feature
-<!-- Ref: EE5CA7ABA20044B0B40B83CA50460F5D -->
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature
+Returns all activated or a specific activated feature
+##Syntax
+```powershell
+Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|FeaturePipeBind|False||
+|Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOFeature
+```
+This will return all activated web scoped features
+
+###Example 2
+```powershell
+PS:> Get-SPOFeature -Scope Site
+```
+This will return all activated site scoped features
+
+###Example 3
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
+This will return a specific activated web scoped feature
+
+###Example 4
+```powershell
+PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
+```
+This will return a specific activated site scoped feature

@@ -8,7 +8,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsLifecycle.Resume, "SPOWorkflowInstance")]
-    [CmdletHelp("Resumes a previously stopped workflow instance", Category = "Workflows")]
+    [CmdletHelp("Resumes a previously stopped workflow instance",
+        Category = CmdletHelpCategory.Workflows)]
 
     public class ResumeWorkflowInstance : SPOWebCmdlet
     {

@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOWeb")]
-    [CmdletHelp("Removes a subweb in the current web", Category = "Webs")]
+    [CmdletHelp("Removes a subweb in the current web",
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = @"PS:> Remove-SPOWeb -Url projectA",
         Remarks = "Remove a web",

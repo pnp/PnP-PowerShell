@@ -14,38 +14,53 @@ using System.Threading.Tasks;
 namespace OfficeDevPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebPartXml")]
-    [CmdletHelp("Returns the webpart XML of a webpart registered on a site", Category = "Web Parts")]
+    [CmdletHelp("Returns the webpart XML of a webpart registered on a site",
+        Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOWebPartXml -PageUrl ""/sites/demo/sitepages/home.aspx"" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
+        Code = @"PS:> Get-SPOWebPartXml -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
         Remarks = @"Returns the webpart XML for a given webpart on a page.", SortOrder = 1)]
     public class GetWebPartXml : SPOWebCmdlet
     {
-
         [Parameter(Mandatory = true, HelpMessage = "Full server relative url of the webpart page, e.g. /sites/mysite/sitepages/home.aspx")]
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Id of the webpart. Use Get-SPOWebPart to retrieve all webpart Ids")]
-        public GuidPipeBind Identity;
+        [Parameter(Mandatory = true, HelpMessage = "Id or title of the webpart. Use Get-SPOWebPart to retrieve all webpart Ids")]
+        public WebPartPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
-            if (!ServerRelativePageUrl.StartsWith("/"))
+            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
+            if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
             {
-                ServerRelativePageUrl = "/" + ServerRelativePageUrl;
+                ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
             }
 
-            if (!SelectedWeb.IsPropertyAvailable("ServerRelativeUrl"))
+            Guid id = Guid.Empty;
+            if (Identity.Id == Guid.Empty)
             {
-                ClientContext.Load(SelectedWeb, w => w.ServerRelativeUrl);
-                ClientContext.ExecuteQueryRetry();
+                var wp = SelectedWeb.GetWebParts(ServerRelativePageUrl).FirstOrDefault(wps => wps.WebPart.Title == Identity.Title);
+                if (wp != null)
+                {
+                    id = wp.Id;
+                }
+                else
+                {
+                    throw new Exception(string.Format("Web Part with title '{0}' cannot be found on page with URL {1}", Identity.Title, ServerRelativePageUrl));
+                }
             }
+            else
+            {
+                id = Identity.Id;
+            }
+
             var uri = new Uri(ClientContext.Url);
 
             var hostUri = uri.Host;
             var webUrl = string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, SelectedWeb.ServerRelativeUrl);
             var pageUrl = string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, ServerRelativePageUrl);
-            var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/_vti_bin/exportwp.aspx?pageurl={1}&guidstring={2}", webUrl, pageUrl, Identity.Id.ToString()));
+            var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/_vti_bin/exportwp.aspx?pageurl={1}&guidstring={2}", webUrl, pageUrl, id.ToString()));
 
             if (SPOnlineConnection.CurrentConnection.ConnectionType == Enums.ConnectionType.O365)
             {

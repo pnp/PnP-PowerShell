@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommunications.Send, "SPOMail")]
-    [CmdletHelp("Sends an email using the Office 365 SMTP Service", Category = "Utilities")]
+    [CmdletHelp("Sends an email using the Office 365 SMTP Service",
+        Category = CmdletHelpCategory.Utilities)]
     public class SendMail : SPOWebCmdlet
     {
         [Parameter(Mandatory = false)]

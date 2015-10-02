@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace OfficeDevPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "SPOTraceLog")]
-    [CmdletHelp("Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets utilizes the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.", Category = "Base Cmdlets")]
+    [CmdletHelp("Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets utilizes the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.", 
+        Category = CmdletHelpCategory.Base)]
     [CmdletExample(
         Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt",
         Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will capture events of at least 'Information' level.",

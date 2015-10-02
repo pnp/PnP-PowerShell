@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOFileCheckedIn")]
-    [CmdletHelp("Checks in a file", Category = "Webs")]
+    [CmdletHelp("Checks in a file", 
+        Category = CmdletHelpCategory.Webs)]
     public class SetFileCheckedIn : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]

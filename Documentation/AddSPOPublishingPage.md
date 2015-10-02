@@ -1,5 +1,5 @@
 #Add-SPOPublishingPage
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-10-02*
 
 Adds a publishing page
 ##Syntax
@@ -16,4 +16,168 @@ Parameter|Type|Required|Description
 |Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
 |Title|String|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: 14919601EE636E2D53A25661CF36C51D -->
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+Adds a publishing page
+##Syntax
+```powershell
+Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|PageName|String|True||
+|PageTemplateName|String|True||
+|Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
+|Title|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|

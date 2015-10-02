@@ -1,23 +1,339 @@
 #Set-SPOHomePage
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-10-02*
 
 Sets the home page of the current web.
 ##Syntax
 ```powershell
-Set-SPOHomePage [-Web <WebPipeBind>] -Path <String>
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Path|String|True|The root folder relative path of the homepage|
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
 ###Example 1
-    
-    PS:> Set-SPOHomePage -Path SitePages/Home.aspx
+```powershell
 
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
 Sets the home page to the home.aspx file which resides in the SitePages library
-<!-- Ref: 20BA843BB4A4A363DC1CD5F208B26560 -->
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page of the current web.
+##Syntax
+```powershell
+Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|RootFolderRelativeUrl|String|True|The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOHomePage -RootFolderRelativeUrl SitePages/Home.aspx
+
+```
+Sets the home page to the home.aspx file which resides in the SitePages library

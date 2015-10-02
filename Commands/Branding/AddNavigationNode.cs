@@ -8,7 +8,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPONavigationNode")]
-    [CmdletHelp("Adds a menu item to either the quicklaunch or top navigation", Category = "Branding")]
+    [CmdletHelp("Adds a menu item to either the quicklaunch or top navigation", 
+        Category = CmdletHelpCategory.Branding)]
     public class AddNavigationNode : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The location of the node to add. Either TopNavigationBar, QuickLaunch or SearchNav")]

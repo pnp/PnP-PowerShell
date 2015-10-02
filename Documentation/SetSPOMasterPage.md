@@ -1,24 +1,377 @@
 #Set-SPOMasterPage
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-10-02*
 
 Sets the default master page of the current web.
 ##Syntax
 ```powershell
-Set-SPOMasterPage [-MasterPageUrl <String>] [-CustomMasterPageUrl <String>] [-Web <WebPipeBind>]
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|CustomMasterPageUrl|String|False||
-|MasterPageUrl|String|False||
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
 ###Example 1
-    
-    PS:> Set-SPOMasterPage -MasterPageUrl /sites/projects/_catalogs/masterpage/oslo.master
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
 
 
-<!-- Ref: EF6353A4531291AC88F4ACB0AC487B00 -->
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+
+Sets the default master page of the current web.
+##Syntax
+```powershell
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>] [-CustomMasterPageServerRelativeUrl <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|CustomMasterPageServerRelativeUrl|String|False||
+|MasterPageServerRelativeUrl|String|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+
+    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
+
+```
+

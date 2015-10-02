@@ -15,7 +15,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpAttributes
         public string Copyright { get; set; }
         public string Version { get; set; }
 
-        public string Category { get; set; }
+        public CmdletHelpCategory Category { get; set; }
         public CmdletHelpAttribute(string description)
         {
             this.description = description;
@@ -28,6 +28,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpAttributes
                 return description;
             }
         }
+        
     }
 
 }

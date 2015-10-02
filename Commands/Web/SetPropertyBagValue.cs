@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOPropertyBagValue")]
-    [CmdletHelp("Sets a property bag value", Category = "Webs")]
+    [CmdletHelp("Sets a property bag value",
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
       Code = @"PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue",
       Remarks = "This sets or adds a value to the current web property bag",
@@ -59,19 +60,13 @@ namespace OfficeDevPnP.PowerShell.Commands
             }
             else
             {
-                if (!SelectedWeb.IsPropertyAvailable("ServerRelativeUrl"))
-                {
-                    ClientContext.Load(SelectedWeb, w => w.ServerRelativeUrl);
-                    ClientContext.ExecuteQueryRetry();
-                }
-
+                SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                
                 var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
                 var folder = SelectedWeb.GetFolderByServerRelativeUrl(folderUrl);
-                if (!folder.IsPropertyAvailable("Properties"))
-                {
-                    ClientContext.Load(folder.Properties);
-                    ClientContext.ExecuteQueryRetry();
-                }
+
+                folder.EnsureProperty(f => f.Properties);
+                
                 folder.Properties[Key] = Value;
                 folder.Update();
                 ClientContext.ExecuteQueryRetry();

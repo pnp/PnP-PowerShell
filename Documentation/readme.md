@@ -20,6 +20,7 @@ Cmdlet|Description
 **[Get&#8209;SPOHealthScore](GetSPOHealthScore.md)** |Retrieves the current health score value of the server
 **[Disconnect&#8209;SPOnline](DisconnectSPOnline.md)** |Disconnects the context
 **[Connect&#8209;SPOnline](ConnectSPOnline.md)** |Connects to a SharePoint site and creates an in-memory context
+**[Get&#8209;SPOProperty](GetSPOProperty.md)** |Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.
 **[Execute&#8209;SPOQuery](ExecuteSPOQuery.md)** |Executes any queued actions / changes on the SharePoint Client Side Object Model Context
 **[Get&#8209;SPOStoredCredential](GetSPOStoredCredential.md)** |Returns a stored credential from the Windows Credential Manager
 **[Set&#8209;SPOTraceLog](SetSPOTraceLog.md)** |Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets utilizes the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.
@@ -29,6 +30,7 @@ Cmdlet|Description
 **[Remove&#8209;SPOCustomAction](RemoveSPOCustomAction.md)** |Removes a custom action
 **[Get&#8209;SPOCustomAction](GetSPOCustomAction.md)** |Returns all or a specific custom action(s)
 **[Add&#8209;SPOCustomAction](AddSPOCustomAction.md)** |Adds a custom action to a web
+**[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOHomePage](SetSPOHomePage.md)** |Sets the home page of the current web.
 **[Add&#8209;SPOJavaScriptBlock](AddSPOJavaScriptBlock.md)** |Adds a link to a JavaScript snippet/block to a web or site collection
 **[Get&#8209;SPOJavaScriptLink](GetSPOJavaScriptLink.md)** |Returns all or a specific custom action(s) with location type ScriptLink
@@ -176,7 +178,6 @@ Cmdlet|Description
 **[Set&#8209;SPOFileCheckedIn](SetSPOFileCheckedIn.md)** |Checks in a file
 **[Set&#8209;SPOFileCheckedOut](SetSPOFileCheckedOut.md)** |Checks out a file
 **[Add&#8209;SPOFolder](AddSPOFolder.md)** |Creates a folder within a parent folder
-**[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOIndexedProperties](SetSPOIndexedProperties.md)** |Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, e.g. only the properties you define with the cmdlet will be indexed.
 **[Remove&#8209;SPOIndexedProperty](RemoveSPOIndexedProperty.md)** |Removes a key from propertybag to be indexed by search. The key and it's value retain in the propertybag, however it will not be indexed anymore.
 **[Add&#8209;SPOIndexedProperty](AddSPOIndexedProperty.md)** |Marks the value of the propertybag key to be indexed by search.

@@ -21,7 +21,8 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning template from a web", Category = "Branding")]
+    [CmdletHelp("Generates a provisioning template from a web", 
+        Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
        Code = @"
     PS:> Get-SPOProvisioningTemplate -Out template.xml
@@ -65,6 +66,9 @@ SortOrder = 5)]
 
         [Parameter(Mandatory = false, HelpMessage = "If specified, all the site collection term groups will be included. Overridden by IncludeAllTermGroups.")]
         public SwitchParameter IncludeSiteCollectionTermGroup;
+
+        [Parameter(Mandatory = false, HelpMessage = "If specified all site groups will be included.")]
+        public SwitchParameter IncludeSiteGroups;
 
         [Parameter(Mandatory = false, HelpMessage = "If specified the files making up the composed look (background image, font file and color file) will be saved.")]
         public SwitchParameter PersistComposedLookFiles;        
@@ -112,14 +116,13 @@ SortOrder = 5)]
 
         private string GetProvisioningTemplateXML(XMLPnPSchemaVersion schema, string path)
         {
-            if (!this.SelectedWeb.IsPropertyAvailable("Url"))
-            {
-                ClientContext.Load(this.SelectedWeb, w => w.Url);
-                ClientContext.ExecuteQueryRetry();
-            }
+            SelectedWeb.EnsureProperty(w => w.Url);
+            
             var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
 
             creationInformation.PersistComposedLookFiles = PersistComposedLookFiles;
+            creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+
             creationInformation.FileConnector = new FileSystemConnector(path, "");
 
             creationInformation.BaseTemplate = this.SelectedWeb.GetBaseTemplate();
@@ -165,6 +168,11 @@ SortOrder = 5)]
                 case XMLPnPSchemaVersion.V201505:
                     {
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
+                        break;
+                    }
+                case XMLPnPSchemaVersion.V201508:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
                         break;
                     }
             }

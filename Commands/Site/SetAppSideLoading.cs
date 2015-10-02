@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOAppSideLoading")]
-    [CmdletHelp("Enables the App Side Loading Feature on a site", Category = "Sites")]
+    [CmdletHelp("Enables the App Side Loading Feature on a site",
+        Category = CmdletHelpCategory.Sites)]
     public class SetAppSideLoading : SPOCmdlet
     {
         [Parameter(ParameterSetName = "On", Mandatory = true)]

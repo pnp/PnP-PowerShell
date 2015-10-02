@@ -8,7 +8,8 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPONavigationNode", SupportsShouldProcess = true)]
-    [CmdletHelp("Removes a menu item from either the quicklaunch or top navigation", Category = "Branding")]
+    [CmdletHelp("Removes a menu item from either the quicklaunch or top navigation", 
+        Category = CmdletHelpCategory.Branding)]
     public class RemoveNavigationNode : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]

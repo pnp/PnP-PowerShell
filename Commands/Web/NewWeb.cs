@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "SPOWeb")]
-    [CmdletHelp("Creates a new subweb to the current web", Category = "Webs")]
+    [CmdletHelp("Creates a new subweb to the current web",
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = @"PS:> New-SPOWeb -Title ""Project A Web"" -Url projectA -Description ""Information about Project A"" -Locale 1033 -Template ""STS#0""", 
         Remarks = "Creates a new subweb under the current web with url projectA", 
@@ -35,7 +36,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             var web = SelectedWeb.CreateWeb(Title, Url, Description, Template, Locale, !BreakInheritance,InheritNavigation);
-            ClientContext.Load(web, w => w.Id, w => w.Url);
+            ClientContext.Load(web, w => w.Id, w => w.Url, w => w.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
             WriteObject(web);
         }

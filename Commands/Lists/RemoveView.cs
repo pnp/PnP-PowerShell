@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOView", SupportsShouldProcess = true)]
-    [CmdletHelp("Deletes a view from a list", Category = "Lists")]
+    [CmdletHelp("Deletes a view from a list",
+        Category = CmdletHelpCategory.Lists)]
     public class RemoveView : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]

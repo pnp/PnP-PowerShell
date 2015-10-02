@@ -1,5 +1,5 @@
 #Remove-SPOWeb
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-10-02*
 
 Removes a subweb in the current web
 ##Syntax
@@ -17,6 +17,327 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Remove-SPOWeb -Url projectA
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
 Remove a web
-<!-- Ref: C6660CDE893236DADFC3A598B0F6FDCC -->
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web
+Removes a subweb in the current web
+##Syntax
+```powershell
+Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Force|SwitchParameter|False||
+|Url|String|True|The Url of the web|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOWeb -Url projectA
+```
+Remove a web

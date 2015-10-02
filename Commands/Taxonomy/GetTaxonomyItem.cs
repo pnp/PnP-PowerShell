@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOTaxonomyItem", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Returns a taxonomy item",Category = "Taxonomy")]
+    [CmdletHelp(@"Returns a taxonomy item", 
+        Category = CmdletHelpCategory.Taxonomy)]
     public class GetTaxonomyItem : SPOCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL")]

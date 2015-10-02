@@ -9,7 +9,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOJavaScriptLink")]
-    [CmdletHelp("Returns all or a specific custom action(s) with location type ScriptLink", Category = "Branding")]
+    [CmdletHelp("Returns all or a specific custom action(s) with location type ScriptLink", 
+        Category = CmdletHelpCategory.Branding)]
     public class GetJavaScriptLink : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the Javascript link. Omit this parameter to retrieve all script links")]

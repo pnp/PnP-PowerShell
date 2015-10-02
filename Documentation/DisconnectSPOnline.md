@@ -1,5 +1,5 @@
 #Disconnect-SPOnline
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-10-02*
 
 Disconnects the context
 ##Syntax
@@ -9,6 +9,115 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Disconnect-SPOnline
+```powershell
+PS:> Disconnect-SPOnline
+```
 
-<!-- Ref: F715BFBBE9E6CDA3E8A30FDA287C7850 -->
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+
+Disconnects the context
+##Syntax
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+##Examples
+
+###Example 1
+```powershell
+PS:> Disconnect-SPOnline
+```
+

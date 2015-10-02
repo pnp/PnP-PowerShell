@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOJavaScriptLink")]
-    [CmdletHelp("Adds a link to a JavaScript file to a web or sitecollection", Category = "Branding")]
+    [CmdletHelp("Adds a link to a JavaScript file to a web or sitecollection", 
+        Category = CmdletHelpCategory.Branding)]
     public class AddJavaScriptLink : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]

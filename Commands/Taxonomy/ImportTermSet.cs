@@ -8,7 +8,8 @@ using File = System.IO.File;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsData.Import, "SPOTermSet", SupportsShouldProcess = false)]
-    [CmdletHelp("Imports a taxonomy term set from a file in the standard format.", Category = "Taxonomy",
+    [CmdletHelp("Imports a taxonomy term set from a file in the standard format.",
+        Category = CmdletHelpCategory.Taxonomy,
         DetailedDescription = @"The format of the file is the same as that used by the import function in the web interface. A sample file can be obtained from the web interface.
 
 This is a CSV file, with the following headings:

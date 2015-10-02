@@ -11,7 +11,8 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsData.Export, "SPOTaxonomy", SupportsShouldProcess = true)]
-    [CmdletHelp("Exports a taxonomy to either the output or to a file.", Category = "Taxonomy")]
+    [CmdletHelp("Exports a taxonomy to either the output or to a file.",
+        Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample
         (Code = @"PS:> Export-SPOTaxonomy", 
         Remarks = "Exports the full taxonomy to the standard output",

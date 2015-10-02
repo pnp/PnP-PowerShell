@@ -9,7 +9,7 @@ using System.Linq;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOCustomAction")]
-    [CmdletHelp("Adds a custom action to a web", Category = "Branding")]
+    [CmdletHelp("Adds a custom action to a web", Category = CmdletHelpCategory.Branding)]
     public class AddCustomAction : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]

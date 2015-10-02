@@ -10,7 +10,8 @@ namespace OfficeDevPnP.PowerShell.Commands
     [Cmdlet(VerbsData.Import, "SPOAppPackage")]
     
     [CmdletHelp("Adds a SharePoint Addin to a site",
-        DetailedDescription = "This commands requires that you have an addin package to deploy", Category = "Apps")]
+        DetailedDescription = "This commands requires that you have an addin package to deploy", 
+        Category = CmdletHelpCategory.Apps)]
     [CmdletExample(
         Code = @"PS:> Import-SPOAppPackage -Path c:\files\demo.app -LoadOnly",
         Remarks = @"This will load the addin in the demo.app package, but will not install it to the site.

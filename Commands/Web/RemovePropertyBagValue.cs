@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOPropertyBagValue", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    [CmdletHelp("Removes a value from the property bag", Category = "Webs")]
+    [CmdletHelp("Removes a value from the property bag",
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = @"PS:> Remove-SPOPropertyBagValue -Key MyKey",
         Remarks = "This will remove the value with key MyKey from the current web property bag",
@@ -44,19 +45,13 @@ namespace OfficeDevPnP.PowerShell.Commands
             }
             else
             {
-                if (!SelectedWeb.IsPropertyAvailable("ServerRelativeUrl"))
-                {
-                    ClientContext.Load(SelectedWeb, w => w.ServerRelativeUrl);
-                    ClientContext.ExecuteQueryRetry();
-                }
+                SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
                 var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
                 var folder = SelectedWeb.GetFolderByServerRelativeUrl(folderUrl);
-                if (!folder.IsPropertyAvailable("Properties"))
-                {
-                    ClientContext.Load(folder.Properties);
-                    ClientContext.ExecuteQueryRetry();
-                }
+
+                folder.EnsureProperty(f => f.Properties);
+
                 if (folder.Properties.FieldValues.ContainsKey(Key))
                 {
                     if (Force || ShouldContinue(string.Format(Properties.Resources.Delete0, Key), Properties.Resources.Confirm))
