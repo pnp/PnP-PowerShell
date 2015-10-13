@@ -1,6 +1,150 @@
 #Uninstall-SPOSolution
+<<<<<<< HEAD
 *Topic automatically generated on: 2015-10-13*
+=======
+*Topic automatically generated on: 2015-10-02*
+>>>>>>> 1b71760d2a6302aa1f33f204a6a39ecc5daaa873
 
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
+Uninstalls a sandboxed solution from a site collection
+##Syntax
+```powershell
+Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|MajorVersion|Int32|False|Optional major version of the solution, defaults to 1|
+|MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
+|PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
+|PackageName|String|True|Filename of the WSP file to uninstall|
 Uninstalls a sandboxed solution from a site collection
 ##Syntax
 ```powershell
