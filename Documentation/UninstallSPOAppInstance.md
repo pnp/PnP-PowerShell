@@ -1,4 +1,7 @@
 #Uninstall-SPOAppInstance
+<<<<<<< HEAD
+*Topic automatically generated on: 2015-10-13*
+=======
 *Topic automatically generated on: 2015-10-02*
 
 Removes an app from a site
@@ -572,6 +575,7 @@ PS:> Uninstall-SPOAppInstance -Identity $appinstance
 ```powershell
 PS:> Uninstall-SPOAppInstance -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 ```
+>>>>>>> 1b71760d2a6302aa1f33f204a6a39ecc5daaa873
 
 Removes an app from a site
 ##Syntax

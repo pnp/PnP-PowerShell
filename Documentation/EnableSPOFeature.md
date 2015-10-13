@@ -1,4 +1,7 @@
 #Enable-SPOFeature
+<<<<<<< HEAD
+*Topic automatically generated on: 2015-10-13*
+=======
 *Topic automatically generated on: 2015-10-02*
 
 Enables a feature
@@ -1020,6 +1023,7 @@ PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
 ```powershell
 PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
 ```
+>>>>>>> 1b71760d2a6302aa1f33f204a6a39ecc5daaa873
 
 Enables a feature
 ##Syntax

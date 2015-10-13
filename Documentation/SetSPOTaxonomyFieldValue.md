@@ -1,4 +1,7 @@
 #Set-SPOTaxonomyFieldValue
+<<<<<<< HEAD
+*Topic automatically generated on: 2015-10-13*
+=======
 *Topic automatically generated on: 2015-10-02*
 
 Sets a taxonomy term value in a listitem field
@@ -924,6 +927,7 @@ PS:> Set-SPOTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -
 ```powershell
 PS:> Set-SPOTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -TermPath 'CORPORATE|DEPARTMENTS|HR'
 ```
+>>>>>>> 1b71760d2a6302aa1f33f204a6a39ecc5daaa873
 
 Sets a taxonomy term value in a listitem field
 ##Syntax

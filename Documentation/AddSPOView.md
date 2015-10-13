@@ -1,4 +1,7 @@
 #Add-SPOView
+<<<<<<< HEAD
+*Topic automatically generated on: 2015-10-13*
+=======
 *Topic automatically generated on: 2015-10-02*
 
 Adds a view to a list
@@ -572,6 +575,7 @@ Parameter|Type|Required|Description
 ```powershell
 Add-SPOView -List "Demo List" -Title "Demo View" -Fields "Title","Address"
 ```
+>>>>>>> 1b71760d2a6302aa1f33f204a6a39ecc5daaa873
 
 Adds a view to a list
 ##Syntax
