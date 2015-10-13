@@ -1,8 +1,5 @@
 #Remove-SPOContentType
-<<<<<<< HEAD
 *Topic automatically generated on: 2015-10-13*
-=======
-*Topic automatically generated on: 2015-10-02*
 
 Removes a content type
 ##Syntax
@@ -323,7 +320,6 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Remove-SPOContentType -Identity "Project Document"
 ```
->>>>>>> 1b71760d2a6302aa1f33f204a6a39ecc5daaa873
 
 Removes a content type
 ##Syntax
