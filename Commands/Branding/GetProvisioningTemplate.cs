@@ -58,7 +58,7 @@ SortOrder = 5)]
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "Filename to write to, optionally including full path")]
         public string Out;
 
-        [Parameter(Mandatory = false, Position = 0, HelpMessage = "The schema of the output to use, defaults to the latest schema")]
+        [Parameter(Mandatory = false, Position = 1, HelpMessage = "The schema of the output to use, defaults to the latest schema")]
         public XMLPnPSchemaVersion Schema = XMLPnPSchemaVersion.LATEST;
 
         [Parameter(Mandatory = false, HelpMessage = "If specified, all term groups will be included. Overrides IncludeSiteCollectionTermGroup.")]
