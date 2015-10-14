@@ -21,7 +21,7 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning template from a web", 
+    [CmdletHelp("Generates a provisioning template from a web",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
        Code = @"
@@ -71,11 +71,13 @@ SortOrder = 5)]
         public SwitchParameter IncludeSiteGroups;
 
         [Parameter(Mandatory = false, HelpMessage = "If specified the files making up the composed look (background image, font file and color file) will be saved.")]
-        public SwitchParameter PersistComposedLookFiles;        
+        public SwitchParameter PersistComposedLookFiles;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false, DontShow = true, HelpMessage = "Exports the template without the use of a base template, causing all OOTB artifacts to be included. Using this switch is generally not required/recommended.")]
+        public SwitchParameter NoBaseTemplate;
 
         [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
@@ -117,15 +119,25 @@ SortOrder = 5)]
         private string GetProvisioningTemplateXML(XMLPnPSchemaVersion schema, string path)
         {
             SelectedWeb.EnsureProperty(w => w.Url);
-            
+
             var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
+
+
 
             creationInformation.PersistComposedLookFiles = PersistComposedLookFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
 
             creationInformation.FileConnector = new FileSystemConnector(path, "");
 
-            creationInformation.BaseTemplate = this.SelectedWeb.GetBaseTemplate();
+            if (NoBaseTemplate)
+            {
+                creationInformation.BaseTemplate = null;
+            }
+            else
+            {
+                creationInformation.BaseTemplate = this.SelectedWeb.GetBaseTemplate();
+            }
+
             creationInformation.ProgressDelegate = (message, step, total) =>
             {
                 WriteProgress(new ProgressRecord(0, string.Format("Extracting Template from {0}", SelectedWeb.Url), message) { PercentComplete = (100 / total) * step });
