@@ -78,7 +78,7 @@ SortOrder = 5)]
 
 
         [Parameter(Mandatory = false)]
-        public Encoding Encoding = System.Text.Encoding.Unicode;
+        public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
 
         protected override void ExecuteCmdlet()
