@@ -130,6 +130,7 @@ SortOrder = 5)]
 
             creationInformation.FileConnector = new FileSystemConnector(path, "");
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (NoBaseTemplate)
             {
                 creationInformation.BaseTemplate = null;
@@ -138,6 +139,7 @@ SortOrder = 5)]
             {
                 creationInformation.BaseTemplate = this.SelectedWeb.GetBaseTemplate();
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             creationInformation.ProgressDelegate = (message, step, total) =>
             {
@@ -175,7 +177,9 @@ SortOrder = 5)]
                     }
                 case XMLPnPSchemaVersion.V201503:
                     {
+#pragma warning disable CS0618 // Type or member is obsolete
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03);
+#pragma warning restore CS0618 // Type or member is obsolete
                         break;
                     }
                 case XMLPnPSchemaVersion.V201505:
