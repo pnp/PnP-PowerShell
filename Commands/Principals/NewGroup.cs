@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Enums;
+using System;
 
 namespace OfficeDevPnP.PowerShell.Commands.Principals
 {
@@ -37,7 +38,8 @@ namespace OfficeDevPnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false)]
         public string RequestToJoinEmail;
 
-        [Parameter(Mandatory = false, DontShow = true)] // Not promoted to use anymore. Use Set-SPOGroup
+        [Parameter(Mandatory = false)] // Not promoted to use anymore. Use Set-SPOGroup
+        [Obsolete("Use Set-SPOGroup")]
         public AssociatedGroupType SetAssociatedGroup = AssociatedGroupType.None;
 
         protected override void ExecuteCmdlet()
