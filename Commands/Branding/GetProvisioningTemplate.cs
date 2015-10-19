@@ -76,7 +76,8 @@ SortOrder = 5)]
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, DontShow = true, HelpMessage = "Exports the template without the use of a base template, causing all OOTB artifacts to be included. Using this switch is generally not required/recommended.")]
+        [Parameter(Mandatory = false, HelpMessage = "Exports the template without the use of a base template, causing all OOTB artifacts to be included. Using this switch is generally not required/recommended.")]
+        [Obsolete("Use of this method is generally not required/recommended")]
         public SwitchParameter NoBaseTemplate;
 
         [Parameter(Mandatory = false)]
