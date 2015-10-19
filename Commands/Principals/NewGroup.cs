@@ -108,7 +108,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Principals
             }
 
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (SetAssociatedGroup != AssociatedGroupType.None)
+
             {
                 switch (SetAssociatedGroup)
                 {
@@ -129,6 +131,8 @@ namespace OfficeDevPnP.PowerShell.Commands.Principals
                         }
                 }
             }
+#pragma warning restore CS0618 // Type or member is obsolete
+
             ClientContext.ExecuteQueryRetry();
             WriteObject(group);
         }
