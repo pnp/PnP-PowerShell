@@ -277,6 +277,7 @@
     <Compile Include="Branding\GetJavaScriptLink.cs" />
     <Compile Include="Branding\ApplyProvisioningTemplate.cs" />
     <Compile Include="Branding\GetProvisioningTemplate.cs" />
+    <Compile Include="Branding\NewProvisioningTemplateFromFolder.cs" />
     <Compile Include="ContentTypes\RemoveContentTypeFromList.cs" />
     <Compile Include="ContentTypes\SetDefaultContentTypeToList.cs" />
     <Compile Include="ContentTypes\AddContentTypeToList.cs" />
@@ -452,7 +453,6 @@
     <None Include="ModuleFiles\OfficeDevPnP.PowerShell.V16.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-
     <None Include="ModuleFiles\OfficeDevPnP.PowerShell.V15.Commands.psd1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
