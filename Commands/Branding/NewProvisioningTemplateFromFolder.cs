@@ -1,17 +1,13 @@
-﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
@@ -38,21 +34,20 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
        SortOrder = 3)]
     [CmdletExample(
        Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder PnPDocumentLibrary
-",
-       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the PnPDocumentLibrary folder",
+    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents""",
+       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder",
        SortOrder = 4)]
 
     [CmdletExample(
        Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder PnPDocumentLibrary -ContentType ""Test Content Type""",
-       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the PnPDocumentLibrary folder. It will add a property to the item for the content type.",
+    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -ContentType ""Test Content Type""",
+       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add a property to the item for the content type.",
        SortOrder = 5)]
 
     [CmdletExample(
        Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder PnPDocumentLibrary -Properties @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
-       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the PnPDocumentLibrary folder. It will add the specified properties to the file entries.",
+    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -Properties @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
+       Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add the specified properties to the file entries.",
        SortOrder = 6)]
 
     public class NewProvisioningTemplateFromFolder : SPOWebCmdlet
@@ -63,13 +58,13 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "Folder to process. If not specified the current folder will be used.")]
         public string Folder;
 
-        [Parameter(Mandatory = false, Position = 1, HelpMessage = "Target folder to provision to files to")]
+        [Parameter(Mandatory = false, Position = 1, HelpMessage = "Target folder to provision to files to. If not specified, the current folder name will be used.")]
         public string TargetFolder;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional wildcard pattern to match filenames against. If empty all files will be included.")]
         public string Match = "*.*";
 
-        [Parameter(Mandatory = false, HelpMessage = "An optional contenttype to refer to.")]
+        [Parameter(Mandatory = false, HelpMessage = "An optional content type to use.")]
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false, HelpMessage = "Additional properties to set for every file entry in the generated template.")]
@@ -102,7 +97,10 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
             {
                 ct = ContentType.GetContentType(this.SelectedWeb);
             }
-
+            if (TargetFolder == null)
+            {
+                TargetFolder = new DirectoryInfo(SessionState.Path.CurrentFileSystemLocation.Path).Name;
+            }
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))
@@ -182,17 +180,22 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
         {
             var files = new List<Core.Framework.Provisioning.Model.File>();
 
-            foreach (var directory in Directory.EnumerateDirectories(folder))
+            DirectoryInfo dirInfo = new DirectoryInfo(folder);
+
+            foreach (var directory in dirInfo.GetDirectories().Where(d => (d.Attributes & FileAttributes.Hidden) == 0))
             {
-                files.AddRange(EnumerateFiles(directory, ctid, properties));
+                files.AddRange(EnumerateFiles(directory.FullName, ctid, properties));
             }
 
-            foreach (var file in Directory.EnumerateFiles(folder, Match))
+            var fileInfo = dirInfo.GetFiles(Match);
+            foreach (var file in fileInfo.Where(f => (f.Attributes & FileAttributes.Hidden) == 0))
             {
-                var unrootedPath = file.Substring(Folder.Length + 1);
+                var unrootedPath = file.FullName.Substring(Folder.Length + 1);
+                var targetFolder = Path.Combine(TargetFolder, unrootedPath.LastIndexOf("\\") > -1 ? unrootedPath.Substring(0, unrootedPath.LastIndexOf("\\")) : "");
+                targetFolder = targetFolder.Replace('\\', '/');
                 var modelFile = new Core.Framework.Provisioning.Model.File()
                 {
-                    Folder = TargetFolder,
+                    Folder = targetFolder,
                     Overwrite = true,
                     Src = unrootedPath,
                 };
