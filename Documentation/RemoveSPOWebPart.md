@@ -1,15 +1,15 @@
 #Remove-SPOWebPart
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Removes a webpart from a page
 ##Syntax
 ```powershell
-Remove-SPOWebPart -Identity <GuidPipeBind> -PageUrl <String> [-Web <WebPipeBind>]
+Remove-SPOWebPart -Identity <GuidPipeBind> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Remove-SPOWebPart -Name <String> -PageUrl <String> [-Web <WebPipeBind>]
+Remove-SPOWebPart -Title <String> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
 ```
 
 
@@ -17,7 +17,6 @@ Remove-SPOWebPart -Name <String> -PageUrl <String> [-Web <WebPipeBind>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|GuidPipeBind|True||
-|Name|String|True||
-|PageUrl|String|True||
+|ServerRelativePageUrl|String|True||
+|Title|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: E4CDCEF96479A4DAB33B8E8D6F311B50 -->

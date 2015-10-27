@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOEventReceiver")]
-    [CmdletHelp("Returns all or a specific event receiver", Category = "Event Receivers")]
+    [CmdletHelp("Returns all or a specific event receiver",
+        Category = CmdletHelpCategory.EventReceivers)]
     [CmdletExample(
       Code = @"PS:> Get-SPOEventReceiver",
       Remarks = @"This will return all registered event receivers on the current web", SortOrder = 1)]

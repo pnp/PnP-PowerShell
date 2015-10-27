@@ -1,5 +1,5 @@
 #Set-SPOTheme
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Sets the theme of the current web.
 ##Syntax
@@ -19,6 +19,7 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Set-SPOTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor
+```powershell
+PS:> Set-SPOTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor
+```
 
-<!-- Ref: 616A57CB884B27F2BAD1DD8F4F0352DF -->

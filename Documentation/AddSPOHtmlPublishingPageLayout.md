@@ -1,5 +1,5 @@
 #Add-SPOHtmlPublishingPageLayout
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a HTML based publishing page layout
 ##Syntax
@@ -17,4 +17,3 @@ Parameter|Type|Required|Description
 |SourceFilePath|String|True|Path to the file which will be uploaded|
 |Title|String|True|Title for the page layout|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: F8CBE76025CD96F62393CBA2D3BEDCAC -->

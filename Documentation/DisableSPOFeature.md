@@ -1,5 +1,5 @@
 #Disable-SPOFeature
-*Topic automatically generated on: 2015-08-16*
+*Topic automatically generated on: 2015-09-21*
 
 Disables a feature
 ##Syntax
@@ -18,14 +18,19 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+```powershell
+PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+```
 
 
 ###Example 2
-    PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
+```powershell
+PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
+```
 
 
 ###Example 3
-    PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
+```powershell
+PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
+```
 
-<!-- Ref: 8C96ADB233553A12C8825EE1AD7E4EC9 -->

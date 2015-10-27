@@ -13,7 +13,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Add,"SPOContentTypeToDocumentSet")]
-    [CmdletHelp("Adds a content type to a document set", Category = "Document Sets")]
+    [CmdletHelp("Adds a content type to a document set", 
+        Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(
         Code = @"PS:> Add-SPOContentTypeToDocumentSet -ContentType ""Test CT"" -DocumentSet ""Test Document Set""",
         Remarks = "This will add the content type called 'Test CT' to the document set called ''Test Document Set'",

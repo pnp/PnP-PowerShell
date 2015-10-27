@@ -1,5 +1,5 @@
 #Add-SPOPublishingPage
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a publishing page
 ##Syntax
@@ -16,4 +16,3 @@ Parameter|Type|Required|Description
 |Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
 |Title|String|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: 14919601EE636E2D53A25661CF36C51D -->

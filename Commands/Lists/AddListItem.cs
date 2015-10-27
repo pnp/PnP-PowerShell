@@ -8,7 +8,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOListItem")]
-    [CmdletHelp("Adds an item to a list", Category = "Lists")]
+    [CmdletHelp("Adds an item to a list", 
+        Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = @"Add-SPOListItem -List ""Demo List"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}", 
         Remarks = @"Adds a new list item to the ""Demo List"", and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
@@ -60,11 +61,8 @@ namespace OfficeDevPnP.PowerShell.Commands
                     }
                     if (ct != null)
                     {
-                        if (!ct.IsPropertyAvailable("StringId"))
-                        {
-                            ClientContext.Load(ct, c => c.StringId);
-                            ClientContext.ExecuteQueryRetry();
-                        }
+                        ct.EnsureProperty(w => w.StringId);
+                        
                         item["ContentTypeId"] = ct.StringId;
                         item.Update();
                         ClientContext.ExecuteQueryRetry();

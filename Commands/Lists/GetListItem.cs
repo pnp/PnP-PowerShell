@@ -10,7 +10,8 @@ using System.Xml.Linq;
 namespace OfficeDevPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "SPOListItem")]
-    [CmdletHelp("Retrieves list items", Category = "Lists")]
+    [CmdletHelp("Retrieves list items", 
+        Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = "PS:> Get-SPOListItem -List Tasks",
         Remarks = "Retrieves all list items from the tasks lists",

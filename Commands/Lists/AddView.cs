@@ -6,13 +6,14 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOView")]
-    [CmdletHelp("Adds a view to a list", Category = "Lists")]
+    [CmdletHelp("Adds a view to a list",
+        Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = @"Add-SPOView -List ""Demo List"" -Title ""Demo View"" -Fields ""Title"",""Address""",
         SortOrder = 1)]
     public class AddView : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, HelpMessage = "The title of the view.")]
@@ -38,11 +39,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            List list = null;
-            if (List != null)
-            {
-                list = List.GetList(SelectedWeb);
-            }
+            var list = List.GetList(SelectedWeb);
             if (list != null)
             {
                 var view = list.CreateView(Title, ViewType, Fields, RowLimit, SetAsDefault, Query, Personal);
@@ -51,5 +48,4 @@ namespace OfficeDevPnP.PowerShell.Commands
             }
         }
     }
-
 }

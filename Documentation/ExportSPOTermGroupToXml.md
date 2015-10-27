@@ -1,5 +1,5 @@
 #Export-SPOTermGroupToXml
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Exports a taxonomy TermGroup to either the output or to an XML file.
 ##Syntax
@@ -19,14 +19,19 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Export-SPOTermGroupToXml
+```powershell
+PS:> Export-SPOTermGroupToXml
+```
 Exports all term groups in the default site collection term store to the standard output
 
 ###Example 2
-    PS:> Export-SPOTermGroupToXml -Out output.xml
+```powershell
+PS:> Export-SPOTermGroupToXml -Out output.xml
+```
 Exports all term groups in the default site collection term store to the file 'output.xml' in the current folder
 
 ###Example 3
-    PS:> Export-SPOTermGroupToXml -Out c:\output.xml -TermGroup "Test Group"
+```powershell
+PS:> Export-SPOTermGroupToXml -Out c:\output.xml -TermGroup "Test Group"
+```
 Exports the term group with the specified name to the file 'output.xml' located in the root folder of the C: drive.
-<!-- Ref: 62E43DCD132E8577F506B58A67A37AE2 -->

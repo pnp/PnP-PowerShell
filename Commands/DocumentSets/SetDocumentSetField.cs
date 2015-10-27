@@ -13,7 +13,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Set, "SPODocumentSetField")]
-    [CmdletHelp("Sets a site column from the avaiable content types to a document set", Category = "Document Sets")]
+    [CmdletHelp("Sets a site column from the avaiable content types to a document set", 
+        Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(
         Code = @"PS:> Set-SPODocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -SetAsSharedField -SetAsWelcomePageField",
         Remarks = "This will set the field, available in one the available content types, as a Shared Field and as a Welcome Page Field.",

@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOField")]
-    [CmdletHelp("Returns a field from a list or site", Category = "Fields")]
+    [CmdletHelp("Returns a field from a list or site",
+        Category = CmdletHelpCategory.Fields)]
     public class GetField : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

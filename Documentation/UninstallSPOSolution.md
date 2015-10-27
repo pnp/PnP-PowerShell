@@ -1,5 +1,5 @@
 #Uninstall-SPOSolution
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Uninstalls a sandboxed solution from a site collection
 ##Syntax
@@ -15,4 +15,3 @@ Parameter|Type|Required|Description
 |MinorVersion|Int32|False|Optional minor version of the solution, defaults to 0|
 |PackageId|GuidPipeBind|True|ID of the solution, from the solution manifest|
 |PackageName|String|True|Filename of the WSP file to uninstall|
-<!-- Ref: F524055D83926BEAD9EE2658B4120056 -->

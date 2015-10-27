@@ -8,7 +8,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands.Principals
 {
     [Cmdlet("Set", "SPOGroup")]
-    [CmdletHelp("Updates a group", Category = "User and group management")]
+    [CmdletHelp("Updates a group",
+        Category = CmdletHelpCategory.Principals)]
     public class SetGroup : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]

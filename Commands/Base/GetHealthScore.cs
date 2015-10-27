@@ -6,7 +6,8 @@ using System.Management.Automation;
 namespace OfficeDevPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Get", "SPOHealthScore")]
-    [CmdletHelp("Retrieves the current health score value of the server", Category = "Base Cmdlets")]
+    [CmdletHelp("Retrieves the current health score value of the server", 
+        Category = CmdletHelpCategory.Base)]
     [CmdletExample(Code = "PS:> Get-SPOHealthScore", SortOrder = 1)]
     public class GetHealthScore : PSCmdlet
     {

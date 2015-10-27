@@ -7,7 +7,8 @@ using System;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOPropertyBag")]
-    [CmdletHelp("Returns the property bag values.", Category = "Webs")]
+    [CmdletHelp("Returns the property bag values.",
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
        Code = @"PS:> Get-SPOPropertyBag",
        Remarks = "This will return all web property bag values",
@@ -46,12 +47,8 @@ namespace OfficeDevPnP.PowerShell.Commands
                 }
                 else
                 {
-                    if (!SelectedWeb.IsPropertyAvailable("AllProperties"))
-                    {
-                        ClientContext.Load(SelectedWeb.AllProperties);
-                        ClientContext.ExecuteQueryRetry();
-
-                    }
+                    SelectedWeb.EnsureProperty(w => w.AllProperties);
+                    
                     var values = SelectedWeb.AllProperties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
                     WriteObject(values, true);
                 }
@@ -60,19 +57,13 @@ namespace OfficeDevPnP.PowerShell.Commands
             {
                 // Folder Property Bag
 
-                if (!SelectedWeb.IsPropertyAvailable("ServerRelativeUrl"))
-                {
-                    ClientContext.Load(SelectedWeb, w => w.ServerRelativeUrl);
-                    ClientContext.ExecuteQueryRetry();
-                }
-
+                SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                
                 var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
                 var folder = SelectedWeb.GetFolderByServerRelativeUrl(folderUrl);
-                if (!folder.IsPropertyAvailable("Properties"))
-                {
-                    ClientContext.Load(folder.Properties);
-                    ClientContext.ExecuteQueryRetry();
-                }
+
+                folder.EnsureProperty(f => f.Properties);
+                
                 if (!string.IsNullOrEmpty(Key))
                 {
                     var value = folder.Properties.FieldValues.FirstOrDefault(x => x.Key == Key);

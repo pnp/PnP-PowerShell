@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "SPOList")]
-    [CmdletHelp("Updates list settings", Category = "Lists")]
+    [CmdletHelp("Updates list settings",
+        Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = @"Set-SPOList -Identity ""Demo List"" -EnableContentTypes $true", 
         Remarks = "Switches the Enable Content Type switch on the list",

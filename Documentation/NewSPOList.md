@@ -1,5 +1,5 @@
 #New-SPOList
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Creates a new list
 ##Syntax
@@ -21,10 +21,13 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> New-SPOList -Title Announcements -Template Announcements
+```powershell
+PS:> New-SPOList -Title Announcements -Template Announcements
+```
 
 
 ###Example 2
-    PS:> New-SPOList -Title "Demo List" -Url "DemoList" -Template Announcements
+```powershell
+PS:> New-SPOList -Title "Demo List" -Url "DemoList" -Template Announcements
+```
 Create a list with a title that is different from the url
-<!-- Ref: B153A64AED78F846D46BC64645C6ACE1 -->

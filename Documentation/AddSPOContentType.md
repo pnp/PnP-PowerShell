@@ -1,5 +1,5 @@
 #Add-SPOContentType
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a new content type
 ##Syntax
@@ -20,6 +20,7 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Add-SPOContentType -Name "Project Document" -Description "Use for Contoso projects" -Group "Contoso Content Types" -ParentContentType $ct
+```powershell
+PS:> Add-SPOContentType -Name "Project Document" -Description "Use for Contoso projects" -Group "Contoso Content Types" -ParentContentType $ct
+```
 This will add a new content type based on the parent content type stored in the $ct variable.
-<!-- Ref: 93D667239AD3B884CBE696754832CCC2 -->

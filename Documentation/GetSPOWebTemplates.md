@@ -1,5 +1,5 @@
 #Get-SPOWebTemplates
-*Topic automatically generated on: 2015-06-03*
+*Topic automatically generated on: 2015-09-21*
 
 Office365 only: Returns the available web templates.
 ##Syntax
@@ -16,10 +16,13 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOWebTemplates
+```powershell
+PS:> Get-SPOWebTemplates
+```
 
 
 ###Example 2
-    PS:> Get-SPOWebTemplates -LCID 1033
+```powershell
+PS:> Get-SPOWebTemplates -LCID 1033
+```
 Returns all webtemplates for the Locale with ID 1033 (English)
-<!-- Ref: 0D1E6E1A845F9A011E9D30F678C66D33 -->

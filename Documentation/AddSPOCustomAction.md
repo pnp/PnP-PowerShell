@@ -1,5 +1,5 @@
 #Add-SPOCustomAction
-*Topic automatically generated on: 2015-09-01*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a custom action to a web
 ##Syntax
@@ -25,4 +25,3 @@ Parameter|Type|Required|Description
 |Title|String|True||
 |Url|String|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: E1B949D002A08EEAC25DECF137438533 -->

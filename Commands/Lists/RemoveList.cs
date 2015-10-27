@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOList", SupportsShouldProcess = true)]
-    [CmdletHelp("Deletes a list", Category = "Lists")]
+    [CmdletHelp("Deletes a list",
+        Category = CmdletHelpCategory.Lists)]
     public class RemoveList : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]

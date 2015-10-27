@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "SPOGroup",DefaultParameterSetName="All")]
-    [CmdletHelp("Returns a specific group or all groups.", Category = "User and group management")]
+    [CmdletHelp("Returns a specific group or all groups.",
+        Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
         Code = @"PS:> Get-SPOGroup", 
         Remarks = "Returns all groups",

@@ -21,7 +21,8 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning template from a web", Category = "Branding")]
+    [CmdletHelp("Generates a provisioning template from a web", 
+        Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
        Code = @"
     PS:> Get-SPOProvisioningTemplate -Out template.xml
@@ -115,11 +116,8 @@ SortOrder = 5)]
 
         private string GetProvisioningTemplateXML(XMLPnPSchemaVersion schema, string path)
         {
-            if (!this.SelectedWeb.IsPropertyAvailable("Url"))
-            {
-                ClientContext.Load(this.SelectedWeb, w => w.Url);
-                ClientContext.ExecuteQueryRetry();
-            }
+            SelectedWeb.EnsureProperty(w => w.Url);
+            
             var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
 
             creationInformation.PersistComposedLookFiles = PersistComposedLookFiles;

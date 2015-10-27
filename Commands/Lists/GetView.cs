@@ -9,7 +9,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOView")]
-    [CmdletHelp("Returns one or all views from a list", Category = "Lists")]
+    [CmdletHelp("Returns one or all views from a list",
+        Category = CmdletHelpCategory.Lists)]
     public class GetView : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]

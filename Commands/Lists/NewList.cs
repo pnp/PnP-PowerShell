@@ -5,7 +5,8 @@ using System.Management.Automation;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "SPOList")]
-    [CmdletHelp("Creates a new list", Category = "Lists")]
+    [CmdletHelp("Creates a new list",
+        Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = "PS:> New-SPOList -Title Announcements -Template Announcements", 
         SortOrder = 1)]

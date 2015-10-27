@@ -4,21 +4,24 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using File = System.IO.File;
+using System;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOWebPartToWebPartPage")]
-    [CmdletHelp("Adds a webpart to a web part page in a specified zone", Category = "Web Parts")]
+    [CmdletHelp("Adds a webpart to a web part page in a specified zone",
+        Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(
-   Code = @"PS:> Add-SPOWebPartToWebPartPage -PageUrl ""/sites/demo/sitepages/home.aspx"" -Path ""c:\myfiles\listview.webpart"" -ZoneId ""Header"" -ZoneIndex 1 ",
+   Code = @"PS:> Add-SPOWebPartToWebPartPage -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Path ""c:\myfiles\listview.webpart"" -ZoneId ""Header"" -ZoneIndex 1 ",
    Remarks = @"This will add the webpart as defined by the XML in the listview.webpart file to the specified page in the specified zone and with the order index of 1", SortOrder = 1)]
     [CmdletExample(
-  Code = @"PS:> Add-SPOWebPartToWebPartPage -PageUrl ""/sites/demo/sitepages/home.aspx"" -XML $webpart -ZoneId ""Header"" -ZoneIndex 1 ",
+  Code = @"PS:> Add-SPOWebPartToWebPartPage -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -XML $webpart -ZoneId ""Header"" -ZoneIndex 1 ",
   Remarks = @"This will add the webpart as defined by the XML in the $webpart variable to the specified page in the specified zone and with the order index of 1", SortOrder = 1)]
     public class AddWebPartToWebPartPage : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Server Relative Url of the page to add the webpart to.")]
-        public string PageUrl = string.Empty;
+        [Alias("PageUrl")]
+        public string ServerRelativePageUrl = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = "XML", HelpMessage = "A string containing the XML for the webpart.")]
         public string Xml = string.Empty;
@@ -34,7 +37,13 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-           
+            var serverRelativeWebUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
+            if (!ServerRelativePageUrl.ToLowerInvariant().StartsWith(serverRelativeWebUrl.ToLowerInvariant()))
+            {
+                ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
+            }
+
 
             WebPartEntity wp = null;
 
@@ -61,7 +70,7 @@ namespace OfficeDevPnP.PowerShell.Commands
             }
             if (wp != null)
             {
-                SelectedWeb.AddWebPartToWebPartPage(PageUrl, wp);
+                SelectedWeb.AddWebPartToWebPartPage(ServerRelativePageUrl, wp);
             }
         }
     }

@@ -1,5 +1,5 @@
 #Set-SPOGroup
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Updates a group
 ##Syntax
@@ -24,4 +24,3 @@ Parameter|Type|Required|Description
 |SetAssociatedGroup|AssociatedGroupType|False||
 |Title|String|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: 8E92D99D1F177C3BA13AE1EE347C8D9B -->

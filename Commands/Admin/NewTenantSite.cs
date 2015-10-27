@@ -7,9 +7,19 @@ using OfficeDevPnP.PowerShell.Commands.Base;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "SPOTenantSite")]
-    [CmdletHelp("Creates a new site collection for the current tenant", DetailedDescription = @"
-The New-SPOTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
-Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx ", Category = "Tenant Administration")]
+    [CmdletHelp("Creates a new site collection for the current tenant", 
+        DetailedDescription = @"The New-SPOTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
+Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx ", 
+        Category = CmdletHelpCategory.TenantAdmin)]
+    [CmdletRelatedLink(
+        Text ="Locale IDs", 
+        Url = "http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911")]
+    [CmdletRelatedLink(
+        Text = "Resource Usage Limits on Sandboxed Solutions in SharePoint 2010", 
+        Url = "http://msdn.microsoft.com/en-us/library/gg615462.aspx.")]
+    [CmdletRelatedLink(
+        Text = "Creating on-premises site collections using CSOM",
+        Url = "http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx")]
     public class NewTenantSite : SPOAdminCmdlet
     {
         [Parameter(Mandatory = true)]

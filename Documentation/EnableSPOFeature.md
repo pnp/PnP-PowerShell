@@ -1,5 +1,5 @@
 #Enable-SPOFeature
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Enables a feature
 ##Syntax
@@ -19,14 +19,19 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+```powershell
+PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+```
 
 
 ###Example 2
-    PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
+```powershell
+PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
+```
 
 
 ###Example 3
-    PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
+```powershell
+PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
+```
 
-<!-- Ref: 555356C7C8D855E1525FF4040146076E -->

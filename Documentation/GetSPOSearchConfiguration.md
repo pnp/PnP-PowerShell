@@ -1,29 +1,1751 @@
 #Get-SPOSearchConfiguration
-*Topic automatically generated on: 2015-08-31*
+*Topic automatically generated on: 2015-09-23*
 
 Returns the search configuration
 ##Syntax
 ```powershell
-Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Web <WebPipeBind>]
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Path|String|False||
 |Scope|SearchConfigurationScope|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOSearchConfiguration
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
 Returns the search configuration for the current web
 
 ###Example 2
-    PS:> Get-SPOSearchConfiguration -Scope Site
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
 Returns the search configuration for the current site collection
 
 ###Example 3
-    PS:> Get-SPOSearchConfiguration -Scope Subscription
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
 Returns the search configuration for the current tenant
-<!-- Ref: 70F8EEE409C9A02BB2CBC837AEF3E6EA -->
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file
+Returns the search configuration
+##Syntax
+```powershell
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Path|String|False||
+|Scope|SearchConfigurationScope|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Get-SPOSearchConfiguration
+```
+Returns the search configuration for the current web
+
+###Example 2
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Site
+```
+Returns the search configuration for the current site collection
+
+###Example 3
+```powershell
+PS:> Get-SPOSearchConfiguration -Scope Subscription
+```
+Returns the search configuration for the current tenant
+
+###Example 4
+```powershell
+PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
+```
+Returns the search configuration for the current tenant and saves it to the specified file

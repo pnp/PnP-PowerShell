@@ -1,10 +1,15 @@
 #Add-SPOTaxonomyField
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-22*
 
 Adds a taxonomy field to a list or as a site column.
 ##Syntax
 ```powershell
-Add-SPOTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -TermSetPath <String> [-TermPathDelimiter <String>] [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+Add-SPOTaxonomyField [-TaxonomyItemId <GuidPipeBind>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-SPOTaxonomyField -TermSetPath <String> [-TermPathDelimiter <String>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
 ```
 
 
@@ -20,7 +25,189 @@ Parameter|Type|Required|Description
 |List|ListPipeBind|False||
 |MultiValue|SwitchParameter|False||
 |Required|SwitchParameter|False||
+|TaxonomyItemId|GuidPipeBind|False||
 |TermPathDelimiter|String|False||
 |TermSetPath|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: 4418E10730E580E51267711CB9DCB25A -->
+##Examples
+
+###Example 1
+```powershell
+PS:> Add-SPOTaxonomyField -DisplayName "Test" -InternalName "Test" -TermSetPath "TestTermGroup|TestTermSet"
+```
+Adds a new taxonomy field called "Test" that points to the TestTermSet which is located in the TestTermGroup
+Adds a taxonomy field to a list or as a site column.
+##Syntax
+```powershell
+Add-SPOTaxonomyField [-TaxonomyItemId <GuidPipeBind>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-SPOTaxonomyField -TermSetPath <String> [-TermPathDelimiter <String>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|AddToDefaultView|SwitchParameter|False||
+|DisplayName|String|True||
+|FieldOptions|AddFieldOptions|False||
+|Group|String|False||
+|Id|GuidPipeBind|False||
+|InternalName|String|True||
+|List|ListPipeBind|False||
+|MultiValue|SwitchParameter|False||
+|Required|SwitchParameter|False||
+|TaxonomyItemId|GuidPipeBind|False||
+|TermPathDelimiter|String|False||
+|TermSetPath|String|True||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Add-SPOTaxonomyField -DisplayName "Test" -InternalName "Test" -TermSetPath "TestTermGroup|TestTermSet"
+```
+Adds a new taxonomy field called "Test" that points to the TestTermSet which is located in the TestTermGroup
+Adds a taxonomy field to a list or as a site column.
+##Syntax
+```powershell
+Add-SPOTaxonomyField [-TaxonomyItemId <GuidPipeBind>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-SPOTaxonomyField -TermSetPath <String> [-TermPathDelimiter <String>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|AddToDefaultView|SwitchParameter|False||
+|DisplayName|String|True||
+|FieldOptions|AddFieldOptions|False||
+|Group|String|False||
+|Id|GuidPipeBind|False||
+|InternalName|String|True||
+|List|ListPipeBind|False||
+|MultiValue|SwitchParameter|False||
+|Required|SwitchParameter|False||
+|TaxonomyItemId|GuidPipeBind|False||
+|TermPathDelimiter|String|False||
+|TermSetPath|String|True||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Add-SPOTaxonomyField -DisplayName "Test" -InternalName "Test" -TermSetPath "TestTermGroup|TestTermSet"
+```
+Adds a new taxonomy field called "Test" that points to the TestTermSet which is located in the TestTermGroup
+Adds a taxonomy field to a list or as a site column.
+##Syntax
+```powershell
+Add-SPOTaxonomyField [-TaxonomyItemId <GuidPipeBind>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-SPOTaxonomyField -TermSetPath <String> [-TermPathDelimiter <String>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|AddToDefaultView|SwitchParameter|False||
+|DisplayName|String|True||
+|FieldOptions|AddFieldOptions|False||
+|Group|String|False||
+|Id|GuidPipeBind|False||
+|InternalName|String|True||
+|List|ListPipeBind|False||
+|MultiValue|SwitchParameter|False||
+|Required|SwitchParameter|False||
+|TaxonomyItemId|GuidPipeBind|False||
+|TermPathDelimiter|String|False||
+|TermSetPath|String|True||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Add-SPOTaxonomyField -DisplayName "Test" -InternalName "Test" -TermSetPath "TestTermGroup|TestTermSet"
+```
+Adds a new taxonomy field called "Test" that points to the TestTermSet which is located in the TestTermGroup
+Adds a taxonomy field to a list or as a site column.
+##Syntax
+```powershell
+Add-SPOTaxonomyField [-TaxonomyItemId <GuidPipeBind>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-SPOTaxonomyField -TermSetPath <String> [-TermPathDelimiter <String>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|AddToDefaultView|SwitchParameter|False||
+|DisplayName|String|True||
+|FieldOptions|AddFieldOptions|False||
+|Group|String|False||
+|Id|GuidPipeBind|False||
+|InternalName|String|True||
+|List|ListPipeBind|False||
+|MultiValue|SwitchParameter|False||
+|Required|SwitchParameter|False||
+|TaxonomyItemId|GuidPipeBind|False||
+|TermPathDelimiter|String|False||
+|TermSetPath|String|True||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Add-SPOTaxonomyField -DisplayName "Test" -InternalName "Test" -TermSetPath "TestTermGroup|TestTermSet"
+```
+Adds a new taxonomy field called "Test" that points to the TestTermSet which is located in the TestTermGroup
+Adds a taxonomy field to a list or as a site column.
+##Syntax
+```powershell
+Add-SPOTaxonomyField [-TaxonomyItemId <GuidPipeBind>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-SPOTaxonomyField -TermSetPath <String> [-TermPathDelimiter <String>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+```
+
+
+##Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|AddToDefaultView|SwitchParameter|False||
+|DisplayName|String|True||
+|FieldOptions|AddFieldOptions|False||
+|Group|String|False||
+|Id|GuidPipeBind|False||
+|InternalName|String|True||
+|List|ListPipeBind|False||
+|MultiValue|SwitchParameter|False||
+|Required|SwitchParameter|False||
+|TaxonomyItemId|GuidPipeBind|False||
+|TermPathDelimiter|String|False||
+|TermSetPath|String|True||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Add-SPOTaxonomyField -DisplayName "Test" -InternalName "Test" -TermSetPath "TestTermGroup|TestTermSet"
+```
+Adds a new taxonomy field called "Test" that points to the TestTermSet which is located in the TestTermGroup

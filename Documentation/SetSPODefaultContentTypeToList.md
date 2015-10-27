@@ -1,5 +1,5 @@
 #Set-SPODefaultContentTypeToList
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Sets the default content type for a list
 ##Syntax
@@ -17,6 +17,7 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Set-SPODefaultContentTypeToList -List "Project Documents" -ContentType "Project"
+```powershell
+PS:> Set-SPODefaultContentTypeToList -List "Project Documents" -ContentType "Project"
+```
 This will set the Project content type (which has already been added to a list) as the default content type
-<!-- Ref: B40227CF5BA926122A3198A089FDDB84 -->

@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOWikiPageContent")]
-    [CmdletHelp("Gets the contents/source of a wiki page", Category = "Publishing")]
+    [CmdletHelp("Gets the contents/source of a wiki page",
+        Category = CmdletHelpCategory.Publishing)]
     public class GetWikiPageContent : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position=0)]

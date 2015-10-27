@@ -10,7 +10,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsCommon.Get, "SPOFeature")]
-    [CmdletHelp("Returns all activated or a specific activated feature", Category = "Features")]
+    [CmdletHelp("Returns all activated or a specific activated feature",
+        Category = CmdletHelpCategory.Features)]
     [CmdletExample(
      Code = @"PS:> Get-SPOFeature",
      Remarks = @"This will return all activated web scoped features", SortOrder = 1)]

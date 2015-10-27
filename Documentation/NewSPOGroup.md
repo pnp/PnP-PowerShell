@@ -1,5 +1,5 @@
 #New-SPOGroup
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a user to the build-in Site User Info List and returns a user object
 ##Syntax
@@ -23,6 +23,7 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> New-SPOUser -LogonName user@company.com
+```powershell
+PS:> New-SPOUser -LogonName user@company.com
+```
 
-<!-- Ref: 36BB6CA67C81BA83B051777D23614329 -->

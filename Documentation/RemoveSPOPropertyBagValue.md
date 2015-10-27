@@ -1,5 +1,5 @@
 #Remove-SPOPropertyBagValue
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Removes a value from the property bag
 ##Syntax
@@ -18,14 +18,19 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Remove-SPOPropertyBagValue -Key MyKey
+```powershell
+PS:> Remove-SPOPropertyBagValue -Key MyKey
+```
 This will remove the value with key MyKey from the current web property bag
 
 ###Example 2
-    PS:> Remove-SPOPropertyBagValue -Key MyKey -Folder /MyFolder
+```powershell
+PS:> Remove-SPOPropertyBagValue -Key MyKey -Folder /MyFolder
+```
 This will remove the value with key MyKey from the folder MyFolder which is located in the root folder of the current web
 
 ###Example 3
-    PS:> Remove-SPOPropertyBagValue -Key MyKey -Folder /
+```powershell
+PS:> Remove-SPOPropertyBagValue -Key MyKey -Folder /
+```
 This will remove the value with key MyKey from the root folder of the current web
-<!-- Ref: 78282DCDA2059ED043399AA32D80EF36 -->

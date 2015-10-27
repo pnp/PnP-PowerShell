@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.Commands.Enums;
 namespace OfficeDevPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Get", "SPOStoredCredential")]
-    [CmdletHelp("Returns a stored credential from the Windows Credential Manager", Category = "Base Cmdlets")]
+    [CmdletHelp("Returns a stored credential from the Windows Credential Manager", 
+        Category = CmdletHelpCategory.Base)]
     [CmdletExample(Code = "PS:> Get-SPOnlineStoredCredential -Name O365", 
         Remarks = "Returns the credential associated with the specified identifier",
         SortOrder = 1)]

@@ -1,5 +1,5 @@
 #Set-SPODefaultColumnValues
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Sets default column values for a document library
 ##Syntax
@@ -22,10 +22,13 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Set-SPODefaultColumnValues -List Documents -Field TaxKeyword -Value "Company|Locations|Stockholm"
+```powershell
+PS:> Set-SPODefaultColumnValues -List Documents -Field TaxKeyword -Value "Company|Locations|Stockholm"
+```
 Sets a default value for the enterprise keywords field on a library to a term called "Stockholm", located in the "Locations" term set, which is part of the "Company" term group
 
 ###Example 2
-    PS:> Set-SPODefaultColumnValues -List Documents -Field MyTextField -Value "DefaultValue"
+```powershell
+PS:> Set-SPODefaultColumnValues -List Documents -Field MyTextField -Value "DefaultValue"
+```
 Sets a default value for the MyTextField text field on a library to a value of "DefaultValue"
-<!-- Ref: 34EB95FE022CA7DADB5D9DFED456AA53 -->

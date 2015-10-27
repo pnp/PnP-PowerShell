@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOField", SupportsShouldProcess = true)]
-    [CmdletHelp("Removes a field from a list or a site", Category = "Fields")]
+    [CmdletHelp("Removes a field from a list or a site",
+        Category = CmdletHelpCategory.Fields)]
     public class RemoveField : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

@@ -1,5 +1,5 @@
 #Add-SPOJavaScriptLink
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a link to a JavaScript file to a web or sitecollection
 ##Syntax
@@ -16,4 +16,3 @@ Parameter|Type|Required|Description
 |Sequence|Int32|False||
 |Url|String[]|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: F034704BA5E1D1B5187AB159901C5BAC -->

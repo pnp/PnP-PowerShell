@@ -35,6 +35,21 @@ namespace OfficeDevPnP.PowerShell.Tests
             }
         }
 
-      
+        [TestMethod]
+        public void GetPropertyTest()
+        {
+            using (var ctx = TestCommon.CreateClientContext())
+            {
+                using (var scope = new PSTestScope(true))
+                {
+
+                    var results = scope.ExecuteCommand("Get-SPOProperty",
+                        new CommandParameter("ClientObject", ctx.Web),
+                        new CommandParameter("Property", "Lists"));
+                    Assert.IsTrue(results.Count == 1);
+                    Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Microsoft.SharePoint.Client.ListCollection));
+                }
+            }
+        }
     }
 }

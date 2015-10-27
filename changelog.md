@@ -1,5 +1,21 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-09-23**
+
+* Update Get-SPOSearchConfiguration and Set-SPOSearchConfiguration to support Path parameter to export to or import from a file
+**2015-09-21**
+
+* Added -Parameters parameter to Apply-SPOProvisioningTemplate. See help for the cmdlet for more info.
+* Renamed PageUrl parameter of Webpart cmdlets to ServerRelativePageUrl. Set PageUrl as parameter alias to not break existing scripts.
+
+**2015-09-17**
+
+* Added Get-SPOProperty to dynamically load specified properties from objects.
+
+**2015-09-10**
+
+* Renamed Path parameter of Set-SPOHomePage to RootFolderRelativeUrl. Set Path as parameter alias.
+
 **2015-09-02**
 
 * Started adding unit tests

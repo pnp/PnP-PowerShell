@@ -1,0 +1,13 @@
+﻿<?xml version="1.0"?>
+<pnp:ProvisioningTemplate ID="PNPPOWERSHELLTEMPLATE" Version="1" xmlns:pnp="http://schemas.dev.office.com/PnP/2015/05/ProvisioningSchema">
+  <pnp:SiteFields>
+    <Field Type="Text"
+           DisplayName="PnPPowerShellTemplateTest"
+           Name="PnPPowerShellTemplateTest"
+           StaticName="PnPPowerShellTemplateTest"
+           Required="FALSE"
+           Group="PnP"
+           ID="{33E2B2E9-2BB8-46E3-A255-2153631965BE}">
+    </Field>
+  </pnp:SiteFields>
+</pnp:ProvisioningTemplate>

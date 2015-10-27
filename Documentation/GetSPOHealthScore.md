@@ -1,5 +1,5 @@
 #Get-SPOHealthScore
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Retrieves the current health score value of the server
 ##Syntax
@@ -9,6 +9,7 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOHealthScore
+```powershell
+PS:> Get-SPOHealthScore
+```
 
-<!-- Ref: F98A85C85EA87FC264E3C159EF2AFAFF -->

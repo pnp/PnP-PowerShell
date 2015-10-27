@@ -7,7 +7,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOFile")]
-    [CmdletHelp("Uploads a file to Web", Category = "Webs")]
+    [CmdletHelp("Uploads a file to Web", 
+        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = @"PS:> Add-SPOFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage", 
         Remarks = "This will upload the file company.master to the masterpage catalog",
@@ -49,12 +50,8 @@ namespace OfficeDevPnP.PowerShell.Commands
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            if (!SelectedWeb.IsPropertyAvailable("ServerRelativeUrl"))
-            {
-                ClientContext.Load(SelectedWeb, w => w.ServerRelativeUrl);
-                ClientContext.ExecuteQueryRetry();
-            }
-
+            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            
             var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
             //var folder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder));
             //ClientContext.Load(folder, f => f.ServerRelativeUrl);

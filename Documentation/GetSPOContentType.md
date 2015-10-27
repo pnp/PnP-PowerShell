@@ -1,5 +1,5 @@
 #Get-SPOContentType
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Retrieves a content type
 ##Syntax
@@ -17,6 +17,7 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Get-SPOContentType -Identity "Project Document"
+```powershell
+PS:> Get-SPOContentType -Identity "Project Document"
+```
 This will get a listing of content types within the current context
-<!-- Ref: 3FEC30B10173DA9D48DFDDB1876D6487 -->

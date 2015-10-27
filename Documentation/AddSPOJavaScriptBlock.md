@@ -1,5 +1,5 @@
 #Add-SPOJavaScriptBlock
-*Topic automatically generated on: 2015-09-01*
+*Topic automatically generated on: 2015-09-21*
 
 Adds a link to a JavaScript snippet/block to a web or site collection
 ##Syntax
@@ -19,4 +19,3 @@ Parameter|Type|Required|Description
 |Script|String|True|The javascript block to add|
 |Sequence|Int32|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-<!-- Ref: 816D24119E51FB05015613CBD355BD74 -->

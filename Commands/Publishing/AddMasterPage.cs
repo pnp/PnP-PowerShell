@@ -5,7 +5,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOMasterPage")]
-    [CmdletHelp("Adds a Masterpage", Category = "Publishing")]
+    [CmdletHelp("Adds a Masterpage",
+        Category = CmdletHelpCategory.Publishing)]
     [CmdletExample(
         Code = @"PS:> Add-SPOMasterPage -SourceFilePath ""page.master"" -Title ""MasterPage"" -Description ""MasterPage for Web"" -DestinationFolderHierarchy ""SubFolder""",
         Remarks = "Adds a MasterPage to the web",

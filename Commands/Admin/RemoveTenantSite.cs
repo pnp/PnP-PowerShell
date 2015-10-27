@@ -8,7 +8,9 @@ using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
-    [CmdletHelp("Office365 only: Removes a site collection from the current tenant", DetailedDescription = "", Category = "Tenant Administration")]
+    [CmdletHelp("Office365 only: Removes a site collection from the current tenant", 
+        DetailedDescription = "", 
+        Category = CmdletHelpCategory.TenantAdmin)]
     public class RemoveSite : SPOAdminCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]

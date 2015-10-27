@@ -1,5 +1,5 @@
 #Remove-SPOEventReceiver
-*Topic automatically generated on: 2015-08-04*
+*Topic automatically generated on: 2015-09-21*
 
 Removes/unregisters a specific event receiver
 ##Syntax
@@ -18,10 +18,13 @@ Parameter|Type|Required|Description
 ##Examples
 
 ###Example 1
-    PS:> Remove-SPOEventReceiver -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```powershell
+PS:> Remove-SPOEventReceiver -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
 This will remove an event receiver with id fb689d0e-eb99-4f13-beb3-86692fd39f22 from the current web
 
 ###Example 2
-    PS:> Remove-SPOEventReceiver -List ProjectList -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```powershell
+PS:> Remove-SPOEventReceiver -List ProjectList -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
+```
 This will remove an event receiver with id fb689d0e-eb99-4f13-beb3-86692fd39f22 from the list with name "ProjectList"
-<!-- Ref: A75AD55B95FAD44D844E56D58E98AF89 -->

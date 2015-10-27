@@ -6,7 +6,8 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 namespace OfficeDevPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "SPOWorkflowDefinition")]
-    [CmdletHelp("Returns a workflow definition", Category = "Workflows")]
+    [CmdletHelp("Returns a workflow definition",
+        Category = CmdletHelpCategory.Workflows)]
 
     public class GetWorkflowDefinition : SPOWebCmdlet
     {
