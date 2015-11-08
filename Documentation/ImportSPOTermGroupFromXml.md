@@ -1,5 +1,5 @@
 #Import-SPOTermGroupFromXml
-*Topic automatically generated on: 2015-09-21*
+*Topic automatically generated on: 2015-10-13*
 
 Imports a taxonomy TermGroup from either the input or from an XML file.
 ##Syntax

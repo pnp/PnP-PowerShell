@@ -1,5 +1,5 @@
 #Find-SPOFile
-*Topic automatically generated on: 2015-09-21*
+*Topic automatically generated on: 2015-10-13*
 
 Finds a file in the virtual file system of the web.
 ##Syntax

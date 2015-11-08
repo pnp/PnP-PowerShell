@@ -1,5 +1,5 @@
 #New-SPOUser
-*Topic automatically generated on: 2015-09-21*
+*Topic automatically generated on: 2015-10-13*
 
 Adds a user to the build-in Site User Info List and returns a user object
 ##Syntax
