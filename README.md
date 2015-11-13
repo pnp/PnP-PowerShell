@@ -52,6 +52,11 @@ For the SharePoint On-Premises Modules
 
 Once the above has been completed you can then start to use the PowerShell Modules
 
+Once new releases of the module are made available on the PowerShell Gallery you will be able to use the the following command to install the latest updated version
+```powershell
+Update-Module
+``` 
+
 This will automatically load the module after starting PowerShell 3.0.
 To use the library you first need to connect to your tenant:
 
