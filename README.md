@@ -28,6 +28,30 @@ OfficeDevPnP.PowerShell | Erwin van Hunen
 A build script will copy the required files to a folder in your users folder, called:
 *C:\Users\<YourUserName>\Documents\WindowsPowerShell\Modules\OfficeDevPnP.PowerShell.Commands*
 
+Alternatively for installation on machines that have at least PowerShell v3 installed (you can find this out by opening PowerShell and running $host.version and Major should be above 3) you can run the below command which will install PowerShell Package Management and then install the PowerShell Modules from the PowerShell Gallery
+```powershell
+Invoke-Expression (New-Object Net.WebClient).DownloadString('http://bit.ly/InstallO365PnPPowerShell')
+'''
+If you wish to see the commands that the above will run please see the files as stored in the below locations
+http://bit.ly/PSPackManInstall
+http://bit.ly/ODevPnPPowerShellHelper1
+
+If you however already have PackageManagement installed you can just run the below
+
+```powershell
+Install-Module OfficeDevPnP.PowerShell.V16.Commands
+```
+For the SharePoint Online Module
+
+or
+
+```powershell
+Install-Module OfficeDevPnP.PowerShell.V15.Commands
+```
+For the SharePoint On-Premises Modules
+
+Once the above has been completed you can then start to use the PowerShell Modules
+
 This will automatically load the module after starting PowerShell 3.0.
 To use the library you first need to connect to your tenant:
 
