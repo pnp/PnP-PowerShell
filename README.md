@@ -32,6 +32,7 @@ Alternatively for installation on machines that have at least PowerShell v3 inst
 ```powershell
 Invoke-Expression (New-Object Net.WebClient).DownloadString('http://bit.ly/InstallO365PnPPowerShell')
 '''
+
 If you wish to see the commands that the above will run please see the files as stored in the below locations
 http://bit.ly/PSPackManInstall
 http://bit.ly/ODevPnPPowerShellHelper1
@@ -41,6 +42,7 @@ If you however already have PackageManagement installed you can just run the bel
 ```powershell
 Install-Module OfficeDevPnP.PowerShell.V16.Commands
 ```
+
 For the SharePoint Online Module
 
 or
@@ -48,6 +50,7 @@ or
 ```powershell
 Install-Module OfficeDevPnP.PowerShell.V15.Commands
 ```
+
 For the SharePoint On-Premises Modules
 
 Once the above has been completed you can then start to use the PowerShell Modules
