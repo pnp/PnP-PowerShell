@@ -59,7 +59,3 @@ if ((Get-command -Module PowerShellGet).count -gt 0)
         Write-Output "PowerShellPackageManagement is not installed on this Machine - Please run the below to install - you will need to Copy and Paste it as i'm not doing everything for you ;-)"
         Write-Output "Invoke-Expression (New-Object Net.WebClient).DownloadString('http://bit.ly/PSPackManInstall')"
         }
-if ($run -eq $true) 
-    {
-    
-    }
