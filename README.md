@@ -31,7 +31,7 @@ A build script will copy the required files to a folder in your users folder, ca
 Alternatively for installation on machines that have at least PowerShell v3 installed (you can find this out by opening PowerShell and running $host.version and Major should be above 3) you can run the below command which will install PowerShell Package Management and then install the PowerShell Modules from the PowerShell Gallery
 ```powershell
 Invoke-Expression (New-Object Net.WebClient).DownloadString('http://bit.ly/InstallO365PnPPowerShell')
-'''
+```
 
 If you wish to see the commands that the above will run please see the files as stored in the below locations
 http://bit.ly/PSPackManInstall
