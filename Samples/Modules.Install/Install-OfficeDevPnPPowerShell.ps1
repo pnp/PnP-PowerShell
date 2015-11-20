@@ -1,2 +1,2 @@
-﻿Invoke-Expression (New-Object Net.WebClient).DownloadString('http://bit.ly/PSPackManInstall') # We use this to install the PowerShell Package Manager for the PowerShell Gallery
-Invoke-Expression (New-Object Net.WebClient).DownloadString('http://bit.ly/ODevPnPPowerShellHelper1')
+﻿Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/erwinvanhunen/PnP-PowerShell/master/Samples/Modules.Install/Install-PowerShellPackageMangement.ps1') # We use this to install the PowerShell Package Manager for the PowerShell Gallery
+Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/erwinvanhunen/PnP-PowerShell/master/Samples/Modules.Install/Install-OfficeDevPnPPowerShellHelperModule.ps1')
