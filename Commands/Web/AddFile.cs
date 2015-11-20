@@ -66,6 +66,7 @@ namespace OfficeDevPnP.PowerShell.Commands
                 try
                 {
                     var existingFile = SelectedWeb.GetFileByServerRelativeUrl(fileUrl);
+                    existingFile.EnsureProperty(f => f.Exists);
                     if (existingFile.Exists)
                     {
                         SelectedWeb.CheckOutFile(fileUrl);
