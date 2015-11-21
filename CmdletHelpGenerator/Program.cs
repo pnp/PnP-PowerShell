@@ -360,13 +360,14 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                                 originalMd = System.IO.File.ReadAllText(mdFilePath);
 
                             }
-                            var docHeaderBuilder = new StringBuilder();
+                            var docBuilder = new StringBuilder();
+                            
+                            // Header
 
-
-                            docHeaderBuilder.AppendFormat("#{0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
+                            docBuilder.AppendFormat("#{0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
 
                             // Body 
-                            var docBuilder = new StringBuilder();
+                            
                             docBuilder.AppendFormat("{0}{1}", cmdletInfo.Description, Environment.NewLine);
                             docBuilder.AppendFormat("##Syntax{0}", Environment.NewLine);
                             foreach (var cmdletSyntax in cmdletInfo.Syntaxes.OrderBy(s => s.ParameterSetName))
@@ -432,7 +433,8 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                             {
                                 if (result.operation != DiffMatchPatch.Operation.EQUAL)
                                 {
-                                    System.IO.File.WriteAllText(mdFilePath, docHeaderBuilder.Append(docBuilder).ToString());
+                                    System.IO.File.WriteAllText(mdFilePath, docBuilder.ToString());
+                                    break;
                                 }
                             }
                         }
