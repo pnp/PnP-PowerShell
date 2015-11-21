@@ -354,7 +354,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                         {
                             string mdFilePath = string.Format("{0}\\Documentation\\{1}{2}.md", solutionDir, cmdletInfo.Verb, cmdletInfo.Noun);
                             toc.Add(cmdletInfo);
-                            //var existingHashCode = string.Empty;
+
                             if (System.IO.File.Exists(mdFilePath))
                             {
                                 originalMd = System.IO.File.ReadAllText(mdFilePath);
