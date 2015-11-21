@@ -1,6 +1,4 @@
 #Remove-SPOList
-*Topic automatically generated on: 2015-10-13*
-
 Deletes a list
 ##Syntax
 ```powershell

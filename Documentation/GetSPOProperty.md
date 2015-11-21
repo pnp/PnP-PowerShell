@@ -1,6 +1,4 @@
 #Get-SPOProperty
-*Topic automatically generated on: 2015-10-13*
-
 Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.
 ##Syntax
 ```powershell

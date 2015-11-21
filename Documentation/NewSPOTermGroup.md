@@ -1,6 +1,4 @@
 #New-SPOTermGroup
-*Topic automatically generated on: 2015-10-13*
-
 Creates a taxonomy term group
 ##Syntax
 ```powershell

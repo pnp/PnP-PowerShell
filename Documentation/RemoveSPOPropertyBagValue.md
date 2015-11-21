@@ -1,6 +1,4 @@
 #Remove-SPOPropertyBagValue
-*Topic automatically generated on: 2015-10-13*
-
 Removes a value from the property bag
 ##Syntax
 ```powershell

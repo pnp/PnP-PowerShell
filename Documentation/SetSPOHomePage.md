@@ -1,6 +1,4 @@
 #Set-SPOHomePage
-*Topic automatically generated on: 2015-10-13*
-
 Sets the home page of the current web.
 ##Syntax
 ```powershell

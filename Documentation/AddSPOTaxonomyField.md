@@ -1,6 +1,4 @@
 #Add-SPOTaxonomyField
-*Topic automatically generated on: 2015-10-13*
-
 Adds a taxonomy field to a list or as a site column.
 ##Syntax
 ```powershell

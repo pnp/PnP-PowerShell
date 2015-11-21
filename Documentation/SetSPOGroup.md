@@ -1,6 +1,4 @@
 #Set-SPOGroup
-*Topic automatically generated on: 2015-10-13*
-
 Updates a group
 ##Syntax
 ```powershell
