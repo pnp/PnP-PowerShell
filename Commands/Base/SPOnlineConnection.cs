@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Diagnostics;
 using OfficeDevPnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
 {
     public class SPOnlineConnection
     {
+        internal static PnPMonitoredScope MonitoredScope { get; set; }
         internal static List<ClientContext> ContextCache { get; set; }
         internal static SPOnlineConnection CurrentConnection { get; set; }
         public ConnectionType ConnectionType { get; protected set; }
@@ -34,6 +36,11 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
             ContextCache = new List<ClientContext>();
             ContextCache.Add(context);
             Url = (new Uri(url)).AbsoluteUri;
+            if (MonitoredScope != null)
+            {
+                MonitoredScope.Dispose();
+            }
+            MonitoredScope = new PnPMonitoredScope("OfficeDevPnP.PowerShell.Commands");
         }
 
         public void RestoreCachedContext(string url)
