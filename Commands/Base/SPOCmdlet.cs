@@ -36,6 +36,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
+            SPOnlineConnection.MonitoredScope.LogInfo("Executing {0}", this.MyInvocation.InvocationName);
             try
             {
                 if (SPOnlineConnection.CurrentConnection.MinimalHealthScore != -1)
@@ -64,11 +65,13 @@ namespace OfficeDevPnP.PowerShell.Commands
                             }
                             if (retry > SPOnlineConnection.CurrentConnection.RetryCount)
                             {
+                                SPOnlineConnection.MonitoredScope.LogError("Health Score not sufficient: requested {0}, actualy {1}", SPOnlineConnection.CurrentConnection.MinimalHealthScore, healthScore);
                                 WriteError(new ErrorRecord(new Exception(Resources.HealthScoreNotSufficient), "HALT", ErrorCategory.LimitsExceeded, null));
                             }
                         }
                         else
                         {
+                            SPOnlineConnection.MonitoredScope.LogError("Health Score not sufficient: requested {0}, actualy {1}", SPOnlineConnection.CurrentConnection.MinimalHealthScore, healthScore);
                             WriteError(new ErrorRecord(new Exception(Resources.HealthScoreNotSufficient), "HALT", ErrorCategory.LimitsExceeded, null));
                         }
                     }
@@ -82,9 +85,10 @@ namespace OfficeDevPnP.PowerShell.Commands
             {
                 SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
                 WriteError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
+                SPOnlineConnection.MonitoredScope.LogError(ex.Message);
             }
+            SPOnlineConnection.MonitoredScope.LogInfo("Finished {0}", this.MyInvocation.InvocationName);
         }
-
 
     }
 }
