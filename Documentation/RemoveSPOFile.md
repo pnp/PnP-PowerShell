@@ -25,3 +25,9 @@ Parameter|Type|Required|Description
 PS:>Remove-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
 ```
 
+
+###Example 2
+```powershell
+PS:>Remove-SPOFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor
+```
+

@@ -23,8 +23,12 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-
-    PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
-
+PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
 ```
+Sets the master page based on a server relative URL
 
+###Example 2
+```powershell
+PS:> Set-SPOMasterPage -MasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master
+```
+Sets the master page based on a site relative URL

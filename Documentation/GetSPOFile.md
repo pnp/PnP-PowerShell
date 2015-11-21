@@ -39,3 +39,9 @@ Downloads the file and saves it to c:\temp\company.spcolor
 PS:> Get-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -AsString
 ```
 Downloads the file and outputs its contents to the console
+
+###Example 4
+```powershell
+PS:> Get-SPOFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor
+```
+Refers to the file by site relative URL, downloads the file and saves it to c:\temp\company.spcolor
