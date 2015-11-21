@@ -1,6 +1,4 @@
 #Remove-SPOWebPart
-*Topic automatically generated on: 2015-10-13*
-
 Removes a webpart from a page
 ##Syntax
 ```powershell

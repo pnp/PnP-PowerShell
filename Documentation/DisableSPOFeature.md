@@ -1,6 +1,4 @@
 #Disable-SPOFeature
-*Topic automatically generated on: 2015-10-13*
-
 Disables a feature
 ##Syntax
 ```powershell

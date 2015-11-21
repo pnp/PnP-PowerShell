@@ -1,6 +1,4 @@
 #Add-SPONavigationNode
-*Topic automatically generated on: 2015-10-13*
-
 Adds a menu item to either the quicklaunch or top navigation
 ##Syntax
 ```powershell

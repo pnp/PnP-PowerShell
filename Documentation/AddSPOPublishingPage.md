@@ -1,6 +1,4 @@
 #Add-SPOPublishingPage
-*Topic automatically generated on: 2015-10-13*
-
 Adds a publishing page
 ##Syntax
 ```powershell

@@ -1,6 +1,4 @@
 #Add-SPOHtmlPublishingPageLayout
-*Topic automatically generated on: 2015-10-13*
-
 Adds a HTML based publishing page layout
 ##Syntax
 ```powershell

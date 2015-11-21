@@ -1,6 +1,4 @@
 #Remove-SPOView
-*Topic automatically generated on: 2015-10-13*
-
 Deletes a view from a list
 ##Syntax
 ```powershell

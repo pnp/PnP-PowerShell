@@ -1,6 +1,4 @@
 #Get-SPOGroup
-*Topic automatically generated on: 2015-10-13*
-
 Returns a specific group or all groups.
 ##Syntax
 ```powershell

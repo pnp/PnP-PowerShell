@@ -1,6 +1,4 @@
 #Add-SPOEventReceiver
-*Topic automatically generated on: 2015-10-13*
-
 Adds a new event receiver
 ##Syntax
 ```powershell

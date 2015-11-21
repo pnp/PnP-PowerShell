@@ -358,15 +358,12 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                             if (System.IO.File.Exists(mdFilePath))
                             {
                                 originalMd = System.IO.File.ReadAllText(mdFilePath);
-                              
+
                             }
                             var docHeaderBuilder = new StringBuilder();
 
 
-                            // Separate header from body to calculate the hashcode later
                             docHeaderBuilder.AppendFormat("#{0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
-                            docHeaderBuilder.AppendFormat("*Topic automatically generated on: {0}*{1}", DateTime.Now.ToString("yyyy'-'MM'-'dd"), Environment.NewLine);
-                            docHeaderBuilder.Append(Environment.NewLine);
 
                             // Body 
                             var docBuilder = new StringBuilder();
@@ -433,12 +430,9 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
                             foreach (var result in diffResults)
                             {
-                                if (!result.text.Contains("*Topic automatically generated on"))
+                                if (result.operation != DiffMatchPatch.Operation.EQUAL)
                                 {
-                                    if (result.operation != DiffMatchPatch.Operation.EQUAL)
-                                    {
-                                        System.IO.File.WriteAllText(mdFilePath, docHeaderBuilder.Append(docBuilder).ToString());
-                                    }
+                                    System.IO.File.WriteAllText(mdFilePath, docHeaderBuilder.Append(docBuilder).ToString());
                                 }
                             }
                         }
@@ -489,12 +483,9 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
                 foreach (var result in diffResults)
                 {
-                    if (!result.text.Contains("*Topic automatically generated on"))
+                    if (result.operation != DiffMatchPatch.Operation.EQUAL)
                     {
-                        if (result.operation != DiffMatchPatch.Operation.EQUAL)
-                        {
-                            System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
-                        }
+                        System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
                     }
                 }
             }

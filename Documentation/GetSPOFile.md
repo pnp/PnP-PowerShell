@@ -1,25 +1,24 @@
 #Get-SPOFile
-*Topic automatically generated on: 2015-10-13*
-
 Downloads a file.
 ##Syntax
 ```powershell
-Get-SPOFile [-Path <String>] [-Filename <String>] [-Web <WebPipeBind>] -ServerRelativeUrl <String>
+Get-SPOFile [-Path <String>] [-Filename <String>] [-AsString [<SwitchParameter>]] [-Web <WebPipeBind>] -ServerRelativeUrl <String>
 ```
 
 
 ```powershell
-Get-SPOFile -AsString [<SwitchParameter>] [-Web <WebPipeBind>] -ServerRelativeUrl <String>
+Get-SPOFile [-Path <String>] [-Filename <String>] [-AsString [<SwitchParameter>]] [-Web <WebPipeBind>] -SiteRelativeUrl <String>
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|AsString|SwitchParameter|True||
+|AsString|SwitchParameter|False||
 |Filename|String|False||
 |Path|String|False||
 |ServerRelativeUrl|String|True||
+|SiteRelativeUrl|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

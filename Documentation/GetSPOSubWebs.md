@@ -1,6 +1,4 @@
 #Get-SPOSubWebs
-*Topic automatically generated on: 2015-10-13*
-
 Returns the subwebs
 ##Syntax
 ```powershell
