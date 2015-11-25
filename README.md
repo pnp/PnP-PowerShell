@@ -25,7 +25,7 @@ OfficeDevPnP.PowerShell | Erwin van Hunen
 ----------
 
 # COMMANDS INCLUDED #
-[Navigate here for an overview of all cmdlets and their parameters:](Documentation/readme.md)
+[Navigate here for an overview of all cmdlets and their parameters](Documentation/readme.md)
 
 # INSTALLATION #
 
