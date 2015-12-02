@@ -62,7 +62,7 @@
       </Directory>
     </Directory>
 
-    <WixVariable Id="WixUILicenseRtf" Value="Apache License Version 2.rtf" />
+    <WixVariable Id="WixUILicenseRtf" Value="MITLicense.rtf" />
     <WixVariable Id="WixUIDialogBmp" Value="officedevpnp.bmp"/>
     <WixVariable Id="WixUIBannerBmp" Value="setupbanner.png"/>
 
