@@ -1,6 +1,4 @@
 #Get-SPOTermGroup
-*Topic automatically generated on: 2015-10-13*
-
 Returns a taxonomy term group
 ##Syntax
 ```powershell

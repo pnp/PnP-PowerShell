@@ -45,7 +45,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Apache License Version 2.rtf" />
+    <Content Include="MITLicense.rtf" />
     <Content Include="officedevpnp.bmp" />
     <Content Include="setupbanner.png" />
   </ItemGroup>

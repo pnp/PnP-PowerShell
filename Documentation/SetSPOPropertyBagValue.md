@@ -1,6 +1,4 @@
 #Set-SPOPropertyBagValue
-*Topic automatically generated on: 2015-10-13*
-
 Sets a property bag value
 ##Syntax
 ```powershell

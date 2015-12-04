@@ -1,6 +1,4 @@
 #Get-SPOJavaScriptLink
-*Topic automatically generated on: 2015-10-13*
-
 Returns all or a specific custom action(s) with location type ScriptLink
 ##Syntax
 ```powershell

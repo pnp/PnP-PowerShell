@@ -85,6 +85,5 @@ namespace OfficeDevPnP.PowerShell.Commands
             }
         }
 
-
     }
 }

@@ -1,6 +1,4 @@
 #Get-SPOWebPartXml
-*Topic automatically generated on: 2015-10-13*
-
 Returns the webpart XML of a webpart registered on a site
 ##Syntax
 ```powershell

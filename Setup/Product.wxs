@@ -16,7 +16,7 @@
   <Product Id="*"
            Name="$(var.ProductName)"
            Language="1033"
-           Version="1.8.1115.0"
+           Version="1.9.1215.0"
            Manufacturer="OfficeDev PnP"
            UpgradeCode="630fe2af-dc42-467d-94c8-6eefd065cbfa">
 
@@ -62,7 +62,7 @@
       </Directory>
     </Directory>
 
-    <WixVariable Id="WixUILicenseRtf" Value="Apache License Version 2.rtf" />
+    <WixVariable Id="WixUILicenseRtf" Value="MITLicense.rtf" />
     <WixVariable Id="WixUIDialogBmp" Value="officedevpnp.bmp"/>
     <WixVariable Id="WixUIBannerBmp" Value="setupbanner.png"/>
 

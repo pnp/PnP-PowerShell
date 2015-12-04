@@ -1,6 +1,4 @@
 #Set-SPOTaxonomyFieldValue
-*Topic automatically generated on: 2015-10-13*
-
 Sets a taxonomy term value in a listitem field
 ##Syntax
 ```powershell

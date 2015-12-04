@@ -1,6 +1,4 @@
 #Get-SPODocumentSetTemplate
-*Topic automatically generated on: 2015-10-13*
-
 Retrieves a document set template
 ##Syntax
 ```powershell

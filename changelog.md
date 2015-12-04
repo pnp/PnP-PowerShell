@@ -1,5 +1,11 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-11-21**
+
+* Added, where applicable, Site Relative Url parameters, besides the existing Server Relative Url parameters on cmdlets.
+* Implemented the use of PnP Monitored Scope. Turn on the trace log with Set-SPOTraceLog -On -Level Information -LogFile c:\pathtoyourlogfile.log to see the tracelog.
+* Added a Get-SPOTheme cmdlet
+
 **2015-10-26**
 
 * Added New-SPOProvisioningTemplateFromFolder cmdlet

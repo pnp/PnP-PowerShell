@@ -125,10 +125,6 @@
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\..\PnP-Sites-Core\Assemblies\16\Microsoft.SharePoint.Client.WorkflowServices.dll</HintPath>
         </Reference>
-        <Reference Include="Microsoft.Office.Client.Education, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\ReferenceAssemblies\16\Microsoft.Office.Client.Education.dll</HintPath>
-        </Reference>
       </ItemGroup>
     </When>
     <Otherwise>
@@ -180,10 +176,6 @@
         <Reference Include="Microsoft.SharePoint.Client.WorkflowServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\..\PnP-Sites-Core\Assemblies\15\Microsoft.SharePoint.Client.WorkflowServices.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Office.Client.Education, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\ReferenceAssemblies\15\Microsoft.Office.Client.Education.dll</HintPath>
         </Reference>
       </ItemGroup>
     </Otherwise>
@@ -278,6 +270,7 @@
     <Compile Include="Branding\ApplyProvisioningTemplate.cs" />
     <Compile Include="Branding\GetProvisioningTemplate.cs" />
     <Compile Include="Branding\NewProvisioningTemplateFromFolder.cs" />
+    <Compile Include="Branding\GetTheme.cs" />
     <Compile Include="ContentTypes\RemoveContentTypeFromList.cs" />
     <Compile Include="ContentTypes\SetDefaultContentTypeToList.cs" />
     <Compile Include="ContentTypes\AddContentTypeToList.cs" />

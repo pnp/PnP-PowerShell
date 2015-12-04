@@ -354,22 +354,20 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                         {
                             string mdFilePath = string.Format("{0}\\Documentation\\{1}{2}.md", solutionDir, cmdletInfo.Verb, cmdletInfo.Noun);
                             toc.Add(cmdletInfo);
-                            //var existingHashCode = string.Empty;
+
                             if (System.IO.File.Exists(mdFilePath))
                             {
                                 originalMd = System.IO.File.ReadAllText(mdFilePath);
-                              
+
                             }
-                            var docHeaderBuilder = new StringBuilder();
+                            var docBuilder = new StringBuilder();
+                            
+                            // Header
 
-
-                            // Separate header from body to calculate the hashcode later
-                            docHeaderBuilder.AppendFormat("#{0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
-                            docHeaderBuilder.AppendFormat("*Topic automatically generated on: {0}*{1}", DateTime.Now.ToString("yyyy'-'MM'-'dd"), Environment.NewLine);
-                            docHeaderBuilder.Append(Environment.NewLine);
+                            docBuilder.AppendFormat("#{0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
 
                             // Body 
-                            var docBuilder = new StringBuilder();
+                            
                             docBuilder.AppendFormat("{0}{1}", cmdletInfo.Description, Environment.NewLine);
                             docBuilder.AppendFormat("##Syntax{0}", Environment.NewLine);
                             foreach (var cmdletSyntax in cmdletInfo.Syntaxes.OrderBy(s => s.ParameterSetName))
@@ -433,12 +431,10 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
                             foreach (var result in diffResults)
                             {
-                                if (!result.text.Contains("*Topic automatically generated on"))
+                                if (result.operation != DiffMatchPatch.Operation.EQUAL)
                                 {
-                                    if (result.operation != DiffMatchPatch.Operation.EQUAL)
-                                    {
-                                        System.IO.File.WriteAllText(mdFilePath, docHeaderBuilder.Append(docBuilder).ToString());
-                                    }
+                                    System.IO.File.WriteAllText(mdFilePath, docBuilder.ToString());
+                                    break;
                                 }
                             }
                         }
@@ -489,12 +485,9 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
                 foreach (var result in diffResults)
                 {
-                    if (!result.text.Contains("*Topic automatically generated on"))
+                    if (result.operation != DiffMatchPatch.Operation.EQUAL)
                     {
-                        if (result.operation != DiffMatchPatch.Operation.EQUAL)
-                        {
-                            System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
-                        }
+                        System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
                     }
                 }
             }

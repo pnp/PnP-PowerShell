@@ -1,6 +1,4 @@
 #Set-SPOSearchConfiguration
-*Topic automatically generated on: 2015-10-13*
-
 Returns the search configuration
 ##Syntax
 ```powershell

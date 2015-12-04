@@ -1,6 +1,4 @@
 #Request-SPOReIndexWeb
-*Topic automatically generated on: 2015-10-13*
-
 Marks the web for full indexing during the next incremental crawl
 ##Syntax
 ```powershell

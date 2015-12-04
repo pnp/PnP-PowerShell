@@ -1,6 +1,4 @@
 #Add-SPOIndexedProperty
-*Topic automatically generated on: 2015-10-13*
-
 Marks the value of the propertybag key to be indexed by search.
 ##Syntax
 ```powershell
