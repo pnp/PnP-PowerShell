@@ -1,4 +1,6 @@
 #Import-SPOAppPackage
+*Topic automatically generated on: 2015-12-04*
+
 Adds a SharePoint Addin to a site
 ##Syntax
 ```powershell

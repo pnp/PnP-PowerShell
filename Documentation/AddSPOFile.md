@@ -1,4 +1,6 @@
 #Add-SPOFile
+*Topic automatically generated on: 2015-12-04*
+
 Uploads a file to Web
 ##Syntax
 ```powershell

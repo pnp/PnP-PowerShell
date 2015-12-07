@@ -1,4 +1,6 @@
 #Get-SPOWikiPageContent
+*Topic automatically generated on: 2015-12-04*
+
 Gets the contents/source of a wiki page
 ##Syntax
 ```powershell

@@ -1,4 +1,6 @@
 #New-SPOProvisioningTemplateFromFolder
+*Topic automatically generated on: 2015-12-04*
+
 Generates a provisioning template from a given folder, including only files that are present in that folder
 ##Syntax
 ```powershell

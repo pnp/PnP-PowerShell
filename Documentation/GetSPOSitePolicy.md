@@ -1,4 +1,6 @@
 #Get-SPOSitePolicy
+*Topic automatically generated on: 2015-12-04*
+
 Retrieves all or a specific site policy
 ##Syntax
 ```powershell

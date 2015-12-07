@@ -1,4 +1,6 @@
 #Apply-SPOProvisioningTemplate
+*Topic automatically generated on: 2015-12-04*
+
 Applies a provisioning template to a web
 ##Syntax
 ```powershell

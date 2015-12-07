@@ -1,4 +1,6 @@
 #Add-SPOFolder
+*Topic automatically generated on: 2015-12-04*
+
 Creates a folder within a parent folder
 ##Syntax
 ```powershell

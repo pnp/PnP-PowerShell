@@ -1,4 +1,6 @@
 #Uninstall-SPOAppInstance
+*Topic automatically generated on: 2015-12-04*
+
 Removes an app from a site
 ##Syntax
 ```powershell

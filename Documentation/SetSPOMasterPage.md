@@ -1,4 +1,6 @@
 #Set-SPOMasterPage
+*Topic automatically generated on: 2015-12-04*
+
 Sets the default master page of the current web.
 ##Syntax
 ```powershell

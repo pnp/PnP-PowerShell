@@ -1,4 +1,6 @@
 #Add-SPOWebPartToWikiPage
+*Topic automatically generated on: 2015-12-04*
+
 Adds a webpart to a wiki page in a specified table row and column
 ##Syntax
 ```powershell

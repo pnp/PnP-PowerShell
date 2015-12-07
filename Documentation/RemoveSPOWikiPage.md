@@ -1,4 +1,6 @@
 #Remove-SPOWikiPage
+*Topic automatically generated on: 2015-12-04*
+
 Removes a wiki page
 ##Syntax
 ```powershell

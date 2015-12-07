@@ -1,4 +1,6 @@
 #Get-SPOView
+*Topic automatically generated on: 2015-12-04*
+
 Returns one or all views from a list
 ##Syntax
 ```powershell

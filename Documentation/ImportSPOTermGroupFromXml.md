@@ -1,4 +1,6 @@
 #Import-SPOTermGroupFromXml
+*Topic automatically generated on: 2015-12-04*
+
 Imports a taxonomy TermGroup from either the input or from an XML file.
 ##Syntax
 ```powershell

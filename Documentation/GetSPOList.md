@@ -1,4 +1,6 @@
 #Get-SPOList
+*Topic automatically generated on: 2015-12-04*
+
 Returns a List object
 ##Syntax
 ```powershell

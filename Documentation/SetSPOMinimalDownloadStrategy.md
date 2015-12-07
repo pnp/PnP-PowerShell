@@ -1,4 +1,6 @@
 #Set-SPOMinimalDownloadStrategy
+*Topic automatically generated on: 2015-12-04*
+
 Activates or deactivates the minimal downloading strategy.
 ##Syntax
 ```powershell

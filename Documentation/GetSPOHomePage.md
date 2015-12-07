@@ -1,4 +1,6 @@
 #Get-SPOHomePage
+*Topic automatically generated on: 2015-12-04*
+
 Returns the URL to the home page
 ##Syntax
 ```powershell

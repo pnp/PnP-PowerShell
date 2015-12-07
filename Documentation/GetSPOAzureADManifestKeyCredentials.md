@@ -1,4 +1,6 @@
 #Get-SPOAzureADManifestKeyCredentials
+*Topic automatically generated on: 2015-12-04*
+
 Creates the JSON snippet that is required for the manifest json file for Azure WebApplication / WebAPI apps
 ##Syntax
 ```powershell

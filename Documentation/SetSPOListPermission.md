@@ -1,4 +1,6 @@
 #Set-SPOListPermission
+*Topic automatically generated on: 2015-12-04*
+
 Sets list permissions
 ##Syntax
 ```powershell

@@ -1,4 +1,6 @@
 #Import-SPOTaxonomy
+*Topic automatically generated on: 2015-12-04*
+
 Imports a taxonomy from either a string array or a file
 ##Syntax
 ```powershell

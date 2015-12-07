@@ -1,4 +1,6 @@
 #Remove-SPOEventReceiver
+*Topic automatically generated on: 2015-12-04*
+
 Removes/unregisters a specific event receiver
 ##Syntax
 ```powershell

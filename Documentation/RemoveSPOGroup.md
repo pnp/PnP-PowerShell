@@ -1,4 +1,6 @@
 #Remove-SPOGroup
+*Topic automatically generated on: 2015-12-04*
+
 Removes a group.
 ##Syntax
 ```powershell

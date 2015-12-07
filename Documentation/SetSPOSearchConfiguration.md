@@ -1,5 +1,7 @@
 #Set-SPOSearchConfiguration
-Returns the search configuration
+*Topic automatically generated on: 2015-12-04*
+
+Sets the search configuration
 ##Syntax
 ```powershell
 Set-SPOSearchConfiguration -Configuration <String> [-Scope <SearchConfigurationScope>] [-Web <WebPipeBind>]

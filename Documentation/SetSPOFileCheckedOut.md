@@ -1,4 +1,6 @@
 #Set-SPOFileCheckedOut
+*Topic automatically generated on: 2015-12-04*
+
 Checks out a file
 ##Syntax
 ```powershell

@@ -1,4 +1,6 @@
 #Set-SPODocumentSetField
+*Topic automatically generated on: 2015-12-04*
+
 Sets a site column from the avaiable content types to a document set
 ##Syntax
 ```powershell

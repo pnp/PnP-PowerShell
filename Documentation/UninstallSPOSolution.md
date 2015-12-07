@@ -1,4 +1,6 @@
 #Uninstall-SPOSolution
+*Topic automatically generated on: 2015-12-04*
+
 Uninstalls a sandboxed solution from a site collection
 ##Syntax
 ```powershell

@@ -1,4 +1,6 @@
 #Get-SPOWebPart
+*Topic automatically generated on: 2015-12-04*
+
 Returns a webpart definition object
 ##Syntax
 ```powershell

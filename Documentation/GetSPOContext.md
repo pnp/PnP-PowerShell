@@ -1,4 +1,6 @@
 #Get-SPOContext
+*Topic automatically generated on: 2015-12-04*
+
 Returns a Client Side Object Model context
 ##Syntax
 ##Parameters

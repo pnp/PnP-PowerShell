@@ -1,4 +1,6 @@
 #Set-SPOTheme
+*Topic automatically generated on: 2015-12-04*
+
 Sets the theme of the current web.
 ##Syntax
 ```powershell

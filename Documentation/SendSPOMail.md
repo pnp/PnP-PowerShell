@@ -1,4 +1,6 @@
 #Send-SPOMail
+*Topic automatically generated on: 2015-12-04*
+
 Sends an email using the Office 365 SMTP Service
 ##Syntax
 ```powershell

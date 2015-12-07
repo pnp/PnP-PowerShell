@@ -1,4 +1,6 @@
 #Get-SPOAppInstance
+*Topic automatically generated on: 2015-12-04*
+
 Returns a SharePoint AddIn Instance
 ##Syntax
 ```powershell

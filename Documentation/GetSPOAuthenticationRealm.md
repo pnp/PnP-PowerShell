@@ -1,4 +1,6 @@
 #Get-SPOAuthenticationRealm
+*Topic automatically generated on: 2015-12-04*
+
 Gets the authentication realm for the current web
 ##Syntax
 ```powershell

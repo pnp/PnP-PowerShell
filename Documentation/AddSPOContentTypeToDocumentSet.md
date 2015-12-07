@@ -1,4 +1,6 @@
 #Add-SPOContentTypeToDocumentSet
+*Topic automatically generated on: 2015-12-04*
+
 Adds a content type to a document set
 ##Syntax
 ```powershell

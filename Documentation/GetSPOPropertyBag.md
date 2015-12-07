@@ -1,4 +1,6 @@
 #Get-SPOPropertyBag
+*Topic automatically generated on: 2015-12-04*
+
 Returns the property bag values.
 ##Syntax
 ```powershell

@@ -1,4 +1,6 @@
 #Resume-SPOWorkflowInstance
+*Topic automatically generated on: 2015-12-04*
+
 Resumes a previously stopped workflow instance
 ##Syntax
 ```powershell

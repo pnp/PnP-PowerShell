@@ -1,4 +1,6 @@
 #Request-SPOReIndexList
+*Topic automatically generated on: 2015-12-04*
+
 Marks the list for full indexing during the next incremental crawl
 ##Syntax
 ```powershell

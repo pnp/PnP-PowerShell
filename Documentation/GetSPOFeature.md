@@ -1,4 +1,6 @@
 #Get-SPOFeature
+*Topic automatically generated on: 2015-12-04*
+
 Returns all activated or a specific activated feature
 ##Syntax
 ```powershell
