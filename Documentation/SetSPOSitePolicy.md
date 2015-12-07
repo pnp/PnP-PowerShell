@@ -1,6 +1,4 @@
 #Set-SPOSitePolicy
-*Topic automatically generated on: 2015-12-04*
-
 Sets a site policy
 ##Syntax
 ```powershell

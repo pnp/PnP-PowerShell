@@ -1,6 +1,4 @@
 #Get-SPOEventReceiver
-*Topic automatically generated on: 2015-12-04*
-
 Returns all or a specific event receiver
 ##Syntax
 ```powershell

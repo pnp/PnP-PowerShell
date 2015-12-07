@@ -1,6 +1,4 @@
 #Add-SPOView
-*Topic automatically generated on: 2015-12-04*
-
 Adds a view to a list
 ##Syntax
 ```powershell

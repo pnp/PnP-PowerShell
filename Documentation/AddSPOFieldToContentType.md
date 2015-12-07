@@ -1,6 +1,4 @@
 #Add-SPOFieldToContentType
-*Topic automatically generated on: 2015-12-04*
-
 Adds an existing site column to a content type
 ##Syntax
 ```powershell

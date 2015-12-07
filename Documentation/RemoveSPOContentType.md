@@ -1,6 +1,4 @@
 #Remove-SPOContentType
-*Topic automatically generated on: 2015-12-04*
-
 Removes a content type
 ##Syntax
 ```powershell

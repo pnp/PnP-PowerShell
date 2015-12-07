@@ -1,6 +1,4 @@
 #Get-SPOStoredCredential
-*Topic automatically generated on: 2015-12-04*
-
 Returns a stored credential from the Windows Credential Manager
 ##Syntax
 ```powershell

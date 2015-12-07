@@ -1,6 +1,4 @@
 #Remove-SPOWeb
-*Topic automatically generated on: 2015-12-04*
-
 Removes a subweb in the current web
 ##Syntax
 ```powershell

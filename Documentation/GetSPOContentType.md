@@ -1,6 +1,4 @@
 #Get-SPOContentType
-*Topic automatically generated on: 2015-12-04*
-
 Retrieves a content type
 ##Syntax
 ```powershell

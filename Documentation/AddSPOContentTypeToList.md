@@ -1,6 +1,4 @@
 #Add-SPOContentTypeToList
-*Topic automatically generated on: 2015-12-04*
-
 Adds a new content type to a list
 ##Syntax
 ```powershell

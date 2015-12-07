@@ -1,6 +1,4 @@
 #Remove-SPOField
-*Topic automatically generated on: 2015-12-04*
-
 Removes a field from a list or a site
 ##Syntax
 ```powershell

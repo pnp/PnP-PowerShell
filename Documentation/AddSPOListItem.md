@@ -1,6 +1,4 @@
 #Add-SPOListItem
-*Topic automatically generated on: 2015-12-04*
-
 Adds an item to a list
 ##Syntax
 ```powershell

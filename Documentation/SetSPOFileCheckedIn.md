@@ -1,6 +1,4 @@
 #Set-SPOFileCheckedIn
-*Topic automatically generated on: 2015-12-04*
-
 Checks in a file
 ##Syntax
 ```powershell

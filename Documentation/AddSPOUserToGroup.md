@@ -1,6 +1,4 @@
 #Add-SPOUserToGroup
-*Topic automatically generated on: 2015-12-04*
-
 Adds a user to a group
 ##Syntax
 ```powershell

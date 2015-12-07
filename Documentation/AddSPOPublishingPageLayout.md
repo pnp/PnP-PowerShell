@@ -1,6 +1,4 @@
 #Add-SPOPublishingPageLayout
-*Topic automatically generated on: 2015-12-04*
-
 Adds a publishing page layout
 ##Syntax
 ```powershell

@@ -1,6 +1,4 @@
 #Get-SPOTheme
-*Topic automatically generated on: 2015-12-04*
-
 Returns the current theme/composed look of the current web.
 ##Syntax
 ```powershell

@@ -1,6 +1,4 @@
 #Find-SPOFile
-*Topic automatically generated on: 2015-12-04*
-
 Finds a file in the virtual file system of the web.
 ##Syntax
 ```powershell

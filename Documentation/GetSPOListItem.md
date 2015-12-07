@@ -1,6 +1,4 @@
 #Get-SPOListItem
-*Topic automatically generated on: 2015-12-04*
-
 Retrieves list items
 ##Syntax
 ```powershell

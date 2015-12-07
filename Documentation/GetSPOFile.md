@@ -1,6 +1,4 @@
 #Get-SPOFile
-*Topic automatically generated on: 2015-12-04*
-
 Downloads a file.
 ##Syntax
 ```powershell

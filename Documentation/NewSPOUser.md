@@ -1,6 +1,4 @@
 #New-SPOUser
-*Topic automatically generated on: 2015-12-04*
-
 Adds a user to the build-in Site User Info List and returns a user object
 ##Syntax
 ```powershell

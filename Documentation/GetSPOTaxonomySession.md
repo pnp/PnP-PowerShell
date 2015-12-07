@@ -1,6 +1,4 @@
 #Get-SPOTaxonomySession
-*Topic automatically generated on: 2015-12-04*
-
 Returns a taxonomy session
 ##Syntax
 ```powershell

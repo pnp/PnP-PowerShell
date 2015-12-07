@@ -1,6 +1,4 @@
 #Get-SPOWorkflowSubscription
-*Topic automatically generated on: 2015-12-04*
-
 Returns a workflow subscriptions from a list
 ##Syntax
 ```powershell

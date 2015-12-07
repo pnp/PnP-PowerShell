@@ -1,6 +1,4 @@
 #Export-SPOTaxonomy
-*Topic automatically generated on: 2015-12-04*
-
 Exports a taxonomy to either the output or to a file.
 ##Syntax
 ```powershell

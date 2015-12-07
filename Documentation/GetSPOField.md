@@ -1,6 +1,4 @@
 #Get-SPOField
-*Topic automatically generated on: 2015-12-04*
-
 Returns a field from a list or site
 ##Syntax
 ```powershell

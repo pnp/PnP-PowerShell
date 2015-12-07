@@ -1,6 +1,4 @@
 #Enable-SPOFeature
-*Topic automatically generated on: 2015-12-04*
-
 Enables a feature
 ##Syntax
 ```powershell

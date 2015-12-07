@@ -1,6 +1,4 @@
 #Set-SPODefaultContentTypeToList
-*Topic automatically generated on: 2015-12-04*
-
 Sets the default content type for a list
 ##Syntax
 ```powershell

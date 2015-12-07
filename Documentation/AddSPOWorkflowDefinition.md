@@ -1,6 +1,4 @@
 #Add-SPOWorkflowDefinition
-*Topic automatically generated on: 2015-12-04*
-
 Adds a workflow definition
 ##Syntax
 ```powershell

@@ -1,6 +1,4 @@
 #Remove-SPOWorkflowDefinition
-*Topic automatically generated on: 2015-12-04*
-
 Removes a workflow definition
 ##Syntax
 ```powershell
