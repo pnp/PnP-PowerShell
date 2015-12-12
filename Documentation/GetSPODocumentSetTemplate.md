@@ -17,10 +17,10 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Get-SPODocumentSetTemplate -Identity "Test Document Set"
 ```
-
+This will get the document set template with the name "Test Document Set"
 
 ###Example 2
 ```powershell
 PS:> Get-SPODocumentSetTemplate -Identity "0x0120D520005DB65D094035A241BAC9AF083F825F3B"
 ```
-
+This will get the document set template with the id "0x0120D520005DB65D094035A241BAC9AF083F825F3B"
