@@ -193,6 +193,11 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
                         break;
                     }
+                case XMLPnPSchemaVersion.V201512:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
+                        break;
+                    }
             }
             var _outputStream = formatter.ToFormattedTemplate(template);
             StreamReader reader = new StreamReader(_outputStream);
