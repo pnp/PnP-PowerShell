@@ -242,6 +242,7 @@
     <Compile Include="Base\GetAzureADManifestKeyCredentials.cs" />
     <Compile Include="Base\PipeBinds\DocumentSetPipeBind.cs" />
     <Compile Include="Base\PipeBinds\FeaturePipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ListItemPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TermGroupPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowInstancePipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowDefinitionPipeBind.cs" />
@@ -306,6 +307,7 @@
     <Compile Include="InformationManagement\SetSitePolicy.cs" />
     <Compile Include="Lists\AddListItem.cs" />
     <Compile Include="Lists\AddView.cs" />
+    <Compile Include="Lists\SetListItem.cs" />
     <Compile Include="Lists\GetListItem.cs" />
     <Compile Include="Lists\RequestReIndexList.cs" />
     <Compile Include="Lists\SetDefaultColumnValues.cs" />
