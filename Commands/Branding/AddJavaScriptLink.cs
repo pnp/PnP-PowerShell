@@ -9,6 +9,12 @@ namespace OfficeDevPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Add, "SPOJavaScriptLink")]
     [CmdletHelp("Adds a link to a JavaScript file to a web or sitecollection",
         Category = CmdletHelpCategory.Branding)]
+    [CmdletExample(Code = "PS:> Add-SPOJavaScriptLink -Name jQuery -Url https://code.jquery.com/jquery.min.js -Sequence 9999 -Scope Site",
+                Remarks = "Injects a reference to the latest v1 series jQuery library to all pages within the current site collection under the name jQuery and at order 9999",
+                SortOrder = 1)]
+    [CmdletExample(Code = "PS:> Add-SPOJavaScriptLink -Name jQuery -Url https://code.jquery.com/jquery.min.js",
+                Remarks = "Injects a reference to the latest v1 series jQuery library to all pages within the current web under the name jQuery",
+                SortOrder = 2)]
     public class AddJavaScriptLink : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Name under which to register the JavaScriptLink")]

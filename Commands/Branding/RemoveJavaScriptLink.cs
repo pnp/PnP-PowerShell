@@ -11,9 +11,18 @@ namespace OfficeDevPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Remove, "SPOJavaScriptLink", SupportsShouldProcess = true)]
     [CmdletHelp("Removes a JavaScript link or block from a web or sitecollection",
         Category = CmdletHelpCategory.Branding)]
+    [CmdletExample(Code = "PS:> Remove-SPOJavaScriptLink -Name jQuery",
+                Remarks = "Removes the injected JavaScript file with the name jQuery from the current web after confirmation",
+                SortOrder = 1)]
+    [CmdletExample(Code = "PS:> Remove-SPOJavaScriptLink -Name jQuery -Scope Site",
+                Remarks = "Removes the injected JavaScript file with the name jQuery from the current site collection after confirmation",
+                SortOrder = 2)]
+    [CmdletExample(Code = "PS:> Remove-SPOJavaScriptLink -Name jQuery -Scope Site -Force",
+                Remarks = "Removes the injected JavaScript file with the name jQuery from the current site collection and will not ask for confirmation",
+                SortOrder = 3)]
     public class RemoveJavaScriptLink : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the Javascript link. Omit this parameter to retrieve all script links")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the JavaScriptLink to remove")]
         [Alias("Key")]
         public string Name = string.Empty;
 
@@ -21,10 +30,10 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Obsolete("Use Scope parameter")]
         public SwitchParameter FromSite;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Use the -Force flag to bypass the confirmation question")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Define if the JavaScriptLink is to be found at the web or site collection scope. Web is default.")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
