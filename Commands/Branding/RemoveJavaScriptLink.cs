@@ -5,6 +5,7 @@ using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Enums;
 using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 using System;
+using System.Collections.Generic;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {
@@ -33,38 +34,41 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Use the -Force flag to bypass the confirmation question")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Define if the JavaScriptLink is to be found at the web or site collection scope. Web is default.")]
-        public CustomActionScope Scope = CustomActionScope.Web;
+        [Parameter(Mandatory = false, HelpMessage = "Define if the JavaScriptLink is to be found at the web or site collection scope. Omit to allow deletion from either web or site collection.")]
+        public CustomActionScope? Scope;
 
         protected override void ExecuteCmdlet()
         {
-
             // Following code to handle desprecated parameter
-            CustomActionScope setScope;
-
             if (MyInvocation.BoundParameters.ContainsKey("FromSite"))
             {
-                setScope = CustomActionScope.Site;
-            }
-            else
-            {
-                setScope = Scope;
+                Scope = CustomActionScope.Site;
             }
 
-            var action = setScope == CustomActionScope.Web ? SelectedWeb.GetCustomActions().FirstOrDefault(c => c.Name == Name) : ClientContext.Site.GetCustomActions().FirstOrDefault(c => c.Name == Name);
-            if (action != null)
+            List<UserCustomAction> actions = new List<UserCustomAction>();
+
+            if (!Scope.HasValue || Scope == CustomActionScope.Web)
             {
-                if (Force || ShouldContinue(string.Format(Resources.RemoveJavaScript0, action.Name), Resources.Confirm))
+                actions.AddRange(SelectedWeb.GetCustomActions().Where(c => c.Location == "ScriptLink"));
+            }
+            if (!Scope.HasValue || Scope == CustomActionScope.Site)
+            {
+                actions.AddRange(ClientContext.Site.GetCustomActions().Where(c => c.Location == "ScriptLink"));
+            }
+
+            if (!actions.Any()) return;
+
+            foreach (var action in actions.Where(action => Force || ShouldContinue(string.Format(Resources.RemoveJavaScript0, action.Name), Resources.Confirm)))
+            {
+                switch (action.Scope)
                 {
-                    if (setScope == CustomActionScope.Web)
-                    {
+                    case UserCustomActionScope.Web:
                         SelectedWeb.DeleteJsLink(Name);
-                    }
-                    else
-                    {
-                        var site = ClientContext.Site;
-                        site.DeleteJsLink(Name);
-                    }
+                        break;
+
+                    case UserCustomActionScope.Site:
+                        ClientContext.Site.DeleteJsLink(Name);
+                        break;
                 }
             }
         }
