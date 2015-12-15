@@ -12,7 +12,8 @@ namespace OfficeDevPnP.PowerShell.Commands
     public class AddJavaScriptLink : SPOWebCmdlet
     {
         [Parameter(Mandatory = true)]
-        public string Key = string.Empty;
+        [Alias("Key")]
+        public string Name = string.Empty;
 
         [Parameter(Mandatory = true)]
         public string[] Url = null;
@@ -44,12 +45,12 @@ namespace OfficeDevPnP.PowerShell.Commands
 
             if (setScope == CustomActionScope.Web)
             {
-                SelectedWeb.AddJsLink(Key, Url, Sequence);
+                SelectedWeb.AddJsLink(Name, Url, Sequence);
             }
             else
             {
                 var site = ClientContext.Site;
-                site.AddJsLink(Key, Url, Sequence);
+                site.AddJsLink(Name, Url, Sequence);
             }
         }
     }
