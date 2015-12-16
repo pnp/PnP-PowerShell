@@ -21,7 +21,6 @@ namespace OfficeDevPnP.PowerShell.Commands.Base.PipeBinds
 
         public ListItemPipeBind(string id)
         {
-            Guid guidId;
             uint uintId;
 
             if (uint.TryParse(id, out uintId))

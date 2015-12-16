@@ -61,6 +61,7 @@ namespace OfficeDevPnP.PowerShell.Commands
                 web = ClientContext.Web;
             }
 
+            SPOnlineConnection.CurrentConnection.Context.ExecuteQueryRetry();
 
             return web;
         }
