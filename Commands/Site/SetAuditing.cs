@@ -24,6 +24,14 @@ namespace OfficeDevPnP.PowerShell.Commands
         Code = @"PS:> Set-SPOAuditing -TrimAuditLog",
         Remarks = "Enables the automatic trimming of the audit log",
         SortOrder = 4)]
+    [CmdletExample(
+        Code = @"PS:> Set-SPOAuditing -RetentionTime 7 -CheckOutCheckInItems -MoveCopyItems -SearchContent",
+        Remarks = @"Sets the audit log trimming to 7 days, this also enables the automatic trimming of the audit log.
+                    Do auditing for:
+                    - Checking out or checking in items
+                    - Moving or copying items to another location in the site
+                    - Searching site content",
+        SortOrder = 5)]
     public class SetAuditing : SPOCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName ="EnableAll")]
@@ -97,32 +105,32 @@ namespace OfficeDevPnP.PowerShell.Commands
                 ClientContext.Site.AuditLogTrimmingRetention = RetentionTime;
                 ClientContext.Site.TrimAuditLog = true;
             }
-            if(TrimAuditLog)
+            if(TrimAuditLog.IsPresent)
             {
-                ClientContext.Site.TrimAuditLog = false;
+                ClientContext.Site.TrimAuditLog = true;
             }
 
             //set the events to audit
             //AuditMaskType.Update
-            if (EditItems) { AuditFlags = AuditFlags | AuditMaskType.Update; }
+            if (EditItems.IsPresent) { AuditFlags = AuditFlags | AuditMaskType.Update; UpdateAudit = true; }
 
             //AuditMaskType.CheckOut and AuditMaskType.CheckIn
-            if(CheckOutCheckInItems) { AuditFlags = AuditFlags | AuditMaskType.CheckOut | AuditMaskType.CheckIn; }
+            if(CheckOutCheckInItems.IsPresent) { AuditFlags = AuditFlags | AuditMaskType.CheckOut | AuditMaskType.CheckIn; UpdateAudit = true; }
 
             //AuditMaskType.Copy and AuditMaskType.Move
-            if (MoveCopyItems) { AuditFlags = AuditFlags | AuditMaskType.Copy | AuditMaskType.Move; }
+            if (MoveCopyItems.IsPresent) { AuditFlags = AuditFlags | AuditMaskType.Copy | AuditMaskType.Move; UpdateAudit = true; }
 
             //AuditMaskType.Undelete and AuditMaskType.ObjectDelete
-            if (DeleteRestoreItems) { AuditFlags = AuditFlags | AuditMaskType.Undelete | AuditMaskType.ObjectDelete; }
+            if (DeleteRestoreItems.IsPresent) { AuditFlags = AuditFlags | AuditMaskType.Undelete | AuditMaskType.ObjectDelete; UpdateAudit = true; }
 
             //AuditMaskType.SchemaChange and AuditMaskType.ProfileChange
-            if (EditContentTypesColumns) { AuditFlags = AuditFlags | AuditMaskType.SchemaChange | AuditMaskType.ProfileChange; }
+            if (EditContentTypesColumns.IsPresent) { AuditFlags = AuditFlags | AuditMaskType.SchemaChange | AuditMaskType.ProfileChange; UpdateAudit = true; }
 
             //AuditMaskType.Search
-            if (SearchContent) { AuditFlags = AuditFlags | AuditMaskType.Search; }
+            if (SearchContent.IsPresent) { AuditFlags = AuditFlags | AuditMaskType.Search; UpdateAudit = true; }
 
             //AuditMaskType.SecurityChange
-            if (EditUsersPermissions) { AuditFlags = AuditFlags | AuditMaskType.SecurityChange; }
+            if (EditUsersPermissions.IsPresent) { AuditFlags = AuditFlags | AuditMaskType.SecurityChange; UpdateAudit = true; }
 
             if(UpdateAudit)
             {
