@@ -179,7 +179,6 @@
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>30</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
@@ -188,7 +187,6 @@
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>Url</Label>
-            <Width>30</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
         </TableHeaders>
@@ -292,11 +290,9 @@
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>30</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Width>30</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
@@ -403,7 +399,6 @@
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
-            <Width>40</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
