@@ -6,11 +6,11 @@ using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 namespace OfficeDevPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "SPOGroupPermissions")]
-    [CmdletHelp("Returns the permissions for a specific group",
+    [CmdletHelp("Returns the permissions for a specific SharePoint group",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
         Code = @"PS:> Get-SPOGroupPermissions -Identity 'My Site Members'", 
-        Remarks = "Returns the permissions for the group with the name 'My Site Members'",
+        Remarks = "Returns the permissions for the SharePoint group with the name 'My Site Members'",
         SortOrder = 0)]
     public class GetGroupPermissions : SPOWebCmdlet
     {
