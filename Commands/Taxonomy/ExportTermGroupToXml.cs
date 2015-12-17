@@ -29,7 +29,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         Remarks = "Exports all term groups in the default site collection term store to the file 'output.xml' in the current folder",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTermGroupToXml -Out c:\output.xml -TermGroup ""Test Group""", 
+        Code = @"PS:> Export-SPOTermGroupToXml -Out c:\output.xml -Identity ""Test Group""", 
         Remarks = "Exports the term group with the specified name to the file 'output.xml' located in the root folder of the C: drive.",
         SortOrder = 3)]
     public class ExportTermGroup : SPOCmdlet
@@ -87,7 +87,7 @@ namespace OfficeDevPnP.PowerShell.Commands
                 var document = XDocument.Parse(fullxml);
 
                 
-                XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05;
+                XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
 
                 var termGroupsElement = document.Root.Descendants(pnp + "TermGroups").FirstOrDefault();
 
