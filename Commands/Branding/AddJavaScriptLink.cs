@@ -32,7 +32,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Alias("AddToSite")]
         public SwitchParameter SiteScoped;
 
-        [Parameter(Mandatory = false, HelpMessage = "Defines if this JavaScript file will be injected to every page within the current site collection or web. Default is web.")]
+        [Parameter(Mandatory = false, HelpMessage = "Defines if this JavaScript file will be injected to every page within the current site collection or web. All is not allowed in for this command. Default is web.")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
@@ -49,14 +49,19 @@ namespace OfficeDevPnP.PowerShell.Commands
                 setScope = Scope;
             }
 
-            if (setScope == CustomActionScope.Web)
+            switch (setScope)
             {
-                SelectedWeb.AddJsLink(Name, Url, Sequence);
-            }
-            else
-            {
-                var site = ClientContext.Site;
-                site.AddJsLink(Name, Url, Sequence);
+                case CustomActionScope.Web:
+                    SelectedWeb.AddJsLink(Name, Url, Sequence);
+                    break;
+
+                case CustomActionScope.Site:
+                    ClientContext.Site.AddJsLink(Name, Url, Sequence);
+                    break;
+
+                case CustomActionScope.All:
+                    WriteWarning("CustomActionScope All is not supported for adding JavaScriptLinks");
+                    break;
             }
         }
     }

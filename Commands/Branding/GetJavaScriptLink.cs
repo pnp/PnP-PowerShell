@@ -29,18 +29,18 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Alias("Key")]
         public string Name = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Scope of the action, either Web, Site or omit to return both")]
-        public CustomActionScope? Scope = null;
+        [Parameter(Mandatory = false, HelpMessage = "Scope of the action, either Web, Site or All to return both")]
+        public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
         {
             List<UserCustomAction> actions = new List<UserCustomAction>();
 
-            if (!Scope.HasValue || Scope == CustomActionScope.Web)
+            if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
             {
                 actions.AddRange(SelectedWeb.GetCustomActions().Where(c => c.Location == "ScriptLink"));
             }
-            if (!Scope.HasValue || Scope == CustomActionScope.Site)
+            if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
             {
                 actions.AddRange(ClientContext.Site.GetCustomActions().Where(c => c.Location == "ScriptLink"));
             }

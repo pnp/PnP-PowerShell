@@ -34,8 +34,8 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Use the -Force flag to bypass the confirmation question")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Define if the JavaScriptLink is to be found at the web or site collection scope. Omit to allow deletion from either web or site collection.")]
-        public CustomActionScope? Scope;
+        [Parameter(Mandatory = false, HelpMessage = "Define if the JavaScriptLink is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection.")]
+        public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
         {
@@ -47,11 +47,11 @@ namespace OfficeDevPnP.PowerShell.Commands
 
             List<UserCustomAction> actions = new List<UserCustomAction>();
 
-            if (!Scope.HasValue || Scope == CustomActionScope.Web)
+            if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
             {
                 actions.AddRange(SelectedWeb.GetCustomActions().Where(c => c.Location == "ScriptLink"));
             }
-            if (!Scope.HasValue || Scope == CustomActionScope.Site)
+            if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
             {
                 actions.AddRange(ClientContext.Site.GetCustomActions().Where(c => c.Location == "ScriptLink"));
             }

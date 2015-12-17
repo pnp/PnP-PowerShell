@@ -32,7 +32,7 @@ Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = true)]
         public string Location = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multple CustomActions being added to the page.")]
         public int Sequence = 0;
 
         [Parameter(Mandatory = false)]
@@ -53,9 +53,8 @@ Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = false)]
         public UserCustomActionRegistrationType RegistrationType;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site, defaults to Web. All is not valid for this command.")]
         public CustomActionScope Scope = CustomActionScope.Web;
-
 
         protected override void ExecuteCmdlet()
         {
@@ -84,14 +83,20 @@ Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
                 Rights = permissions
             };
 
-            if (Scope == CustomActionScope.Web)
+            switch (Scope)
             {
-                SelectedWeb.AddCustomAction(ca);
-            }
-            else
-            {
-                ClientContext.Site.AddCustomAction(ca);
-            }
+                case CustomActionScope.Web:
+                    SelectedWeb.AddCustomAction(ca);
+                    break;
+
+                case CustomActionScope.Site:
+                    ClientContext.Site.AddCustomAction(ca);
+                    break;
+
+                case CustomActionScope.All:
+                    WriteWarning("CustomActionScope All is not supported for adding CustomActions");
+                    break;
+            }           
         }
     }
 }
