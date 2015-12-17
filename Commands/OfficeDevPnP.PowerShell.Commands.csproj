@@ -315,6 +315,7 @@
     <Compile Include="Base\PipeBinds\ViewPipeBind.cs" />
     <Compile Include="Lists\SetList.cs" />
     <Compile Include="Lists\SetListPermission.cs" />
+    <Compile Include="Principals\SetGroupPermissions.cs" />
     <Compile Include="Principals\GetGroupPermissions.cs" />
     <Compile Include="Principals\RemoveGroup.cs" />
     <Compile Include="Principals\SetGroup.cs" />
