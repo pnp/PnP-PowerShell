@@ -21,11 +21,11 @@ namespace OfficeDevPnP.PowerShell.Commands
     [CmdletHelp("Imports a taxonomy TermGroup from either the input or from an XML file.",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(
-        Code = @"PS:> Import-SPOTermGroupFromXml -Xml $xml", 
+        Code = @"PS:> Import-SPOTermGroupFromXml -Xml $xml",
         Remarks = "Imports the XML based termgroup information located in the $xml variable",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Import-SPOTermGroupFromXml -Path input.xml", 
+        Code = @"PS:> Import-SPOTermGroupFromXml -Path input.xml",
         Remarks = "Imports the XML file specified by the path.",
         SortOrder = 2)]
     public class ImportTermGroupFromXml : SPOCmdlet
@@ -44,7 +44,7 @@ namespace OfficeDevPnP.PowerShell.Commands
             template.Features = null;
             template.CustomActions = null;
             template.ComposedLook = null;
-                
+
             template.Id = "TAXONOMYPROVISIONING";
 
             var outputStream = XMLPnPSchemaFormatter.LatestFormatter.ToFormattedTemplate(template);
@@ -69,7 +69,7 @@ namespace OfficeDevPnP.PowerShell.Commands
                 termGroupsElement = XElement.Parse(File.ReadAllText(Path));
             }
 
-            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05;
+            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
             var templateElement = document.Root.Descendants(pnp + "ProvisioningTemplate").FirstOrDefault();
 
             if (templateElement != null)
