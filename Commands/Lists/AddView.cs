@@ -45,7 +45,7 @@ namespace OfficeDevPnP.PowerShell.Commands
             var list = List.GetList(SelectedWeb);
             if (list != null)
             {
-                var view = list.CreateView(Title, ViewType, Fields, RowLimit, SetAsDefault, Query, Paged, Personal);
+                var view = list.CreateView(Title, ViewType, Fields, RowLimit, SetAsDefault, Query, Personal, Paged);
 
                 WriteObject(view);
             }
