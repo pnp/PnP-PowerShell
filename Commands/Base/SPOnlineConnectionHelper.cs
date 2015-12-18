@@ -58,6 +58,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString());
         }
 
+
 #if !CLIENTSDKV15
         internal static SPOnlineConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
         {
@@ -105,6 +106,34 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString());
         }
 #endif
+
+        internal static SPOnlineConnection InstantiateWebloginConnection(Uri url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
+        {
+            var authManager = new Core.AuthenticationManager();
+
+            var context = authManager.GetWebLoginClientContext(url.ToString());
+
+            if (context != null)
+            {
+                context.ApplicationName = Properties.Resources.ApplicationName;
+                context.RequestTimeout = requestTimeout;
+                var connectionType = ConnectionType.OnPrem;
+                if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+                {
+                    connectionType = ConnectionType.O365;
+                }
+                if (skipAdminCheck == false)
+                {
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
+                }
+
+                return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString());
+            }
+            throw new Exception("Error establishing a connection, context is null");
+        }
 
         internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
         {
