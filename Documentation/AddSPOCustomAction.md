@@ -18,8 +18,8 @@ Parameter|Type|Required|Description
 |RegistrationId|String|False||
 |RegistrationType|UserCustomActionRegistrationType|False||
 |Rights|PermissionKind[]|False||
-|Scope|CustomActionScope|False||
-|Sequence|Int32|False||
+|Scope|CustomActionScope|False|The scope of the CustomAction to add to. Either Web or Site, defaults to Web. All is not valid for this command.|
+|Sequence|Int32|False|Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multple CustomActions being added to the page.|
 |Title|String|True||
 |Url|String|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
