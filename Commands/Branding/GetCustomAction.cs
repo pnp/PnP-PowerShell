@@ -13,23 +13,23 @@ namespace OfficeDevPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Branding)]
     public class GetCustomAction : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Identity of the CustomAction to return. Omit to return all CustomActions.")]
         public GuidPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Scope of the CustomAction, either Web, Site or All to return both")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
         {
-            List<UserCustomAction> actions = null;
+            List<UserCustomAction> actions = new List<UserCustomAction>();
 
-            if (Scope == CustomActionScope.Web)
+            if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
             {
-                actions = SelectedWeb.GetCustomActions().ToList();
+                actions.AddRange(SelectedWeb.GetCustomActions());
             }
-            else
+            if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
             {
-                actions = ClientContext.Site.GetCustomActions().ToList();
+                actions.AddRange(ClientContext.Site.GetCustomActions());
             }
 
             if (Identity != null)
