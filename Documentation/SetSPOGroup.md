@@ -9,7 +9,7 @@ Set-SPOGroup -Identity <GroupPipeBind> [-SetAssociatedGroup <AssociatedGroupType
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|AddRole|String|False||
+|AddRole|String|False|Name of the permission set to add to this SharePoint group|
 |AllowMembersEditMembership|Boolean|False||
 |AllowRequestToJoinLeave|Boolean|False||
 |AutoAcceptRequestToJoinLeave|Boolean|False||
@@ -17,7 +17,7 @@ Parameter|Type|Required|Description
 |Identity|GroupPipeBind|True||
 |OnlyAllowMembersViewMembership|Boolean|False||
 |Owner|String|False||
-|RemoveRole|String|False||
+|RemoveRole|String|False|Name of the permission set to remove from this SharePoint group|
 |RequestToJoinEmail|String|False||
 |SetAssociatedGroup|AssociatedGroupType|False||
 |Title|String|False||

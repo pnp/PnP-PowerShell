@@ -30,6 +30,6 @@ Exports all term groups in the default site collection term store to the file 'o
 
 ###Example 3
 ```powershell
-PS:> Export-SPOTermGroupToXml -Out c:\output.xml -TermGroup "Test Group"
+PS:> Export-SPOTermGroupToXml -Out c:\output.xml -Identity "Test Group"
 ```
 Exports the term group with the specified name to the file 'output.xml' located in the root folder of the C: drive.

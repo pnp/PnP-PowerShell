@@ -123,6 +123,8 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[Set&#8209;SPOAppSideLoading](SetSPOAppSideLoading.md)** |Enables the App Side Loading Feature on a site
+**[Get&#8209;SPOAuditing](GetSPOAuditing.md)** |Get the Auditing setting of a site
+**[Set&#8209;SPOAuditing](SetSPOAuditing.md)** |Set Auditing setting for a site
 **[Get&#8209;SPOSite](GetSPOSite.md)** |Returns the current site collection from the context.
 **[Uninstall&#8209;SPOSolution](UninstallSPOSolution.md)** |Uninstalls a sandboxed solution from a site collection
 **[Install&#8209;SPOSolution](InstallSPOSolution.md)** |Installs a sandboxed solution to a site collection. WARNING! This method can delete your composed look gallery due to the method used to activate the solution. We recommend you to only to use this cmdlet if you are okay with that.
@@ -155,6 +157,8 @@ Cmdlet|Description
 **[Set&#8209;SPOGroup](SetSPOGroup.md)** |Updates a group
 **[New&#8209;SPOGroup](NewSPOGroup.md)** |Adds a user to the build-in Site User Info List and returns a user object
 **[Get&#8209;SPOGroup](GetSPOGroup.md)** |Returns a specific group or all groups.
+**[Set&#8209;SPOGroupPermissions](SetSPOGroupPermissions.md)** |Adds and/or removes permissions of a specific SharePoint group
+**[Get&#8209;SPOGroupPermissions](GetSPOGroupPermissions.md)** |Returns the permissions for a specific SharePoint group
 **[New&#8209;SPOUser](NewSPOUser.md)** |Adds a user to the build-in Site User Info List and returns a user object
 **[Remove&#8209;SPOUserFromGroup](RemoveSPOUserFromGroup.md)** |Removes a user from a group
 **[Add&#8209;SPOUserToGroup](AddSPOUserToGroup.md)** |Adds a user to a group

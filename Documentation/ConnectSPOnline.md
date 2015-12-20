@@ -21,6 +21,11 @@ Connect-SPOnline [-Realm <String>] -AppId <String> -AppSecret <String> [-Minimal
 ```
 
 
+```powershell
+Connect-SPOnline -UseWebLogin [<SwitchParameter>] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
+```
+
+
 ##Detailed Description
 If no credentials have been specified, and the CurrentCredentials parameter has not been specified, you will be prompted for credentials.
 
@@ -45,6 +50,7 @@ Parameter|Type|Required|Description
 |Tenant|String|True|The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com|
 |Url|String|True|The Url of the site collection to connect to.|
 |UseAdfs|SwitchParameter|False|If you want to connect to your on-premises SharePoint farm using ADFS|
+|UseWebLogin|SwitchParameter|True|If you want to connect to SharePoint with browser based login|
 ##Examples
 
 ###Example 1
