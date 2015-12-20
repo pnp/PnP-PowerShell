@@ -15,7 +15,7 @@ namespace OfficeDevPnP.PowerShell.Commands
     [CmdletExample(
         Code = @"Add-SPOView -List ""Demo List"" -Title ""Demo View"" -Fields ""Title"",""Address"" -Paged",
         Remarks = "Adds a view named ""Demo view"" to the ""Demo List"" list and makes sure there's paging on this view.",        
-        SortOrder = 1)]        
+        SortOrder = 2)]        
     public class AddView : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]
