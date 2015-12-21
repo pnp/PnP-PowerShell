@@ -247,10 +247,10 @@
     <Compile Include="Base\PipeBinds\WorkflowInstancePipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowDefinitionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowSubscriptionPipeBind.cs" />
-    <Compile Include="Base\GetSPOContext.cs" />
+    <Compile Include="Base\GetContext.cs" />
     <Compile Include="Base\GetStoredCredential.cs" />
     <Compile Include="Base\GetHealthScore.cs" />
-    <Compile Include="Base\ExecuteSPOQuery.cs" />
+    <Compile Include="Base\ExecuteQuery.cs" />
     <Compile Include="Base\DisconnectSPOnline.cs" />
     <Compile Include="Base\PipeBinds\FieldPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ListPipeBind.cs" />
