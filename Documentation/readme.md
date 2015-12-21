@@ -17,6 +17,7 @@ Cmdlet|Description
 **[Get&#8209;SPOAuthenticationRealm](GetSPOAuthenticationRealm.md)** |Gets the authentication realm for the current web
 **[Get&#8209;SPOAzureADManifestKeyCredentials](GetSPOAzureADManifestKeyCredentials.md)** |Creates the JSON snippet that is required for the manifest json file for Azure WebApplication / WebAPI apps
 **[Get&#8209;SPOContext](GetSPOContext.md)** |Returns a Client Side Object Model context
+**[Set&#8209;SPOContext](SetSPOContext.md)** |Sets the Client Context to use by the cmdlets
 **[Get&#8209;SPOHealthScore](GetSPOHealthScore.md)** |Retrieves the current health score value of the server
 **[Disconnect&#8209;SPOnline](DisconnectSPOnline.md)** |Disconnects the context
 **[Connect&#8209;SPOnline](ConnectSPOnline.md)** |Connects to a SharePoint site and creates an in-memory context
