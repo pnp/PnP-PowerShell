@@ -261,6 +261,7 @@
     <Compile Include="Base\PipeBinds\WebPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GuidPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
+    <Compile Include="Base\SetContext.cs" />
     <Compile Include="Base\SPOAdminCmdlet.cs" />
     <Compile Include="Base\SPOnlineConnection.cs" />
     <Compile Include="Base\SPOnlineConnectionHelper.cs" />

@@ -1,5 +1,9 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-12-21**
+
+* Added a Set-SPOContext cmdlet
+
 **2015-12-14**
 
 * Added Set-SPOListItem cmdlet
