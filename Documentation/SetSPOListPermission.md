@@ -20,3 +20,16 @@ Parameter|Type|Required|Description
 |RemoveRole|String|False||
 |User|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Set-SPOListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'
+```
+Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'
+
+###Example 2
+```powershell
+PS:> Set-SPOListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'
+```
+Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'

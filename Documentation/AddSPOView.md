@@ -25,4 +25,10 @@ Parameter|Type|Required|Description
 ```powershell
 Add-SPOView -List "Demo List" -Title "Demo View" -Fields "Title","Address"
 ```
+Adds a view named "Demo view" to the "Demo List" list.
 
+###Example 2
+```powershell
+Add-SPOView -List "Demo List" -Title "Demo View" -Fields "Title","Address" -Paged
+```
+Adds a view named "Demo view" to the "Demo List" list and makes sure there's paging on this view.
