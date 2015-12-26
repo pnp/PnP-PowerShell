@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Xml.Linq;
 
 namespace OfficeDevPnP.PowerShell.Commands.Branding
 {
@@ -73,6 +74,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, Position = 1, HelpMessage = "The schema of the output to use, defaults to the latest schema")]
         public XMLPnPSchemaVersion Schema = XMLPnPSchemaVersion.LATEST;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified, the output will only contain the <pnp:Files> element. This allows the output to be included in another template.")]
+        public SwitchParameter AsIncludeFile;
+
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
@@ -114,20 +118,57 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
 
                         var xml = GetFiles(Schema, new FileInfo(Out).DirectoryName, Folder, ct != null ? ct.StringId : null);
 
+                        if(AsIncludeFile)
+                        {
+                            XElement xElement = XElement.Parse(xml);
+                            // Get the Files Element
+                            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
+
+                            var filesElement = xElement.Descendants(pnp + "Files").FirstOrDefault();
+
+                            if (filesElement != null)
+                            {
+                                xml = filesElement.ToString();
+                            }
+                        }
                         System.IO.File.WriteAllText(Out, xml, Encoding);
                     }
                 }
                 else
                 {
                     var xml = GetFiles(Schema, new FileInfo(Out).DirectoryName, Folder, ct != null ? ct.StringId : null);
+                    if (AsIncludeFile)
+                    {
+                        XElement xElement = XElement.Parse(xml);
+                        // Get the Files Element
+                        XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
 
+                        var filesElement = xElement.Descendants(pnp + "Files").FirstOrDefault();
+
+                        if (filesElement != null)
+                        {
+                            xml = filesElement.ToString();
+                        }
+                    }
                     System.IO.File.WriteAllText(Out, xml, Encoding);
                 }
             }
             else
             {
                 var xml = GetFiles(Schema, SessionState.Path.CurrentFileSystemLocation.Path, Folder, ct != null ? ct.StringId : null);
+                if (AsIncludeFile)
+                {
+                    XElement xElement = XElement.Parse(xml);
+                    // Get the Files Element
+                    XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
 
+                    var filesElement = xElement.Descendants(pnp + "Files").FirstOrDefault();
+
+                    if (filesElement != null)
+                    {
+                        xml = filesElement.ToString();
+                    }
+                }
                 WriteObject(xml);
             }
 
