@@ -65,7 +65,11 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "If specified all site groups will be included.")]
         public SwitchParameter IncludeSiteGroups;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
+        public SwitchParameter PersistBrandingFiles;
+
         [Parameter(Mandatory = false, HelpMessage = "If specified the files making up the composed look (background image, font file and color file) will be saved.")]
+        [Obsolete("Use PersistBrandingFiles instead.")]
         public SwitchParameter PersistComposedLookFiles;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
@@ -84,7 +88,6 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))
@@ -126,7 +129,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
                 creationInformation.HandlersToProcess = Handlers;
             }
 
-            creationInformation.PersistComposedLookFiles = PersistComposedLookFiles;
+            creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
 
             creationInformation.FileConnector = new FileSystemConnector(path, "");
