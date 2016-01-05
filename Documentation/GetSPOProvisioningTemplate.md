@@ -2,7 +2,7 @@
 Generates a provisioning template from a web
 ##Syntax
 ```powershell
-Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-PersistComposedLookFiles [<SwitchParameter>]] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Handlers <Handlers>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
+Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Handlers <Handlers>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
 ```
 
 
@@ -16,7 +16,7 @@ Parameter|Type|Required|Description
 |IncludeSiteCollectionTermGroup|SwitchParameter|False|If specified, all the site collection term groups will be included. Overridden by IncludeAllTermGroups.|
 |IncludeSiteGroups|SwitchParameter|False|If specified all site groups will be included.|
 |Out|String|False|Filename to write to, optionally including full path|
-|PersistComposedLookFiles|SwitchParameter|False|If specified the files making up the composed look (background image, font file and color file) will be saved.|
+|PersistBrandingFiles|SwitchParameter|False|If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.|
 |Schema|XMLPnPSchemaVersion|False|The schema of the output to use, defaults to the latest schema|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
