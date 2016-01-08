@@ -9,7 +9,7 @@ This solution shows how you can build a library of PowerShell commands that act 
 -  SharePoint 2013 on-premises
 
 ### Prerequisites ###
-In order to build the setup project the WiX toolset needs to be installed. You can obtain this from http://wix.codeplex.com. If you use Visual Studio 2015 you will need at least WiX 3.10, which can be downloaded from here: http://wixtoolset.org/releases/
+In order to build the setup project the WiX toolset needs to be installed. You can obtain this from http://wix.codeplex.com. If you use Visual Studio 2015 you will need at least WiX 3.10, but do not install WiX v4.x, which can be downloaded from here: http://wixtoolset.org/releases/
 
 In order to generate the Cmdlet help you need Windows Management Framework v4.0 which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
 
@@ -109,3 +109,7 @@ Connect-SPOnline –Url https://yoursite.sharepoint.com –Credentials yourlabel
 
 Alternatively you can create a credential manager entry with an internet or network address starting with your tenant url, e.g. https://mytenant.sharepoint.com. If you then use Connect-SPOnline -Url https://mytenant.sharepoint.com/sites/yoursite
 to create a new connection, the cmdlet will resolve the credentials to use based upon the URL.
+
+# Contributing #
+
+If you want to contribute to this OfficeDevPnP PowerShel library, please [proceed here](CONTRIBUTING.md)

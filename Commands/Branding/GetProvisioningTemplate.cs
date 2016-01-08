@@ -24,35 +24,30 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
     [CmdletHelp("Generates a provisioning template from a web",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
-       Code = @"
-    PS:> Get-SPOProvisioningTemplate -Out template.xml
-",
+       Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml",
        Remarks = "Extracts a provisioning template in XML format from the current web.",
        SortOrder = 1)]
     [CmdletExample(
-Code = @"
-    PS:> Get-SPOProvisioningTemplate -Out template.xml -Schema V201503
-",
-Remarks = "Extracts a provisioning template in XML format from the current web and saves it in the V201503 version of the schema.",
-SortOrder = 2)]
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -Schema V201503",
+        Remarks = "Extracts a provisioning template in XML format from the current web and saves it in the V201503 version of the schema.",
+        SortOrder = 2)]
     [CmdletExample(
-   Code = @"
-    PS:> Get-SPOProvisioningTemplate -Out template.xml -IncludeAllTermGroups
-",
-   Remarks = "Extracts a provisioning template in XML format from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.",
-   SortOrder = 3)]
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -IncludeAllTermGroups",
+        Remarks = "Extracts a provisioning template in XML format from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.",
+        SortOrder = 3)]
     [CmdletExample(
-  Code = @"
-    PS:> Get-SPOProvisioningTemplate -Out template.xml -IncludeSiteCollectionTermGroup
-",
-  Remarks = "Extracts a provisioning template in XML format from the current web and includes the term group currently (if set) assigned to the site collection.",
-  SortOrder = 4)]
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -IncludeSiteCollectionTermGroup",
+        Remarks = "Extracts a provisioning template in XML format from the current web and includes the term group currently (if set) assigned to the site collection.",
+        SortOrder = 4)]
     [CmdletExample(
-Code = @"
-    PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistComposedLookFiles
-",
-Remarks = "Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.",
-SortOrder = 5)]
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistComposedLookFiles",
+        Remarks = "Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.",
+        SortOrder = 5)]
+    [CmdletExample(
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -Handlers Lists, SiteSecurity",
+        Remarks = "Extracts a provisioning template in XML format from the current web, but only processes lists and site security when generating the template.",
+        SortOrder = 5)]
+
     public class GetProvisioningTemplate : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "Filename to write to, optionally including full path")]
@@ -70,7 +65,11 @@ SortOrder = 5)]
         [Parameter(Mandatory = false, HelpMessage = "If specified all site groups will be included.")]
         public SwitchParameter IncludeSiteGroups;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
+        public SwitchParameter PersistBrandingFiles;
+
         [Parameter(Mandatory = false, HelpMessage = "If specified the files making up the composed look (background image, font file and color file) will be saved.")]
+        [Obsolete("Use PersistBrandingFiles instead.")]
         public SwitchParameter PersistComposedLookFiles;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
@@ -83,10 +82,12 @@ SortOrder = 5)]
         [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
+        public Handlers Handlers;
+
 
         protected override void ExecuteCmdlet()
         {
-
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))
@@ -123,9 +124,12 @@ SortOrder = 5)]
 
             var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
 
+            if (this.MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            {
+                creationInformation.HandlersToProcess = Handlers;
+            }
 
-
-            creationInformation.PersistComposedLookFiles = PersistComposedLookFiles;
+            creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
 
             creationInformation.FileConnector = new FileSystemConnector(path, "");
@@ -190,6 +194,11 @@ SortOrder = 5)]
                 case XMLPnPSchemaVersion.V201508:
                     {
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
+                        break;
+                    }
+                case XMLPnPSchemaVersion.V201512:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
                         break;
                     }
             }

@@ -9,9 +9,18 @@ namespace OfficeDevPnP.PowerShell.Commands.Features
 {
     [Cmdlet("Disable", "SPOFeature", SupportsShouldProcess = false)]
     [CmdletHelp("Disables a feature", Category = CmdletHelpCategory.Features)]
-    [CmdletExample(Code = "PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe", SortOrder = 1)]
-    [CmdletExample(Code = "PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force", SortOrder = 2)]
-    [CmdletExample(Code = "PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web", SortOrder = 3)]
+    [CmdletExample(
+        Code = "PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
+        Remarks = @"This will enable the feature with the id ""99a00f6e-fb81-4dc7-8eac-e09c6f9132fe""",          
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = "PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force", 
+        Remarks = @"This will enable the feature with the id ""99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"" with force.", 
+        SortOrder = 2)]
+    [CmdletExample(
+        Code = "PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web", 
+        Remarks = @"This will enable the feature with the id ""99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"" with the web scope.", 
+        SortOrder = 3)]
     public class DisableFeature : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The id of the feature to disable.")]

@@ -19,16 +19,16 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 ```
-
+This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"
 
 ###Example 2
 ```powershell
 PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
 ```
-
+This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with force.
 
 ###Example 3
 ```powershell
 PS:> Disable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
 ```
-
+This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with the web scope.

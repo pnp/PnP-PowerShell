@@ -31,6 +31,8 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                 solutionDir = args[2];
                 generateMarkdown = true;
             }
+
+
             var doc = new XDocument(new XDeclaration("1.0", "UTF-8", string.Empty));
 
             XNamespace ns = "http://msh";
@@ -48,12 +50,12 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
             var assembly = Assembly.LoadFrom(inFile);
             var types = assembly.GetTypes();
+    //        System.Diagnostics.Debugger.Launch();
+
             foreach (var t in types)
             {
                 if (t.BaseType.Name == "SPOCmdlet" || t.BaseType.Name == "PSCmdlet" || t.BaseType.Name == "SPOWebCmdlet" || t.BaseType.Name == "SPOAdminCmdlet")
                 {
-
-                    //XElement examples = new XElement(command + "examples");
 
                     var verb = string.Empty;
                     var noun = string.Empty;
@@ -65,7 +67,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                     var attrs = t.GetCustomAttributes();
                     var examples = new List<CmdletExampleAttribute>();
                     var relatedLinks = new List<CmdletRelatedLinkAttribute>();
-                    //System.Attribute.GetCustomAttributes(t); 
+
 
                     // Get info from attributes
                     foreach (var attr in attrs)
@@ -126,7 +128,8 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                     commandElement.Add(syntaxElement);
 
                     // Store syntaxes in CmdletInfo structure (if not AllParameterSets), and also in all syntaxItems list
-                    var fields = t.GetFields();
+                    var fields = GetFields(t);
+                    //var fields = t.GetFields();
                     var syntaxItems = new List<SyntaxItem>();
                     foreach (var field in fields)
                     {
@@ -347,97 +350,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                     // Markdown from CmdletInfo
                     if (generateMarkdown)
                     {
-                        var originalMd = string.Empty;
-                        var newMd = string.Empty;
-
-                        if (!string.IsNullOrEmpty(cmdletInfo.Verb) && !string.IsNullOrEmpty(cmdletInfo.Noun))
-                        {
-                            string mdFilePath = string.Format("{0}\\Documentation\\{1}{2}.md", solutionDir, cmdletInfo.Verb, cmdletInfo.Noun);
-                            toc.Add(cmdletInfo);
-
-                            if (System.IO.File.Exists(mdFilePath))
-                            {
-                                originalMd = System.IO.File.ReadAllText(mdFilePath);
-
-                            }
-                            var docBuilder = new StringBuilder();
-                            
-                            // Header
-
-                            docBuilder.AppendFormat("#{0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
-
-                            // Body 
-                            
-                            docBuilder.AppendFormat("{0}{1}", cmdletInfo.Description, Environment.NewLine);
-                            docBuilder.AppendFormat("##Syntax{0}", Environment.NewLine);
-                            foreach (var cmdletSyntax in cmdletInfo.Syntaxes.OrderBy(s => s.ParameterSetName))
-                            {
-                                var syntaxText = new StringBuilder();
-                                syntaxText.AppendFormat("```powershell\r\n{0}", cmdletInfo.FullCommand);
-                                foreach (var par in cmdletSyntax.Parameters.OrderBy(p => p.Position))
-                                {
-                                    syntaxText.Append(" ");
-                                    if (!par.Required)
-                                    {
-                                        syntaxText.Append("[");
-                                    }
-                                    if (par.Type == "SwitchParameter")
-                                    {
-                                        syntaxText.AppendFormat("-{0} [<{1}>]", par.Name, par.Type);
-                                    }
-                                    else
-                                    {
-                                        syntaxText.AppendFormat("-{0} <{1}>", par.Name, par.Type);
-                                    }
-                                    if (!par.Required)
-                                    {
-                                        syntaxText.Append("]");
-                                    }
-                                }
-                                // Add All ParameterSet ones
-                                docBuilder.Append(syntaxText);
-                                docBuilder.AppendFormat("\n```\n\n\n");
-                            }
-
-                            if (!string.IsNullOrEmpty(cmdletInfo.DetailedDescription))
-                            {
-                                docBuilder.Append("##Detailed Description\n");
-                                docBuilder.AppendFormat("{0}\n\n", cmdletInfo.DetailedDescription);
-                            }
-                            docBuilder.Append("##Parameters\n");
-                            docBuilder.Append("Parameter|Type|Required|Description\n");
-                            docBuilder.Append("---------|----|--------|-----------\n");
-                            foreach (var par in cmdletInfo.Parameters.OrderBy(x => x.Name))
-                            {
-                                docBuilder.AppendFormat("|{0}|{1}|{2}|{3}|\n", par.Name, par.Type, par.Required ? "True" : "False", par.Description);
-                            }
-                            if (examples.Any())
-                                docBuilder.Append("##Examples\n");
-                            var examplesCount = 1;
-                            foreach (var example in examples.OrderBy(e => e.SortOrder))
-                            {
-                                docBuilder.AppendFormat("{0}\n", example.Introduction);
-                                docBuilder.AppendFormat("###Example {0}\n", examplesCount);
-                                docBuilder.AppendFormat("```powershell\n{0}\n```\n", example.Code);
-                                docBuilder.AppendFormat("{0}\n", example.Remarks);
-                                examplesCount++;
-                            }
-
-                            newMd = docBuilder.ToString();
-
-                            DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
-
-                            var diffResults = dmp.diff_main(newMd, originalMd);
-
-                            foreach (var result in diffResults)
-                            {
-                                if (result.operation != DiffMatchPatch.Operation.EQUAL)
-                                {
-                                    System.IO.File.WriteAllText(mdFilePath, docBuilder.ToString());
-                                    break;
-                                }
-                            }
-                        }
+                        GenerateMarkDown(toc, solutionDir, examples, cmdletInfo);
                     }
                 }
 
@@ -446,50 +359,7 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
 
             if (generateMarkdown)
             {
-                var originalMd = string.Empty;
-                var newMd = string.Empty;
-
-                // Create the readme.md
-                var readmePath = string.Format("{0}\\Documentation\\readme.md", solutionDir);
-                if (System.IO.File.Exists(readmePath))
-                {
-                    originalMd = System.IO.File.ReadAllText(readmePath);
-                }
-                var docBuilder = new StringBuilder();
-
-
-                docBuilder.AppendFormat("# Cmdlet Documentation #{0}", Environment.NewLine);
-                docBuilder.AppendFormat("Below you can find a list of all the available cmdlets. Many commands provide built-in help and examples. Retrieve the detailed help with {0}", Environment.NewLine);
-                docBuilder.AppendFormat("{0}```powershell{0}Get-Help Connect-SPOnline -Detailed{0}```{0}{0}", Environment.NewLine);
-
-                // Get all unique categories
-                var categories = toc.Select(c => c.Category).Distinct();
-
-                foreach (var category in categories.OrderBy(c => c))
-                {
-                    docBuilder.AppendFormat("##{0}{1}", category, Environment.NewLine);
-
-                    docBuilder.AppendFormat("Cmdlet|Description{0}", Environment.NewLine);
-                    docBuilder.AppendFormat(":-----|:----------{0}", Environment.NewLine);
-                    foreach (var cmdletInfo in toc.Where(c => c.Category == category).OrderBy(c => c.Noun))
-                    {
-                        var description = cmdletInfo.Description.Replace("\r\n", " ");
-                        docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}{4}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, Environment.NewLine);
-                    }
-                }
-
-                newMd = docBuilder.ToString();
-                DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
-
-                var diffResults = dmp.diff_main(newMd, originalMd);
-
-                foreach (var result in diffResults)
-                {
-                    if (result.operation != DiffMatchPatch.Operation.EQUAL)
-                    {
-                        System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
-                    }
-                }
+                CreateReadme(toc, solutionDir);
             }
 
             DirectoryInfo di = new DirectoryInfo(string.Format("{0}\\Documentation", solutionDir));
@@ -504,6 +374,163 @@ namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
                     if (index == -1)
                     {
                         mdFile.Delete();
+                    }
+                }
+            }
+        }
+
+        private static List<FieldInfo> GetFields(Type t)
+        {
+            var fieldInfoList = new List<FieldInfo>();
+            foreach (var fieldInfo in t.GetFields())
+            {
+                fieldInfoList.Add(fieldInfo);
+            }
+            if (t.BaseType != null && t.BaseType.BaseType != null)
+            {
+                fieldInfoList.AddRange(GetFields(t.BaseType.BaseType));
+            }
+            return fieldInfoList;
+        }
+
+        private static void CreateReadme(List<CmdletInfo> toc, string solutionDir)
+        {
+            var originalMd = string.Empty;
+            var newMd = string.Empty;
+
+            // Create the readme.md
+            var readmePath = string.Format("{0}\\Documentation\\readme.md", solutionDir);
+            if (System.IO.File.Exists(readmePath))
+            {
+                originalMd = System.IO.File.ReadAllText(readmePath);
+            }
+            var docBuilder = new StringBuilder();
+
+
+            docBuilder.AppendFormat("# Cmdlet Documentation #{0}", Environment.NewLine);
+            docBuilder.AppendFormat("Below you can find a list of all the available cmdlets. Many commands provide built-in help and examples. Retrieve the detailed help with {0}", Environment.NewLine);
+            docBuilder.AppendFormat("{0}```powershell{0}Get-Help Connect-SPOnline -Detailed{0}```{0}{0}", Environment.NewLine);
+
+            // Get all unique categories
+            var categories = toc.Select(c => c.Category).Distinct();
+
+            foreach (var category in categories.OrderBy(c => c))
+            {
+                docBuilder.AppendFormat("##{0}{1}", category, Environment.NewLine);
+
+                docBuilder.AppendFormat("Cmdlet|Description{0}", Environment.NewLine);
+                docBuilder.AppendFormat(":-----|:----------{0}", Environment.NewLine);
+                foreach (var cmdletInfo in toc.Where(c => c.Category == category).OrderBy(c => c.Noun))
+                {
+                    var description = cmdletInfo.Description.Replace("\r\n", " ");
+                    docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}{4}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, Environment.NewLine);
+                }
+            }
+
+            newMd = docBuilder.ToString();
+            DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
+
+            var diffResults = dmp.diff_main(newMd, originalMd);
+
+            foreach (var result in diffResults)
+            {
+                if (result.operation != DiffMatchPatch.Operation.EQUAL)
+                {
+                    System.IO.File.WriteAllText(readmePath, docBuilder.ToString());
+                }
+            }
+        }
+
+        private static void GenerateMarkDown(List<CmdletInfo> toc, string solutionDir, List<CmdletExampleAttribute> examples, CmdletInfo cmdletInfo)
+        {
+            var originalMd = string.Empty;
+            var newMd = string.Empty;
+
+            if (!string.IsNullOrEmpty(cmdletInfo.Verb) && !string.IsNullOrEmpty(cmdletInfo.Noun))
+            {
+                string mdFilePath = string.Format("{0}\\Documentation\\{1}{2}.md", solutionDir, cmdletInfo.Verb, cmdletInfo.Noun);
+                toc.Add(cmdletInfo);
+
+                if (System.IO.File.Exists(mdFilePath))
+                {
+                    originalMd = System.IO.File.ReadAllText(mdFilePath);
+
+                }
+                var docBuilder = new StringBuilder();
+
+                // Header
+
+                docBuilder.AppendFormat("#{0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
+
+                // Body 
+
+                docBuilder.AppendFormat("{0}{1}", cmdletInfo.Description, Environment.NewLine);
+                docBuilder.AppendFormat("##Syntax{0}", Environment.NewLine);
+                foreach (var cmdletSyntax in cmdletInfo.Syntaxes.OrderBy(s => s.ParameterSetName))
+                {
+                    var syntaxText = new StringBuilder();
+                    syntaxText.AppendFormat("```powershell\r\n{0}", cmdletInfo.FullCommand);
+                    foreach (var par in cmdletSyntax.Parameters.OrderBy(p => p.Position))
+                    {
+                        syntaxText.Append(" ");
+                        if (!par.Required)
+                        {
+                            syntaxText.Append("[");
+                        }
+                        if (par.Type == "SwitchParameter")
+                        {
+                            syntaxText.AppendFormat("-{0} [<{1}>]", par.Name, par.Type);
+                        }
+                        else
+                        {
+                            syntaxText.AppendFormat("-{0} <{1}>", par.Name, par.Type);
+                        }
+                        if (!par.Required)
+                        {
+                            syntaxText.Append("]");
+                        }
+                    }
+                    // Add All ParameterSet ones
+                    docBuilder.Append(syntaxText);
+                    docBuilder.AppendFormat("\n```\n\n\n");
+                }
+
+                if (!string.IsNullOrEmpty(cmdletInfo.DetailedDescription))
+                {
+                    docBuilder.Append("##Detailed Description\n");
+                    docBuilder.AppendFormat("{0}\n\n", cmdletInfo.DetailedDescription);
+                }
+                docBuilder.Append("##Parameters\n");
+                docBuilder.Append("Parameter|Type|Required|Description\n");
+                docBuilder.Append("---------|----|--------|-----------\n");
+                foreach (var par in cmdletInfo.Parameters.OrderBy(x => x.Name))
+                {
+                    docBuilder.AppendFormat("|{0}|{1}|{2}|{3}|\n", par.Name, par.Type, par.Required ? "True" : "False", par.Description);
+                }
+                if (examples.Any())
+                    docBuilder.Append("##Examples\n");
+                var examplesCount = 1;
+                foreach (var example in examples.OrderBy(e => e.SortOrder))
+                {
+                    docBuilder.AppendFormat("{0}\n", example.Introduction);
+                    docBuilder.AppendFormat("###Example {0}\n", examplesCount);
+                    docBuilder.AppendFormat("```powershell\n{0}\n```\n", example.Code);
+                    docBuilder.AppendFormat("{0}\n", example.Remarks);
+                    examplesCount++;
+                }
+
+                newMd = docBuilder.ToString();
+
+                DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
+
+                var diffResults = dmp.diff_main(newMd, originalMd);
+
+                foreach (var result in diffResults)
+                {
+                    if (result.operation != DiffMatchPatch.Operation.EQUAL)
+                    {
+                        System.IO.File.WriteAllText(mdFilePath, docBuilder.ToString());
+                        break;
                     }
                 }
             }

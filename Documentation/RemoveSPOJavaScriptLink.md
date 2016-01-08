@@ -9,7 +9,26 @@ Remove-SPOJavaScriptLink [-Force [<SwitchParameter>]] [-Scope <CustomActionScope
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False||
-|Name|String|True|Name of the Javascript link. Omit this parameter to retrieve all script links|
-|Scope|CustomActionScope|False||
+|Force|SwitchParameter|False|Use the -Force flag to bypass the confirmation question|
+|Name|String|True|Name of the JavaScriptLink to remove|
+|Scope|CustomActionScope|False|Define if the JavaScriptLink is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOJavaScriptLink -Name jQuery
+```
+Removes the injected JavaScript file with the name jQuery from the current web after confirmation
+
+###Example 2
+```powershell
+PS:> Remove-SPOJavaScriptLink -Name jQuery -Scope Site
+```
+Removes the injected JavaScript file with the name jQuery from the current site collection after confirmation
+
+###Example 3
+```powershell
+PS:> Remove-SPOJavaScriptLink -Name jQuery -Scope Site -Force
+```
+Removes the injected JavaScript file with the name jQuery from the current site collection and will not ask for confirmation

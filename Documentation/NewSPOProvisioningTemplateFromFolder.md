@@ -2,13 +2,14 @@
 Generates a provisioning template from a given folder, including only files that are present in that folder
 ##Syntax
 ```powershell
-New-SPOProvisioningTemplateFromFolder [-Match <String>] [-ContentType <ContentTypePipeBind>] [-Properties <Hashtable>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Folder <String>] [-TargetFolder <String>] [-Schema <XMLPnPSchemaVersion>]
+New-SPOProvisioningTemplateFromFolder [-Match <String>] [-ContentType <ContentTypePipeBind>] [-Properties <Hashtable>] [-AsIncludeFile [<SwitchParameter>]] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Folder <String>] [-TargetFolder <String>] [-Schema <XMLPnPSchemaVersion>]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|AsIncludeFile|SwitchParameter|False|If specified, the output will only contain the <pnp:Files> element. This allows the output to be included in another template.|
 |ContentType|ContentTypePipeBind|False|An optional content type to use.|
 |Encoding|Encoding|False||
 |Folder|String|False|Folder to process. If not specified the current folder will be used.|

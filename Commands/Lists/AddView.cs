@@ -10,7 +10,12 @@ namespace OfficeDevPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = @"Add-SPOView -List ""Demo List"" -Title ""Demo View"" -Fields ""Title"",""Address""",
+        Remarks = @"Adds a view named ""Demo view"" to the ""Demo List"" list.",
         SortOrder = 1)]
+    [CmdletExample(
+        Code = @"Add-SPOView -List ""Demo List"" -Title ""Demo View"" -Fields ""Title"",""Address"" -Paged",
+        Remarks = @"Adds a view named ""Demo view"" to the ""Demo List"" list and makes sure there's paging on this view.",        
+        SortOrder = 2)]        
     public class AddView : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]
@@ -34,15 +39,18 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "If specified, a personal view will be created.")]
         public SwitchParameter Personal;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified the view will be set as the default view for the list.")]
+        [Parameter(Mandatory = false, HelpMessage = "If specified, the view will be set as the default view for the list.")]
         public SwitchParameter SetAsDefault;
+        
+        [Parameter(Mandatory = false, HelpMessage = "If specified, the view will have paging.")]
+        public SwitchParameter Paged;        
 
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
             if (list != null)
             {
-                var view = list.CreateView(Title, ViewType, Fields, RowLimit, SetAsDefault, Query, Personal);
+                var view = list.CreateView(Title, ViewType, Fields, RowLimit, SetAsDefault, Query, Personal, Paged);
 
                 WriteObject(view);
             }

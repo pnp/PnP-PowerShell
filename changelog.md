@@ -1,5 +1,17 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2015-21-26**
+
+* Added -AsIncludeFile parameter to New-SPOProvisioningTemplateFromFolder
+
+**2015-12-21**
+
+* Added a Set-SPOContext cmdlet
+
+**2015-12-14**
+
+* Added Set-SPOListItem cmdlet
+
 **2015-11-21**
 
 * Added, where applicable, Site Relative Url parameters, besides the existing Server Relative Url parameters on cmdlets.

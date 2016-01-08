@@ -18,10 +18,10 @@ namespace OfficeDevPnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false)]
         public AssociatedGroupType SetAssociatedGroup = AssociatedGroupType.None;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to add to this SharePoint group")]
         public string AddRole = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to remove from this SharePoint group")]
         public string RemoveRole = string.Empty;
 
         [Parameter(Mandatory = false)]

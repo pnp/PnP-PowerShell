@@ -13,7 +13,7 @@ Specify a scope as 'Site' to add the custom action to all sites in a site collec
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Name|String|True|The name of the script block. Can be used to identiy the script with other cmdlets or coded solutions|
-|Scope|CustomActionScope|False|The scope of the script to add to. Either Web or Site, defaults to Web.|
+|Scope|CustomActionScope|False|The scope of the script to add to. Either Web or Site, defaults to Web. All is not valid for this command.|
 |Script|String|True|The javascript block to add|
 |Sequence|Int32|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|

@@ -27,7 +27,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Alias("AddToSite")]
         public SwitchParameter SiteScoped;
 
-        [Parameter(Mandatory = false, HelpMessage = "The scope of the script to add to. Either Web or Site, defaults to Web.")]
+        [Parameter(Mandatory = false, HelpMessage = "The scope of the script to add to. Either Web or Site, defaults to Web. All is not valid for this command.")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()

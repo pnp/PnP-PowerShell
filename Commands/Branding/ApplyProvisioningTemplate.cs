@@ -21,28 +21,28 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
     [CmdletHelp("Applies a provisioning template to a web",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
-     Code = @"
-    PS:> Apply-SPOProvisioningTemplate -Path template.xml
-",
+     Code = @"PS:> Apply-SPOProvisioningTemplate -Path template.xml",
      Remarks = @"Applies a provisioning template in XML format to the current web.
 ",
      SortOrder = 1)]
     [CmdletExample(
-     Code = @"
-    PS:> Apply-SPOProvisioningTemplate -Path template.xml -ResourceFolder c:\provisioning\resources
-",
+     Code = @"PS:> Apply-SPOProvisioningTemplate -Path template.xml -ResourceFolder c:\provisioning\resources",
      Remarks = @"Applies a provisioning template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.
 ",
      SortOrder = 2)]
 
     [CmdletExample(
-     Code = @"
-    PS:> Apply-SPOProvisioningTemplate -Path template.xml -Parameters @{""ListTitle""=""Projects"";""parameter2""=""a second value""}
-",
+     Code = @"PS:> Apply-SPOProvisioningTemplate -Path template.xml -Parameters @{""ListTitle""=""Projects"";""parameter2""=""a second value""}",
      Remarks = @"Applies a provisioning template in XML format to the current web. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.
 
 For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.",
      SortOrder = 3)]
+
+    [CmdletExample(
+     Code = @"PS:> Apply-SPOProvisioningTemplate -Path template.xml -Handlers Lists, SiteSecurity",
+     Remarks = @"Applies a provisioning template in XML format to the current web. It will only apply the lists and site security part of the template.",
+     SortOrder = 4)]
+
     public class ApplyProvisioningTemplate : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the provisioning template.")]
@@ -56,6 +56,9 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.")]
         public Hashtable Parameters;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.")]
+        public Handlers Handlers;
 
         protected override void ExecuteCmdlet()
         {
@@ -109,6 +112,11 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 }
 
                 var applyingInformation = new ProvisioningTemplateApplyingInformation();
+
+                if (this.MyInvocation.BoundParameters.ContainsKey("Handlers"))
+                {
+                    applyingInformation.HandlersToProcess = Handlers;
+                }
 
                 applyingInformation.ProgressDelegate = (message, step, total) =>
                 {
