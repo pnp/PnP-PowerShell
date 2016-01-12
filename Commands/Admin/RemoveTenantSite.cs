@@ -13,8 +13,8 @@ namespace OfficeDevPnP.PowerShell.Commands
         DetailedDescription = "",
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-      Code = @"PS:> Remove-SPOTenantSite -Url https://contoso.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
-      Remarks = @"This will remove the site collection with the url 'https://contoso.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.", SortOrder = 1)]        
+      Code = @"PS:> Remove-SPOTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
+      Remarks = @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.", SortOrder = 1)]        
     public class RemoveSite : SPOAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
