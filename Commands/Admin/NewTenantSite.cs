@@ -34,7 +34,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = false)]
         public string Description = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
+        [Parameter(Mandatory = true, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
         public string Owner = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft: http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911.")]
