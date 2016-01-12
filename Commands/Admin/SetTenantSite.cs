@@ -10,6 +10,9 @@ namespace OfficeDevPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Set, "SPOTenantSite")]
     [CmdletHelp(@"Office365 only: Uses the tenant API to set site information.", 
         Category = CmdletHelpCategory.TenantAdmin)]
+    [CmdletExample(
+      Code = @"PS:> Set-SPOTenantSite -Url https://contoso.sharepoint.com -Title 'Contoso Website' -Sharing Disabled",
+      Remarks = @"This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.", SortOrder = 1)]        
     public class SetTenantSite : SPOAdminCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The URL of the site", Position=0, ValueFromPipeline=true)]
