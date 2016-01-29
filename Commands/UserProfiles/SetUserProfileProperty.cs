@@ -34,6 +34,7 @@ You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) w
         public string Value;
 
         [Parameter(Mandatory = true, HelpMessage = "The values set in the case of a multi value property, e.g. \"Value 1\",\"Value 2\"",ParameterSetName = "Multi")]
+        [AllowEmptyString]
         public string[] Values;
 
         protected override void ExecuteCmdlet()
