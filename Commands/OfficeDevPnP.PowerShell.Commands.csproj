@@ -268,6 +268,7 @@
     <Compile Include="Base\ConnectSPOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
     <Compile Include="Base\SetTraceLog.cs" />
+    <Compile Include="Branding\ConvertProvisioningTemplate.cs" />
     <Compile Include="Branding\GetJavaScriptLink.cs" />
     <Compile Include="Branding\ApplyProvisioningTemplate.cs" />
     <Compile Include="Branding\GetProvisioningTemplate.cs" />

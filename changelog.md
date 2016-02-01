@@ -1,6 +1,11 @@
 # OfficeDevPnP.PowerShell Changelog #
 
-**2015-21-26**
+
+**2016-02-01**
+
+* Added Convert-SPOProvisioningTemplate cmdlet
+
+**2015-12-26**
 
 * Added -AsIncludeFile parameter to New-SPOProvisioningTemplateFromFolder
 
