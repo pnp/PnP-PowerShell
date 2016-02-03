@@ -1,6 +1,7 @@
 # OfficeDevPnP.PowerShell Changelog #
 
-
+**2016-02-03 **
+* Added -ExcludedHandlers attribute to Apply-SPOProvisioningTemplate and Get-SPOPRovisioningTemplate
 **2016-02-01**
 
 * Added Convert-SPOProvisioningTemplate cmdlet

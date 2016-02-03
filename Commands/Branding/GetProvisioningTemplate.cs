@@ -82,9 +82,11 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
+        [Parameter(Mandatory = false, ParameterSetName = "Handlers", HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
         public Handlers Handlers;
 
+        [Parameter(Mandatory = false, ParameterSetName = "ExcludeHandlers", HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
+        public Handlers ExcludeHandlers;
 
         protected override void ExecuteCmdlet()
         {
@@ -126,6 +128,17 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
 
             if (this.MyInvocation.BoundParameters.ContainsKey("Handlers"))
             {
+                creationInformation.HandlersToProcess = Handlers;
+            }
+            if (this.MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            {
+                foreach (var handler in (OfficeDevPnP.Core.Framework.Provisioning.Model.Handlers[])Enum.GetValues(typeof(Handlers)))
+                {
+                    if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
+                    {
+                        Handlers = Handlers | handler;
+                    }
+                }
                 creationInformation.HandlersToProcess = Handlers;
             }
 
