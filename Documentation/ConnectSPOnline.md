@@ -57,26 +57,22 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Connect-SPOnline -Url https://yourtenant.sharepoint.com -Credentials (Get-Credential)
 ```
-This will prompt for username and password and creates a context for the other PowerShell commands to use.
- 
+This will prompt for username and password and creates a context for the other PowerShell commands to use. 
 
 ###Example 2
 ```powershell
 PS:> Connect-SPOnline -Url http://yourlocalserver -CurrentCredentials
 ```
 This will use the current user credentials and connects to the server specified by the Url parameter.
-    
 
 ###Example 3
 ```powershell
 PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials 'O365Creds'
 ```
 This will use credentials from the Windows Credential Manager, as defined by the label 'O365Creds'.
-    
 
 ###Example 4
 ```powershell
 PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs
 ```
 This will prompt for username and password and creates a context using ADFS to authenticate.
-    

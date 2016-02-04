@@ -10,4 +10,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Get-SPOHealthScore
 ```
-
+This will retrieve the current health score of the server.

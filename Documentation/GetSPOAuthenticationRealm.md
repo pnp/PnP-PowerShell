@@ -14,7 +14,6 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-
 PS:> Get-SPOAuthenticationRealm -Url https://contoso.sharepoint.com
 ```
 

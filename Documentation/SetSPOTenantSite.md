@@ -17,3 +17,10 @@ Parameter|Type|Required|Description
 |Url|String|False|The URL of the site|
 |UserCodeMaximumLevel|Nullable`1|False||
 |UserCodeWarningLevel|Nullable`1|False||
+##Examples
+
+###Example 1
+```powershell
+PS:> Set-SPOTenantSite -Url https://contoso.sharepoint.com -Title 'Contoso Website' -Sharing Disabled
+```
+This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.
