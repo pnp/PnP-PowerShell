@@ -30,11 +30,11 @@ namespace OfficeDevPnP.PowerShell.Commands
             {
                 if (ContentType.Id != null)
                 {
-                    ct = this.SelectedWeb.GetContentTypeById(ContentType.Id);
+                    ct = this.SelectedWeb.GetContentTypeById(ContentType.Id,true);
                 }
                 else if (ContentType.Name != null)
                 {
-                    ct = this.SelectedWeb.GetContentTypeByName(ContentType.Name);
+                    ct = this.SelectedWeb.GetContentTypeByName(ContentType.Name,true);
                 }
             }
             else
