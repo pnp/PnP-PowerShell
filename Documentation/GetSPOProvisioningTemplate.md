@@ -2,7 +2,7 @@
 Generates a provisioning template from a web
 ##Syntax
 ```powershell
-Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
+Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
 ```
 
 
