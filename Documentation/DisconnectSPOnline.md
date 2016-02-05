@@ -10,4 +10,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Disconnect-SPOnline
 ```
-
+This will disconnect you from the server.
