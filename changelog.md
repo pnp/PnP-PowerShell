@@ -1,6 +1,15 @@
 # OfficeDevPnP.PowerShell Changelog #
 
-**2015-21-26**
+**2016-02-04**
+* Added -PersistPublishingFiles and -IncludeNativePublishingFiles parameters to Get-SPOProvisioningTemplate
+
+**2016-02-03 **
+* Added -ExcludedHandlers attribute to Apply-SPOProvisioningTemplate and Get-SPOPRovisioningTemplate
+**2016-02-01**
+
+* Added Convert-SPOProvisioningTemplate cmdlet
+
+**2015-12-26**
 
 * Added -AsIncludeFile parameter to New-SPOProvisioningTemplateFromFolder
 

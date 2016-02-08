@@ -37,11 +37,17 @@ namespace OfficeDevPnP.PowerShell.Tests
 
             _runSpace.Open();
 
+            // Sets the execution policy to unrestricted. Requires Visual Studio to run in elevated mode.
+            var pipeLine = _runSpace.CreatePipeline();
+            Command cmd = new Command("Set-ExecutionPolicy");
+            cmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
+            pipeLine.Commands.Add(cmd);
+            pipeLine.Invoke();
 
             if (connect)
             {
-                var pipeLine = _runSpace.CreatePipeline();
-                Command cmd = new Command("connect-sponline");
+                pipeLine = _runSpace.CreatePipeline();
+                cmd = new Command("connect-sponline");
                 cmd.Parameters.Add("Url", SiteUrl);
                 if (!string.IsNullOrEmpty(CredentialManagerEntry))
                 {
@@ -49,7 +55,7 @@ namespace OfficeDevPnP.PowerShell.Tests
                     cmd.Parameters.Add("Credentials", CredentialManagerEntry);
                 }
                 else
-                {                    
+                {
                     if (!string.IsNullOrEmpty(Realm) && !string.IsNullOrEmpty("AppId") && !string.IsNullOrEmpty("AppSecret"))
                     {
                         // Use oAuth Token to authenticate

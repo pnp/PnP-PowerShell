@@ -12,6 +12,9 @@ namespace OfficeDevPnP.PowerShell.Commands
     [CmdletHelp("Office365 only: Removes a site collection from the current tenant",
         DetailedDescription = "",
         Category = CmdletHelpCategory.TenantAdmin)]
+    [CmdletExample(
+      Code = @"PS:> Remove-SPOTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
+      Remarks = @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.", SortOrder = 1)]        
     public class RemoveSite : SPOAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

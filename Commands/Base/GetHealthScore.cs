@@ -8,7 +8,10 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
     [Cmdlet("Get", "SPOHealthScore")]
     [CmdletHelp("Retrieves the current health score value of the server", 
         Category = CmdletHelpCategory.Base)]
-    [CmdletExample(Code = "PS:> Get-SPOHealthScore", SortOrder = 1)]
+    [CmdletExample(
+        Code = "PS:> Get-SPOHealthScore", 
+        Remarks = @"This will retrieve the current health score of the server.",        
+        SortOrder = 1)]
     public class GetHealthScore : PSCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The url of the WebApplication to retrieve the health score from", ValueFromPipeline = true)]

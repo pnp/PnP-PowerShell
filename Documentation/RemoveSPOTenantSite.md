@@ -13,3 +13,10 @@ Parameter|Type|Required|Description
 |FromRecycleBin|SwitchParameter|False|If specified, will search for the site in the Recycle Bin and remove it from there.|
 |SkipRecycleBin|SwitchParameter|False|Do not add to the trashcan if selected.|
 |Url|String|True||
+##Examples
+
+###Example 1
+```powershell
+PS:> Remove-SPOTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin
+```
+This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.

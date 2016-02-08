@@ -22,12 +22,12 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Add-SPOFile -Path c:\temp\company.master -Folder "_catalogs/masterpage
+PS:> Add-SPOFile -Path c:\temp\company.master -Folder "_catalogs/masterpage"
 ```
 This will upload the file company.master to the masterpage catalog
 
 ###Example 2
 ```powershell
-PS:> Add-SPOFile -Path .\displaytemplate.html -Folder "_catalogs/masterpage/display templates/test
+PS:> Add-SPOFile -Path .\displaytemplate.html -Folder "_catalogs/masterpage/display templates/test"
 ```
 This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder not exists it will create it.

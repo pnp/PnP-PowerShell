@@ -72,6 +72,18 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
         [Obsolete("Use PersistBrandingFiles instead.")]
         public SwitchParameter PersistComposedLookFiles;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified the files used for the publishing feature will be saved.")]
+        public SwitchParameter PersistPublishingFiles;
+
+        [Parameter(Mandatory = false, HelpMessage = "If specified, out of the box / native publishing files will be saved.")]
+        public SwitchParameter IncludeNativePublishingFiles;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
+        public Handlers Handlers;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
+        public Handlers ExcludeHandlers;
+
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
@@ -82,9 +94,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
-        public Handlers Handlers;
-
+     
 
         protected override void ExecuteCmdlet()
         {
@@ -128,8 +138,21 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
             {
                 creationInformation.HandlersToProcess = Handlers;
             }
+            if (this.MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            {
+                foreach (var handler in (OfficeDevPnP.Core.Framework.Provisioning.Model.Handlers[])Enum.GetValues(typeof(Handlers)))
+                {
+                    if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
+                    {
+                        Handlers = Handlers | handler;
+                    }
+                }
+                creationInformation.HandlersToProcess = Handlers;
+            }
 
             creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
+            creationInformation.PersistPublishingFiles = PersistPublishingFiles;
+            creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
 
             creationInformation.FileConnector = new FileSystemConnector(path, "");

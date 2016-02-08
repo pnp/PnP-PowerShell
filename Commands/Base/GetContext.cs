@@ -8,6 +8,10 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
     [Cmdlet(VerbsCommon.Get, "SPOContext")]
     [CmdletHelp("Returns a Client Side Object Model context",
         Category = CmdletHelpCategory.Base)]
+    [CmdletExample(
+        Code = @"PS:> $ctx = Get-SPOContext",
+        Remarks = @"This will put the current context in the $ctx variable.",
+        SortOrder = 1)]        
     public class GetSPOContext : PSCmdlet
     {
 

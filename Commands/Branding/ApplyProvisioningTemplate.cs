@@ -60,6 +60,9 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.")]
         public Handlers Handlers;
 
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
+        public Handlers ExcludeHandlers;
+
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.Url);
@@ -115,6 +118,17 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
                 if (this.MyInvocation.BoundParameters.ContainsKey("Handlers"))
                 {
+                    applyingInformation.HandlersToProcess = Handlers;
+                }
+                if (this.MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+                {
+                    foreach (var handler in (OfficeDevPnP.Core.Framework.Provisioning.Model.Handlers[])Enum.GetValues(typeof(Handlers)))
+                    {
+                        if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
+                        {
+                            Handlers = Handlers | handler;
+                        }
+                    }
                     applyingInformation.HandlersToProcess = Handlers;
                 }
 

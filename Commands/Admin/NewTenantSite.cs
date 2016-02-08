@@ -11,6 +11,9 @@ namespace OfficeDevPnP.PowerShell.Commands
         DetailedDescription = @"The New-SPOTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
 Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx ", 
         Category = CmdletHelpCategory.TenantAdmin)]
+    [CmdletExample(
+        Code = @"PS:> New-SPOTenantSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Owner user@example.org -TimeZone 4",
+        Remarks = @"This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contoso', the timezone 'UTC+01:00' and the owner 'user@example.org'", SortOrder = 1)]        
     [CmdletRelatedLink(
         Text ="Locale IDs", 
         Url = "http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911")]
@@ -31,7 +34,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = false)]
         public string Description = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
+        [Parameter(Mandatory = true, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
         public string Owner = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft: http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911.")]
@@ -40,7 +43,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the site collection template type. Use the Get-SPOWebTemplate cmdlet to get the list of valid templates. If no template is specified, one can be added later. The Template and LocaleId parameters must be a valid combination as returned from the Get-SPOnlineWebTemplate cmdlet.")]
         public string Template = "STS#0";
 
-        [Parameter(Mandatory = true, HelpMessage = "Use Get-SPOnlineTimeZone to retrieve possible timezone values")]
+        [Parameter(Mandatory = true, HelpMessage = "Use Get-SPOTimeZoneId to retrieve possible timezone values")]
         public int TimeZone;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.")]

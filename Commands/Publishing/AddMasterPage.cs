@@ -38,7 +38,8 @@ namespace OfficeDevPnP.PowerShell.Commands
                 SourceFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, SourceFilePath);
             }
 
-            SelectedWeb.DeployMasterPage(SourceFilePath, Title, Description, UiVersion, DefaultCssFile, DestinationFolderHierarchy);
+            var masterPageFile = SelectedWeb.DeployMasterPage(SourceFilePath, Title, Description, UiVersion, DefaultCssFile, DestinationFolderHierarchy);
+            WriteObject(masterPageFile);
         }
     }
 }
