@@ -71,11 +71,11 @@ namespace OfficeDevPnP.PowerShell.Commands
                 switch (action.Scope)
                 {
                     case UserCustomActionScope.Web:
-                        SelectedWeb.DeleteJsLink(Name);
+                        SelectedWeb.DeleteJsLink(action.Name);
                         break;
 
                     case UserCustomActionScope.Site:
-                        ClientContext.Site.DeleteJsLink(Name);
+                        ClientContext.Site.DeleteJsLink(action.Name);
                         break;
                 }
             }
