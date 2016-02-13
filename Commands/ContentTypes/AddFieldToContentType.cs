@@ -63,7 +63,7 @@ namespace OfficeDevPnP.PowerShell.Commands
                     }
                     if (ct != null)
                     {
-                        SelectedWeb.AddFieldToContentType(ct, field, Required, false);
+                        SelectedWeb.AddFieldToContentType(ct, field, Required, Hidden);
                     }
                 }
             }
