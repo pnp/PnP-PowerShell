@@ -77,7 +77,7 @@ namespace OfficeDevPnP.PowerShell.Commands
                 }
             }
 
-            folder.UploadFile(new FileInfo(Path).Name, Path, true);
+            var file = folder.UploadFile(new FileInfo(Path).Name, Path, true);
 
             if (Checkout)
                 SelectedWeb.CheckInFile(fileUrl, CheckinType.MajorCheckIn, "");
@@ -87,6 +87,8 @@ namespace OfficeDevPnP.PowerShell.Commands
 
             if (Approve)
                 SelectedWeb.ApproveFile(fileUrl, PublishComment);
+
+            WriteObject(file);
         }
     }
 }
