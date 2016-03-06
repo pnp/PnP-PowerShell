@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using OfficeDevPnP.Core.Utilities;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {

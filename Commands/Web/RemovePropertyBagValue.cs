@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 using System.Management.Automation;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using OfficeDevPnP.Core.Utilities;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {
