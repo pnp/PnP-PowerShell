@@ -1,7 +1,8 @@
 # OfficeDevPnP.PowerShell Changelog #
 
 **2016-03-07**
-* Added Remove-SPOFieldFromContentType cmdlet.
+* Added Remove-SPOFieldFromContentType cmdlet
+* Added Get-SPOSiteSearchQueryResults cmdlet
 
 **2016-02-04**
 * Added -PersistPublishingFiles and -IncludeNativePublishingFiles parameters to Get-SPOProvisioningTemplate
