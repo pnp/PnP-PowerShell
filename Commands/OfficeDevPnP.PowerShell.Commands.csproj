@@ -274,6 +274,7 @@
     <Compile Include="Branding\GetProvisioningTemplate.cs" />
     <Compile Include="Branding\NewProvisioningTemplateFromFolder.cs" />
     <Compile Include="Branding\GetTheme.cs" />
+    <Compile Include="ContentTypes\RemoveFieldFromContentType.cs" />
     <Compile Include="ContentTypes\RemoveContentTypeFromList.cs" />
     <Compile Include="ContentTypes\SetDefaultContentTypeToList.cs" />
     <Compile Include="ContentTypes\AddContentTypeToList.cs" />

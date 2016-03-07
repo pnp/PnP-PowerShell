@@ -56,6 +56,7 @@ Cmdlet|Description
 **[Remove&#8209;SPOContentTypeFromList](RemoveSPOContentTypeFromList.md)** |Removes a content type from a list
 **[Add&#8209;SPOContentTypeToList](AddSPOContentTypeToList.md)** |Adds a new content type to a list
 **[Set&#8209;SPODefaultContentTypeToList](SetSPODefaultContentTypeToList.md)** |Sets the default content type for a list
+**[Remove&#8209;SPOFieldFromContentType](RemoveSPOFieldFromContentType.md)** |Removes a site column from a content type
 **[Add&#8209;SPOFieldToContentType](AddSPOFieldToContentType.md)** |Adds an existing site column to a content type
 ##Document Sets
 Cmdlet|Description
