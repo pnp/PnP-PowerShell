@@ -10,7 +10,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Principals
     [CmdletHelp("Adds group to the Site Groups List and returns a group object",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
-        Code = @"PS:> New-SPOGroup -Title "My Site Users"",
+        Code = @"PS:> New-SPOGroup -Title ""My Site Users""",
         SortOrder = 1)]
     public class NewGroup : SPOWebCmdlet
     {
