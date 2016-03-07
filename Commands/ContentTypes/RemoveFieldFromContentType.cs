@@ -13,16 +13,19 @@ namespace OfficeDevPnP.PowerShell.Commands
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(
      Code = @"PS:> Remove-SPOFieldFromContentType -Field ""Project_Name"" -ContentType ""Project Document""",
-     Remarks = @"This will remove the site column with an internal name of ""Project_Name"" to a content type called ""Project Document""", SortOrder = 1)]
+     Remarks = @"This will remove the site column with an internal name of ""Project_Name"" from a content type called ""Project Document""", SortOrder = 1)]
+    [CmdletExample(
+     Code = @"PS:> Remove-SPOFieldFromContentType -Field ""Project_Name"" -ContentType ""Project Document"" -DoNotUpdateChildren",
+     Remarks = @"This will remove the site column with an internal name of ""Project_Name"" from a content type called ""Project Document"". It will not update content types that inherit from the ""Project Document"" content type.", SortOrder = 1)]
     public class RemoveFieldFromContentType : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The field to remove.")]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The content type where the field is to be removed from.")]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "If specified, inherited content types will not be updated.")]
         public SwitchParameter DoNotUpdateChildren;
 
         protected override void ExecuteCmdlet()
