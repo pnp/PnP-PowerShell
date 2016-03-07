@@ -122,6 +122,7 @@ Cmdlet|Description
 :-----|:----------
 **[Set&#8209;SPOSearchConfiguration](SetSPOSearchConfiguration.md)** |Sets the search configuration
 **[Get&#8209;SPOSearchConfiguration](GetSPOSearchConfiguration.md)** |Returns the search configuration
+**[Get&#8209;SPOSiteSearchQueryResults](GetSPOSiteSearchQueryResults.md)** |Executes a search query to retrieve indexed site collections
 ##Sites
 Cmdlet|Description
 :-----|:----------
@@ -158,7 +159,7 @@ Cmdlet|Description
 :-----|:----------
 **[Remove&#8209;SPOGroup](RemoveSPOGroup.md)** |Removes a group.
 **[Set&#8209;SPOGroup](SetSPOGroup.md)** |Updates a group
-**[New&#8209;SPOGroup](NewSPOGroup.md)** |Adds a user to the build-in Site User Info List and returns a user object
+**[New&#8209;SPOGroup](NewSPOGroup.md)** |Adds group to the Site Groups List and returns a group object
 **[Get&#8209;SPOGroup](GetSPOGroup.md)** |Returns a specific group or all groups.
 **[Set&#8209;SPOGroupPermissions](SetSPOGroupPermissions.md)** |Adds and/or removes permissions of a specific SharePoint group
 **[Get&#8209;SPOGroupPermissions](GetSPOGroupPermissions.md)** |Returns the permissions for a specific SharePoint group

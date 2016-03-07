@@ -324,7 +324,7 @@
     <Compile Include="Principals\RemoveGroup.cs" />
     <Compile Include="Principals\SetGroup.cs" />
     <Compile Include="Publishing\AddMasterPage.cs" />
-    <Compile Include="Search\SiteSearchQueryResults.cs" />
+    <Compile Include="Search\GetSiteSearchQueryResults.cs" />
     <Compile Include="Search\SetSearchConfiguration.cs" />
     <Compile Include="Search\GetSearchConfiguration.cs" />
     <Compile Include="Site\GetAuditing.cs" />
