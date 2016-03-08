@@ -309,6 +309,7 @@
     <Compile Include="InformationManagement\SetSitePolicy.cs" />
     <Compile Include="Lists\AddListItem.cs" />
     <Compile Include="Lists\AddView.cs" />
+    <Compile Include="Lists\RemoveListItem.cs" />
     <Compile Include="Lists\SetListItem.cs" />
     <Compile Include="Lists\GetListItem.cs" />
     <Compile Include="Lists\RequestReIndexList.cs" />

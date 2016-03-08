@@ -20,16 +20,16 @@ namespace OfficeDevPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = false)] public SwitchParameter Force;
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
-            if (Identity != null){ 
+            if (Identity != null)
+            {
                 var item = Identity.GetListItem(list);
-                ClientContext.Load(item);
-                ClientContext.ExecuteQueryRetry();
-                if (Force || ShouldContinue(Properties.Resources.RemoveList, Properties.Resources.Confirm))
+                if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveListItemWithId0,item.Id), Properties.Resources.Confirm))
                 {
                     item.DeleteObject();
                     ClientContext.ExecuteQueryRetry();
