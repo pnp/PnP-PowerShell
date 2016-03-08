@@ -1,6 +1,7 @@
 # OfficeDevPnP.PowerShell Changelog #
 
 **2016-03-08**
+* Added Remove-SPOListItem
 * Updated Get-SPOWeb and Get-SPOSubWebs to include ServerRelativeUrl
 * Added Ensure-SPOFolder cmdlet
 
