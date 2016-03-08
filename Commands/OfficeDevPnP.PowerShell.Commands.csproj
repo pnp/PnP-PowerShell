@@ -340,6 +340,7 @@
     <Compile Include="Branding\AddJavaScriptLink.cs" />
     <Compile Include="Branding\AddJavaScriptBlock.cs" />
     <Compile Include="WebParts\GetWebPartXml.cs" />
+    <Compile Include="Web\EnsureFolder.cs" />
     <Compile Include="Web\AddFolder.cs" />
     <Compile Include="Web\RemovedIndexedProperty.cs" />
     <Compile Include="Web\RemoveFile.cs" />
