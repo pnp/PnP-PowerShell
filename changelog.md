@@ -1,5 +1,8 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2016-03-08**
+* Added Ensure-SPOFolder cmdlet
+
 **2016-03-07**
 * Added Remove-SPOFieldFromContentType cmdlet
 * Added Get-SPOSiteSearchQueryResults cmdlet
