@@ -2,7 +2,7 @@
 Deletes an item from a list
 ##Syntax
 ```powershell
-Remove-SPOListItem [-Id <Int32>] [-UniqueId <GuidPipeBind>] [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] -Identity <ListPipeBind>
+Remove-SPOListItem -Identity <ListItemPipeBind> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] -List <ListPipeBind>
 ```
 
 
@@ -10,14 +10,13 @@ Remove-SPOListItem [-Id <Int32>] [-UniqueId <GuidPipeBind>] [-Force [<SwitchPara
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Force|SwitchParameter|False||
-|Id|Int32|False|The ID of the item to retrieve|
-|Identity|ListPipeBind|True|The ID or Title of the list.|
-|UniqueId|GuidPipeBind|False|The unique id (GUID) of the item to retrieve|
+|Identity|ListItemPipeBind|True|The ID of the listitem, or actual ListItem object|
+|List|ListPipeBind|True|The ID, Title or Url of the list.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
 ###Example 1
 ```powershell
-PS:> Remove-SPOListItem -Identity "Demo List" -Id "1" -Force
+PS:> Remove-SPOListItem -List "Demo List" -Identity "1" -Force
 ```
-Removes the listitem with Id "1" from the "Demo List" list.
+Removes the listitem with id "1" from the "Demo List" list.

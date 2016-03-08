@@ -9,39 +9,32 @@ namespace OfficeDevPnP.PowerShell.Commands.Lists
     [CmdletHelp("Deletes an item from a list",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOListItem -Identity ""Demo List"" -Id ""1"" -Force",
+        Code = @"PS:> Remove-SPOListItem -List ""Demo List"" -Identity ""1"" -Force",
         SortOrder = 1,
-        Remarks = @"Removes the listitem with Id ""1"" from the ""Demo List"" list.")]
+        Remarks = @"Removes the listitem with id ""1"" from the ""Demo List"" list.")]
     public class RemoveListItem : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]
-        public ListPipeBind Identity = new ListPipeBind();
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
+        public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve")]
-        public int Id = -1;
-
-        [Parameter(Mandatory = false, HelpMessage = "The unique id (GUID) of the item to retrieve")]
-        public GuidPipeBind UniqueId;
+        [Parameter(Mandatory = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
+        public ListItemPipeBind Identity;
 
         [Parameter(Mandatory = false)] public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
-            var list = Identity.GetList(SelectedWeb);
-            if (Identity != null)
-            {
-                var listItem = list.GetItemById(Id);
-                if (Id != -1)
+            var list = List.GetList(SelectedWeb);
+            if (Identity != null){ 
+                var item = Identity.GetListItem(list);
+                ClientContext.Load(item);
+                ClientContext.ExecuteQueryRetry();
+                if (Force || ShouldContinue(Properties.Resources.RemoveList, Properties.Resources.Confirm))
                 {
-                    ClientContext.Load(listItem);
+                    item.DeleteObject();
                     ClientContext.ExecuteQueryRetry();
-                    if (Force || ShouldContinue(Properties.Resources.RemoveList, Properties.Resources.Confirm))
-                    {
-                        listItem.DeleteObject();
-                        ClientContext.ExecuteQueryRetry();
-                    }
                 }
             }
         }
-     }
+    }
 }
