@@ -99,6 +99,7 @@ Cmdlet|Description
 **[New&#8209;SPOList](NewSPOList.md)** |Creates a new list
 **[Set&#8209;SPOList](SetSPOList.md)** |Updates list settings
 **[Add&#8209;SPOListItem](AddSPOListItem.md)** |Adds an item to a list
+**[Remove&#8209;SPOListItem](RemoveSPOListItem.md)** |Deletes an item from a list
 **[Set&#8209;SPOListItem](SetSPOListItem.md)** |Updates a list item
 **[Get&#8209;SPOListItem](GetSPOListItem.md)** |Retrieves list items
 **[Set&#8209;SPOListPermission](SetSPOListPermission.md)** |Sets list permissions
