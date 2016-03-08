@@ -87,7 +87,7 @@
                 <PropertyName>Title</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Url</PropertyName>
+                <PropertyName>ServerRelativeUrl</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Id</PropertyName>
