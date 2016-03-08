@@ -44,8 +44,8 @@ Parameter|Type|Required|Description
 |Realm|String|False|Authentication realm. If not specified will be resolved from the url specified.|
 |RedirectUri|String|True|The Redirect URI of the Azure AD Application|
 |RequestTimeout|Int32|False|The request timeout. Default is 180000|
-|RetryCount|Int32|False|Defines how often a retry should be executed if the server healthscore is not sufficient.|
-|RetryWait|Int32|False|Defines how many seconds to wait before each retry. Default is 5 seconds.|
+|RetryCount|Int32|False|Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.|
+|RetryWait|Int32|False|Defines how many seconds to wait before each retry. Default is 1 second.|
 |SkipTenantAdminCheck|SwitchParameter|False||
 |Tenant|String|True|The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com|
 |Url|String|True|The Url of the site collection to connect to.|

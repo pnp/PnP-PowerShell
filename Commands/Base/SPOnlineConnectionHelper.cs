@@ -39,7 +39,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                 realm = GetRealmFromTargetUrl(url);
             }
 
-            var context = authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret);
+            var context = (PnPClientContext)authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret);
+            context.RetryCount = retryCount;
+            context.Delay = retryWait * 1000;
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
 
@@ -69,7 +71,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
             string configFile = Path.Combine(appDataFolder, "OfficeDevPnP.PowerShell\\tokencache.dat");
             FileTokenCache cache = new FileTokenCache(configFile);
 
-            var context = authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache);
+            var context = (PnPClientContext)authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache);
+            context.RetryCount = retryCount;
+            context.Delay = retryWait * 1000;
 
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
@@ -89,8 +93,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
         {
             Core.AuthenticationManager authManager = new Core.AuthenticationManager();
-            var context = authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificatePath, certificatePassword);
-
+            var context = (PnPClientContext)authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificatePath, certificatePassword);
+            context.RetryCount = retryCount;
+            context.Delay = retryWait * 1000;
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {
@@ -111,10 +116,12 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         {
             var authManager = new Core.AuthenticationManager();
 
-            var context = authManager.GetWebLoginClientContext(url.ToString());
+            var context = (PnPClientContext)authManager.GetWebLoginClientContext(url.ToString());
 
             if (context != null)
             {
+                context.RetryCount = retryCount;
+                context.Delay = retryWait * 1000;
                 context.ApplicationName = Properties.Resources.ApplicationName;
                 context.RequestTimeout = requestTimeout;
                 var connectionType = ConnectionType.OnPrem;
@@ -137,7 +144,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
         {
-            ClientContext context = new ClientContext(url.AbsoluteUri);
+            var context = new PnPClientContext(url.AbsoluteUri);
+            context.RetryCount = retryCount;
+            context.Delay = retryWait * 1000;
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
             if (!currentCredentials)
@@ -215,7 +224,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                 throw new Exception("Cannot retrieve ADFS settings.");
             }
 
-            var context = authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(), networkCredentials.UserName, networkCredentials.Password, networkCredentials.Domain, adfsHost, adfsRelyingParty);
+            var context = (PnPClientContext)authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(), networkCredentials.UserName, networkCredentials.Password, networkCredentials.Domain, adfsHost, adfsRelyingParty);
+            context.RetryCount = retryCount;
+            context.Delay = retryWait * 1000;
 
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
