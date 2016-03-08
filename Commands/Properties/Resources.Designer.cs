@@ -269,7 +269,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove listi tem with ID {0}?.
+        ///   Looks up a localized string similar to Remove list item with ID {0}?.
         /// </summary>
         internal static string RemoveListItemWithId0 {
             get {

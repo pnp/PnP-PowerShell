@@ -214,6 +214,6 @@
     <value>Remove Web '{0}' ? </value>
   </data>
   <data name="RemoveListItemWithId0" xml:space="preserve">
-    <value>Remove listi tem with ID {0}?</value>
+    <value>Remove list item with ID {0}?</value>
   </data>
 </root>
