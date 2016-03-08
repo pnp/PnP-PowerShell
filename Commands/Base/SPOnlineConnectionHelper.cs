@@ -39,9 +39,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                 realm = GetRealmFromTargetUrl(url);
             }
 
-            var context = (PnPClientContext)authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret);
-            context.RetryCount = retryCount;
-            context.Delay = retryWait * 1000;
+            var context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret), retryCount, retryWait * 1000);
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
 
@@ -71,9 +69,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
             string configFile = Path.Combine(appDataFolder, "OfficeDevPnP.PowerShell\\tokencache.dat");
             FileTokenCache cache = new FileTokenCache(configFile);
 
-            var context = (PnPClientContext)authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache);
-            context.RetryCount = retryCount;
-            context.Delay = retryWait * 1000;
+            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache), retryCount, retryWait * 10000);
 
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
@@ -93,9 +89,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
         {
             Core.AuthenticationManager authManager = new Core.AuthenticationManager();
-            var context = (PnPClientContext)authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificatePath, certificatePassword);
-            context.RetryCount = retryCount;
-            context.Delay = retryWait * 1000;
+            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificatePath, certificatePassword), retryCount, retryWait * 1000);
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {
@@ -116,7 +110,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         {
             var authManager = new Core.AuthenticationManager();
 
-            var context = (PnPClientContext)authManager.GetWebLoginClientContext(url.ToString());
+            var context = PnPClientContext.ConvertFrom(authManager.GetWebLoginClientContext(url.ToString()), retryCount, retryWait * 1000);
 
             if (context != null)
             {
@@ -224,7 +218,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                 throw new Exception("Cannot retrieve ADFS settings.");
             }
 
-            var context = (PnPClientContext)authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(), networkCredentials.UserName, networkCredentials.Password, networkCredentials.Domain, adfsHost, adfsRelyingParty);
+            var context = PnPClientContext.ConvertFrom(authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(), networkCredentials.UserName, networkCredentials.Password, networkCredentials.Domain, adfsHost, adfsRelyingParty), retryCount, retryWait * 1000);
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
 
@@ -313,7 +307,8 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                         adfsRelyingParty = queryParameters["wtrealm"];
                     }
                 }
-            } catch(WebException ex)
+            }
+            catch (WebException ex)
             {
                 throw new Exception("Endpoint does not use ADFS for authentication.", ex);
             }
