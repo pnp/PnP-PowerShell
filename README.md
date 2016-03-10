@@ -67,10 +67,10 @@ Update-Module
 
 This will automatically load the module after starting PowerShell 3.0.
 
-You can check the version of the installed PnP-PowerShell module with the following command:
+You can check the installed PnP-PowerShell versions with the following command:
 
 ```powershell
-Get-Module OfficeDevPnP.Powershell.* -ListAvailable | Select Name,Version
+Get-Module OfficeDevPnP.Powershell.* -ListAvailable | Select-Object Name,Version | Sort-Object Version -Descending
 ```
 
 ## HOW TO USE DURING DEVELOPMENT ##
