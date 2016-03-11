@@ -1,5 +1,8 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2016-03-11**
+* Added List parameter to Get-SPOContentType, allowing to retrieve the ContentTypes added to a list.
+
 **2016-03-08**
 * Added Remove-SPOListItem
 * Updated Get-SPOWeb and Get-SPOSubWebs to include ServerRelativeUrl
