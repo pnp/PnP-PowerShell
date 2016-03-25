@@ -95,9 +95,9 @@ Cmdlet|Description
 :-----|:----------
 **[Set&#8209;SPODefaultColumnValues](SetSPODefaultColumnValues.md)** |Sets default column values for a document library
 **[Remove&#8209;SPOList](RemoveSPOList.md)** |Deletes a list
-**[Set&#8209;SPOList](SetSPOList.md)** |Updates list settings
 **[Get&#8209;SPOList](GetSPOList.md)** |Returns a List object
 **[New&#8209;SPOList](NewSPOList.md)** |Creates a new list
+**[Set&#8209;SPOList](SetSPOList.md)** |Updates list settings
 **[Add&#8209;SPOListItem](AddSPOListItem.md)** |Adds an item to a list
 **[Remove&#8209;SPOListItem](RemoveSPOListItem.md)** |Deletes an item from a list
 **[Set&#8209;SPOListItem](SetSPOListItem.md)** |Updates a list item
@@ -171,14 +171,8 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[New&#8209;SPOPersonalSite](NewSPOPersonalSite.md)** |Office365 only: Creates a personal / OneDrive For Business site
-**[Set&#8209;SPOUserProfileProperty](SetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.
-
-You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command. 
-
-**[Get&#8209;SPOUserProfileProperty](GetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.
-
-You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command. 
-
+**[Set&#8209;SPOUserProfileProperty](SetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
+**[Get&#8209;SPOUserProfileProperty](GetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
 ##Utilities
 Cmdlet|Description
 :-----|:----------

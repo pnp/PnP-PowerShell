@@ -30,7 +30,7 @@ Parameter|Type|Required|Description
 |Group|String|False||
 |Id|GuidPipeBind|False||
 |InternalName|String|True||
-|List|ListPipeBind|True||
+|List|ListPipeBind|False||
 |Required|SwitchParameter|False||
 |Type|FieldType|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
