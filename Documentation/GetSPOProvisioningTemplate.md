@@ -50,12 +50,12 @@ Extracts a provisioning template in XML format from the current web and includes
 
 ###Example 5
 ```powershell
-PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistComposedLookFiles
-```
-Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.
-
-###Example 6
-```powershell
 PS:> Get-SPOProvisioningTemplate -Out template.xml -Handlers Lists, SiteSecurity
 ```
 Extracts a provisioning template in XML format from the current web, but only processes lists and site security when generating the template.
+
+###Example 6
+```powershell
+PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistComposedLookFiles
+```
+Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.

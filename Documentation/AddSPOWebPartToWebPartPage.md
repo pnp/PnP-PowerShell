@@ -24,12 +24,12 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Add-SPOWebPartToWebPartPage -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -Path "c:\myfiles\listview.webpart" -ZoneId "Header" -ZoneIndex 1 
-```
-This will add the webpart as defined by the XML in the listview.webpart file to the specified page in the specified zone and with the order index of 1
-
-###Example 2
-```powershell
 PS:> Add-SPOWebPartToWebPartPage -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -XML $webpart -ZoneId "Header" -ZoneIndex 1 
 ```
 This will add the webpart as defined by the XML in the $webpart variable to the specified page in the specified zone and with the order index of 1
+
+###Example 2
+```powershell
+PS:> Add-SPOWebPartToWebPartPage -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -Path "c:\myfiles\listview.webpart" -ZoneId "Header" -ZoneIndex 1 
+```
+This will add the webpart as defined by the XML in the listview.webpart file to the specified page in the specified zone and with the order index of 1

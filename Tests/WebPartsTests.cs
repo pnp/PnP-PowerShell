@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.SharePoint.Client;
 using System.Management.Automation.Runspaces;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using OfficeDevPnP.Core.Utilities;
 

@@ -28,12 +28,12 @@ Remove a web
 
 ###Example 2
 ```powershell
-PS:> Remove-SPOWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
-```
-Remove a web specified by its ID
-
-###Example 3
-```powershell
 PS:> Get-SPOSubWebs | Remove-SPOWeb -Force
 ```
 Remove all subwebs and do not ask for confirmation
+
+###Example 3
+```powershell
+PS:> Remove-SPOWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
+```
+Remove a web specified by its ID
