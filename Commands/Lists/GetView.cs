@@ -34,22 +34,24 @@ namespace OfficeDevPnP.PowerShell.Commands
                         if (Identity.Id != Guid.Empty)
                         {
                             view = list.GetViewById(Identity.Id);
-                            
+                            view.EnsureProperty(v => v.ViewFields);
+
                         }
                         else if (!string.IsNullOrEmpty(Identity.Title))
                         {
                             view = list.GetViewByName(Identity.Title);
+                            view.EnsureProperty(v => v.ViewFields);
                         }
                     }
                     else
                     {
                         views = ClientContext.LoadQuery(list.Views.IncludeWithDefaultProperties(v => v.ViewFields));
                         ClientContext.ExecuteQueryRetry();
-                        
+
                     }
                     if (views != null && views.Any())
                     {
-                        WriteObject(views,true);
+                        WriteObject(views, true);
                     }
                     else if (view != null)
                     {
