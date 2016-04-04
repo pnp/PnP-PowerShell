@@ -41,6 +41,7 @@ namespace OfficeDevPnP.PowerShell.Tests
             var pipeLine = _runSpace.CreatePipeline();
             Command cmd = new Command("Set-ExecutionPolicy");
             cmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
+            cmd.Parameters.Add("Scope", "Process");
             pipeLine.Commands.Add(cmd);
             pipeLine.Invoke();
 

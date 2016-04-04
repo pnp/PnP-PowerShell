@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.SharePoint.Client;
+using System.Collections.Generic;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {
@@ -27,6 +28,20 @@ namespace OfficeDevPnP.PowerShell.Commands
             return web;
         }
 
+        public static IEnumerable<Web> GetAllWebsRecursive(this Web currentWeb)
+        {
+            currentWeb.Context.Load(currentWeb, item => item.Webs);
+            currentWeb.Context.ExecuteQuery();
 
+            foreach (var subWeb in currentWeb.Webs)
+            {
+                foreach (var subSubWeb in subWeb.GetAllWebsRecursive())
+                {
+                    yield return subSubWeb;
+                }
+
+                yield return subWeb;
+            }
+        }
     }
 }
