@@ -74,6 +74,7 @@ Cmdlet|Description
 ##Features
 Cmdlet|Description
 :-----|:----------
+**[New&#8209;SPOExtensbilityHandlerObject](NewSPOExtensbilityHandlerObject.md)** |Creates a ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet
 **[Get&#8209;SPOFeature](GetSPOFeature.md)** |Returns all activated or a specific activated feature
 **[Disable&#8209;SPOFeature](DisableSPOFeature.md)** |Disables a feature
 **[Enable&#8209;SPOFeature](EnableSPOFeature.md)** |Enables a feature
