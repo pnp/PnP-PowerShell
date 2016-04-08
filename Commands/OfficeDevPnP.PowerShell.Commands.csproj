@@ -290,6 +290,7 @@
     <Compile Include="Enums\CustomActionScope.cs" />
     <Compile Include="Enums\FeatureScope.cs" />
     <Compile Include="Enums\NavigationNodeTypeEnum.cs" />
+    <Compile Include="Extensibility\NewExtensibilityHandlerObject.cs" />
     <Compile Include="Extensions\ClientExtensions.cs" />
     <Compile Include="ContentTypes\AddFieldToContentType.cs" />
     <Compile Include="ContentTypes\RemoveContentType.cs" />
