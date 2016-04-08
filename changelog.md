@@ -1,5 +1,8 @@
 # OfficeDevPnP.PowerShell Changelog #
 
+**2016-04-08**
+* Added -ExtensibilityHandlers parameter to Get-SPOPRovisioningTemplate
+
 **2016-03-11**
 * Added List parameter to Get-SPOContentType, allowing to retrieve the ContentTypes added to a list.
 
