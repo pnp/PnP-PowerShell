@@ -35,5 +35,7 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
             else
                 return ShouldProcessPostAction(item);
         }
+
+        public InvokeActionParameter<T> ShallowCopy() => (InvokeActionParameter<T>) MemberwiseClone();
     }
 }

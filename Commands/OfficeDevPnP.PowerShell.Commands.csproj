@@ -308,9 +308,9 @@
     <Compile Include="Fields\AddField.cs" />
     <Compile Include="InformationManagement\GetSitePolicy.cs" />
     <Compile Include="InformationManagement\SetSitePolicy.cs" />
-    <Compile Include="InvokeAction\InvokeAction.cs" />
-    <Compile Include="InvokeAction\InvokeActionParameter.cs" />
-    <Compile Include="InvokeAction\InvokeActionResult.cs" />
+    <Compile Include="InvokeAction\InvokeWebAction.cs" />
+    <Compile Include="InvokeAction\InvokeWebActionParameter.cs" />
+    <Compile Include="InvokeAction\InvokeWebActionResult.cs" />
     <Compile Include="Lists\AddListItem.cs" />
     <Compile Include="Lists\AddView.cs" />
     <Compile Include="Lists\SetListItem.cs" />
