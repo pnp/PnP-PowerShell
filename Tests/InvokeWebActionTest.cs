@@ -23,6 +23,7 @@ namespace OfficeDevPnP.PowerShell.Tests
             {
                 AddList(ctx.Web, "PnPTestList1", 2, "Test1");
                 AddList(ctx.Web, "PnPTestList2", 3, "Test2");
+                AddList(ctx.Web, "PnPTestList3", 0, "Test3");
             }
         }
 
@@ -31,18 +32,21 @@ namespace OfficeDevPnP.PowerShell.Tests
         {
             using (var ctx = TestCommon.CreateClientContext())
             {
-                var list = ctx.Web.GetListByTitle("PnPTestList1");
-                if (list != null)
+                IEnumerable<string> listNames = new[]
                 {
-                    list.DeleteObject();
-                    ctx.ExecuteQueryRetry();
-                }
+                    "PnPTestList1",
+                    "PnPTestList2",
+                    "PnPTestList3"
+                };
 
-                list = ctx.Web.GetListByTitle("PnPTestList2");
-                if (list != null)
+                foreach (var listName in listNames)
                 {
-                    list.DeleteObject();
-                    ctx.ExecuteQueryRetry();
+                    var list = ctx.Web.GetListByTitle(listName);
+                    if (list != null)
+                    {
+                        list.DeleteObject();
+                        ctx.ExecuteQueryRetry();
+                    }
                 }
             }
         }
@@ -300,7 +304,7 @@ namespace OfficeDevPnP.PowerShell.Tests
                     new CommandParameter("ListProperties", new[] { "Title" })
                 );
 
-                Assert.IsTrue(listNames.Count > 2, "Wrong count on lists");
+                Assert.IsTrue(listNames.Count > 3, "Wrong count on lists");
 
                 Assert.IsTrue(listNames.Contains("PnPTestList1"), "PnPTestList1 is missing");
                 Assert.IsTrue(listNames.Contains("PnPTestList2"), "PnPTestList2 is missing");
@@ -332,7 +336,7 @@ namespace OfficeDevPnP.PowerShell.Tests
                     new CommandParameter("ListProperties", new[] { "Title" })
                 );
 
-                Assert.IsTrue(listNames.Count > 2, "Wrong count on lists");
+                Assert.IsTrue(listNames.Count > 3, "Wrong count on lists");
 
                 Assert.IsTrue(listNames.Contains("PnPTestList1"), "PnPTestList1 is missing");
                 Assert.IsTrue(listNames.Contains("PnPTestList2"), "PnPTestList2 is missing");
@@ -368,7 +372,7 @@ namespace OfficeDevPnP.PowerShell.Tests
                     new CommandParameter("ListProperties", new[] { "Title" })
                 );
 
-                Assert.IsTrue(listNames.Count == 2, "Wrong count on lists");
+                Assert.IsTrue(listNames.Count == 3, "Wrong count on lists");
 
                 Assert.IsTrue(listNames.Contains("PnPTestList1"), "PnPTestList1 is missing");
                 Assert.IsTrue(listNames.Contains("PnPTestList2"), "PnPTestList2 is missing");
@@ -377,7 +381,7 @@ namespace OfficeDevPnP.PowerShell.Tests
 
                 AssertInvokeActionResult(result,
                     processedWebCount: 1,
-                    processedListCount: 2
+                    processedListCount: 3
                 );
             }
         }
@@ -417,7 +421,7 @@ namespace OfficeDevPnP.PowerShell.Tests
 
                 AssertInvokeActionResult(result,
                     processedWebCount: 1,
-                    processedListCount: 2,
+                    processedListCount: 3,
                     processedListItemCount: 5
                 );
             }
@@ -502,7 +506,7 @@ namespace OfficeDevPnP.PowerShell.Tests
 
                 AssertInvokeActionResult(result,
                     processedWebCount: 1,
-                    processedListCount: 2,
+                    processedListCount: 3,
                     processedListItemCount: 2
                 );
             }
