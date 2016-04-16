@@ -60,3 +60,12 @@ Extracts a provisioning template in XML format from the current web and saves th
 PS:> Get-SPOProvisioningTemplate -Out template.xml -Handlers Lists, SiteSecurity
 ```
 Extracts a provisioning template in XML format from the current web, but only processes lists and site security when generating the template.
+
+###Example 7
+```powershell
+
+PS:> $handler1 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> $handler2 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2
+```
+This will create two new ExtensibilityHandler objects that are run during extraction of the template
