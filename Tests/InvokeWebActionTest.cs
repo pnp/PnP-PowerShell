@@ -137,7 +137,6 @@ namespace OfficeDevPnP.PowerShell.Tests
             list.Context.ExecuteQueryRetry();
         }
 
-
         [TestMethod]
         public void InvokeWebActionWebAction()
         {
@@ -308,6 +307,7 @@ namespace OfficeDevPnP.PowerShell.Tests
 
                 Assert.IsTrue(listNames.Contains("PnPTestList1"), "PnPTestList1 is missing");
                 Assert.IsTrue(listNames.Contains("PnPTestList2"), "PnPTestList2 is missing");
+                Assert.IsTrue(listNames.Contains("PnPTestList3"), "PnPTestList3 is missing");
 
                 InvokeWebActionResult result = results.Last().BaseObject as InvokeWebActionResult;
 
@@ -340,6 +340,7 @@ namespace OfficeDevPnP.PowerShell.Tests
 
                 Assert.IsTrue(listNames.Contains("PnPTestList1"), "PnPTestList1 is missing");
                 Assert.IsTrue(listNames.Contains("PnPTestList2"), "PnPTestList2 is missing");
+                Assert.IsTrue(listNames.Contains("PnPTestList3"), "PnPTestList3 is missing");
 
                 InvokeWebActionResult result = results.Last().BaseObject as InvokeWebActionResult;
 
@@ -376,6 +377,7 @@ namespace OfficeDevPnP.PowerShell.Tests
 
                 Assert.IsTrue(listNames.Contains("PnPTestList1"), "PnPTestList1 is missing");
                 Assert.IsTrue(listNames.Contains("PnPTestList2"), "PnPTestList2 is missing");
+                Assert.IsTrue(listNames.Contains("PnPTestList3"), "PnPTestList3 is missing");
 
                 InvokeWebActionResult result = results.Last().BaseObject as InvokeWebActionResult;
 
@@ -383,6 +385,38 @@ namespace OfficeDevPnP.PowerShell.Tests
                     processedWebCount: 1,
                     processedListCount: 3
                 );
+            }
+        }
+
+        [TestMethod]
+        public void InvokeWebActionListActionWithListPropertiesRootFolder()
+        {
+            using (var scope = new PSTestScope(true))
+            {
+                List<string> listUrls = new List<string>();
+
+                Action<List> listAction = list =>
+                {
+                    listUrls.Add(list.RootFolder.ServerRelativeUrl);
+                };
+
+                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                    new CommandParameter("ListAction", listAction),
+                    new CommandParameter("ListProperties", new[] { "Title", "RootFolder" })
+                );
+
+                Assert.IsTrue(listUrls.Count > 3, "Wrong count on lists");
+
+                InvokeWebActionResult result = results.Last().BaseObject as InvokeWebActionResult;
+
+                foreach (var item in listUrls)
+                    Assert.IsTrue(!string.IsNullOrEmpty(item), "Failed to load property RootFolder");
+
+                AssertInvokeActionResult(result,
+                    processedWebCount: 1
+                );
+
+                Assert.IsTrue(result.ProcessedListCount > 2, "Wrong count on proccessed list");
             }
         }
 
@@ -406,6 +440,48 @@ namespace OfficeDevPnP.PowerShell.Tests
                 var results = scope.ExecuteCommand("Invoke-SPOWebAction",
                     new CommandParameter("ListItemAction", listItemAction),
                     new CommandParameter("ShouldProcessListAction", shouldProcessListAction)
+                );
+
+                Assert.IsTrue(listItemTitles.Count == 5, "Wrong count on listItems");
+
+                Assert.IsTrue(listItemTitles.Contains("Test1-1"), "Test1-1 is missing");
+                Assert.IsTrue(listItemTitles.Contains("Test1-2"), "Test1-2 is missing");
+
+                Assert.IsTrue(listItemTitles.Contains("Test2-1"), "Test2-1 is missing");
+                Assert.IsTrue(listItemTitles.Contains("Test2-2"), "Test2-2 is missing");
+                Assert.IsTrue(listItemTitles.Contains("Test2-3"), "Test2-3 is missing");
+
+                InvokeWebActionResult result = results.Last().BaseObject as InvokeWebActionResult;
+
+                AssertInvokeActionResult(result,
+                    processedWebCount: 1,
+                    processedListCount: 3,
+                    processedListItemCount: 5
+                );
+            }
+        }
+
+        [TestMethod]
+        public void InvokeWebActionListItemActionWithSkipCounting()
+        {
+            using (var scope = new PSTestScope(true))
+            {
+                List<string> listItemTitles = new List<string>();
+
+                Action<ListItem> listItemAction = listItem =>
+                {
+                    listItemTitles.Add(listItem["Title"]?.ToString());
+                };
+
+                Func<List, bool> shouldProcessListAction = list =>
+                {
+                    return list.Title.Contains("PnPTestList");
+                };
+
+                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                    new CommandParameter("ListItemAction", listItemAction),
+                    new CommandParameter("ShouldProcessListAction", shouldProcessListAction),
+                    new CommandParameter("SkipCounting", true)
                 );
 
                 Assert.IsTrue(listItemTitles.Count == 5, "Wrong count on listItems");

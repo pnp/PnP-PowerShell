@@ -78,6 +78,10 @@ namespace OfficeDevPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Will not output statistics after the operation")]
         public SwitchParameter DisableStatisticsOutput;
 
+        [Parameter(Mandatory = false, HelpMessage = "Will skip the counting process, by doing this you will not get an estimated time remaining")]
+        public SwitchParameter SkipCounting;
+
+
         protected override void ExecuteCmdlet()
         {
             if (WebAction == null && ListAction == null && ListItemAction == null && PostWebAction == null && PostListAction == null)
@@ -120,11 +124,11 @@ namespace OfficeDevPnP.PowerShell.Commands
                 else
                     websToProcess = Webs;
 
-                invokeAction = new InvokeAction.InvokeWebAction(this, websToProcess, SubWebs.ToBool(), webActions, listActions, listItemActions);
+                invokeAction = new InvokeAction.InvokeWebAction(this, websToProcess, SubWebs.ToBool(), webActions, listActions, listItemActions, SkipCounting.ToBool());
             }
             else
             {
-                invokeAction = new InvokeAction.InvokeWebAction(this, SelectedWeb, ListName, webActions, listActions, listItemActions);
+                invokeAction = new InvokeAction.InvokeWebAction(this, SelectedWeb, ListName, webActions, listActions, listItemActions, SkipCounting.ToBool());
             }
 
             InvokeWebActionResult result = invokeAction.StartProcessAction();

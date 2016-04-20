@@ -10,28 +10,28 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 {
     public class InvokeWebActionResult
     {
-        public int TotalWebCount { get; set; }
-        public int ProcessedWebCount { get; set; }
-        public int ProcessedPostWebCount { get; set; }
+        public int TotalWebCount { get; internal set; }
+        public int ProcessedWebCount { get; internal set; }
+        public int ProcessedPostWebCount { get; internal set; }
 
-        public int TotalListCount { get; set; }
-        public int ProcessedListCount { get; set; }
-        public int ProcessedPostListCount { get; set; }
+        public int TotalListCount { get; internal set; }
+        public int ProcessedListCount { get; internal set; }
+        public int ProcessedPostListCount { get; internal set; }
 
-        public int TotalListItemCount { get; set; }
-        public int ProcessedListItemCount { get; set; }
+        public int TotalListItemCount { get; internal set; }
+        public int ProcessedListItemCount { get; internal set; }
 
-        public bool IsListNameSpecified { get; set; }
+        public bool IsListNameSpecified { get; internal set; }
 
-        public double AverageWebTime { get; set; }
-        public double AverageListTime { get; set; }
-        public double AverageListItemTime { get; set; }
+        public double AverageWebTime { get; internal set; }
+        public double AverageListTime { get; internal set; }
+        public double AverageListItemTime { get; internal set; }
 
-        public double AveragePostWebTime { get; set; }
-        public double AveragePostListTime { get; set; }
+        public double AveragePostWebTime { get; internal set; }
+        public double AveragePostListTime { get; internal set; }
 
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime StartDate { get; internal set; }
+        public DateTime EndDate { get; internal set; }
 
         public TimeSpan TotalExecutionTime => EndDate - StartDate;
 
