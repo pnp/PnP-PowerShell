@@ -92,7 +92,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         public Handlers ExcludeHandlers;
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while extracting a template")]
-        public ExtensibilityHandler[] ExtensbilityHandlers;
+        public ExtensibilityHandler[] ExtensibilityHandlers;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
@@ -104,7 +104,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
-     
+
 
         protected override void ExecuteCmdlet()
         {
@@ -164,7 +164,10 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
-            creationInformation.ExtensibilityHandlers = ExtensbilityHandlers.ToList<ExtensibilityHandler>();
+            if (ExtensibilityHandlers != null)
+            {
+                creationInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
+            }
             creationInformation.FileConnector = new FileSystemConnector(path, "");
 
 #pragma warning disable CS0618 // Type or member is obsolete
