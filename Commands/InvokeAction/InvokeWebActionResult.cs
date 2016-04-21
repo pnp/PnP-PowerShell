@@ -12,23 +12,23 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
     {
         public int TotalWebCount { get; internal set; }
         public int ProcessedWebCount { get; internal set; }
-        public int ProcessedPostWebCount { get; internal set; }
+        public int? ProcessedPostWebCount { get; internal set; }
 
         public int TotalListCount { get; internal set; }
         public int ProcessedListCount { get; internal set; }
-        public int ProcessedPostListCount { get; internal set; }
+        public int? ProcessedPostListCount { get; internal set; }
 
         public int TotalListItemCount { get; internal set; }
         public int ProcessedListItemCount { get; internal set; }
 
         public bool IsListNameSpecified { get; internal set; }
 
-        public double AverageWebTime { get; internal set; }
-        public double AverageListTime { get; internal set; }
-        public double AverageListItemTime { get; internal set; }
+        public double? AverageWebTime { get; internal set; }
+        public double? AverageListTime { get; internal set; }
+        public double? AverageListItemTime { get; internal set; }
 
-        public double AveragePostWebTime { get; internal set; }
-        public double AveragePostListTime { get; internal set; }
+        public double? AveragePostWebTime { get; internal set; }
+        public double? AveragePostListTime { get; internal set; }
 
         public DateTime StartDate { get; internal set; }
         public DateTime EndDate { get; internal set; }
@@ -51,23 +51,22 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
                 if (ProcessedWebCount != 0)
                     AddTableRow(resultTable, "Number of webs proccessed", ProcessedWebCount);
 
-                if (ProcessedWebCount != 0)
-                    AddTableRow(resultTable, "Number of webs post proccessed", ProcessedWebCount);
+                if (ProcessedPostWebCount.HasValue)
+                    AddTableRow(resultTable, "Number of webs post proccessed", ProcessedPostWebCount);
 
-
-                if (ProcessedListCount != 0 || ProcessedListItemCount != 0 || ProcessedPostListCount != 0 || ProcessedListItemCount != 0)
+                if (ProcessedListCount != 0 || ProcessedPostListCount.HasValue || ProcessedListItemCount != 0)
                 {
                     AddTableRow(resultTable, "Number of lists", TotalListCount);
 
                     if (ProcessedListCount != 0)
                         AddTableRow(resultTable, "Number of lists proccessed", ProcessedListCount);
 
-                    if(ProcessedPostListCount != 0)
+                    if(ProcessedPostListCount.HasValue)
                         AddTableRow(resultTable, "Number of lists post proccessed", ProcessedPostListCount);
                 }
             }
 
-            if (ProcessedListItemCount != 0 || ProcessedPostListCount != 0)
+            if (ProcessedListItemCount != 0 || ProcessedPostListCount.HasValue)
             {
                 AddTableRow(resultTable, "Number of list items", TotalListItemCount);
 
@@ -77,46 +76,58 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 
             if (!IsListNameSpecified)
             {
-                if (AverageWebTime != 0)
+                if (AverageWebTime.HasValue)
                 {
-                    TimeSpan averageWebTimeSpan = new TimeSpan(0, 0, (int)AverageWebTime);
-                    AddTableRow(resultTable, "Average web action time", averageWebTimeSpan.ToString("dd\\.hh\\:mm\\:ss"));
+                    TimeSpan averageWebTimeSpan = TimeSpan.FromSeconds(AverageWebTime.Value);
+                    AddTableRow(resultTable, "Average web action time", GetTimeSpanText(averageWebTimeSpan));
                 }
 
-                if (AveragePostWebTime != 0)
+                if (AveragePostWebTime.HasValue)
                 {
-                    TimeSpan averagePostWebTimeSpan = new TimeSpan(0, 0, (int)AveragePostWebTime);
-                    AddTableRow(resultTable, "Average web post action time", averagePostWebTimeSpan.ToString("dd\\.hh\\:mm\\:ss"));
+                    TimeSpan averagePostWebTimeSpan = TimeSpan.FromSeconds(AveragePostWebTime.Value);
+                    AddTableRow(resultTable, "Average web post action time", GetTimeSpanText(averagePostWebTimeSpan));
                 }
             }
 
             if (ProcessedListCount != 0 || ProcessedListItemCount != 0)
             {
-                if (AverageListTime != 0)
+                if (AverageListTime.HasValue)
                 {
-                    TimeSpan averageListTimeSpan = new TimeSpan(0, 0, (int)AverageListTime);
-                    AddTableRow(resultTable, "Average list action time", averageListTimeSpan.ToString("dd\\.hh\\:mm\\:ss"));
+                    TimeSpan averageListTimeSpan = TimeSpan.FromSeconds(AverageListTime.Value);
+                    AddTableRow(resultTable, "Average list action time", GetTimeSpanText(averageListTimeSpan));
                 }
 
-                if (AveragePostListTime != 0)
+                if (AveragePostListTime.HasValue)
                 {
-                    TimeSpan averagePostListTimeSpan = new TimeSpan(0, 0, (int)AveragePostListTime);
-                    AddTableRow(resultTable, "Average list action time", averagePostListTimeSpan.ToString("dd\\.hh\\:mm\\:ss"));
+                    TimeSpan averagePostListTimeSpan = TimeSpan.FromSeconds(AveragePostListTime.Value);
+                    AddTableRow(resultTable, "Average list action time", GetTimeSpanText(averagePostListTimeSpan));
                 }
             }
 
-            if (AverageListItemTime != 0)
+            if (AverageListItemTime.HasValue)
             {
-                TimeSpan averageListItemTimeSpan = new TimeSpan(0, 0, (int)AverageListItemTime);
-                AddTableRow(resultTable, "Average list item action time", averageListItemTimeSpan.ToString("dd\\.hh\\:mm\\:ss"));
+                TimeSpan averageListItemTimeSpan = TimeSpan.FromSeconds(AverageListItemTime.Value);
+                AddTableRow(resultTable, "Average list item action time", GetTimeSpanText(averageListItemTimeSpan));
             }
 
             AddTableRow(resultTable, "Start date", StartDate);
             AddTableRow(resultTable, "End date", EndDate);
 
-            AddTableRow(resultTable, "Total execution time", TotalExecutionTime.ToString("dd\\.hh\\:mm\\:ss"));
+            AddTableRow(resultTable, "Total execution time", GetTimeSpanText(TotalExecutionTime));
 
             return resultTable;
+        }
+
+        private string GetTimeSpanText(TimeSpan timeSpan)
+        {
+            string text = string.Empty;
+
+            if (timeSpan.Days > 0)
+                text += $"{timeSpan.Days} days";
+
+            text += timeSpan.ToString("hh\\:mm\\:ss\\.ff");
+
+            return text;
         }
 
         private void AddTableRow(DataTable table, string title, object value)

@@ -8,6 +8,7 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 using OfficeDevPnP.PowerShell.Commands.Extensions;
+using OfficeDevPnP.PowerShell.Commands.Base;
 
 namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 {
@@ -141,7 +142,6 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 
 			if (_listActions.HasAnyAction || _listItemActions.HasAnyAction)
 			{
-				//Counting
 				int webCount = webs.Count;
 				for (int webIndex = 0; webIndex < webCount; webIndex++)
 				{
@@ -193,11 +193,16 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			{
 				Web currentWeb = webs[webIndex];
 
-				currentWeb.LoadProperties(_webActions.Properties);
-				if (!_webActions.ShouldProcessAnyAction(currentWeb))
-					continue;
+                //Update current connection context to the web that is beeing process
+                //So commands like Get-SPOList returns the correct list for the current web beeing proccess
+                SPOnlineConnection.CurrentConnection.Context = (ClientContext) currentWeb.Context;
 
-				UpdateWebProgressBar(webs, webIndex, webCount, 0, _totalExecutionTimeStopWatch);
+                currentWeb.LoadProperties(_webActions.Properties);
+
+                UpdateWebProgressBar(webs, webIndex, webCount, 0, _totalExecutionTimeStopWatch);
+
+                if (!_webActions.ShouldProcessAnyAction(currentWeb))
+					continue;
 
 				processAction = ProccessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessAction, _webActions.Action, ref _currentWebsProcessed, ref _averageWebTime);
 
@@ -216,10 +221,8 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 						if (_isListNameSpecified && !currentList.Title.Equals(_listName, StringComparison.CurrentCultureIgnoreCase))
 							continue;
 
-						//Update web progress bar
 						UpdateWebProgressBar(webs, webIndex, webCount, listIndex, _totalExecutionTimeStopWatch);
 
-						//Update list progress bar
 						UpdateListProgressBar(lists, listIndex, listCount);
 
 						processAction = ProccessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessAction, _listActions.Action, ref _currentListsProcessed, ref _averageListTime);
@@ -239,7 +242,6 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 							{
 								ListItem currentListItem = listItems[listItemIndex];
 
-								//Update list item progress bar
 								WriteIterationProgress(ListItemProgressBarId, ListProgressBarId, "Iterating list items", GetTitle(currentListItem), listItemIndex, listItemCount, CalculateRemainingTimeForListItems(listItemCount, listItemIndex));
 
 								ProccessAction(currentListItem, GetTitle, _listItemActions.Properties, _listItemActions.ShouldProcessAction, _listItemActions.Action, ref _currentListItemsProcessed, ref _averageListItemTime);
@@ -263,18 +265,31 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 		private void UpdateResult()
 		{
 			_result.ProcessedWebCount = _currentWebsProcessed;
-			_result.ProcessedListCount = _currentListsProcessed;
-			_result.ProcessedListItemCount = _currentListItemsProcessed;
 
-			_result.ProcessedPostWebCount = _currentPostWebsProcessed;
-			_result.ProcessedPostListCount = _currentPostListsProcessed;
+            if(_webActions.HasPostAction)
+                _result.ProcessedPostWebCount = _currentPostWebsProcessed;
 
-			_result.AverageWebTime = _averageWebTime;
-			_result.AverageListTime = _averageListTime;
-			_result.AverageListItemTime = _averageListItemTime;
+            _result.ProcessedListCount = _currentListsProcessed;
 
-			_result.AveragePostWebTime = _averagePostWebTime;
-			_result.AveragePostListTime = _averagePostListTime;
+            if (_listActions.HasPostAction)
+                _result.ProcessedPostListCount = _currentPostListsProcessed;
+
+            _result.ProcessedListItemCount = _currentListItemsProcessed;
+
+            if(_webActions.HasAction)
+			    _result.AverageWebTime = _averageWebTime;
+
+            if(_webActions.HasPostAction)
+                _result.AveragePostWebTime = _averagePostWebTime;
+
+            if (_listActions.HasAction)
+			    _result.AverageListTime = _averageListTime;
+
+            if(_listActions.HasPostAction)
+                _result.AveragePostListTime = _averagePostListTime;
+
+            if (_listItemActions.HasAction)
+			    _result.AverageListItemTime = _averageListItemTime;
 
 			_result.EndDate = DateTime.Now;
 		}
@@ -408,10 +423,17 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 		{
 			string activityText = $"{activity}, {currentIndex + 1}/{itemCount}";
 
-			if (stopwatch != null)
-				activityText += ", " + stopwatch.Elapsed.ToString("dd\\.hh\\:mm\\:ss");
+            if (stopwatch != null)
+            {
+                activityText += ", ";
 
-			string statusText = status;
+                if (stopwatch.Elapsed.Days > 0)
+                    activityText += $"{stopwatch.Elapsed.Days} days ";
+
+                activityText += stopwatch.Elapsed.ToString("hh\\:mm\\:ss");
+            }
+
+            string statusText = status;
 
 			if (string.IsNullOrEmpty(statusText))
 				statusText = " ";
@@ -434,7 +456,7 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 
 		private void CompleteProgressBar(int id)
 		{
-            //Since you need the Activity name to close the progress bar we write an empty temporary activity first.
+            //HACK: Since you need the Activity name to close the progress bar we write an empty temporary activity first.
             _cmdlet.WriteProgress(new ProgressRecord(id, " ", " ")
             {
                 PercentComplete = 100

@@ -315,7 +315,7 @@ namespace OfficeDevPnP.PowerShell.Tests
                     processedWebCount: 1
                 );
 
-                Assert.IsTrue(result.ProcessedListCount > 2, "Wrong count on proccessed list");
+                Assert.IsTrue(result.ProcessedListCount > 3, "Wrong count on proccessed list");
             }
         }
 
@@ -347,6 +347,8 @@ namespace OfficeDevPnP.PowerShell.Tests
                 AssertInvokeActionResult(result,
                     processedWebCount: 1
                 );
+
+                Assert.IsTrue(result.ProcessedPostListCount > 3, "Wrong count on proccessed list");
             }
         }
 
@@ -666,31 +668,41 @@ namespace OfficeDevPnP.PowerShell.Tests
             if (processedWebCount.HasValue)
             {
                 Assert.AreEqual(processedWebCount.Value, result.ProcessedWebCount, "Total proccessed web count does not match");
-                Assert.IsTrue(result.AverageWebTime > 0, "Average web time is 0");
+
+                if(result.AverageWebTime.HasValue)
+                    Assert.IsTrue(result.AverageWebTime > 0, "Average web time is 0");
             }
 
             if (processedPostWebCount.HasValue)
             {
                 Assert.AreEqual(processedPostWebCount.Value, result.ProcessedPostWebCount, "Total proccessed web count does not match");
-                Assert.IsTrue(result.AveragePostWebTime > 0, "Average web time is 0");
+
+                if (result.AveragePostWebTime.HasValue)
+                    Assert.IsTrue(result.AveragePostWebTime > 0, "Average web time is 0");
             }
 
             if (processedListCount.HasValue)
             {
                 Assert.AreEqual(processedListCount.Value, result.ProcessedListCount, "Total proccessed list count does not match");
-                Assert.IsTrue(result.AverageListTime > 0, "Average list time is 0");
+
+                if (result.AverageListTime.HasValue)
+                    Assert.IsTrue(result.AverageListTime > 0, "Average list time is 0");
             }
 
             if (processedPostListCount.HasValue)
             {
                 Assert.AreEqual(processedPostListCount.Value, result.ProcessedPostListCount, "Total proccessed list count does not match");
-                Assert.IsTrue(result.AveragePostListTime > 0, "Average list time is 0");
+
+                if (result.AveragePostListTime.HasValue)
+                    Assert.IsTrue(result.AveragePostListTime > 0, "Average list time is 0");
             }
 
             if (processedListItemCount.HasValue)
             {
                 Assert.AreEqual(processedListItemCount.Value, result.ProcessedListItemCount, "Total proccessed list item count does not match");
-                Assert.IsTrue(result.AverageListItemTime > 0, "Average list item time is 0");
+
+                if (result.AverageListItemTime.HasValue)
+                    Assert.IsTrue(result.AverageListItemTime > 0, "Average list item time is 0");
             }
 
             Assert.IsTrue(result.StartDate >= DateTime.Today, "Incorrect start date");
