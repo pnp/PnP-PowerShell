@@ -3,6 +3,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
 using System;
+using OfficeDevPnP.Core.Utilities;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {

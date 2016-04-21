@@ -5,6 +5,7 @@ using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using File = System.IO.File;
 using System;
+using OfficeDevPnP.Core.Utilities;
 
 namespace OfficeDevPnP.PowerShell.Commands
 {
