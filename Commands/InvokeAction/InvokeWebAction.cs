@@ -13,38 +13,38 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 {
 	internal class InvokeWebAction
 	{
-		protected const int WebProgressBarId = 1;
-		protected const int ListProgressBarId = 2;
-		protected const int ListItemProgressBarId = 3;
-
-		protected readonly Cmdlet _cmdlet;
-
-		protected InvokeWebActionResult _result;
-		protected int _currentWebsProcessed = 0;
-		protected int _currentListsProcessed = 0;
-		protected int _currentListItemsProcessed = 0;
-
-		protected int _currentPostWebsProcessed = 0;
-		protected int _currentPostListsProcessed = 0;
-
-		protected double _averageWebTime = 0;
-		protected double _averageListTime = 0;
-		protected double _averageListItemTime = 0;
-
-		protected double _averagePostWebTime = 0;
-		protected double _averagePostListTime = 0;
-
-		protected readonly IEnumerable<Web> _webs;
-		protected readonly bool _subWebs;
-		protected readonly string _listName;
-		protected readonly bool _isListNameSpecified;
-		protected readonly InvokeActionParameter<Web> _webActions;
-		protected readonly InvokeActionParameter<List> _listActions;
-		protected readonly InvokeActionParameter<ListItem> _listItemActions;
-
-		protected readonly bool _skipCounting;
-
-		protected Stopwatch _totalExecutionTimeStopWatch;
+        private const int WebProgressBarId = 1;
+		private const int ListProgressBarId = 2;
+		private const int ListItemProgressBarId = 3;
+        
+		private readonly Cmdlet _cmdlet;
+        
+		private InvokeWebActionResult _result;
+		private int _currentWebsProcessed = 0;
+		private int _currentListsProcessed = 0;
+		private int _currentListItemsProcessed = 0;
+        
+		private int _currentPostWebsProcessed = 0;
+		private int _currentPostListsProcessed = 0;
+        
+		private double _averageWebTime = 0;
+		private double _averageListTime = 0;
+		private double _averageListItemTime = 0;
+        
+		private double _averagePostWebTime = 0;
+		private double _averagePostListTime = 0;
+        
+		private readonly IEnumerable<Web> _webs;
+		private readonly bool _subWebs;
+		private readonly string _listName;
+		private readonly bool _isListNameSpecified;
+		private readonly InvokeActionParameter<Web> _webActions;
+		private readonly InvokeActionParameter<List> _listActions;
+		private readonly InvokeActionParameter<ListItem> _listItemActions;
+        
+		private readonly bool _skipCounting;
+        
+		private Stopwatch _totalExecutionTimeStopWatch;
 
 		private InvokeWebAction(Cmdlet cmdlet, bool subWebs, InvokeActionParameter<Web> webActions, InvokeActionParameter<List> listActions, InvokeActionParameter<ListItem> listItemActions, bool skipCounting)
 		{
@@ -446,7 +446,7 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			});
 		}
 
-		protected string[] AddProperties(string[] properties, params string[] propertiesToAdd)
+        private string[] AddProperties(string[] properties, params string[] propertiesToAdd)
 		{
 			if (properties == null)
 				return propertiesToAdd;
