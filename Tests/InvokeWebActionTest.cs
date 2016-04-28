@@ -643,9 +643,7 @@ namespace OfficeDevPnP.PowerShell.Tests
 
                 InvokeWebActionResult result = results.Last().BaseObject as InvokeWebActionResult;
 
-                AssertInvokeActionResult(result,
-                    processedWebCount: 1
-                );
+                Assert.AreEqual(1, result.ProcessedWebCount, "Total proccessed web count does not match");
 
                 Assert.IsFalse(webActionFired, "web action fired");
                 Assert.IsFalse(webPostActionFired, "web post action fired");

@@ -27,13 +27,21 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
         
 		private int _currentPostWebsProcessed = 0;
 		private int _currentPostListsProcessed = 0;
-        
-		private double _averageWebTime = 0;
-		private double _averageListTime = 0;
-		private double _averageListItemTime = 0;
-        
-		private double _averagePostWebTime = 0;
-		private double _averagePostListTime = 0;
+
+        private double _averageShouldProcessWebTime = 0;
+        private double _averageWebTime = 0;
+
+        private double _averageShouldProcessListTime = 0;
+        private double _averageListTime = 0;
+
+        private double _averageShouldProcessListItemTime = 0;
+        private double _averageListItemTime = 0;
+
+        private double _averageShouldProcessPostWebTime = 0;
+        private double _averagePostWebTime = 0;
+
+        private double _averageShouldProcessPostListTime = 0;
+        private double _averagePostListTime = 0;
         
 		private readonly IEnumerable<Web> _webs;
 		private readonly bool _subWebs;
@@ -209,7 +217,7 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
                 if (!_webActions.ShouldProcessAnyAction(currentWeb))
 					continue;
 
-				processAction = ProccessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessAction, _webActions.Action, ref _currentWebsProcessed, ref _averageWebTime);
+				processAction = ProccessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessAction, _webActions.Action, ref _currentWebsProcessed, ref _averageWebTime, ref _averageShouldProcessWebTime);
 
 				if (!processAction)
 					continue;
@@ -230,7 +238,7 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 
 						UpdateListProgressBar(lists, listIndex, listCount);
 
-						processAction = ProccessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessAction, _listActions.Action, ref _currentListsProcessed, ref _averageListTime);
+						processAction = ProccessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessAction, _listActions.Action, ref _currentListsProcessed, ref _averageListTime, ref _averageShouldProcessListTime);
 
 						if (!processAction)
 							continue;
@@ -249,19 +257,19 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 
 								WriteIterationProgress(ListItemProgressBarId, ListProgressBarId, "Iterating list items", GetTitle(currentListItem), listItemIndex, listItemCount, CalculateRemainingTimeForListItems(listItemCount, listItemIndex));
 
-								ProccessAction(currentListItem, GetTitle, _listItemActions.Properties, _listItemActions.ShouldProcessAction, _listItemActions.Action, ref _currentListItemsProcessed, ref _averageListItemTime);
+								ProccessAction(currentListItem, GetTitle, _listItemActions.Properties, _listItemActions.ShouldProcessAction, _listItemActions.Action, ref _currentListItemsProcessed, ref _averageListItemTime, ref _averageShouldProcessListItemTime);
 							}
 
 							CompleteProgressBar(ListItemProgressBarId);
 						}
 
-						processAction = ProccessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessPostAction, _listActions.PostAction, ref _currentPostListsProcessed, ref _averagePostListTime);
+						processAction = ProccessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessPostAction, _listActions.PostAction, ref _currentPostListsProcessed, ref _averagePostListTime, ref _averageShouldProcessPostListTime);
 					}
 
 					CompleteProgressBar(ListProgressBarId);
 				}
 
-				processAction = ProccessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessPost, _webActions.PostAction, ref _currentPostWebsProcessed, ref _averagePostWebTime);
+				processAction = ProccessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessPost, _webActions.PostAction, ref _currentPostWebsProcessed, ref _averagePostWebTime, ref _averageShouldProcessPostWebTime);
 			}
 
 			CompleteProgressBar(WebProgressBarId);
@@ -309,22 +317,38 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			WriteIterationProgress(ListProgressBarId, WebProgressBarId, "Iterating lists", GetTitle(lists[index]), index, count, CalculateRemainingTimeForList(lists, index));
 		}
 
-		private bool ProccessAction<T>(T item, Func<T, string> getTitle, string[] properties, Func<T, bool> shouldProcessAction, Action<T> action, ref int itemsProcessed, ref double averageTime) where T : SecurableObject
+		private bool ProccessAction<T>(T item, Func<T, string> getTitle, string[] properties, Func<T, bool> shouldProcessAction, Action<T> action, ref int itemsProcessed, ref double averageActionTime, ref double averageShouldProcessTime) where T : SecurableObject
 		{
-			Stopwatch actionStopWatch = Stopwatch.StartNew();
-			item.LoadProperties(properties);
+            Stopwatch shouldProcessStopWatch = Stopwatch.StartNew();
+
+            item.LoadProperties(properties);
 
 			string title = getTitle(item);
 
-			bool processAction = ProcessAction(item, title, shouldProcessAction, action);
+            bool processAction = false;
 
-			if (processAction)
-			{
-				itemsProcessed++;
-				averageTime = CalculateAverage(averageTime, actionStopWatch.Elapsed.TotalSeconds, itemsProcessed);
-			}
+            if (shouldProcessAction == null)
+                processAction = true;
+            else
+                processAction = shouldProcessAction(item);
 
-			return processAction;
+            averageShouldProcessTime = CalculateAverage(averageShouldProcessTime, shouldProcessStopWatch.Elapsed.TotalSeconds, itemsProcessed);
+
+            if (processAction && action != null)
+            {
+                if (_cmdlet.ShouldProcess(title, "Process action"))
+                {
+                    Stopwatch actionStopWatch = Stopwatch.StartNew();
+
+                    action(item);
+                    averageActionTime = CalculateAverage(averageActionTime, actionStopWatch.Elapsed.TotalSeconds, itemsProcessed);
+                }
+            }
+
+            if(processAction)
+                itemsProcessed++;
+
+            return processAction;
 		}
 
 		private string GetTitle(Web web) => $"{web.Title} - {web.Url}";
@@ -355,11 +379,14 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			if (_skipCounting)
 				return -1;
 
-			double timeRemaining = (_averageWebTime + _averagePostWebTime) * (webs.Count - websProcessed);
+			double timeRemaining = ((_averageWebTime + _averagePostWebTime) + (_averageShouldProcessWebTime + _averageShouldProcessPostWebTime)) * (webs.Count - websProcessed);
 
-			//We have already processed the WebAction on current web, this will make the WebProgressBar and ListProgressBar in sync when iteration one web.
-			if (listProcessedOnCurrentWeb > 0)
-				timeRemaining -= _averageWebTime;
+            //We have already processed the WebAction on current web, this will make the WebProgressBar and ListProgressBar in sync when iteration one web.
+            if (listProcessedOnCurrentWeb > 0)
+            {
+                timeRemaining -= _averageWebTime;
+                timeRemaining -= _averageShouldProcessWebTime;
+            }
 
 			if (_listActions.HasAnyAction || _listItemActions.HasAnyAction)
 			{
@@ -375,7 +402,7 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			if (_skipCounting)
 				return -1;
 
-			double timeRemaining = (_averageWebTime + _averagePostListTime) * (lists.Count - itemsProcessed);
+			double timeRemaining = ((_averageWebTime + _averagePostListTime) + (_averageShouldProcessListTime + _averageShouldProcessPostListTime)) * (lists.Count - itemsProcessed);
 			int remainingListItems = lists.Cast<List>().Skip(itemsProcessed).Sum(item => item.ItemCount);
 
 			if(_listItemActions.HasAnyAction)
@@ -389,42 +416,18 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			if (_skipCounting)
 				return -1;
 
-			return _averageListItemTime * (listItemsCount - itemsProcessed);
+			return (_averageListItemTime + _averageShouldProcessListItemTime) * (listItemsCount - itemsProcessed);
 		}
 
-		private double CalculateAverage(double averageTime, double totalSeconds, int currentItemsProcessed) => averageTime + ((totalSeconds - averageTime) / currentItemsProcessed);
+        private double CalculateAverage(double averageTime, double totalSeconds, int currentItemsProcessed)
+        {
+            if (currentItemsProcessed == 0)
+                return totalSeconds;
 
-		private bool ProcessAction<T>(T target, string targetTitle, Func<T, bool> shouldProcessAction, Action<T> action)
-		{
-			bool processAction = false;
+            return averageTime + ((totalSeconds - averageTime) / currentItemsProcessed);
+        }
 
-			if (shouldProcessAction == null)
-			{
-				processAction = true;
-			   _cmdlet.WriteDebug("No should process script block, will process action");
-			}
-			else
-			{
-				_cmdlet.WriteVerbose("Invoking should process function");
-				processAction = shouldProcessAction(target);
-			}
-
-			_cmdlet.WriteVerbose("ShouldProcessAction: " + processAction);
-
-			if(processAction && action != null)
-			{
-				_cmdlet.WriteVerbose("Invoking action function");
-
-				if(_cmdlet.ShouldProcess(targetTitle, "Process action"))
-				{
-					action(target);
-				}
-			}
-
-			return processAction;
-		} 
-
-		private void WriteIterationProgress(int id, int? parentId, string activity, string status, int currentIndex, int itemCount, double? secondsRemaining = null, Stopwatch stopwatch = null)
+			private void WriteIterationProgress(int id, int? parentId, string activity, string status, int currentIndex, int itemCount, double? secondsRemaining = null, Stopwatch stopwatch = null)
 		{
 			string activityText = $"{activity}, {currentIndex + 1}/{itemCount}";
 
