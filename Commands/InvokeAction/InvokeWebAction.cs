@@ -84,7 +84,9 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			_result = new InvokeWebActionResult();
 			_result.StartDate = DateTime.Now;
 
-			UpdatePropertiesToLoad();
+            ClientContext previousContext = SPOnlineConnection.CurrentConnection.Context;
+
+            UpdatePropertiesToLoad();
 
 			List<Web> webs;
 			if (_subWebs)
@@ -98,8 +100,11 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			ProcessAction(webs);
 
 			UpdateResult();
-			
-			return _result;
+
+            //Reset context to where the user were before.
+            SPOnlineConnection.CurrentConnection.Context = previousContext;
+
+            return _result;
 		}
 
 		private void UpdatePropertiesToLoad()
