@@ -14,19 +14,19 @@ namespace OfficeDevPnP.PowerShell.Commands
         SortOrder = 1)]
     public class AddContentType : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "Specify the name of the new content type")]
         public string Name;
 
         [Parameter(Mandatory = false, HelpMessage="If specified, in the format of 0x0100233af432334r434343f32f3, will create a content type with the specific ID")]
         public string ContentTypeId;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the description of the new content type")]
         public string Description;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the group of the new content type")]
         public string Group;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the parent of the new content type")]
         public ContentType ParentContentType;
 
         protected override void ExecuteCmdlet()
