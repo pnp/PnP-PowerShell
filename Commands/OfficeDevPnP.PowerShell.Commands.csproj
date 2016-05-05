@@ -197,9 +197,9 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OfficeDevPnP.Core">
+    <Reference Include="OfficeDevPnP.Core, Version=2.3.1604.0, Culture=neutral, PublicKeyToken=3751622786b357c2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PnP-Sites-Core\Core\OfficeDevPnP.Core\bin\$(Configuration)\OfficeDevPnP.Core.dll</HintPath>
+      <HintPath>..\..\..\Users\erwin\Documents\Visual Studio 2015\Projects\ConsoleApplication19\packages\OfficeDevPnPCore15.2.3.1604.0\lib\net45\OfficeDevPnP.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

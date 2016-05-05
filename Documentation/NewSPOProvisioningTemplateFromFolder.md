@@ -24,45 +24,36 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml
-
+PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml
 ```
 Creates an empty provisioning template, and includes all files in the current folder.
 
 ###Example 2
 ```powershell
-
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp
-
+PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp
 ```
 Creates an empty provisioning template, and includes all files in the c:\temp folder.
 
 ###Example 3
 ```powershell
-
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js
-
+PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js
 ```
 Creates an empty provisioning template, and includes all files with a JS extension in the c:\temp folder.
 
 ###Example 4
 ```powershell
-
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder "Shared Documents"
+PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder "Shared Documents"
 ```
 Creates an empty provisioning template, and includes all files with a JS extension in the c:\temp folder and marks the files in the template to be added to the 'Shared Documents' folder
 
 ###Example 5
 ```powershell
-
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder "Shared Documents" -ContentType "Test Content Type"
+PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder "Shared Documents" -ContentType "Test Content Type"
 ```
 Creates an empty provisioning template, and includes all files with a JS extension in the c:\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add a property to the item for the content type.
 
 ###Example 6
 ```powershell
-
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder "Shared Documents" -Properties @{"Title" = "Test Title"; "Category"="Test Category"}
+PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder "Shared Documents" -Properties @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
 Creates an empty provisioning template, and includes all files with a JS extension in the c:\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add the specified properties to the file entries.

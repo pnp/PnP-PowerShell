@@ -25,3 +25,9 @@ Parameter|Type|Required|Description
 PS:> Set-SPOMinimalDownloadStrategy -Off
 ```
 Will deactivate minimal download strategy (MDS) for the current web.
+
+###Example 2
+```powershell
+PS:> Set-SPOMinimalDownloadStrategy -On
+```
+Will activate minimal download strategy (MDS) for the current web.
