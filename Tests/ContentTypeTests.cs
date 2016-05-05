@@ -102,6 +102,29 @@ namespace OfficeDevPnP.PowerShell.Tests
             }
         }
 
+        public void AddContentTypeWithIdTest()
+        {
+            using (var scope = new PSTestScope(true))
+            {
+                var results = scope.ExecuteCommand("Add-SPOContentType",
+                    new CommandParameter("Name", CTName4),
+                    new CommandParameter("Description", "This is the description of the content type"),
+                    new CommandParameter("ContentTypeID", "0x01010010AFE1111D664A55B9D45F9712E7B827"),
+                    new CommandParameter("Group", "UnitTestCTGroup"));
+
+                Assert.IsTrue(results.Any());
+                Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Microsoft.SharePoint.Client.ContentType));
+
+                using (var ctx = TestCommon.CreateClientContext())
+                {
+                    var ct = ctx.Web.GetContentTypeByName(CTName4);
+                    ct.DeleteObject();
+                    ctx.ExecuteQueryRetry();
+                }
+            }
+        }
+
+
         [TestMethod]
         public void AddContentTypeToListTest()
         {

@@ -213,6 +213,7 @@ Cmdlet|Description
 **[Get&#8209;SPOWeb](GetSPOWeb.md)** |Returns the current web object
 **[New&#8209;SPOWeb](NewSPOWeb.md)** |Creates a new subweb to the current web
 **[Set&#8209;SPOWeb](SetSPOWeb.md)** |Sets properties on a web
+**[Invoke&#8209;SPOWebAction](InvokeSPOWebAction.md)** |Executes operations on web, lists, list items.
 ##Workflows
 Cmdlet|Description
 :-----|:----------
