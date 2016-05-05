@@ -200,6 +200,7 @@
     <Compile Include="EventReceiverTests.cs" />
     <Compile Include="FeatureTests.cs" />
     <Compile Include="FieldsTests.cs" />
+    <Compile Include="InvokeWebActionTest.cs" />
     <Compile Include="WebPartsTests.cs" />
     <Compile Include="ListsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -299,6 +299,7 @@
     <Compile Include="Events\AddEventReceiver.cs" />
     <Compile Include="Events\GetEventReceiver.cs" />
     <Compile Include="Events\RemoveEventReceiver.cs" />
+    <Compile Include="Extensions\ClientObjectExtensions.cs" />
     <Compile Include="Extensions\WebExtensions.cs" />
     <Compile Include="Features\GetFeature.cs" />
     <Compile Include="Fields\AddFieldFromXml.cs" />
@@ -308,6 +309,9 @@
     <Compile Include="Fields\AddField.cs" />
     <Compile Include="InformationManagement\GetSitePolicy.cs" />
     <Compile Include="InformationManagement\SetSitePolicy.cs" />
+    <Compile Include="InvokeAction\InvokeWebAction.cs" />
+    <Compile Include="InvokeAction\InvokeWebActionParameter.cs" />
+    <Compile Include="InvokeAction\InvokeWebActionResult.cs" />
     <Compile Include="Lists\AddListItem.cs" />
     <Compile Include="Lists\AddView.cs" />
     <Compile Include="Lists\RemoveListItem.cs" />
@@ -342,6 +346,7 @@
     <Compile Include="Branding\AddJavaScriptLink.cs" />
     <Compile Include="Branding\AddJavaScriptBlock.cs" />
     <Compile Include="WebParts\GetWebPartXml.cs" />
+    <Compile Include="Web\InvokeWebAction.cs" />
     <Compile Include="Web\EnsureFolder.cs" />
     <Compile Include="Web\AddFolder.cs" />
     <Compile Include="Web\RemovedIndexedProperty.cs" />
