@@ -68,12 +68,14 @@ namespace OfficeDevPnP.PowerShell.Commands
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
-                
-                foreach (var key in Values.Keys)
-                {
-                    item[key as string] = Values[key];
-                }
 
+                if (Values != null)
+                {
+                    foreach (var key in Values.Keys)
+                    {
+                        item[key as string] = Values[key];
+                    }
+                }
 
                 item.Update();
                 ClientContext.Load(item);

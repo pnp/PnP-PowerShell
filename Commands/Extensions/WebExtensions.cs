@@ -18,6 +18,7 @@ namespace OfficeDevPnP.PowerShell.Commands
         public static Web GetWebByUrl(this Web currentWeb, string url)
         {
             var clientContext = currentWeb.Context as ClientContext;
+
             Site site = clientContext.Site;
             Web web = site.OpenWeb(url);
             web.EnsureProperties(w => w.Url, w => w.Title, w => w.Id, w => w.ServerRelativeUrl);

@@ -42,7 +42,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
             var context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret), retryCount, retryWait * 1000);
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-
+            context.DisableReturnValueCache = true;
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {
@@ -118,6 +118,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                 context.Delay = retryWait * 1000;
                 context.ApplicationName = Properties.Resources.ApplicationName;
                 context.RequestTimeout = requestTimeout;
+                context.DisableReturnValueCache = true;
                 var connectionType = ConnectionType.OnPrem;
                 if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
                 {
@@ -142,6 +143,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
             context.ApplicationName = Properties.Resources.ApplicationName;
+            context.DisableReturnValueCache = true;
             context.RequestTimeout = requestTimeout;
             if (!currentCredentials)
             {
@@ -224,6 +226,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
 
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
+            context.DisableReturnValueCache = true;
 
             var connectionType = ConnectionType.OnPrem;
 
