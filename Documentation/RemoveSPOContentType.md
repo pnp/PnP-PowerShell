@@ -19,3 +19,9 @@ Parameter|Type|Required|Description
 PS:> Remove-SPOContentType -Identity "Project Document"
 ```
 This will remove a content type called "Project Document" from the current web
+
+###Example 2
+```powershell
+PS:> Remove-SPOContentType -Identity "Project Document" -Force
+```
+This will remove a content type called "Project Document" from the current web with force

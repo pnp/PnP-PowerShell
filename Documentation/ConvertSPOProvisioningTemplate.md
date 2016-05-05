@@ -1,5 +1,5 @@
 #Convert-SPOProvisioningTemplate
-Converts a provisioning template to a web
+Converts a provisioning template to a other schema version
 ##Syntax
 ```powershell
 Convert-SPOProvisioningTemplate [-Out <String>] [-Encoding <Encoding>] [-Force [<SwitchParameter>]] -Path <String> [-ToSchema <XMLPnPSchemaVersion>]

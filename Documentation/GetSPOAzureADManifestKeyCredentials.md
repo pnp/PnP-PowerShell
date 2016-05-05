@@ -9,7 +9,7 @@ Get-SPOAzureADManifestKeyCredentials -CertPath <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|CertPath|String|True||
+|CertPath|String|True|Specifies the path to the certificate like .\mycert.cer|
 ##Examples
 
 ###Example 1

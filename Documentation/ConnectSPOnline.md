@@ -46,7 +46,7 @@ Parameter|Type|Required|Description
 |RequestTimeout|Int32|False|The request timeout. Default is 180000|
 |RetryCount|Int32|False|Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.|
 |RetryWait|Int32|False|Defines how many seconds to wait before each retry. Default is 1 second.|
-|SkipTenantAdminCheck|SwitchParameter|False||
+|SkipTenantAdminCheck|SwitchParameter|False|Should we skip the check if this site is the Tenant admin site. Default is false|
 |Tenant|String|True|The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com|
 |Url|String|True|The Url of the site collection to connect to.|
 |UseAdfs|SwitchParameter|False|If you want to connect to your on-premises SharePoint farm using ADFS|
