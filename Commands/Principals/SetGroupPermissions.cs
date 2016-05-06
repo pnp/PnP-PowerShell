@@ -46,11 +46,11 @@ namespace OfficeDevPnP.PowerShell.Commands.Principals
             var group = Identity.GetGroup(SelectedWeb);
             
             List list = List.GetList(SelectedWeb);
-            if (list == null && List.Title != null)
+            if (list == null && !String.IsNullOrEmpty(List.Title))
             {
                 throw new Exception(string.Format("List with Title {0} not found", List.Title));
             }
-            else if (list == null && List.Id != null )
+            else if (list == null && List.Id != Guid.Empty )
             {
                 throw new Exception(string.Format("List with Id {0} not found", List.Id));
             }
