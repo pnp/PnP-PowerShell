@@ -3,6 +3,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace OfficeDevPnP.PowerShell.Commands.Principals
 {
@@ -43,11 +44,15 @@ namespace OfficeDevPnP.PowerShell.Commands.Principals
         protected override void ExecuteCmdlet()
         {
             var group = Identity.GetGroup(SelectedWeb);
-
-            List list = null;
-            if (List != null)
+            
+            List list = List.GetList(SelectedWeb);
+            if (list == null && List.Title != null)
             {
-                list = List.GetList(SelectedWeb);
+                throw new Exception(string.Format("List with Title {0} not found", List.Title));
+            }
+            else if (list == null && List.Id != null )
+            {
+                throw new Exception(string.Format("List with Id {0} not found", List.Id));
             }
 
             if (AddRole != null)
