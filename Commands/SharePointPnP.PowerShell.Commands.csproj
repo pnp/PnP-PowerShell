@@ -7,8 +7,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OfficeDevPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>OfficeDevPnP.PowerShell.Online.Commands</AssemblyName>
+    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>SharePointPnP.PowerShell.Online.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -26,8 +26,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OfficeDevPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>OfficeDevPnP.PowerShell.SP2013.Commands</AssemblyName>
+    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>SharePointPnP.PowerShell.SP2013.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -45,8 +45,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OfficeDevPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>OfficeDevPnP.PowerShell.SP2016.Commands</AssemblyName>
+    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>SharePointPnP.PowerShell.SP2016.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
