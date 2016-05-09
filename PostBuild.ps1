@@ -5,7 +5,6 @@ if($ConfigurationName -like "Debug*")
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 	if($ConfigurationName -like "Debug15")
 	{
-		
 		$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShellSP2013"
 	} elseif($ConfigurationName -like "Debug16")
 	{
@@ -21,8 +20,8 @@ if($ConfigurationName -like "Debug*")
 		Remove-Item $DestinationFolder\*
 	} else {
 		# No, create it
-		Write-Host "Creating target folder: $PSModuleHome"
-		New-Item -Path $PSModuleHome -ItemType Directory -Force >$null # Suppress output
+		Write-Host "Creating target folder: $DestinationFolder"
+		New-Item -Path $DestinationFolder -ItemType Directory -Force >$null # Suppress output
 	}
 
 	Write-Host "Copying files from $TargetDir to $DestinationFolder"
@@ -57,6 +56,7 @@ if($ConfigurationName -like "Debug*")
 		Remove-Item $DestinationFolder\*
 	} else {
 		# No, create it
+		Write-Host "Creating target folder: $DestinationFolder"
 		New-Item -Path $DestinationFolder -ItemType Directory -Force >$null # Suppress output
 	}
 
