@@ -1,8 +1,8 @@
-﻿using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client;
 using System.Management.Automation;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOSite")]
     [CmdletHelp("Returns the current site collection from the context.",

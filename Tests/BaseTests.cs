@@ -2,13 +2,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 using System.Management.Automation;
-using System.Collections.ObjectModel;
-using OfficeDevPnP.PowerShell.Commands.Base;
-using OfficeDevPnP.PowerShell.Tests;
 using System.Configuration;
-using OfficeDevPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Commands.Utilities;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
     public class BaseTests

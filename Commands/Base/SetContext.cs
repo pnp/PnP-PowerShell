@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "SPOContext")]
     [CmdletHelp("Sets the Client Context to use by the cmdlets",

@@ -1,12 +1,7 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
+namespace SharePointPnP.PowerShell.Commands.InvokeAction
 {
     public class InvokeWebActionResult
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OfficeDevPnP.PowerShell.CmdletHelpAttributes
+namespace SharePointPnP.PowerShell.CmdletHelpAttributes
 {
     [AttributeUsage(AttributeTargets.Class,
                       AllowMultiple = true)]

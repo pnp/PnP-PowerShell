@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OfficeDevPnP.PowerShell.Commands.Properties {
+namespace SharePointPnP.PowerShell.Commands.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("OfficeDevPnP.PowerShell.Commands.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SharePointPnP.PowerShell.Commands.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

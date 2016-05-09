@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.InformationPolicy;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOSitePolicy")]
     [CmdletHelp("Sets a site policy", 

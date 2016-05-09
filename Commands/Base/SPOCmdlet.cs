@@ -3,11 +3,11 @@ using System.Management.Automation;
 using System.Threading;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
-using OfficeDevPnP.PowerShell.Commands.Base;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.Commands.Base;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System.Collections.Generic;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     public class SPOCmdlet : PSCmdlet
     {

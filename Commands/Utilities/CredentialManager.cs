@@ -5,7 +5,7 @@ using System.Security;
 using Microsoft.Win32.SafeHandles;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-namespace OfficeDevPnP.PowerShell.Commands.Utilities
+namespace SharePointPnP.PowerShell.Commands.Utilities
 {
     internal static class CredentialManager
     {

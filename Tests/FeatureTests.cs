@@ -3,8 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.SharePoint.Client;
 using System.Management.Automation.Runspaces;
 using System.Linq;
+using Core = OfficeDevPnP.Core;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
     public class FeatureTests

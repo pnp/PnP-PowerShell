@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
 using OfficeDevPnP.Core.Entities;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "SPOTenantSite")]
     [CmdletHelp("Creates a new site collection for the current tenant", 
@@ -58,7 +58,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageQuota parameter")]
         public long StorageQuotaWarningLevel = 100;
 
-#if !CLIENTSDKV15
+#if !ONPREMISES
         [Parameter(Mandatory = false)]
         public SwitchParameter RemoveDeletedSite;
 #endif
@@ -67,7 +67,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
 
         protected override void ExecuteCmdlet()
         {
-#if CLIENTSDKV15
+#if ONPREMISES
             var entity = new SiteEntity();
             entity.Url = Url;
             entity.Title = Title;

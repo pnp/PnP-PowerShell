@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Utilities;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet("Ensure", "SPOFolder")]
     [CmdletHelp("Returns a folder given a site relative path, and will create it if it not exists.",

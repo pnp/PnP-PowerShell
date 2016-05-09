@@ -2,11 +2,11 @@
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Enums;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Enums;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-namespace OfficeDevPnP.PowerShell.Commands.Search
+namespace SharePointPnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Set, "SPOSearchConfiguration")]
     [CmdletHelp("Sets the search configuration",

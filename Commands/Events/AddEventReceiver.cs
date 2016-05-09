@@ -1,9 +1,9 @@
-﻿using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOEventReceiver")]
     [CmdletHelp("Adds a new event receiver",

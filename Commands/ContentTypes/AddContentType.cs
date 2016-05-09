@@ -1,10 +1,9 @@
-﻿using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client;
 using System.Management.Automation;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
-
     [Cmdlet(VerbsCommon.Add, "SPOContentType")]
     [CmdletHelp("Adds a new content type", 
         Category = CmdletHelpCategory.ContentTypes)]

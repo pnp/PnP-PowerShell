@@ -1,9 +1,9 @@
 ﻿using Microsoft.SharePoint.Client;
 using System.Management.Automation;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Uninstall, "SPOAppInstance", SupportsShouldProcess = true)]
     [CmdletHelp("Removes an app from a site", Category = CmdletHelpCategory.Apps)]

@@ -2,7 +2,7 @@
 using Microsoft.SharePoint.Client;
 using System.Collections.Generic;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     public static class WebExtensions
     {

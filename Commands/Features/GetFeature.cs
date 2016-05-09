@@ -1,13 +1,13 @@
 ﻿using Microsoft.SharePoint.Client;
 using System.Collections.Generic;
 using System.Management.Automation;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
-using OfficeDevPnP.PowerShell.Commands.Enums;
+using SharePointPnP.PowerShell.Commands.Enums;
 
-namespace OfficeDevPnP.PowerShell.Commands.Features
+namespace SharePointPnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsCommon.Get, "SPOFeature")]
     [CmdletHelp("Returns all activated or a specific activated feature",
@@ -44,7 +44,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Features
                 featureCollection = SelectedWeb.Features;
             }
             IEnumerable<Feature> query;
-#if !CLIENTSDKV15
+#if !ONPREMISES
             if (ClientContext.ServerVersion.Major > 15)
             {
                 query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(f => f.DisplayName));
@@ -69,7 +69,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Features
                 }
                 else if (!string.IsNullOrEmpty(Identity.Name))
                 {
-#if !CLIENTSDKV15
+#if !ONPREMISES
                     WriteObject(query.Where(f => f.DisplayName.Equals(Identity.Name, StringComparison.OrdinalIgnoreCase)));
 #else
                     throw new Exception("Querying by name is not supported in version 15 of the Client Side Object Model");

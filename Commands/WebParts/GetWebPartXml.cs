@@ -1,8 +1,8 @@
 ﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +12,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OfficeDevPnP.PowerShell.Commands.WebParts
+namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebPartXml")]
     [CmdletHelp("Returns the webpart XML of a webpart registered on a site",

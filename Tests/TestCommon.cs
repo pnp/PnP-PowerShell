@@ -3,8 +3,9 @@ using System;
 using System.Configuration;
 using System.Security;
 using System.Net;
+using Core = OfficeDevPnP.Core;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     static class TestCommon
     {

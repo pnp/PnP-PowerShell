@@ -1,16 +1,16 @@
 ﻿using OfficeDevPnP.Core.Utilities;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.IO;
 using System.Management.Automation;
 using System.Net;
 using System.Security;
-#if !CLIENTSDKV15
+#if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
 #endif
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Connect", "SPOnline", SupportsShouldProcess = false)]
     [CmdletHelp("Connects to a SharePoint site and creates an in-memory context",
@@ -74,7 +74,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "Weblogin", HelpMessage = "If you want to connect to SharePoint with browser based login")]
         public SwitchParameter UseWebLogin;
 
-#if !CLIENTSDKV15
+#if !ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = "NativeAAD", HelpMessage = "The Client ID of the Azure AD Application")]
         [Parameter(Mandatory = true, ParameterSetName = "AppOnlyAAD", HelpMessage = "The Client ID of the Azure AD Application")]
         public string ClientId;
@@ -122,13 +122,13 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                 }
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck);
             }
-#if !CLIENTSDKV15
+#if !ONPREMISES
             else if (ParameterSetName == "NativeAAD")
             {
                 if (ClearTokenCache)
                 {
                     string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    string configFile = Path.Combine(appDataFolder, "OfficeDevPnP.PowerShell\\tokencache.dat");
+                    string configFile = Path.Combine(appDataFolder, "SharePointPnP.PowerShell\\tokencache.dat");
                     if (File.Exists(configFile))
                     {
                         File.Delete(configFile);

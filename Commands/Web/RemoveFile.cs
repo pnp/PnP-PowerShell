@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System;
 using OfficeDevPnP.Core.Utilities;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOFile", SupportsShouldProcess = true)]
     [CmdletHelp("Removes a file.",

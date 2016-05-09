@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
     public class GetTenantSiteTests

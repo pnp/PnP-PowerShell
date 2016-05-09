@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using OfficeDevPnP.Core.Utilities;
-using System.Xml.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
 
-namespace OfficeDevPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet("Apply", "SPOProvisioningTemplate")]
     [CmdletHelp("Applies a provisioning template to a web",

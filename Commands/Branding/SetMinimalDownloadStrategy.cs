@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "SPOMinimalDownloadStrategy")]
     [CmdletHelp("Activates or deactivates the minimal downloading strategy.", 
@@ -32,11 +32,11 @@ namespace OfficeDevPnP.PowerShell.Commands
         {
             if (On)
             {
-                SelectedWeb.Features.Add(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID, Force, FeatureDefinitionScope.None);
+                SelectedWeb.Features.Add(OfficeDevPnP.Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID, Force, FeatureDefinitionScope.None);
             }
             else
             {
-                SelectedWeb.Features.Remove(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID, Force);
+                SelectedWeb.Features.Remove(OfficeDevPnP.Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID, Force);
             }
             ClientContext.ExecuteQueryRetry();
         }

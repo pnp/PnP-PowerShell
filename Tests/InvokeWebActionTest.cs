@@ -4,12 +4,12 @@ using Microsoft.SharePoint.Client;
 using System.Management.Automation.Runspaces;
 using System.Collections;
 using System.Linq;
-using OfficeDevPnP.PowerShell.Tests;
+using SharePointPnP.PowerShell.Tests;
 using System.Collections.Generic;
-using OfficeDevPnP.PowerShell.Commands.InvokeAction;
+using SharePointPnP.PowerShell.Commands.InvokeAction;
 using System.Threading;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
     public class InvokeWebActionTest

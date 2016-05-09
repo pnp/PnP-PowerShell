@@ -6,7 +6,7 @@ using System.Linq;
 using System.Xml.Linq;
 using OfficeDevPnP.Core.Utilities;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
     public class WebPartsTests
@@ -55,7 +55,7 @@ namespace OfficeDevPnP.PowerShell.Tests
                             new CommandParameter("Identity", wp.Id));
 
                         Assert.IsTrue(results.Count > 0);
-                        Assert.IsTrue(results[0].BaseObject.GetType() == typeof(OfficeDevPnP.PowerShell.Commands.PropertyBagValue));
+                        Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Commands.PropertyBagValue));
 
                     }
                     else

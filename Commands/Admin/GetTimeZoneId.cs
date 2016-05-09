@@ -1,10 +1,10 @@
-﻿using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOTimeZoneId")]
     [CmdletHelp("Returns a time zone ID", Category = CmdletHelpCategory.TenantAdmin)]
@@ -40,7 +40,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         public IEnumerable<Zone> AllZones()
         {
-            foreach (var zone in Enum.GetValues(typeof(Core.Enums.TimeZone)))
+            foreach (var zone in Enum.GetValues(typeof(OfficeDevPnP.Core.Enums.TimeZone)))
             {
                 var description = zone.ToString();
                 var identifier = description.Split('_')[0];

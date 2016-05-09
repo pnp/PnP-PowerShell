@@ -1,8 +1,8 @@
 ﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Xml.Linq;
 
-namespace OfficeDevPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.New, "SPOProvisioningTemplateFromFolder")]
     [CmdletHelp("Generates a provisioning template from a given folder, including only files that are present in that folder",
@@ -206,9 +206,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
             return reader.ReadToEnd();
         }
 
-        private List<Core.Framework.Provisioning.Model.File> EnumerateFiles(string folder, string ctid, Hashtable properties)
+        private List<OfficeDevPnP.Core.Framework.Provisioning.Model.File> EnumerateFiles(string folder, string ctid, Hashtable properties)
         {
-            var files = new List<Core.Framework.Provisioning.Model.File>();
+            var files = new List<OfficeDevPnP.Core.Framework.Provisioning.Model.File>();
 
             DirectoryInfo dirInfo = new DirectoryInfo(folder);
 
@@ -223,7 +223,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
                 var unrootedPath = file.FullName.Substring(Folder.Length + 1);
                 var targetFolder = Path.Combine(TargetFolder, unrootedPath.LastIndexOf("\\") > -1 ? unrootedPath.Substring(0, unrootedPath.LastIndexOf("\\")) : "");
                 targetFolder = targetFolder.Replace('\\', '/');
-                var modelFile = new Core.Framework.Provisioning.Model.File()
+                var modelFile = new OfficeDevPnP.Core.Framework.Provisioning.Model.File()
                 {
                     Folder = targetFolder,
                     Overwrite = true,

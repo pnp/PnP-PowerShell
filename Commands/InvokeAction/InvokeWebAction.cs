@@ -7,10 +7,10 @@ using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
-using OfficeDevPnP.PowerShell.Commands.Extensions;
-using OfficeDevPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Extensions;
+using SharePointPnP.PowerShell.Commands.Base;
 
-namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
+namespace SharePointPnP.PowerShell.Commands.InvokeAction
 {
 	internal class InvokeWebAction
 	{

@@ -4,7 +4,7 @@ using System.Management.Automation.Runspaces;
 using Microsoft.SharePoint.Client;
 using System.Linq;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
     public class ContentTypeTests

@@ -1,9 +1,9 @@
 ﻿using Microsoft.SharePoint.Client;
 using System.Management.Automation;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace OfficeDevPnP.PowerShell.Commands.Lists
+namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsLifecycle.Request, "SPOReIndexList")]
     [CmdletHelp("Marks the list for full indexing during the next incremental crawl",
