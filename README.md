@@ -38,23 +38,28 @@ If you main OS is Windows 10, you can run the following commands to install the 
 
 _SharePoint Online_
 ```powershell
-Install-Module SharePointPnP.PowerShell.Online.Commands
+Install-Module SharePointPnPOnlineCmdlets
+```
+
+_SharePoint 2016_
+```powershell
+Install-Module SharePointPnPSP2016Cmdlets
 ```
 
 _SharePoint 2013_
 ```powershell
-Install-Module OfficeDevPnP.PowerShell.V15.Commands
+Install-Module SharePointPnPSP2013Cmdlets
 ```
 
 Alternatively for installation on machines that have at least PowerShell v3 installed (you can find this out by opening PowerShell and running $host.version and Major should be above 3) you can run the below command which will install PowerShell Package Management and then install the PowerShell Modules from the PowerShell Gallery
 
 ```powershell
-Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-OfficeDevPnPPowerShell.ps1')
+Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-SharePointPnPPowerShell.ps1')
 ```
 
 If you wish to see the commands that the above will run please see the files as stored in the below locations:
 * https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-PowerShellPackageMangement.ps1
-* https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-OfficeDevPnPPowerShellHelperModule.ps1
+* https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-SharePointPnPPowerShellHelperModule.ps1
 
 Once the above has been completed you can then start to use the PowerShell Modules
 
