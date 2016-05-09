@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
+namespace SharePointPnP.PowerShell.Commands.InvokeAction
 {
     internal class InvokeActionParameter<T>
     {

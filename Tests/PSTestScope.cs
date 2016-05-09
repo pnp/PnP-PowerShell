@@ -1,12 +1,12 @@
 ﻿using Microsoft.PowerShell.Commands;
-using OfficeDevPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     public class PSTestScope : IDisposable
     {

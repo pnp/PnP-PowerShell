@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace OfficeDevPnP.PowerShell.Commands.PageLayout
+namespace SharePointPnP.PowerShell.Commands.PageLayout
 {
     [Cmdlet(VerbsCommon.Add, "SPOPublishingPageLayout")]
     [CmdletHelp("Adds a publishing page layout",

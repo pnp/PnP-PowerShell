@@ -1,11 +1,10 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.Commands.Enums;
 using System.Management.Automation;
 using OfficeDevPnP.Core.Enums;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPONavigationNode", SupportsShouldProcess = true)]
     [CmdletHelp("Removes a menu item from either the quicklaunch or top navigation", 

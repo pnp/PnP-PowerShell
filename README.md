@@ -1,4 +1,4 @@
-# OfficeDevPnP.PowerShell Commands #
+# SharePointPnP.PowerShell Commands #
 
 ### Summary ###
 This solution shows how you can build a library of PowerShell commands that act towards SharePoint Online. The commands use CSOM and can work against both SharePoint Online as SharePoint On-Premises.
@@ -16,7 +16,7 @@ In order to generate the Cmdlet help you need Windows Management Framework v4.0 
 ### Solution ###
 Solution | Author(s)
 ---------|----------
-OfficeDevPnP.PowerShell | Erwin van Hunen
+SharePointPnP.PowerShell | Erwin van Hunen
 
 ### Disclaimer ###
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
@@ -38,11 +38,10 @@ If you main OS is Windows 10, you can run the following commands to install the 
 
 _SharePoint Online_
 ```powershell
-Install-Module OfficeDevPnP.PowerShell.V16.Commands
+Install-Module SharePointPnP.PowerShell.Online.Commands
 ```
-or
 
-_SharePoint On-Premises_
+_SharePoint 2013_
 ```powershell
 Install-Module OfficeDevPnP.PowerShell.V15.Commands
 ```

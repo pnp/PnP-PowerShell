@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?if $(var.OfficeDevPnP.PowerShell.Commands.Configuration) = Release OR $(var.OfficeDevPnP.PowerShell.Commands.Configuration) = Debug ?>
+<?if $(var.SharePointPnP.PowerShell.Commands.Configuration) = Release OR $(var.SharePointPnP.PowerShell.Commands.Configuration) = Debug ?>
+<?define AssemblyVersion = "16.1.0.0" ?>
+<?define ProductName = "SharePoint PnP PowerShell Commands" ?>
+<?define ProductAssemblyName = "SharePointPnP.PowerShell.Online.Commands" ?>
+<?elseif $(var.SharePointPnP.PowerShell.Commands.Configuration) = Release16 OR $(var.SharePointPnP.PowerShell.Commands.Configuration) = Debug16 ?>
 <?define AssemblyVersion = "16.0.0.0" ?>
-<?define ProductName = "Office 365 Developer PnP PowerShell Commands" ?>
-<?define ProductAssemblyName = "OfficeDevPnP.PowerShell.V16.Commands" ?>
+<?define ProductName = "SharePoint PnP PowerShell Commands for SP2016" ?>
+<?define ProductAssemblyName = "SharePointPnP.PowerShell.SP2016.Commands" ?>
 <?else ?>
 <?define AssemblyVersion = "15.0.0.0" ?>
-<?define ProductName = "Office 365 Developer PnP PowerShell Commands (On-Premises)" ?>
-<?define ProductAssemblyName = "OfficeDevPnP.PowerShell.V15.Commands" ?>
+<?define ProductName = "sharePoint PnP PowerShell Commands for SP2013" ?>
+<?define ProductAssemblyName = "SharePointPnP.PowerShell.SP2013.Commands" ?>
 <?endif ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
@@ -17,7 +21,7 @@
            Name="$(var.ProductName)"
            Language="1033"
            Version="2.4.1605.0"
-           Manufacturer="OfficeDev PnP"
+           Manufacturer="SharePoint PnP"
            UpgradeCode="630fe2af-dc42-467d-94c8-6eefd065cbfa">
 
     <Package InstallerVersion="200"
@@ -28,7 +32,7 @@
 
     <MediaTemplate  EmbedCab="yes" />
 
-    <Feature Id="ProductFeature" Title="OfficeDev PnP PowerShell Commands" Level="1">
+    <Feature Id="ProductFeature" Title="SharePoint PnP PowerShell Commands" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ENVIRONMENTVARS" />
 
@@ -76,27 +80,27 @@
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="MODULEFOLDER">
       <Component Id="PowerShellCommands" Guid="{1F5CA574-E185-49D2-9A91-CD46A8548D3E}">
-        <File Id="Commands" Source="$(var.OfficeDevPnP.PowerShell.Commands.TargetPath)" />
-        <File Id="CommandsHelp" Source="$(var.OfficeDevPnP.PowerShell.Commands.TargetPath)-help.xml"/>
-        <File Id="Core" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\OfficeDevPnP.Core.dll"/>
-        <File Id="CmdletHelpAttributes" Source="$(var.OfficeDevPnP.PowerShell.CmdletHelpAttributes.TargetPath)"/>
-        <File Id="FormatFile" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\ModuleFiles\$(var.ProductAssemblyName).Format.ps1xml" />
-        <File Id="PSD1File" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\ModuleFiles\$(var.ProductAssemblyName).psd1" />
-        <File Id="ClientSDK.Client" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.dll" />
-        <File Id="ClientSDK.Client.Runtime" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Runtime.dll" />
-        <File Id="ClientSDK.Client.Taxonomy" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Taxonomy.dll" />
-        <File Id="ClientSDK.Client.UserProfiles" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.UserProfiles.dll" />
-        <File Id="ClientSDK.Client.WorkflowServices" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.WorkflowServices.dll" />
-        <File Id="ClientSDK.Client.DocumentManagement" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.DocumentManagement.dll" />
-        <File Id="ClientSDK.Client.Publishing" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Publishing.dll" />
-        <File Id="ClientSDK.Client.Search" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Search.dll" />
-        <File Id="ClientSDK.Client.Search.Applications" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Search.Applications.dll" />
-        <File Id="OnlineSDK.Client.Tenant" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.Online.SharePoint.Client.Tenant.dll" />
-        <File Id="OfficeSDK.Client.Policy" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.Office.Client.Policy.dll" />
-        <File Id="OfficeSDK.Client.TranslationServices" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.Office.Client.TranslationServices.dll" />
-        <File Id="IdentityModel.Clients.ActiveDirectory" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
-        <File Id="IdentityModel.Clients.ActiveDirectory.WindowsForms" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
-        <File Id="NewtonSoft" Source="$(var.OfficeDevPnP.PowerShell.Commands.ProjectDir)bin\$(var.OfficeDevPnP.PowerShell.Commands.Configuration)\Newtonsoft.Json.Dll" />
+        <File Id="Commands" Source="$(var.SharePointPnP.PowerShell.Commands.TargetPath)" />
+        <File Id="CommandsHelp" Source="$(var.SharePointPnP.PowerShell.Commands.TargetPath)-help.xml"/>
+        <File Id="Core" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\OfficePnP.Core.dll"/>
+        <File Id="CmdletHelpAttributes" Source="$(var.SharePointPnP.PowerShell.CmdletHelpAttributes.TargetPath)"/>
+        <File Id="FormatFile" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\ModuleFiles\$(var.ProductAssemblyName).Format.ps1xml" />
+        <File Id="PSD1File" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\ModuleFiles\$(var.ProductAssemblyName).psd1" />
+        <File Id="ClientSDK.Client" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.dll" />
+        <File Id="ClientSDK.Client.Runtime" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Runtime.dll" />
+        <File Id="ClientSDK.Client.Taxonomy" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Taxonomy.dll" />
+        <File Id="ClientSDK.Client.UserProfiles" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.UserProfiles.dll" />
+        <File Id="ClientSDK.Client.WorkflowServices" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.WorkflowServices.dll" />
+        <File Id="ClientSDK.Client.DocumentManagement" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.DocumentManagement.dll" />
+        <File Id="ClientSDK.Client.Publishing" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Publishing.dll" />
+        <File Id="ClientSDK.Client.Search" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Search.dll" />
+        <File Id="ClientSDK.Client.Search.Applications" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.SharePoint.Client.Search.Applications.dll" />
+        <File Id="OnlineSDK.Client.Tenant" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.Online.SharePoint.Client.Tenant.dll" />
+        <File Id="OfficeSDK.Client.Policy" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.Office.Client.Policy.dll" />
+        <File Id="OfficeSDK.Client.TranslationServices" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.Office.Client.TranslationServices.dll" />
+        <File Id="IdentityModel.Clients.ActiveDirectory" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+        <File Id="IdentityModel.Clients.ActiveDirectory.WindowsForms" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
+        <File Id="NewtonSoft" Source="$(var.SharePointPnP.PowerShell.Commands.ProjectDir)bin\$(var.SharePointPnP.PowerShell.Commands.Configuration)\Newtonsoft.Json.Dll" />
       </Component>
     </ComponentGroup>
     <ComponentGroup Id="ENVIRONMENTVARS" Directory="TARGETDIR">

@@ -6,11 +6,11 @@
     <ProductVersion>3.8</ProductVersion>
     <ProjectGuid>17c05f96-5d99-4367-ab05-7c07d2570f08</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>OfficeDevPnPPowerShellSetup</OutputName>
+    <OutputName>SharePointPnPPowerShellSetup</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
-    <Name>OfficeDevPnP.PowerShell.Setup</Name>
+    <Name>SharePointPnP.PowerShell.Setup</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -23,20 +23,46 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug16|x86' ">
+    <DefineConstants>Debug</DefineConstants>
+    <LinkerAdditionalOptions />
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug16|AnyCPU' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug16|Any CPU' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release16|x86' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release16|AnyCPU' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release16|Any CPU' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Commands\OfficeDevPnP.PowerShell.Commands.csproj">
-      <Name>OfficeDevPnP.PowerShell.Commands</Name>
+    <ProjectReference Include="..\Commands\SharePointPnP.PowerShell.Commands.csproj">
+      <Name>SharePointPnP.PowerShell.Commands</Name>
       <Project>{1dde6f0a-ca49-419a-9ce8-a6ca02f43ce0}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
-    <ProjectReference Include="..\HelpAttributes\OfficeDevPnP.PowerShell.CmdletHelpAttributes.csproj">
-      <Name>OfficeDevPnP.PowerShell.CmdletHelpAttributes</Name>
+    <ProjectReference Include="..\HelpAttributes\SharePointPnP.PowerShell.CmdletHelpAttributes.csproj">
+      <Name>SharePointPnP.PowerShell.CmdletHelpAttributes</Name>
       <Project>{fdd50bbd-ae78-4b10-9549-0566686719ab}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>

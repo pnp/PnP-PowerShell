@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using OfficeDevPnP.Core.Utilities;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Enums;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Enums;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Get", "SPOStoredCredential")]
     [CmdletHelp("Returns a stored credential from the Windows Credential Manager", 

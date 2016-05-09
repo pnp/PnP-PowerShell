@@ -1,5 +1,7 @@
-# OfficeDevPnP.PowerShell Changelog #
+# SharePointPnP.PowerShell Changelog #
 
+**2016-05-09**
+* Namespace, Assembly and Project rename from OfficeDevPnP.PowerShell to SharePointPnP.PowerShell
 **2016-04-08**
 * Added -ExtensibilityHandlers parameter to Get-SPOPRovisioningTemplate
 

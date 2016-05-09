@@ -1,10 +1,10 @@
-﻿#if !CLIENTSDKV15
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebTemplates")]
     [CmdletHelp(@"Office365 only: Returns the available web templates.", Category = CmdletHelpCategory.TenantAdmin)]

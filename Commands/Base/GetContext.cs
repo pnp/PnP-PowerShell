@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
-using OfficeDevPnP.PowerShell.Commands.Properties;
+using SharePointPnP.PowerShell.Commands.Properties;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "SPOContext")]
     [CmdletHelp("Returns a Client Side Object Model context",

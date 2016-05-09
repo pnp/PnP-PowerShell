@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using System.Text.RegularExpressions;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Runtime.Serialization;
 using System.IO;
 
-namespace OfficeDevPnP.PowerShell.CmdletHelpGenerator
+namespace SharePointPnP.PowerShell.CmdletHelpGenerator
 {
     class Program
     {

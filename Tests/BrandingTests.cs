@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client;
 using System.Linq;
 using OfficeDevPnP.Core.Enums;
 
-namespace OfficeDevPnP.PowerShell.Tests
+namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
     public class BrandingTests
@@ -391,16 +391,16 @@ namespace OfficeDevPnP.PowerShell.Tests
             }
             using (var context = TestCommon.CreateClientContext())
             {
-                var featureActive = context.Web.IsFeatureActive(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
+                var featureActive = context.Web.IsFeatureActive(OfficeDevPnP.Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
                 if (isActive)
                 {
                     Assert.IsFalse(featureActive);
-                    context.Web.ActivateFeature(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
+                    context.Web.ActivateFeature(OfficeDevPnP.Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
                 }
                 else
                 {
                     Assert.IsTrue(featureActive);
-                    context.Web.DeactivateFeature(Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
+                    context.Web.DeactivateFeature(OfficeDevPnP.Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID);
                 }
             }
         }

@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Management.Automation;
 using System.Globalization;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsData.Import, "SPOAppPackage")]
     

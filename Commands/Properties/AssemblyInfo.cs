@@ -5,18 +5,22 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-#if !CLIENTSDKV15
-[assembly: AssemblyTitle("OfficeDevPnP.PowerShell.V16.Commands")]
+#if SP2013
+[assembly: AssemblyTitle("SharePointPnP.PowerShell.SP2013.Commands")]
+#elif SP2016
+[assembly: AssemblyTitle("SharePointPnP.PowerShell.SP2016.Commands")]
 #else
-[assembly: AssemblyTitle("OfficeDevPnP.PowerShell.V15.Commands")]
+[assembly: AssemblyTitle("SharePointPnP.PowerShell.Online.Commands")]
 #endif
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-#if !CLIENTSDKV15
-[assembly: AssemblyProduct("OfficeDevPnP.PowerShell.V16.Commands")]
+#if SP2013
+[assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2013.Commands")]
+#elif SP2016
+[assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2016.Commands")]
 #else
-[assembly: AssemblyProduct("OfficeDevPnP.PowerShell.V15.Commands")]
+[assembly: AssemblyProduct("SharePointPnP.PowerShell.Online.Commands")]
 #endif
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
@@ -42,4 +46,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.4.1605.0")]
 [assembly: AssemblyFileVersion("2.4.1605.0")]
-[assembly: InternalsVisibleTo("OfficeDevPnP.PowerShell.Tests")]
+[assembly: InternalsVisibleTo("SharePointPnP.PowerShell.Tests")]

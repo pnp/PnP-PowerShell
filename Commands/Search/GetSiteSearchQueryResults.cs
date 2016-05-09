@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Query;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Collections.Generic;
 
-namespace OfficeDevPnP.PowerShell.Commands.Search
+namespace SharePointPnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "SPOSiteSearchQueryResults")]
     [CmdletHelp("Executes a search query to retrieve indexed site collections",
