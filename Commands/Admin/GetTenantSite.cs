@@ -1,4 +1,4 @@
-﻿#if !CLIENTSDKV15
+﻿#if !ONPREMISES
 using System.ComponentModel;
 using System.Linq;
 using System.Management.Automation;

@@ -6,7 +6,7 @@ using System.IO;
 using System.Management.Automation;
 using System.Net;
 using System.Security;
-#if !CLIENTSDKV15
+#if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
 #endif
 
@@ -74,7 +74,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "Weblogin", HelpMessage = "If you want to connect to SharePoint with browser based login")]
         public SwitchParameter UseWebLogin;
 
-#if !CLIENTSDKV15
+#if !ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = "NativeAAD", HelpMessage = "The Client ID of the Azure AD Application")]
         [Parameter(Mandatory = true, ParameterSetName = "AppOnlyAAD", HelpMessage = "The Client ID of the Azure AD Application")]
         public string ClientId;
@@ -122,7 +122,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                 }
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck);
             }
-#if !CLIENTSDKV15
+#if !ONPREMISES
             else if (ParameterSetName == "NativeAAD")
             {
                 if (ClearTokenCache)

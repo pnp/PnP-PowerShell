@@ -1,10 +1,10 @@
-﻿using System.Management.Automation;
+﻿#if !ONPREMISES
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.UserProfiles;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.PowerShell.Commands.Base;
 
-#if !CLIENTSDKV15
 namespace OfficeDevPnP.PowerShell.Commands.UserProfiles
 {
 

@@ -59,7 +59,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         }
 
 
-#if !CLIENTSDKV15
+#if !ONPRESMISES
         internal static SPOnlineConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
         {
             Core.AuthenticationManager authManager = new Core.AuthenticationManager();

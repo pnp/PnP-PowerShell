@@ -1,4 +1,4 @@
-﻿#if !CLIENTSDKV15
+﻿#if !ONPREMISES
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;

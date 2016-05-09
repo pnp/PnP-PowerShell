@@ -1,4 +1,4 @@
-﻿#if !CLIENTSDKV15
+﻿#if !ONPREMISES
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.PowerShell.CmdletHelpAttributes;

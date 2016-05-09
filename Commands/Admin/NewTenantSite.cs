@@ -58,7 +58,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageQuota parameter")]
         public long StorageQuotaWarningLevel = 100;
 
-#if !CLIENTSDKV15
+#if !ONPREMISES
         [Parameter(Mandatory = false)]
         public SwitchParameter RemoveDeletedSite;
 #endif
@@ -67,7 +67,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
 
         protected override void ExecuteCmdlet()
         {
-#if CLIENTSDKV15
+#if ONPREMISES
             var entity = new SiteEntity();
             entity.Url = Url;
             entity.Title = Title;

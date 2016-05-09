@@ -44,7 +44,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Features
                 featureCollection = SelectedWeb.Features;
             }
             IEnumerable<Feature> query;
-#if !CLIENTSDKV15
+#if !ONPREMISES
             if (ClientContext.ServerVersion.Major > 15)
             {
                 query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(f => f.DisplayName));
@@ -69,7 +69,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Features
                 }
                 else if (!string.IsNullOrEmpty(Identity.Name))
                 {
-#if !CLIENTSDKV15
+#if !ONPREMISES
                     WriteObject(query.Where(f => f.DisplayName.Equals(Identity.Name, StringComparison.OrdinalIgnoreCase)));
 #else
                     throw new Exception("Querying by name is not supported in version 15 of the Client Side Object Model");
