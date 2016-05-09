@@ -402,7 +402,7 @@ namespace OfficeDevPnP.PowerShell.Commands.InvokeAction
 			if (_skipCounting)
 				return -1;
 
-			double timeRemaining = ((_averageWebTime + _averagePostListTime) + (_averageShouldProcessListTime + _averageShouldProcessPostListTime)) * (lists.Count - itemsProcessed);
+			double timeRemaining = ((_averageListTime + _averagePostListTime) + (_averageShouldProcessListTime + _averageShouldProcessPostListTime)) * (lists.Count - itemsProcessed);
 			int remainingListItems = lists.Cast<List>().Skip(itemsProcessed).Sum(item => item.ItemCount);
 
 			if(_listItemActions.HasAnyAction)
