@@ -1,9 +1,9 @@
-﻿using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOList")]
     [CmdletHelp("Returns a List object",

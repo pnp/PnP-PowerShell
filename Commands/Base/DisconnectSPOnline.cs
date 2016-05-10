@@ -1,8 +1,8 @@
-﻿using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Management.Automation;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Disconnect", "SPOnline")]
 

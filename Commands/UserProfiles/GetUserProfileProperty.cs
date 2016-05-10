@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.UserProfiles;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
 
-namespace OfficeDevPnP.PowerShell.Commands.UserProfiles
+namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "SPOUserProfileProperty")]
     [CmdletHelp(@"Office365 only: Uses the tenant API to retrieve site information.

@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Utilities;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommunications.Send, "SPOMail")]
     [CmdletHelp("Sends an email using the Office 365 SMTP Service",

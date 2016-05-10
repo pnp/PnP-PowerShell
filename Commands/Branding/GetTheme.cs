@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Newtonsoft.Json;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOTheme")]
     [CmdletHelp("Returns the current theme/composed look of the current web.",

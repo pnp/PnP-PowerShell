@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Enums;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Enums;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System;
 using System.Collections.Generic;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOJavaScriptLink", SupportsShouldProcess = true)]
     [CmdletHelp("Removes a JavaScript link or block from a web or sitecollection",

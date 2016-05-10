@@ -7,15 +7,15 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using File = System.IO.File;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsData.Export, "SPOTermGroupToXml", SupportsShouldProcess = true)]
     [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.",

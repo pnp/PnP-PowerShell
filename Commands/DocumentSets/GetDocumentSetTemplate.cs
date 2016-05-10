@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.DocumentSet;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
-using OfficeDevPnP.PowerShell.Commands.Enums;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace OfficeDevPnP.PowerShell.Commands.DocumentSets
+namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Get,"SPODocumentSetTemplate")]
     [CmdletHelp("Retrieves a document set template", 

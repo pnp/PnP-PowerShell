@@ -1,10 +1,10 @@
 ﻿using System;
-using OfficeDevPnP.PowerShell.Commands.Base;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     public class SPOWebCmdlet : SPOCmdlet
     {

@@ -1,11 +1,8 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
-using OfficeDevPnP.PowerShell.Commands.Enums;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 
-namespace OfficeDevPnP.PowerShell.Commands.Features
+namespace SharePointPnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsCommon.New, "SPOExtensbilityHandlerObject")]
     [CmdletHelp("Creates a ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet", Category = CmdletHelpCategory.Features)]

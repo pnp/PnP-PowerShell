@@ -7,8 +7,8 @@
     <ProjectGuid>{B53C2D73-E46B-47E1-BB80-C2A363A53FB3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OfficeDevPnP.PowerShell.CmdletHelpGenerator</RootNamespace>
-    <AssemblyName>OfficeDevPnP.PowerShell.CmdletHelpGenerator</AssemblyName>
+    <RootNamespace>SharePointPnP.PowerShell.CmdletHelpGenerator</RootNamespace>
+    <AssemblyName>SharePointPnP.PowerShell.CmdletHelpGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -74,6 +74,26 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug16|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug16\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release16|AnyCPU'">
+    <OutputPath>bin\Release16\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -101,9 +121,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HelpAttributes\OfficeDevPnP.PowerShell.CmdletHelpAttributes.csproj">
+    <ProjectReference Include="..\HelpAttributes\SharePointPnP.PowerShell.CmdletHelpAttributes.csproj">
       <Project>{fdd50bbd-ae78-4b10-9549-0566686719ab}</Project>
-      <Name>OfficeDevPnP.PowerShell.CmdletHelpAttributes</Name>
+      <Name>SharePointPnP.PowerShell.CmdletHelpAttributes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

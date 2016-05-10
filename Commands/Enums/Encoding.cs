@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OfficeDevPnP.PowerShell.Commands.Enums
+namespace SharePointPnP.PowerShell.Commands.Enums
 {
     public enum Encoding
     {

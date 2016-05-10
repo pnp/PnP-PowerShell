@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace OfficeDevPnP.PowerShell.Commands.Principals
+namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "SPOGroup",DefaultParameterSetName="All")]
     [CmdletHelp("Returns a specific group or all groups.",

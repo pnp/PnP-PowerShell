@@ -2,12 +2,12 @@
 using System.Management.Automation;
 using System.Text;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace OfficeDevPnP.PowerShell.Commands.Lists
+namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "SPOListItem")]
     [CmdletHelp("Retrieves list items", 

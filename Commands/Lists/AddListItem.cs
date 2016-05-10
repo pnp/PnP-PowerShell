@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using Microsoft.SharePoint.Client;
 using System.Management.Automation;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "SPOListItem")]
     [CmdletHelp("Adds an item to a list", 
@@ -68,12 +68,14 @@ namespace OfficeDevPnP.PowerShell.Commands
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
-                
-                foreach (var key in Values.Keys)
-                {
-                    item[key as string] = Values[key];
-                }
 
+                if (Values != null)
+                {
+                    foreach (var key in Values.Keys)
+                    {
+                        item[key as string] = Values[key];
+                    }
+                }
 
                 item.Update();
                 ClientContext.Load(item);

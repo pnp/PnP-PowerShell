@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OfficeDevPnP.PowerShell.CmdletHelpAttributes
+namespace SharePointPnP.PowerShell.CmdletHelpAttributes
 {
     [AttributeUsage(AttributeTargets.Class,
                      AllowMultiple = true)]

@@ -3,10 +3,10 @@ using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.PowerShell.Commands;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.Commands.Enums;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.Commands.Enums;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     public class SPOAdminCmdlet : SPOCmdlet
     {

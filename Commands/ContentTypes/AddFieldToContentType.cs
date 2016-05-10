@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
-
     [Cmdlet(VerbsCommon.Add, "SPOFieldToContentType")]
     [CmdletHelp("Adds an existing site column to a content type", 
         Category = CmdletHelpCategory.ContentTypes)]
@@ -16,16 +15,16 @@ namespace OfficeDevPnP.PowerShell.Commands
         SortOrder = 1)]
     public class AddFieldToContentType : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "Specifies the field that needs to be added to the content type")]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "Specifies which content type a field needs to be added to")]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies whether the field is required or not")]
         public SwitchParameter Required;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies whether the field should be hidden or not")]
         public SwitchParameter Hidden;
 
         protected override void ExecuteCmdlet()

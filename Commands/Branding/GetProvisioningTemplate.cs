@@ -10,15 +10,15 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Utilities;
-using OfficeDevPnP.PowerShell.Commands.Enums;
+using SharePointPnP.PowerShell.Commands.Enums;
 using File = System.IO.File;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 
-namespace OfficeDevPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOProvisioningTemplate", SupportsShouldProcess = true)]
     [CmdletHelp("Generates a provisioning template from a web",

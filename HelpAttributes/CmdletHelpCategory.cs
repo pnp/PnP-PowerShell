@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OfficeDevPnP.PowerShell.CmdletHelpAttributes
+namespace SharePointPnP.PowerShell.CmdletHelpAttributes
 {
     public enum CmdletHelpCategory
     {

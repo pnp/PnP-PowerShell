@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
 using OfficeDevPnP.Core.Entities;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "SPOTenantSite")]
     [CmdletHelp("Creates a new site collection for the current tenant", 
@@ -25,13 +25,13 @@ Online site collection fails if a deleted site with the same URL exists in the R
         Url = "http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx")]
     public class NewTenantSite : SPOAdminCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = @"Specifies the title of the new site collection")]
         public string Title;
 
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the full URL of the new site collection. It must be in a valid managed path in the company's site. For example, for company contoso, valid managed paths are https://contoso.sharepoint.com/sites and https://contoso.sharepoint.com/teams.")]
         public string Url;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the description of the new site collection")]
         public string Description = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
@@ -49,16 +49,16 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.")]
         public double ResourceQuota = 0;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the warning level for the resource quota. This value must not exceed the value set for the ResourceQuota parameter")]
         public double ResourceQuotaWarningLevel = 0;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.")]
         public long StorageQuota = 100;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageQuota parameter")]
         public long StorageQuotaWarningLevel = 100;
 
-#if !CLIENTSDKV15
+#if !ONPREMISES
         [Parameter(Mandatory = false)]
         public SwitchParameter RemoveDeletedSite;
 #endif
@@ -67,7 +67,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
 
         protected override void ExecuteCmdlet()
         {
-#if CLIENTSDKV15
+#if ONPREMISES
             var entity = new SiteEntity();
             entity.Url = Url;
             entity.Title = Title;

@@ -9,7 +9,7 @@ Get-Help Connect-SPOnline -Detailed
 Cmdlet|Description
 :-----|:----------
 **[Uninstall&#8209;SPOAppInstance](UninstallSPOAppInstance.md)** |Removes an app from a site
-**[Get&#8209;SPOAppInstance](GetSPOAppInstance.md)** |Returns a SharePoint AddIn Instance
+**[Get&#8209;SPOAppInstance](GetSPOAppInstance.md)** |Returns a SharePoint AddIn Instance in the site
 **[Import&#8209;SPOAppPackage](ImportSPOAppPackage.md)** |Adds a SharePoint Addin to a site
 ##Base Cmdlets
 Cmdlet|Description
@@ -41,7 +41,7 @@ Cmdlet|Description
 **[Set&#8209;SPOMinimalDownloadStrategy](SetSPOMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.
 **[Add&#8209;SPONavigationNode](AddSPONavigationNode.md)** |Adds a menu item to either the quicklaunch or top navigation
 **[Remove&#8209;SPONavigationNode](RemoveSPONavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation
-**[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a web
+**[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
 **[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
 **[New&#8209;SPOProvisioningTemplateFromFolder](NewSPOProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
@@ -151,7 +151,7 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[Set&#8209;SPOTenantSite](SetSPOTenantSite.md)** |Office365 only: Uses the tenant API to set site information.
-**[Get&#8209;SPOTenantSite](GetSPOTenantSite.md)** |Office365 only: Uses the tenant API to retrieve site information. 
+**[Get&#8209;SPOTenantSite](GetSPOTenantSite.md)** |Office365 only: Uses the tenant API to retrieve site information.
 **[Remove&#8209;SPOTenantSite](RemoveSPOTenantSite.md)** |Office365 only: Removes a site collection from the current tenant
 **[New&#8209;SPOTenantSite](NewSPOTenantSite.md)** |Creates a new site collection for the current tenant
 **[Get&#8209;SPOTimeZoneId](GetSPOTimeZoneId.md)** |Returns a time zone ID
@@ -213,6 +213,7 @@ Cmdlet|Description
 **[Get&#8209;SPOWeb](GetSPOWeb.md)** |Returns the current web object
 **[New&#8209;SPOWeb](NewSPOWeb.md)** |Creates a new subweb to the current web
 **[Set&#8209;SPOWeb](SetSPOWeb.md)** |Sets properties on a web
+**[Invoke&#8209;SPOWebAction](InvokeSPOWebAction.md)** |Executes operations on web, lists, list items.
 ##Workflows
 Cmdlet|Description
 :-----|:----------

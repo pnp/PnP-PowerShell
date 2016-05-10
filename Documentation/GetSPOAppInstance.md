@@ -1,5 +1,5 @@
 #Get-SPOAppInstance
-Returns a SharePoint AddIn Instance
+Returns a SharePoint AddIn Instance in the site
 ##Syntax
 ```powershell
 Get-SPOAppInstance [-Web <WebPipeBind>] [-Identity <GuidPipeBind>]
@@ -9,7 +9,7 @@ Get-SPOAppInstance [-Web <WebPipeBind>] [-Identity <GuidPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|GuidPipeBind|False|The Id of the App Instance|
+|Identity|GuidPipeBind|False|Specifies the Id of the App Instance|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
@@ -18,11 +18,9 @@ Parameter|Type|Required|Description
 PS:> Get-SPOAppInstance
 ```
 This will return all addin instances in the site.
- 
 
 ###Example 2
 ```powershell
-PS:> Get-SPOnlineAppInstance -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+PS:> Get-SPOAppInstance -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 ```
 This will return an addin instance with the specified id.
-    

@@ -1,12 +1,12 @@
 ﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Diagnostics;
-using OfficeDevPnP.PowerShell.Commands.Enums;
+using SharePointPnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     public class SPOnlineConnection
     {

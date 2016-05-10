@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
-
     [Cmdlet(VerbsCommon.Remove, "SPOFieldFromContentType")]
     [CmdletHelp("Removes a site column from a content type", 
         Category = CmdletHelpCategory.ContentTypes)]

@@ -9,7 +9,7 @@ Get-SPOProperty -ClientObject <ClientObject> -Property <String[]>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|ClientObject|ClientObject|True||
+|ClientObject|ClientObject|True|Specifies the object where the properties of should be retrieved|
 |Property|String[]|True|The properties to load. If one property is specified its value will be returned to the output.|
 ##Examples
 

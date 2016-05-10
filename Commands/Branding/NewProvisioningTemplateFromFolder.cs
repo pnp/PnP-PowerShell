@@ -1,8 +1,8 @@
 ﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,44 +10,33 @@ using System.Linq;
 using System.Management.Automation;
 using System.Xml.Linq;
 
-namespace OfficeDevPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.New, "SPOProvisioningTemplateFromFolder")]
     [CmdletHelp("Generates a provisioning template from a given folder, including only files that are present in that folder",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
-       Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml
-",
+       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml",
        Remarks = "Creates an empty provisioning template, and includes all files in the current folder.",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp
-",
+       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp",
        Remarks = "Creates an empty provisioning template, and includes all files in the c:\\temp folder.",
        SortOrder = 2)]
     [CmdletExample(
-       Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js
-",
+       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js",
        Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder.",
        SortOrder = 3)]
     [CmdletExample(
-       Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents""",
+       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents""",
        Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder",
        SortOrder = 4)]
-
     [CmdletExample(
-       Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -ContentType ""Test Content Type""",
+       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -ContentType ""Test Content Type""",
        Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add a property to the item for the content type.",
        SortOrder = 5)]
-
     [CmdletExample(
-       Code = @"
-    PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -Properties @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
+       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -Properties @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
        Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add the specified properties to the file entries.",
        SortOrder = 6)]
 
@@ -217,9 +206,9 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
             return reader.ReadToEnd();
         }
 
-        private List<Core.Framework.Provisioning.Model.File> EnumerateFiles(string folder, string ctid, Hashtable properties)
+        private List<OfficeDevPnP.Core.Framework.Provisioning.Model.File> EnumerateFiles(string folder, string ctid, Hashtable properties)
         {
-            var files = new List<Core.Framework.Provisioning.Model.File>();
+            var files = new List<OfficeDevPnP.Core.Framework.Provisioning.Model.File>();
 
             DirectoryInfo dirInfo = new DirectoryInfo(folder);
 
@@ -234,7 +223,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Branding
                 var unrootedPath = file.FullName.Substring(Folder.Length + 1);
                 var targetFolder = Path.Combine(TargetFolder, unrootedPath.LastIndexOf("\\") > -1 ? unrootedPath.Substring(0, unrootedPath.LastIndexOf("\\")) : "");
                 targetFolder = targetFolder.Replace('\\', '/');
-                var modelFile = new Core.Framework.Provisioning.Model.File()
+                var modelFile = new OfficeDevPnP.Core.Framework.Provisioning.Model.File()
                 {
                     Folder = targetFolder,
                     Overwrite = true,

@@ -1,11 +1,10 @@
-﻿using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client;
 using System.Management.Automation;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
-
     [Cmdlet(VerbsCommon.Add, "SPOContentTypeToList")]
     [CmdletHelp("Adds a new content type to a list", 
         Category = CmdletHelpCategory.ContentTypes)]
@@ -15,13 +14,13 @@ namespace OfficeDevPnP.PowerShell.Commands
         SortOrder = 1)]
     public class AddContentTypeToList : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "Specifies the list the content type needs to be added to")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "Specifies the content type that needs to be added to the list")]
         public ContentTypePipeBind ContentType;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specify if the content type needs to be the default content type or not")]
         public SwitchParameter DefaultContentType;
 
         protected override void ExecuteCmdlet()

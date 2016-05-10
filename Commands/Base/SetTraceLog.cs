@@ -1,13 +1,9 @@
-﻿using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "SPOTraceLog")]
     [CmdletHelp("Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets utilizes the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.", 
@@ -37,7 +33,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         public string LogFile;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.")]
-        public Core.Diagnostics.LogLevel Level = Core.Diagnostics.LogLevel.Information;
+        public OfficeDevPnP.Core.Diagnostics.LogLevel Level = OfficeDevPnP.Core.Diagnostics.LogLevel.Information;
 
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "If specified the trace log entries will be delimited with this value.")]
         public string Delimiter;
@@ -78,14 +74,14 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                         delimitedListener.TraceOutputOptions = TraceOptions.DateTime;
                         delimitedListener.Name = LISTENERNAME;
                         Trace.Listeners.Add(delimitedListener);
-                        Core.Diagnostics.Log.LogLevel = Level;
+                        OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
                     }
                     else
                     {
                         TextWriterTraceListener listener = new TextWriterTraceListener(LogFile);
                         listener.Name = LISTENERNAME;
                         Trace.Listeners.Add(listener);
-                        Core.Diagnostics.Log.LogLevel = Level;
+                        OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
                     }
                 }
                 else
@@ -93,7 +89,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
                     ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
                     consoleListener.Name = LISTENERNAME;
                     Trace.Listeners.Add(consoleListener);
-                    Core.Diagnostics.Log.LogLevel = Level;
+                    OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
                 }
                 Trace.AutoFlush = AutoFlush;
                 Trace.IndentSize = IndentSize;

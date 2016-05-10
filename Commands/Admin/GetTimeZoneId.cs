@@ -1,24 +1,18 @@
-﻿using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOTimeZoneId")]
     [CmdletHelp("Returns a time zone ID", Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(
-        Code = @"PS:> Get-SPOTimeZoneId",
-        Remarks = @"This will return all time zone IDs in use by Office 365.
- ", SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Get-SPOTimeZoneId -Match Stockholm",
-        Remarks = @"This will return the time zone IDs for Stockholm
-    ", SortOrder = 2)]
+    [CmdletExample(Code = @"PS:> Get-SPOTimeZoneId",Remarks = @"This will return all time zone IDs in use by Office 365.", SortOrder = 1)]
+    [CmdletExample(Code = @"PS:> Get-SPOTimeZoneId -Match Stockholm", Remarks = @"This will return the time zone IDs for Stockholm", SortOrder = 2)]
     public class GetTimeZoneId : PSCmdlet
     {
-        [Parameter(Mandatory = false, Position=0)]
+        [Parameter(Mandatory = false, Position=0, HelpMessage = "A string to search for like 'Stockholm'")]
         public string Match;
 
         protected override void ProcessRecord()
@@ -46,7 +40,7 @@ namespace OfficeDevPnP.PowerShell.Commands
 
         public IEnumerable<Zone> AllZones()
         {
-            foreach (var zone in Enum.GetValues(typeof(Core.Enums.TimeZone)))
+            foreach (var zone in Enum.GetValues(typeof(OfficeDevPnP.Core.Enums.TimeZone)))
             {
                 var description = zone.ToString();
                 var identifier = description.Split('_')[0];

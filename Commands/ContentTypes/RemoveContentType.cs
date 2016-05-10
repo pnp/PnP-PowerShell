@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
-using OfficeDevPnP.PowerShell.Commands.Base.PipeBinds;
-using Resources = OfficeDevPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOContentType")]
     [CmdletHelp("Removes a content type", 
@@ -13,6 +13,10 @@ namespace OfficeDevPnP.PowerShell.Commands
         Code = @"PS:> Remove-SPOContentType -Identity ""Project Document""",
         Remarks = @"This will remove a content type called ""Project Document"" from the current web",
         SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Remove-SPOContentType -Identity ""Project Document"" -Force",
+        Remarks = @"This will remove a content type called ""Project Document"" from the current web with force",
+        SortOrder = 2)]
     public class RemoveContentType : SPOWebCmdlet
     {
 

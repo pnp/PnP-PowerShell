@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "SPOProperty")]
     [CmdletHelp("Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.",
@@ -27,7 +27,7 @@ PS:> Get-SPOProperty -ClientObject $list -Property Views",
         SortOrder = 2)]
     public class EnsureProperty : SPOCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the object where the properties of should be retrieved")]
         public ClientObject ClientObject;
 
         [Parameter(Mandatory = true, Position = 1, HelpMessage = "The properties to load. If one property is specified its value will be returned to the output.")]

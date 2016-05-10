@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Json;
-using OfficeDevPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace OfficeDevPnP.PowerShell.Commands.Base
+namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "SPOAzureADManifestKeyCredentials")]
     [CmdletHelp("Creates the JSON snippet that is required for the manifest json file for Azure WebApplication / WebAPI apps", 
@@ -23,7 +18,7 @@ namespace OfficeDevPnP.PowerShell.Commands.Base
         SortOrder = 2)]
     public class GetAzureADManifestKeyCredentials : PSCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = @"Specifies the path to the certificate like .\mycert.cer")]
         public string CertPath;
 
         protected override void ProcessRecord()
