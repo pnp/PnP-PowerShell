@@ -25,15 +25,15 @@ param (
        {
             'Online' { 
                 $moduleVersion = 'SharePoint Online'
-                $moduleName = 'SharePointPnPOnlineCmdlets'
+                $moduleName = 'SharePointPnPPowerShellOnline'
                 }
             'SP2013' {
                 $moduleVersion = 'SharePoint 2013'
-                $moduleName = 'SharePointPnPSP2013Cmdlets'
+                $moduleName = 'SharePointPnPPowerShell2013'
             }
             'SP2016' {
                 $moduleVersion = 'SharePoint 2016'
-                $moduleName = 'SharePointPnPSP2016Cmdlets'
+                $moduleName = 'SharePointPnPPowerShell2016'
             }
        }
 
