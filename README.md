@@ -38,17 +38,17 @@ If you main OS is Windows 10, you can run the following commands to install the 
 
 _SharePoint Online_
 ```powershell
-Install-Module SharePointPnPOnlineCmdlets
+Install-Module SharePointPnPPowerShellOnline
 ```
 
 _SharePoint 2016_
 ```powershell
-Install-Module SharePointPnPSP2016Cmdlets
+Install-Module SharePointPnPPowerShell2016
 ```
 
 _SharePoint 2013_
 ```powershell
-Install-Module SharePointPnPSP2013Cmdlets
+Install-Module SharePointPnPPowerShell2013
 ```
 
 Alternatively for installation on machines that have at least PowerShell v3 installed (you can find this out by opening PowerShell and running $host.version and Major should be above 3) you can run the below command which will install PowerShell Package Management and then install the PowerShell Modules from the PowerShell Gallery
