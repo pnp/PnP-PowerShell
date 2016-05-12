@@ -2,7 +2,7 @@
 Generates a provisioning template from a web
 ##Syntax
 ```powershell
-Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
+Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-PersistMultiLanguageResources [<SwitchParameter>]] [-ResourceFilePrefix <String>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
 ```
 
 
@@ -20,7 +20,9 @@ Parameter|Type|Required|Description
 |IncludeSiteGroups|SwitchParameter|False|If specified all site groups will be included.|
 |Out|String|False|Filename to write to, optionally including full path|
 |PersistBrandingFiles|SwitchParameter|False|If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.|
+|PersistMultiLanguageResources|SwitchParameter|False|If specified, resource values for applicable artifacts will be persisted to a resource file|
 |PersistPublishingFiles|SwitchParameter|False|If specified the files used for the publishing feature will be saved.|
+|ResourceFilePrefix|String|False|If specified resource files will be saved with the specified prefix. See examples for more info|
 |Schema|XMLPnPSchemaVersion|False|The schema of the output to use, defaults to the latest schema|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
