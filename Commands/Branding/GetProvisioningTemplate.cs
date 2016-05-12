@@ -85,6 +85,12 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified, out of the box / native publishing files will be saved.")]
         public SwitchParameter IncludeNativePublishingFiles;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified, resource values for applicable artifacts will be persisted to a resource file")]
+        public SwitchParameter PersistMultiLanguageResources;
+
+        [Parameter(Mandatory = false, HelpMessage = "If specified resource files will be saved with the specified prefix. See examples for more info")]
+        public string ResourceFilePrefix;
+
         [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
         public Handlers Handlers;
 
@@ -164,6 +170,17 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+            creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
+            if(!string.IsNullOrEmpty(ResourceFilePrefix))
+            {
+                creationInformation.ResourceFilePrefix = ResourceFilePrefix;
+            } else
+            {
+                FileInfo fileInfo = new FileInfo(Out);
+                var prefix = fileInfo.Name.Replace(fileInfo.Extension, "_");
+                creationInformation.ResourceFilePrefix = prefix;
+
+            }
             if (ExtensibilityHandlers != null)
             {
                 creationInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
