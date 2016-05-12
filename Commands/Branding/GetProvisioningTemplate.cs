@@ -49,11 +49,11 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         SortOrder = 6)]
     [CmdletExample(
         Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources",
-        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template_1033.resx'.",
+        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.",
         SortOrder = 7)]
     [CmdletExample(
         Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources -ResourceFilePrefix MyResources",
-        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources_1033.resx' etc.",
+        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.",
         SortOrder = 8)]
 
     [CmdletExample(
@@ -97,7 +97,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified, resource values for applicable artifacts will be persisted to a resource file")]
         public SwitchParameter PersistMultiLanguageResources;
 
-        [Parameter(Mandatory = false, HelpMessage = "If specified resource files will be saved with the specified prefix. See examples for more info")]
+        [Parameter(Mandatory = false, HelpMessage = "If specified, resource files will be saved with the specified prefix instead of using the template name specified. If no template name is specified the files will be called PnP-Resources.<language>.resx. See examples for more info.")]
         public string ResourceFilePrefix;
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
@@ -188,7 +188,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 if (Out != null)
                 {
                     FileInfo fileInfo = new FileInfo(Out);
-                    var prefix = fileInfo.Name.Replace(fileInfo.Extension, "_");
+                    var prefix = fileInfo.Name.Substring(0,fileInfo.Name.LastIndexOf("."));
                     creationInformation.ResourceFilePrefix = prefix;
                 }
 
