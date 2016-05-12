@@ -65,6 +65,18 @@ Extracts a provisioning template in XML format from the current web, but only pr
 
 ###Example 7
 ```powershell
+PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources
+```
+Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template_1033.resx'.
+
+###Example 8
+```powershell
+PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources -ResourceFilePrefix MyResources
+```
+Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources_1033.resx' etc.
+
+###Example 9
+```powershell
 
 PS:> $handler1 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 PS:> $handler2 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
