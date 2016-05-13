@@ -48,21 +48,24 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Remarks = "Extracts a provisioning template in XML format from the current web, but only processes lists and site security when generating the template.",
         SortOrder = 6)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources",
-        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.",
-        SortOrder = 7)]
-    [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources -ResourceFilePrefix MyResources",
-        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.",
-        SortOrder = 8)]
-
-    [CmdletExample(
         Code = @"
 PS:> $handler1 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 PS:> $handler2 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
         Remarks = @"This will create two new ExtensibilityHandler objects that are run during extraction of the template",
+        SortOrder = 7)]
+#if !SP2013
+    [CmdletExample(
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources",
+        Introduction = "Only supported on SP2016 and SP Online",
+        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.",
+        SortOrder = 8)]
+    [CmdletExample(
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources -ResourceFilePrefix MyResources",
+        Introduction = "Only supported on SP2016 and SP Online",
+        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.",
         SortOrder = 9)]
+#endif
 
     public class GetProvisioningTemplate : SPOWebCmdlet
     {
@@ -94,12 +97,13 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified, out of the box / native publishing files will be saved.")]
         public SwitchParameter IncludeNativePublishingFiles;
 
+#if !SP2013
         [Parameter(Mandatory = false, HelpMessage = "If specified, resource values for applicable artifacts will be persisted to a resource file")]
         public SwitchParameter PersistMultiLanguageResources;
 
         [Parameter(Mandatory = false, HelpMessage = "If specified, resource files will be saved with the specified prefix instead of using the template name specified. If no template name is specified the files will be called PnP-Resources.<language>.resx. See examples for more info.")]
         public string ResourceFilePrefix;
-
+#endif
         [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
         public Handlers Handlers;
 
@@ -179,6 +183,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+#if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
             if(!string.IsNullOrEmpty(ResourceFilePrefix))
             {
@@ -193,6 +198,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 }
 
             }
+#endif
             if (ExtensibilityHandlers != null)
             {
                 creationInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
