@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
     [CmdletHelp("Adds and/or removes permissions of a specific SharePoint group",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -AddRole Contribute", 
+        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -AddRole Contribute",
         Remarks = "Adds the 'Contribute' permission to the SharePoint group with the name 'My Site Members'",
         SortOrder = 1)]
     [CmdletExample(
@@ -31,6 +31,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         [Alias("Name")]
         public GroupPipeBind Identity = new GroupPipeBind();
 
+        [Parameter(Mandatory = false, HelpMessage = "The list to apply the command to.")]
+        public ListPipeBind List = new ListPipeBind();
+
         [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to add to this SharePoint group")]
         public string[] AddRole = null;
 
@@ -40,14 +43,34 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         protected override void ExecuteCmdlet()
         {
             var group = Identity.GetGroup(SelectedWeb);
+            
+            List list = List.GetList(SelectedWeb);
+            if (list == null && !String.IsNullOrEmpty(List.Title))
+            {
+                throw new Exception(string.Format("List with Title {0} not found", List.Title));
+            }
+            else if (list == null && List.Id != Guid.Empty )
+            {
+                throw new Exception(string.Format("List with Id {0} not found", List.Id));
+            }
 
             if (AddRole != null)
             {
                 foreach (var role in AddRole)
                 {
                     var roleDefinition = SelectedWeb.RoleDefinitions.GetByName(role);
-                    var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext) {roleDefinition};
-                    var roleAssignments = SelectedWeb.RoleAssignments;
+                    var roleDefinitionBindings = new RoleDefinitionBindingCollection(ClientContext) { roleDefinition };
+
+                    RoleAssignmentCollection roleAssignments;
+                    if (list != null)
+                    {
+                        roleAssignments = list.RoleAssignments;
+                    }
+                    else
+                    {
+                        roleAssignments = SelectedWeb.RoleAssignments;
+                    }
+
                     roleAssignments.Add(group, roleDefinitionBindings);
                     ClientContext.Load(roleAssignments);
                     ClientContext.ExecuteQueryRetry();
@@ -57,7 +80,15 @@ namespace SharePointPnP.PowerShell.Commands.Principals
             {
                 foreach (var role in RemoveRole)
                 {
-                    var roleAssignment = SelectedWeb.RoleAssignments.GetByPrincipal(group);
+                    RoleAssignment roleAssignment;
+                    if (list != null)
+                    {
+                        roleAssignment = list.RoleAssignments.GetByPrincipal(group);
+                    }
+                    else
+                    {
+                        roleAssignment = SelectedWeb.RoleAssignments.GetByPrincipal(group);
+                    }
                     var roleDefinitionBindings = roleAssignment.RoleDefinitionBindings;
                     ClientContext.Load(roleDefinitionBindings);
                     ClientContext.ExecuteQueryRetry();
