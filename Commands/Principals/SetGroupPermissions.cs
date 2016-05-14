@@ -3,6 +3,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
@@ -25,6 +26,10 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -RemoveRole @('Contribute', 'Design')",
         Remarks = "Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'",
         SortOrder = 4)]
+    [CmdletExample(
+        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' List 'MyList' -RemoveRole @('Contribute')",
+        Remarks = "Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'",
+        SortOrder = 5)]
     public class SetGroupPermissions : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName", HelpMessage = "Get the permissions of a specific group by name")]
@@ -45,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
             var group = Identity.GetGroup(SelectedWeb);
             
             List list = List.GetList(SelectedWeb);
-            if (list == null && !String.IsNullOrEmpty(List.Title))
+            if (list == null && !string.IsNullOrEmpty(List.Title))
             {
                 throw new Exception(string.Format("List with Title {0} not found", List.Title));
             }
