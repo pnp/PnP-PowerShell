@@ -27,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Remarks = "Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' List 'MyList' -RemoveRole @('Contribute')",
+        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')",
         Remarks = "Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'",
         SortOrder = 5)]
     public class SetGroupPermissions : SPOWebCmdlet

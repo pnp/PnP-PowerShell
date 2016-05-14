@@ -42,6 +42,6 @@ Removes the 'Contribute' and 'Design' permissions from the SharePoint group with
 
 ###Example 5
 ```powershell
-PS:> Set-SPOGroupPermissions -Identity 'My Site Members' List 'MyList' -RemoveRole @('Contribute')
+PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')
 ```
 Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'
