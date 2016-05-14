@@ -2,7 +2,7 @@
 Adds and/or removes permissions of a specific SharePoint group
 ##Syntax
 ```powershell
-Set-SPOGroupPermissions [-AddRole <String[]>] [-RemoveRole <String[]>] [-Web <WebPipeBind>] -Identity <GroupPipeBind>
+Set-SPOGroupPermissions [-List <ListPipeBind>] [-AddRole <String[]>] [-RemoveRole <String[]>] [-Web <WebPipeBind>] -Identity <GroupPipeBind>
 ```
 
 
@@ -11,6 +11,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |AddRole|String[]|False|Name of the permission set to add to this SharePoint group|
 |Identity|GroupPipeBind|True|Get the permissions of a specific group by name|
+|List|ListPipeBind|False|The list to apply the command to.|
 |RemoveRole|String[]|False|Name of the permission set to remove from this SharePoint group|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
@@ -38,3 +39,9 @@ Adds the 'Contribute' and 'Design' permissions to the SharePoint group with the 
 PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -RemoveRole @('Contribute', 'Design')
 ```
 Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'
+
+###Example 5
+```powershell
+PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')
+```
+Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'
