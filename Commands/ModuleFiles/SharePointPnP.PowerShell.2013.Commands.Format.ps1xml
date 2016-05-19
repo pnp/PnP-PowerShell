@@ -564,6 +564,62 @@
       </TableControl>
     </View>
     <View>
+      <Name>FolderItems</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.SharePoint.Client.File</TypeName>
+        <TypeName>Microsoft.SharePoint.Client.Folder</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>40</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Type</Label>
+            <Width>20</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ItemCount/Length</Label>
+            <Width>20</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Time Last Modified</Label>
+            <Width>30</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.GetType().Name</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if($_.GetType().Name -eq "File"){
+                  $_.Length
+                  }
+                  else{
+                  $_.ItemCount
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TimeLastModified</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
       <Name>File</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.SharePoint.Client.File</TypeName>

@@ -6,6 +6,7 @@ using System.IO;
 using System.Management.Automation;
 using System.Net;
 using System.Security;
+using System.Linq;
 #if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
 #endif
@@ -73,6 +74,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, ParameterSetName = "Weblogin", HelpMessage = "If you want to connect to SharePoint with browser based login")]
         public SwitchParameter UseWebLogin;
+
+        [Parameter(Mandatory = false, HelpMessage = "If you want to create a PSDrive connected to Url")]
+        public SwitchParameter CreateDrive;
+
+        [Parameter(Mandatory = false, HelpMessage = "Name of the PSDrive created (default: spo)")]
+        public string DriveName = "spo";
 
 #if !ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = "NativeAAD", HelpMessage = "The Client ID of the Azure AD Application")]
@@ -154,6 +161,21 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck);
             }
             WriteVerbose(string.Format("PnP PowerShell Cmdlets ({0}): Connected to {1}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(), Url));
+
+            if (CreateDrive && SPOnlineConnection.CurrentConnection.Context != null)
+            {
+                var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals("SPO", StringComparison.InvariantCultureIgnoreCase));
+                if (provider != null)
+                {
+                    if (provider.Drives.Any(d => d.Name.Equals(DriveName, StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        SessionState.Drive.Remove(DriveName, true, "Global");
+                    }
+
+                    var drive = new PSDriveInfo(DriveName, provider, string.Empty, Url, null);
+                    SessionState.Drive.New(drive, "Global");
+                }
+            }
         }
 
         private PSCredential GetCredentials()

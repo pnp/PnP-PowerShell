@@ -437,6 +437,12 @@
     <Compile Include="Principals\GetGroupPermissions.cs" />
     <Compile Include="Principals\RemoveGroup.cs" />
     <Compile Include="Principals\SetGroup.cs" />
+    <Compile Include="Provider\SPOContentParameters.cs" />
+    <Compile Include="Provider\SPOContentReaderWriter.cs" />
+    <Compile Include="Provider\SPODriveCacheItem.cs" />
+    <Compile Include="Provider\SPODriveInfo.cs" />
+    <Compile Include="Provider\SPODriveParameters.cs" />
+    <Compile Include="Provider\SPOProvider.cs" />
     <Compile Include="Publishing\AddMasterPage.cs" />
     <Compile Include="Search\GetSiteSearchQueryResults.cs" />
     <Compile Include="Search\SetSearchConfiguration.cs" />
@@ -454,6 +460,7 @@
     <Compile Include="Branding\AddJavaScriptLink.cs" />
     <Compile Include="Branding\AddJavaScriptBlock.cs" />
     <Compile Include="WebParts\GetWebPartXml.cs" />
+    <Compile Include="Web\GetFolderItem.cs" />
     <Compile Include="Web\InvokeWebAction.cs" />
     <Compile Include="Web\EnsureFolder.cs" />
     <Compile Include="Web\AddFolder.cs" />
