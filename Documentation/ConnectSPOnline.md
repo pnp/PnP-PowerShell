@@ -2,27 +2,27 @@
 Connects to a SharePoint site and creates an in-memory context
 ##Syntax
 ```powershell
-Connect-SPOnline -ClientId <String> -Tenant <String> -CertificatePath <String> -CertificatePassword <SecureString> [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
+Connect-SPOnline -ClientId <String> -Tenant <String> -CertificatePath <String> -CertificatePassword <SecureString> [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-CreateDrive [<SwitchParameter>]] [-DriveName <String>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
 ```
 
 
 ```powershell
-Connect-SPOnline [-Credentials <CredentialPipeBind>] [-CurrentCredentials [<SwitchParameter>]] [-UseAdfs [<SwitchParameter>]] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
+Connect-SPOnline [-Credentials <CredentialPipeBind>] [-CurrentCredentials [<SwitchParameter>]] [-UseAdfs [<SwitchParameter>]] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-CreateDrive [<SwitchParameter>]] [-DriveName <String>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
 ```
 
 
 ```powershell
-Connect-SPOnline -ClientId <String> -RedirectUri <String> [-ClearTokenCache [<SwitchParameter>]] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
+Connect-SPOnline -ClientId <String> -RedirectUri <String> [-ClearTokenCache [<SwitchParameter>]] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-CreateDrive [<SwitchParameter>]] [-DriveName <String>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
 ```
 
 
 ```powershell
-Connect-SPOnline [-Realm <String>] -AppId <String> -AppSecret <String> [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
+Connect-SPOnline [-Realm <String>] -AppId <String> -AppSecret <String> [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-CreateDrive [<SwitchParameter>]] [-DriveName <String>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
 ```
 
 
 ```powershell
-Connect-SPOnline -UseWebLogin [<SwitchParameter>] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
+Connect-SPOnline -UseWebLogin [<SwitchParameter>] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-CreateDrive [<SwitchParameter>]] [-DriveName <String>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
 ```
 
 
@@ -38,8 +38,10 @@ Parameter|Type|Required|Description
 |CertificatePath|String|True|Path to the certificate (*.pfx)|
 |ClearTokenCache|SwitchParameter|False|Clears the token cache.|
 |ClientId|String|True|The Client ID of the Azure AD Application|
+|CreateDrive|SwitchParameter|False|If you want to create a PSDrive connected to the URL|
 |Credentials|CredentialPipeBind|False|Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.|
 |CurrentCredentials|SwitchParameter|False|If you want to connect with the current user credentials|
+|DriveName|String|False|Name of the PSDrive to create (default: SPO)|
 |MinimalHealthScore|Int32|False|Specifies a minimal server healthscore before any requests are executed.|
 |Realm|String|False|Authentication realm. If not specified will be resolved from the url specified.|
 |RedirectUri|String|True|The Redirect URI of the Azure AD Application|
@@ -82,3 +84,11 @@ This will use credentials from the Windows Credential Manager, as defined by the
 PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs
 ```
 This will prompt for username and password and creates a context using ADFS to authenticate.
+
+###Example 6
+```powershell
+PS:> Connect-SPOnline -Url https://yourserver -Credentials (Get-Credential) -CreateDrive
+cd SPO:\\
+dir
+```
+This will prompt you for credentials and creates a context for the other PowerShell commands to use. It will also create a SPO:\\ drive you can use to navigate around the site
