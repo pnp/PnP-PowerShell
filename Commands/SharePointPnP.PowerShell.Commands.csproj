@@ -116,6 +116,9 @@
   <PropertyGroup>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\pnp.ico</ApplicationIcon>
+  </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
       <ItemGroup>
@@ -312,6 +315,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Selectors" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -591,6 +595,9 @@
     <None Include="ModuleFiles\SharePointPnP.PowerShell.2013.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pnp.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
