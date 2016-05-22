@@ -113,6 +113,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while extracting a template")]
         public ExtensibilityHandler[] ExtensibilityHandlers;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter AsXML;
+
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
@@ -137,27 +140,21 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 {
                     if (Force || ShouldContinue(string.Format(Resources.File0ExistsOverwrite, Out), Resources.Confirm))
                     {
-                        var xml = GetProvisioningTemplateXML(Schema, new FileInfo(Out).DirectoryName);
-
-                        File.WriteAllText(Out, xml, Encoding);
+                        GetProvisioningTemplateXML(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
                     }
                 }
                 else
                 {
-                    var xml = GetProvisioningTemplateXML(Schema, new FileInfo(Out).DirectoryName);
-
-                    File.WriteAllText(Out, xml, Encoding);
+                    GetProvisioningTemplateXML(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
                 }
             }
             else
             {
-                var xml = GetProvisioningTemplateXML(Schema, SessionState.Path.CurrentFileSystemLocation.Path);
-
-                WriteObject(xml);
+                GetProvisioningTemplateXML(Schema, SessionState.Path.CurrentFileSystemLocation.Path, null);
             }
         }
 
-        private string GetProvisioningTemplateXML(XMLPnPSchemaVersion schema, string path)
+        private void GetProvisioningTemplateXML(XMLPnPSchemaVersion schema, string path, string packageName)
         {
             SelectedWeb.EnsureProperty(w => w.Url);
 
@@ -179,21 +176,27 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 creationInformation.HandlersToProcess = Handlers;
             }
 
+            if (packageName != null && !AsXML)
+            {
+                var fileSystemConnector = new FileSystemConnector(path, "");
+                creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
+            }
             creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
-            if(!string.IsNullOrEmpty(ResourceFilePrefix))
+            if (!string.IsNullOrEmpty(ResourceFilePrefix))
             {
                 creationInformation.ResourceFilePrefix = ResourceFilePrefix;
-            } else
+            }
+            else
             {
                 if (Out != null)
                 {
                     FileInfo fileInfo = new FileInfo(Out);
-                    var prefix = fileInfo.Name.Substring(0,fileInfo.Name.LastIndexOf("."));
+                    var prefix = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf("."));
                     creationInformation.ResourceFilePrefix = prefix;
                 }
 
@@ -203,7 +206,6 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             {
                 creationInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
             }
-            creationInformation.FileConnector = new FileSystemConnector(path, "");
 
 #pragma warning disable CS0618 // Type or member is obsolete
             if (NoBaseTemplate)
@@ -273,11 +275,30 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                         break;
                     }
             }
-            var _outputStream = formatter.ToFormattedTemplate(template);
-            StreamReader reader = new StreamReader(_outputStream);
 
-            return reader.ReadToEnd();
+            if (packageName != null && !AsXML)
+            {
+                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
 
+                      creationInformation.FileConnector as OpenXMLConnector);
+                var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".")) + ".xml";
+
+                provider.SaveAs(template, templateFileName, formatter);
+            }
+            else
+            {
+
+                var _outputStream = formatter.ToFormattedTemplate(template);
+                StreamReader reader = new StreamReader(_outputStream);
+                if (Out != null)
+                {
+                    File.WriteAllText(Path.Combine(path, packageName), reader.ReadToEnd(), Encoding);
+                }
+                else
+                {
+                    WriteObject(reader.ReadToEnd());
+                }
+            }
         }
     }
 }
