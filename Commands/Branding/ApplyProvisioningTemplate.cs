@@ -75,23 +75,40 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
             FileInfo fileInfo = new FileInfo(Path);
 
-            XMLTemplateProvider provider =
-                new XMLFileSystemTemplateProvider(fileInfo.DirectoryName, "");
-
-            var provisioningTemplate = provider.GetTemplate(fileInfo.Name);
+            XMLTemplateProvider provider = null;
+            ProvisioningTemplate provisioningTemplate = null;
+            var isOpenOfficeFile = IsOpenOfficeFile(Path);
+            if (isOpenOfficeFile)
+            {
+                var fileSystemconnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(fileInfo.Name, fileSystemconnector));
+                var fileName = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(".")) + ".xml";
+                provisioningTemplate = provider.GetTemplate(fileName);
+            }
+            else
+            {
+                provider = new XMLFileSystemTemplateProvider(fileInfo.DirectoryName, "");
+                provisioningTemplate = provider.GetTemplate(fileInfo.Name);
+            }
 
             if (provisioningTemplate != null)
             {
-                FileSystemConnector fileSystemConnector = null;
-                if (string.IsNullOrEmpty(ResourceFolder))
+                if (isOpenOfficeFile)
                 {
-                    fileSystemConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                    provisioningTemplate.Connector = provider.Connector;
                 }
                 else
                 {
-                    fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
+                    FileSystemConnector fileSystemConnector = null;
+                    if(ResourceFolder != null)
+                    {
+                        fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
+                        provisioningTemplate.Connector = fileSystemConnector;
+                    } else
+                    {
+                        provisioningTemplate.Connector = provider.Connector;
+                    }
                 }
-                provisioningTemplate.Connector = fileSystemConnector;
 
                 if (Parameters != null)
                 {
@@ -142,6 +159,30 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 applyingInformation.OverwriteSystemPropertyBagValues = OverwriteSystemPropertyBagValues;
                 SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
             }
+        }
+
+
+        private bool IsOpenOfficeFile(string path)
+        {
+            bool istrue = false;
+            // SIG 50 4B 03 04 14 00
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                byte[] bytes = new byte[6];
+
+                int n = stream.Read(bytes, 0, 6);
+                var signature = string.Empty;
+                foreach (var b in bytes)
+                {
+                    signature += b.ToString("X2");
+                }
+                if (signature == "504B03041400")
+                {
+                    istrue = true;
+                }
+
+            }
+            return istrue;
         }
     }
 }

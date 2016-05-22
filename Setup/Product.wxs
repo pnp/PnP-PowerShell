@@ -35,7 +35,7 @@
     <Feature Id="ProductFeature" Title="SharePoint PnP PowerShell Commands" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ENVIRONMENTVARS" />
-
+      <ComponentGroupRef Id="RegistryKeys"/>
     </Feature>
 
     <PropertyRef Id="NETFRAMEWORK45"/>
@@ -111,6 +111,27 @@
       <Component Id="EnvironmentVarPerUser" Guid="{CAE7B727-018A-4F37-9D62-C70363B9A9D1}">
         <Condition>ALLUSERS="" OR (ALLUSERS=2 AND (NOT Privileged))</Condition>
         <Environment Id="PSMODULEPATHPERUSER" Name="PSMODULEPATH" Value="[LocalAppDataFolder]Apps\[ApplicationFolderName]" Permanent="no" Part="last" Action="set" System="no" />
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="RegistryKeys" Directory="TARGETDIR">
+      <Component Id="IconRegistryKeys" Guid="{E206561F-2259-43B9-908D-86E3C70801B0}">
+        <RegistryKey Root="HKCR"
+                     Key=".pnp"
+              Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Value="PnP.ProvisioningTemplate.Package" />
+          <RegistryValue Type="string" Name="Content Type" Value="package/pnp" KeyPath="yes"/>
+          <RegistryValue Type="string" Name="PerceivedType" Value="compressed"/>
+        </RegistryKey>
+        <RegistryKey Root="HKCR" Key="PnP.ProvisioningTemplate.Package" Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Value="PNP Provisioning Template Package" />
+          <RegistryValue Type="string" Name="FriendlyTypeName" Value="PNP Provisioning Template Package" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR" Key="PnP.ProvisioningTemplate.Package\CLSID" Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Value="{02C26B7A-482D-4E1B-93A7-9FD9F965698F}" />
+        </RegistryKey>
+        <RegistryKey Root="HKCR" Key="PnP.ProvisioningTemplate.Package\DefaultIcon" Action="createAndRemoveOnUninstall">
+          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]$(var.ProductAssemblyName).dll" />
+        </RegistryKey>
       </Component>
     </ComponentGroup>
   </Fragment>
