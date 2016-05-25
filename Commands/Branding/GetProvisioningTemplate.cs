@@ -24,47 +24,51 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     [CmdletHelp("Generates a provisioning template from a web",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
-       Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml",
-       Remarks = "Extracts a provisioning template in XML format from the current web.",
+       Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp",
+       Remarks = "Extracts a provisioning template in Office Open XML from the current web.",
        SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -Schema V201503",
-        Remarks = "Extracts a provisioning template in XML format from the current web and saves it in the V201503 version of the schema.",
-        SortOrder = 2)]
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml",
+       Remarks = "Extracts a provisioning template in XML format from the current web.",
+       SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -IncludeAllTermGroups",
-        Remarks = "Extracts a provisioning template in XML format from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.",
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp -Schema V201503",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web and saves it in the V201503 version of the schema.",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -IncludeSiteCollectionTermGroup",
-        Remarks = "Extracts a provisioning template in XML format from the current web and includes the term group currently (if set) assigned to the site collection.",
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp -IncludeAllTermGroups",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistComposedLookFiles",
-        Remarks = "Extracts a provisioning template in XML format from the current web and saves the files that make up the composed look to the same folder as where the template is saved.",
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp -IncludeSiteCollectionTermGroup",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web and includes the term group currently (if set) assigned to the site collection.",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -Handlers Lists, SiteSecurity",
-        Remarks = "Extracts a provisioning template in XML format from the current web, but only processes lists and site security when generating the template.",
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp -PersistComposedLookFiles",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web and saves the files that make up the composed look to the same folder as where the template is saved.",
         SortOrder = 6)]
+    [CmdletExample(
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp -Handlers Lists, SiteSecurity",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web, but only processes lists and site security when generating the template.",
+        SortOrder = 7)]
     [CmdletExample(
         Code = @"
 PS:> $handler1 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 PS:> $handler2 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
         Remarks = @"This will create two new ExtensibilityHandler objects that are run during extraction of the template",
-        SortOrder = 7)]
+        SortOrder = 8)]
 #if !SP2013
     [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources",
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp -PersistMultiLanguageResources",
         Introduction = "Only supported on SP2016 and SP Online",
-        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.",
-        SortOrder = 8)]
-    [CmdletExample(
-        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.xml -PersistMultiLanguageResources -ResourceFilePrefix MyResources",
-        Introduction = "Only supported on SP2016 and SP Online",
-        Remarks = "Extracts a provisioning template in XML format from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.",
         SortOrder = 9)]
+    [CmdletExample(
+        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp -PersistMultiLanguageResources -ResourceFilePrefix MyResources",
+        Introduction = "Only supported on SP2016 and SP Online",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.",
+        SortOrder = 10)]
 #endif
 
     public class GetProvisioningTemplate : SPOWebCmdlet
@@ -113,9 +117,6 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while extracting a template")]
         public ExtensibilityHandler[] ExtensibilityHandlers;
 
-        [Parameter(Mandatory = false)]
-        public SwitchParameter AsXML;
-
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
@@ -130,6 +131,10 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         protected override void ExecuteCmdlet()
         {
+            if(PersistMultiLanguageResources == false && ResourceFilePrefix != null)
+            {
+                WriteWarning("In order to export resource files, also specify the PersistMultiLanguageResources switch");
+            }
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))
@@ -140,21 +145,21 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 {
                     if (Force || ShouldContinue(string.Format(Resources.File0ExistsOverwrite, Out), Resources.Confirm))
                     {
-                        GetProvisioningTemplateXML(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                        ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
                     }
                 }
                 else
                 {
-                    GetProvisioningTemplateXML(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                    ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
                 }
             }
             else
             {
-                GetProvisioningTemplateXML(Schema, SessionState.Path.CurrentFileSystemLocation.Path, null);
+                ExtractTemplate(Schema, SessionState.Path.CurrentFileSystemLocation.Path, null);
             }
         }
 
-        private void GetProvisioningTemplateXML(XMLPnPSchemaVersion schema, string path, string packageName)
+        private void ExtractTemplate(XMLPnPSchemaVersion schema, string path, string packageName)
         {
             SelectedWeb.EnsureProperty(w => w.Url);
 
@@ -176,7 +181,21 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 creationInformation.HandlersToProcess = Handlers;
             }
 
-            if (packageName != null && !AsXML)
+            var extension = "";
+            if (packageName != null)
+            {
+                if (packageName.IndexOf(".") > -1)
+                {
+                    extension = packageName.Substring(packageName.LastIndexOf(".")).ToLower();
+                }
+                else
+                {
+                    packageName += ".pnp";
+                    extension = ".pnp";
+                }
+            }
+
+            if (extension == ".pnp")
             {
                 var fileSystemConnector = new FileSystemConnector(path, "");
                 creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
@@ -276,7 +295,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                     }
             }
 
-            if (packageName != null && !AsXML)
+            if (extension == ".pnp")
             {
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
 
