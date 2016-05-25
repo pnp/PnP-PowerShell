@@ -67,7 +67,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
             }
             if (!string.IsNullOrEmpty(ResourceFolder))
             {
-                if (System.IO.Path.IsPathRooted(ResourceFolder))
+                if (!System.IO.Path.IsPathRooted(ResourceFolder))
                 {
                     ResourceFolder = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, ResourceFolder);
                 }
