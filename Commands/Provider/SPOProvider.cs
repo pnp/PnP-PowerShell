@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -18,7 +19,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         //Private properties
         private const string Pattern = @"^[\\w\\d\\.\\s]*$";
         private const string PathSeparator = "/";
-        private const int DefaultCacheTimeout = 1000;
+        private const int DefaultItemCacheTimeout = 1000; //1 second default caching of file/folder object
+        private const int DefaultWebCacheTimeout = 1000 * 60 * 10; //10 minutes default caching of Web object
 
         //Init
         protected override ProviderInfo Start(ProviderInfo providerInfo)
@@ -34,68 +36,59 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             WriteVerbose(string.Format("SPOProvider::NewDrive (Drive.Name = ’{0}’, Drive.Root = ’{1}’)", drive.Name, drive.Root));
 
             var spoParametes = DynamicParameters as SPODriveParameters;
-            var spoDrive = new SPODriveInfo(drive);
-            if (spoParametes != null && spoParametes.UseCurrentSPOContext)
+            Web web = null;
+
+            if (spoParametes != null && spoParametes.Context != null)
             {
-                if (SPOnlineConnection.CurrentConnection != null)
-                {
-                    spoDrive.Web = SPOnlineConnection.CurrentConnection.Context.Web;
-                }
-                else
-                {
-                    WriteErrorInternal(PnPResources.NoConnection, spoDrive, ErrorCategory.ConnectionError);
-                }
+                var webUrl = spoParametes.Url ?? spoParametes.Context.Url;
+                web = spoParametes.Context.Clone(webUrl).Web;
             }
             else if (spoParametes != null && spoParametes.Web != null)
             {
-                var webUrl = spoParametes.Web.EnsureProperty(w => w.ServerRelativeUrl);
-                spoDrive.Web = spoParametes.Web.Context.Clone(webUrl).Web;
-            }
-            else if (spoParametes != null && spoParametes.Url != null && SPOnlineConnection.CurrentConnection != null)
-            {
-                var cloneCtx = SPOnlineConnection.CurrentConnection.Context.Clone(spoParametes.Url);
-                spoDrive.Web = cloneCtx.Web;
-
+                var webUrl = spoParametes.Url ?? spoParametes.Web.EnsureProperty(w => w.Url);
+                web = spoParametes.Web.Context.Clone(webUrl).Web;
             }
             else if (SPOnlineConnection.CurrentConnection != null)
             {
-                var webUrl = SPOnlineConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
-                spoDrive.Web = SPOnlineConnection.CurrentConnection.Context.Clone(webUrl).Web;
+                var webUrl = (spoParametes != null && spoParametes.Url != null) ? spoParametes.Url : SPOnlineConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
+                web = SPOnlineConnection.CurrentConnection.Context.Clone(webUrl).Web;
             }
             else
             {
-                WriteErrorInternal(PnPResources.NoConnection, spoDrive, ErrorCategory.ConnectionError);
+                WriteErrorInternal(PnPResources.NoConnection, drive.Root, ErrorCategory.ConnectionError);
             }
 
-            spoDrive.Timeout = (spoParametes != null && spoParametes.CacheTimeout != default(int)) ? spoParametes.CacheTimeout : DefaultCacheTimeout;
-
+            if (web != null)
+            {
 #if DEBUG
-            spoDrive.Web.Context.ExecutingWebRequest += (sender, args) =>
-            {
-                var counter = (int)SessionState.PSVariable.Get("WebRequestCounter").Value;
-                counter++;
-                SessionState.PSVariable.Set("WebRequestCounter", counter);
-            };
+                SetCounter(web.Context);
 #endif
+                var itemTimeout = (spoParametes != null && spoParametes.ItemCacheTimeout != default(int)) ? spoParametes.ItemCacheTimeout : DefaultItemCacheTimeout;
+                var webTimeout = (spoParametes != null && spoParametes.WebCacheTimeout != default(int)) ? spoParametes.WebCacheTimeout : DefaultWebCacheTimeout;
+                var normalizePath = NormalizePath(IsPropertyAvailable(web, "ServerRelativeUrl") ? web.ServerRelativeUrl : web.EnsureProperty(w => w.ServerRelativeUrl));
 
-            spoDrive.NormalizedRoot = NormalizeRoot(spoDrive);
+                //Set root to normalized root
+                var normalizedDrive = new SPODriveInfo(new PSDriveInfo(drive.Name, drive.Provider, "/", drive.Description, drive.Credential, drive.DisplayRoot))
+                {
+                    Web = web,
+                    ItemTimeout = itemTimeout,
+                    WebTimeout = webTimeout,
+                    CurrentLocation = normalizePath
+                };
 
-            if (!ValidateRoot(spoDrive))
-            {
-                WriteErrorInternal("Unvalid root", spoDrive.Root, ErrorCategory.InvalidArgument);
+                //Add web to cache
+                normalizedDrive.CachedWebs.Add(new SPODriveCacheWeb
+                {
+                    Web = normalizedDrive.Web,
+                    LastRefresh = DateTime.Now,
+                    Path = normalizePath
+
+                });
+
+                return normalizedDrive;
             }
+            return null;
 
-            //return spoDrive;
-
-            //Set root to normalized root
-            return new SPODriveInfo(new PSDriveInfo(spoDrive.Name ,spoDrive.Provider, spoDrive.NormalizedRoot, spoDrive.Description, spoDrive.Credential, spoDrive.DisplayRoot))
-            {
-                Web = spoDrive.Web,
-                Timeout = spoDrive.Timeout,
-                NormalizedRoot = spoDrive.NormalizedRoot,
-                IsNotClonedContext = spoDrive.IsNotClonedContext
-               
-            };
         }
 
         protected override object NewDriveDynamicParameters()
@@ -131,7 +124,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
             try
             {
-                if (PathIsDrive(path)) return true;
+                if (IsPathDrive(path)) return true;
                 return GetFileOrFolder(path, false) is Folder;
             }
             catch (Exception e)
@@ -145,9 +138,10 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         {
             WriteVerbose(string.Format("SPOProvider::ItemExists (Path = ’{0}’)", path));
 
-            if (PathIsDrive(path)) return true;
+            if (IsPathDrive(path)) return true;
             try
             {
+                if (path.EndsWith("*")) return false;
                 return GetFileOrFolder(path, false) != null;
             }
             catch (Exception e)
@@ -195,7 +189,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
         protected override string GetChildName(string path)
         {
-            WriteVerbose(string.Format("SPOProvider::GetChildName YYY (path = ’{0}’) = {1}", path, base.GetChildName(path)));
+            WriteVerbose(string.Format("SPOProvider::GetChildName(path = ’{0}’) = {1}", path, base.GetChildName(path)));
             return base.GetChildName(path);
         }
 
@@ -225,12 +219,12 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var folder = GetFileOrFolder(path) as Folder;
             if (folder != null)
             {
-                WriteItemObject(string.Format("\nFolder: {0}\n", folder.ServerRelativeUrl), GetServerRelativePath(path), true);
 
+                var serverRelativePath = GetServerRelativePath(path);
                 var folderAndFiles = GetFolderItems(folder).ToArray();
-                folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => WriteItemObject(subFolder, GetServerRelativePath(path), true));
-                folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, GetServerRelativePath(path), false));
 
+                folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => WriteItemObject(subFolder, serverRelativePath, true));
+                folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, serverRelativePath, false));
                 if (recurse)
                 {
                     folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => GetChildItems(subFolder.ServerRelativeUrl, true));
@@ -250,9 +244,25 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (folder != null)
             {
                 var folderAndFiles = GetFolderItems(folder).ToArray();
-
-                folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => WriteItemObject(subFolder.Name, GetServerRelativePath(path), true));
-                folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file.Name, GetServerRelativePath(path), false));
+                var serverRelaitivePath = GetServerRelativePath(path);
+                foreach (var subFolder in folderAndFiles.OfType<Folder>().ToList())
+                {
+                    string name;
+                    if (string.IsNullOrEmpty(subFolder.Name))
+                    {
+                        var serverRelativeUrl = IsPropertyAvailable(subFolder, "ServerRelativeUrl") ? subFolder.ServerRelativeUrl : subFolder.EnsureProperty(s => s.ServerRelativeUrl);
+                        name = serverRelativeUrl.Split(PathSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Last();
+                    }
+                    else
+                    {
+                        name = subFolder.Name;
+                    }
+                    WriteItemObject(name, serverRelaitivePath, true);
+                }
+                foreach (var file in folderAndFiles.OfType<File>().ToList())
+                {
+                    WriteItemObject(file.Name, serverRelaitivePath, false);
+                }
             }
             else
             {
@@ -265,145 +275,176 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         {
             WriteVerbose(string.Format("SPOProvider::CopyItem (Path = ’{0}’, copyPath = ’{1}’)", path, copyPath));
 
-            if (!IsSameDrive(path, copyPath))
-            {
-                var msg = "Copy between drives is not implemented, yet";
-                var err = new NotImplementedException(msg);
-                WriteErrorInternal(msg, path, ErrorCategory.NotImplemented, exception:err);
-                return;
-            }
+            CopyMoveImplementation(path, copyPath, recurse);
 
-            var source = GetFileOrFolder(path);
-            if (source == null) return;
+            //if (!IsSameDrive(path, copyPath))
+            //{
+            //    var msg = "Copy between drives is not implemented, yet";
+            //    var err = new NotImplementedException(msg);
+            //    WriteErrorInternal(msg, path, ErrorCategory.NotImplemented, exception: err);
+            //    return;
+            //}
 
-            var spoDrive = GetCurrentDrive(path);
-            if (spoDrive == null) return;
+            //var source = GetFileOrFolder(path);
+            //if (source == null) return;
 
-            var targetUrl = GetServerRelativePath(copyPath);
-            var isTargetFile = targetUrl.Split(PathSeparator.ToCharArray()).Last().Contains(".");
-            var targetFolderPath = (isTargetFile) ? GetParentServerRelativePath(targetUrl) : targetUrl;
-            var targetFolder = spoDrive.Web.EnsureFolderPath(PathSeparator + GetWebRelativePath(targetFolderPath));
+            //var spoDrive = GetCurrentDrive(path);
+            //if (spoDrive == null) return;
 
-            if (ShouldProcess(string.Format("Copy {0} to {1}", GetServerRelativePath(path), targetUrl)))
-            {
-                if (source is File)
-                {
-                    var sourceFile = source as File;
-                    if (isTargetFile)
-                    {
-                        sourceFile.CopyTo(targetUrl, Force);
-                    }
-                    else
-                    {
-                        sourceFile.CopyTo(targetFolderPath + PathSeparator + sourceFile.Name, Force);
-                    }
-                    sourceFile.Context.ExecuteQueryRetry();
-                }
-                else if (source is Folder && !isTargetFile)
-                {
-                    var sourceFolder = source as Folder;
-                    var folderAndFiles = GetFolderItems(sourceFolder);
+            //var targetUrl = GetServerRelativePath(copyPath);
+            //var isTargetFile = targetUrl.Split(PathSeparator.ToCharArray()).Last().Contains(".");
+            //var targetFolderPath = (isTargetFile) ? GetParentServerRelativePath(targetUrl) : targetUrl;
+            //var targetWeb = FindWebInPath(targetFolderPath);
+            //if (targetWeb == null)
+            //{
+            //    var msg = "Target web not found";
+            //    var err = new FileNotFoundException();
+            //    WriteErrorInternal(msg, path, ErrorCategory.ObjectNotFound, exception: err);
+            //    return;
+            //}
 
-                    foreach (var folder in folderAndFiles.OfType<Folder>())
-                    {
-                        var newSubFolder = targetFolder.CreateFolder(folder.Name);
-                        if (recurse)
-                        {
-                            CopyItem(folder.ServerRelativeUrl, newSubFolder.ServerRelativeUrl, recurse);
-                        }
-                    }
-                    foreach (var file in folderAndFiles.OfType<File>())
-                    {
-                        file.CopyTo(targetFolderPath + PathSeparator + file.Name, Force);
-                        file.Context.ExecuteQueryRetry();
-                    }
-                }
-                else
-                {
-                    WriteErrorInternal("Operation not supported", path, ErrorCategory.InvalidOperation);
-                }
-            }
+            //var copyToSameSiteCollection = IsInSameSiteCollection(spoDrive.Web, targetWeb);
+            //var targetFolder = spoDrive.Web.EnsureFolderPath(PathSeparator + GetWebRelativePath(targetFolderPath));
+
+            //if (ShouldProcess(string.Format("Copy {0} to {1}", GetServerRelativePath(path), targetUrl)))
+            //{
+            //    if (source is File)
+            //    {
+            //        var sourceFile = source as File;
+            //        var targetFilePath = (isTargetFile) ? targetUrl : targetFolderPath + PathSeparator + sourceFile.Name;
+
+            //        if (copyToSameSiteCollection)
+            //        {
+
+
+            //            sourceFile.CopyTo(targetFilePath, Force);
+            //            sourceFile.Context.ExecuteQueryRetry();
+            //        }
+            //        else
+            //        {
+            //            var sourceStream = sourceFile.OpenBinaryStream();
+            //            sourceFile.Context.ExecuteQueryRetry();
+
+            //            File.SaveBinaryDirect(targetFolder.Context as ClientContext, targetFilePath, sourceStream.Value, Force);
+            //        }
+            //    }
+            //    else if (source is Folder && !isTargetFile)
+            //    {
+            //        var sourceFolder = source as Folder;
+            //        var folderAndFiles = GetFolderItems(sourceFolder);
+
+            //        foreach (var folder in folderAndFiles.OfType<Folder>())
+            //        {
+            //            var newSubFolder = targetFolder.CreateFolder(folder.Name);
+            //            if (recurse)
+            //            {
+            //                CopyItem(folder.ServerRelativeUrl, newSubFolder.ServerRelativeUrl, recurse);
+            //            }
+            //        }
+            //        foreach (var file in folderAndFiles.OfType<File>())
+            //        {
+            //            //file.CopyTo(targetFolderPath + PathSeparator + file.Name, Force);
+            //            //file.Context.ExecuteQueryRetry();
+            //            CopyItem(file.ServerRelativeUrl, targetFolderPath, recurse);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        WriteErrorInternal("Operation not supported", path, ErrorCategory.InvalidOperation);
+            //    }
+            //}
         }
 
         protected override void MoveItem(string path, string destination)
         {
             WriteVerbose(string.Format("SPOProvider::CopyItem (Path = ’{0}’, destination = ’{1}’)", path, destination));
 
-            if (!IsSameDrive(path, destination))
-            {
-                var msg = "Move between drives is not implemented, yet";
-                var err = new NotImplementedException(msg);
-                WriteErrorInternal(msg, path, ErrorCategory.NotImplemented, exception: err);
-                return;
-            }
+            CopyMoveImplementation(path, destination, true, false);
 
-            var source = GetFileOrFolder(path);
-            if (source == null) return;
+            //if (!IsSameDrive(path, destination))
+            //{
+            //    var msg = "Move between drives is not implemented, yet";
+            //    var err = new NotImplementedException(msg);
+            //    WriteErrorInternal(msg, path, ErrorCategory.NotImplemented, exception: err);
+            //    return;
+            //}
 
-            var spoDrive = GetCurrentDrive(path);
-            if (spoDrive == null) return;
+            //var source = GetFileOrFolder(path);
+            //if (source == null) return;
 
-            var targetUrl = GetServerRelativePath(destination);
-            var isTargetFile = targetUrl.Split(PathSeparator.ToCharArray()).Last().Contains(".");
-            var targetFolderPath = (isTargetFile) ? GetParentServerRelativePath(targetUrl) : targetUrl;
-            var targetFolder = spoDrive.Web.EnsureFolderPath(GetWebRelativePath(targetFolderPath));
-            var moveToOperations = (Force) ? MoveOperations.Overwrite : MoveOperations.None;
+            //var spoDrive = GetCurrentDrive(path);
+            //if (spoDrive == null) return;
 
-            if (ShouldProcess(string.Format("Move {0} to {1}", GetServerRelativePath(path), targetUrl)))
-            {
-                if (source is File)
-                {
-                    var sourceFile = source as File;
-                    if (isTargetFile)
-                    {
-                        sourceFile.MoveTo(targetUrl, moveToOperations);
-                    }
-                    else
-                    {
-                        sourceFile.MoveTo(targetFolderPath + PathSeparator + sourceFile.Name, moveToOperations);
-                    }
-                    sourceFile.Context.ExecuteQueryRetry();
+            //var targetUrl = GetServerRelativePath(destination);
+            //var isTargetFile = targetUrl.Split(PathSeparator.ToCharArray()).Last().Contains(".");
+            //var targetFolderPath = (isTargetFile) ? GetParentServerRelativePath(targetUrl) : targetUrl;
+            //var targetFolder = spoDrive.Web.EnsureFolderPath(GetWebRelativePath(targetFolderPath));
+            //var moveToOperations = (Force) ? MoveOperations.Overwrite : MoveOperations.None;
 
-                }
-                else if (source is Folder && !isTargetFile)
-                {
-                    var sourceFolder = source as Folder;
-                    var folderAndFiles = GetFolderItems(sourceFolder);
+            //if (ShouldProcess(string.Format("Move {0} to {1}", GetServerRelativePath(path), targetUrl)))
+            //{
+            //    if (source is File)
+            //    {
+            //        var sourceFile = source as File;
+            //        if (isTargetFile)
+            //        {
+            //            sourceFile.MoveTo(targetUrl, moveToOperations);
+            //        }
+            //        else
+            //        {
+            //            sourceFile.MoveTo(targetFolderPath + PathSeparator + sourceFile.Name, moveToOperations);
+            //        }
+            //        sourceFile.Context.ExecuteQueryRetry();
 
-                    //Create new folders recursively
-                    foreach (var folder in folderAndFiles.OfType<Folder>())
-                    {
-                        var newSubFolder = targetFolder.CreateFolder(folder.Name);
-                        MoveItem(folder.ServerRelativeUrl, newSubFolder.ServerRelativeUrl);
-                    }
-                    //Move files
-                    foreach (var file in folderAndFiles.OfType<File>())
-                    {
-                        file.MoveTo(targetFolderPath + PathSeparator + file.Name, moveToOperations);
-                        file.Context.ExecuteQueryRetry();
-                    }
-                    //Remove source folders
-                    sourceFolder.DeleteObject();
-                    spoDrive.Web.Context.ExecuteQueryRetry();
-                }
-                else
-                {
-                    WriteErrorInternal("Operation not supported", path, ErrorCategory.InvalidOperation);
-                }
-            }
+            //    }
+            //    else if (source is Folder && !isTargetFile)
+            //    {
+            //        var sourceFolder = source as Folder;
+            //        var folderAndFiles = GetFolderItems(sourceFolder);
+
+            //        //Create new folders recursively
+            //        foreach (var folder in folderAndFiles.OfType<Folder>())
+            //        {
+            //            var newSubFolder = targetFolder.CreateFolder(folder.Name);
+            //            MoveItem(folder.ServerRelativeUrl, newSubFolder.ServerRelativeUrl);
+            //        }
+            //        //Move files
+            //        foreach (var file in folderAndFiles.OfType<File>())
+            //        {
+            //            file.MoveTo(targetFolderPath + PathSeparator + file.Name, moveToOperations);
+            //            file.Context.ExecuteQueryRetry();
+            //        }
+            //        //Remove source folders
+            //        sourceFolder.DeleteObject();
+            //        spoDrive.Web.Context.ExecuteQueryRetry();
+            //    }
+            //    else
+            //    {
+            //        WriteErrorInternal("Operation not supported", path, ErrorCategory.InvalidOperation);
+            //    }
+            //}
 
         }
 
         protected override void RenameItem(string path, string newName)
         {
-            MoveItem(path, GetParentServerRelativePath(path) + PathSeparator + newName);
+            WriteVerbose(string.Format("SPOProvider::RenameItem (Path = ’{0}’)", path));
+
+            if (newName.Contains(PathSeparator))
+            {
+                var msg = "Name can not contain path separator";
+                var err = new ArgumentException(msg);
+                WriteErrorInternal(msg, path, ErrorCategory.InvalidArgument, true, err);
+                return;
+            }
+            CopyMoveImplementation(path, GetParentServerRelativePath(path) + PathSeparator + newName, true, false);
         }
 
         protected override void RemoveItem(string path, bool recurse)
         {
-            WriteVerbose(string.Format("SPOProvider::CopyItem (Path = ’{0}’)", path));
+            WriteVerbose(string.Format("SPOProvider::RemoveItem (Path = ’{0}’)", path));
 
-            var obj = GetFileOrFolder(path);
+            var obj = GetFileOrFolder(path) as ClientObject;
 
             if (obj != null && ShouldProcess(GetServerRelativePath(path), string.Format("{0} {1}", (Force) ? "Delete" : "Recycle", obj.GetType().Name)))
             {
@@ -431,7 +472,6 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     {
                         folder.Recycle();
                     }
-
                     folder.Context.ExecuteQueryRetry();
                 }
             }
@@ -565,8 +605,9 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             return null;
         }
 
+        #region Helpers
 
-        //Helpers
+        //Get helpers
         private object GetFileOrFolder(string path, bool throwError = true)
         {
             var spoDrive = GetCurrentDrive(path);
@@ -577,14 +618,13 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
             //Try get cached item
             var fileOrFolder = GetCachedItem(serverRelativePath);
-            if (fileOrFolder != null) return fileOrFolder;
+            if (fileOrFolder != null) return fileOrFolder.Item;
 
-            var web = spoDrive.Web;
-            var ctx = spoDrive.Web.Context;
-
+            var web = FindWebInPath(serverRelativePath);
+            spoDrive.Web = web;
             var webUrl = IsPropertyAvailable(web, "ServerRelativeUrl") ? web.ServerRelativeUrl : web.EnsureProperty(w => w.ServerRelativeUrl);
 
-            //If web root return web root folder
+            //If path is current web root return root folder
             if (serverRelativePath.Equals(webUrl, StringComparison.InvariantCultureIgnoreCase))
             {
                 if (!IsPropertyAvailable(web, "RootFolder"))
@@ -595,13 +635,35 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 return web.RootFolder;
             }
 
-            //Determine if we should try file or folder first
-            var tryFileFirst = serverRelativePath.Split(PathSeparator.ToCharArray()).Last().Contains(".");
+            //Search object
+            var result = ExecuteObjectSearch(serverRelativePath, web);
+            if (result is File || result is Folder)
+            {
+                    SetCachedItem(serverRelativePath, result);
+                    return result;
+            }
 
+            //Cache not found item
+            SetCachedItem(serverRelativePath, null);
+
+            //Error
+            if (throwError && result is Exception)
+            {
+                var ex = result as Exception;
+                WriteErrorInternal(ex.Message, path, ErrorCategory.ObjectNotFound, exception: ex);
+            }
+
+            return null;
+        }
+
+        private object ExecuteObjectSearch(string serverRelativePath, Web web)
+        {
+            var ctx = web.Context;
             File file;
             Folder folder;
-
             var scope = new ExceptionHandlingScope(ctx);
+            var tryFileFirst = serverRelativePath.Split(PathSeparator.ToCharArray()).Last().Contains(".");
+
             if (tryFileFirst)
             {
                 using (scope.StartScope())
@@ -641,49 +703,54 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             }
             catch (Exception e)
             {
-                if (throwError)
-                {
-                    WriteErrorInternal(e.Message, path, ErrorCategory.ObjectNotFound, exception: e);
-                }
+                return e;
             }
-
 
             //Check if we got data
             if (IsPropertyAvailable(file, "Name"))
             {
-                SetCachedItem(serverRelativePath, file);
                 return file;
             }
             else if (IsPropertyAvailable(folder, "Name"))
             {
-                SetCachedItem(serverRelativePath, folder);
                 return folder;
             }
+
             return null;
         }
 
         private IEnumerable<object> GetFolderItems(Folder folder, bool throwError = false)
         {
+            var folderAndFiles = new List<object>();
             try
             {
                 if (folder != null)
                 {
-                    if (!IsPropertyAvailable(folder, "ServerRelativeUrl"))
-                    {
-                        folder.EnsureProperty(f => f.ServerRelativeUrl);
-                    }
-                    var folderAndFiles = GetCachedChildItems(folder.ServerRelativeUrl);
-                    if (folderAndFiles != null) return folderAndFiles;
+                    var serverRelativePath = GetServerRelativePath(IsPropertyAvailable(folder, "ServerRelativeUrl") ? folder.ServerRelativeUrl : folder.EnsureProperty(f => f.ServerRelativeUrl));
 
+                    var cachedFolderAndFiles = GetCachedChildItems(serverRelativePath);
+                    if (cachedFolderAndFiles != null) return cachedFolderAndFiles;
+
+                    var ctx = folder.Context as ClientContext;
+
+                    if (ctx != null)
+                    {
+                        var webUrl = GetServerRelativePath(IsPropertyAvailable(ctx.Web, "ServerRelativeUrl") ? ctx.Web.ServerRelativeUrl : ctx.Web.EnsureProperty(w => w.ServerRelativeUrl));
+                        if (serverRelativePath.Equals(webUrl, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            var subWebs = ctx.Web.EnsureProperty(w => w.Webs.Include(sw => sw.RootFolder));
+                            folderAndFiles.AddRange(subWebs.Select(subWeb => subWeb.RootFolder));
+                        }
+                    }
 
                     var files = folder.Context.LoadQuery(folder.Files).OrderBy(f => f.Name);
                     var folders = folder.Context.LoadQuery(folder.Folders).OrderBy(f => f.Name);
                     folder.Context.ExecuteQueryRetry();
 
-                    folderAndFiles = folders.Concat<object>(files);
-                    SetCachedChildItems(folder.ServerRelativeUrl, folderAndFiles);
+                    folderAndFiles.AddRange(folders);
+                    folderAndFiles.AddRange(files);
+                    SetCachedChildItems(serverRelativePath, folderAndFiles);
 
-                    return folderAndFiles;
                 }
             }
             catch (Exception e)
@@ -693,9 +760,169 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     WriteErrorInternal(e.Message, "GetFolderItems", exception: e);
                 }
             }
+            return folderAndFiles;
+        }
+
+        private Web FindWebInPath(string serverRelativePath)
+        {
+            var spoDrive = GetCurrentDrive(serverRelativePath);
+            if (spoDrive == null) return null;
+
+            var pathParts = serverRelativePath.Split(PathSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var webUrl = IsPropertyAvailable(spoDrive.Web, "Url") ? spoDrive.Web.Url : spoDrive.Web.EnsureProperty(w => w.Url);
+            var webUri = new Uri(webUrl);
+            var hostUrl = string.Format("{0}://{1}/", webUri.Scheme, webUri.Host);
+
+            for (var i = pathParts.Length; i >= 0; i--)
+            {
+                var path = string.Join(PathSeparator, pathParts.Take(i));
+                var fullUrl = hostUrl + path;
+                var partsServerRelativePath = PathSeparator + path;
+
+                try
+                {
+                    var cachedWeb = GetCachedWeb(partsServerRelativePath);
+                    if (cachedWeb == null)
+                    {
+                        var ctx = spoDrive.Web.Context.Clone(fullUrl);
+                        ctx.ExecuteQueryRetry();
+#if DEBUG
+                        SetCounter(ctx);
+#endif
+                        SetCachedWeb(partsServerRelativePath, ctx.Web);
+                        return ctx.Web;
+                    }
+                    else if (cachedWeb.Web != null)
+                    {
+                        return cachedWeb.Web;
+                    }
+                }
+                catch
+                {
+                    SetCachedWeb(partsServerRelativePath, null);
+                }
+            }
             return null;
         }
 
+        private void SetCounter(ClientRuntimeContext ctx)
+        {
+            ctx.ExecutingWebRequest += (sender, args) =>
+            {
+                var counter = (int)SessionState.PSVariable.Get("WebRequestCounter").Value;
+                counter++;
+                SessionState.PSVariable.Set("WebRequestCounter", counter);
+            };
+        }
+
+        //Copymove helpers
+        private void CopyMoveImplementation(string sourcePath, string targetPath, bool recurse = false, bool isCopyOperation = true, bool reCreateSourceFolder = true)
+        {
+            if (!IsSameDrive(sourcePath, targetPath))
+            {
+                var msg = "Copy between drives is not implemented, yet";
+                var err = new NotImplementedException(msg);
+                WriteErrorInternal(msg, sourcePath, ErrorCategory.NotImplemented, true, err);
+                return;
+            }
+
+            var source = GetFileOrFolder(sourcePath) as ClientObject;
+            if (source == null) return;
+
+            var spoDrive = GetCurrentDrive(sourcePath);
+            if (spoDrive == null) return;
+
+            var targetUrl = GetServerRelativePath(targetPath);
+            var targetIsFile = targetUrl.Split(PathSeparator.ToCharArray()).Last().Contains(".");
+            var targetFolderPath = (targetIsFile) ? GetParentServerRelativePath(targetUrl) : targetUrl;
+            var sourceWeb = ((ClientContext)source.Context).Web;
+            var targetWeb = FindWebInPath(targetFolderPath);
+
+            if (targetWeb == null)
+            {
+                var msg = "Target web not found";
+                var err = new FileNotFoundException(msg);
+                WriteErrorInternal(msg, sourcePath, ErrorCategory.ObjectNotFound, true, err);
+                return;
+            }
+
+            var isSameWeb = IsSameWeb(sourceWeb, targetWeb);
+            var targetFolder = GetFileOrFolder(targetFolderPath, false) as Folder;
+            var endOfPathFolderCreated = false;
+            if (targetFolder == null)
+            {
+                endOfPathFolderCreated = true;
+                targetFolder = targetWeb.EnsureFolderPath(PathSeparator + GetWebRelativePath(targetFolderPath));
+            }
+
+            if (ShouldProcess(string.Format("{0} to {1}", GetServerRelativePath(sourcePath), targetUrl)))
+            {
+                if (source is File)
+                {
+                    var sourceFile = source as File;
+                    var targetFilePath = (targetIsFile) ? targetUrl : targetFolderPath + PathSeparator + sourceFile.Name;
+
+                    if (isSameWeb)
+                    {
+                        if (isCopyOperation)
+                        {
+                            sourceFile.CopyTo(targetFilePath, Force);
+                        }
+                        else
+                        {
+                            var moveToOperations = (Force) ? MoveOperations.Overwrite : MoveOperations.None;
+                            sourceFile.MoveTo(targetFilePath, moveToOperations);
+                        }
+                        sourceFile.Context.ExecuteQueryRetry();
+                    }
+                    else
+                    {
+                        var sourceStream = sourceFile.OpenBinaryStream();
+                        sourceFile.Context.ExecuteQueryRetry();
+
+                        targetFolder.UploadFile(targetFilePath.Split(PathSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Last(), sourceStream.Value, Force);
+
+                        if (!isCopyOperation)
+                        {
+                            sourceFile.DeleteObject();
+                            sourceFile.Context.ExecuteQueryRetry();
+                        }
+                    }
+                }
+                else if (source is Folder && !targetIsFile)
+                {
+                    var sourceFolder = source as Folder;
+
+                    var rootFolder = (endOfPathFolderCreated || !reCreateSourceFolder) ? targetFolder : targetFolder.CreateFolder(sourceFolder.Name);
+                    var folderAndFiles = GetFolderItems(sourceFolder);
+
+                    foreach (var folder in folderAndFiles.OfType<Folder>())
+                    {
+                        var subFolder = rootFolder.CreateFolder(folder.Name);
+                        if (recurse)
+                        {
+                            CopyMoveImplementation(folder.ServerRelativeUrl, subFolder.ServerRelativeUrl, recurse, isCopyOperation, false);
+                        }
+                    }
+                    foreach (var file in folderAndFiles.OfType<File>())
+                    {
+                        CopyMoveImplementation(file.ServerRelativeUrl, rootFolder.ServerRelativeUrl, recurse, isCopyOperation);
+                    }
+
+                    if (!isCopyOperation)
+                    {
+                        sourceFolder.DeleteObject();
+                        sourceFolder.Context.ExecuteQueryRetry();
+                    }
+                }
+                else
+                {
+                    WriteErrorInternal("Operation not supported", sourcePath, ErrorCategory.InvalidOperation);
+                }
+            }
+        }
+
+        //Drive helpers
         private SPODriveInfo GetCurrentDrive(string path)
         {
             return PSDriveInfo as SPODriveInfo ?? GetDrive(path);
@@ -707,45 +934,75 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             return ProviderInfo.Drives.FirstOrDefault(d => path.StartsWith(d.Name, StringComparison.InvariantCultureIgnoreCase)) as SPODriveInfo;
         }
 
-        private bool ValidateRoot(SPODriveInfo spoDrive)
+        private string RemoveDriveFromPath(string path)
         {
-            if (!spoDrive.NormalizedRoot.StartsWith(PathSeparator)) return false;
+            if (string.IsNullOrEmpty(path)) return path;
 
-            if (spoDrive.Root.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
-            {
-                var webUrl = IsPropertyAvailable(spoDrive.Web, "Url") ? spoDrive.Web.Url : spoDrive.Web.EnsureProperty(w => w.Url);
-                if (!spoDrive.Root.StartsWith(webUrl))
-                {
-                    return false;
-                }
-            }
+            var spoDrive = GetCurrentDrive(path);
+            if (spoDrive == null) return path;
 
-            var webRelativeUrl = IsPropertyAvailable(spoDrive.Web, "ServerRelativeUrl") ? spoDrive.Web.ServerRelativeUrl : spoDrive.Web.EnsureProperty(w => w.ServerRelativeUrl);
-            if (spoDrive.NormalizedRoot.StartsWith(webRelativeUrl, StringComparison.InvariantCultureIgnoreCase))
-            {
-                //Try get root folder
-                try
-                {
-                    var rootFolder = spoDrive.Web.GetFolderByServerRelativeUrl(spoDrive.NormalizedRoot);
-                    spoDrive.Web.Context.ExecuteQueryRetry();
-                    if (rootFolder != null)
-                    {
-                        return true;
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            return false;
+            var result = Regex.Replace(path, string.Format(@"^{0}:", spoDrive.Name), string.Empty);
+            //if (removeRoot) result = Regex.Replace(result, string.Format(@"^{0}", spoDrive.NormalizedRoot), string.Empty);
+
+            return result;
+
         }
 
+        private bool IsPathDrive(string path)
+        {
+            var spoDrive = GetCurrentDrive(path);
+            if (spoDrive == null) return false;
+
+            var normalizedPath = GetServerRelativePath(path);
+            return normalizedPath.Equals(spoDrive.Root, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        private bool IsSameDrive(string path1, string path2)
+        {
+            var drive1 = GetDrive(path1);
+            var drive2 = GetDrive(path2);
+
+            return (drive1 == drive2);
+        }
+
+        private void SetDriveWeb(string path, Web web)
+        {
+            var spoDrive = GetCurrentDrive(path);
+            if (spoDrive == null) return;
+
+            spoDrive.Web = web;
+        }
+
+        //Validate helpers
         private bool IsPropertyAvailable(ClientObject clientObject, string propertyName)
         {
             return clientObject.IsObjectPropertyInstantiated(propertyName) || clientObject.IsPropertyAvailable(propertyName);
         }
 
+        private bool IsInSameSiteCollection(Web web1, Web web2)
+        {
+            var ctx1 = web1.Context as ClientContext;
+            var ctx2 = web2.Context as ClientContext;
+
+            if (ctx1 == null || ctx2 == null) return false;
+
+            ctx1.Load(ctx1.Site, s => s.Url);
+            ctx2.Load(ctx2.Site, s => s.Url);
+            ctx1.ExecuteQueryRetry();
+            ctx2.ExecuteQueryRetry();
+
+            return ctx1.Site.Url.Equals(ctx2.Site.Url);
+        }
+
+        private bool IsSameWeb(Web web1, Web web2)
+        {
+            var url1 = IsPropertyAvailable(web1, "Id") ? web1.Url : web1.EnsureProperty(w => w.Url);
+            var url2 = IsPropertyAvailable(web2, "Id") ? web2.Url : web2.EnsureProperty(w => w.Url);
+
+            return url1.Equals(url2);
+        }
+
+        //Error helpers
         internal void WriteErrorInternal(string message, object path, ErrorCategory errorCategory = ErrorCategory.NotSpecified, bool terminate = false, Exception exception = null)
         {
             exception = exception ?? new Exception(message);
@@ -767,9 +1024,12 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var spoDrive = GetCurrentDrive(path);
             if (spoDrive == null) return null;
 
-            var normalizedChild = NormalizePath(path);
-            var childWithoutDriveAndRoot = RemoveDriveFromPath(normalizedChild);
-            var normalizePath = NormalizePath(spoDrive.NormalizedRoot + PathSeparator + childWithoutDriveAndRoot, true);
+            var normalizePath = NormalizePath(path);
+            normalizePath = RemoveDriveFromPath(normalizePath);
+            if (!normalizePath.StartsWith(PathSeparator))
+            {
+                normalizePath = NormalizePath(spoDrive.Root.TrimEnd(PathSeparator.ToCharArray()) + PathSeparator + normalizePath);
+            }
             return normalizePath;
         }
 
@@ -800,79 +1060,28 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             return result;
         }
 
-        private string NormalizePath(string path, bool removeDuplicatePathSeparators = false)
+        private string NormalizePath(string path)
         {
             if (string.IsNullOrEmpty(path)) return path;
 
             var result = Regex.Replace(path, @"\\", PathSeparator);
-            if (removeDuplicatePathSeparators) result = Regex.Replace(result, @"/{2,}", PathSeparator);
-            if (Regex.IsMatch(result, string.Format(@"[^{0}]{{1,}}", PathSeparator))) result = result.TrimEnd(PathSeparator.ToCharArray());
+            //result = result.Replace("*", string.Empty);
+            result = Regex.Replace(result, @"/{2,}", PathSeparator);
+            result = result.TrimEnd(PathSeparator.ToCharArray());
+            result = string.IsNullOrEmpty(result) ? PathSeparator : result;
 
             return result;
-        }
-
-        private string NormalizeRoot(SPODriveInfo spoDrive)
-        {
-            var root = spoDrive.Root;
-            if (root.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Uri uri;
-                if (Uri.TryCreate(root, UriKind.Absolute, out uri))
-                {
-                    root = uri.AbsolutePath;
-                }
-            }
-
-            var normalizedRoot = NormalizePath(root + PathSeparator, true);
-            var webRelativeUrl = IsPropertyAvailable(spoDrive.Web, "ServerRelativeUrl") ? spoDrive.Web.ServerRelativeUrl : spoDrive.Web.EnsureProperty(w => w.ServerRelativeUrl);
-
-            if (!normalizedRoot.StartsWith(webRelativeUrl))
-            {
-                normalizedRoot = NormalizePath(webRelativeUrl + PathSeparator + normalizedRoot);
-            }
-
-            return normalizedRoot;
-        }
-
-        private string RemoveDriveFromPath(string path, bool removeRoot = true)
-        {
-            if (string.IsNullOrEmpty(path)) return path;
-
-            var spoDrive = GetCurrentDrive(path);
-            if (spoDrive == null) return path;
-
-            var result = Regex.Replace(path, string.Format(@"^{0}:", spoDrive.Name), string.Empty);
-            if (removeRoot) result = Regex.Replace(result, string.Format(@"^{0}", spoDrive.NormalizedRoot), string.Empty);
-
-            return result;
-
-        }
-
-        private bool PathIsDrive(string path)
-        {
-            var spoDrive = GetCurrentDrive(path);
-            if (spoDrive == null) return false;
-
-            var normalizedPath = GetServerRelativePath(path);
-            return normalizedPath.Equals(spoDrive.NormalizedRoot, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        private bool IsSameDrive(string path1, string path2)
-        {
-            var drive1 = GetDrive(path1);
-            var drive2 = GetDrive(path2);
-
-            return (drive1 == drive2);
         }
 
         //Cache helpers
-        private object GetCachedItem(string serverRelativePath)
+        private SPODriveCacheItem GetCachedItem(string serverRelativePath)
         {
             var spoDrive = GetCurrentDrive(serverRelativePath);
             if (spoDrive == null) return null;
 
-            var cachedItem = spoDrive.CachedItems.FirstOrDefault(c => c.Path == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.Timeout);
-            return (cachedItem != null) ? cachedItem.Item : null;
+            var cachedItem = spoDrive.CachedItems.FirstOrDefault(c => c.Path == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.ItemTimeout);
+            //return (cachedItem != null) ? cachedItem.Item : null;
+            return cachedItem;
 
         }
 
@@ -895,7 +1104,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var spoDrive = GetCurrentDrive(serverRelativePath);
             if (spoDrive == null) return null;
 
-            var childItems = spoDrive.CachedItems.Where(c => GetParentServerRelativePath(c.Path) == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.Timeout);
+            var childItems = spoDrive.CachedItems.Where(c => GetParentServerRelativePath(c.Path) == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.ItemTimeout);
             return childItems.Any() ? childItems.Select(c => c.Item) : null;
         }
 
@@ -907,20 +1116,45 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             foreach (var item in childItems)
             {
                 var name = string.Empty;
-                var folder = item as Folder;
-                var file = item as File;
 
-                if (folder != null)
+                if (item is Folder)
                 {
-                    name = folder.Name;
+                    var folder = item as Folder;
+                    name = string.IsNullOrEmpty(folder.Name) ? folder.ServerRelativeUrl.Split(PathSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Last() : folder.Name;
                 }
-                else if (file != null)
+                else if (item is File)
                 {
+                    var file = item as File;
                     name = file.Name;
                 }
                 SetCachedItem(parentServerRelativePath.TrimEnd(PathSeparator.ToCharArray()) + PathSeparator + name, item);
             }
         }
 
+        private SPODriveCacheWeb GetCachedWeb(string serverRelativePath)
+        {
+            var spoDrive = GetCurrentDrive(serverRelativePath);
+            if (spoDrive == null) return null;
+
+            var result = spoDrive.CachedWebs.FirstOrDefault(c => c.Path == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.ItemTimeout * 100);
+            return result;
+
+        }
+
+        private void SetCachedWeb(string serverRelativePath, Web web)
+        {
+            var spoDrive = GetCurrentDrive(serverRelativePath);
+            if (spoDrive == null) return;
+
+            spoDrive.CachedWebs.RemoveAll(c => c.Path.Equals(serverRelativePath));
+            spoDrive.CachedWebs.Add(new SPODriveCacheWeb
+            {
+                Web = web,
+                Path = serverRelativePath,
+                LastRefresh = DateTime.Now
+            });
+        }
+
+        #endregion
     }
 }

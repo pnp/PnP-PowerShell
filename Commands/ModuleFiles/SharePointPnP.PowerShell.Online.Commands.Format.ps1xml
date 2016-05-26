@@ -569,6 +569,10 @@
         <TypeName>Microsoft.SharePoint.Client.File</TypeName>
         <TypeName>Microsoft.SharePoint.Client.Folder</TypeName>
       </ViewSelectedBy>
+      <GroupBy>
+        <ScriptBlock>$_.PSPath.Replace("SharePointPnPPowerShellOnline\SPO::", "")</ScriptBlock>
+        <Label>Folder</Label>
+      </GroupBy>
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
@@ -596,18 +600,32 @@
           <TableRowEntry>
             <TableColumnItems>
               <TableColumnItem>
-                <PropertyName>Name</PropertyName>
+                <ScriptBlock>
+                  if($_.Name -eq ""){
+                  $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexof("/") + 1)
+                  }
+                  else{
+                  $_.Name
+                  }
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <ScriptBlock>$_.GetType().Name</ScriptBlock>
+                <ScriptBlock>
+                  if($_.GetType().Name -eq "Folder" -and $_.Name -eq ""){
+                    "Folder (subweb)"
+                  }
+                  else{
+                    $_.GetType().Name
+                  }
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "File"){
-                  $_.Length
+                    $_.Length
                   }
                   else{
-                  $_.ItemCount
+                    $_.ItemCount
                   }
                 </ScriptBlock>
               </TableColumnItem>

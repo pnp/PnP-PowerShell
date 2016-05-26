@@ -12,10 +12,13 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         public string Url { get; set; }
 
         [Parameter()]
-        public int CacheTimeout { get; set; }
+        public int ItemCacheTimeout { get; set; }
 
         [Parameter()]
-        public SwitchParameter UseCurrentSPOContext { get; set; }
+        public int WebCacheTimeout { get; set; }
+
+        [Parameter()]
+        public ClientRuntimeContext Context { get; set; }
 
     }
 }

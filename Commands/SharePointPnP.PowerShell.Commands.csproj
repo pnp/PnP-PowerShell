@@ -443,6 +443,7 @@
     <Compile Include="Principals\SetGroup.cs" />
     <Compile Include="Provider\SPOContentParameters.cs" />
     <Compile Include="Provider\SPOContentReaderWriter.cs" />
+    <Compile Include="Provider\SPODriveCacheWeb.cs" />
     <Compile Include="Provider\SPODriveCacheItem.cs" />
     <Compile Include="Provider\SPODriveInfo.cs" />
     <Compile Include="Provider\SPODriveParameters.cs" />
