@@ -4,7 +4,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 {
     public class SPOContentParameters
     {
-        [Parameter()]
+        [Parameter(HelpMessage = "Handle the input/output as binary data")]
         public SwitchParameter IsBinary { get; set; }
     }
 }
