@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         private const string Pattern = @"^[\\w\\d\\.\\s]*$";
         private const string PathSeparator = "/";
         private const int DefaultItemCacheTimeout = 1000; //1 second default caching of file/folder object
-        private const int DefaultWebCacheTimeout = 1000 * 60 * 10; //10 minutes default caching of Web object
+        private const int DefaultWebCacheTimeout = 1000 * 60 * 10; //10 minutes default caching of web object
 
         //Init
         protected override ProviderInfo Start(ProviderInfo providerInfo)
