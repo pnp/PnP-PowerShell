@@ -444,7 +444,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
                 if (ShouldProcess(string.Format("Set content in {0}", GetServerRelativePath(path))))
                 {
-                    return new SPOContentReaderWriter(file, isBinary, provider: this);
+                    return new SPOContentReaderWriter(file, isBinary);
                 }
             }
 
