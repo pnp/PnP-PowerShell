@@ -10,13 +10,14 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 {
     internal class SPOContentReaderWriter : IContentReader, IContentWriter
     {
+        //Private properties
         private readonly File _file;
         private MemoryStream _stream;
         private StreamReader _streamReader;
         private StreamWriter _streamWriter;
         private readonly bool _isBinary;
 
-        public SPOContentReaderWriter(File file, bool isBinary, CmdletProvider provider = null)
+        public SPOContentReaderWriter(File file, bool isBinary)
         {
             _file = file;
             _isBinary = isBinary;
@@ -127,6 +128,5 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 _stream = null;
             }
         }
-
     }
 }
