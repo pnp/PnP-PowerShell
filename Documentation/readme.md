@@ -65,6 +65,7 @@ Cmdlet|Description
 :-----|:----------
 **[Remove&#8209;SPOContentTypeFromDocumentSet](RemoveSPOContentTypeFromDocumentSet.md)** |Removes a content type from a document set
 **[Add&#8209;SPOContentTypeToDocumentSet](AddSPOContentTypeToDocumentSet.md)** |Adds a content type to a document set
+**[Add&#8209;SPODocumentSet](AddSPODocumentSet.md)** |Creates a new document set in a library.
 **[Set&#8209;SPODocumentSetField](SetSPODocumentSetField.md)** |Sets a site column from the avaiable content types to a document set
 **[Get&#8209;SPODocumentSetTemplate](GetSPODocumentSetTemplate.md)** |Retrieves a document set template
 ##Event Receivers

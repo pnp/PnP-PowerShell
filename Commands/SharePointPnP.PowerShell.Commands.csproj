@@ -391,6 +391,7 @@
     <Compile Include="ContentTypes\RemoveContentTypeFromList.cs" />
     <Compile Include="ContentTypes\SetDefaultContentTypeToList.cs" />
     <Compile Include="ContentTypes\AddContentTypeToList.cs" />
+    <Compile Include="DocumentSets\AddDocumentSet.cs" />
     <Compile Include="DocumentSets\GetDocumentSetTemplate.cs" />
     <Compile Include="DocumentSets\RemoveContentTypeFromDocumentSet.cs" />
     <Compile Include="DocumentSets\AddContentTypeToDocumentSet.cs" />
