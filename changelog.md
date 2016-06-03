@@ -1,5 +1,8 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2016-06-03**
+* Added Add-SPODocumentSet cmdlet
+
 **2016-06-02**
 * Added Enable-SPOResponsiveUI and Disable-SPOResponsiveUI cmdlets
 * Added -CreateDrive parameter to Connect-SPOnline cmdlet, allowing to create a virtual drive into a SharePoint site
