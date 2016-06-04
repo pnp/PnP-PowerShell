@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using web = Microsoft.SharePoint.Client.Web;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.InvokeAction;
@@ -11,7 +12,7 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebPnP
 {
     [Cmdlet("Invoke", "SPOWebAction", SupportsShouldProcess = true)]
     [CmdletHelp("Executes operations on web, lists, list items.",
@@ -27,19 +28,19 @@ namespace SharePointPnP.PowerShell.Commands
     public class InvokeWebAction : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Webs you want to process (for example diffrent site collections), will use Web parameter if not specified")]
-        public Web[] Webs;
+        public web[] Webs;
 
         [Parameter(Mandatory = false, HelpMessage = "Function to be exectued on the web. There is one input parameter of type Web")]
-        public Action<Web> WebAction;
+        public Action<web> WebAction;
 
         [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web that would decide if " + nameof(WebAction) + " should be invoked, There is one input parameter of type Web and the function should return a bool value")]
-        public Func<Web, bool> ShouldProcessWebAction;
+        public Func<web, bool> ShouldProcessWebAction;
 
         [Parameter(Mandatory = false, HelpMessage = "Function to be exectued on the web, this will trigger after lists and list items have been proccessed. There is one input parameter of type Web")]
-        public Action<Web> PostWebAction;
+        public Action<web> PostWebAction;
 
         [Parameter(Mandatory = false, HelpMessage = "Function to be executed on the web that would decide if " + nameof(PostWebAction) + " should be invoked, There is one input parameter of type Web and the function should return a bool value")]
-        public Func<Web, bool> ShouldProcessPostWebAction;
+        public Func<web, bool> ShouldProcessPostWebAction;
 
         [Parameter(Mandatory = false, HelpMessage = "The properties to load for web.")]
         public string[] WebProperties;
@@ -90,7 +91,7 @@ namespace SharePointPnP.PowerShell.Commands
                 return;
             }
 
-            InvokeActionParameter<Web> webActions = new InvokeActionParameter<Web>()
+            InvokeActionParameter<web> webActions = new InvokeActionParameter<web>()
             {
                 Action = WebAction,
                 ShouldProcessAction = ShouldProcessWebAction,
@@ -118,7 +119,7 @@ namespace SharePointPnP.PowerShell.Commands
             InvokeAction.InvokeWebAction invokeAction;
             if (string.IsNullOrEmpty(ListName))
             {
-                IEnumerable<Web> websToProcess;
+                IEnumerable<web> websToProcess;
                 if (Webs == null || Webs.Length == 0)
                     websToProcess = new[] { SelectedWeb };
                 else

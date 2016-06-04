@@ -3,7 +3,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebPnP
 {
     [Cmdlet(VerbsCommon.Add, "SPOIndexedProperty")]
     [CmdletHelp("Marks the value of the propertybag key to be indexed by search.",

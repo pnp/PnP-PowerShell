@@ -2,7 +2,7 @@
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebPnP
 {
     [Cmdlet(VerbsCommon.Get, "SPOMasterPage")]
     [CmdletHelp("Returns the URLS of the default Master Page and the custom Master Page.", 

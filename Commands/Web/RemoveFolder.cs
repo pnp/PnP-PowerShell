@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebPnP
 {
     [Cmdlet(VerbsCommon.Remove, "SPOFolder")]
     [CmdletHelp("Deletes a folder within a parent folder",

@@ -2,7 +2,7 @@
 using System.Management.Automation;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebPnP
 {
     [Cmdlet(VerbsLifecycle.Request, "SPOReIndexWeb")]
     [CmdletHelp("Marks the web for full indexing during the next incremental crawl",

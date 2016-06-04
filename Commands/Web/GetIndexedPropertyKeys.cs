@@ -2,7 +2,7 @@
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebPnP
 {
     [Cmdlet(VerbsCommon.Get, "SPOIndexedPropertyKeys")]
     [CmdletHelp("Returns the keys of the property bag values that have been marked for indexing by search",

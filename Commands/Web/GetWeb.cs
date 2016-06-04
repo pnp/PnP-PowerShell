@@ -4,7 +4,7 @@ using System;
 using System.Management.Automation;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebPnP
 {
     [Cmdlet(VerbsCommon.Get, "SPOWeb")]
     [CmdletHelp("Returns the current web object",

@@ -1,10 +1,11 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using web = Microsoft.SharePoint.Client.Web;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebPnP
 {
     [Cmdlet(VerbsCommon.Remove, "SPOWeb")]
     [CmdletHelp("Removes a subweb in the current web",
@@ -40,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             if (ParameterSetName == "ByIdentity")
             {
-                Web web = null;
+                web web = null;
                 if (Identity.Id != Guid.Empty)
                 {
                     web = ClientContext.Web.GetWebById(Identity.Id);
