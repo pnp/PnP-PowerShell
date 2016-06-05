@@ -5,7 +5,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 
-namespace SharePointPnP.PowerShell.Commands.WebPnP
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOWeb")]
     [CmdletHelp("Removes a subweb in the current web",

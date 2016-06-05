@@ -5,7 +5,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.WebPnP
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOPropertyBag")]
     [CmdletHelp("Returns the property bag values.",

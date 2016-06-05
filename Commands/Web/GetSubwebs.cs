@@ -5,7 +5,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.Commands.WebPnP
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOSubWebs")]
     [CmdletHelp("Returns the subwebs", 

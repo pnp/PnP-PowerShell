@@ -2,7 +2,7 @@
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.WebPnP
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet("Set", "SPOFileCheckedOut")]
     [CmdletHelp("Checks out a file",

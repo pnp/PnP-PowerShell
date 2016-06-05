@@ -2,7 +2,7 @@
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.WebPnP
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Find, "SPOFile")]
     [CmdletHelp("Finds a file in the virtual file system of the web.",

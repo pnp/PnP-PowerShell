@@ -8,7 +8,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands;
 using File = Microsoft.SharePoint.Client.File;
 
-namespace OfficeDevPnP.PowerShell.Commands.Web
+namespace OfficeDevPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOFolderItem")]
     [CmdletHelp("List content in folder", Category = CmdletHelpCategory.Webs)]

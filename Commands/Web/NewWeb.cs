@@ -2,7 +2,7 @@
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.WebPnP
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "SPOWeb")]
     [CmdletHelp("Creates a new subweb to the current web",

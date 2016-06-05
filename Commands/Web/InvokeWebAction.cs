@@ -12,7 +12,7 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.WebPnP
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet("Invoke", "SPOWebAction", SupportsShouldProcess = true)]
     [CmdletHelp("Executes operations on web, lists, list items.",

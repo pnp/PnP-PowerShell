@@ -5,7 +5,7 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.WebPnP
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "SPOFile", SupportsShouldProcess = true)]
     [CmdletHelp("Removes a file.",
