@@ -28,12 +28,9 @@ namespace SharePointPnP.PowerShell.Commands
         {
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            Folder folder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder,Name));
+            Folder folder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder, Name));
 
-            ClientContext.Load(folder, f => f.Name);
- //           ClientContext.Load(folder, f => f.ServerRelativeUrl);
-            ClientContext.ExecuteQueryRetry();
- //           WriteObject("Folder" + folder.Name + folder.ServerRelativeUrl);
+            folder.EnsureProperty(f => f.Name);
 
             if (Force || ShouldContinue(string.Format(Resources.Delete0, folder.Name), Resources.Confirm))
             {
