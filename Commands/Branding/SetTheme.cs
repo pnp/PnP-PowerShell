@@ -46,13 +46,10 @@ namespace SharePointPnP.PowerShell.Commands
                 composedLook = new ComposedLook();
                 composedLook.BackgroundFile = "";
                 SelectedWeb.EnsureProperty(w => w.AlternateCssUrl);
-                composedLook.AlternateCSS = SelectedWeb.AlternateCssUrl;
                 composedLook.ColorFile = "";
                 SelectedWeb.EnsureProperty(w => w.MasterUrl);
-                composedLook.MasterPage = SelectedWeb.MasterUrl;
                 composedLook.FontFile = "";
                 SelectedWeb.EnsureProperty(w => w.SiteLogoUrl);
-                composedLook.SiteLogo = SelectedWeb.SiteLogoUrl;
             }
 
             composedLook.Name = composedLook.Name ?? "Custom by PnP PowerShell";
