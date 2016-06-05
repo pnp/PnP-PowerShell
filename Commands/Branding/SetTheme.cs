@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands
 
             ClientContext.ExecuteQueryRetry();
 
-            var composedLook = new ComposedLook();
+            ComposedLook composedLook;
             // Set the corresponding property bag value which is used by the provisioning engine
             if (SelectedWeb.PropertyBagContainsKey(PROPBAGKEY))
             {
