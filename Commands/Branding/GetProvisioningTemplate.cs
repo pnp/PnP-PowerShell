@@ -131,10 +131,12 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         protected override void ExecuteCmdlet()
         {
+#if !SP2013
             if(PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
                 WriteWarning("In order to export resource files, also specify the PersistMultiLanguageResources switch");
             }
+#endif
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))
