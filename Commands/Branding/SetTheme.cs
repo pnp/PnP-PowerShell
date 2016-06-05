@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands
 
             ClientContext.ExecuteQueryRetry();
 
-            var composedLook = new ComposedLook();
+            ComposedLook composedLook;
             // Set the corresponding property bag value which is used by the provisioning engine
             if (SelectedWeb.PropertyBagContainsKey(PROPBAGKEY))
             {
@@ -46,13 +46,10 @@ namespace SharePointPnP.PowerShell.Commands
                 composedLook = new ComposedLook();
                 composedLook.BackgroundFile = "";
                 SelectedWeb.EnsureProperty(w => w.AlternateCssUrl);
-                composedLook.AlternateCSS = SelectedWeb.AlternateCssUrl;
                 composedLook.ColorFile = "";
                 SelectedWeb.EnsureProperty(w => w.MasterUrl);
-                composedLook.MasterPage = SelectedWeb.MasterUrl;
                 composedLook.FontFile = "";
                 SelectedWeb.EnsureProperty(w => w.SiteLogoUrl);
-                composedLook.SiteLogo = SelectedWeb.SiteLogoUrl;
             }
 
             composedLook.Name = composedLook.Name ?? "Custom by PnP PowerShell";
