@@ -200,7 +200,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 var fileSystemConnector = new FileSystemConnector(path, "");
                 creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
             }
+#pragma warning disable 618
             creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
+#pragma warning restore 618
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
@@ -280,7 +282,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                     }
                 case XMLPnPSchemaVersion.V201505:
                     {
+#pragma warning disable CS0618 // Type or member is obsolete
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
+#pragma warning restore CS0618 // Type or member is obsolete
                         break;
                     }
                 case XMLPnPSchemaVersion.V201508:
