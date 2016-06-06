@@ -60,7 +60,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.Url);
-            bool templateFromFileSystem = !Path.StartsWith("http");
+            bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
             FileConnectorBase fileConnector;
             string templateFileName = System.IO.Path.GetFileName(Path);
             if (templateFromFileSystem)
