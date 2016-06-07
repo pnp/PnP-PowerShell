@@ -219,8 +219,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 var serverRelativePath = GetServerRelativePath(path);
                 var folderAndFiles = GetFolderItems(folder).ToArray();
 
-                folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => WriteItemObject(subFolder, serverRelativePath, true));
-                folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, serverRelativePath, false));
+                folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => WriteItemObject(subFolder, subFolder.ServerRelativeUrl, true));
+                folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, file.ServerRelativeUrl, false));
                 if (recurse)
                 {
                     folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => GetChildItems(subFolder.ServerRelativeUrl, true));
