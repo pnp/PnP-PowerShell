@@ -37,6 +37,16 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
      Remarks = @"Applies a provisioning template in XML format to the current web. It will only apply the lists and site security part of the template.",
      SortOrder = 4)]
 
+    [CmdletExample(
+     Code = @"PS:> Apply-SPOProvisioningTemplate -Path template.pnp",
+     Remarks = @"Applies a provisioning template from a pnp package to the current web.",
+     SortOrder = 5)]
+
+    [CmdletExample(
+     Code = @"PS:> Apply-SPOProvisioningTemplate -Path https://tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp",
+     Remarks = @"Applies a provisioning template from a pnp package stored in a library to the current web.",
+     SortOrder = 6)]
+
     public class ApplyProvisioningTemplate : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning template.")]
