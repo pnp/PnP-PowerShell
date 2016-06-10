@@ -12,7 +12,11 @@
 <?define ProductName = "sharePoint PnP PowerShell Commands for SP2013" ?>
 <?define ProductAssemblyName = "SharePointPnP.PowerShell.SP2013.Commands" ?>
 <?endif ?>
-
+<!--                                                   -->
+<!--                                                   -->
+<!-- NOTICE: THIS PROJECT IS A REFERENCE PROJECT ONLY. -->
+<!--                                                   -->
+<!--                                                   -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
