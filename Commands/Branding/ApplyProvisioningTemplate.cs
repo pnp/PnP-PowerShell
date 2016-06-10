@@ -8,6 +8,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
+using System.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
@@ -37,6 +38,14 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
      Remarks = @"Applies a provisioning template in XML format to the current web. It will only apply the lists and site security part of the template.",
      SortOrder = 4)]
 
+    [CmdletExample(
+        Code = @"
+PS:> $handler1 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> $handler2 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
+        Remarks = @"This will create two new ExtensibilityHandler objects that are run while provisioning the template",
+        SortOrder = 5)]
+
     public class ApplyProvisioningTemplate : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the provisioning template.")]
@@ -56,6 +65,9 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
         public Handlers ExcludeHandlers;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while applying a template")]
+        public ExtensibilityHandler[] ExtensibilityHandlers;
 
         protected override void ExecuteCmdlet()
         {
@@ -100,11 +112,12 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 else
                 {
                     FileSystemConnector fileSystemConnector = null;
-                    if(ResourceFolder != null)
+                    if (ResourceFolder != null)
                     {
                         fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
                         provisioningTemplate.Connector = fileSystemConnector;
-                    } else
+                    }
+                    else
                     {
                         provisioningTemplate.Connector = provider.Connector;
                     }
@@ -141,6 +154,11 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                         }
                     }
                     applyingInformation.HandlersToProcess = Handlers;
+                }
+
+                if (ExtensibilityHandlers != null)
+                {
+                    applyingInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
                 }
 
                 applyingInformation.ProgressDelegate = (message, step, total) =>
