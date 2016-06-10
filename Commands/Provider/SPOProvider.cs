@@ -219,8 +219,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 var serverRelativePath = GetServerRelativePath(path);
                 var folderAndFiles = GetFolderItems(folder).ToArray();
 
-                folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => WriteItemObject(subFolder, serverRelativePath, true));
-                folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, serverRelativePath, false));
+                folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => WriteItemObject(subFolder, subFolder.ServerRelativeUrl, true));
+                folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, file.ServerRelativeUrl, false));
                 if (recurse)
                 {
                     folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => GetChildItems(subFolder.ServerRelativeUrl, true));
@@ -429,8 +429,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             }
             if (obj == null)
             {
-                NewItem(path, "File", string.Empty);
-                obj = GetFileOrFolder(path);
+                NewItem(path, "File", null);
+                obj = GetFileOrFolder(path, useChache: false);
             }
             if (obj is File)
             {
@@ -483,7 +483,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         #region Helpers
 
         //Get helpers
-        private object GetFileOrFolder(string path, bool throwError = true)
+        private object GetFileOrFolder(string path, bool throwError = true, bool useChache = true)
         {
             var spoDrive = GetCurrentDrive(path);
             if (spoDrive == null) return null;
@@ -492,8 +492,11 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (string.IsNullOrEmpty(serverRelativePath)) return null;
 
             //Try get cached item
-            var fileOrFolder = GetCachedItem(serverRelativePath);
-            if (fileOrFolder != null) return fileOrFolder.Item;
+            if (useChache)
+            {
+                var fileOrFolder = GetCachedItem(serverRelativePath);
+                if (fileOrFolder != null) return fileOrFolder.Item;
+            }
 
             //Find web closes to object
             var web = FindWebInPath(serverRelativePath);

@@ -570,7 +570,7 @@
         <TypeName>Microsoft.SharePoint.Client.Folder</TypeName>
       </ViewSelectedBy>
       <GroupBy>
-        <ScriptBlock>$_.PSPath.Replace("SharePointPnPPowerShell2013\SPO::", "")</ScriptBlock>
+        <ScriptBlock>$_.PSParentPath.Replace("SharePointPnPPowerShell2013\SPO::", "")</ScriptBlock>
         <Label>Folder</Label>
       </GroupBy>
       <TableControl>
