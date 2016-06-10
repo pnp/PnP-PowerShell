@@ -116,6 +116,9 @@
   <PropertyGroup>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\pnp.ico</ApplicationIcon>
+  </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
       <ItemGroup>
@@ -312,6 +315,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Selectors" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -375,6 +379,8 @@
     <Compile Include="Base\ConnectSPOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
     <Compile Include="Base\SetTraceLog.cs" />
+    <Compile Include="Branding\DisableResponsiveUI.cs" />
+    <Compile Include="Branding\EnableResponsiveUI.cs" />
     <Compile Include="Branding\ConvertProvisioningTemplate.cs" />
     <Compile Include="Branding\GetJavaScriptLink.cs" />
     <Compile Include="Branding\ApplyProvisioningTemplate.cs" />
@@ -385,6 +391,7 @@
     <Compile Include="ContentTypes\RemoveContentTypeFromList.cs" />
     <Compile Include="ContentTypes\SetDefaultContentTypeToList.cs" />
     <Compile Include="ContentTypes\AddContentTypeToList.cs" />
+    <Compile Include="DocumentSets\AddDocumentSet.cs" />
     <Compile Include="DocumentSets\GetDocumentSetTemplate.cs" />
     <Compile Include="DocumentSets\RemoveContentTypeFromDocumentSet.cs" />
     <Compile Include="DocumentSets\AddContentTypeToDocumentSet.cs" />
@@ -437,6 +444,13 @@
     <Compile Include="Principals\GetGroupPermissions.cs" />
     <Compile Include="Principals\RemoveGroup.cs" />
     <Compile Include="Principals\SetGroup.cs" />
+    <Compile Include="Provider\SPOContentParameters.cs" />
+    <Compile Include="Provider\SPOContentReaderWriter.cs" />
+    <Compile Include="Provider\SPODriveCacheWeb.cs" />
+    <Compile Include="Provider\SPODriveCacheItem.cs" />
+    <Compile Include="Provider\SPODriveInfo.cs" />
+    <Compile Include="Provider\SPODriveParameters.cs" />
+    <Compile Include="Provider\SPOProvider.cs" />
     <Compile Include="Publishing\AddMasterPage.cs" />
     <Compile Include="Search\GetSiteSearchQueryResults.cs" />
     <Compile Include="Search\SetSearchConfiguration.cs" />
@@ -454,6 +468,7 @@
     <Compile Include="Branding\AddJavaScriptLink.cs" />
     <Compile Include="Branding\AddJavaScriptBlock.cs" />
     <Compile Include="WebParts\GetWebPartXml.cs" />
+    <Compile Include="Web\GetFolderItem.cs" />
     <Compile Include="Web\InvokeWebAction.cs" />
     <Compile Include="Web\EnsureFolder.cs" />
     <Compile Include="Web\AddFolder.cs" />
@@ -461,6 +476,7 @@
     <Compile Include="Web\RemoveFile.cs" />
     <Compile Include="Web\GetIndexedPropertyKeys.cs" />
     <Compile Include="Web\AddIndexedProperty.cs" />
+    <Compile Include="Web\RemoveFolder.cs" />
     <Compile Include="Web\RemoveWeb.cs" />
     <Compile Include="Workflows\AddWorkflowDefinition.cs" />
     <Compile Include="Workflows\ResumeWorkflowInstance.cs" />
@@ -584,6 +600,9 @@
     <None Include="ModuleFiles\SharePointPnP.PowerShell.2013.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pnp.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

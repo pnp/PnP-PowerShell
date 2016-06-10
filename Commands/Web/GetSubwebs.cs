@@ -1,5 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using web = Microsoft.SharePoint.Client.Web;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands
             }
             else
             {
-                var subwebs = new List<Web>();
+                var subwebs = new List<web>();
                 subwebs.AddRange(webs);
                 foreach (var subweb in webs)
                 {
@@ -37,9 +38,9 @@ namespace SharePointPnP.PowerShell.Commands
             }
         }
 
-        private List<Web> GetSubWebsInternal(Web subweb)
+        private List<web> GetSubWebsInternal(web subweb)
         {
-            var subwebs = new List<Web>();
+            var subwebs = new List<web>();
             var webs = subweb.Context.LoadQuery(subweb.Webs);
             subweb.Context.ExecuteQueryRetry();
             subwebs.AddRange(webs);

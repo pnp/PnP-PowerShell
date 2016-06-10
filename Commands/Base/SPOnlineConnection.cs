@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     public class SPOnlineConnection
     {
         internal static List<ClientContext> ContextCache { get; set; }
-        internal static SPOnlineConnection CurrentConnection { get; set; }
+        public static SPOnlineConnection CurrentConnection { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
         public int MinimalHealthScore { get; protected set; }
         public int RetryCount { get; protected set; }

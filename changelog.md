@@ -1,5 +1,13 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2016-06-03**
+* Added Add-SPODocumentSet cmdlet
+
+**2016-06-02**
+* Added Enable-SPOResponsiveUI and Disable-SPOResponsiveUI cmdlets
+* Added -CreateDrive parameter to Connect-SPOnline cmdlet, allowing to create a virtual drive into a SharePoint site
+* Added Invoke-SPOWebAction cmdlet
+
 **2016-05-09**
 * Namespace, Assembly and Project rename from OfficeDevPnP.PowerShell to SharePointPnP.PowerShell
 **2016-04-08**

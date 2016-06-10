@@ -8,6 +8,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
+using System.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
@@ -37,6 +38,14 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
      Remarks = @"Applies a provisioning template in XML format to the current web. It will only apply the lists and site security part of the template.",
      SortOrder = 4)]
 
+    [CmdletExample(
+        Code = @"
+PS:> $handler1 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> $handler2 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
+        Remarks = @"This will create two new ExtensibilityHandler objects that are run while provisioning the template",
+        SortOrder = 5)]
+
     public class ApplyProvisioningTemplate : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the provisioning template.")]
@@ -57,6 +66,9 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
         public Handlers ExcludeHandlers;
 
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while applying a template")]
+        public ExtensibilityHandler[] ExtensibilityHandlers;
+
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.Url);
@@ -67,7 +79,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
             }
             if (!string.IsNullOrEmpty(ResourceFolder))
             {
-                if (System.IO.Path.IsPathRooted(ResourceFolder))
+                if (!System.IO.Path.IsPathRooted(ResourceFolder))
                 {
                     ResourceFolder = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, ResourceFolder);
                 }
@@ -75,23 +87,41 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
             FileInfo fileInfo = new FileInfo(Path);
 
-            XMLTemplateProvider provider =
-                new XMLFileSystemTemplateProvider(fileInfo.DirectoryName, "");
-
-            var provisioningTemplate = provider.GetTemplate(fileInfo.Name);
+            XMLTemplateProvider provider = null;
+            ProvisioningTemplate provisioningTemplate = null;
+            var isOpenOfficeFile = IsOpenOfficeFile(Path);
+            if (isOpenOfficeFile)
+            {
+                var fileSystemconnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(fileInfo.Name, fileSystemconnector));
+                var fileName = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(".")) + ".xml";
+                provisioningTemplate = provider.GetTemplate(fileName);
+            }
+            else
+            {
+                provider = new XMLFileSystemTemplateProvider(fileInfo.DirectoryName, "");
+                provisioningTemplate = provider.GetTemplate(fileInfo.Name);
+            }
 
             if (provisioningTemplate != null)
             {
-                FileSystemConnector fileSystemConnector = null;
-                if (string.IsNullOrEmpty(ResourceFolder))
+                if (isOpenOfficeFile)
                 {
-                    fileSystemConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                    provisioningTemplate.Connector = provider.Connector;
                 }
                 else
                 {
-                    fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
+                    FileSystemConnector fileSystemConnector = null;
+                    if (ResourceFolder != null)
+                    {
+                        fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
+                        provisioningTemplate.Connector = fileSystemConnector;
+                    }
+                    else
+                    {
+                        provisioningTemplate.Connector = provider.Connector;
+                    }
                 }
-                provisioningTemplate.Connector = fileSystemConnector;
 
                 if (Parameters != null)
                 {
@@ -126,6 +156,11 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                     applyingInformation.HandlersToProcess = Handlers;
                 }
 
+                if (ExtensibilityHandlers != null)
+                {
+                    applyingInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
+                }
+
                 applyingInformation.ProgressDelegate = (message, step, total) =>
                 {
                     WriteProgress(new ProgressRecord(0, string.Format("Applying template to {0}", SelectedWeb.Url), message) { PercentComplete = (100 / total) * step });
@@ -142,6 +177,30 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 applyingInformation.OverwriteSystemPropertyBagValues = OverwriteSystemPropertyBagValues;
                 SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
             }
+        }
+
+
+        private bool IsOpenOfficeFile(string path)
+        {
+            bool istrue = false;
+            // SIG 50 4B 03 04 14 00
+            using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                byte[] bytes = new byte[6];
+
+                int n = stream.Read(bytes, 0, 6);
+                var signature = string.Empty;
+                foreach (var b in bytes)
+                {
+                    signature += b.ToString("X2");
+                }
+                if (signature == "504B03041400")
+                {
+                    istrue = true;
+                }
+
+            }
+            return istrue;
         }
     }
 }
