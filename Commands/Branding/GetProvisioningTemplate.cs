@@ -197,10 +197,13 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 }
             }
 
+            var fileSystemConnector = new FileSystemConnector(path, "");
             if (extension == ".pnp")
             {
-                var fileSystemConnector = new FileSystemConnector(path, "");
                 creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
+            } else
+            {
+                creationInformation.FileConnector = fileSystemConnector;
             }
 #pragma warning disable 618
             creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
