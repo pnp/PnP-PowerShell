@@ -170,7 +170,6 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
             foreach (var currentFile in dirInfo.GetFiles("*.*", SearchOption.AllDirectories))
             {
-                if (currentFile.Extension == ".pnp") continue;
                 PnPFileInfo fileInfo = new PnPFileInfo
                 {
                     Name = currentFile.Name,
