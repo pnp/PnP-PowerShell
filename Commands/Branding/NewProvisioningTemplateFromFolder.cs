@@ -175,8 +175,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                     Name = currentFile.Name,
                     Folder = GetFolderName(currentFile, dirInfo),
                     Content = System.IO.File.ReadAllBytes(currentFile.FullName)
-                };                
-                WriteVerbose(currentFile + ":" + fileInfo.Folder);
+                };
+                WriteVerbose("Adding file:" + currentFile + " - " + fileInfo.Folder);
                 info.Files.Add(fileInfo);
             }
             byte[] pack = info.PackTemplate().ToArray();
