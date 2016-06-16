@@ -2,7 +2,7 @@
 Applies a provisioning template to a web
 ##Syntax
 ```powershell
-Apply-SPOProvisioningTemplate [-ResourceFolder <String>] [-OverwriteSystemPropertyBagValues [<SwitchParameter>]] [-Parameters <Hashtable>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-Web <WebPipeBind>] -Path <String>
+Apply-SPOProvisioningTemplate [-ResourceFolder <String>] [-OverwriteSystemPropertyBagValues [<SwitchParameter>]] [-Parameters <Hashtable>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-Web <WebPipeBind>] -Path <String>
 ```
 
 
@@ -10,6 +10,7 @@ Apply-SPOProvisioningTemplate [-ResourceFolder <String>] [-OverwriteSystemProper
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |ExcludeHandlers|Handlers|False|Allows you to run all handlers, excluding the ones specified.|
+|ExtensibilityHandlers|ExtensibilityHandler[]|False|Allows you to specify ExtensbilityHandlers to execute while applying a template|
 |Handlers|Handlers|False|Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.|
 |OverwriteSystemPropertyBagValues|SwitchParameter|False|Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)|
 |Parameters|Hashtable|False|Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.|
@@ -45,3 +46,12 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 PS:> Apply-SPOProvisioningTemplate -Path template.xml -Handlers Lists, SiteSecurity
 ```
 Applies a provisioning template in XML format to the current web. It will only apply the lists and site security part of the template.
+
+###Example 5
+```powershell
+
+PS:> $handler1 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> $handler2 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2
+```
+This will create two new ExtensibilityHandler objects that are run while provisioning the template

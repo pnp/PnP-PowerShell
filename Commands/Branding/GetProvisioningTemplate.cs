@@ -131,10 +131,12 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         protected override void ExecuteCmdlet()
         {
+#if !SP2013
             if(PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
                 WriteWarning("In order to export resource files, also specify the PersistMultiLanguageResources switch");
             }
+#endif
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))
@@ -195,12 +197,17 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 }
             }
 
+            var fileSystemConnector = new FileSystemConnector(path, "");
             if (extension == ".pnp")
             {
-                var fileSystemConnector = new FileSystemConnector(path, "");
                 creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
+            } else
+            {
+                creationInformation.FileConnector = fileSystemConnector;
             }
+#pragma warning disable 618
             creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
+#pragma warning restore 618
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
@@ -280,7 +287,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                     }
                 case XMLPnPSchemaVersion.V201505:
                     {
+#pragma warning disable CS0618 // Type or member is obsolete
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
+#pragma warning restore CS0618 // Type or member is obsolete
                         break;
                     }
                 case XMLPnPSchemaVersion.V201508:
