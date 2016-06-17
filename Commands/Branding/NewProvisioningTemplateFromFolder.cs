@@ -170,23 +170,27 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
             foreach (var currentFile in dirInfo.GetFiles("*.*", SearchOption.AllDirectories))
             {
+                var folder = GetFolderName(currentFile, dirInfo);
                 PnPFileInfo fileInfo = new PnPFileInfo
                 {
-                    Name = currentFile.Name,
-                    Folder = GetFolderName(currentFile, dirInfo),
+                    InternalName = currentFile.Name.AsInternalFilename(),
+                    OriginalName = currentFile.Name,
+                    Folder = folder,
                     Content = System.IO.File.ReadAllBytes(currentFile.FullName)
                 };
-                WriteVerbose("Adding file:" + currentFile + " - " + fileInfo.Folder);
+                WriteVerbose("Adding file:" + currentFile.Name + " - " + folder);
                 info.Files.Add(fileInfo);
             }
             byte[] pack = info.PackTemplate().ToArray();
             return pack;
         }
 
-        private static string GetFolderName(FileInfo currentFile, DirectoryInfo dirInfo)
+        private string GetFolderName(FileInfo currentFile, DirectoryInfo rootFolderInfo)
         {
-            var folder = currentFile.DirectoryName ?? string.Empty;
-            return folder.Replace(dirInfo.FullName, "").Replace('\\', '/').Replace(' ', '_');
+            var fileFolder = currentFile.DirectoryName ?? string.Empty;
+            fileFolder = fileFolder.Replace('\\', '/').Replace(' ', '_');
+            var rootFolder = rootFolderInfo.FullName.Replace('\\', '/').Replace(' ', '_').TrimEnd('/');
+            return fileFolder.Replace(rootFolder, "");
         }
 
         private string CreateXmlAsStringFrom(string dirName, string ctId)
