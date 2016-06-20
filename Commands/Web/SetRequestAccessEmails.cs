@@ -9,9 +9,17 @@ namespace SharePointPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Set, "SPORequestAccessEmails")]
     [CmdletHelp("Sets Request Access Emails on a web",
        Category = CmdletHelpCategory.Webs)]
+    [CmdletExample(
+       Code = @"PS:> Set-SPORequestAccessEmails -Emails someone@example.com )",
+       Remarks = "This will update the request access e-mail address",
+       SortOrder = 1)]
+    [CmdletExample(
+       Code = @"PS:> Set-SPORequestAccessEmails -Emails @( someone@example.com; someoneelse@example.com )",
+       Remarks = "This will update multiple request access e-mail addresses",
+       SortOrder = 2)]
     public class SetRequestAccessEmails : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true)]
         public List<string> Emails;
         
         protected override void ExecuteCmdlet()
