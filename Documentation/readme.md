@@ -45,6 +45,8 @@ Cmdlet|Description
 **[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
 **[New&#8209;SPOProvisioningTemplateFromFolder](NewSPOProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
+**[Disable&#8209;SPOResponsiveUI](DisableSPOResponsiveUI.md)** |Disables the PnP Responsive UI implementation on a classic SharePoint Web
+**[Enable&#8209;SPOResponsiveUI](EnableSPOResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Web
 **[Get&#8209;SPOTheme](GetSPOTheme.md)** |Returns the current theme/composed look of the current web.
 **[Set&#8209;SPOTheme](SetSPOTheme.md)** |Sets the theme of the current web.
 ##Content Types
@@ -63,6 +65,7 @@ Cmdlet|Description
 :-----|:----------
 **[Remove&#8209;SPOContentTypeFromDocumentSet](RemoveSPOContentTypeFromDocumentSet.md)** |Removes a content type from a document set
 **[Add&#8209;SPOContentTypeToDocumentSet](AddSPOContentTypeToDocumentSet.md)** |Adds a content type to a document set
+**[Add&#8209;SPODocumentSet](AddSPODocumentSet.md)** |Creates a new document set in a library.
 **[Set&#8209;SPODocumentSetField](SetSPODocumentSetField.md)** |Sets a site column from the avaiable content types to a document set
 **[Get&#8209;SPODocumentSetTemplate](GetSPODocumentSetTemplate.md)** |Retrieves a document set template
 ##Event Receivers
@@ -199,6 +202,8 @@ Cmdlet|Description
 **[Set&#8209;SPOFileCheckedOut](SetSPOFileCheckedOut.md)** |Checks out a file
 **[Ensure&#8209;SPOFolder](EnsureSPOFolder.md)** |Returns a folder given a site relative path, and will create it if it not exists.
 **[Add&#8209;SPOFolder](AddSPOFolder.md)** |Creates a folder within a parent folder
+**[Remove&#8209;SPOFolder](RemoveSPOFolder.md)** |Deletes a folder within a parent folder
+**[Get&#8209;SPOFolderItem](GetSPOFolderItem.md)** |List content in folder
 **[Set&#8209;SPOIndexedProperties](SetSPOIndexedProperties.md)** |Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, e.g. only the properties you define with the cmdlet will be indexed.
 **[Remove&#8209;SPOIndexedProperty](RemoveSPOIndexedProperty.md)** |Removes a key from propertybag to be indexed by search. The key and it's value retain in the propertybag, however it will not be indexed anymore.
 **[Add&#8209;SPOIndexedProperty](AddSPOIndexedProperty.md)** |Marks the value of the propertybag key to be indexed by search.

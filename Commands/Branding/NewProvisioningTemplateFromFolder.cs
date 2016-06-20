@@ -107,7 +107,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
                         var xml = GetFiles(Schema, new FileInfo(Out).DirectoryName, Folder, ct != null ? ct.StringId : null);
 
-                        if(AsIncludeFile)
+                        if (AsIncludeFile)
                         {
                             XElement xElement = XElement.Parse(xml);
                             // Get the Files Element
@@ -191,12 +191,20 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                     }
                 case XMLPnPSchemaVersion.V201505:
                     {
+#pragma warning disable CS0618 // Type or member is obsolete
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
+#pragma warning disable CS0618 // Type or member is obsolete
                         break;
                     }
                 case XMLPnPSchemaVersion.V201508:
                     {
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
+                        break;
+                    }
+                case XMLPnPSchemaVersion.V201512:
+                    {
+                        formatter =
+                            XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
                         break;
                     }
             }

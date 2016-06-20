@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "The web to apply the command to. Omit this parameter to use the current web.")]
         public WebPipeBind Web = new WebPipeBind();
 
-        internal Web SelectedWeb
+        protected Web SelectedWeb
         {
             get
             {

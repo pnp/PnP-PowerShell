@@ -564,6 +564,80 @@
       </TableControl>
     </View>
     <View>
+      <Name>FolderItems</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.SharePoint.Client.File</TypeName>
+        <TypeName>Microsoft.SharePoint.Client.Folder</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <ScriptBlock>$_.PSParentPath.Replace("SharePointPnPPowerShellOnline\SPO::", "")</ScriptBlock>
+        <Label>Folder</Label>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>40</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Type</Label>
+            <Width>20</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ItemCount/Length</Label>
+            <Width>20</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Time Last Modified</Label>
+            <Width>30</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if($_.Name -eq ""){
+                  $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexof("/") + 1)
+                  }
+                  else{
+                  $_.Name
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if($_.GetType().Name -eq "Folder" -and $_.Name -eq ""){
+                    "Folder (subweb)"
+                  }
+                  else{
+                    $_.GetType().Name
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if($_.GetType().Name -eq "File"){
+                    $_.Length
+                  }
+                  else{
+                    $_.ItemCount
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TimeLastModified</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
       <Name>File</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.SharePoint.Client.File</TypeName>

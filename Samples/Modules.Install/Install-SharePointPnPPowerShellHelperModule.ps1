@@ -25,15 +25,15 @@ param (
        {
             'Online' { 
                 $moduleVersion = 'SharePoint Online'
-                $moduleName = 'SharePointPnPOnlineCmdlets'
+                $moduleName = 'SharePointPnPPowerShellOnline'
                 }
             'SP2013' {
                 $moduleVersion = 'SharePoint 2013'
-                $moduleName = 'SharePointPnPSP2013Cmdlets'
+                $moduleName = 'SharePointPnPPowerShell2013'
             }
             'SP2016' {
                 $moduleVersion = 'SharePoint 2016'
-                $moduleName = 'SharePointPnPSP2016Cmdlets'
+                $moduleName = 'SharePointPnPPowerShell2016'
             }
        }
 
@@ -71,7 +71,7 @@ if ((Get-command -Module PowerShellGet).count -gt 0)
     { 
     Write-Output 'PowerShellPackageManagement now installed we will now run the next command in 10 Seconds'
     Start-Sleep -Seconds 10 
-    Install-Office365DevPNPModules -ModuleToInstall (Request-SPOOrOnPremises)
+    Install-SharePointPnPPowerShellModule -ModuleToInstall (Request-SPOOrOnPremises)
     }
     else
         {

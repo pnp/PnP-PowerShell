@@ -6,6 +6,7 @@ using System.IO;
 using System.Management.Automation;
 using System.Net;
 using System.Security;
+using System.Linq;
 #if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
 #endif
@@ -14,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Connect", "SPOnline", SupportsShouldProcess = false)]
     [CmdletHelp("Connects to a SharePoint site and creates an in-memory context",
-        DetailedDescription = "If no credentials have been specified, and the CurrentCredentials parameter has not been specified, you will be prompted for credentials.", 
+        DetailedDescription = "If no credentials have been specified, and the CurrentCredentials parameter has not been specified, you will be prompted for credentials.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
         Code = @"PS:> Connect-SPOnline -Url https://contoso.sharepoint.com",
@@ -26,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Connect-SPOnline -Url http://yourlocalserver -CurrentCredentials",
-        Remarks = @"This will use the current user credentials and connects to the server specified by the Url parameter.", 
+        Remarks = @"This will use the current user credentials and connects to the server specified by the Url parameter.",
         SortOrder = 3)]
     [CmdletExample(
         Code = @"PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials 'O365Creds'",
@@ -34,8 +35,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
         SortOrder = 4)]
     [CmdletExample(
         Code = @"PS:> Connect-SPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs",
-        Remarks = @"This will prompt for username and password and creates a context using ADFS to authenticate.", 
+        Remarks = @"This will prompt for username and password and creates a context using ADFS to authenticate.",
         SortOrder = 5)]
+    [CmdletExample(
+        Code = @"PS:> Connect-SPOnline -Url https://yourserver -Credentials (Get-Credential) -CreateDrive
+cd SPO:\\
+dir",
+        Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It will also create a SPO:\\ drive you can use to navigate around the site",
+        SortOrder = 6)]
     public class ConnectSPOnline : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
@@ -74,6 +81,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "Weblogin", HelpMessage = "If you want to connect to SharePoint with browser based login")]
         public SwitchParameter UseWebLogin;
 
+        [Parameter(Mandatory = false, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        public SwitchParameter CreateDrive;
+
+        [Parameter(Mandatory = false, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        public string DriveName = "SPO";
+
 #if !ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = "NativeAAD", HelpMessage = "The Client ID of the Azure AD Application")]
         [Parameter(Mandatory = true, ParameterSetName = "AppOnlyAAD", HelpMessage = "The Client ID of the Azure AD Application")]
@@ -109,7 +122,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck);
             }
-            else if(UseWebLogin)
+            else if (UseWebLogin)
             {
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck);
             }
@@ -154,6 +167,21 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck);
             }
             WriteVerbose(string.Format("PnP PowerShell Cmdlets ({0}): Connected to {1}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(), Url));
+
+            if (CreateDrive && SPOnlineConnection.CurrentConnection.Context != null)
+            {
+                var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals("SPO", StringComparison.InvariantCultureIgnoreCase));
+                if (provider != null)
+                {
+                    if (provider.Drives.Any(d => d.Name.Equals(DriveName, StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        SessionState.Drive.Remove(DriveName, true, "Global");
+                    }
+
+                    var drive = new PSDriveInfo(DriveName, provider, string.Empty, Url, null);
+                    SessionState.Drive.New(drive, "Global");
+                }
+            }
         }
 
         private PSCredential GetCredentials()

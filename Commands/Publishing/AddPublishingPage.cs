@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Alias("Name")]
         public string PageName = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the page layout you want to use. Specify without the .aspx extension. So 'ArticleLeft' or 'BlankWebPartPage'")]
         public string PageTemplateName = null;
 
         [Parameter(Mandatory = false, ParameterSetName = "WithTitle")]
