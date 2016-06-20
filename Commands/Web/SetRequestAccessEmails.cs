@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletHelp("Sets Request Access Emails on a web",
        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
-       Code = @"PS:> Set-SPORequestAccessEmails -Emails someone@example.com )",
+       Code = @"PS:> Set-SPORequestAccessEmails -Emails someone@example.com ",
        Remarks = "This will update the request access e-mail address",
        SortOrder = 1)]
     [CmdletExample(
@@ -19,12 +19,12 @@ namespace SharePointPnP.PowerShell.Commands
        SortOrder = 2)]
     public class SetRequestAccessEmails : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
-        public List<string> Emails;
-        
+        [Parameter(Mandatory = true, HelpMessage = "Email address(es) to set the RequestAccessEmails to")]
+        public string[] Emails = null;
+
         protected override void ExecuteCmdlet()
         {
-            if (Emails != null && Emails.Count > 0)
+            if (Emails != null && Emails.Length > 0)
             {
                 SelectedWeb.EnsureProperty(w => w.HasUniqueRoleAssignments);
 

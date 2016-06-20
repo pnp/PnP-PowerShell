@@ -2,20 +2,20 @@
 Sets Request Access Emails on a web
 ##Syntax
 ```powershell
-Set-SPORequestAccessEmails -Emails <List`1> [-Web <WebPipeBind>]
+Set-SPORequestAccessEmails -Emails <String[]> [-Web <WebPipeBind>]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Emails|List`1|True||
+|Emails|String[]|True|Email address(es) to set the RequestAccessEmails to|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
 ###Example 1
 ```powershell
-PS:> Set-SPORequestAccessEmails -Emails someone@example.com )
+PS:> Set-SPORequestAccessEmails -Emails someone@example.com 
 ```
 This will update the request access e-mail address
 
