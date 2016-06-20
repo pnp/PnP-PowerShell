@@ -469,6 +469,7 @@
     <Compile Include="Branding\AddJavaScriptBlock.cs" />
     <Compile Include="WebParts\GetWebPartXml.cs" />
     <Compile Include="Web\GetFolderItem.cs" />
+    <Compile Include="Web\GetRequestAccessEmails.cs" />
     <Compile Include="Web\InvokeWebAction.cs" />
     <Compile Include="Web\EnsureFolder.cs" />
     <Compile Include="Web\AddFolder.cs" />
@@ -478,6 +479,7 @@
     <Compile Include="Web\AddIndexedProperty.cs" />
     <Compile Include="Web\RemoveFolder.cs" />
     <Compile Include="Web\RemoveWeb.cs" />
+    <Compile Include="Web\SetRequestAccessEmails.cs" />
     <Compile Include="Workflows\AddWorkflowDefinition.cs" />
     <Compile Include="Workflows\ResumeWorkflowInstance.cs" />
     <Compile Include="Workflows\StopWorkflowInstance.cs" />
