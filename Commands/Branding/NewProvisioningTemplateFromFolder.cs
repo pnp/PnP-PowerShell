@@ -1,5 +1,4 @@
-﻿using System;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -44,11 +43,11 @@ namespace SharePointPnP.PowerShell.Commands.Branding
        SortOrder = 6)]
     [CmdletExample(
        Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.pnp",
-       Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the current folder",
+       Remarks = "Creates an empty provisioning template as a pnp package file, and includes all files in the current folder",
        SortOrder = 7)]
     [CmdletExample(
        Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.pnp -Folder c:\temp",
-       Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the c:\\temp folder",
+       Remarks = "Creates an empty provisioning template as a pnp package file, and includes all files in the c:\\temp folder",
        SortOrder = 8)]
 
     public class NewProvisioningTemplateFromFolder : SPOWebCmdlet
@@ -95,6 +94,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 if (!Path.IsPathRooted(Folder))
                 {
                     Folder = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Folder);
+                    Folder = new DirectoryInfo(Folder).FullName.TrimEnd('\\', '/'); // normalize away relative ./ paths
                 }
             }
             if (ContentType != null)
@@ -110,22 +110,20 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             {
                 if (!ShouldContinue()) return;
 
-                var dirName = new FileInfo(Out).DirectoryName;
                 if (Path.GetExtension(Out).ToLower() == ".pnp")
                 {
-                    byte[] pack = CreatePnPPackageFile();
+                    byte[] pack = CreatePnPPackageFile(ct?.StringId);
                     System.IO.File.WriteAllBytes(Out, pack);
                 }
                 else
                 {
-                    var xml = CreateXmlAsStringFrom(dirName, ct?.StringId);
+                    var xml = CreateXmlAsStringFrom(ct?.StringId);
                     System.IO.File.WriteAllText(Out, xml, Encoding);
                 }
             }
             else
             {
-                var dirName = SessionState.Path.CurrentFileSystemLocation.Path;
-                var xml = CreateXmlAsStringFrom(dirName, ct?.StringId);
+                var xml = CreateXmlAsStringFrom(ct?.StringId);
                 WriteObject(xml);
             }
         }
@@ -147,7 +145,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             return shouldContinue;
         }
 
-        private byte[] CreatePnPPackageFile()
+        private byte[] CreatePnPPackageFile(string ctId)
         {
             PnPInfo info = new PnPInfo
             {
@@ -164,9 +162,15 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             };
             DirectoryInfo dirInfo = new DirectoryInfo(Path.GetFullPath(Folder));
             string templateFileName = Path.GetFileNameWithoutExtension(Out) + ".xml";
-            bool templateFileMissing = dirInfo.GetFiles(templateFileName, SearchOption.TopDirectoryOnly).Length == 0;
-            if (templateFileMissing) throw new InvalidOperationException("You need an xml template file (" + templateFileName + ") with the same name as the .pnp outfile in order to pack a folder to a .pnp package file.");
-
+            var xml = CreateXmlAsStringFrom(ctId);
+            PnPFileInfo templateInfo = new PnPFileInfo
+            {
+                InternalName = templateFileName.AsInternalFilename(),
+                OriginalName = templateFileName,
+                Folder = "",
+                Content = System.Text.Encoding.UTF8.GetBytes(xml)
+            };
+            info.Files.Add(templateInfo);
 
             foreach (var currentFile in dirInfo.GetFiles("*.*", SearchOption.AllDirectories))
             {
@@ -193,7 +197,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             return fileFolder.Replace(rootFolder, "");
         }
 
-        private string CreateXmlAsStringFrom(string dirName, string ctId)
+        private string CreateXmlAsStringFrom(string ctId)
         {
             var xml = GetFiles(Schema, Folder, ctId);
             if (!AsIncludeFile) return xml;
