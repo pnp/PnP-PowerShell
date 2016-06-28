@@ -57,10 +57,13 @@ namespace SharePointPnP.PowerShell.Tests
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(Realm) && !string.IsNullOrEmpty("AppId") && !string.IsNullOrEmpty("AppSecret"))
+                    if (!string.IsNullOrEmpty("AppId") && !string.IsNullOrEmpty("AppSecret"))
                     {
                         // Use oAuth Token to authenticate
-                        cmd.Parameters.Add("Realm", Realm);
+                        if (!string.IsNullOrEmpty(Realm))
+                        {
+                            cmd.Parameters.Add("Realm", Realm);
+                        }
                         cmd.Parameters.Add("AppId", AppId);
                         cmd.Parameters.Add("AppSecret", AppSecret);
                     }
