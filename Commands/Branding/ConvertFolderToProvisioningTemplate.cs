@@ -9,13 +9,13 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet("Convert", "SPOFolderToProvisingTemplate")]
+    [Cmdlet("Convert", "SPOFolderToProvisioningTemplate")]
     [CmdletExample(
-       Code = @"PS:> Convert-SPOFolderToProvisingTemplate -Out template.pnp",
+       Code = @"PS:> Convert-SPOFolderToProvisioningTemplate -Out template.pnp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the current folder",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Convert-SPOFolderToProvisingTemplate -Out template.pnp -Folder c:\temp",
+       Code = @"PS:> Convert-SPOFolderToProvisioningTemplate -Out template.pnp -Folder c:\temp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the c:\\temp folder",
        SortOrder = 2)]
     public class ConvertProvisioningTemplateFromFolder : PSCmdlet
