@@ -30,6 +30,6 @@ This will remove the content type called 'Test CT' from the document set called 
 
 ###Example 3
 ```powershell
-PS:> Remove-SPOContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B
+PS:> Remove-SPOContentTypeFromDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B
 ```
 This will remove the content type called 'Test CT' from the document set called ''Test Document Set'
