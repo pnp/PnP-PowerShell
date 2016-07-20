@@ -12,7 +12,10 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
       Code = @"PS:> Set-SPOTenantSite -Url https://contoso.sharepoint.com -Title 'Contoso Website' -Sharing Disabled",
-      Remarks = @"This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.", SortOrder = 1)]        
+      Remarks = @"This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.", SortOrder = 1)]
+    [CmdletExample(
+      Code = @"PS:> Set-SPOTenantSite -Url https://contoso.sharepoint.com -Title 'Contoso Website' -StorageWarningLevel 8000 -StorageMaximumLevel 10000",
+      Remarks = @"This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website', set the storage warning level to 8GB and set the storage maximum level to 10GB.", SortOrder = 2)]
     public class SetTenantSite : SPOAdminCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Specifies the URL of the site", Position=0, ValueFromPipeline=true)]
