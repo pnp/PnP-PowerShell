@@ -88,6 +88,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified all site groups will be included.")]
         public SwitchParameter IncludeSiteGroups;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified all the managers and contributors of term groups will be included.")]
+        public SwitchParameter IncludeTermGroupsSecurity;
+        
         [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
         public SwitchParameter PersistBrandingFiles;
 
@@ -114,8 +117,11 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
         public Handlers ExcludeHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while extracting a template")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while extracting a template.")]
         public ExtensibilityHandler[] ExtensibilityHandlers;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while extracting a template.")]
+        public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
@@ -211,6 +217,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+            creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
             if (!string.IsNullOrEmpty(ResourceFilePrefix))
@@ -311,7 +318,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                       creationInformation.FileConnector as OpenXMLConnector);
                 var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".")) + ".xml";
 
-                provider.SaveAs(template, templateFileName, formatter);
+                provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
             }
             else
             {
