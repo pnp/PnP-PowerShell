@@ -2,7 +2,7 @@
 Generates a provisioning template from a web
 ##Syntax
 ```powershell
-Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-IncludeTermGroupsSecurity [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-PersistMultiLanguageResources [<SwitchParameter>]] [-ResourceFilePrefix <String>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
+Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-IncludeTermGroupsSecurity [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-PersistMultiLanguageResources [<SwitchParameter>]] [-ResourceFilePrefix <String>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-TemplateDisplayName <String>] [-TemplateImagePreviewUrl <String>] [-TemplateProperties <Hashtable>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
 ```
 
 
@@ -25,6 +25,9 @@ Parameter|Type|Required|Description
 |PersistPublishingFiles|SwitchParameter|False|If specified the files used for the publishing feature will be saved.|
 |ResourceFilePrefix|String|False|If specified, resource files will be saved with the specified prefix instead of using the template name specified. If no template name is specified the files will be called PnP-Resources.<language>.resx. See examples for more info.|
 |Schema|XMLPnPSchemaVersion|False|The schema of the output to use, defaults to the latest schema|
+|TemplateDisplayName|String|False|It can be used to specify the DisplayName of the template file that will be extracted.|
+|TemplateImagePreviewUrl|String|False|It can be used to specify the ImagePreviewUrl of the template file that will be extracted.|
+|TemplateProperties|Hashtable|False|It can be used to specify custom Properties for the template file that will be extracted.|
 |TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while extracting a template.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
