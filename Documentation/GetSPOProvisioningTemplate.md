@@ -2,7 +2,7 @@
 Generates a provisioning template from a web
 ##Syntax
 ```powershell
-Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-PersistMultiLanguageResources [<SwitchParameter>]] [-ResourceFilePrefix <String>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
+Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-IncludeTermGroupsSecurity [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-PersistMultiLanguageResources [<SwitchParameter>]] [-ResourceFilePrefix <String>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
 ```
 
 
@@ -11,19 +11,21 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Encoding|Encoding|False||
 |ExcludeHandlers|Handlers|False|Allows you to run all handlers, excluding the ones specified.|
-|ExtensibilityHandlers|ExtensibilityHandler[]|False|Allows you to specify ExtensbilityHandlers to execute while extracting a template|
+|ExtensibilityHandlers|ExtensibilityHandler[]|False|Allows you to specify ExtensbilityHandlers to execute while extracting a template.|
 |Force|SwitchParameter|False|Overwrites the output file if it exists.|
 |Handlers|Handlers|False|Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.|
 |IncludeAllTermGroups|SwitchParameter|False|If specified, all term groups will be included. Overrides IncludeSiteCollectionTermGroup.|
 |IncludeNativePublishingFiles|SwitchParameter|False|If specified, out of the box / native publishing files will be saved.|
 |IncludeSiteCollectionTermGroup|SwitchParameter|False|If specified, all the site collection term groups will be included. Overridden by IncludeAllTermGroups.|
 |IncludeSiteGroups|SwitchParameter|False|If specified all site groups will be included.|
+|IncludeTermGroupsSecurity|SwitchParameter|False|If specified all the managers and contributors of term groups will be included.|
 |Out|String|False|Filename to write to, optionally including full path|
 |PersistBrandingFiles|SwitchParameter|False|If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.|
 |PersistMultiLanguageResources|SwitchParameter|False|If specified, resource values for applicable artifacts will be persisted to a resource file|
 |PersistPublishingFiles|SwitchParameter|False|If specified the files used for the publishing feature will be saved.|
 |ResourceFilePrefix|String|False|If specified, resource files will be saved with the specified prefix instead of using the template name specified. If no template name is specified the files will be called PnP-Resources.<language>.resx. See examples for more info.|
 |Schema|XMLPnPSchemaVersion|False|The schema of the output to use, defaults to the latest schema|
+|TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while extracting a template.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
