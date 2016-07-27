@@ -90,7 +90,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         [Parameter(Mandatory = false, HelpMessage = "If specified all the managers and contributors of term groups will be included.")]
         public SwitchParameter IncludeTermGroupsSecurity;
-        
+
         [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
         public SwitchParameter PersistBrandingFiles;
 
@@ -145,7 +145,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         protected override void ExecuteCmdlet()
         {
 #if !SP2013
-            if(PersistMultiLanguageResources == false && ResourceFilePrefix != null)
+            if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
                 WriteWarning("In order to export resource files, also specify the PersistMultiLanguageResources switch");
             }
@@ -370,7 +370,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 {
                     if (!String.IsNullOrEmpty(key))
                     {
-                        template.Properties.Add(key, properties[key]);
+                        template.Properties[key] = properties[key];
                     }
                 }
             }
