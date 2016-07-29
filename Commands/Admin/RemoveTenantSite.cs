@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the full URL of the site collection that needs to be deleted")]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "Do not add to the trashcan if selected.")]
+        [Parameter(Mandatory = false, HelpMessage = "Do not add to the trashcan when selected.")]
         [Alias("SkipTrash")]
         public SwitchParameter SkipRecycleBin;
 
