@@ -180,8 +180,14 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[New&#8209;SPOPersonalSite](NewSPOPersonalSite.md)** |Office365 only: Creates a personal / OneDrive For Business site
-**[Set&#8209;SPOUserProfileProperty](SetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
-**[Get&#8209;SPOUserProfileProperty](GetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
+**[Set&#8209;SPOUserProfileProperty](SetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.
+
+You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command. 
+
+**[Get&#8209;SPOUserProfileProperty](GetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.
+
+You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command. 
+
 ##Utilities
 Cmdlet|Description
 :-----|:----------
@@ -218,6 +224,8 @@ Cmdlet|Description
 **[Remove&#8209;SPOPropertyBagValue](RemoveSPOPropertyBagValue.md)** |Removes a value from the property bag
 **[Set&#8209;SPOPropertyBagValue](SetSPOPropertyBagValue.md)** |Sets a property bag value
 **[Request&#8209;SPOReIndexWeb](RequestSPOReIndexWeb.md)** |Marks the web for full indexing during the next incremental crawl
+**[Get&#8209;SPORequestAccessEmails](GetSPORequestAccessEmails.md)** |Returns the request access e-mail addresses
+**[Set&#8209;SPORequestAccessEmails](SetSPORequestAccessEmails.md)** |Sets Request Access Emails on a web
 **[Get&#8209;SPOSubWebs](GetSPOSubWebs.md)** |Returns the subwebs
 **[Remove&#8209;SPOWeb](RemoveSPOWeb.md)** |Removes a subweb in the current web
 **[Get&#8209;SPOWeb](GetSPOWeb.md)** |Returns the current web object
