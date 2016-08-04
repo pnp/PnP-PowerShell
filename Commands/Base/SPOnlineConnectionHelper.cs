@@ -145,7 +145,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             throw new Exception("Error establishing a connection, context is null");
         }
 
-        internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
+        internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false, ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
             context.RetryCount = retryCount;
@@ -157,6 +157,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.DisableReturnValueCache = true;
 #endif
             context.RequestTimeout = requestTimeout;
+
+            context.AuthenticationMode = authenticationMode;
+
+            if (authenticationMode == ClientAuthenticationMode.FormsAuthentication)
+            {
+                var formsAuthInfo = new FormsAuthenticationLoginInfo(credentials.UserName, EncryptionUtility.ToInsecureString(credentials.Password));
+                context.FormsAuthenticationLoginInfo = formsAuthInfo;
+            }
+
             if (!currentCredentials)
             {
                 try
@@ -219,7 +228,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, bool skipAdminCheck = false)
         {
-           var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+            var authManager = new OfficeDevPnP.Core.AuthenticationManager();
 
             var networkCredentials = credentials.GetNetworkCredential();
 

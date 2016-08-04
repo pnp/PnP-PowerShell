@@ -7,7 +7,7 @@ Connect-SPOnline -ClientId <String> -Tenant <String> -CertificatePath <String> -
 
 
 ```powershell
-Connect-SPOnline [-Credentials <CredentialPipeBind>] [-CurrentCredentials [<SwitchParameter>]] [-UseAdfs [<SwitchParameter>]] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-CreateDrive [<SwitchParameter>]] [-DriveName <String>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
+Connect-SPOnline [-Credentials <CredentialPipeBind>] [-CurrentCredentials [<SwitchParameter>]] [-UseAdfs [<SwitchParameter>]] [-AuthenticationMode <ClientAuthenticationMode>] [-MinimalHealthScore <Int32>] [-RetryCount <Int32>] [-RetryWait <Int32>] [-RequestTimeout <Int32>] [-CreateDrive [<SwitchParameter>]] [-DriveName <String>] [-SkipTenantAdminCheck [<SwitchParameter>]] -Url <String>
 ```
 
 
@@ -34,6 +34,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |AppId|String|True|The Application Client ID to use.|
 |AppSecret|String|True|The Application Client Secret to use.|
+|AuthenticationMode|ClientAuthenticationMode|False|Specify to use for instance use forms based authentication (FBA)|
 |CertificatePassword|SecureString|True|Password to the certificate (*.pfx)|
 |CertificatePath|String|True|Path to the certificate (*.pfx)|
 |ClearTokenCache|SwitchParameter|False|Clears the token cache.|
@@ -92,3 +93,9 @@ cd SPO:\\
 dir
 ```
 This will prompt you for credentials and creates a context for the other PowerShell commands to use. It will also create a SPO:\\ drive you can use to navigate around the site
+
+###Example 7
+```powershell
+PS:> Connect-SPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication
+```
+This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)
