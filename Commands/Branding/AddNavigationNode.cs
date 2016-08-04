@@ -37,7 +37,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "The url to navigate to when clicking the new menu item.")]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "Optionallly value of a header entry to add the menu item to.")]
+        [Parameter(Mandatory = false, HelpMessage = "Optionally value of a header entry to add the menu item to.")]
         public string Header;
         
         [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection.")]
