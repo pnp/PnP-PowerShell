@@ -5,6 +5,10 @@ Below you can find a list of all the available cmdlets. Many commands provide bu
 Get-Help Connect-SPOnline -Detailed
 ```
 
+##
+Cmdlet|Description
+:-----|:----------
+**[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |
 ##Apps
 Cmdlet|Description
 :-----|:----------
@@ -45,6 +49,7 @@ Cmdlet|Description
 **[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
 **[New&#8209;SPOProvisioningTemplateFromFolder](NewSPOProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
+**[Set&#8209;SPOProvisioningTemplateMetadata](SetSPOProvisioningTemplateMetadata.md)** |Sets metadata of a provisioning template
 **[Disable&#8209;SPOResponsiveUI](DisableSPOResponsiveUI.md)** |Disables the PnP Responsive UI implementation on a classic SharePoint Web
 **[Enable&#8209;SPOResponsiveUI](EnableSPOResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Web
 **[Get&#8209;SPOTheme](GetSPOTheme.md)** |Returns the current theme/composed look of the current web.
@@ -213,6 +218,8 @@ Cmdlet|Description
 **[Remove&#8209;SPOPropertyBagValue](RemoveSPOPropertyBagValue.md)** |Removes a value from the property bag
 **[Set&#8209;SPOPropertyBagValue](SetSPOPropertyBagValue.md)** |Sets a property bag value
 **[Request&#8209;SPOReIndexWeb](RequestSPOReIndexWeb.md)** |Marks the web for full indexing during the next incremental crawl
+**[Get&#8209;SPORequestAccessEmails](GetSPORequestAccessEmails.md)** |Returns the request access e-mail addresses
+**[Set&#8209;SPORequestAccessEmails](SetSPORequestAccessEmails.md)** |Sets Request Access Emails on a web
 **[Get&#8209;SPOSubWebs](GetSPOSubWebs.md)** |Returns the subwebs
 **[Remove&#8209;SPOWeb](RemoveSPOWeb.md)** |Removes a subweb in the current web
 **[Get&#8209;SPOWeb](GetSPOWeb.md)** |Returns the current web object

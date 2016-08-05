@@ -10,7 +10,7 @@ Get-SPOWebTemplates [-Lcid <UInt32>] [-CompatibilityLevel <Int32>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |CompatibilityLevel|Int32|False|The version of SharePoint|
-|Lcid|UInt32|False|The language id like 1033 for English|
+|Lcid|UInt32|False|The language ID. For instance: 1033 for English|
 ##Examples
 
 ###Example 1

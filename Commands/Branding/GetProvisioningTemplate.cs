@@ -16,7 +16,7 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.Enums;
 using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
-
+using System.Collections;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
@@ -88,6 +88,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified all site groups will be included.")]
         public SwitchParameter IncludeSiteGroups;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified all the managers and contributors of term groups will be included.")]
+        public SwitchParameter IncludeTermGroupsSecurity;
+
         [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
         public SwitchParameter PersistBrandingFiles;
 
@@ -114,8 +117,11 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
         public Handlers ExcludeHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while extracting a template")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while extracting a template.")]
         public ExtensibilityHandler[] ExtensibilityHandlers;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while extracting a template.")]
+        public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
@@ -127,12 +133,19 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
+        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify the DisplayName of the template file that will be extracted.")]
+        public string TemplateDisplayName;
 
+        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify the ImagePreviewUrl of the template file that will be extracted.")]
+        public string TemplateImagePreviewUrl;
+
+        [Parameter(Mandatory = false, HelpMessage = "It can be used to specify custom Properties for the template file that will be extracted.")]
+        public Hashtable TemplateProperties;
 
         protected override void ExecuteCmdlet()
         {
 #if !SP2013
-            if(PersistMultiLanguageResources == false && ResourceFilePrefix != null)
+            if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
                 WriteWarning("In order to export resource files, also specify the PersistMultiLanguageResources switch");
             }
@@ -201,7 +214,8 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             if (extension == ".pnp")
             {
                 creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
-            } else
+            }
+            else
             {
                 creationInformation.FileConnector = fileSystemConnector;
             }
@@ -211,6 +225,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+            creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
             if (!string.IsNullOrEmpty(ResourceFilePrefix))
@@ -270,6 +285,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
             var template = SelectedWeb.GetProvisioningTemplate(creationInformation);
 
+            // Set metadata for template, if any
+            SetTemplateMetadata(template, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);
+
             ITemplateFormatter formatter = null;
             switch (schema)
             {
@@ -311,20 +329,49 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                       creationInformation.FileConnector as OpenXMLConnector);
                 var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".")) + ".xml";
 
-                provider.SaveAs(template, templateFileName, formatter);
+                provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
             }
             else
             {
-
-                var _outputStream = formatter.ToFormattedTemplate(template);
-                StreamReader reader = new StreamReader(_outputStream);
                 if (Out != null)
                 {
-                    File.WriteAllText(Path.Combine(path, packageName), reader.ReadToEnd(), Encoding);
+                    XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(path, "");
+                    provider.SaveAs(template, Path.Combine(path, packageName), formatter, TemplateProviderExtensions);
                 }
                 else
                 {
+                    var _outputStream = formatter.ToFormattedTemplate(template);
+                    StreamReader reader = new StreamReader(_outputStream);
+
                     WriteObject(reader.ReadToEnd());
+                }
+            }
+        }
+
+        public static void SetTemplateMetadata(ProvisioningTemplate template, string templateDisplayName, string templateImagePreviewUrl, Hashtable templateProperties)
+        {
+            if (!String.IsNullOrEmpty(templateDisplayName))
+            {
+                template.DisplayName = templateDisplayName;
+            }
+
+            if (!String.IsNullOrEmpty(templateImagePreviewUrl))
+            {
+                template.ImagePreviewUrl = templateImagePreviewUrl;
+            }
+
+            if (templateProperties != null && templateProperties.Count > 0)
+            {
+                var properties = templateProperties
+                    .Cast<DictionaryEntry>()
+                    .ToDictionary(i => (String)i.Key, i => (String)i.Value);
+
+                foreach (var key in properties.Keys)
+                {
+                    if (!String.IsNullOrEmpty(key))
+                    {
+                        template.Properties[key] = properties[key];
+                    }
                 }
             }
         }

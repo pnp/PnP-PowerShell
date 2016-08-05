@@ -20,12 +20,12 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Set-SPODocumentSetField -Field "Test Field" -DocumentSet "Test Document Set" -SetAsSharedField -SetAsWelcomePageField
+PS:> Set-SPODocumentSetField -Field "Test Field" -DocumentSet "Test Document Set" -SetSharedField -SetWelcomePageField
 ```
 This will set the field, available in one the available content types, as a Shared Field and as a Welcome Page Field.
 
 ###Example 2
 ```powershell
-PS:> Set-SPODocumentSetField -Field "Test Field" -DocumentSet "Test Document Set" -RemoveAsSharedField -RemoveAsWelcomePageField
+PS:> Set-SPODocumentSetField -Field "Test Field" -DocumentSet "Test Document Set" -RemoveSharedField -RemoveWelcomePageField
 ```
 This will remove the field, available in one the available content types, as a Shared Field and as a Welcome Page Field.

@@ -2,7 +2,7 @@
 Applies a provisioning template to a web
 ##Syntax
 ```powershell
-Apply-SPOProvisioningTemplate [-ResourceFolder <String>] [-OverwriteSystemPropertyBagValues [<SwitchParameter>]] [-Parameters <Hashtable>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-Web <WebPipeBind>] -Path <String>
+Apply-SPOProvisioningTemplate [-ResourceFolder <String>] [-OverwriteSystemPropertyBagValues [<SwitchParameter>]] [-Parameters <Hashtable>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Web <WebPipeBind>] -Path <String>
 ```
 
 
@@ -14,8 +14,9 @@ Parameter|Type|Required|Description
 |Handlers|Handlers|False|Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.|
 |OverwriteSystemPropertyBagValues|SwitchParameter|False|Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)|
 |Parameters|Hashtable|False|Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.|
-|Path|String|True|Path to the xml file containing the provisioning template.|
+|Path|String|True|Path to the xml or pnp file containing the provisioning template.|
 |ResourceFolder|String|False|Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.|
+|TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while applying a template.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
@@ -48,6 +49,18 @@ PS:> Apply-SPOProvisioningTemplate -Path template.xml -Handlers Lists, SiteSecur
 Applies a provisioning template in XML format to the current web. It will only apply the lists and site security part of the template.
 
 ###Example 5
+```powershell
+PS:> Apply-SPOProvisioningTemplate -Path template.pnp
+```
+Applies a provisioning template from a pnp package to the current web.
+
+###Example 6
+```powershell
+PS:> Apply-SPOProvisioningTemplate -Path https://tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp
+```
+Applies a provisioning template from a pnp package stored in a library to the current web.
+
+###Example 7
 ```powershell
 
 PS:> $handler1 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1

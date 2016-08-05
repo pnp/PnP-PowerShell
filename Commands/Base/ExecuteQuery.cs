@@ -7,6 +7,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
     [Cmdlet("Execute", "SPOQuery")]
     [CmdletHelp("Executes any queued actions / changes on the SharePoint Client Side Object Model Context",
         Category = CmdletHelpCategory.Base)]
+    [CmdletExample(
+      Code = @"PS:> Execute-SPOQuery -RetryCount 5",
+      Remarks = @"This will execute any queued actions / changes on the SharePoint Client Side Object Model Context and will retry 5 times in case of throttling.", SortOrder = 1)]
 
     public class ExecuteSPOQuery : SPOCmdlet
     {
