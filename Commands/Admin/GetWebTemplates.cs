@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletRelatedLink(Text = "Locale IDs", Url = "http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911")]
     public class GetWebTemplates : SPOAdminCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The language id like 1033 for English")]
+        [Parameter(Mandatory = false, HelpMessage = "The language ID. For instance: 1033 for English")]
         public uint Lcid;
 
         [Parameter(Mandatory = false, HelpMessage = "The version of SharePoint")]

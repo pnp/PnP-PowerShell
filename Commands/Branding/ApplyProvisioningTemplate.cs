@@ -9,6 +9,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
 using System.Linq;
+using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
@@ -79,6 +80,9 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while applying a template")]
         public ExtensibilityHandler[] ExtensibilityHandlers;
 
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.")]
+        public ITemplateProviderExtension[] TemplateProviderExtensions;
+
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.Url);
@@ -133,7 +137,7 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                     throw new NotSupportedException("Only .pnp package files are supported from a SharePoint library");
                 }
             }
-            provisioningTemplate = provider.GetTemplate(templateFileName);
+            provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
 
             if (provisioningTemplate == null) return;
 

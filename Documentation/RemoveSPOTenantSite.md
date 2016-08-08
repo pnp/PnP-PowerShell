@@ -11,7 +11,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Force|SwitchParameter|False|Do not ask for confirmation.|
 |FromRecycleBin|SwitchParameter|False|If specified, will search for the site in the Recycle Bin and remove it from there.|
-|SkipRecycleBin|SwitchParameter|False|Do not add to the trashcan if selected.|
+|SkipRecycleBin|SwitchParameter|False|Do not add to the trashcan when selected.|
 |Url|String|True|Specifies the full URL of the site collection that needs to be deleted|
 ##Examples
 

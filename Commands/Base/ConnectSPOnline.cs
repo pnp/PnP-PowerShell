@@ -7,6 +7,8 @@ using System.Management.Automation;
 using System.Net;
 using System.Security;
 using System.Linq;
+using Microsoft.SharePoint.Client;
+using File = System.IO.File;
 #if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
 #endif
@@ -43,6 +45,10 @@ cd SPO:\\
 dir",
         Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It will also create a SPO:\\ drive you can use to navigate around the site",
         SortOrder = 6)]
+    [CmdletExample(
+        Code = @"PS:> Connect-SPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication",
+        Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)",
+        SortOrder = 7)]
     public class ConnectSPOnline : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
@@ -80,6 +86,9 @@ dir",
 
         [Parameter(Mandatory = true, ParameterSetName = "Weblogin", HelpMessage = "If you want to connect to SharePoint with browser based login")]
         public SwitchParameter UseWebLogin;
+
+        [Parameter(Mandatory = false, ParameterSetName = "Main", HelpMessage = "Specify to use for instance use forms based authentication (FBA)")]
+        public ClientAuthenticationMode AuthenticationMode = ClientAuthenticationMode.Default;
 
         [Parameter(Mandatory = false, HelpMessage = "If you want to create a PSDrive connected to the URL")]
         public SwitchParameter CreateDrive;
@@ -164,7 +173,7 @@ dir",
                         creds = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
                     }
                 }
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck);
+                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, SkipTenantAdminCheck, AuthenticationMode);
             }
             WriteVerbose(string.Format("PnP PowerShell Cmdlets ({0}): Connected to {1}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(), Url));
 
