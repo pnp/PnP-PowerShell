@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletExample(Code = @"$cUIExtn = ""<CommandUIExtension><CommandUIDefinitions><CommandUIDefinition Location=""""Ribbon.List.Share.Controls._children""""><Button Id=""""Ribbon.List.Share.GetItemsCountButton"""" Alt=""""Get list items count"""" Sequence=""""11"""" Command=""""Invoke_GetItemsCountButtonRequest"""" LabelText=""""Get Items Count"""" TemplateAlias=""""o1"""" Image32by32=""""_layouts/15/images/placeholder32x32.png"""" Image16by16=""""_layouts/15/images/placeholder16x16.png"""" /></CommandUIDefinition></CommandUIDefinitions><CommandUIHandlers><CommandUIHandler Command=""""Invoke_GetItemsCountButtonRequest"""" CommandAction=""""javascript: alert('Total items in this list: '+ ctx.TotalListItems);"""" EnabledScript=""""javascript: function checkEnable() { return (true);} checkEnable();""""/></CommandUIHandlers></CommandUIExtension>""
 
 Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -Description 'Adds custom action to custom list ribbon' -Group 'Microsoft.SharePoint.Client.UserCustomAction.group' -Location 'CommandUI.Ribbon' -CommandUIExtension $cUIExtn",
-    Remarks = @"Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice, escape quotes in CommandUIExtension.",
+    Remarks = @"Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice: escape quotes in CommandUIExtension.",
     SortOrder = 1)]
     public class AddCustomAction : SPOWebCmdlet
     {
@@ -32,7 +32,7 @@ Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = true)]
         public string Location = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multple CustomActions being added to the page.")]
+        [Parameter(Mandatory = false, HelpMessage = "Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.")]
         public int Sequence = 0;
 
         [Parameter(Mandatory = false)]
@@ -53,7 +53,7 @@ Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = false)]
         public UserCustomActionRegistrationType RegistrationType;
 
-        [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site, defaults to Web. All is not valid for this command.")]
+        [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()
@@ -94,7 +94,7 @@ Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
                     break;
 
                 case CustomActionScope.All:
-                    WriteWarning("CustomActionScope All is not supported for adding CustomActions");
+                    WriteWarning("CustomActionScope 'All' is not supported for adding CustomActions");
                     break;
             }           
         }

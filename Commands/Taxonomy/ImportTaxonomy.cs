@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Delimiter = "|";
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "If specified, terms that exist in the termset, but are not in the imported data will be removed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "If specified, terms that exist in the termset, but are not in the imported data, will be removed.")]
         public SwitchParameter SynchronizeDeletions;
 
         protected override void ExecuteCmdlet()

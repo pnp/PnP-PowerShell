@@ -9,14 +9,14 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = @"PS:> New-SPOWeb -Title ""Project A Web"" -Url projectA -Description ""Information about Project A"" -Locale 1033 -Template ""STS#0""", 
-        Remarks = "Creates a new subweb under the current web with url projectA", 
+        Remarks = "Creates a new subweb under the current web with URL projectA", 
         SortOrder = 1)]
     public class NewWeb : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage="The title of the new web")]
         public string Title;
 
-        [Parameter(Mandatory = true, HelpMessage="The Url of the new web")]
+        [Parameter(Mandatory = true, HelpMessage="The URL of the new web")]
         public string Url;
 
         [Parameter(Mandatory = false, HelpMessage="The description of the new web")]

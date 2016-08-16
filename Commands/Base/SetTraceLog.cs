@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "SPOTraceLog")]
-    [CmdletHelp("Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets utilizes the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.", 
+    [CmdletHelp("Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.", 
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
         Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt",

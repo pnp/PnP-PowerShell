@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.PageLayout
         [Parameter(Mandatory = true, HelpMessage = "Associated content type ID")]
         public string AssociatedContentTypeID;
 
-        [Parameter(Mandatory = false, HelpMessage = "Folder hierarchy where the html page layouts will be deployed")]
+        [Parameter(Mandatory = false, HelpMessage = "Folder hierarchy where the HTML page layouts will be deployed")]
         public string DestinationFolderHierarchy;
 
         protected override void ExecuteCmdlet()

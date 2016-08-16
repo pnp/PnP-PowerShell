@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
 
     public class RemoveWorkflowDefinition : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The subscription to remove", Position = 0)]
+        [Parameter(Mandatory = true, HelpMessage = "The definition to remove", Position = 0)]
         public WorkflowDefinitionPipeBind Identity;
 
         protected override void ExecuteCmdlet()
