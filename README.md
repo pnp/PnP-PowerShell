@@ -100,6 +100,7 @@ At the following links you will find a few videos on how to get started with the
 
 * https://channel9.msdn.com/blogs/OfficeDevPnP/PnP-Web-Cast-Introduction-to-Office-365-PnP-PowerShell
 * https://channel9.msdn.com/blogs/OfficeDevPnP/Introduction-to-PnP-PowerShell-Cmdlets
+* https://channel9.msdn.com/blogs/OfficeDevPnP/PnP-Webcast-PnP-PowerShell-Getting-started-with-latest-updates
 
 # SETTINGS UP CREDENTIALS #
 In case of an unattended script you might want to add a new entry in your credential manager of windows. 
