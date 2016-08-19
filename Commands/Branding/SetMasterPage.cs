@@ -26,18 +26,18 @@ namespace SharePointPnP.PowerShell.Commands
         SortOrder = 4)]
     public class SetMasterPage : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = "SERVER", HelpMessage = "Specifies the Master page url based on the server relative URL")]
+        [Parameter(Mandatory = false, ParameterSetName = "SERVER", HelpMessage = "Specifies the Master page URL based on the server relative URL")]
         [Alias("MasterPageUrl")]
         public string MasterPageServerRelativeUrl = null;
 
-        [Parameter(Mandatory = false, ParameterSetName = "SERVER", HelpMessage = "Specifies the custom Master page url based on the server relative URL")]
+        [Parameter(Mandatory = false, ParameterSetName = "SERVER", HelpMessage = "Specifies the custom Master page URL based on the server relative URL")]
         [Alias("CustomMasterPageUrl")]
         public string CustomMasterPageServerRelativeUrl = null;
 
-        [Parameter(Mandatory = false, ParameterSetName = "SITE", HelpMessage = "Specifies the Master page url based on the site relative URL")]
+        [Parameter(Mandatory = false, ParameterSetName = "SITE", HelpMessage = "Specifies the Master page URL based on the site relative URL")]
         public string MasterPageSiteRelativeUrl = null;
 
-        [Parameter(Mandatory = false, ParameterSetName = "SITE", HelpMessage = "Specifies the custom Master page url based on the site relative URL")]
+        [Parameter(Mandatory = false, ParameterSetName = "SITE", HelpMessage = "Specifies the custom Master page URL based on the site relative URL")]
         public string CustomMasterPageSiteRelativeUrl = null;
 
         protected override void ExecuteCmdlet()

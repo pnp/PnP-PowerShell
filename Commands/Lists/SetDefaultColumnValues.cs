@@ -32,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = true, HelpMessage = "The internal name, id or a reference to a field")]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = true, HelpMessage = "A list of values. In case of a text field the values will be concatenated, separated by a semi-column. In case of a taxonomy field multiple values will added")]
+        [Parameter(Mandatory = true, HelpMessage = "A list of values. In case of a text field the values will be concatenated, separated by a semi-colon. In case of a taxonomy field multiple values will added")]
         public string[] Value;
 
         [Parameter(Mandatory = false, HelpMessage = "A library relative folder path, if not specified it will set the default column values on the root folder of the library ('/')")]

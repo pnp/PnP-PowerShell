@@ -8,19 +8,19 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Set, "SPODocumentSetField")]
-    [CmdletHelp("Sets a site column from the avaiable content types to a document set", 
+    [CmdletHelp("Sets a site column from the available content types to a document set", 
         Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(
         Code = @"PS:> Set-SPODocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -SetSharedField -SetWelcomePageField",
-        Remarks = "This will set the field, available in one the available content types, as a Shared Field and as a Welcome Page Field.",
+        Remarks = "This will set the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Set-SPODocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -RemoveSharedField -RemoveWelcomePageField",
-        Remarks = "This will remove the field, available in one the available content types, as a Shared Field and as a Welcome Page Field.",
+        Remarks = "This will remove the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.",
         SortOrder = 1)]
     public class SetFieldInDocumentSet : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The document set to set the field in. Either specify a name, a document set template object, an id, or a content type object")]
+        [Parameter(Mandatory = true, HelpMessage = "The document set in which to set the field. Either specify a name, a document set template object, an id, or a content type object")]
         public DocumentSetPipeBind DocumentSet;
 
         [Parameter(Mandatory = true, HelpMessage = "The field to set. The field needs to be available in one of the available content types. Either specify a name, an id or a field object")]

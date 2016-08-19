@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Branding)]
     public class AddJavaScriptBlock : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The name of the script block. Can be used to identiy the script with other cmdlets or coded solutions")]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the script block. Can be used to identify the script with other cmdlets or coded solutions")]
         [Alias("Key")]
         public string Name = string.Empty;
 
@@ -27,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Alias("AddToSite")]
         public SwitchParameter SiteScoped;
 
-        [Parameter(Mandatory = false, HelpMessage = "The scope of the script to add to. Either Web or Site, defaults to Web. All is not valid for this command.")]
+        [Parameter(Mandatory = false, HelpMessage = "The scope of the script to add to. Either Web or Site, defaults to Web. 'All' is not valid for this command.")]
         public CustomActionScope Scope = CustomActionScope.Web;
 
         protected override void ExecuteCmdlet()

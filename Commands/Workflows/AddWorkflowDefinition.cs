@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         [Parameter(Mandatory = true, HelpMessage = "The workflow definition to add.")]
         public WorkflowDefinition Definition;
 
-        [Parameter(Mandatory = false, HelpMessage = "By default workflow definitions will be publish, specify this switch to override that.")]
+        [Parameter(Mandatory = false, HelpMessage = "Overrides the default behaviour, which is to publish workflow definitions.")]
         public SwitchParameter DoNotPublish;
         protected override void ExecuteCmdlet()
         {
