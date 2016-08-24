@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.IO;
 using System.Management.Automation;
@@ -87,14 +87,10 @@ namespace SharePointPnP.PowerShell.Commands
 
             var file = folder.UploadFile(new FileInfo(Path).Name, Path, true);
 
-            if (Checkout)
-                SelectedWeb.CheckInFile(fileUrl, CheckinType.MajorCheckIn, CheckInComment);
-
+       
             if (Values != null)
             {
-                file.CheckOut();
-
-                ListItem item = file.ListItemAllFields;
+                var item = file.ListItemAllFields;
 
                 foreach (var key in Values.Keys)
                 {
@@ -103,10 +99,12 @@ namespace SharePointPnP.PowerShell.Commands
 
                 item.Update();
 
-                file.CheckIn(string.Empty, CheckinType.OverwriteCheckIn);
-
                 ClientContext.ExecuteQueryRetry();
             }
+
+            if (Checkout)
+                SelectedWeb.CheckInFile(fileUrl, CheckinType.MajorCheckIn, CheckInComment);
+
 
             if (Publish)
                 SelectedWeb.PublishFile(fileUrl, PublishComment);
