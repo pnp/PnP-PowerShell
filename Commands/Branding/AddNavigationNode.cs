@@ -54,7 +54,7 @@ namespace SharePointPnP.PowerShell.Commands
                 ClientContext.ExecuteQueryRetry();
                 Url = SelectedWeb.Url;
             }
-            SelectedWeb.AddNavigationNode(Title, new Uri(Url), Header, Location, External.IsPresent, !First.IsPresent);
+            SelectedWeb.AddNavigationNode(Title, new Uri(Url, UriKind.RelativeOrAbsolute), Header, Location, External.IsPresent, !First.IsPresent);
         }
     }
 }
