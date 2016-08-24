@@ -10,23 +10,23 @@ Invoke-SPOWebAction [-Webs <Web[]>] [-WebAction <Action`1>] [-ShouldProcessWebAc
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |DisableStatisticsOutput|SwitchParameter|False|Will not output statistics after the operation|
-|ListAction|Action`1|False|Function to be exectued on the list. There is one input parameter of type List|
-|ListItemAction|Action`1|False|Function to be exectued on the list item. There is one input parameter of type ListItem|
+|ListAction|Action`1|False|Function to be executed on the list. There is one input parameter of type List|
+|ListItemAction|Action`1|False|Function to be executed on the list item. There is one input parameter of type ListItem|
 |ListItemProperties|String[]|False|The properties to load for list items.|
 |ListProperties|String[]|False|The properties to load for list.|
-|PostListAction|Action`1|False|Function to be exectued on the list, this will trigger after list items have been proccesse. There is one input parameter of type List|
-|PostWebAction|Action`1|False|Function to be exectued on the web, this will trigger after lists and list items have been proccessed. There is one input parameter of type Web|
-|ShouldProcessListAction|Func`2|False|Function to be executed on the web that would decide if ListAction should be invoked, There is one input parameter of type List and the function should return a bool value|
-|ShouldProcessListItemAction|Func`2|False|Function to be executed on the web that would decide if ListItemAction should be invoked, There is one input parameter of type ListItem and the function should return a bool value|
-|ShouldProcessPostListAction|Func`2|False|Function to be executed on the web that would decide if PostListAction should be invoked, There is one input parameter of type List and the function should return a bool value|
-|ShouldProcessPostWebAction|Func`2|False|Function to be executed on the web that would decide if PostWebAction should be invoked, There is one input parameter of type Web and the function should return a bool value|
-|ShouldProcessWebAction|Func`2|False|Function to be executed on the web that would decide if WebAction should be invoked, There is one input parameter of type Web and the function should return a bool value|
-|SkipCounting|SwitchParameter|False|Will skip the counting process, by doing this you will not get an estimated time remaining|
+|PostListAction|Action`1|False|Function to be executed on the list, this will trigger after list items have been processed. There is one input parameter of type List|
+|PostWebAction|Action`1|False|Function to be executed on the web, this will trigger after lists and list items have been processed. There is one input parameter of type Web|
+|ShouldProcessListAction|Func`2|False|Function to be executed on the web that would determine if ListAction should be invoked, There is one input parameter of type List and the function should return a boolean value|
+|ShouldProcessListItemAction|Func`2|False|Function to be executed on the web that would determine if ListItemAction should be invoked, There is one input parameter of type ListItem and the function should return a boolean value|
+|ShouldProcessPostListAction|Func`2|False|Function to be executed on the web that would determine if PostListAction should be invoked, There is one input parameter of type List and the function should return a boolean value|
+|ShouldProcessPostWebAction|Func`2|False|Function to be executed on the web that would determine if PostWebAction should be invoked, There is one input parameter of type Web and the function should return a boolean value|
+|ShouldProcessWebAction|Func`2|False|Function to be executed on the web that would determine if WebAction should be invoked, There is one input parameter of type Web and the function should return a boolean value|
+|SkipCounting|SwitchParameter|False|Will skip the counting process; by doing this you will not get an estimated time remaining|
 |SubWebs|SwitchParameter|False|Specify if sub webs will be processed|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-|WebAction|Action`1|False|Function to be exectued on the web. There is one input parameter of type Web|
+|WebAction|Action`1|False|Function to be executed on the web. There is one input parameter of type Web|
 |WebProperties|String[]|False|The properties to load for web.|
-|Webs|Web[]|False|Webs you want to process (for example diffrent site collections), will use Web parameter if not specified|
+|Webs|Web[]|False|Webs you want to process (for example different site collections), will use Web parameter if not specified|
 ##Examples
 
 ###Example 1

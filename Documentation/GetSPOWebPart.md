@@ -10,7 +10,7 @@ Get-SPOWebPart -ServerRelativePageUrl <String> [-Identity <WebPartPipeBind>] [-W
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|WebPartPipeBind|False||
-|ServerRelativePageUrl|String|True|Full server relative url of the webpart page, e.g. /sites/mysite/sitepages/home.aspx|
+|ServerRelativePageUrl|String|True|Full server relative URL of the webpart page, e.g. /sites/mysite/sitepages/home.aspx|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
