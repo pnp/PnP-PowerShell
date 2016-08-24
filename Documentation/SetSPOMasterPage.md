@@ -14,10 +14,10 @@ Set-SPOMasterPage [-MasterPageSiteRelativeUrl <String>] [-CustomMasterPageSiteRe
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|CustomMasterPageServerRelativeUrl|String|False|Specifies the custom Master page url based on the server relative URL|
-|CustomMasterPageSiteRelativeUrl|String|False|Specifies the custom Master page url based on the site relative URL|
-|MasterPageServerRelativeUrl|String|False|Specifies the Master page url based on the server relative URL|
-|MasterPageSiteRelativeUrl|String|False|Specifies the Master page url based on the site relative URL|
+|CustomMasterPageServerRelativeUrl|String|False|Specifies the custom Master page URL based on the server relative URL|
+|CustomMasterPageSiteRelativeUrl|String|False|Specifies the custom Master page URL based on the site relative URL|
+|MasterPageServerRelativeUrl|String|False|Specifies the Master page URL based on the server relative URL|
+|MasterPageSiteRelativeUrl|String|False|Specifies the Master page URL based on the site relative URL|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

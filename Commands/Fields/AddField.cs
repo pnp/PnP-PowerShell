@@ -120,13 +120,29 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
                         if (Field.Id != Guid.Empty)
                         {
                             field = SelectedWeb.Fields.GetById(Field.Id);
+                            ClientContext.Load(field);
+                            ClientContext.ExecuteQueryRetry();
                         }
                         else if (!string.IsNullOrEmpty(Field.Name))
                         {
-                            field = SelectedWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                            try
+                            {
+                                field = SelectedWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                                ClientContext.Load(field);
+                                ClientContext.ExecuteQueryRetry();
+                            }
+                            catch
+                            {
+                                // Field might be sitecolumn, swallow exception
+                            }
+                            if (field != null)
+                            {
+                                var rootWeb = ClientContext.Site.RootWeb;
+                                field = rootWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                                ClientContext.Load(field);
+                                ClientContext.ExecuteQueryRetry();
+                            }
                         }
-                        ClientContext.Load(field);
-                        ClientContext.ExecuteQueryRetry();
                     }
                     if (field != null)
                     {

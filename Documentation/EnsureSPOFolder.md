@@ -1,5 +1,5 @@
 #Ensure-SPOFolder
-Returns a folder given a site relative path, and will create it if it not exists.
+Returns a folder given a site relative path, and will create it does not exist.
 ##Syntax
 ```powershell
 Ensure-SPOFolder -SiteRelativePath <String> [-Web <WebPipeBind>]
@@ -17,4 +17,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Ensure-SPOFolder -SiteRelativePath "demofolder/subfolder"
 ```
-Creates a folder called subfolder in a folder called demofolder with located in the root folder of the site. If the folder hierarchy does not exist, it will be created.
+Creates a folder called subfolder in a folder called demofolder located in the root folder of the site. If the folder hierarchy does not exist, it will be created.

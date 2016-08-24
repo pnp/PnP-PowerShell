@@ -15,7 +15,7 @@ Parameter|Type|Required|Description
 |Locale|Int32|False||
 |Template|String|True|The site definition template to use for the new web, e.g. STS#0|
 |Title|String|True|The title of the new web|
-|Url|String|True|The Url of the new web|
+|Url|String|True|The URL of the new web|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
@@ -23,4 +23,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> New-SPOWeb -Title "Project A Web" -Url projectA -Description "Information about Project A" -Locale 1033 -Template "STS#0"
 ```
-Creates a new subweb under the current web with url projectA
+Creates a new subweb under the current web with URL projectA
