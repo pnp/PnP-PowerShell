@@ -110,19 +110,8 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                             ResourceFolder);
                     }
                 }
-
-                // If the template has been provided through the -Path parameter
-                if (InputInstance == null)
-                {
-                    FileInfo fileInfo = new FileInfo(Path);
-                    fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
-                }
-                // Otherwise the -Path parameter has simply to refer to a folder
-                else
-                {
-                    var pathFolder = System.IO.Path.GetPathRoot(Path);
-                    fileConnector = new FileSystemConnector(pathFolder, "");
-                }
+                FileInfo fileInfo = new FileInfo(Path);
+                fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
             }
             else
             {                
