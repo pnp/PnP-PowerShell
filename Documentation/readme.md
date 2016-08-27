@@ -5,10 +5,6 @@ Below you can find a list of all the available cmdlets. Many commands provide bu
 Get-Help Connect-SPOnline -Detailed
 ```
 
-##
-Cmdlet|Description
-:-----|:----------
-**[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |
 ##Apps
 Cmdlet|Description
 :-----|:----------
@@ -35,6 +31,7 @@ Cmdlet|Description
 **[Remove&#8209;SPOCustomAction](RemoveSPOCustomAction.md)** |Removes a custom action
 **[Get&#8209;SPOCustomAction](GetSPOCustomAction.md)** |Returns all or a specific custom action(s)
 **[Add&#8209;SPOCustomAction](AddSPOCustomAction.md)** |Adds a custom action to a web
+**[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |Creates a pnp package file of an existing template xml, and includes all files in the current folder
 **[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOHomePage](SetSPOHomePage.md)** |Sets the home page of the current web.
 **[Add&#8209;SPOJavaScriptBlock](AddSPOJavaScriptBlock.md)** |Adds a link to a JavaScript snippet/block to a web or site collection
@@ -45,6 +42,7 @@ Cmdlet|Description
 **[Set&#8209;SPOMinimalDownloadStrategy](SetSPOMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.
 **[Add&#8209;SPONavigationNode](AddSPONavigationNode.md)** |Adds a menu item to either the quicklaunch or top navigation
 **[Remove&#8209;SPONavigationNode](RemoveSPONavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation
+**[New&#8209;SPOProvisioningTemplate](NewSPOProvisioningTemplate.md)** |Creates a new provisioning template object
 **[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
 **[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
