@@ -112,7 +112,7 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                 }
 
                 // If the template has been provided through the -Path parameter
-                if (InputInstance != null)
+                if (InputInstance == null)
                 {
                     FileInfo fileInfo = new FileInfo(Path);
                     fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
