@@ -9,11 +9,10 @@ using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
 using System.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using OfficeDevPnP.Core;
 using OfficeDevPnP.Core.Utilities;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace SharePointPnP.PowerShell.Commands.Base
@@ -56,7 +55,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl);
+            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 
 
@@ -71,7 +70,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
             FileTokenCache cache = new FileTokenCache(configFile);
 
             var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache), retryCount, retryWait * 10000);
-
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {
@@ -84,7 +82,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl);
+            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
@@ -103,7 +101,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl);
+            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 #endif
 
@@ -137,7 +135,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     }
                 }
 
-                return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl);
+                return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
             }
             throw new Exception("Error establishing a connection, context is null");
         }
@@ -145,6 +143,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
+
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
             context.ApplicationName = Properties.Resources.ApplicationName;
@@ -220,7 +219,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl);
+            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 
         internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
@@ -239,6 +238,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
 
             var context = PnPClientContext.ConvertFrom(authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(), networkCredentials.UserName, networkCredentials.Password, networkCredentials.Domain, adfsHost, adfsRelyingParty), retryCount, retryWait * 1000);
+
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
 
@@ -259,7 +259,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl);
+            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 
         public static string GetRealmFromTargetUrl(Uri targetApplicationUri)
@@ -357,5 +357,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
 
         }
+
+        private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);
+
+        private static readonly Lazy<string> PnPPSVersionTagLazy = new Lazy<string>(
+            () => {
+                var coreAssembly = Assembly.GetExecutingAssembly();
+                var result = $"PnPPS:{((AssemblyFileVersionAttribute) coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.Split('.')[2]}";
+                return (result);
+            },
+            true);
     }
 }
