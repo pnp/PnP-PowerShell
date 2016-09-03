@@ -89,7 +89,7 @@ namespace SharePointPnP.PowerShell.Commands
                 var document = XDocument.Parse(fullxml);
 
                 
-                XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
+                XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05;
 
                 var termGroupsElement = document.Root.Descendants(pnp + "TermGroups").FirstOrDefault();
 
