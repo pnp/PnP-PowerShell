@@ -47,7 +47,7 @@ namespace SharePointPnP.PowerShell.Commands
             }
             if (list != null)
             {
-                if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary)
+                if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary || list.BaseTemplate == (int)ListTemplateType.WebPageLibrary)
                 {
                     Field field = null;
                     // Get the field
