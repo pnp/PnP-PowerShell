@@ -69,8 +69,8 @@ namespace SharePointPnP.PowerShell.Commands
                 termGroupsElement = XElement.Parse(File.ReadAllText(Path));
             }
 
-            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
-            var templateElement = document.Root.Descendants(pnp + "ProvisioningTemplate").FirstOrDefault();
+            //XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_25_12;
+            var templateElement = document.Root.Descendants(document.Root.GetNamespaceOfPrefix("pnp") + "ProvisioningTemplate").FirstOrDefault();
 
             if (templateElement != null)
             {
