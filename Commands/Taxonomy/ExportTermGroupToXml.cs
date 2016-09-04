@@ -21,20 +21,26 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTermGroupToXml", 
+        Code = @"PS:> Export-SPOTermGroupToXml",
         Remarks = "Exports all term groups in the default site collection term store to the standard output",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTermGroupToXml -Out output.xml", 
+        Code = @"PS:> Export-SPOTermGroupToXml -Out output.xml",
         Remarks = "Exports all term groups in the default site collection term store to the file 'output.xml' in the current folder",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTermGroupToXml -Out c:\output.xml -Identity ""Test Group""", 
+        Code = @"PS:> Export-SPOTermGroupToXml -Out c:\output.xml -Identity ""Test Group""",
         Remarks = "Exports the term group with the specified name to the file 'output.xml' located in the root folder of the C: drive.",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> $termgroup = Get-SPOTermGroup -GroupName Test
+PS:> $termgroup | Export-SPOTermGroupToXml -Out c:\output.xml",
+        Remarks = "Retrieves a termgroup and subsequently exports that term group to a the file named 'output.xml'",
+        SortOrder = 4)]
     public class ExportTermGroup : SPOCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The ID or name of the termgroup")]
+        [Parameter(Mandatory = false, HelpMessage = "The ID or name of the termgroup",
+            ValueFromPipeline = true)]
         public TermGroupPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "File to export the data to.")]
@@ -52,14 +58,14 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-           // var template = new ProvisioningTemplate();
+            // var template = new ProvisioningTemplate();
 
             var templateCi = new ProvisioningTemplateCreationInformation(ClientContext.Web) { IncludeAllTermGroups = true };
 
             templateCi.HandlersToProcess = Handlers.TermGroups;
 
             var template = ClientContext.Web.GetProvisioningTemplate(templateCi);
-           
+
             template.Security = null;
             template.Features = null;
             template.CustomActions = null;
@@ -88,7 +94,7 @@ namespace SharePointPnP.PowerShell.Commands
             {
                 var document = XDocument.Parse(fullxml);
 
-                
+
                 XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05;
 
                 var termGroupsElement = document.Root.Descendants(pnp + "TermGroups").FirstOrDefault();
