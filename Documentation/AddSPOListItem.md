@@ -2,7 +2,7 @@
 Adds an item to a list
 ##Syntax
 ```powershell
-Add-SPOListItem [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>] [-Web <WebPipeBind>] -List <ListPipeBind>
+Add-SPOListItem [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>] [-Folder <String>] [-Web <WebPipeBind>] -List <ListPipeBind>
 ```
 
 
@@ -10,6 +10,7 @@ Add-SPOListItem [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>] [-Web
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |ContentType|ContentTypePipeBind|False|Specify either the name, ID or an actual content type.|
+|Folder|String|False|The list relative URL of a folder. E.g. "MyFolder" for a folder located in the root of the list, or "MyFolder/SubFolder" for a folder located in the MyFolder folder which is located in the root of the list.|
 |List|ListPipeBind|True|The ID, Title or Url of the list.|
 |Values|Hashtable|False|Use the internal names of the fields when specifying field names.
 
@@ -56,3 +57,9 @@ Adds a new list item to the "Demo List", sets the content type to "Company" and 
 Add-SPOListItem -List "Demo List" -Values @{"MultiUserField"="user1@domain.com","user2@domain.com"}
 ```
 Adds a new list item to the "Demo List" and sets the user field called MultiUserField to 2 users. Separate multiple users with a comma.
+
+###Example 4
+```powershell
+Add-SPOListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Folder "projects/europe"
+```
+Adds a new list item to the "Demo List". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.

@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletHelp("Creates a folder within a parent folder",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOFolder -Name NewFolder -Folder _catalogs/masterpage/newfolder",
+        Code = @"PS:> Add-SPOFolder -Name NewFolder -Folder _catalogs/masterpage",
         SortOrder = 1)]
     public class AddFolder : SPOWebCmdlet
     {
@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-            
+                        
             Folder folder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder));
             ClientContext.Load(folder, f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
