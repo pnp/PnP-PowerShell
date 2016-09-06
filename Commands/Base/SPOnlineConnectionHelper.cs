@@ -19,9 +19,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     internal class SPOnlineConnectionHelper
     {
-        private const string CommonAuthority = "https://login.windows.net/Common";
+        //private const string CommonAuthority = "https://login.windows.net/Common";
         public static AuthenticationContext AuthContext { get; set; }
-        private static string ContextUrl { get; set; }
+        //private static string ContextUrl { get; set; }
 
         static SPOnlineConnectionHelper()
         {

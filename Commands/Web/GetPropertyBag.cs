@@ -2,7 +2,6 @@
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System;
 using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands

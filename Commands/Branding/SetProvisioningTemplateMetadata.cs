@@ -6,9 +6,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
-using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
-using System.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
@@ -83,22 +81,22 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             else
             {                
                 Uri fileUri = new Uri(Path);
-                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(this.ClientContext, fileUri);
-                var templateContext = this.ClientContext.Clone(webUrl.ToString());
+                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, fileUri);
+                var templateContext = ClientContext.Clone(webUrl.ToString());
 
                 string library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
                 int idx = library.IndexOf("/");
                 library = library.Substring(0, idx);
                 fileConnector = new SharePointConnector(templateContext, templateContext.Url, library);
             }
-            XMLTemplateProvider provider = null;
-            ProvisioningTemplate provisioningTemplate = null;
+            XMLTemplateProvider provider;
+            ProvisioningTemplate provisioningTemplate;
             Stream stream = fileConnector.GetFileStream(templateFileName);
             var isOpenOfficeFile = IsOpenOfficeFile(stream);
             if (isOpenOfficeFile)
             {
                 provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
-                templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".")) + ".xml";
+                templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
             }
             else
             {
@@ -126,7 +124,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             // SIG 50 4B 03 04 14 00
 
             byte[] bytes = new byte[6];
-            int n = stream.Read(bytes, 0, 6);
+            stream.Read(bytes, 0, 6);
             var signature = string.Empty;
             foreach (var b in bytes)
             {

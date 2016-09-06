@@ -53,7 +53,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
             {
                 case SearchConfigurationScope.Web:
                     {
-                        this.SelectedWeb.SetSearchConfiguration(Configuration);
+                        SelectedWeb.SetSearchConfiguration(Configuration);
                         break;
                     }
                 case SearchConfigurationScope.Site:

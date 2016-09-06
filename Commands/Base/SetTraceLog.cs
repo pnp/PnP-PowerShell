@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "SPOTraceLog")]
-    [CmdletHelp("Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.", 
+    [CmdletHelp("Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
         Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt",
@@ -47,13 +47,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "Off", HelpMessage = "Turn off tracing to log file.")]
         public SwitchParameter Off;
 
-        private const string LISTENERNAME = "PNPPOWERSHELLTRACELISTENER";
+        private const string Listenername = "PNPPOWERSHELLTRACELISTENER";
         protected override void ProcessRecord()
         {
 
             if (ParameterSetName == "On")
             {
-                var existingListener = Trace.Listeners[LISTENERNAME];
+                var existingListener = Trace.Listeners[Listenername];
                 if (existingListener != null)
                 {
                     existingListener.Flush();
@@ -72,14 +72,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         DelimitedListTraceListener delimitedListener = new DelimitedListTraceListener(LogFile);
                         delimitedListener.Delimiter = Delimiter;
                         delimitedListener.TraceOutputOptions = TraceOptions.DateTime;
-                        delimitedListener.Name = LISTENERNAME;
+                        delimitedListener.Name = Listenername;
                         Trace.Listeners.Add(delimitedListener);
                         OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
                     }
                     else
                     {
                         TextWriterTraceListener listener = new TextWriterTraceListener(LogFile);
-                        listener.Name = LISTENERNAME;
+                        listener.Name = Listenername;
                         Trace.Listeners.Add(listener);
                         OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
                     }
@@ -87,7 +87,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 else
                 {
                     ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
-                    consoleListener.Name = LISTENERNAME;
+                    consoleListener.Name = Listenername;
                     Trace.Listeners.Add(consoleListener);
                     OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
                 }
@@ -99,10 +99,17 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 try
                 {
                     Trace.Flush();
-                    Trace.Listeners[LISTENERNAME].Close();
-                    Trace.Listeners.Remove(LISTENERNAME);
+                    var traceListener = Trace.Listeners[Listenername];
+                    if (traceListener != null)
+                    {
+                        traceListener.Close();
+                        Trace.Listeners.Remove(Listenername);
+                    }
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                    // ignored
+                }
             }
         }
     }

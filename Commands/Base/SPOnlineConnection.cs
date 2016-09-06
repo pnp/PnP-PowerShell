@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Diagnostics;
 using SharePointPnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections.Generic;

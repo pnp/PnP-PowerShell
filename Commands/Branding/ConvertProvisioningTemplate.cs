@@ -47,7 +47,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            if (this.MyInvocation.BoundParameters.ContainsKey("Out"))
+            if (MyInvocation.BoundParameters.ContainsKey("Out"))
             {
                 if (!System.IO.Path.IsPathRooted(Out))
                 {
@@ -107,16 +107,16 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
                 if (!string.IsNullOrEmpty(Out))
                 {
-                    if (System.IO.File.Exists(Out))
+                    if (File.Exists(Out))
                     {
                         if (Force || ShouldContinue(string.Format(Resources.File0ExistsOverwrite, Out), Resources.Confirm))
                         {
-                            System.IO.File.WriteAllText(Out, provisioningTemplate.ToXML(formatter), Encoding);
+                            File.WriteAllText(Out, provisioningTemplate.ToXML(formatter), Encoding);
                         }
                     }
                     else
                     {
-                        System.IO.File.WriteAllText(Out, provisioningTemplate.ToXML(formatter), Encoding);
+                        File.WriteAllText(Out, provisioningTemplate.ToXML(formatter), Encoding);
                     }
                 }
                 else

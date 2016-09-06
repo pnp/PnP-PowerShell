@@ -2,7 +2,7 @@
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Utilities
 {
     [Cmdlet(VerbsCommunications.Send, "SPOMail")]
     [CmdletHelp("Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.",
@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             if (string.IsNullOrWhiteSpace(Password) && string.IsNullOrWhiteSpace(From))
             {
-                MailUtility.SendEmail(this.ClientContext, To, Cc, Subject, Body);
+                MailUtility.SendEmail(ClientContext, To, Cc, Subject, Body);
             }
             else
             {

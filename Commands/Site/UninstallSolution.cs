@@ -3,7 +3,7 @@ using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsLifecycle.Uninstall, "SPOSolution")]
     [CmdletHelp("Uninstalls a sandboxed solution from a site collection",

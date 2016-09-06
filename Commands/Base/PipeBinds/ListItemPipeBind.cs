@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-using System;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {

@@ -40,12 +40,12 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
 
         protected override void ExecuteCmdlet()
         {
-            if (this.MyInvocation.BoundParameters.ContainsKey("SetSharedField") && this.MyInvocation.BoundParameters.ContainsKey("RemoveSharedField"))
+            if (MyInvocation.BoundParameters.ContainsKey("SetSharedField") && MyInvocation.BoundParameters.ContainsKey("RemoveSharedField"))
             {
                 WriteWarning("Cannot set and remove a shared field at the same time");
                 return;
             }
-            if (this.MyInvocation.BoundParameters.ContainsKey("SetWelcomePageField") && this.MyInvocation.BoundParameters.ContainsKey("RemoveWelcomePageField"))
+            if (MyInvocation.BoundParameters.ContainsKey("SetWelcomePageField") && MyInvocation.BoundParameters.ContainsKey("RemoveWelcomePageField"))
             {
                 WriteWarning("Cannot set and remove a welcome page field at the same time");
                 return;

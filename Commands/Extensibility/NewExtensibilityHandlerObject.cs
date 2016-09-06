@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Features
+namespace SharePointPnP.PowerShell.Commands.Extensibility
 {
     [Cmdlet(VerbsCommon.New, "SPOExtensbilityHandlerObject")]
     [CmdletHelp("Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet", Category = CmdletHelpCategory.Features)]
@@ -30,11 +30,13 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         protected override void ProcessRecord()
         {
-            ExtensibilityHandler handler = new ExtensibilityHandler();
-            handler.Assembly = Assembly;
-            handler.Type = Type;
-            handler.Configuration = Configuration;
-            handler.Enabled = !Disabled;
+            var handler = new ExtensibilityHandler
+            {
+                Assembly = Assembly,
+                Type = Type,
+                Configuration = Configuration,
+                Enabled = !Disabled
+            };
             WriteObject(handler);
         }
 

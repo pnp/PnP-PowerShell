@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
 using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Taxonomy;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using File = System.IO.File;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using File = System.IO.File;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Import, "SPOTermGroupFromXml", SupportsShouldProcess = true)]
     [CmdletHelp("Imports a taxonomy TermGroup from either the input or from an XML file.",
@@ -55,8 +49,8 @@ namespace SharePointPnP.PowerShell.Commands
 
             var document = XDocument.Parse(fullXml);
 
-            XElement termGroupsElement = null;
-            if (this.MyInvocation.BoundParameters.ContainsKey("Xml"))
+            XElement termGroupsElement;
+            if (MyInvocation.BoundParameters.ContainsKey("Xml"))
             {
                 termGroupsElement = XElement.Parse(Xml);
             }
@@ -72,10 +66,7 @@ namespace SharePointPnP.PowerShell.Commands
             //XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_25_12;
             var templateElement = document.Root.Descendants(document.Root.GetNamespaceOfPrefix("pnp") + "ProvisioningTemplate").FirstOrDefault();
 
-            if (templateElement != null)
-            {
-                templateElement.Add(termGroupsElement);
-            }
+            templateElement?.Add(termGroupsElement);
 
             var stream = new MemoryStream();
             document.Save(stream);

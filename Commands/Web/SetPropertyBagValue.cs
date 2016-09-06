@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -41,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (!this.MyInvocation.BoundParameters.ContainsKey("Folder"))
+            if (!MyInvocation.BoundParameters.ContainsKey("Folder"))
             {
                 if (!Indexed)
                 {

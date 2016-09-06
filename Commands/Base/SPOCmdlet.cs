@@ -5,8 +5,6 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -58,12 +56,12 @@ namespace SharePointPnP.PowerShell.Commands
                                 healthScore = Utility.GetHealthScore(SPOnlineConnection.CurrentConnection.Url);
                                 if (healthScore <= SPOnlineConnection.CurrentConnection.MinimalHealthScore)
                                 {
-                                    var tag = SPOnlineConnection.CurrentConnection.PnPVersionTag + ":" + this.MyInvocation.MyCommand.Name.Replace("SPO", "");
+                                    var tag = SPOnlineConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
                                     if (tag.Length > 32)
                                     {
                                         tag = tag.Substring(0, 32);
                                     }
-                                    this.ClientContext.ClientTag = tag;
+                                    ClientContext.ClientTag = tag;
 
 
                                     ExecuteCmdlet();
@@ -84,13 +82,12 @@ namespace SharePointPnP.PowerShell.Commands
                 }
                 else
                 {
-                    var tag = SPOnlineConnection.CurrentConnection.PnPVersionTag + ":" +
-                              this.MyInvocation.MyCommand.Name.Replace("SPO", "");
+                    var tag = SPOnlineConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
                     if (tag.Length > 32)
                     {
                         tag = tag.Substring(0, 32);
                     }
-                    this.ClientContext.ClientTag = tag;
+                    ClientContext.ClientTag = tag;
 
                     ExecuteCmdlet();
                 }
