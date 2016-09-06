@@ -52,6 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
             }
          
             var docSetTemplate = DocumentSet.GetDocumentSetTemplate(SelectedWeb);
+            
 
             ClientContext.Load(docSetTemplate, dt => dt.AllowedContentTypes, dt => dt.SharedFields, dt => dt.WelcomePageFields);
             ClientContext.ExecuteQueryRetry();
@@ -86,6 +87,14 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
                     {
                         break;
                     }
+                }
+                if (existingField == null)
+                {
+                    var docSetCt = DocumentSet.ContentType;
+                    var fields = docSetCt.Fields;
+                    ClientContext.Load(fields, fs => fs.Include(f => f.Id));
+                    ClientContext.ExecuteQueryRetry();
+                    existingField = fields.FirstOrDefault(f => f.Id == field.Id);
                 }
                 if (existingField != null)
                 {
