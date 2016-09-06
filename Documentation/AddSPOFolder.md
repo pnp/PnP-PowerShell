@@ -16,6 +16,6 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Add-SPOFolder -Name NewFolder -Folder _catalogs/masterpage/newfolder
+PS:> Add-SPOFolder -Name NewFolder -Folder _catalogs/masterpage
 ```
 
