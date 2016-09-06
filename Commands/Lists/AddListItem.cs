@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
@@ -23,6 +24,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [CmdletExample(
         Code = @"Add-SPOListItem -List ""Demo List"" -Values @{""MultiUserField""=""user1@domain.com"",""user2@domain.com""}",
         Remarks = @"Adds a new list item to the ""Demo List"" and sets the user field called MultiUserField to 2 users. Separate multiple users with a comma.",
+        SortOrder = 3)]
+    [CmdletExample(
+        Code = @"Add-SPOListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Folder ""projects/europe""",
+        Remarks = @"Adds a new list item to the ""Demo List"". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.",
         SortOrder = 3)]
     public class AddListItem : SPOWebCmdlet
     {
@@ -47,6 +52,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             "\n\nHyperlink or Picture: -Values @{\"Hyperlink\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
 
+        [Parameter(Mandatory = false, HelpMessage = @"The list relative URL of a folder. E.g. ""MyFolder"" for a folder located in the root of the list, or ""MyFolder/SubFolder"" for a folder located in the MyFolder folder which is located in the root of the list.")]
+        public string Folder;
+
         protected override void ExecuteCmdlet()
         {
             List list = null;
@@ -57,6 +65,15 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             if (list != null)
             {
                 ListItemCreationInformation liCI = new ListItemCreationInformation();
+                if (Folder != null)
+                {
+                    // Create the folder if it doesn't exist
+                    var rootFolder = list.EnsureProperty(l => l.RootFolder);
+                    var targetFolder =
+                        SelectedWeb.EnsureFolder(rootFolder, Folder);
+
+                    liCI.FolderUrl = targetFolder.ServerRelativeUrl;
+                }
                 var item = list.AddItem(liCI);
 
                 if (ContentType != null)
