@@ -5,7 +5,7 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommunications.Send, "SPOMail")]
-    [CmdletHelp("Sends an email using the Office 365 SMTP Service",
+    [CmdletHelp("Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.",
         Category = CmdletHelpCategory.Utilities)]
     [CmdletExample(
         Code = @"PS:> Send-SPOMail -To address@tenant.sharepointonline.com -Subject test -Body test",
