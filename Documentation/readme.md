@@ -183,7 +183,7 @@ Cmdlet|Description
 ##Utilities
 Cmdlet|Description
 :-----|:----------
-**[Send&#8209;SPOMail](SendSPOMail.md)** |Sends an email using the Office 365 SMTP Service
+**[Send&#8209;SPOMail](SendSPOMail.md)** |Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.
 ##Web Parts
 Cmdlet|Description
 :-----|:----------
