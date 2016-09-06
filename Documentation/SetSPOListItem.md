@@ -34,7 +34,7 @@ Lookup (id of lookup value): -Values @{"Lookup" = "2"}
 
 Yes/No: -Values @{"YesNo" = "No"}
 
-Person/Group (id of user/group in Site User Info List): -Values @{"Person" = "3"}
+Person/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{"Person" = "user1@domain.com","21"}
 
 Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnp"}|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
