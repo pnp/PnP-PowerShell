@@ -42,7 +42,15 @@ namespace SharePointPnP.PowerShell.Commands
             else if (Value.BaseObject is int)
             {
                 SelectedWeb.SetWebPartProperty(Key, (int)Value.BaseObject, Identity.Id, ServerRelativePageUrl);
+            } else if (Value.BaseObject is bool)
+            {
+                SelectedWeb.SetWebPartProperty(Key, (bool) Value.BaseObject, Identity.Id, ServerRelativePageUrl);
             }
+            else
+            {
+                WriteError(new ErrorRecord(new Exception("Type of value is not supported. Has to be of type string, int or bool"), "UNSUPPORTEDTYPE",ErrorCategory.InvalidType, this));
+            }
+
         }
     }
 }
