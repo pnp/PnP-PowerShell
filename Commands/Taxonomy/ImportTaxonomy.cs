@@ -4,7 +4,7 @@ using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using File = System.IO.File;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Import, "SPOTaxonomy", SupportsShouldProcess = true)]
     [CmdletHelp("Imports a taxonomy from either a string array or a file",

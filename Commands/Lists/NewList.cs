@@ -1,9 +1,9 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using Microsoft.SharePoint.Client;
+﻿using System;
 using System.Management.Automation;
-using System;
+using Microsoft.SharePoint.Client;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.New, "SPOList")]
     [CmdletHelp("Creates a new list",

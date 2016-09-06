@@ -110,35 +110,35 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                             ResourceFolder);
                     }
                 }
-                FileInfo fileInfo = new FileInfo(Path);
+                var fileInfo = new FileInfo(Path);
                 fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
             }
             else
             {                
                 Uri fileUri = new Uri(Path);
-                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(this.ClientContext, fileUri);
-                var templateContext = this.ClientContext.Clone(webUrl.ToString());
+                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, fileUri);
+                var templateContext = ClientContext.Clone(webUrl.ToString());
 
-                string library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
-                int idx = library.IndexOf("/");
+                var library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
+                var idx = library.IndexOf("/", StringComparison.Ordinal);
                 library = library.Substring(0, idx);
 
                 // This syntax creates a SharePoint connector regardless we have the -InputInstance argument or not
                 fileConnector = new SharePointConnector(templateContext, templateContext.Url, library);
             }
 
-            XMLTemplateProvider provider = null;
-            ProvisioningTemplate provisioningTemplate = null;
+            ProvisioningTemplate provisioningTemplate;
 
             // If we don't have the -InputInstance parameter, we load the template from the source connector
             if (InputInstance == null)
             {
                 Stream stream = fileConnector.GetFileStream(templateFileName);
                 var isOpenOfficeFile = IsOpenOfficeFile(stream);
+                XMLTemplateProvider provider;
                 if (isOpenOfficeFile)
                 {
                     provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
-                    templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".")) + ".xml";
+                    templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
                 }
                 else
                 {
@@ -210,13 +210,13 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
 
-            if (this.MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
             {
                 applyingInformation.HandlersToProcess = Handlers;
             }
-            if (this.MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
             {
-                foreach (var handler in (OfficeDevPnP.Core.Framework.Provisioning.Model.Handlers[])Enum.GetValues(typeof(Handlers)))
+                foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
                     if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
                     {
@@ -228,12 +228,12 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
                 if (ExtensibilityHandlers != null)
                 {
-                    applyingInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
+                    applyingInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList();
                 }
 
                 applyingInformation.ProgressDelegate = (message, step, total) =>
                 {
-                    WriteProgress(new ProgressRecord(0, string.Format("Applying template to {0}", SelectedWeb.Url), message) { PercentComplete = (100 / total) * step });
+                    WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", message) { PercentComplete = (100 / total) * step });
                 };
 
             applyingInformation.MessagesDelegate = (message, type) =>
@@ -248,13 +248,13 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
         }
 
-        private bool IsOpenOfficeFile(Stream stream)
+        private static bool IsOpenOfficeFile(Stream stream)
         {
             bool istrue = false;
             // SIG 50 4B 03 04 14 00
 
             byte[] bytes = new byte[6];
-            int n = stream.Read(bytes, 0, 6);
+            stream.Read(bytes, 0, 6);
             var signature = string.Empty;
             foreach (var b in bytes)
             {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
 using System.Text.RegularExpressions;
@@ -155,7 +154,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 var folder = GetFileOrFolder(path) as Folder;
                 if (folder != null)
                 {
-                    var folderAndFiles = GetFolderItems(folder, false);
+                    var folderAndFiles = GetFolderItems(folder);
                     return folderAndFiles.Any();
                 }
                 return false;
@@ -777,7 +776,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                         var subFolder = rootFolder.CreateFolder(folder.Name);
                         if (recurse)
                         {
-                            CopyMoveImplementation(folder.ServerRelativeUrl, subFolder.ServerRelativeUrl, recurse, isCopyOperation, false);
+                            CopyMoveImplementation(folder.ServerRelativeUrl, subFolder.ServerRelativeUrl, true, isCopyOperation, false);
                         }
                     }
                     foreach (var file in folderAndFiles.OfType<File>())
@@ -961,7 +960,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (spoDrive == null) return null;
 
             var childItems = spoDrive.CachedItems.Where(c => GetParentServerRelativePath(c.Path) == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.ItemTimeout);
-            return childItems.Any() ? childItems.Select(c => c.Item) : null;
+            var spoDriveCacheItems = childItems as SPODriveCacheItem[] ?? childItems.ToArray();
+            return spoDriveCacheItems.Any() ? spoDriveCacheItems.Select(c => c.Item) : null;
         }
 
         private void SetCachedChildItems(string parentServerRelativePath, IEnumerable<object> childItems)

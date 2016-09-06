@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client.Taxonomy;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "SPOTaxonomyField")]
     [CmdletHelp("Adds a taxonomy field to a list or as a site column.",
@@ -56,7 +56,7 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            TaxonomyItem taxItem = null;
+            TaxonomyItem taxItem;
             Field field;
             if (ParameterSetName == "Path")
             {
@@ -90,7 +90,7 @@ namespace SharePointPnP.PowerShell.Commands
                 id = Guid.NewGuid();
             }
 
-            TaxonomyFieldCreationInformation fieldCI = new TaxonomyFieldCreationInformation()
+            var fieldCI = new TaxonomyFieldCreationInformation()
             {
                 Id = id,
                 InternalName = InternalName,

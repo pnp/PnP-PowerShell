@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Features
             var featureId = Identity.Id;
             if(Scope == FeatureScope.Web)
             {
-                this.SelectedWeb.ActivateFeature(featureId, Sandboxed);
+                SelectedWeb.ActivateFeature(featureId, Sandboxed);
             }
             else
             {

@@ -3,7 +3,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "SPOAppSideLoading")]
     [CmdletHelp("Enables the App SideLoading Feature on a site",

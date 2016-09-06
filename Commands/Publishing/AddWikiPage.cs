@@ -3,7 +3,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Add, "SPOWikiPage")]
     [CmdletHelp("Adds a wiki page",

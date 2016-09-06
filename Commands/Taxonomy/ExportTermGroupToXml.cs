@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Taxonomy;
+using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
+using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Export, "SPOTermGroupToXml", SupportsShouldProcess = true)]
     [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.",
@@ -50,7 +48,7 @@ PS:> $termgroup | Export-SPOTermGroupToXml -Out c:\output.xml",
         public SwitchParameter FullTemplate;
 
         [Parameter(Mandatory = false)]
-        public Encoding Encoding = System.Text.Encoding.Unicode;
+        public Encoding Encoding = Encoding.Unicode;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
@@ -71,7 +69,7 @@ PS:> $termgroup | Export-SPOTermGroupToXml -Out c:\output.xml",
             template.CustomActions = null;
             template.ComposedLook = null;
 
-            if (this.MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
                 if (Identity.Id != Guid.Empty)
                 {
@@ -93,7 +91,6 @@ PS:> $termgroup | Export-SPOTermGroupToXml -Out c:\output.xml",
             if (!FullTemplate)
             {
                 var document = XDocument.Parse(fullxml);
-
 
                 XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05;
 

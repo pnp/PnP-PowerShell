@@ -1,9 +1,9 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using System.Management.Automation;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
 
     [Cmdlet(VerbsCommon.Remove, "SPOContentTypeFromList")]
@@ -30,11 +30,11 @@ namespace SharePointPnP.PowerShell.Commands
             {
                 if (ContentType.Id != null)
                 {
-                    ct = this.SelectedWeb.GetContentTypeById(ContentType.Id,true);
+                    ct = SelectedWeb.GetContentTypeById(ContentType.Id,true);
                 }
                 else if (ContentType.Name != null)
                 {
-                    ct = this.SelectedWeb.GetContentTypeByName(ContentType.Name,true);
+                    ct = SelectedWeb.GetContentTypeByName(ContentType.Name,true);
                 }
             }
             else
@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands
             }
             if (ct != null)
             {
-                this.SelectedWeb.RemoveContentTypeFromList(list, ct);
+                SelectedWeb.RemoveContentTypeFromList(list, ct);
             }
         }
 

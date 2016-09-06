@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Newtonsoft.Json;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOTheme")]
     [CmdletHelp("Returns the current theme/composed look of the current web.",
@@ -19,8 +19,6 @@ namespace SharePointPnP.PowerShell.Commands
         SortOrder = 2)]
     public class GetTheme : SPOWebCmdlet
     {
-        private const string PROPBAGKEY = "_PnP_ProvisioningTemplateComposedLookInfo";
-
         [Parameter(Mandatory = false, HelpMessage = "Specify this switch to not use the PnP Provisioning engine based composed look information but try to detect the current composed look as is.")]
         public SwitchParameter DetectCurrentComposedLook;
 

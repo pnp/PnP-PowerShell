@@ -38,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Features
 
             if (Scope == FeatureScope.Web)
             {
-                this.SelectedWeb.DeactivateFeature(featureId);
+                SelectedWeb.DeactivateFeature(featureId);
             }
             else
             {
