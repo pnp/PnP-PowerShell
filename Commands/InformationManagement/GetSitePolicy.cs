@@ -1,9 +1,8 @@
-﻿using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using System.Management.Automation;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Get, "SPOSitePolicy")]
     [CmdletHelp("Retrieves all or a specific site policy",
@@ -29,22 +28,21 @@ namespace SharePointPnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
 
-            if (!this.MyInvocation.BoundParameters.ContainsKey("AllAvailable") && !this.MyInvocation.BoundParameters.ContainsKey("Name"))
+            if (!MyInvocation.BoundParameters.ContainsKey("AllAvailable") && !MyInvocation.BoundParameters.ContainsKey("Name"))
             {
                 // Return the current applied site policy
                 WriteObject(this.SelectedWeb.GetAppliedSitePolicy());
             }
             else
             {
-                if (this.MyInvocation.BoundParameters.ContainsKey("AllAvailable"))
+                if (MyInvocation.BoundParameters.ContainsKey("AllAvailable"))
                 {
-                    WriteObject(this.SelectedWeb.GetSitePolicies(),true);
+                    WriteObject(SelectedWeb.GetSitePolicies(),true);
                     return;
                 }
-                if (this.MyInvocation.BoundParameters.ContainsKey("Name"))
+                if (MyInvocation.BoundParameters.ContainsKey("Name"))
                 {
-                    WriteObject(this.SelectedWeb.GetSitePolicyByName(Name));
-                    return;
+                    WriteObject(SelectedWeb.GetSitePolicyByName(Name));
                 }
                 
             }

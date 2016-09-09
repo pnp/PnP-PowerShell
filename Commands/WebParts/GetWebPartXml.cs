@@ -1,16 +1,14 @@
-﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Utilities;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.WebParts
 {
@@ -38,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
                 ServerRelativePageUrl = UrlUtility.Combine(serverRelativeWebUrl, ServerRelativePageUrl);
             }
 
-            Guid id = Guid.Empty;
+            Guid id;
             if (Identity.Id == Guid.Empty)
             {
                 var wp = SelectedWeb.GetWebParts(ServerRelativePageUrl).FirstOrDefault(wps => wps.WebPart.Title == Identity.Title);
@@ -58,10 +56,9 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
 
             var uri = new Uri(ClientContext.Url);
 
-            var hostUri = uri.Host;
             var webUrl = string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, SelectedWeb.ServerRelativeUrl);
             var pageUrl = string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, ServerRelativePageUrl);
-            var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/_vti_bin/exportwp.aspx?pageurl={1}&guidstring={2}", webUrl, pageUrl, id.ToString()));
+            var request = (HttpWebRequest)WebRequest.Create($"{webUrl}/_vti_bin/exportwp.aspx?pageurl={pageUrl}&guidstring={id}");
 
             if (SPOnlineConnection.CurrentConnection.ConnectionType == Enums.ConnectionType.O365)
             {
@@ -89,10 +86,10 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
             }
 
             var response = request.GetResponse();
-            using (Stream stream = response.GetResponseStream())
+            using (var stream = response.GetResponseStream())
             {
-                StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                string responseString = reader.ReadToEnd();
+                var reader = new StreamReader(stream, Encoding.UTF8);
+                var responseString = reader.ReadToEnd();
                 WriteObject(responseString);
             }
 

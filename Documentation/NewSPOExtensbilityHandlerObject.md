@@ -1,5 +1,5 @@
 #New-SPOExtensbilityHandlerObject
-Creates a ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet
+Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet
 ##Syntax
 ```powershell
 New-SPOExtensbilityHandlerObject -Type <String> [-Configuration <String>] [-Disabled [<SwitchParameter>]] -Assembly <String>

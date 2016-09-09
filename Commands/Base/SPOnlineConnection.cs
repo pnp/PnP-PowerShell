@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Diagnostics;
 using SharePointPnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     public class SPOnlineConnection
     {
+        internal string PnPVersionTag { get; set; }
         internal static List<ClientContext> ContextCache { get; set; }
         public static SPOnlineConnection CurrentConnection { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
@@ -20,9 +20,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public string Url { get; protected set; }
 
+        public string TenantAdminUrl { get; protected set; }
+
         public ClientContext Context { get; set; }
 
-        public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url)
+        public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
         {
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -32,8 +34,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
             RetryCount = retryCount;
             RetryWait = retryWait;
             PSCredential = credential;
+            TenantAdminUrl = tenantAdminUrl;
             ContextCache = new List<ClientContext>();
             ContextCache.Add(context);
+            PnPVersionTag = pnpVersionTag;
             Url = (new Uri(url)).AbsoluteUri;
         }
 

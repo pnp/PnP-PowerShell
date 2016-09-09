@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
@@ -12,8 +9,6 @@ using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.Commands.Enums;
 using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
@@ -70,6 +65,10 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.",
         SortOrder = 10)]
 #endif
+    [CmdletExample(
+        Code = @"PS:> $template = Get-SPOProvisioningTemplate -OutputInstance",
+        Remarks = "Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.",
+        SortOrder = 11)]
 
     public class GetProvisioningTemplate : SPOWebCmdlet
     {
@@ -142,6 +141,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "It can be used to specify custom Properties for the template file that will be extracted.")]
         public Hashtable TemplateProperties;
 
+        [Parameter(Mandatory = false, HelpMessage = "Returns the template as an in-memory object, which is an instance of the ProvisioningTemplate type of the PnP Core Component. It cannot be used together with the -Out parameter.")]
+        public SwitchParameter OutputInstance;
+
         protected override void ExecuteCmdlet()
         {
 #if !SP2013
@@ -180,13 +182,13 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
             var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
 
-            if (this.MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
             {
                 creationInformation.HandlersToProcess = Handlers;
             }
-            if (this.MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
             {
-                foreach (var handler in (OfficeDevPnP.Core.Framework.Provisioning.Model.Handlers[])Enum.GetValues(typeof(Handlers)))
+                foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
                     if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
                     {
@@ -199,9 +201,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             var extension = "";
             if (packageName != null)
             {
-                if (packageName.IndexOf(".") > -1)
+                if (packageName.IndexOf(".", StringComparison.Ordinal) > -1)
                 {
-                    extension = packageName.Substring(packageName.LastIndexOf(".")).ToLower();
+                    extension = packageName.Substring(packageName.LastIndexOf(".", StringComparison.Ordinal)).ToLower();
                 }
                 else
                 {
@@ -237,7 +239,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 if (Out != null)
                 {
                     FileInfo fileInfo = new FileInfo(Out);
-                    var prefix = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf("."));
+                    var prefix = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(".", StringComparison.Ordinal));
                     creationInformation.ResourceFilePrefix = prefix;
                 }
 
@@ -245,7 +247,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 #endif
             if (ExtensibilityHandlers != null)
             {
-                creationInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
+                creationInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList();
             }
 
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -255,13 +257,13 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             }
             else
             {
-                creationInformation.BaseTemplate = this.SelectedWeb.GetBaseTemplate();
+                creationInformation.BaseTemplate = SelectedWeb.GetBaseTemplate();
             }
 #pragma warning restore CS0618 // Type or member is obsolete
 
             creationInformation.ProgressDelegate = (message, step, total) =>
             {
-                WriteProgress(new ProgressRecord(0, string.Format("Extracting Template from {0}", SelectedWeb.Url), message) { PercentComplete = (100 / total) * step });
+                WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = (100 / total) * step });
             };
             creationInformation.MessagesDelegate = (message, type) =>
             {
@@ -288,63 +290,72 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             // Set metadata for template, if any
             SetTemplateMetadata(template, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);
 
-            ITemplateFormatter formatter = null;
-            switch (schema)
+            if (!OutputInstance)
             {
-                case XMLPnPSchemaVersion.LATEST:
-                    {
-                        formatter = XMLPnPSchemaFormatter.LatestFormatter;
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201503:
-                    {
-#pragma warning disable CS0618 // Type or member is obsolete
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03);
-#pragma warning restore CS0618 // Type or member is obsolete
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201505:
-                    {
-#pragma warning disable CS0618 // Type or member is obsolete
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
-#pragma warning restore CS0618 // Type or member is obsolete
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201508:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201512:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
-                        break;
-                    }
-            }
-
-            if (extension == ".pnp")
-            {
-                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-
-                      creationInformation.FileConnector as OpenXMLConnector);
-                var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".")) + ".xml";
-
-                provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
-            }
-            else
-            {
-                if (Out != null)
+                ITemplateFormatter formatter = null;
+                switch (schema)
                 {
-                    XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(path, "");
-                    provider.SaveAs(template, Path.Combine(path, packageName), formatter, TemplateProviderExtensions);
+                    case XMLPnPSchemaVersion.LATEST:
+                        {
+                            formatter = XMLPnPSchemaFormatter.LatestFormatter;
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201503:
+                        {
+#pragma warning disable CS0618 // Type or member is obsolete
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03);
+#pragma warning restore CS0618 // Type or member is obsolete
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201505:
+                        {
+#pragma warning disable CS0618 // Type or member is obsolete
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
+#pragma warning restore CS0618 // Type or member is obsolete
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201508:
+                        {
+#pragma warning disable CS0618 // Type or member is obsolete
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
+#pragma warning restore CS0618 // Type or member is obsolete
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201512:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
+                            break;
+                        }
+                }
+
+                if (extension == ".pnp")
+                {
+                    XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
+
+                          creationInformation.FileConnector as OpenXMLConnector);
+                    var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+
+                    provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
                 }
                 else
                 {
-                    var _outputStream = formatter.ToFormattedTemplate(template);
-                    StreamReader reader = new StreamReader(_outputStream);
+                    if (Out != null)
+                    {
+                        XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(path, "");
+                        provider.SaveAs(template, Path.Combine(path, packageName), formatter, TemplateProviderExtensions);
+                    }
+                    else
+                    {
+                        var outputStream = formatter.ToFormattedTemplate(template);
+                        var reader = new StreamReader(outputStream);
 
-                    WriteObject(reader.ReadToEnd());
+                        WriteObject(reader.ReadToEnd());
+                    }
                 }
+            }
+            else
+            {
+                WriteObject(template);
             }
         }
 

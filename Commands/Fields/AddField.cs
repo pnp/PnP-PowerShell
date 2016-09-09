@@ -1,11 +1,11 @@
-﻿using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client;
-using System;
+﻿using System;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "SPOField")]
     [CmdletHelp("Adds a field to a list or as a site column",
@@ -61,12 +61,12 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
         {
             if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
             {
-                context = new ChoiceFieldDynamicParameters();
-                return context;
+                _context = new ChoiceFieldDynamicParameters();
+                return _context;
             }
             return null;
         }
-        private ChoiceFieldDynamicParameters context;
+        private ChoiceFieldDynamicParameters _context;
 
         protected override void ExecuteCmdlet()
         {
@@ -94,7 +94,7 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
                     if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
                     {
                         f = list.CreateField<FieldChoice>(fieldCI);
-                        ((FieldChoice)f).Choices = context.Choices;
+                        ((FieldChoice)f).Choices = _context.Choices;
                         f.Update();
                         ClientContext.ExecuteQueryRetry();
                     }
@@ -120,13 +120,29 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
                         if (Field.Id != Guid.Empty)
                         {
                             field = SelectedWeb.Fields.GetById(Field.Id);
+                            ClientContext.Load(field);
+                            ClientContext.ExecuteQueryRetry();
                         }
                         else if (!string.IsNullOrEmpty(Field.Name))
                         {
-                            field = SelectedWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                            try
+                            {
+                                field = SelectedWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                                ClientContext.Load(field);
+                                ClientContext.ExecuteQueryRetry();
+                            }
+                            catch
+                            {
+                                // Field might be sitecolumn, swallow exception
+                            }
+                            if (field != null)
+                            {
+                                var rootWeb = ClientContext.Site.RootWeb;
+                                field = rootWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                                ClientContext.Load(field);
+                                ClientContext.ExecuteQueryRetry();
+                            }
                         }
-                        ClientContext.Load(field);
-                        ClientContext.ExecuteQueryRetry();
                     }
                     if (field != null)
                     {
@@ -152,7 +168,7 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
                 if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
                 {
                     f = SelectedWeb.CreateField<FieldChoice>(fieldCI);
-                    ((FieldChoice)f).Choices = context.Choices;
+                    ((FieldChoice)f).Choices = _context.Choices;
                     f.Update();
                     ClientContext.ExecuteQueryRetry();
                 }
@@ -178,10 +194,10 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
             [Parameter(Mandatory = false)]
             public string[] Choices
             {
-                get { return choices; }
-                set { choices = value; }
+                get { return _choices; }
+                set { _choices = value; }
             }
-            private string[] choices;
+            private string[] _choices;
         }
 
     }

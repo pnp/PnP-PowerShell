@@ -5,10 +5,6 @@ Below you can find a list of all the available cmdlets. Many commands provide bu
 Get-Help Connect-SPOnline -Detailed
 ```
 
-##
-Cmdlet|Description
-:-----|:----------
-**[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |
 ##Apps
 Cmdlet|Description
 :-----|:----------
@@ -19,7 +15,7 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[Get&#8209;SPOAuthenticationRealm](GetSPOAuthenticationRealm.md)** |Gets the authentication realm for the current web
-**[Get&#8209;SPOAzureADManifestKeyCredentials](GetSPOAzureADManifestKeyCredentials.md)** |Creates the JSON snippet that is required for the manifest json file for Azure WebApplication / WebAPI apps
+**[Get&#8209;SPOAzureADManifestKeyCredentials](GetSPOAzureADManifestKeyCredentials.md)** |Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps
 **[Get&#8209;SPOContext](GetSPOContext.md)** |Returns a Client Side Object Model context
 **[Set&#8209;SPOContext](SetSPOContext.md)** |Sets the Client Context to use by the cmdlets
 **[Get&#8209;SPOHealthScore](GetSPOHealthScore.md)** |Retrieves the current health score value of the server
@@ -28,13 +24,14 @@ Cmdlet|Description
 **[Get&#8209;SPOProperty](GetSPOProperty.md)** |Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.
 **[Execute&#8209;SPOQuery](ExecuteSPOQuery.md)** |Executes any queued actions / changes on the SharePoint Client Side Object Model Context
 **[Get&#8209;SPOStoredCredential](GetSPOStoredCredential.md)** |Returns a stored credential from the Windows Credential Manager
-**[Set&#8209;SPOTraceLog](SetSPOTraceLog.md)** |Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets utilizes the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.
+**[Set&#8209;SPOTraceLog](SetSPOTraceLog.md)** |Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.
 ##Branding
 Cmdlet|Description
 :-----|:----------
 **[Remove&#8209;SPOCustomAction](RemoveSPOCustomAction.md)** |Removes a custom action
 **[Get&#8209;SPOCustomAction](GetSPOCustomAction.md)** |Returns all or a specific custom action(s)
 **[Add&#8209;SPOCustomAction](AddSPOCustomAction.md)** |Adds a custom action to a web
+**[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |Creates a pnp package file of an existing template xml, and includes all files in the current folder
 **[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOHomePage](SetSPOHomePage.md)** |Sets the home page of the current web.
 **[Add&#8209;SPOJavaScriptBlock](AddSPOJavaScriptBlock.md)** |Adds a link to a JavaScript snippet/block to a web or site collection
@@ -45,6 +42,7 @@ Cmdlet|Description
 **[Set&#8209;SPOMinimalDownloadStrategy](SetSPOMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.
 **[Add&#8209;SPONavigationNode](AddSPONavigationNode.md)** |Adds a menu item to either the quicklaunch or top navigation
 **[Remove&#8209;SPONavigationNode](RemoveSPONavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation
+**[New&#8209;SPOProvisioningTemplate](NewSPOProvisioningTemplate.md)** |Creates a new provisioning template object
 **[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
 **[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
@@ -71,7 +69,7 @@ Cmdlet|Description
 **[Remove&#8209;SPOContentTypeFromDocumentSet](RemoveSPOContentTypeFromDocumentSet.md)** |Removes a content type from a document set
 **[Add&#8209;SPOContentTypeToDocumentSet](AddSPOContentTypeToDocumentSet.md)** |Adds a content type to a document set
 **[Add&#8209;SPODocumentSet](AddSPODocumentSet.md)** |Creates a new document set in a library.
-**[Set&#8209;SPODocumentSetField](SetSPODocumentSetField.md)** |Sets a site column from the avaiable content types to a document set
+**[Set&#8209;SPODocumentSetField](SetSPODocumentSetField.md)** |Sets a site column from the available content types to a document set
 **[Get&#8209;SPODocumentSetTemplate](GetSPODocumentSetTemplate.md)** |Retrieves a document set template
 ##Event Receivers
 Cmdlet|Description
@@ -82,7 +80,7 @@ Cmdlet|Description
 ##Features
 Cmdlet|Description
 :-----|:----------
-**[New&#8209;SPOExtensbilityHandlerObject](NewSPOExtensbilityHandlerObject.md)** |Creates a ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet
+**[New&#8209;SPOExtensbilityHandlerObject](NewSPOExtensbilityHandlerObject.md)** |Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet
 **[Get&#8209;SPOFeature](GetSPOFeature.md)** |Returns all activated or a specific activated feature
 **[Disable&#8209;SPOFeature](DisableSPOFeature.md)** |Disables a feature
 **[Enable&#8209;SPOFeature](EnableSPOFeature.md)** |Enables a feature
@@ -104,9 +102,9 @@ Cmdlet|Description
 :-----|:----------
 **[Set&#8209;SPODefaultColumnValues](SetSPODefaultColumnValues.md)** |Sets default column values for a document library
 **[Remove&#8209;SPOList](RemoveSPOList.md)** |Deletes a list
+**[Set&#8209;SPOList](SetSPOList.md)** |Updates list settings
 **[Get&#8209;SPOList](GetSPOList.md)** |Returns a List object
 **[New&#8209;SPOList](NewSPOList.md)** |Creates a new list
-**[Set&#8209;SPOList](SetSPOList.md)** |Updates list settings
 **[Add&#8209;SPOListItem](AddSPOListItem.md)** |Adds an item to a list
 **[Remove&#8209;SPOListItem](RemoveSPOListItem.md)** |Deletes an item from a list
 **[Set&#8209;SPOListItem](SetSPOListItem.md)** |Updates a list item
@@ -136,7 +134,7 @@ Cmdlet|Description
 ##Sites
 Cmdlet|Description
 :-----|:----------
-**[Set&#8209;SPOAppSideLoading](SetSPOAppSideLoading.md)** |Enables the App Side Loading Feature on a site
+**[Set&#8209;SPOAppSideLoading](SetSPOAppSideLoading.md)** |Enables the App SideLoading Feature on a site
 **[Get&#8209;SPOAuditing](GetSPOAuditing.md)** |Get the Auditing setting of a site
 **[Set&#8209;SPOAuditing](SetSPOAuditing.md)** |Set Auditing setting for a site
 **[Get&#8209;SPOSite](GetSPOSite.md)** |Returns the current site collection from the context.
@@ -173,7 +171,7 @@ Cmdlet|Description
 **[Get&#8209;SPOGroup](GetSPOGroup.md)** |Returns a specific group or all groups.
 **[Set&#8209;SPOGroupPermissions](SetSPOGroupPermissions.md)** |Adds and/or removes permissions of a specific SharePoint group
 **[Get&#8209;SPOGroupPermissions](GetSPOGroupPermissions.md)** |Returns the permissions for a specific SharePoint group
-**[New&#8209;SPOUser](NewSPOUser.md)** |Adds a user to the build-in Site User Info List and returns a user object
+**[New&#8209;SPOUser](NewSPOUser.md)** |Adds a user to the built-in Site User Info List and returns a user object
 **[Remove&#8209;SPOUserFromGroup](RemoveSPOUserFromGroup.md)** |Removes a user from a group
 **[Add&#8209;SPOUserToGroup](AddSPOUserToGroup.md)** |Adds a user to a group
 ##User Profiles
@@ -185,7 +183,7 @@ Cmdlet|Description
 ##Utilities
 Cmdlet|Description
 :-----|:----------
-**[Send&#8209;SPOMail](SendSPOMail.md)** |Sends an email using the Office 365 SMTP Service
+**[Send&#8209;SPOMail](SendSPOMail.md)** |Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.
 ##Web Parts
 Cmdlet|Description
 :-----|:----------
@@ -205,15 +203,15 @@ Cmdlet|Description
 **[Add&#8209;SPOFile](AddSPOFile.md)** |Uploads a file to Web
 **[Set&#8209;SPOFileCheckedIn](SetSPOFileCheckedIn.md)** |Checks in a file
 **[Set&#8209;SPOFileCheckedOut](SetSPOFileCheckedOut.md)** |Checks out a file
-**[Ensure&#8209;SPOFolder](EnsureSPOFolder.md)** |Returns a folder given a site relative path, and will create it if it not exists.
+**[Ensure&#8209;SPOFolder](EnsureSPOFolder.md)** |Returns a folder given a site relative path, and will create it does not exist.
 **[Add&#8209;SPOFolder](AddSPOFolder.md)** |Creates a folder within a parent folder
 **[Remove&#8209;SPOFolder](RemoveSPOFolder.md)** |Deletes a folder within a parent folder
 **[Get&#8209;SPOFolderItem](GetSPOFolderItem.md)** |List content in folder
-**[Set&#8209;SPOIndexedProperties](SetSPOIndexedProperties.md)** |Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, e.g. only the properties you define with the cmdlet will be indexed.
-**[Remove&#8209;SPOIndexedProperty](RemoveSPOIndexedProperty.md)** |Removes a key from propertybag to be indexed by search. The key and it's value retain in the propertybag, however it will not be indexed anymore.
+**[Set&#8209;SPOIndexedProperties](SetSPOIndexedProperties.md)** |Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, i.e. only the properties you define with the cmdlet will be indexed.
+**[Remove&#8209;SPOIndexedProperty](RemoveSPOIndexedProperty.md)** |Removes a key from propertybag to be indexed by search. The key and it's value remain in the propertybag, however it will not be indexed anymore.
 **[Add&#8209;SPOIndexedProperty](AddSPOIndexedProperty.md)** |Marks the value of the propertybag key to be indexed by search.
 **[Get&#8209;SPOIndexedPropertyKeys](GetSPOIndexedPropertyKeys.md)** |Returns the keys of the property bag values that have been marked for indexing by search
-**[Get&#8209;SPOMasterPage](GetSPOMasterPage.md)** |Returns the URLS of the default Master Page and the custom Master Page.
+**[Get&#8209;SPOMasterPage](GetSPOMasterPage.md)** |Returns the URLs of the default Master Page and the custom Master Page.
 **[Get&#8209;SPOPropertyBag](GetSPOPropertyBag.md)** |Returns the property bag values.
 **[Remove&#8209;SPOPropertyBagValue](RemoveSPOPropertyBagValue.md)** |Removes a value from the property bag
 **[Set&#8209;SPOPropertyBagValue](SetSPOPropertyBagValue.md)** |Sets a property bag value

@@ -33,3 +33,10 @@ Exports all term groups in the default site collection term store to the file 'o
 PS:> Export-SPOTermGroupToXml -Out c:\output.xml -Identity "Test Group"
 ```
 Exports the term group with the specified name to the file 'output.xml' located in the root folder of the C: drive.
+
+###Example 4
+```powershell
+PS:> $termgroup = Get-SPOTermGroup -GroupName Test
+PS:> $termgroup | Export-SPOTermGroupToXml -Out c:\output.xml
+```
+Retrieves a termgroup and subsequently exports that term group to a the file named 'output.xml'

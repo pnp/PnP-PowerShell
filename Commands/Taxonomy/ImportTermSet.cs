@@ -3,9 +3,8 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using File = System.IO.File;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Import, "SPOTermSet", SupportsShouldProcess = false)]
     [CmdletHelp("Imports a taxonomy term set from a file in the standard format.",

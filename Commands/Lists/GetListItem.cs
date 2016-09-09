@@ -1,24 +1,24 @@
 ﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using System.Text;
+using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "SPOListItem")]
-    [CmdletHelp("Retrieves list items", 
+    [CmdletHelp("Retrieves list items",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = "PS:> Get-SPOListItem -List Tasks",
-        Remarks = "Retrieves all list items from the tasks lists",
+        Remarks = "Retrieves all list items from the Tasks list",
         SortOrder = 1)]
     [CmdletExample(
         Code = "PS:> Get-SPOListItem -List Tasks -Id 1",
-        Remarks = "Retrieves the list item with ID 1 from from the tasks lists. This parameter is ignored if the Query parameter is specified.",
+        Remarks = "Retrieves the list item with ID 1 from from the Tasks list. This parameter is ignored if the Query parameter is specified.",
         SortOrder = 2)]
     [CmdletExample(
         Code = "PS:> Get-SPOListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3",
@@ -32,6 +32,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = "PS:> Get-SPOListItem -List Tasks -Query \"<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3</Value></Eq></Where></Query></View>\"",
         Remarks = "Retrieves all list items based on the CAML query specified.",
         SortOrder = 5)]
+    [CmdletExample(
+        Code = "PS:> Get-SPOListItem -List Tasks -PageSize 1000",
+        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items. This parameter is ignored if the Query parameter is specified.",
+        SortOrder = 6)]
     public class GetListItem : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0)]
@@ -48,6 +52,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
         public string[] Fields;
+
+        [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.")]
+        public int PageSize = -1;
 
         protected override void ExecuteCmdlet()
         {
@@ -108,7 +115,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     if (viewFields != null)
                     {
                         viewFields.RemoveAll();
-                    } else
+                    }
+                    else
                     {
                         viewFields = new XElement("ViewFields");
                         queryElement.Add(viewFields);
@@ -122,10 +130,37 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     }
                     query.ViewXml = queryElement.ToString();
                 }
-                var listItems = list.GetItems(query);
-                ClientContext.Load(listItems);
-                ClientContext.ExecuteQueryRetry();
-                WriteObject(listItems, true);
+
+                if (PageSize > 0)
+                {
+                    var queryElement = XElement.Parse(query.ViewXml);
+
+                    var rowLimit = queryElement.Descendants("RowLimit").FirstOrDefault();
+                    if (rowLimit != null)
+                    {
+                        rowLimit.RemoveAll();
+                    }
+                    else
+                    {
+                        rowLimit = new XElement("RowLimit");
+                        queryElement.Add(rowLimit);
+                    }
+
+                    rowLimit.SetAttributeValue("Paged", "TRUE");
+                    rowLimit.SetValue(PageSize);
+
+                    query.ViewXml = queryElement.ToString();
+                }
+
+                do
+                {
+                    var listItems = list.GetItems(query);
+                    ClientContext.Load(listItems);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(listItems, true);
+
+                    query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+                } while (query.ListItemCollectionPosition != null);
             }
         }
     }

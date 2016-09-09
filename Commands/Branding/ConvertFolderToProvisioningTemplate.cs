@@ -10,6 +10,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet("Convert", "SPOFolderToProvisioningTemplate")]
+    [CmdletHelp("Creates a pnp package file of an existing template xml, and includes all files in the current folder",
+        Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
        Code = @"PS:> Convert-SPOFolderToProvisioningTemplate -Out template.pnp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the current folder",
@@ -65,11 +67,11 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             }
 
             bool shouldContinue = true;
-            if (System.IO.File.Exists(Out))
+            if (File.Exists(Out))
             {
                 shouldContinue = (Force ||
-                                  ShouldContinue(string.Format(Commands.Properties.Resources.File0ExistsOverwrite, Out),
-                                      Commands.Properties.Resources.Confirm));
+                                  ShouldContinue(string.Format(Properties.Resources.File0ExistsOverwrite, Out),
+                                      Properties.Resources.Confirm));
             }
             return shouldContinue;
         }

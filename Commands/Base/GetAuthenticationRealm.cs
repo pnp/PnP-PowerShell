@@ -39,20 +39,10 @@ namespace SharePointPnP.PowerShell.Commands
             }
             catch (WebException e)
             {
-                if (e.Response == null)
-                {
-                }
-
                 var bearerResponseHeader = e.Response.Headers["WWW-Authenticate"];
-                if (string.IsNullOrEmpty(bearerResponseHeader))
-                {
-                }
 
                 const string bearer = "Bearer realm=\"";
                 var bearerIndex = bearerResponseHeader.IndexOf(bearer, StringComparison.Ordinal);
-                if (bearerIndex < 0)
-                {
-                }
 
                 var realmIndex = bearerIndex + bearer.Length;
 

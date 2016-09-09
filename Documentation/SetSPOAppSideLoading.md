@@ -1,5 +1,5 @@
 #Set-SPOAppSideLoading
-Enables the App Side Loading Feature on a site
+Enables the App SideLoading Feature on a site
 ##Syntax
 ```powershell
 Set-SPOAppSideLoading -Off [<SwitchParameter>]

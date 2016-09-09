@@ -2,7 +2,7 @@
 Generates a provisioning template from a web
 ##Syntax
 ```powershell
-Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-IncludeTermGroupsSecurity [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-PersistMultiLanguageResources [<SwitchParameter>]] [-ResourceFilePrefix <String>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-TemplateDisplayName <String>] [-TemplateImagePreviewUrl <String>] [-TemplateProperties <Hashtable>] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
+Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-IncludeSiteCollectionTermGroup [<SwitchParameter>]] [-IncludeSiteGroups [<SwitchParameter>]] [-IncludeTermGroupsSecurity [<SwitchParameter>]] [-PersistBrandingFiles [<SwitchParameter>]] [-PersistPublishingFiles [<SwitchParameter>]] [-IncludeNativePublishingFiles [<SwitchParameter>]] [-PersistMultiLanguageResources [<SwitchParameter>]] [-ResourceFilePrefix <String>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Force [<SwitchParameter>]] [-Encoding <Encoding>] [-TemplateDisplayName <String>] [-TemplateImagePreviewUrl <String>] [-TemplateProperties <Hashtable>] [-OutputInstance [<SwitchParameter>]] [-Web <WebPipeBind>] [-Out <String>] [-Schema <XMLPnPSchemaVersion>]
 ```
 
 
@@ -20,6 +20,7 @@ Parameter|Type|Required|Description
 |IncludeSiteGroups|SwitchParameter|False|If specified all site groups will be included.|
 |IncludeTermGroupsSecurity|SwitchParameter|False|If specified all the managers and contributors of term groups will be included.|
 |Out|String|False|Filename to write to, optionally including full path|
+|OutputInstance|SwitchParameter|False|Returns the template as an in-memory object, which is an instance of the ProvisioningTemplate type of the PnP Core Component. It cannot be used together with the -Out parameter.|
 |PersistBrandingFiles|SwitchParameter|False|If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.|
 |PersistMultiLanguageResources|SwitchParameter|False|If specified, resource values for applicable artifacts will be persisted to a resource file|
 |PersistPublishingFiles|SwitchParameter|False|If specified the files used for the publishing feature will be saved.|
@@ -94,3 +95,9 @@ Only supported on SP2016 and SP Online
 PS:> Get-SPOProvisioningTemplate -Out template.pnp -PersistMultiLanguageResources -ResourceFilePrefix MyResources
 ```
 Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.
+
+###Example 11
+```powershell
+PS:> $template = Get-SPOProvisioningTemplate -OutputInstance
+```
+Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.

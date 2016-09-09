@@ -1,14 +1,13 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands;
 using File = Microsoft.SharePoint.Client.File;
 
-namespace OfficeDevPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOFolderItem")]
     [CmdletHelp("List content in folder", Category = CmdletHelpCategory.Webs)]

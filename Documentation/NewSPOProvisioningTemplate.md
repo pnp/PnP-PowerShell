@@ -1,8 +1,8 @@
-#Get-SPORequestAccessEmails
-Returns the request access e-mail addresses
+#New-SPOProvisioningTemplate
+Creates a new provisioning template object
 ##Syntax
 ```powershell
-Get-SPORequestAccessEmails [-Web <WebPipeBind>]
+New-SPOProvisioningTemplate [-Web <WebPipeBind>]
 ```
 
 
@@ -14,6 +14,6 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Get-SPORequestAccessEmails
+PS:> $template = New-SPOProvisioningTemplate
 ```
-This will return all the request access e-mail addresses for the current web
+Creates a new instance of a provisioning template object.

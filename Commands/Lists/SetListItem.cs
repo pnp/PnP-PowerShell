@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
-using System.Text;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System.Linq;
-using System.Xml.Linq;
-using System.Collections;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
@@ -47,7 +46,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             "\n\nDate and Time: -Values @{\"DateAndTime\" = \"03/10/2015 14:16\"}" +
             "\n\nLookup (id of lookup value): -Values @{\"Lookup\" = \"2\"}" +
             "\n\nYes/No: -Values @{\"YesNo\" = \"No\"}" +
-            "\n\nPerson/Group (id of user/group in Site User Info List): -Values @{\"Person\" = \"3\"}" +
+           "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"Person\" = \"user1@domain.com\",\"21\"}" +
             "\n\nHyperlink or Picture: -Values @{\"Hyperlink\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
 
@@ -89,10 +88,68 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
+                var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title, f => f.FieldTypeKind));
+                ClientContext.ExecuteQueryRetry();
 
                 foreach (var key in Values.Keys)
                 {
-                    item[key as string] = Values[key];
+                    var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                    if (field != null)
+                    {
+                        switch (field.FieldTypeKind)
+                        {
+                            case FieldType.User:
+                                {
+                                    List<FieldUserValue> userValues = new List<FieldUserValue>();
+
+                                    var value = Values[key];
+                                    if (value.GetType().IsArray)
+                                    {
+                                        foreach (var arrayItem in value as object[])
+                                        {
+                                            int userId;
+                                            if (!int.TryParse(arrayItem as string, out userId))
+                                            {
+                                                var user = SelectedWeb.EnsureUser(arrayItem as string);
+                                                ClientContext.Load(user);
+                                                ClientContext.ExecuteQueryRetry();
+                                                userValues.Add(new FieldUserValue() {LookupId = user.Id});
+                                            }
+                                            else
+                                            {
+                                                userValues.Add(new FieldUserValue() { LookupId = userId });
+                                            }
+                                        }
+                                        item[key as string] = userValues.ToArray();
+                                    }
+                                    else
+                                    {
+                                        int userId;
+                                        if (!int.TryParse(value as string, out userId))
+                                        {
+                                            var user = SelectedWeb.EnsureUser(value as string);
+                                            ClientContext.Load(user);
+                                            ClientContext.ExecuteQueryRetry();
+                                            item[key as string] = new FieldUserValue() {LookupId = user.Id};
+                                        }
+                                        else
+                                        {
+                                            item[key as string] = new FieldUserValue() { LookupId = userId };
+                                        }
+                                    }
+                                    break;
+                                }
+                            default:
+                                {
+                                    item[key as string] = Values[key];
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Field not present in list");
+                    }
                 }
 
 

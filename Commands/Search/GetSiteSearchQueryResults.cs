@@ -27,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         SortOrder = 4)]
     public class GetSiteSearchQueryResults : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "Search query in Keyword Query Language (KQL) to execute to refine the returned sites. If omited, all indexed sites will be returned.")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "Search query in Keyword Query Language (KQL) to execute to refine the returned sites. If omitted, all indexed sites will be returned.")]
         public string Query = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.")]

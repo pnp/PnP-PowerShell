@@ -18,8 +18,8 @@ Parameter|Type|Required|Description
 |RegistrationId|String|False||
 |RegistrationType|UserCustomActionRegistrationType|False||
 |Rights|PermissionKind[]|False||
-|Scope|CustomActionScope|False|The scope of the CustomAction to add to. Either Web or Site, defaults to Web. All is not valid for this command.|
-|Sequence|Int32|False|Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multple CustomActions being added to the page.|
+|Scope|CustomActionScope|False|The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.|
+|Sequence|Int32|False|Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.|
 |Title|String|True||
 |Url|String|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
@@ -31,4 +31,4 @@ $cUIExtn = "<CommandUIExtension><CommandUIDefinitions><CommandUIDefinition Locat
 
 Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -Description 'Adds custom action to custom list ribbon' -Group 'Microsoft.SharePoint.Client.UserCustomAction.group' -Location 'CommandUI.Ribbon' -CommandUIExtension $cUIExtn
 ```
-Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice, escape quotes in CommandUIExtension.
+Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice: escape quotes in CommandUIExtension.

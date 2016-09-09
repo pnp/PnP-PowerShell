@@ -42,4 +42,4 @@ Sets the search configuration for the current tenant
 ```powershell
 PS:> Set-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription
 ```
-Reads the search configuratino from the specified XML file and sets it for the current tenant
+Reads the search configuration from the specified XML file and sets it for the current tenant

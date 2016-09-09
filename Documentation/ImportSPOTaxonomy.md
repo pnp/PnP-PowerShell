@@ -17,7 +17,7 @@ Parameter|Type|Required|Description
 |Delimiter|String|False||
 |Lcid|Int32|False||
 |Path|String|True|Specifies a file containing terms per line, in the format as required by the Terms parameter.|
-|SynchronizeDeletions|SwitchParameter|False|If specified, terms that exist in the termset, but are not in the imported data will be removed.|
+|SynchronizeDeletions|SwitchParameter|False|If specified, terms that exist in the termset, but are not in the imported data, will be removed.|
 |Terms|String[]|False|An array of strings describing termgroup, termset, term, subterms using a default delimiter of '|'.|
 |TermStoreName|String|False||
 ##Examples

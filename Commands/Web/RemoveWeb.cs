@@ -4,6 +4,7 @@ using web = Microsoft.SharePoint.Client.Web;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using SharePointPnP.PowerShell.Commands.Extensions;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -41,7 +42,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             if (ParameterSetName == "ByIdentity")
             {
-                web web = null;
+                web web;
                 if (Identity.Id != Guid.Empty)
                 {
                     web = ClientContext.Web.GetWebById(Identity.Id);

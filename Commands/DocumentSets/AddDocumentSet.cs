@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.DocumentSet;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -28,12 +23,12 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
         [Parameter(Mandatory = true)] public ContentTypePipeBind ContentType;
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(this.SelectedWeb);
+            var list = List.GetList(SelectedWeb);
             list.EnsureProperty(l => l.RootFolder);
 
-            var result = DocumentSet.Create(this.ClientContext, list.RootFolder, Name, ContentType.GetContentType(this.SelectedWeb).Id);
+            var result = DocumentSet.Create(ClientContext, list.RootFolder, Name, ContentType.GetContentType(SelectedWeb).Id);
 
-            this.ClientContext.ExecuteQueryRetry();
+            ClientContext.ExecuteQueryRetry();
 
             WriteObject(result.Value);
         }

@@ -1,12 +1,13 @@
-﻿using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client;
-using System;
+﻿using System;
 using System.Linq;
 using System.Management.Automation;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.WebParts;
 using OfficeDevPnP.Core.Utilities;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebPart")]
     [CmdletHelp("Returns a webpart definition object",
@@ -19,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands
         Remarks = @"Returns a specific webpart defined on the given page.", SortOrder = 2)]
     public class GetWebPart : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Full server relative url of the webpart page, e.g. /sites/mysite/sitepages/home.aspx")]
+        [Parameter(Mandatory = true, HelpMessage = "Full server relative URL of the webpart page, e.g. /sites/mysite/sitepages/home.aspx")]
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
@@ -43,18 +44,20 @@ namespace SharePointPnP.PowerShell.Commands
                 if (Identity.Id != Guid.Empty)
                 {
                     var wpfound = from wp in definitions where wp.Id == Identity.Id select wp;
-                    if (wpfound.Any())
+                    var webPartDefinitions = wpfound as WebPartDefinition[] ?? wpfound.ToArray();
+                    if (webPartDefinitions.Any())
                     {
-                        WriteObject(wpfound.FirstOrDefault());
+                        WriteObject(webPartDefinitions.FirstOrDefault());
 
                     }
                 }
                 else if (!string.IsNullOrEmpty(Identity.Title))
                 {
                     var wpfound = from wp in definitions where wp.WebPart.Title == Identity.Title select wp;
-                    if (wpfound.Any())
+                    var webPartDefinitions = wpfound as WebPartDefinition[] ?? wpfound.ToArray();
+                    if (webPartDefinitions.Any())
                     {
-                        WriteObject(wpfound.FirstOrDefault());
+                        WriteObject(webPartDefinitions.FirstOrDefault());
                     }
                 }
             }

@@ -56,6 +56,10 @@ PS:> $handler2 = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handle
 PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
         Remarks = @"This will create two new ExtensibilityHandler objects that are run while provisioning the template",
         SortOrder = 7)]
+    [CmdletExample(
+     Code = @"PS:> Apply-SPOProvisioningTemplate -Path .\ -InputInstance $template",
+     Remarks = @"Applies a provisioning template from an in-memory instance of a ProvisioningTemplate type of the PnP Core Component, reading the supporting files, if any, from the current (.\) path. The syntax can be used together with any other supported parameters.",
+     SortOrder = 8)]
 
     public class ApplyProvisioningTemplate : SPOWebCmdlet
     {
@@ -83,6 +87,9 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.")]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.")]
+        public ProvisioningTemplate InputInstance;
+
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.Url);
@@ -103,50 +110,78 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                             ResourceFolder);
                     }
                 }
-                FileInfo fileInfo = new FileInfo(Path);
+                var fileInfo = new FileInfo(Path);
                 fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
             }
             else
             {                
                 Uri fileUri = new Uri(Path);
-                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(this.ClientContext, fileUri);
-                var templateContext = this.ClientContext.Clone(webUrl.ToString());
+                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, fileUri);
+                var templateContext = ClientContext.Clone(webUrl.ToString());
 
-                string library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
-                int idx = library.IndexOf("/");
+                var library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
+                var idx = library.IndexOf("/", StringComparison.Ordinal);
                 library = library.Substring(0, idx);
+
+                // This syntax creates a SharePoint connector regardless we have the -InputInstance argument or not
                 fileConnector = new SharePointConnector(templateContext, templateContext.Url, library);
             }
-            XMLTemplateProvider provider = null;
-            ProvisioningTemplate provisioningTemplate = null;
-            Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = IsOpenOfficeFile(stream);
-            if (isOpenOfficeFile)
+
+            ProvisioningTemplate provisioningTemplate;
+
+            // If we don't have the -InputInstance parameter, we load the template from the source connector
+            if (InputInstance == null)
             {
-                provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
-                templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".")) + ".xml";
-            }
-            else
-            {
-                if (templateFromFileSystem)
+                Stream stream = fileConnector.GetFileStream(templateFileName);
+                var isOpenOfficeFile = IsOpenOfficeFile(stream);
+                XMLTemplateProvider provider;
+                if (isOpenOfficeFile)
                 {
-                    provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
+                    provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
+                    templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
                 }
                 else
                 {
-                    throw new NotSupportedException("Only .pnp package files are supported from a SharePoint library");
+                    if (templateFromFileSystem)
+                    {
+                        provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("Only .pnp package files are supported from a SharePoint library");
+                    }
+                }
+                provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
+
+                if (provisioningTemplate == null)
+                {
+                    // If we don't have the template, raise an error and exit
+                    WriteError(new ErrorRecord(new Exception("The -Path parameter targets an invalid repository or template object."), "WRONG_PATH", ErrorCategory.SyntaxError, null));
+                    return;
+                }
+
+                if (isOpenOfficeFile)
+                {
+                    provisioningTemplate.Connector = provider.Connector;
+                }
+                else
+                {
+                    if (ResourceFolder != null)
+                    {
+                        var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
+                        provisioningTemplate.Connector = fileSystemConnector;
+                    }
+                    else
+                    {
+                        provisioningTemplate.Connector = provider.Connector;
+                    }
                 }
             }
-            provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
-
-            if (provisioningTemplate == null) return;
-
-            if (isOpenOfficeFile)
-            {
-                provisioningTemplate.Connector = provider.Connector;
-            }
+            // Otherwise we use the provisioning template instance provided through the -InputInstance parameter
             else
             {
+                provisioningTemplate = InputInstance;
+
                 if (ResourceFolder != null)
                 {
                     var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
@@ -154,7 +189,7 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                 }
                 else
                 {
-                    provisioningTemplate.Connector = provider.Connector;
+                    provisioningTemplate.Connector = fileConnector;
                 }
             }
 
@@ -175,13 +210,13 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
 
-            if (this.MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
             {
                 applyingInformation.HandlersToProcess = Handlers;
             }
-            if (this.MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
             {
-                foreach (var handler in (OfficeDevPnP.Core.Framework.Provisioning.Model.Handlers[])Enum.GetValues(typeof(Handlers)))
+                foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
                     if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
                     {
@@ -193,12 +228,12 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
                 if (ExtensibilityHandlers != null)
                 {
-                    applyingInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList<ExtensibilityHandler>();
+                    applyingInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList();
                 }
 
                 applyingInformation.ProgressDelegate = (message, step, total) =>
                 {
-                    WriteProgress(new ProgressRecord(0, string.Format("Applying template to {0}", SelectedWeb.Url), message) { PercentComplete = (100 / total) * step });
+                    WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", message) { PercentComplete = (100 / total) * step });
                 };
 
             applyingInformation.MessagesDelegate = (message, type) =>
@@ -213,13 +248,13 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
         }
 
-        private bool IsOpenOfficeFile(Stream stream)
+        private static bool IsOpenOfficeFile(Stream stream)
         {
             bool istrue = false;
             // SIG 50 4B 03 04 14 00
 
             byte[] bytes = new byte[6];
-            int n = stream.Read(bytes, 0, 6);
+            stream.Read(bytes, 0, 6);
             var signature = string.Empty;
             foreach (var b in bytes)
             {

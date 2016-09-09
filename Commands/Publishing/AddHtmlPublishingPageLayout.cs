@@ -2,7 +2,7 @@
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.PageLayout
+namespace SharePointPnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Add, "SPOHtmlPublishingPageLayout")]
     [CmdletHelp("Adds a HTML based publishing page layout",
@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.PageLayout
         [Parameter(Mandatory = true, HelpMessage = "Associated content type ID")]
         public string AssociatedContentTypeID;
 
-        [Parameter(Mandatory = false, HelpMessage = "Folder hierarchy where the html page layouts will be deployed")]
+        [Parameter(Mandatory = false, HelpMessage = "Folder hierarchy where the HTML page layouts will be deployed")]
         public string DestinationFolderHierarchy;
 
         protected override void ExecuteCmdlet()
