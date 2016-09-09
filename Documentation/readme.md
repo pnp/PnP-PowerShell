@@ -156,12 +156,8 @@ Cmdlet|Description
 ##Tenant Administration
 Cmdlet|Description
 :-----|:----------
-**[Set&#8209;SPOTenantSite](SetSPOTenantSite.md)** |Office365 only: Uses the tenant API to set site information.
-**[Get&#8209;SPOTenantSite](GetSPOTenantSite.md)** |Office365 only: Uses the tenant API to retrieve site information.
-**[Remove&#8209;SPOTenantSite](RemoveSPOTenantSite.md)** |Office365 only: Removes a site collection from the current tenant
 **[New&#8209;SPOTenantSite](NewSPOTenantSite.md)** |Creates a new site collection for the current tenant
 **[Get&#8209;SPOTimeZoneId](GetSPOTimeZoneId.md)** |Returns a time zone ID
-**[Get&#8209;SPOWebTemplates](GetSPOWebTemplates.md)** |Office365 only: Returns the available web templates.
 ##User and group management
 Cmdlet|Description
 :-----|:----------
@@ -177,8 +173,6 @@ Cmdlet|Description
 ##User Profiles
 Cmdlet|Description
 :-----|:----------
-**[New&#8209;SPOPersonalSite](NewSPOPersonalSite.md)** |Office365 only: Creates a personal / OneDrive For Business site
-**[Set&#8209;SPOUserProfileProperty](SetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
 **[Get&#8209;SPOUserProfileProperty](GetSPOUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command.  
 ##Utilities
 Cmdlet|Description
@@ -216,8 +210,6 @@ Cmdlet|Description
 **[Remove&#8209;SPOPropertyBagValue](RemoveSPOPropertyBagValue.md)** |Removes a value from the property bag
 **[Set&#8209;SPOPropertyBagValue](SetSPOPropertyBagValue.md)** |Sets a property bag value
 **[Request&#8209;SPOReIndexWeb](RequestSPOReIndexWeb.md)** |Marks the web for full indexing during the next incremental crawl
-**[Get&#8209;SPORequestAccessEmails](GetSPORequestAccessEmails.md)** |Returns the request access e-mail addresses
-**[Set&#8209;SPORequestAccessEmails](SetSPORequestAccessEmails.md)** |Sets Request Access Emails on a web
 **[Get&#8209;SPOSubWebs](GetSPOSubWebs.md)** |Returns the subwebs
 **[Remove&#8209;SPOWeb](RemoveSPOWeb.md)** |Removes a subweb in the current web
 **[Get&#8209;SPOWeb](GetSPOWeb.md)** |Returns the current web object
