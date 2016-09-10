@@ -7,7 +7,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
     {
         private readonly string _id;
         private readonly string _name;
-        private readonly ContentType _contentType;
+        private ContentType _contentType;
         private readonly DocumentSetTemplate _documentSetTemplate;
 
         public DocumentSetPipeBind()
@@ -92,6 +92,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                 {
                     ct = web.GetContentTypeByName(Name, true);
                 }
+                _contentType = ct;
                 var docSet = DocumentSetTemplate.GetDocumentSetTemplate(web.Context, ct);
                 return docSet;
             }

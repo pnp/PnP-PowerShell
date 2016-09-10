@@ -1,16 +1,16 @@
 ﻿using System;
-using Microsoft.SharePoint.Client;
 using System.Collections.Generic;
+using Microsoft.SharePoint.Client;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Extensions
 {
     public static class WebExtensions
     {
         public static Web GetWebById(this Web currentWeb, Guid guid)
         {
             var clientContext = currentWeb.Context as ClientContext;
-            Site site = clientContext.Site;
-            Web web = site.OpenWebById(guid);
+            var site = clientContext.Site;
+            var web = site.OpenWebById(guid);
             web.EnsureProperties(w => w.Url, w => w.Title, w => w.Id, w => w.ServerRelativeUrl);
             return web;
         }
@@ -19,8 +19,8 @@ namespace SharePointPnP.PowerShell.Commands
         {
             var clientContext = currentWeb.Context as ClientContext;
 
-            Site site = clientContext.Site;
-            Web web = site.OpenWeb(url);
+            var site = clientContext.Site;
+            var web = site.OpenWeb(url);
             web.EnsureProperties(w => w.Url, w => w.Title, w => w.Id, w => w.ServerRelativeUrl);
             return web;
         }

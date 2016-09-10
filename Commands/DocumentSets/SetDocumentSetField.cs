@@ -40,18 +40,19 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
 
         protected override void ExecuteCmdlet()
         {
-            if (this.MyInvocation.BoundParameters.ContainsKey("SetSharedField") && this.MyInvocation.BoundParameters.ContainsKey("RemoveSharedField"))
+            if (MyInvocation.BoundParameters.ContainsKey("SetSharedField") && MyInvocation.BoundParameters.ContainsKey("RemoveSharedField"))
             {
                 WriteWarning("Cannot set and remove a shared field at the same time");
                 return;
             }
-            if (this.MyInvocation.BoundParameters.ContainsKey("SetWelcomePageField") && this.MyInvocation.BoundParameters.ContainsKey("RemoveWelcomePageField"))
+            if (MyInvocation.BoundParameters.ContainsKey("SetWelcomePageField") && MyInvocation.BoundParameters.ContainsKey("RemoveWelcomePageField"))
             {
                 WriteWarning("Cannot set and remove a welcome page field at the same time");
                 return;
             }
          
             var docSetTemplate = DocumentSet.GetDocumentSetTemplate(SelectedWeb);
+            
 
             ClientContext.Load(docSetTemplate, dt => dt.AllowedContentTypes, dt => dt.SharedFields, dt => dt.WelcomePageFields);
             ClientContext.ExecuteQueryRetry();
@@ -86,6 +87,14 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
                     {
                         break;
                     }
+                }
+                if (existingField == null)
+                {
+                    var docSetCt = DocumentSet.ContentType;
+                    var fields = docSetCt.Fields;
+                    ClientContext.Load(fields, fs => fs.Include(f => f.Id));
+                    ClientContext.ExecuteQueryRetry();
+                    existingField = fields.FirstOrDefault(f => f.Id == field.Id);
                 }
                 if (existingField != null)
                 {

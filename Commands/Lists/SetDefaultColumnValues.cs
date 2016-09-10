@@ -1,14 +1,14 @@
-﻿using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client;
-using System.Management.Automation;
-using System;
-using OfficeDevPnP.Core.Entities;
-using Microsoft.SharePoint.Client.Taxonomy;
+﻿using System;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Linq;
+using System.Management.Automation;
+using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
+using OfficeDevPnP.Core.Entities;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
 
@@ -47,7 +47,7 @@ namespace SharePointPnP.PowerShell.Commands
             }
             if (list != null)
             {
-                if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary)
+                if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary || list.BaseTemplate == (int)ListTemplateType.WebPageLibrary)
                 {
                     Field field = null;
                     // Get the field
@@ -75,7 +75,7 @@ namespace SharePointPnP.PowerShell.Commands
                     if (field != null)
                     {
                         IDefaultColumnValue defaultColumnValue = null;
-                        if (field.TypeAsString == "Text")
+                        if (field.TypeAsString == "Text" || field.TypeAsString == "Choice")
                         {
                             var values = string.Join(";", Value);
                             defaultColumnValue = new DefaultColumnTextValue()

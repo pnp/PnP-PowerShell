@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System;
 using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands
@@ -56,7 +54,7 @@ namespace SharePointPnP.PowerShell.Commands
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
             }
 
-            if (this.MyInvocation.BoundParameters.ContainsKey("AsString"))
+            if (MyInvocation.BoundParameters.ContainsKey("AsString"))
             {
                 WriteObject(SelectedWeb.GetFileAsString(ServerRelativeUrl));
             }

@@ -1,9 +1,9 @@
-﻿using Microsoft.SharePoint.Client;
+﻿using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Remove, "SPOEventReceiver", SupportsShouldProcess = true)]
     [CmdletHelp("Removes/unregisters a specific event receiver",

@@ -99,7 +99,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             }
             if (ContentType != null)
             {
-                ct = ContentType.GetContentType(this.SelectedWeb);
+                ct = ContentType.GetContentType(SelectedWeb);
             }
             if (TargetFolder == null)
             {
@@ -224,8 +224,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             template.Files.AddRange(EnumerateFiles(folder, ctid, Properties));
 
             var formatter = GetTemplateFormatterFromSchema(schema);
-            var _outputStream = formatter.ToFormattedTemplate(template);
-            StreamReader reader = new StreamReader(_outputStream);
+            var outputStream = formatter.ToFormattedTemplate(template);
+            StreamReader reader = new StreamReader(outputStream);
 
             return reader.ReadToEnd();
         }
@@ -261,8 +261,12 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                     }
                 case XMLPnPSchemaVersion.V201512:
                     {
-                        formatter =
-                            XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
+                        break;
+                    }
+                case XMLPnPSchemaVersion.V201605:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
                         break;
                     }
             }

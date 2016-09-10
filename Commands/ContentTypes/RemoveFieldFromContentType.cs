@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System.Linq;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Remove, "SPOFieldFromContentType")]
-    [CmdletHelp("Removes a site column from a content type", 
+    [CmdletHelp("Removes a site column from a content type",
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(
      Code = @"PS:> Remove-SPOFieldFromContentType -Field ""Project_Name"" -ContentType ""Project Document""",
@@ -49,35 +49,50 @@ namespace SharePointPnP.PowerShell.Commands
                 {
                     ContentType.ContentType.EnsureProperty(c => c.FieldLinks);
                     var fieldLink = ContentType.ContentType.FieldLinks.FirstOrDefault(f => f.Id == field.Id);
-                    fieldLink.DeleteObject();
-                    ContentType.ContentType.Update(!DoNotUpdateChildren);
-                    ClientContext.ExecuteQueryRetry();
+                    if (fieldLink != null)
+                    {
+                        fieldLink.DeleteObject();
+                        ContentType.ContentType.Update(!DoNotUpdateChildren);
+                        ClientContext.ExecuteQueryRetry();
+                    }
+                    else
+                    {
+                        WriteError(new ErrorRecord(new Exception("Cannot find field reference in content type"), "FieldRefNotFound", ErrorCategory.ObjectNotFound, ContentType));
+                    }
+
                 }
                 else
                 {
                     ContentType ct;
                     if (!string.IsNullOrEmpty(ContentType.Id))
                     {
-                        ct = SelectedWeb.GetContentTypeById(ContentType.Id,true);
-                      
+                        ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
+
                     }
                     else
                     {
-                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name,true);
+                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
                     }
                     if (ct != null)
                     {
                         ct.EnsureProperty(c => c.FieldLinks);
                         var fieldLink = ct.FieldLinks.FirstOrDefault(f => f.Id == field.Id);
-                        fieldLink.DeleteObject();
-                        ct.Update(!DoNotUpdateChildren);
-                        ClientContext.ExecuteQueryRetry();
+                        if (fieldLink != null)
+                        {
+                            fieldLink.DeleteObject();
+                            ct.Update(!DoNotUpdateChildren);
+                            ClientContext.ExecuteQueryRetry();
+                        }
+                        else
+                        {
+                            WriteError(new ErrorRecord(new Exception("Cannot find field reference in content type"), "FieldRefNotFound", ErrorCategory.ObjectNotFound, ContentType));
+                        }
                     }
                 }
             }
             else
             {
-                throw new Exception("Field not found");
+                WriteError(new ErrorRecord(new Exception("Field not found"), "FieldNotFound", ErrorCategory.ObjectNotFound, this));
             }
         }
 

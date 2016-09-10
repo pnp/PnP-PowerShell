@@ -1,11 +1,10 @@
-using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.Commands.Enums;
 using System;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "SPONavigationNode")]
     [CmdletHelp("Adds a menu item to either the quicklaunch or top navigation", 

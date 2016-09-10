@@ -67,11 +67,11 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             }
 
             bool shouldContinue = true;
-            if (System.IO.File.Exists(Out))
+            if (File.Exists(Out))
             {
                 shouldContinue = (Force ||
-                                  ShouldContinue(string.Format(Commands.Properties.Resources.File0ExistsOverwrite, Out),
-                                      Commands.Properties.Resources.Confirm));
+                                  ShouldContinue(string.Format(Properties.Resources.File0ExistsOverwrite, Out),
+                                      Properties.Resources.Confirm));
             }
             return shouldContinue;
         }

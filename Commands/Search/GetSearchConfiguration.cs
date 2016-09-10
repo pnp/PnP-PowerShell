@@ -44,7 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
             {
                 case SearchConfigurationScope.Web:
                     {
-                        configoutput = this.SelectedWeb.GetSearchConfiguration();
+                        configoutput = SelectedWeb.GetSearchConfiguration();
                         break;
                     }
                 case SearchConfigurationScope.Site:

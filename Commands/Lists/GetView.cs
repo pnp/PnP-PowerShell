@@ -1,12 +1,12 @@
-﻿using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Collections.Generic;
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "SPOView")]
     [CmdletHelp("Returns one or all views from a list",

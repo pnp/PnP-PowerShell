@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using System.Text;
+using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {

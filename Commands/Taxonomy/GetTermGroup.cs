@@ -1,9 +1,10 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client.Taxonomy;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Get, "SPOTermGroup", SupportsShouldProcess = false)]
     [CmdletHelp(@"Returns a taxonomy term group",
@@ -22,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
-            var termStore = default(TermStore);
+            TermStore termStore;
             if (string.IsNullOrEmpty(TermStoreName))
             {
                 termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
@@ -32,9 +33,16 @@ namespace SharePointPnP.PowerShell.Commands
                 termStore = taxonomySession.TermStores.GetByName(TermStoreName);
             }
             // Get Group
-            var group = termStore.GetTermGroupByName(GroupName);
+            if (termStore != null)
+            {
+                var group = termStore.GetTermGroupByName(GroupName);
 
-            WriteObject(group);
+                WriteObject(@group);
+            }
+            else
+            {
+                WriteError(new ErrorRecord(new Exception("Cannot find termstore"),"INCORRECTTERMSTORE",ErrorCategory.ObjectNotFound,TermStoreName));
+            }
         }
 
     }

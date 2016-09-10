@@ -1,10 +1,8 @@
-﻿using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.IO;
 using System.Management.Automation;
-using System.Net;
 using System.Security;
 using System.Linq;
 using Microsoft.SharePoint.Client;
@@ -115,10 +113,10 @@ dir",
 
         [Parameter(Mandatory = false, ParameterSetName = "NativeAAD", HelpMessage = "Clears the token cache.")]
         public SwitchParameter ClearTokenCache;
-
+#endif
         [Parameter(Mandatory = false, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
         public string TenantAdminUrl;
-#endif
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
         public SwitchParameter SkipTenantAdminCheck;
 
@@ -179,7 +177,7 @@ dir",
                 }
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AuthenticationMode);
             }
-            WriteVerbose(string.Format("PnP PowerShell Cmdlets ({0}): Connected to {1}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(), Url));
+            WriteVerbose($"PnP PowerShell Cmdlets ({System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
 
             if (CreateDrive && SPOnlineConnection.CurrentConnection.Context != null)
             {
@@ -199,9 +197,9 @@ dir",
 
         private PSCredential GetCredentials()
         {
-            PSCredential creds = null;
+            PSCredential creds;
 
-            var connectionURI = new Uri(Url);
+            var connectionUri = new Uri(Url);
 
             // Try to get the credentials by full url
 
@@ -209,8 +207,8 @@ dir",
             if (creds == null)
             {
                 // Try to get the credentials by splitting up the path
-                var pathString = string.Format("{0}://{1}", connectionURI.Scheme, connectionURI.IsDefaultPort ? connectionURI.Host : string.Format("{0}:{1}", connectionURI.Host, connectionURI.Port));
-                var path = connectionURI.AbsolutePath;
+                var pathString = string.Format("{0}://{1}", connectionUri.Scheme, connectionUri.IsDefaultPort ? connectionUri.Host : string.Format("{0}:{1}", connectionUri.Host, connectionUri.Port));
+                var path = connectionUri.AbsolutePath;
                 while (path.IndexOf('/') != -1)
                 {
                     path = path.Substring(0, path.LastIndexOf('/'));
@@ -228,12 +226,12 @@ dir",
                 if (creds == null)
                 {
                     // Try to find the credentials by schema and hostname
-                    creds = Utilities.CredentialManager.GetCredential(connectionURI.Scheme + "://" + connectionURI.Host);
+                    creds = Utilities.CredentialManager.GetCredential(connectionUri.Scheme + "://" + connectionUri.Host);
 
                     if (creds == null)
                     {
                         // try to find the credentials by hostname
-                        creds = Utilities.CredentialManager.GetCredential(connectionURI.Host);
+                        creds = Utilities.CredentialManager.GetCredential(connectionUri.Host);
                     }
                 }
 

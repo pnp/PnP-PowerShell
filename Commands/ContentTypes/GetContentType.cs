@@ -1,12 +1,10 @@
-﻿using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client;
+﻿using System.Linq;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Get, "SPOContentType")]
     [CmdletHelp("Retrieves a content type",
