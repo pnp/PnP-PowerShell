@@ -51,9 +51,9 @@ function Request-SPOOrOnPremises
     [string]$title="Confirm"
     [string]$message="Which version of the Modules do you want to install?"
     
-	$SPO = New-Object System.Management.Automation.Host.ChoiceDescription " SharePoint Online", "SharePoint Online"
-    $SP2016 = New-Object System.Management.Automation.Host.ChoiceDescription " SharePoint 2016 ", "SharePoint 2016"
-	$SP2013 = New-Object System.Management.Automation.Host.ChoiceDescription " SharePoint 2013 ", "SharePoint 2013"
+	$SPO = New-Object System.Management.Automation.Host.ChoiceDescription "SharePoint &Online", "SharePoint Online"
+    $SP2016 = New-Object System.Management.Automation.Host.ChoiceDescription "SharePoint 201&6", "SharePoint 2016"
+	$SP2013 = New-Object System.Management.Automation.Host.ChoiceDescription "SharePoint 201&3", "SharePoint 2013"
 	$options = [System.Management.Automation.Host.ChoiceDescription[]]($SPO, $SP2016, $SP2013)
 
 	$result = $host.ui.PromptForChoice($title, $message, $options, 0)
