@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointPnP.PowerShell.Commands", "Commands\SharePointPnP.PowerShell.Commands.csproj", "{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}"
 EndProject
@@ -183,8 +183,8 @@ Global
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug|x86.Build.0 = Debug|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug15|Any CPU.ActiveCfg = Debug15|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug15|Any CPU.Build.0 = Debug15|Any CPU
-		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug15|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug15|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug15|Mixed Platforms.ActiveCfg = Debug15|Any CPU
+		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug15|Mixed Platforms.Build.0 = Debug15|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug15|x86.ActiveCfg = Debug|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug15|x86.Build.0 = Debug|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Debug16|Any CPU.ActiveCfg = Debug16|Any CPU
@@ -201,8 +201,8 @@ Global
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release|x86.Build.0 = Release|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release15|Any CPU.ActiveCfg = Release15|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release15|Any CPU.Build.0 = Release15|Any CPU
-		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release15|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release15|Mixed Platforms.Build.0 = Release|Any CPU
+		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release15|Mixed Platforms.ActiveCfg = Release15|Any CPU
+		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release15|Mixed Platforms.Build.0 = Release15|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release15|x86.ActiveCfg = Release|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release15|x86.Build.0 = Release|Any CPU
 		{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}.Release16|Any CPU.ActiveCfg = Release16|Any CPU
