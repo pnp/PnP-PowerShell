@@ -35,7 +35,16 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 realm = GetRealmFromTargetUrl(url);
             }
 
-            var context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret), retryCount, retryWait * 1000);
+            PnPClientContext context = null;
+            if (url.DnsSafeHost.Contains("spoppe.com"))
+            {
+                context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: "windows-ppe.net", globalEndPointPrefix: "login"), retryCount, retryWait * 1000);
+            }
+            else
+            {
+                context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret), retryCount, retryWait * 1000);
+            }
+
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
 #if !ONPREMISES
