@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         SortOrder = 1)]
     public class NewUser : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The users login name (user@company.com)")]
         [Alias("LogonName")]
         public string LoginName = string.Empty;
 

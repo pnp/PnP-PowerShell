@@ -9,15 +9,19 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [Cmdlet(VerbsCommon.Remove, "SPOView", SupportsShouldProcess = true)]
     [CmdletHelp("Deletes a view from a list",
         Category = CmdletHelpCategory.Lists)]
+    [CmdletExample(
+        Code = @"PS:> Remove-SPOView -List ""Demo List"" -Identity ""All Items"" -Force",
+        SortOrder = 1,
+        Remarks = @"Removes the view with title ""All Items"" from the ""Demo List"" list.")]
     public class RemoveView : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the view.")]
         public ViewPipeBind Identity = new ViewPipeBind();
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 1, HelpMessage = "The ID or Url of the list.")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

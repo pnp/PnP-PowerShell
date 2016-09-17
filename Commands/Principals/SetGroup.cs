@@ -10,12 +10,20 @@ namespace SharePointPnP.PowerShell.Commands.Principals
     [Cmdlet("Set", "SPOGroup")]
     [CmdletHelp("Updates a group",
         Category = CmdletHelpCategory.Principals)]
+    [CmdletExample(
+        Code = @"PS:> Set-SPOGroup -Identity 'My Site Members' -SetAssociatedGroup Members",
+        Remarks = "Sets the SharePoint group with the name 'My Site Members' as the associated members group",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Set-SPOGroup -Identity 'My Site Members' -Owner 'site owners'",
+        Remarks = "Sets the SharePoint group with the name 'site owners' as the owner of the SharePoint group with the name 'My Site Members'",
+        SortOrder = 2)]
     public class SetGroup : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "A group object, an ID or a name of a group")]
         public GroupPipeBind Identity = new GroupPipeBind();
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "One of the associated group types (Visitors, Members, Owners")]
         public AssociatedGroupType SetAssociatedGroup = AssociatedGroupType.None;
 
         [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to add to this SharePoint group")]
@@ -24,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false, HelpMessage = "Name of the permission set to remove from this SharePoint group")]
         public string RemoveRole = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The title for the group")]
         public string Title = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "The owner for the group, which can be a user or another group")]

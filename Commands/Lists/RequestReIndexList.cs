@@ -8,6 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [Cmdlet(VerbsLifecycle.Request, "SPOReIndexList")]
     [CmdletHelp("Marks the list for full indexing during the next incremental crawl",
         Category = CmdletHelpCategory.Lists)]
+    [CmdletExample(
+        Code = @"PS:> Request-SPOReIndexList -Identity ""Demo List""",
+        SortOrder = 1)]
     public class RequestReIndexList : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]

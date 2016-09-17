@@ -13,10 +13,10 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         SortOrder = 1)]
     public class RemoveGroup : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "A group object, an ID or a name of a group to remove")]
         public GroupPipeBind Identity = new GroupPipeBind();
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

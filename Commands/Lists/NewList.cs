@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Remarks = "Create a list with a title that is different from the url")]
     public class NewList : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The Title of the list")]
         public string Title;
 
         [Parameter(Mandatory = true, HelpMessage = "The type of list to create.")]
@@ -26,17 +26,17 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "If set, will override the url of the list.")]
         public string Url = null;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if versioning should be enabled")]
         public SwitchParameter EnableVersioning;
 
         [Parameter(Mandatory = false, HelpMessage = "Obsolete")]
-        [Obsolete("Not in use")]
+        [Obsolete("Not in use, use OnQuickLaunch parameter instead")]
         public QuickLaunchOptions QuickLaunchOptions;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if content types should be enabled on this list")]
         public SwitchParameter EnableContentTypes;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if this list should be visible on the QuikLaunch")]
         public SwitchParameter OnQuickLaunch;
 
         protected override void ExecuteCmdlet()

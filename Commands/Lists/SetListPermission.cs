@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 2)]        
     public class SetListPermission : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The ID or Title of the list.")]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = "Group")]
@@ -30,10 +30,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, ParameterSetName = "User")]
         public string User;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The role that must be assigned to the group or user")]
         public string AddRole = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The rolde that must be removed from the group or user")]
         public string RemoveRole = string.Empty;
 
         protected override void ExecuteCmdlet()

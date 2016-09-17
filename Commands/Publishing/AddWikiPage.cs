@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
         Category = CmdletHelpCategory.Publishing)]
     public class AddWikiPage : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The server relative page URL")]
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
