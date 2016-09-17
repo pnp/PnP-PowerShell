@@ -20,37 +20,45 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef")]
+        [Parameter(HelpMessage = "The list object or name where this field needs to be added")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = "FieldRef")]
+        [Parameter(Mandatory = true, ParameterSetName = "FieldRef", HelpMessage = "Field Object that needs to be added")]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = true, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = true, ParameterSetName = "WebPara")]
+        [Parameter(HelpMessage = "The display name of the field")]
         public string DisplayName;
 
         [Parameter(Mandatory = true, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = true, ParameterSetName = "WebPara")]
+        [Parameter(HelpMessage = "The internal name of the field")]
         public string InternalName;
 
         [Parameter(Mandatory = true, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = true, ParameterSetName = "WebPara")]
+        [Parameter(HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
         public FieldType Type;
 
         [Parameter(Mandatory = false, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = false, ParameterSetName = "WebPara")]
+        [Parameter(HelpMessage = "The ID of the field, must be unique")]
         public GuidPipeBind Id = new GuidPipeBind();
 
         [Parameter(Mandatory = false, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = false, ParameterSetName = "ListXML")]
+        [Parameter(HelpMessage = "Switch Parameter if this field must be added to the default view")]
         public SwitchParameter AddToDefaultView;
 
         [Parameter(Mandatory = false, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = false, ParameterSetName = "ListXML")]
+        [Parameter(HelpMessage = "Switch Parameter if the field is a required field")]
         public SwitchParameter Required;
 
         [Parameter(Mandatory = false, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = false, ParameterSetName = "ListXML")]
+        [Parameter(HelpMessage = "The group name to where this field belongs to")]
         public string Group;
 
         [Parameter(Mandatory = false)]

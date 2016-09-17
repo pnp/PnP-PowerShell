@@ -9,12 +9,16 @@ namespace SharePointPnP.PowerShell.Commands.Fields
     [Cmdlet(VerbsCommon.Get, "SPOField")]
     [CmdletHelp("Returns a field from a list or site",
         Category = CmdletHelpCategory.Fields)]
+    [CmdletExample(
+        Code = @"PS:> Get-SPOField -List ""Demo list"" -Identity ""Speakers""",
+        Remarks = @"Gets the speakers field from the list Demo list",
+        SortOrder = 1)]
     public class GetField : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The list object or name where to get the field from")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, Position=0, ValueFromPipeline=true)]
+        [Parameter(Mandatory = false, Position=0, ValueFromPipeline=true, HelpMessage = "The field object or name to get")]
         public FieldPipeBind Identity = new FieldPipeBind();
 
         protected override void ExecuteCmdlet()
