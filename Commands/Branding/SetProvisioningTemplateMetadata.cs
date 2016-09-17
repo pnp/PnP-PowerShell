@@ -16,33 +16,27 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateDisplayName ""DisplayNameValue""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.
-",
+     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.",
      SortOrder = 1)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateDisplayName ""DisplayNameValue""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.
-",
+     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.",
      SortOrder = 2)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateImagePreviewUrl ""Full URL of the Image Preview""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.
-",
+     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.",
      SortOrder = 3)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateImagePreviewUrl ""Full URL of the Image Preview""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.
-",
+     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.",
      SortOrder = 4)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateProperties @{""Property1"" = ""Test Value 1""; ""Property2""=""Test Value 2""}",
-     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.
-",
+     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.",
      SortOrder = 5)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateProperties @{""Property1"" = ""Test Value 1""; ""Property2""=""Test Value 2""}",
-     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.
-",
+     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.",
      SortOrder = 6)]
 
 

@@ -13,42 +13,48 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -Description 'Adds custom action to custom list ribbon' -Group 'Microsoft.SharePoint.Client.UserCustomAction.group' -Location 'CommandUI.Ribbon' -CommandUIExtension $cUIExtn",
     Remarks = @"Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice: escape quotes in CommandUIExtension.",
     SortOrder = 1)]
+    [CmdletRelatedLink(
+        Text ="UserCustomAction", 
+        Url = "https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.usercustomaction.aspx")]
+    [CmdletRelatedLink(
+        Text ="BasePermissions",
+        Url = "https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.basepermissions.aspx")]
     public class AddCustomAction : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the custom action")]
         public string Name = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The title of the custom action")]
         public string Title = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The description of the custom action")]
         public string Description = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The group where this custom action needs to be added like 'Microsoft.SharePoint.Client.UserCustomAction.group'")]
         public string Group = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The actual location where this custom action need to be added like 'CommandUI.Ribbon'")]
         public string Location = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.")]
         public int Sequence = 0;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The URL, URI or ECMAScript (JScript, JavaScript) function associated with the action")]
         public string Url = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The URL of the image associated with the custom action")]
         public string ImageUrl = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "XML fragment that determines user interface properties of the custom action")]
         public string CommandUIExtension = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The identifier of the object associated with the custom action.")]
         public string RegistrationId = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "A string array that contain the permissions needed for the custom action")]
         public PermissionKind[] Rights;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false), HelpMessage = "Specifies the type of object associated with the custom action"]
         public UserCustomActionRegistrationType RegistrationType;
 
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.")]

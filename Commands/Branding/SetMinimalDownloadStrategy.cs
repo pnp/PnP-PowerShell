@@ -17,13 +17,13 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         SortOrder = 2)]
     public class SetMDS : SPOWebCmdlet
     {
-        [Parameter(ParameterSetName = "On", Mandatory = true)]
+        [Parameter(ParameterSetName = "On", Mandatory = true, HelpMessage = "Turn minimal download strategy on")]
         public SwitchParameter On;
 
-        [Parameter(ParameterSetName = "Off", Mandatory = true)]
+        [Parameter(ParameterSetName = "Off", Mandatory = true, HelpMessage = "Turn minimal download strategy off")]
         public SwitchParameter Off;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
