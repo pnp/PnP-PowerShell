@@ -15,10 +15,10 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
         SortOrder = 1)]
     public class RemoveContentTypeFromList : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The list object where the content type needs to be removed from")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The Content type object that needs to be removed")]
         public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()

@@ -15,10 +15,10 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
         SortOrder = 1)]
     public class SetDefaultContentTypeToList : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The list object where the content type needs to be added")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The content type object that needs to be added to the list")]
         public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()
