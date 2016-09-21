@@ -44,14 +44,21 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 setScope = Scope;
             }
 
-            if (setScope == CustomActionScope.Web)
+            if (setScope != CustomActionScope.All)
             {
-                SelectedWeb.AddJsBlock(Name, Script, Sequence);
+                if (setScope == CustomActionScope.Web)
+                {
+                    SelectedWeb.AddJsBlock(Name, Script, Sequence);
+                }
+                else
+                {
+                    var site = ClientContext.Site;
+                    site.AddJsBlock(Name, Script, Sequence);
+                }
             }
             else
             {
-                var site = ClientContext.Site;
-                site.AddJsBlock(Name, Script, Sequence);
+                WriteError(new ErrorRecord(new Exception("Scope parameter can only be set to Web or Site"),"INCORRECTVALUE",ErrorCategory.InvalidArgument, this));
             }
         }
     }
