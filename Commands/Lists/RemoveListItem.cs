@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
         public ListItemPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

@@ -22,10 +22,10 @@ namespace SharePointPnP.PowerShell.Commands.Events
       Remarks = @"This will return a specific registered event receiver in the list with the name ProjectList", SortOrder = 4)]
     public class GetEventReceiver : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = "List")]
+        [Parameter(Mandatory = false, ParameterSetName = "List", HelpMessage = "The list object from where to get the event receiver object")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The Guid of the event receiver on the list")]
         public GuidPipeBind Identity;
 
         protected override void ExecuteCmdlet()
