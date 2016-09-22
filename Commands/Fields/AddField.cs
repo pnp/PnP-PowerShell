@@ -20,10 +20,10 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara")]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef")]
-        [Parameter(HelpMessage = "The list object or name where this field needs to be added")]
+        [Parameter(HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = "FieldRef", HelpMessage = "Field Object that needs to be added")]
+        [Parameter(Mandatory = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = true, ParameterSetName = "ListPara")]

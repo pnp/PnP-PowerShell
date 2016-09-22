@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "A group object, an ID or a name of a group to remove")]
         public GroupPipeBind Identity = new GroupPipeBind();
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
         SortOrder = 1)]
     public class AddPublishingPage : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The name of the page to be added as aspx file")]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the page to be added as an aspx file")]
         [Alias("Name")]
         public string PageName = string.Empty;
 

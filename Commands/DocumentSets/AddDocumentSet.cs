@@ -15,13 +15,13 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
       SortOrder = 1)]
     public class AddDocumentSet : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The list object where the document set needs to be added")]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the list, its ID or an actual list object from where the document set needs to be added")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, HelpMessage = "The name of the document set")] 
         public string Name;
 
-        [Parameter(Mandatory = true, HelpMessage = "The content type name of the document set")] 
+        [Parameter(Mandatory = true, HelpMessage = "The name of the content type, its ID or an actual content object referencing to the document set.")] 
         public ContentTypePipeBind ContentType;
         protected override void ExecuteCmdlet()
         {

@@ -10,9 +10,13 @@ namespace SharePointPnP.PowerShell.Commands.Fields
     [CmdletHelp("Returns a field from a list or site",
         Category = CmdletHelpCategory.Fields)]
     [CmdletExample(
+        Code = @"PS:> Get-SPOField",
+        Remarks = @"Gets all the fields from the current site",
+        SortOrder = 1)]
+    [CmdletExample(
         Code = @"PS:> Get-SPOField -List ""Demo list"" -Identity ""Speakers""",
         Remarks = @"Gets the speakers field from the list Demo list",
-        SortOrder = 1)]
+        SortOrder = 2)]
     public class GetField : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The list object or name where to get the field from")]

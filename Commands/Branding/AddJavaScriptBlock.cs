@@ -22,10 +22,10 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Alias("Key")]
         public string Name = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "The javascript block to add to the specified scope or site")]
+        [Parameter(Mandatory = true, HelpMessage = "The javascript block to add to the specified scope")]
         public string Script = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "A sequence number where to add the script block")]
+        [Parameter(Mandatory = false, HelpMessage = "A sequence number that defines the order on the page")]
         public int Sequence = 0;
 
         [Parameter(Mandatory = false)]

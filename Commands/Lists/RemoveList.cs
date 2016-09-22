@@ -12,14 +12,14 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = "PS:> Remove-SPOList -Title Announcements",
         SortOrder = 1)]
     [CmdletExample(
-        Code = "PS:> Remove-SPOList -Title Announcements -force",
+        Code = "PS:> Remove-SPOList -Title Announcements -Force",
         SortOrder = 2)]
     public class RemoveList : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]
         public ListPipeBind Identity = new ListPipeBind();
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
         protected override void ExecuteCmdlet()
         {

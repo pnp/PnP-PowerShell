@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
         [Parameter(Mandatory = false, ParameterSetName="List", HelpMessage = "The list object from where to get the event receiver object")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

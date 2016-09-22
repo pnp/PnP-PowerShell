@@ -23,7 +23,7 @@ PS:> Add-SPOContentTypeToDocumentSet -ContentType $ct -DocumentSet $docset",
         SortOrder = 3)]
     public class AddContentTypeToDocumentSet : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The content type objec, name or id to add. Either specify name, an id, or a content type object.")]
+        [Parameter(Mandatory = true, HelpMessage = "The content type object, name or id to add. Either specify name, an id, or a content type object.")]
         public ContentTypePipeBind[] ContentType;
 
         [Parameter(Mandatory = true, HelpMessage = "The document set object or id to add the content type to. Either specify a name, a document set template object, an id, or a content type object")]

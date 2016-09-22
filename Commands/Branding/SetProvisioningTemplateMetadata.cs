@@ -24,19 +24,19 @@ namespace SharePointPnP.PowerShell.Commands.Branding
      SortOrder = 2)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateImagePreviewUrl ""Full URL of the Image Preview""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.",
+     Remarks = @"Sets the Url to the preview image of a provisioning template in XML format.",
      SortOrder = 3)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateImagePreviewUrl ""Full URL of the Image Preview""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.",
+     Remarks = @"Sets the to the preview image of a provisioning template in Office Open XML format.",
      SortOrder = 4)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateProperties @{""Property1"" = ""Test Value 1""; ""Property2""=""Test Value 2""}",
-     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.",
+     Remarks = @"Sets the property 'Property1' to the value 'Test Value 1' of a provisioning template in XML format.",
      SortOrder = 5)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateProperties @{""Property1"" = ""Test Value 1""; ""Property2""=""Test Value 2""}",
-     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.",
+     Remarks = @"Sets the property 'Property1' to the value 'Test Value 1' of a provisioning template in Office Open XML format.",
      SortOrder = 6)]
 
 

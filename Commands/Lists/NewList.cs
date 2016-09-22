@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Switch parameter if content types should be enabled on this list")]
         public SwitchParameter EnableContentTypes;
 
-        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if this list should be visible on the QuikLaunch")]
+        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if this list should be visible on the QuickLaunch")]
         public SwitchParameter OnQuickLaunch;
 
         protected override void ExecuteCmdlet()

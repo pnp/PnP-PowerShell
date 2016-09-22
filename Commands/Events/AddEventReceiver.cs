@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
         [Alias("Sync")]
         public EventReceiverSynchronization Synchronization;
 
-        [Parameter(Mandatory = false, HelpMessage = "The sequence number where this event reeiver should be placed")]
+        [Parameter(Mandatory = false, HelpMessage = "The sequence number where this event receiver should be placed")]
         public int SequenceNumber = 1000;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]

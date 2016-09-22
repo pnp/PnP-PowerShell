@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [CmdletHelp("Deletes a view from a list",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOView -List ""Demo List"" -Identity ""All Items"" -Force",
+        Code = @"PS:> Remove-SPOView -List ""Demo List"" -Identity ""All Items""",
         SortOrder = 1,
         Remarks = @"Removes the view with title ""All Items"" from the ""Demo List"" list.")]
     public class RemoveView : SPOWebCmdlet
@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 1, HelpMessage = "The ID or Url of the list.")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
