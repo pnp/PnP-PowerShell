@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "The role that must be assigned to the group or user")]
         public string AddRole = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "The rolde that must be removed from the group or user")]
+        [Parameter(Mandatory = false, HelpMessage = "The role that must be removed from the group or user")]
         public string RemoveRole = string.Empty;
 
         protected override void ExecuteCmdlet()

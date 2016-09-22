@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 1, HelpMessage = "The list object or name where to remove the field from")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

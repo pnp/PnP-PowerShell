@@ -23,10 +23,10 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = true, HelpMessage = "The title of the node that needs to be removed")]
         public string Title;
 
-        [Parameter(Mandatory = false, HelpMessage "The header where the node is located")]
+        [Parameter(Mandatory = false, HelpMessage = "The header where the node is located")]
         public string Header;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
