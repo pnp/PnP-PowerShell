@@ -148,6 +148,7 @@ Cmdlet|Description
 **[Set&#8209;SPOTaxonomyFieldValue](SetSPOTaxonomyFieldValue.md)** |Sets a taxonomy term value in a listitem field
 **[Get&#8209;SPOTaxonomyItem](GetSPOTaxonomyItem.md)** |Returns a taxonomy item
 **[Get&#8209;SPOTaxonomySession](GetSPOTaxonomySession.md)** |Returns a taxonomy session
+**[Remove&#8209;SPOTermGroup](RemoveSPOTermGroup.md)** |Removes a taxonomy term group and all its containing termsets
 **[New&#8209;SPOTermGroup](NewSPOTermGroup.md)** |Creates a taxonomy term group
 **[Get&#8209;SPOTermGroup](GetSPOTermGroup.md)** |Returns a taxonomy term group
 **[Import&#8209;SPOTermGroupFromXml](ImportSPOTermGroupFromXml.md)** |Imports a taxonomy TermGroup from either the input or from an XML file.
