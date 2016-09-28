@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                 var group = termStore.GetTermGroupByName(GroupName);
                 if (group != null)
                 {
-                    if (Force || ShouldContinue(string.Format(Resources.Delete0, group.Name), Resources.Confirm))
+                    if (Force || ShouldContinue(string.Format(Resources.RemoveTermGroup0AndAllUnderlyingTermSetsAndTerms, group.Name), Resources.Confirm))
                     {
                         group.EnsureProperty(g => group.TermSets);
                         if (group.TermSets.Any())
@@ -51,7 +51,6 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                             foreach (var termSet in group.TermSets)
                             {
                                 termSet.DeleteObject();
-                                ClientContext.ExecuteQueryRetry();
                             }
                         }
                         group.DeleteObject();

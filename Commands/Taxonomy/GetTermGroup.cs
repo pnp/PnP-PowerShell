@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Category = CmdletHelpCategory.Taxonomy)]
     public class GetTermGroup : SPOCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, 
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0,
             HelpMessage = "Name of the taxonomy term group to retrieve.")]
         public string GroupName;
 
@@ -36,12 +36,12 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             if (termStore != null)
             {
                 var group = termStore.GetTermGroupByName(GroupName);
-
+                group.EnsureProperties(g => g.Name, g => g.Id);
                 WriteObject(@group);
             }
             else
             {
-                WriteError(new ErrorRecord(new Exception("Cannot find termstore"),"INCORRECTTERMSTORE",ErrorCategory.ObjectNotFound,TermStoreName));
+                WriteError(new ErrorRecord(new Exception("Cannot find termstore"), "INCORRECTTERMSTORE", ErrorCategory.ObjectNotFound, TermStoreName));
             }
         }
 

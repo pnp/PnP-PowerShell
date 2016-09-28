@@ -1,6 +1,7 @@
 # SharePointPnP.PowerShell Changelog #
 
 **2016-09-29**
+* Live from MS Ignite: Added Remove-SPOTaxonomyItem cmdlet
 * Live from MS Ignite: Added Remove-SPOTermGroup cmdlet
 
 **2016-06-03**

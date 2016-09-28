@@ -315,6 +315,33 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove Term &apos;{0}&apos; and all underlying Terms?.
+        /// </summary>
+        internal static string RemoveTerm0AndAllUnderlyingTerms {
+            get {
+                return ResourceManager.GetString("RemoveTerm0AndAllUnderlyingTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Termgroup &apos;{0}&apos; and all underlying Termsets and Terms? .
+        /// </summary>
+        internal static string RemoveTermGroup0AndAllUnderlyingTermSetsAndTerms {
+            get {
+                return ResourceManager.GetString("RemoveTermGroup0AndAllUnderlyingTermSetsAndTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Termset &apos;{0}&apos; and it&apos;s underlying Terms?.
+        /// </summary>
+        internal static string RemoveTermSet0 {
+            get {
+                return ResourceManager.GetString("RemoveTermSet0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove the {0} key and its value from the property bag?.
         /// </summary>
         internal static string RemoveThe0KeyAndItsValueFromThePropertyBag {
