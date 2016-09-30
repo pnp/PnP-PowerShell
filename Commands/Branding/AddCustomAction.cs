@@ -54,7 +54,7 @@ Add-SPOCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = false, HelpMessage = "A string array that contain the permissions needed for the custom action")]
         public PermissionKind[] Rights;
 
-        [Parameter(Mandatory = false), HelpMessage = "Specifies the type of object associated with the custom action"]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the type of object associated with the custom action")]
         public UserCustomActionRegistrationType RegistrationType;
 
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.")]
