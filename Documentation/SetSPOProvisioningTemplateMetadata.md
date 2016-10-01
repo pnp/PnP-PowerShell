@@ -23,38 +23,32 @@ PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateDisplayName
 ```
 Sets the DisplayName property of a provisioning template in XML format.
 
-
 ###Example 2
 ```powershell
 PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateDisplayName "DisplayNameValue"
 ```
 Sets the DisplayName property of a provisioning template in Office Open XML format.
 
-
 ###Example 3
 ```powershell
 PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateImagePreviewUrl "Full URL of the Image Preview"
 ```
-Sets the DisplayName property of a provisioning template in XML format.
-
+Sets the Url to the preview image of a provisioning template in XML format.
 
 ###Example 4
 ```powershell
 PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateImagePreviewUrl "Full URL of the Image Preview"
 ```
-Sets the DisplayName property of a provisioning template in Office Open XML format.
-
+Sets the to the preview image of a provisioning template in Office Open XML format.
 
 ###Example 5
 ```powershell
 PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateProperties @{"Property1" = "Test Value 1"; "Property2"="Test Value 2"}
 ```
-Sets the DisplayName property of a provisioning template in XML format.
-
+Sets the property 'Property1' to the value 'Test Value 1' of a provisioning template in XML format.
 
 ###Example 6
 ```powershell
 PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateProperties @{"Property1" = "Test Value 1"; "Property2"="Test Value 2"}
 ```
-Sets the DisplayName property of a provisioning template in Office Open XML format.
-
+Sets the property 'Property1' to the value 'Test Value 1' of a provisioning template in Office Open XML format.
