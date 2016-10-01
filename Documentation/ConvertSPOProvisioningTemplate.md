@@ -9,7 +9,7 @@ Convert-SPOProvisioningTemplate [-Out <String>] [-Encoding <Encoding>] [-Force [
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Encoding|Encoding|False|The encoding type of the XML file, Unicode is default|
+|Encoding|Encoding|False||
 |Force|SwitchParameter|False|Overwrites the output file if it exists|
 |Out|String|False|Filename to write to, optionally including full path|
 |Path|String|True|Path to the xml file containing the provisioning template|

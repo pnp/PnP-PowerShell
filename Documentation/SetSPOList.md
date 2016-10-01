@@ -9,12 +9,12 @@ Set-SPOList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|BreakRoleInheritance|SwitchParameter|False|If used the security inheritance is broken for this list|
-|ClearSubscopes|SwitchParameter|False|If used the unique permissions are cleared from child objects and they can inherit role assignments from this object|
-|CopyRoleAssignments|SwitchParameter|False|If used the roles are copied from the parent web|
+|BreakRoleInheritance|SwitchParameter|False||
+|ClearSubscopes|SwitchParameter|False||
+|CopyRoleAssignments|SwitchParameter|False||
 |EnableContentTypes|Boolean|False|Set to $true to enable content types, set to $false to disable content types|
-|Identity|ListPipeBind|True|The ID, Title or Url of the list.|
-|Title|String|False|The title of the list|
+|Identity|ListPipeBind|True||
+|Title|String|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

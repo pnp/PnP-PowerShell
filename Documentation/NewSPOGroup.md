@@ -16,7 +16,7 @@ Parameter|Type|Required|Description
 |OnlyAllowMembersViewMembership|SwitchParameter|False|A switch parameter that specifies whether only group members are allowed to view the list of members in the group|
 |Owner|String|False|The owner for the group, which can be a user or another group|
 |RequestToJoinEmail|String|False|The e-mail address to which membership requests are sent|
-|Title|String|True|The Title of the group|
+|Title|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

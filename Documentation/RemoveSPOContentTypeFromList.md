@@ -9,8 +9,8 @@ Remove-SPOContentTypeFromList -List <ListPipeBind> -ContentType <ContentTypePipe
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|ContentType|ContentTypePipeBind|True|The name of a content type, its ID or an actual content type object that needs to be removed from the specified list.|
-|List|ListPipeBind|True|The name of the list, its ID or an actual list object from where the content type needs to be removed from|
+|ContentType|ContentTypePipeBind|True||
+|List|ListPipeBind|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

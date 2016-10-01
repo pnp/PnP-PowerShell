@@ -15,10 +15,3 @@ Parameter|Type|Required|Description
 |SourceFilePath|String|True|Path to the file which will be uploaded|
 |Title|String|True|Title for the page layout|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-##Examples
-
-###Example 1
-```powershell
-PS:> Add-SPOHtmlPublishingPageLayout -Title 'Our custom page layout' -SourceFilePath 'customlayout.aspx' -Description 'A custom page layout' -AssociatedContentTypeID 0x01010901
-```
-Uploads the pagelayout 'customlayout.aspx' from the current location to the current site as a 'web part page' pagelayout

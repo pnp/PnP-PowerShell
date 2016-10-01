@@ -9,8 +9,8 @@ Remove-SPOGroup [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] [-Identity <Gr
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
-|Identity|GroupPipeBind|False|A group object, an ID or a name of a group to remove|
+|Force|SwitchParameter|False||
+|Identity|GroupPipeBind|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

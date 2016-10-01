@@ -9,14 +9,7 @@ Remove-SPOView [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] -Identity <View
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
-|Identity|ViewPipeBind|True|The ID or Title of the view.|
+|Force|SwitchParameter|False||
+|Identity|ViewPipeBind|True|The ID or Title of the list.|
 |List|ListPipeBind|True|The ID or Url of the list.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-##Examples
-
-###Example 1
-```powershell
-PS:> Remove-SPOView -List "Demo List" -Identity "All Items"
-```
-Removes the view with title "All Items" from the "Demo List" list.

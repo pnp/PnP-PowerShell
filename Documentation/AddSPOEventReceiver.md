@@ -9,13 +9,13 @@ Add-SPOEventReceiver [-List <ListPipeBind>] -Name <String> -Url <String> -EventR
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|EventReceiverType|EventReceiverType|True|The type of the event receiver like ItemAdded, ItemAdding|
-|Force|SwitchParameter|False|Overwrites the output file if it exists.|
-|List|ListPipeBind|False|The list object or name where the event receiver needs to be added|
-|Name|String|True|The name of the event receiver|
-|SequenceNumber|Int32|False|The sequence number where this event receiver should be placed|
-|Synchronization|EventReceiverSynchronization|True|The Synchronization type, Asynchronous or Synchronous|
-|Url|String|True|The URL of the event receiver web service|
+|EventReceiverType|EventReceiverType|True||
+|Force|SwitchParameter|False||
+|List|ListPipeBind|False||
+|Name|String|True||
+|SequenceNumber|Int32|False||
+|Synchronization|EventReceiverSynchronization|True||
+|Url|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

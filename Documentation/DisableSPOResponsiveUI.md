@@ -16,4 +16,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Disable-SPOResponsiveUI
 ```
-If enabled previously, this will remove the PnP Responsive UI from a site.
+If previous enabled, will remove the PnP Responsive UI from a site.

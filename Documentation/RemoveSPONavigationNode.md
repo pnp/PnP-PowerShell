@@ -9,10 +9,10 @@ Remove-SPONavigationNode -Location <NavigationType> -Title <String> [-Header <St
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
-|Header|String|False|The header where the node is located|
-|Location|NavigationType|True|The location from where to remove the node (QuickLaunch, TopNavigationBar|
-|Title|String|True|The title of the node that needs to be removed|
+|Force|SwitchParameter|False||
+|Header|String|False||
+|Location|NavigationType|True||
+|Title|String|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

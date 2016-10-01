@@ -14,9 +14,9 @@ Set-SPOMinimalDownloadStrategy -On [<SwitchParameter>] [-Force [<SwitchParameter
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
-|Off|SwitchParameter|True|Turn minimal download strategy off|
-|On|SwitchParameter|True|Turn minimal download strategy on|
+|Force|SwitchParameter|False||
+|Off|SwitchParameter|True||
+|On|SwitchParameter|True||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

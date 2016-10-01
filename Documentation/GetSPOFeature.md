@@ -9,7 +9,7 @@ Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeatureP
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|FeaturePipeBind|False|The feature ID or name to query for, Querying by name is not supported in version 15 of the Client Side Object Model|
+|Identity|FeaturePipeBind|False||
 |Scope|FeatureScope|False|The scope of the feature. Defaults to Web.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

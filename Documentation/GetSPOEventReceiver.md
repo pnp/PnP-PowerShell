@@ -9,8 +9,8 @@ Get-SPOEventReceiver [-List <ListPipeBind>] [-Identity <GuidPipeBind>] [-Web <We
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|GuidPipeBind|False|The Guid of the event receiver on the list|
-|List|ListPipeBind|False|The list object from where to get the event receiver object|
+|Identity|GuidPipeBind|False||
+|List|ListPipeBind|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

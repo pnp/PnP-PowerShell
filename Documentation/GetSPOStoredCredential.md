@@ -18,9 +18,3 @@ Parameter|Type|Required|Description
 PS:> Get-SPOnlineStoredCredential -Name O365
 ```
 Returns the credential associated with the specified identifier
-
-###Example 2
-```powershell
-PS:> Get-SPOnlineStoredCredential -Name testEnvironment -Type OnPrem
-```
-Gets the credential associated with the specified identifier from the credential manager and then will return a credential that can be used for on-premises authentication

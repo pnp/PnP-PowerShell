@@ -9,9 +9,9 @@ Remove-SPOEventReceiver [-List <ListPipeBind>] -Identity <GuidPipeBind> [-Force 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
-|Identity|GuidPipeBind|True|The Guid of the event receiver on the list|
-|List|ListPipeBind|False|The list object from where to get the event receiver object|
+|Force|SwitchParameter|False||
+|Identity|GuidPipeBind|True||
+|List|ListPipeBind|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

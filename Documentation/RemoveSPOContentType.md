@@ -9,7 +9,7 @@ Remove-SPOContentType [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] -Identit
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
+|Force|SwitchParameter|False||
 |Identity|ContentTypePipeBind|True|The name or ID of the content type to remove|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
