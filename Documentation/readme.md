@@ -42,7 +42,9 @@ Cmdlet|Description
 **[Set&#8209;SPOMinimalDownloadStrategy](SetSPOMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.
 **[Add&#8209;SPONavigationNode](AddSPONavigationNode.md)** |Adds a menu item to either the quicklaunch or top navigation
 **[Remove&#8209;SPONavigationNode](RemoveSPONavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation
+**[Load&#8209;SPOProvisioningTemplate](LoadSPOProvisioningTemplate.md)** |Loads a PnP file from the file systems
 **[New&#8209;SPOProvisioningTemplate](NewSPOProvisioningTemplate.md)** |Creates a new provisioning template object
+**[Save&#8209;SPOProvisioningTemplate](SaveSPOProvisioningTemplate.md)** |Saves a PnP file to the file systems
 **[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
 **[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
