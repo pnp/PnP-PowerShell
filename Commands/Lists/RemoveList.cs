@@ -8,12 +8,18 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [Cmdlet(VerbsCommon.Remove, "SPOList", SupportsShouldProcess = true)]
     [CmdletHelp("Deletes a list",
         Category = CmdletHelpCategory.Lists)]
+    [CmdletExample(
+        Code = "PS:> Remove-SPOList -Title Announcements",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = "PS:> Remove-SPOList -Title Announcements -Force",
+        SortOrder = 2)]
     public class RemoveList : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]
         public ListPipeBind Identity = new ListPipeBind();
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
         protected override void ExecuteCmdlet()
         {

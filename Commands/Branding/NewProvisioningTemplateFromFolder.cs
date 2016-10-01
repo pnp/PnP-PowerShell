@@ -49,6 +49,9 @@ namespace SharePointPnP.PowerShell.Commands.Branding
        Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.pnp -Folder c:\temp",
        Remarks = "Creates an empty provisioning template as a pnp package file, and includes all files in the c:\\temp folder",
        SortOrder = 8)]
+    [CmdletRelatedLink(
+       Text ="Encoding", 
+       Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
 
     public class NewProvisioningTemplateFromFolder : SPOWebCmdlet
     {
@@ -79,7 +82,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The encoding type of the XML file, Unicode is default")]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
         protected override void ExecuteCmdlet()

@@ -220,4 +220,13 @@
   <data name="pnp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pnp.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RemoveTermGroup0AndAllUnderlyingTermSetsAndTerms" xml:space="preserve">
+    <value>Remove Termgroup '{0}' and all underlying Termsets and Terms? </value>
+  </data>
+  <data name="RemoveTermSet0" xml:space="preserve">
+    <value>Remove Termset '{0}' and it's underlying Terms?</value>
+  </data>
+  <data name="RemoveTerm0AndAllUnderlyingTerms" xml:space="preserve">
+    <value>Remove Term '{0}' and all underlying Terms?</value>
+  </data>
 </root>

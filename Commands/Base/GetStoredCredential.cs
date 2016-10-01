@@ -11,6 +11,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
     [CmdletExample(Code = "PS:> Get-SPOnlineStoredCredential -Name O365", 
         Remarks = "Returns the credential associated with the specified identifier",
         SortOrder = 1)]
+    [CmdletExample(Code = "PS:> Get-SPOnlineStoredCredential -Name testEnvironment -Type OnPrem", 
+        Remarks = "Gets the credential associated with the specified identifier from the credential manager and then will return a credential that can be used for on-premises authentication",
+        SortOrder = 2)]
     public class GetStoredCredential : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The credential to retrieve.")]

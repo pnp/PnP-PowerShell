@@ -54,45 +54,10 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
                 id = Identity.Id;
             }
 
-            var uri = new Uri(ClientContext.Url);
 
-            var webUrl = string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, SelectedWeb.ServerRelativeUrl);
-            var pageUrl = string.Format("{0}://{1}{2}", uri.Scheme, uri.Host, ServerRelativePageUrl);
-            var request = (HttpWebRequest)WebRequest.Create($"{webUrl}/_vti_bin/exportwp.aspx?pageurl={pageUrl}&guidstring={id}");
+            WriteObject(SelectedWeb.GetWebPartXml(id,ServerRelativePageUrl));
 
-            if (SPOnlineConnection.CurrentConnection.ConnectionType == Enums.ConnectionType.O365)
-            {
-                var credentials = ClientContext.Credentials as SharePointOnlineCredentials;
-
-                var authCookieValue = credentials.GetAuthenticationCookie(uri);
-
-                Cookie fedAuth = new Cookie()
-                {
-                    Name = "SPOIDCRL",
-                    Value = authCookieValue.TrimStart("SPOIDCRL=".ToCharArray()),
-                    Path = "/",
-                    Secure = true,
-                    HttpOnly = true,
-                    Domain = uri.Host
-                };
-                request.CookieContainer = new CookieContainer();
-                request.CookieContainer.Add(fedAuth);
-            }
-            else
-            {
-                CredentialCache credentialCache = new CredentialCache();
-                credentialCache.Add(new Uri(webUrl), "NTLM", ClientContext.Credentials as NetworkCredential);
-                request.Credentials = credentialCache;
-            }
-
-            var response = request.GetResponse();
-            using (var stream = response.GetResponseStream())
-            {
-                var reader = new StreamReader(stream, Encoding.UTF8);
-                var responseString = reader.ReadToEnd();
-                WriteObject(responseString);
-            }
-
+            
         }
 
     }

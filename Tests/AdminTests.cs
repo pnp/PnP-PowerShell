@@ -43,8 +43,8 @@ namespace SharePointPnP.PowerShell.Tests
         public void GetWebTemplatesTest()
         {
             using (var scope = new PSTestScope(true))
-            {
-                var results = scope.ExecuteCommand("Get-SPOWebTemplates");
+            {                
+                var results = scope.ExecuteCommand("Get-SPOWebTemplates", new CommandParameter("Lcid", "1033"), new CommandParameter("CompatibilityLevel", "15"));
 
                 Assert.IsTrue(results.Count > 0);
                 Assert.IsTrue(results[0].BaseObject.GetType().Equals(typeof(Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplate)));

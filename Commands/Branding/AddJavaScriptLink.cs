@@ -60,7 +60,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                     break;
 
                 case CustomActionScope.All:
-                    WriteWarning("CustomActionScope All is not supported for adding JavaScriptLinks");
+                    WriteError(new ErrorRecord(new Exception("Scope parameter can only be set to Web or Site"), "INCORRECTVALUE", ErrorCategory.InvalidArgument, this));
                     break;
             }
         }

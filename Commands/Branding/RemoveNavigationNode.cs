@@ -17,16 +17,16 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         SortOrder = 2)]
     public class RemoveNavigationNode : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The location from where to remove the node (QuickLaunch, TopNavigationBar")]
         public NavigationType Location;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The title of the node that needs to be removed")]
         public string Title;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The header where the node is located")]
         public string Header;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

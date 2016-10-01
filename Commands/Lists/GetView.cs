@@ -28,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The ID or name of the view")]
         public ViewPipeBind Identity;
 
         protected override void ExecuteCmdlet()

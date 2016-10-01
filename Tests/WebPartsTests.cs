@@ -70,6 +70,11 @@ namespace SharePointPnP.PowerShell.Tests
         [TestMethod]
         public void GetWebPartXmlTest()
         {
+            if (TestCommon.AppOnlyTesting())
+            {
+                Assert.Inconclusive("Can't currently retrieve web part settings using app-only");
+            }
+
             using (var scope = new PSTestScope(true))
             {
                 using (var ctx = TestCommon.CreateClientContext())

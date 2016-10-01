@@ -9,15 +9,23 @@ namespace SharePointPnP.PowerShell.Commands.Fields
     [Cmdlet(VerbsCommon.Remove, "SPOField", SupportsShouldProcess = true)]
     [CmdletHelp("Removes a field from a list or a site",
         Category = CmdletHelpCategory.Fields)]
+    [CmdletExample(
+        Code = @"PS:> Remove-SPOField -Identity ""Speakers""",
+        Remarks = @"Gets the speakers field from the site columns",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Remove-SPOField -List ""Demo list"" -Identity ""Speakers""",
+        Remarks = @"Gets the speakers field from the list Demo list",
+        SortOrder = 1)]
     public class RemoveField : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The field object or name to remove")]
         public FieldPipeBind Identity = new FieldPipeBind();
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 1)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 1, HelpMessage = "The list object or name where to remove the field from")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

@@ -2,11 +2,11 @@
 Returns a taxonomy item
 ##Syntax
 ```powershell
-Get-SPOTaxonomyItem -Term <String>
+Get-SPOTaxonomyItem -TermPath <String>
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Term|String|True|The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL|
+|TermPath|String|True|The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL|

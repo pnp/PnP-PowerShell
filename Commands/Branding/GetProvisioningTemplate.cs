@@ -69,7 +69,9 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         Code = @"PS:> $template = Get-SPOProvisioningTemplate -OutputInstance",
         Remarks = "Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.",
         SortOrder = 11)]
-
+    [CmdletRelatedLink(
+        Text ="Encoding", 
+        Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
     public class GetProvisioningTemplate : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "Filename to write to, optionally including full path")]
@@ -129,7 +131,7 @@ PS:> Get-SPOProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Obsolete("Use of this method is generally not required/recommended")]
         public SwitchParameter NoBaseTemplate;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The encoding type of the XML file, Unicode is default")]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
         [Parameter(Mandatory = false, HelpMessage = "It can be used to specify the DisplayName of the template file that will be extracted.")]
