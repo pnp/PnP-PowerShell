@@ -241,7 +241,7 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
         }
 
-        private static bool IsOpenOfficeFile(Stream stream)
+        internal static bool IsOpenOfficeFile(Stream stream)
         {
             bool istrue = false;
             // SIG 50 4B 03 04 14 00

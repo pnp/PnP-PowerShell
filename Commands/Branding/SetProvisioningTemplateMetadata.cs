@@ -86,7 +86,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             XMLTemplateProvider provider;
             ProvisioningTemplate provisioningTemplate;
             Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = IsOpenOfficeFile(stream);
+            var isOpenOfficeFile = ApplyProvisioningTemplate.IsOpenOfficeFile(stream);
             if (isOpenOfficeFile)
             {
                 provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
@@ -110,25 +110,6 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             GetProvisioningTemplate.SetTemplateMetadata(provisioningTemplate, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);
 
             provider.SaveAs(provisioningTemplate, templateFileName, TemplateProviderExtensions);
-        }
-
-        private bool IsOpenOfficeFile(Stream stream)
-        {
-            bool istrue = false;
-            // SIG 50 4B 03 04 14 00
-
-            byte[] bytes = new byte[6];
-            stream.Read(bytes, 0, 6);
-            var signature = string.Empty;
-            foreach (var b in bytes)
-            {
-                signature += b.ToString("X2");
-            }
-            if (signature == "504B03041400")
-            {
-                istrue = true;
-            }
-            return istrue;
         }
     }
 }
