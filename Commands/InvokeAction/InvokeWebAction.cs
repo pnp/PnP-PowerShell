@@ -177,7 +177,9 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 					for (int listIndex = 0; listIndex < listCount; listIndex++)
 					{
 						List currentList = lists[listIndex];
-						WriteIterationProgress(ListProgressBarId, WebProgressBarId, "Counting list", GetTitle(currentList), listIndex, listCount);
+                        currentList.LoadProperties(_listActions.Properties);
+
+                        WriteIterationProgress(ListProgressBarId, WebProgressBarId, "Counting list", GetTitle(currentList), listIndex, listCount);
 
 						if ((_isListNameSpecified && currentList.Title.Equals(_listName, StringComparison.CurrentCultureIgnoreCase)) || _listActions.ShouldProcessAnyAction(currentList))
 						{
@@ -225,8 +227,9 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 					for (int listIndex = 0; listIndex < listCount; listIndex++)
 					{
 						List currentList = lists[listIndex];
+                        currentList.LoadProperties(_listActions.Properties);
 
-						if (_isListNameSpecified && !currentList.Title.Equals(_listName, StringComparison.CurrentCultureIgnoreCase))
+                        if (_isListNameSpecified && !currentList.Title.Equals(_listName, StringComparison.CurrentCultureIgnoreCase))
 							continue;
 
 						UpdateWebProgressBar(webs, webIndex, webCount, listIndex, _totalExecutionTimeStopWatch);
@@ -250,7 +253,9 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 							{
 								ListItem currentListItem = listItems[listItemIndex];
 
-								WriteIterationProgress(ListItemProgressBarId, ListProgressBarId, "Iterating list items", GetTitle(currentListItem), listItemIndex, listItemCount, CalculateRemainingTimeForListItems(listItemCount, listItemIndex));
+                                currentListItem.LoadProperties(_listItemActions.Properties);
+
+                                WriteIterationProgress(ListItemProgressBarId, ListProgressBarId, "Iterating list items", GetTitle(currentListItem), listItemIndex, listItemCount, CalculateRemainingTimeForListItems(listItemCount, listItemIndex));
 
 								ProcessAction(currentListItem, GetTitle, _listItemActions.Properties, _listItemActions.ShouldProcessAction, _listItemActions.Action, ref _currentListItemsProcessed, ref _averageListItemTime, ref _averageShouldProcessListItemTime);
 							}
