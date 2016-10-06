@@ -177,7 +177,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 					for (int listIndex = 0; listIndex < listCount; listIndex++)
 					{
 						List currentList = lists[listIndex];
-                        currentList.LoadProperties(_listActions.Properties);
+						currentList.LoadProperties(_listActions.Properties);
 
                         WriteIterationProgress(ListProgressBarId, WebProgressBarId, "Counting list", GetTitle(currentList), listIndex, listCount);
 
@@ -227,7 +227,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 					for (int listIndex = 0; listIndex < listCount; listIndex++)
 					{
 						List currentList = lists[listIndex];
-                        currentList.LoadProperties(_listActions.Properties);
+						currentList.LoadProperties(_listActions.Properties);
 
                         if (_isListNameSpecified && !currentList.Title.Equals(_listName, StringComparison.CurrentCultureIgnoreCase))
 							continue;
@@ -253,7 +253,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 							{
 								ListItem currentListItem = listItems[listItemIndex];
 
-                                currentListItem.LoadProperties(_listItemActions.Properties);
+								currentListItem.LoadProperties(_listItemActions.Properties);
 
                                 WriteIterationProgress(ListItemProgressBarId, ListProgressBarId, "Iterating list items", GetTitle(currentListItem), listItemIndex, listItemCount, CalculateRemainingTimeForListItems(listItemCount, listItemIndex));
 
