@@ -16,33 +16,27 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateDisplayName ""DisplayNameValue""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.
-",
+     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.",
      SortOrder = 1)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateDisplayName ""DisplayNameValue""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.
-",
+     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.",
      SortOrder = 2)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateImagePreviewUrl ""Full URL of the Image Preview""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.
-",
+     Remarks = @"Sets the Url to the preview image of a provisioning template in XML format.",
      SortOrder = 3)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateImagePreviewUrl ""Full URL of the Image Preview""",
-     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.
-",
+     Remarks = @"Sets the to the preview image of a provisioning template in Office Open XML format.",
      SortOrder = 4)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.xml -TemplateProperties @{""Property1"" = ""Test Value 1""; ""Property2""=""Test Value 2""}",
-     Remarks = @"Sets the DisplayName property of a provisioning template in XML format.
-",
+     Remarks = @"Sets the property 'Property1' to the value 'Test Value 1' of a provisioning template in XML format.",
      SortOrder = 5)]
     [CmdletExample(
      Code = @"PS:> Set-SPOProvisioningTemplateMetadata -Path template.pnp -TemplateProperties @{""Property1"" = ""Test Value 1""; ""Property2""=""Test Value 2""}",
-     Remarks = @"Sets the DisplayName property of a provisioning template in Office Open XML format.
-",
+     Remarks = @"Sets the property 'Property1' to the value 'Test Value 1' of a provisioning template in Office Open XML format.",
      SortOrder = 6)]
 
 
@@ -92,7 +86,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             XMLTemplateProvider provider;
             ProvisioningTemplate provisioningTemplate;
             Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = IsOpenOfficeFile(stream);
+            var isOpenOfficeFile = ApplyProvisioningTemplate.IsOpenOfficeFile(stream);
             if (isOpenOfficeFile)
             {
                 provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
@@ -116,25 +110,6 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             GetProvisioningTemplate.SetTemplateMetadata(provisioningTemplate, TemplateDisplayName, TemplateImagePreviewUrl, TemplateProperties);
 
             provider.SaveAs(provisioningTemplate, templateFileName, TemplateProviderExtensions);
-        }
-
-        private bool IsOpenOfficeFile(Stream stream)
-        {
-            bool istrue = false;
-            // SIG 50 4B 03 04 14 00
-
-            byte[] bytes = new byte[6];
-            stream.Read(bytes, 0, 6);
-            var signature = string.Empty;
-            foreach (var b in bytes)
-            {
-                signature += b.ToString("X2");
-            }
-            if (signature == "504B03041400")
-            {
-                istrue = true;
-            }
-            return istrue;
         }
     }
 }

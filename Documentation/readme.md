@@ -42,7 +42,9 @@ Cmdlet|Description
 **[Set&#8209;SPOMinimalDownloadStrategy](SetSPOMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.
 **[Add&#8209;SPONavigationNode](AddSPONavigationNode.md)** |Adds a menu item to either the quicklaunch or top navigation
 **[Remove&#8209;SPONavigationNode](RemoveSPONavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation
+**[Load&#8209;SPOProvisioningTemplate](LoadSPOProvisioningTemplate.md)** |Loads a PnP file from the file systems
 **[New&#8209;SPOProvisioningTemplate](NewSPOProvisioningTemplate.md)** |Creates a new provisioning template object
+**[Save&#8209;SPOProvisioningTemplate](SaveSPOProvisioningTemplate.md)** |Saves a PnP file to the file systems
 **[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
 **[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
@@ -146,8 +148,10 @@ Cmdlet|Description
 **[Import&#8209;SPOTaxonomy](ImportSPOTaxonomy.md)** |Imports a taxonomy from either a string array or a file
 **[Export&#8209;SPOTaxonomy](ExportSPOTaxonomy.md)** |Exports a taxonomy to either the output or to a file.
 **[Set&#8209;SPOTaxonomyFieldValue](SetSPOTaxonomyFieldValue.md)** |Sets a taxonomy term value in a listitem field
+**[Remove&#8209;SPOTaxonomyItem](RemoveSPOTaxonomyItem.md)** |Removes a taxonomy item
 **[Get&#8209;SPOTaxonomyItem](GetSPOTaxonomyItem.md)** |Returns a taxonomy item
 **[Get&#8209;SPOTaxonomySession](GetSPOTaxonomySession.md)** |Returns a taxonomy session
+**[Remove&#8209;SPOTermGroup](RemoveSPOTermGroup.md)** |Removes a taxonomy term group and all its containing termsets
 **[New&#8209;SPOTermGroup](NewSPOTermGroup.md)** |Creates a taxonomy term group
 **[Get&#8209;SPOTermGroup](GetSPOTermGroup.md)** |Returns a taxonomy term group
 **[Import&#8209;SPOTermGroupFromXml](ImportSPOTermGroupFromXml.md)** |Imports a taxonomy TermGroup from either the input or from an XML file.

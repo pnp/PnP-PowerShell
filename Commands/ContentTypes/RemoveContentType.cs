@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true, HelpMessage="The name or ID of the content type to remove")]
         public ContentTypePipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

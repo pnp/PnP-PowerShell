@@ -26,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Features
      Remarks = @"This will return a specific activated site scoped feature", SortOrder = 4)]
     public class GetFeature : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The feature ID or name to query for, Querying by name is not supported in version 15 of the Client Side Object Model")]
         public FeaturePipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "The scope of the feature. Defaults to Web.")]

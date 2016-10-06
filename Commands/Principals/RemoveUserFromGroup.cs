@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
     public class RemoveUserFromGroup : SPOWebCmdlet
     {
 
-        [Parameter(Mandatory = true, HelpMessage = "A valid login name of a user")]
+        [Parameter(Mandatory = true, HelpMessage = "A valid login name of a user (user@company.com)")]
         [Alias("LogonName")]
         public string LoginName = string.Empty;
 

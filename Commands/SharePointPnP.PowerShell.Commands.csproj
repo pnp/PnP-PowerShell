@@ -379,7 +379,9 @@
     <Compile Include="Base\ConnectSPOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
     <Compile Include="Base\SetTraceLog.cs" />
+    <Compile Include="Branding\LoadProvisioningTemplate.cs" />
     <Compile Include="Branding\NewProvisioningTemplate.cs" />
+    <Compile Include="Branding\SaveProvisioningTemplate.cs" />
     <Compile Include="Branding\SetProvisioningTemplateMetadata.cs" />
     <Compile Include="Branding\ConvertFolderToProvisioningTemplate.cs" />
     <Compile Include="Branding\DisableResponsiveUI.cs" />
@@ -460,6 +462,8 @@
     <Compile Include="Search\GetSearchConfiguration.cs" />
     <Compile Include="Site\GetAuditing.cs" />
     <Compile Include="Site\SetAuditing.cs" />
+    <Compile Include="Taxonomy\RemoveTaxonomyItem.cs" />
+    <Compile Include="Taxonomy\RemoveTermGroup.cs" />
     <Compile Include="Taxonomy\ImportTermGroupFromXml.cs" />
     <Compile Include="Taxonomy\ExportTermGroupToXml.cs" />
     <Compile Include="Taxonomy\NewTermGroup.cs" />

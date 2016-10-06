@@ -22,7 +22,9 @@ namespace SharePointPnP.PowerShell.Commands.Branding
      Code = @"PS:> Convert-SPOPRovisioningTemplate -Path template.xml -Out newtemplate.xml -ToSchema V201512",
      Remarks = @"Converts a provisioning template to the latest schema using the 201512 schema and outputs the result the newtemplate.xml file.",
      SortOrder = 3)]
-
+     [CmdletRelatedLink(
+        Text ="Encoding", 
+        Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
     public class ConvertProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the provisioning template")]
@@ -34,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, Position = 1, HelpMessage = "The schema of the output to use, defaults to the latest schema")]
         public XMLPnPSchemaVersion ToSchema = XMLPnPSchemaVersion.LATEST;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The encoding type of the XML file, Unicode is default")]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists")]
