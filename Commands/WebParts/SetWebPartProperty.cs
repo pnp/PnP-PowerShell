@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
                 SelectedWeb.SetWebPartProperty(Key, (int)Value.BaseObject, Identity.Id, ServerRelativePageUrl);
             } else if (Value.BaseObject is bool)
             {
-                SelectedWeb.SetWebPartProperty(Key, (bool) Value.BaseObject, Identity.Id, ServerRelativePageUrl);
+                SelectedWeb.SetWebPartProperty(Key, (bool)Value.BaseObject, Identity.Id, ServerRelativePageUrl);
             }
             else
             {

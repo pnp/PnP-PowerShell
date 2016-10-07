@@ -13,27 +13,27 @@ namespace SharePointPnP.PowerShell.Commands.Events
       Remarks = @"This will add a new event receiver that is executed after an item has been added to the ProjectList list", SortOrder = 1)]
     public class AddEventReceiver : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The list object or name where the event receiver needs to be added")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the event receiver")]
         public string Name;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The URL of the event receiver web service")]
         public string Url;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The type of the event receiver like ItemAdded, ItemAdding")]
         [Alias("Type")]
         public EventReceiverType EventReceiverType;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The Synchronization type, Asynchronous or Synchronous")]
         [Alias("Sync")]
         public EventReceiverSynchronization Synchronization;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The sequence number where this event receiver should be placed")]
         public int SequenceNumber = 1000;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

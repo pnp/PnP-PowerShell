@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         SortOrder = 1)]
     public class NewGroup : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The Title of the group")]
         public string Title = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "The description for the group")]

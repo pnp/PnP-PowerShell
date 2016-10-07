@@ -23,7 +23,7 @@ PS:> Add-SPOFieldFromXml -List ""Demo List"" -FieldXml $xml",
         Url = "http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx")]
     public class AddFieldFromXml : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, HelpMessage = "CAML snippet containing the field definition. See http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx", Position = 0)]

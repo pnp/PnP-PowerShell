@@ -9,7 +9,7 @@ New-SPOUser -LoginName <String> [-Web <WebPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|LoginName|String|True||
+|LoginName|String|True|The users login name (user@company.com)|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

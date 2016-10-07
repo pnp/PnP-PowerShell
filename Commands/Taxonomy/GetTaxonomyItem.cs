@@ -9,12 +9,13 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Category = CmdletHelpCategory.Taxonomy)]
     public class GetTaxonomyItem : SPOCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL")]
-        public string Term;
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL")]
+        [Alias("Term")]
+        public string TermPath;
 
         protected override void ExecuteCmdlet()
         {
-            WriteObject(ClientContext.Site.GetTaxonomyItemByPath(Term));
+            WriteObject(ClientContext.Site.GetTaxonomyItemByPath(TermPath));
         }
 
     }

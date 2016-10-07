@@ -15,10 +15,10 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
         SortOrder = 1)]
     public class SetDefaultContentTypeToList : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of a content type, its ID or an actual content type object that needs to be removed from the specified list.")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The content type object that needs to be added to the list")]
         public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()

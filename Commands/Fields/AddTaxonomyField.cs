@@ -17,37 +17,37 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         SortOrder = 1)]
     public class AddTaxonomyField : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The list object or name where this field needs to be added")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The display name of the field")]
         public string DisplayName;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The internal name of the field")]
         public string InternalName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Path")]
+        [Parameter(Mandatory = true, ParameterSetName = "Path", HelpMessage = "The path to the term that this needs be be bound")]
         public string TermSetPath;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Id")]
+        [Parameter(Mandatory = false, ParameterSetName = "Id", HelpMessage = "The ID of the Taxonomy item")]
         public GuidPipeBind TaxonomyItemId;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Path")]
+        [Parameter(Mandatory = false, ParameterSetName = "Path", HelpMessage = "The path delimiter to be used, by default this is '|'")]
         public string TermPathDelimiter = "|";
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The group name to where this field belongs to")]
         public string Group;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The ID for the field, must be unique")]
         public GuidPipeBind Id = new GuidPipeBind();
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Switch Parameter if this field must be added to the default view")]
         public SwitchParameter AddToDefaultView;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Switch Parameter if this Taxonomy field can hold multiple values")]
         public SwitchParameter MultiValue;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Switch Parameter if the field is a required field")]
         public SwitchParameter Required;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]

@@ -31,6 +31,8 @@ Cmdlet|Description
 **[Remove&#8209;SPOCustomAction](RemoveSPOCustomAction.md)** |Removes a custom action
 **[Get&#8209;SPOCustomAction](GetSPOCustomAction.md)** |Returns all or a specific custom action(s)
 **[Add&#8209;SPOCustomAction](AddSPOCustomAction.md)** |Adds a custom action to a web
+**[Remove&#8209;SPOFileFromProvisioningTemplate](RemoveSPOFileFromProvisioningTemplate.md)** |Removes a file from an in-memory PnP Provisioning Template
+**[Add&#8209;SPOFileToProvisioningTemplate](AddSPOFileToProvisioningTemplate.md)** |Adds a file to an in-memory PnP Provisioning Template
 **[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |Creates a pnp package file of an existing template xml, and includes all files in the current folder
 **[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOHomePage](SetSPOHomePage.md)** |Sets the home page of the current web.
@@ -42,14 +44,16 @@ Cmdlet|Description
 **[Set&#8209;SPOMinimalDownloadStrategy](SetSPOMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.
 **[Add&#8209;SPONavigationNode](AddSPONavigationNode.md)** |Adds a menu item to either the quicklaunch or top navigation
 **[Remove&#8209;SPONavigationNode](RemoveSPONavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation
+**[Load&#8209;SPOProvisioningTemplate](LoadSPOProvisioningTemplate.md)** |Loads a PnP file from the file systems
 **[New&#8209;SPOProvisioningTemplate](NewSPOProvisioningTemplate.md)** |Creates a new provisioning template object
+**[Save&#8209;SPOProvisioningTemplate](SaveSPOProvisioningTemplate.md)** |Saves a PnP file to the file systems
 **[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
 **[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
 **[New&#8209;SPOProvisioningTemplateFromFolder](NewSPOProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
 **[Set&#8209;SPOProvisioningTemplateMetadata](SetSPOProvisioningTemplateMetadata.md)** |Sets metadata of a provisioning template
-**[Disable&#8209;SPOResponsiveUI](DisableSPOResponsiveUI.md)** |Disables the PnP Responsive UI implementation on a classic SharePoint Web
-**[Enable&#8209;SPOResponsiveUI](EnableSPOResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Web
+**[Disable&#8209;SPOResponsiveUI](DisableSPOResponsiveUI.md)** |Disables the PnP Responsive UI implementation on a classic SharePoint Site
+**[Enable&#8209;SPOResponsiveUI](EnableSPOResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Site
 **[Get&#8209;SPOTheme](GetSPOTheme.md)** |Returns the current theme/composed look of the current web.
 **[Set&#8209;SPOTheme](SetSPOTheme.md)** |Sets the theme of the current web.
 ##Content Types
@@ -146,8 +150,10 @@ Cmdlet|Description
 **[Import&#8209;SPOTaxonomy](ImportSPOTaxonomy.md)** |Imports a taxonomy from either a string array or a file
 **[Export&#8209;SPOTaxonomy](ExportSPOTaxonomy.md)** |Exports a taxonomy to either the output or to a file.
 **[Set&#8209;SPOTaxonomyFieldValue](SetSPOTaxonomyFieldValue.md)** |Sets a taxonomy term value in a listitem field
+**[Remove&#8209;SPOTaxonomyItem](RemoveSPOTaxonomyItem.md)** |Removes a taxonomy item
 **[Get&#8209;SPOTaxonomyItem](GetSPOTaxonomyItem.md)** |Returns a taxonomy item
 **[Get&#8209;SPOTaxonomySession](GetSPOTaxonomySession.md)** |Returns a taxonomy session
+**[Remove&#8209;SPOTermGroup](RemoveSPOTermGroup.md)** |Removes a taxonomy term group and all its containing termsets
 **[New&#8209;SPOTermGroup](NewSPOTermGroup.md)** |Creates a taxonomy term group
 **[Get&#8209;SPOTermGroup](GetSPOTermGroup.md)** |Returns a taxonomy term group
 **[Import&#8209;SPOTermGroupFromXml](ImportSPOTermGroupFromXml.md)** |Imports a taxonomy TermGroup from either the input or from an XML file.
