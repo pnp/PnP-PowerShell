@@ -1,5 +1,5 @@
 #Disable-SPOResponsiveUI
-Disables the PnP Responsive UI implementation on a classic SharePoint Web
+Disables the PnP Responsive UI implementation on a classic SharePoint Site
 ##Syntax
 ```powershell
 Disable-SPOResponsiveUI [-Web <WebPipeBind>]
@@ -16,4 +16,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Disable-SPOResponsiveUI
 ```
-If previous enabled, will remove the PnP Responsive UI from a site.
+If enabled previously, this will remove the PnP Responsive UI from a site.

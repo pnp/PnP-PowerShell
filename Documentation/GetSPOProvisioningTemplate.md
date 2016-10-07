@@ -9,7 +9,7 @@ Get-SPOProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]] [-Includ
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Encoding|Encoding|False||
+|Encoding|Encoding|False|The encoding type of the XML file, Unicode is default|
 |ExcludeHandlers|Handlers|False|Allows you to run all handlers, excluding the ones specified.|
 |ExtensibilityHandlers|ExtensibilityHandler[]|False|Allows you to specify ExtensbilityHandlers to execute while extracting a template.|
 |Force|SwitchParameter|False|Overwrites the output file if it exists.|
