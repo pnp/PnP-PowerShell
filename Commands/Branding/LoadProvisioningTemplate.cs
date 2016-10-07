@@ -34,16 +34,24 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
         protected override void ProcessRecord()
         {
+            WriteObject(LoadProvisioningTemplate
+                .LoadProvisioningTemplateFromFile(Path, 
+                SessionState.Path.CurrentFileSystemLocation.Path, 
+                TemplateProviderExtensions));
+        }
+
+        internal static ProvisioningTemplate LoadProvisioningTemplateFromFile(String templatePath, String sessionPath, ITemplateProviderExtension[] templateProviderExtensions)
+        {
             // Prepare the File Connector
             FileConnectorBase fileConnector;
-            string templateFileName = System.IO.Path.GetFileName(Path);
+            string templateFileName = System.IO.Path.GetFileName(templatePath);
 
             // Prepare the template path
-            if (!System.IO.Path.IsPathRooted(Path))
+            if (!System.IO.Path.IsPathRooted(templatePath))
             {
-                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+                templatePath = System.IO.Path.Combine(sessionPath, templatePath);
             }
-            var fileInfo = new FileInfo(Path);
+            var fileInfo = new FileInfo(templatePath);
             fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
 
             ProvisioningTemplate provisioningTemplate;
@@ -63,10 +71,11 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
             }
 
-            provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
+            provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
+            provisioningTemplate.Connector = provider.Connector;
 
             // Return the result
-            WriteObject(provisioningTemplate);
+            return(provisioningTemplate);
         }
     }
 }
