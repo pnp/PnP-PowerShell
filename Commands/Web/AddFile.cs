@@ -4,7 +4,6 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using File = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -62,9 +61,9 @@ namespace SharePointPnP.PowerShell.Commands
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            ClientObjectExtensions.EnsureProperty<Microsoft.SharePoint.Client.Web, string>(SelectedWeb, w => w.ServerRelativeUrl);
+            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
             
-            var folder = FileFolderExtensions.EnsureFolder(SelectedWeb, SelectedWeb.RootFolder, Folder);
+            var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
             
             var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, System.IO.Path.GetFileName(Path));
 
@@ -74,10 +73,10 @@ namespace SharePointPnP.PowerShell.Commands
                 try
                 {
                     var existingFile = SelectedWeb.GetFileByServerRelativeUrl(fileUrl);
-                    ClientObjectExtensions.EnsureProperty<File, bool>(existingFile, f => f.Exists);
+                    existingFile.EnsureProperty(f => f.Exists);
                     if (existingFile.Exists)
                     {
-                        FileFolderExtensions.CheckOutFile(SelectedWeb, fileUrl);
+                        SelectedWeb.CheckOutFile(fileUrl);
                     }
                 }
                 catch
@@ -103,14 +102,14 @@ namespace SharePointPnP.PowerShell.Commands
             }
 
             if (Checkout)
-                FileFolderExtensions.CheckInFile(SelectedWeb, fileUrl, CheckinType.MajorCheckIn, CheckInComment);
+                SelectedWeb.CheckInFile(fileUrl, CheckinType.MajorCheckIn, CheckInComment);
 
 
             if (Publish)
-                FileFolderExtensions.PublishFile(SelectedWeb, fileUrl, PublishComment);
+                SelectedWeb.PublishFile(fileUrl, PublishComment);
 
             if (Approve)
-                FileFolderExtensions.ApproveFile(SelectedWeb, fileUrl, ApproveComment);
+                SelectedWeb.ApproveFile(fileUrl, ApproveComment);
 
             WriteObject(file);
         }
