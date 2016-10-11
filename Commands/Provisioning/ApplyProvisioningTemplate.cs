@@ -11,7 +11,7 @@ using System.Collections;
 using System.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Apply", "SPOProvisioningTemplate")]
     [CmdletHelp("Applies a provisioning template to a web",

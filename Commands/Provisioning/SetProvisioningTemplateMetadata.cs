@@ -9,7 +9,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using System.Collections;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Set, "SPOProvisioningTemplateMetadata")]
     [CmdletHelp("Sets metadata of a provisioning template",

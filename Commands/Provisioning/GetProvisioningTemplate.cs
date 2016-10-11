@@ -13,7 +13,7 @@ using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Get, "SPOProvisioningTemplate", SupportsShouldProcess = true)]
     [CmdletHelp("Generates a provisioning template from a web",

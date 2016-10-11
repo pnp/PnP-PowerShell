@@ -2,7 +2,7 @@
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.New, "SPOProvisioningTemplate", SupportsShouldProcess = true)]
     [CmdletHelp("Creates a new provisioning template object",
