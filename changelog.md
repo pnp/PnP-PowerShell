@@ -1,5 +1,9 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2016-10-01**
+* Added Load-SPOPRovisioningTemplate
+* Added Save-SPOProvisioningTemplate
+
 **2016-09-29**
 * Live from MS Ignite: Added Remove-SPOTaxonomyItem cmdlet
 * Live from MS Ignite: Added Remove-SPOTermGroup cmdlet

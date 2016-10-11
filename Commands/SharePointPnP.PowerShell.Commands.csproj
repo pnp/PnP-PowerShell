@@ -379,8 +379,10 @@
     <Compile Include="Base\ConnectSPOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
     <Compile Include="Base\SetTraceLog.cs" />
+    <Compile Include="Branding\AddFileToProvisioningTemplate.cs" />
     <Compile Include="Branding\LoadProvisioningTemplate.cs" />
     <Compile Include="Branding\NewProvisioningTemplate.cs" />
+    <Compile Include="Branding\RemoveFileFromProvisioningTemplate.cs" />
     <Compile Include="Branding\SaveProvisioningTemplate.cs" />
     <Compile Include="Branding\SetProvisioningTemplateMetadata.cs" />
     <Compile Include="Branding\ConvertFolderToProvisioningTemplate.cs" />

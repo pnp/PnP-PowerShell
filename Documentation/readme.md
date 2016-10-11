@@ -31,6 +31,8 @@ Cmdlet|Description
 **[Remove&#8209;SPOCustomAction](RemoveSPOCustomAction.md)** |Removes a custom action
 **[Get&#8209;SPOCustomAction](GetSPOCustomAction.md)** |Returns all or a specific custom action(s)
 **[Add&#8209;SPOCustomAction](AddSPOCustomAction.md)** |Adds a custom action to a web
+**[Remove&#8209;SPOFileFromProvisioningTemplate](RemoveSPOFileFromProvisioningTemplate.md)** |Removes a file from an in-memory PnP Provisioning Template
+**[Add&#8209;SPOFileToProvisioningTemplate](AddSPOFileToProvisioningTemplate.md)** |Adds a file to an in-memory PnP Provisioning Template
 **[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |Creates a pnp package file of an existing template xml, and includes all files in the current folder
 **[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOHomePage](SetSPOHomePage.md)** |Sets the home page of the current web.
@@ -50,8 +52,8 @@ Cmdlet|Description
 **[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
 **[New&#8209;SPOProvisioningTemplateFromFolder](NewSPOProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
 **[Set&#8209;SPOProvisioningTemplateMetadata](SetSPOProvisioningTemplateMetadata.md)** |Sets metadata of a provisioning template
-**[Disable&#8209;SPOResponsiveUI](DisableSPOResponsiveUI.md)** |Disables the PnP Responsive UI implementation on a classic SharePoint Web
-**[Enable&#8209;SPOResponsiveUI](EnableSPOResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Web
+**[Disable&#8209;SPOResponsiveUI](DisableSPOResponsiveUI.md)** |Disables the PnP Responsive UI implementation on a classic SharePoint Site
+**[Enable&#8209;SPOResponsiveUI](EnableSPOResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Site
 **[Get&#8209;SPOTheme](GetSPOTheme.md)** |Returns the current theme/composed look of the current web.
 **[Set&#8209;SPOTheme](SetSPOTheme.md)** |Sets the theme of the current web.
 ##Content Types

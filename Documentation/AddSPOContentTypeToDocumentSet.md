@@ -9,8 +9,8 @@ Add-SPOContentTypeToDocumentSet -ContentType <ContentTypePipeBind[]> -DocumentSe
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|ContentType|ContentTypePipeBind[]|True|The content type to add. Either specify name, an id, or a content type object.|
-|DocumentSet|DocumentSetPipeBind|True|The document set to add the content type to. Either specify a name, a document set template object, an id, or a content type object|
+|ContentType|ContentTypePipeBind[]|True|The content type object, name or id to add. Either specify name, an id, or a content type object.|
+|DocumentSet|DocumentSetPipeBind|True|The document set object or id to add the content type to. Either specify a name, a document set template object, an id, or a content type object|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
