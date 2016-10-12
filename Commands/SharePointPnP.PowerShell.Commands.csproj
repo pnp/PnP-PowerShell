@@ -379,13 +379,14 @@
     <Compile Include="Base\ConnectSPOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
     <Compile Include="Base\SetTraceLog.cs" />
+    <Compile Include="Components\GalleryHelper.cs" />
     <Compile Include="Enums\TargetPlatform.cs" />
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Provisioning\AddFileToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\LoadProvisioningTemplate.cs" />
     <Compile Include="Provisioning\NewProvisioningTemplate.cs" />
-    <Compile Include="Provisioning\PnPTemplatesGalleryResultItem.cs" />
-    <Compile Include="Provisioning\ProvisioningTemplateInformation.cs" />
+    <Compile Include="Components\PnPTemplatesGalleryResultItem.cs" />
+    <Compile Include="Components\ProvisioningTemplateInformation.cs" />
     <Compile Include="Provisioning\RemoveFileFromProvisioningTemplate.cs" />
     <Compile Include="Provisioning\SaveProvisioningTemplate.cs" />
     <Compile Include="Provisioning\GetTemplateFromGallery.cs" />
@@ -621,6 +622,7 @@
   <ItemGroup>
     <Resource Include="Resources\pnp.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

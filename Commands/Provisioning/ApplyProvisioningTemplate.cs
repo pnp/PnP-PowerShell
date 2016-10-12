@@ -10,6 +10,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
 using System.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
+using SharePointPnP.PowerShell.Commands.Components;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
@@ -56,75 +57,79 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
     public class ApplyProvisioningTemplate : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning template.")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning template.", ParameterSetName = "Path")]
         public string Path;
 
-        [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.")]
+        [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ResourceFolder;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)")]
+        [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter OverwriteSystemPropertyBagValues;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Parameters;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Handlers Handlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Handlers ExcludeHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while applying a template")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while applying a template", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ExtensibilityHandler[] ExtensibilityHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.", ParameterSetName = "Instance")]
         public ProvisioningTemplate InputInstance;
+
+        [Parameter(Mandatory = false, ParameterSetName = "Gallery")]
+        public Guid GalleryTemplateId;
 
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.Url);
-            bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
-            FileConnectorBase fileConnector;
-            string templateFileName = System.IO.Path.GetFileName(Path);
-            if (templateFromFileSystem)
-            {
-                if (!System.IO.Path.IsPathRooted(Path))
-                {
-                    Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
-                }
-                if (!string.IsNullOrEmpty(ResourceFolder))
-                {
-                    if (!System.IO.Path.IsPathRooted(ResourceFolder))
-                    {
-                        ResourceFolder = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
-                            ResourceFolder);
-                    }
-                }
-                var fileInfo = new FileInfo(Path);
-                fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
-            }
-            else
-            {                
-                Uri fileUri = new Uri(Path);
-                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, fileUri);
-                var templateContext = ClientContext.Clone(webUrl.ToString());
-
-                var library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
-                var idx = library.IndexOf("/", StringComparison.Ordinal);
-                library = library.Substring(0, idx);
-
-                // This syntax creates a SharePoint connector regardless we have the -InputInstance argument or not
-                fileConnector = new SharePointConnector(templateContext, templateContext.Url, library);
-            }
-
             ProvisioningTemplate provisioningTemplate;
 
-            // If we don't have the -InputInstance parameter, we load the template from the source connector
-            if (InputInstance == null)
+            FileConnectorBase fileConnector;
+            if (MyInvocation.BoundParameters.ContainsKey("Path"))
             {
+                bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
+                string templateFileName = System.IO.Path.GetFileName(Path);
+                if (templateFromFileSystem)
+                {
+                    if (!System.IO.Path.IsPathRooted(Path))
+                    {
+                        Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+                    }
+                    if (!string.IsNullOrEmpty(ResourceFolder))
+                    {
+                        if (!System.IO.Path.IsPathRooted(ResourceFolder))
+                        {
+                            ResourceFolder = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
+                                ResourceFolder);
+                        }
+                    }
+                    var fileInfo = new FileInfo(Path);
+                    fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                }
+                else
+                {
+                    Uri fileUri = new Uri(Path);
+                    var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, fileUri);
+                    var templateContext = ClientContext.Clone(webUrl.ToString());
+
+                    var library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
+                    var idx = library.IndexOf("/", StringComparison.Ordinal);
+                    library = library.Substring(0, idx);
+
+                    // This syntax creates a SharePoint connector regardless we have the -InputInstance argument or not
+                    fileConnector = new SharePointConnector(templateContext, templateContext.Url, library);
+                }
+
+            // If we don't have the -InputInstance parameter, we load the template from the source connector
+
                 Stream stream = fileConnector.GetFileStream(templateFileName);
                 var isOpenOfficeFile = IsOpenOfficeFile(stream);
                 XMLTemplateProvider provider;
@@ -170,11 +175,17 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                     }
                 }
             }
-            // Otherwise we use the provisioning template instance provided through the -InputInstance parameter
+            
             else
             {
-                provisioningTemplate = InputInstance;
-
+                if (MyInvocation.BoundParameters.ContainsKey("GalleryTemplateId"))
+                {
+                    provisioningTemplate = GalleryHelper.GetTemplate(GalleryTemplateId);
+                }
+                else
+                {
+                    provisioningTemplate = InputInstance;
+                }
                 if (ResourceFolder != null)
                 {
                     var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
@@ -182,6 +193,19 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                 }
                 else
                 {
+                    if (Path != null)
+                    {
+                        if (!System.IO.Path.IsPathRooted(Path))
+                        {
+                            Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+                        }
+                    }
+                    else
+                    {
+                        Path = SessionState.Path.CurrentFileSystemLocation.Path;
+                    }
+                    var fileInfo = new FileInfo(Path);
+                    fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
                     provisioningTemplate.Connector = fileConnector;
                 }
             }

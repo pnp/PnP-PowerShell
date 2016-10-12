@@ -832,7 +832,7 @@
     <View>
       <Name>ProvisioningTemplateInformation</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Provisioning.ProvisioningTemplateInformation</TypeName>
+        <TypeName>SharePointPnP.PowerShell.Commands.Components.ProvisioningTemplateInformation</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>

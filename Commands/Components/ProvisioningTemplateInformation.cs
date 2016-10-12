@@ -1,7 +1,7 @@
 ﻿using System;
 using SharePointPnP.PowerShell.Commands.Enums;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Components
 {
     /// <summary>
     /// Defines a Provisioning Template stored in a Provisioning Repository
