@@ -379,11 +379,16 @@
     <Compile Include="Base\ConnectSPOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
     <Compile Include="Base\SetTraceLog.cs" />
+    <Compile Include="Enums\TargetPlatform.cs" />
+    <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Provisioning\AddFileToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\LoadProvisioningTemplate.cs" />
     <Compile Include="Provisioning\NewProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\PnPTemplatesGalleryResultItem.cs" />
+    <Compile Include="Provisioning\ProvisioningTemplateInformation.cs" />
     <Compile Include="Provisioning\RemoveFileFromProvisioningTemplate.cs" />
     <Compile Include="Provisioning\SaveProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\GetTemplateFromGallery.cs" />
     <Compile Include="Provisioning\SetProvisioningTemplateMetadata.cs" />
     <Compile Include="Provisioning\ConvertFolderToProvisioningTemplate.cs" />
     <Compile Include="Branding\DisableResponsiveUI.cs" />
@@ -472,6 +477,7 @@
     <Compile Include="Taxonomy\GetTermGroup.cs" />
     <Compile Include="Taxonomy\ImportTermSet.cs" />
     <Compile Include="UserProfiles\SetUserProfileProperty.cs" />
+    <Compile Include="Utilities\HttpHelper.cs" />
     <Compile Include="WebParts\GetWebPartProperty.cs" />
     <Compile Include="Branding\RemoveJavaScriptLink.cs" />
     <Compile Include="Branding\AddJavaScriptLink.cs" />
