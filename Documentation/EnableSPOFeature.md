@@ -2,7 +2,12 @@
 Enables a feature
 ##Syntax
 ```powershell
-Enable-SPOFeature [-Force [<SwitchParameter>]] [-Scope <FeatureScope>] [-Sandboxed [<SwitchParameter>]] [-Web <WebPipeBind>] -Identity <GuidPipeBind>
+Enable-SPOFeature
+        [-Force [<SwitchParameter>]]
+        [-Scope <FeatureScope>]
+        [-Sandboxed [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
+        -Identity <GuidPipeBind>
 ```
 
 

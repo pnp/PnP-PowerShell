@@ -2,7 +2,11 @@
 Adds a new content type to a list
 ##Syntax
 ```powershell
-Add-SPOContentTypeToList -List <ListPipeBind> -ContentType <ContentTypePipeBind> [-DefaultContentType [<SwitchParameter>]] [-Web <WebPipeBind>]
+Add-SPOContentTypeToList
+        -List <ListPipeBind>
+        -ContentType <ContentTypePipeBind>
+        [-DefaultContentType [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
 ```
 
 

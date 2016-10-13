@@ -5,7 +5,8 @@ You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) w
 
 ##Syntax
 ```powershell
-Get-SPOUserProfileProperty -Account <String[]>
+Get-SPOUserProfileProperty
+        -Account <String[]>
 ```
 
 

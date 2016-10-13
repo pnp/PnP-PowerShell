@@ -2,7 +2,9 @@
 Retrieves a document set template
 ##Syntax
 ```powershell
-Get-SPODocumentSetTemplate [-Web <WebPipeBind>] -Identity <DocumentSetPipeBind>
+Get-SPODocumentSetTemplate
+        [-Web <WebPipeBind>]
+        -Identity <DocumentSetPipeBind>
 ```
 
 

@@ -2,7 +2,9 @@
 Returns a List object
 ##Syntax
 ```powershell
-Get-SPOList [-Web <WebPipeBind>] [-Identity <ListPipeBind>]
+Get-SPOList
+        [-Web <WebPipeBind>]
+        [-Identity <ListPipeBind>]
 ```
 
 

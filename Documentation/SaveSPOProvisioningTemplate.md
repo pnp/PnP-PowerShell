@@ -2,7 +2,10 @@
 Saves a PnP file to the file systems
 ##Syntax
 ```powershell
-Save-SPOProvisioningTemplate -InputInstance <ProvisioningTemplate> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] -Out <String>
+Save-SPOProvisioningTemplate
+        -InputInstance <ProvisioningTemplate>
+        [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+        -Out <String>
 ```
 
 

@@ -2,7 +2,9 @@
 Marks the value of the propertybag key to be indexed by search.
 ##Syntax
 ```powershell
-Add-SPOIndexedProperty [-Web <WebPipeBind>] -Key <String>
+Add-SPOIndexedProperty
+        [-Web <WebPipeBind>]
+        -Key <String>
 ```
 
 

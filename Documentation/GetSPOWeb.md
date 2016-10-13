@@ -2,7 +2,8 @@
 Returns the current web object
 ##Syntax
 ```powershell
-Get-SPOWeb [-Identity <WebPipeBind>]
+Get-SPOWeb
+        [-Identity <WebPipeBind>]
 ```
 
 

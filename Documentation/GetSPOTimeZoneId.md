@@ -2,7 +2,8 @@
 Returns a time zone ID
 ##Syntax
 ```powershell
-Get-SPOTimeZoneId [-Match <String>]
+Get-SPOTimeZoneId
+        [-Match <String>]
 ```
 
 

@@ -2,7 +2,9 @@
 Executes any queued actions / changes on the SharePoint Client Side Object Model Context
 ##Syntax
 ```powershell
-Execute-SPOQuery [-RetryCount <Int32>] [-RetryWait <Int32>]
+Execute-SPOQuery
+        [-RetryCount <Int32>]
+        [-RetryWait <Int32>]
 ```
 
 

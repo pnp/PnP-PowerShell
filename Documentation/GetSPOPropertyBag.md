@@ -2,7 +2,10 @@
 Returns the property bag values.
 ##Syntax
 ```powershell
-Get-SPOPropertyBag [-Folder <String>] [-Web <WebPipeBind>] [-Key <String>]
+Get-SPOPropertyBag
+        [-Folder <String>]
+        [-Web <WebPipeBind>]
+        [-Key <String>]
 ```
 
 

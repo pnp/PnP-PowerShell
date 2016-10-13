@@ -2,7 +2,12 @@
 Adds a link to a JavaScript snippet/block to a web or site collection
 ##Syntax
 ```powershell
-Add-SPOJavaScriptBlock -Name <String> -Script <String> [-Sequence <Int32>] [-Scope <CustomActionScope>] [-Web <WebPipeBind>]
+Add-SPOJavaScriptBlock
+        -Name <String>
+        -Script <String>
+        [-Sequence <Int32>]
+        [-Scope <CustomActionScope>]
+        [-Web <WebPipeBind>]
 ```
 
 

@@ -2,7 +2,12 @@
 Sets default column values for a document library
 ##Syntax
 ```powershell
-Set-SPODefaultColumnValues -Field <FieldPipeBind> -Value <String[]> [-Folder <String>] [-Web <WebPipeBind>] [-List <ListPipeBind>]
+Set-SPODefaultColumnValues
+        -Field <FieldPipeBind>
+        -Value <String[]>
+        [-Folder <String>]
+        [-Web <WebPipeBind>]
+        [-List <ListPipeBind>]
 ```
 
 

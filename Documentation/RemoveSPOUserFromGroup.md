@@ -2,7 +2,10 @@
 Removes a user from a group
 ##Syntax
 ```powershell
-Remove-SPOUserFromGroup -LoginName <String> -Identity <GroupPipeBind> [-Web <WebPipeBind>]
+Remove-SPOUserFromGroup
+        -LoginName <String>
+        -Identity <GroupPipeBind>
+        [-Web <WebPipeBind>]
 ```
 
 

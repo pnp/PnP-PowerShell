@@ -2,7 +2,14 @@
 Creates a new list
 ##Syntax
 ```powershell
-New-SPOList -Title <String> -Template <ListTemplateType> [-Url <String>] [-EnableVersioning [<SwitchParameter>]] [-EnableContentTypes [<SwitchParameter>]] [-OnQuickLaunch [<SwitchParameter>]] [-Web <WebPipeBind>]
+New-SPOList
+        -Title <String>
+        -Template <ListTemplateType>
+        [-Url <String>]
+        [-EnableVersioning [<SwitchParameter>]]
+        [-EnableContentTypes [<SwitchParameter>]]
+        [-OnQuickLaunch [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
 ```
 
 

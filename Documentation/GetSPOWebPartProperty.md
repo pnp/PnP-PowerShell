@@ -2,7 +2,11 @@
 Returns a web part property
 ##Syntax
 ```powershell
-Get-SPOWebPartProperty -ServerRelativePageUrl <String> -Identity <GuidPipeBind> [-Key <String>] [-Web <WebPipeBind>]
+Get-SPOWebPartProperty
+        -ServerRelativePageUrl <String>
+        -Identity <GuidPipeBind>
+        [-Key <String>]
+        [-Web <WebPipeBind>]
 ```
 
 

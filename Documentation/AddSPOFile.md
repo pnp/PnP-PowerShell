@@ -2,7 +2,18 @@
 Uploads a file to Web
 ##Syntax
 ```powershell
-Add-SPOFile -Path <String> -Folder <String> [-Checkout [<SwitchParameter>]] [-CheckInComment <String>] [-Approve [<SwitchParameter>]] [-ApproveComment <String>] [-Publish [<SwitchParameter>]] [-PublishComment <String>] [-UseWebDav [<SwitchParameter>]] [-Values <Hashtable>] [-Web <WebPipeBind>]
+Add-SPOFile
+        -Path <String>
+        -Folder <String>
+        [-Checkout [<SwitchParameter>]]
+        [-CheckInComment <String>]
+        [-Approve [<SwitchParameter>]]
+        [-ApproveComment <String>]
+        [-Publish [<SwitchParameter>]]
+        [-PublishComment <String>]
+        [-UseWebDav [<SwitchParameter>]]
+        [-Values <Hashtable>]
+        [-Web <WebPipeBind>]
 ```
 
 

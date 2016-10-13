@@ -2,7 +2,8 @@
 Returns a taxonomy item
 ##Syntax
 ```powershell
-Get-SPOTaxonomyItem -TermPath <String>
+Get-SPOTaxonomyItem
+        -TermPath <String>
 ```
 
 

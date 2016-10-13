@@ -2,12 +2,18 @@
 Removes a subweb in the current web
 ##Syntax
 ```powershell
-Remove-SPOWeb -Identity <WebPipeBind> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+Remove-SPOWeb
+        -Identity <WebPipeBind>
+        [-Force [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Remove-SPOWeb -Url <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+Remove-SPOWeb
+        -Url <String>
+        [-Force [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
 ```
 
 

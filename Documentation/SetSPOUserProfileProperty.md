@@ -5,12 +5,18 @@ You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) w
 
 ##Syntax
 ```powershell
-Set-SPOUserProfileProperty -Values <String[]> -Account <String> -PropertyName <String>
+Set-SPOUserProfileProperty
+        -Values <String[]>
+        -Account <String>
+        -PropertyName <String>
 ```
 
 
 ```powershell
-Set-SPOUserProfileProperty -Value <String> -Account <String> -PropertyName <String>
+Set-SPOUserProfileProperty
+        -Value <String>
+        -Account <String>
+        -PropertyName <String>
 ```
 
 

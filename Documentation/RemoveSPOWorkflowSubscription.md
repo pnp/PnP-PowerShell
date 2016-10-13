@@ -2,7 +2,9 @@
 Removes a workflow subscription
 ##Syntax
 ```powershell
-Remove-SPOWorkflowSubscription [-Web <WebPipeBind>] -Identity <WorkflowSubscriptionPipeBind>
+Remove-SPOWorkflowSubscription
+        [-Web <WebPipeBind>]
+        -Identity <WorkflowSubscriptionPipeBind>
 ```
 
 

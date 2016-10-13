@@ -2,7 +2,12 @@
 Adds an item to a list
 ##Syntax
 ```powershell
-Add-SPOListItem [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>] [-Folder <String>] [-Web <WebPipeBind>] -List <ListPipeBind>
+Add-SPOListItem
+        [-ContentType <ContentTypePipeBind>]
+        [-Values <Hashtable>]
+        [-Folder <String>]
+        [-Web <WebPipeBind>]
+        -List <ListPipeBind>
 ```
 
 

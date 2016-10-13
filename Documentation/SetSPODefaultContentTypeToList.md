@@ -2,7 +2,10 @@
 Sets the default content type for a list
 ##Syntax
 ```powershell
-Set-SPODefaultContentTypeToList -List <ListPipeBind> -ContentType <ContentTypePipeBind> [-Web <WebPipeBind>]
+Set-SPODefaultContentTypeToList
+        -List <ListPipeBind>
+        -ContentType <ContentTypePipeBind>
+        [-Web <WebPipeBind>]
 ```
 
 

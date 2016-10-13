@@ -2,7 +2,14 @@
 Updates list settings
 ##Syntax
 ```powershell
-Set-SPOList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRoleInheritance [<SwitchParameter>]] [-CopyRoleAssignments [<SwitchParameter>]] [-ClearSubscopes [<SwitchParameter>]] [-Title <String>] [-Web <WebPipeBind>]
+Set-SPOList
+        -Identity <ListPipeBind>
+        [-EnableContentTypes <Boolean>]
+        [-BreakRoleInheritance [<SwitchParameter>]]
+        [-CopyRoleAssignments [<SwitchParameter>]]
+        [-ClearSubscopes [<SwitchParameter>]]
+        [-Title <String>]
+        [-Web <WebPipeBind>]
 ```
 
 

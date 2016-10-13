@@ -2,7 +2,9 @@
 Sets the home page of the current web.
 ##Syntax
 ```powershell
-Set-SPOHomePage [-Web <WebPipeBind>] -RootFolderRelativeUrl <String>
+Set-SPOHomePage
+        [-Web <WebPipeBind>]
+        -RootFolderRelativeUrl <String>
 ```
 
 
