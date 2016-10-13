@@ -2,9 +2,8 @@
 Removes a taxonomy item
 ##Syntax
 ```powershell
-Remove-SPOTaxonomyItem
-        [-Force [<SwitchParameter>]]
-        -TermPath <String>
+Remove-SPOTaxonomyItem [-Force [<SwitchParameter>]]
+                       -TermPath <String>
 ```
 
 

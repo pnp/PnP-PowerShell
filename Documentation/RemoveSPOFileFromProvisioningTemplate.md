@@ -2,10 +2,9 @@
 Removes a file from an in-memory PnP Provisioning Template
 ##Syntax
 ```powershell
-Remove-SPOFileFromProvisioningTemplate
-        -Path <String>
-        -FilePath <String>
-        [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+Remove-SPOFileFromProvisioningTemplate -Path <String>
+                                       -FilePath <String>
+                                       [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
 ```
 
 

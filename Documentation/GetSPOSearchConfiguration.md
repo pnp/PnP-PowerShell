@@ -2,10 +2,9 @@
 Returns the search configuration
 ##Syntax
 ```powershell
-Get-SPOSearchConfiguration
-        [-Scope <SearchConfigurationScope>]
-        [-Path <String>]
-        [-Web <WebPipeBind>]
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>]
+                           [-Path <String>]
+                           [-Web <WebPipeBind>]
 ```
 
 

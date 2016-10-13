@@ -2,10 +2,9 @@
 Returns a field from a list or site
 ##Syntax
 ```powershell
-Get-SPOField
-        [-List <ListPipeBind>]
-        [-Web <WebPipeBind>]
-        [-Identity <FieldPipeBind>]
+Get-SPOField [-List <ListPipeBind>]
+             [-Web <WebPipeBind>]
+             [-Identity <FieldPipeBind>]
 ```
 
 

@@ -2,8 +2,7 @@
 Returns the URLs of the default Master Page and the custom Master Page.
 ##Syntax
 ```powershell
-Get-SPOMasterPage
-        [-Web <WebPipeBind>]
+Get-SPOMasterPage [-Web <WebPipeBind>]
 ```
 
 

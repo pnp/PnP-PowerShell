@@ -2,11 +2,10 @@
 Removes a custom action
 ##Syntax
 ```powershell
-Remove-SPOCustomAction
-        [-Scope <CustomActionScope>]
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
-        -Identity <GuidPipeBind>
+Remove-SPOCustomAction [-Scope <CustomActionScope>]
+                       [-Force [<SwitchParameter>]]
+                       [-Web <WebPipeBind>]
+                       -Identity <GuidPipeBind>
 ```
 
 

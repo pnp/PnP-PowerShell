@@ -2,9 +2,8 @@
 Gets the contents/source of a wiki page
 ##Syntax
 ```powershell
-Get-SPOWikiPageContent
-        [-Web <WebPipeBind>]
-        -ServerRelativePageUrl <String>
+Get-SPOWikiPageContent [-Web <WebPipeBind>]
+                       -ServerRelativePageUrl <String>
 ```
 
 

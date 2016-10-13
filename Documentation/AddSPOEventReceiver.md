@@ -2,15 +2,14 @@
 Adds a new event receiver
 ##Syntax
 ```powershell
-Add-SPOEventReceiver
-        [-List <ListPipeBind>]
-        -Name <String>
-        -Url <String>
-        -EventReceiverType <EventReceiverType>
-        -Synchronization <EventReceiverSynchronization>
-        [-SequenceNumber <Int32>]
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
+Add-SPOEventReceiver [-List <ListPipeBind>]
+                     -Name <String>
+                     -Url <String>
+                     -EventReceiverType <EventReceiverType>
+                     -Synchronization <EventReceiverSynchronization>
+                     [-SequenceNumber <Int32>]
+                     [-Force [<SwitchParameter>]]
+                     [-Web <WebPipeBind>]
 ```
 
 

@@ -2,11 +2,10 @@
 Deletes an item from a list
 ##Syntax
 ```powershell
-Remove-SPOListItem
-        -Identity <ListItemPipeBind>
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
-        -List <ListPipeBind>
+Remove-SPOListItem -Identity <ListItemPipeBind>
+                   [-Force [<SwitchParameter>]]
+                   [-Web <WebPipeBind>]
+                   -List <ListPipeBind>
 ```
 
 

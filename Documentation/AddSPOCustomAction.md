@@ -2,21 +2,20 @@
 Adds a custom action to a web
 ##Syntax
 ```powershell
-Add-SPOCustomAction
-        -Name <String>
-        -Title <String>
-        -Description <String>
-        -Group <String>
-        -Location <String>
-        [-Sequence <Int32>]
-        [-Url <String>]
-        [-ImageUrl <String>]
-        [-CommandUIExtension <String>]
-        [-RegistrationId <String>]
-        [-Rights <PermissionKind[]>]
-        [-RegistrationType <UserCustomActionRegistrationType>]
-        [-Scope <CustomActionScope>]
-        [-Web <WebPipeBind>]
+Add-SPOCustomAction -Name <String>
+                    -Title <String>
+                    -Description <String>
+                    -Group <String>
+                    -Location <String>
+                    [-Sequence <Int32>]
+                    [-Url <String>]
+                    [-ImageUrl <String>]
+                    [-CommandUIExtension <String>]
+                    [-RegistrationId <String>]
+                    [-Rights <PermissionKind[]>]
+                    [-RegistrationType <UserCustomActionRegistrationType>]
+                    [-Scope <CustomActionScope>]
+                    [-Web <WebPipeBind>]
 ```
 
 

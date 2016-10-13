@@ -2,12 +2,11 @@
 Adds a SharePoint Addin to a site
 ##Syntax
 ```powershell
-Import-SPOAppPackage
-        -Path <String>
-        [-Force [<SwitchParameter>]]
-        [-LoadOnly [<SwitchParameter>]]
-        [-Locale <Int32>]
-        [-Web <WebPipeBind>]
+Import-SPOAppPackage -Path <String>
+                     [-Force [<SwitchParameter>]]
+                     [-LoadOnly [<SwitchParameter>]]
+                     [-Locale <Int32>]
+                     [-Web <WebPipeBind>]
 ```
 
 

@@ -2,14 +2,13 @@
 Exports a taxonomy to either the output or to a file.
 ##Syntax
 ```powershell
-Export-SPOTaxonomy
-        [-TermSetId <GuidPipeBind>]
-        [-TermStoreName <String>]
-        [-IncludeID [<SwitchParameter>]]
-        [-Path <String>]
-        [-Force [<SwitchParameter>]]
-        [-Delimiter <String>]
-        [-Encoding <Encoding>]
+Export-SPOTaxonomy [-TermSetId <GuidPipeBind>]
+                   [-TermStoreName <String>]
+                   [-IncludeID [<SwitchParameter>]]
+                   [-Path <String>]
+                   [-Force [<SwitchParameter>]]
+                   [-Delimiter <String>]
+                   [-Encoding <Encoding>]
 ```
 
 

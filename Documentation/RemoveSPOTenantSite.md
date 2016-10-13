@@ -2,11 +2,10 @@
 Office365 only: Removes a site collection from the current tenant
 ##Syntax
 ```powershell
-Remove-SPOTenantSite
-        [-SkipRecycleBin [<SwitchParameter>]]
-        [-FromRecycleBin [<SwitchParameter>]]
-        [-Force [<SwitchParameter>]]
-        -Url <String>
+Remove-SPOTenantSite [-SkipRecycleBin [<SwitchParameter>]]
+                     [-FromRecycleBin [<SwitchParameter>]]
+                     [-Force [<SwitchParameter>]]
+                     -Url <String>
 ```
 
 

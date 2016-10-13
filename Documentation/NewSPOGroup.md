@@ -2,16 +2,15 @@
 Adds group to the Site Groups List and returns a group object
 ##Syntax
 ```powershell
-New-SPOGroup
-        -Title <String>
-        [-Description <String>]
-        [-Owner <String>]
-        [-AllowRequestToJoinLeave [<SwitchParameter>]]
-        [-AutoAcceptRequestToJoinLeave [<SwitchParameter>]]
-        [-AllowMembersEditMembership [<SwitchParameter>]]
-        [-OnlyAllowMembersViewMembership [<SwitchParameter>]]
-        [-RequestToJoinEmail <String>]
-        [-Web <WebPipeBind>]
+New-SPOGroup -Title <String>
+             [-Description <String>]
+             [-Owner <String>]
+             [-AllowRequestToJoinLeave [<SwitchParameter>]]
+             [-AutoAcceptRequestToJoinLeave [<SwitchParameter>]]
+             [-AllowMembersEditMembership [<SwitchParameter>]]
+             [-OnlyAllowMembersViewMembership [<SwitchParameter>]]
+             [-RequestToJoinEmail <String>]
+             [-Web <WebPipeBind>]
 ```
 
 

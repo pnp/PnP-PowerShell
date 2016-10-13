@@ -2,8 +2,7 @@
 Sets the Client Context to use by the cmdlets
 ##Syntax
 ```powershell
-Set-SPOContext
-        -Context <ClientContext>
+Set-SPOContext -Context <ClientContext>
 ```
 
 

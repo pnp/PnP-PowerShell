@@ -2,11 +2,10 @@
 Checks in a file
 ##Syntax
 ```powershell
-Set-SPOFileCheckedIn
-        [-CheckinType <CheckinType>]
-        [-Comment <String>]
-        [-Web <WebPipeBind>]
-        -Url <String>
+Set-SPOFileCheckedIn [-CheckinType <CheckinType>]
+                     [-Comment <String>]
+                     [-Web <WebPipeBind>]
+                     -Url <String>
 ```
 
 

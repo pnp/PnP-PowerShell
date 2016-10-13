@@ -2,9 +2,8 @@
 Returns a stored credential from the Windows Credential Manager
 ##Syntax
 ```powershell
-Get-SPOStoredCredential
-        -Name <String>
-        [-Type <CredentialType>]
+Get-SPOStoredCredential -Name <String>
+                        [-Type <CredentialType>]
 ```
 
 

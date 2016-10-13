@@ -2,8 +2,7 @@
 Returns the keys of the property bag values that have been marked for indexing by search
 ##Syntax
 ```powershell
-Get-SPOIndexedPropertyKeys
-        [-Web <WebPipeBind>]
+Get-SPOIndexedPropertyKeys [-Web <WebPipeBind>]
 ```
 
 

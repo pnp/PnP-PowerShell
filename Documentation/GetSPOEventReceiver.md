@@ -2,10 +2,9 @@
 Returns all or a specific event receiver
 ##Syntax
 ```powershell
-Get-SPOEventReceiver
-        [-List <ListPipeBind>]
-        [-Identity <GuidPipeBind>]
-        [-Web <WebPipeBind>]
+Get-SPOEventReceiver [-List <ListPipeBind>]
+                     [-Identity <GuidPipeBind>]
+                     [-Web <WebPipeBind>]
 ```
 
 

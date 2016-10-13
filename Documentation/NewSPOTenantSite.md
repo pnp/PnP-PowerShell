@@ -2,20 +2,19 @@
 Creates a new site collection for the current tenant
 ##Syntax
 ```powershell
-New-SPOTenantSite
-        -Title <String>
-        -Url <String>
-        [-Description <String>]
-        -Owner <String>
-        [-Lcid <UInt32>]
-        [-Template <String>]
-        -TimeZone <Int32>
-        [-ResourceQuota <Double>]
-        [-ResourceQuotaWarningLevel <Double>]
-        [-StorageQuota <Int64>]
-        [-StorageQuotaWarningLevel <Int64>]
-        [-RemoveDeletedSite [<SwitchParameter>]]
-        [-Wait [<SwitchParameter>]]
+New-SPOTenantSite -Title <String>
+                  -Url <String>
+                  [-Description <String>]
+                  -Owner <String>
+                  [-Lcid <UInt32>]
+                  [-Template <String>]
+                  -TimeZone <Int32>
+                  [-ResourceQuota <Double>]
+                  [-ResourceQuotaWarningLevel <Double>]
+                  [-StorageQuota <Int64>]
+                  [-StorageQuotaWarningLevel <Int64>]
+                  [-RemoveDeletedSite [<SwitchParameter>]]
+                  [-Wait [<SwitchParameter>]]
 ```
 
 

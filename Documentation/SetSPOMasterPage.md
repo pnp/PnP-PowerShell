@@ -2,18 +2,16 @@
 Sets the default master page of the current web.
 ##Syntax
 ```powershell
-Set-SPOMasterPage
-        [-MasterPageServerRelativeUrl <String>]
-        [-CustomMasterPageServerRelativeUrl <String>]
-        [-Web <WebPipeBind>]
+Set-SPOMasterPage [-MasterPageServerRelativeUrl <String>]
+                  [-CustomMasterPageServerRelativeUrl <String>]
+                  [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-SPOMasterPage
-        [-MasterPageSiteRelativeUrl <String>]
-        [-CustomMasterPageSiteRelativeUrl <String>]
-        [-Web <WebPipeBind>]
+Set-SPOMasterPage [-MasterPageSiteRelativeUrl <String>]
+                  [-CustomMasterPageSiteRelativeUrl <String>]
+                  [-Web <WebPipeBind>]
 ```
 
 

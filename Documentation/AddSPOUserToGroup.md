@@ -2,10 +2,9 @@
 Adds a user to a group
 ##Syntax
 ```powershell
-Add-SPOUserToGroup
-        -LoginName <String>
-        -Identity <GroupPipeBind>
-        [-Web <WebPipeBind>]
+Add-SPOUserToGroup -LoginName <String>
+                   -Identity <GroupPipeBind>
+                   [-Web <WebPipeBind>]
 ```
 
 

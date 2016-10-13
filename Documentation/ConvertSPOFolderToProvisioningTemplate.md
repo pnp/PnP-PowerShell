@@ -2,10 +2,9 @@
 Creates a pnp package file of an existing template xml, and includes all files in the current folder
 ##Syntax
 ```powershell
-Convert-SPOFolderToProvisioningTemplate
-        [-Force [<SwitchParameter>]]
-        -Out <String>
-        [-Folder <String>]
+Convert-SPOFolderToProvisioningTemplate [-Force [<SwitchParameter>]]
+                                        -Out <String>
+                                        [-Folder <String>]
 ```
 
 

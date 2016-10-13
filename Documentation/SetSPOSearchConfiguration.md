@@ -2,18 +2,16 @@
 Sets the search configuration
 ##Syntax
 ```powershell
-Set-SPOSearchConfiguration
-        -Configuration <String>
-        [-Scope <SearchConfigurationScope>]
-        [-Web <WebPipeBind>]
+Set-SPOSearchConfiguration -Configuration <String>
+                           [-Scope <SearchConfigurationScope>]
+                           [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-SPOSearchConfiguration
-        -Path <String>
-        [-Scope <SearchConfigurationScope>]
-        [-Web <WebPipeBind>]
+Set-SPOSearchConfiguration -Path <String>
+                           [-Scope <SearchConfigurationScope>]
+                           [-Web <WebPipeBind>]
 ```
 
 

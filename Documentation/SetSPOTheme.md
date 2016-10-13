@@ -2,12 +2,11 @@
 Sets the theme of the current web.
 ##Syntax
 ```powershell
-Set-SPOTheme
-        [-ColorPaletteUrl <String>]
-        [-FontSchemeUrl <String>]
-        [-BackgroundImageUrl <String>]
-        [-ShareGenerated [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
+Set-SPOTheme [-ColorPaletteUrl <String>]
+             [-FontSchemeUrl <String>]
+             [-BackgroundImageUrl <String>]
+             [-ShareGenerated [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
 ```
 
 

@@ -2,11 +2,10 @@
 List content in folder
 ##Syntax
 ```powershell
-Get-SPOFolderItem
-        [-ItemType <String>]
-        [-ItemName <String>]
-        [-Web <WebPipeBind>]
-        [-FolderSiteRelativeUrl <String>]
+Get-SPOFolderItem [-ItemType <String>]
+                  [-ItemName <String>]
+                  [-Web <WebPipeBind>]
+                  [-FolderSiteRelativeUrl <String>]
 ```
 
 

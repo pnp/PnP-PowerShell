@@ -2,87 +2,82 @@
 Connects to a SharePoint site and creates an in-memory context
 ##Syntax
 ```powershell
-Connect-SPOnline
-        -ClientId <String>
-        -Tenant <String>
-        -CertificatePath <String>
-        -CertificatePassword <SecureString>
-        [-MinimalHealthScore <Int32>]
-        [-RetryCount <Int32>]
-        [-RetryWait <Int32>]
-        [-RequestTimeout <Int32>]
-        [-CreateDrive [<SwitchParameter>]]
-        [-DriveName <String>]
-        [-TenantAdminUrl <String>]
-        [-SkipTenantAdminCheck [<SwitchParameter>]]
-        -Url <String>
+Connect-SPOnline -ClientId <String>
+                 -Tenant <String>
+                 -CertificatePath <String>
+                 -CertificatePassword <SecureString>
+                 [-MinimalHealthScore <Int32>]
+                 [-RetryCount <Int32>]
+                 [-RetryWait <Int32>]
+                 [-RequestTimeout <Int32>]
+                 [-CreateDrive [<SwitchParameter>]]
+                 [-DriveName <String>]
+                 [-TenantAdminUrl <String>]
+                 [-SkipTenantAdminCheck [<SwitchParameter>]]
+                 -Url <String>
 ```
 
 
 ```powershell
-Connect-SPOnline
-        [-Credentials <CredentialPipeBind>]
-        [-CurrentCredentials [<SwitchParameter>]]
-        [-UseAdfs [<SwitchParameter>]]
-        [-AuthenticationMode <ClientAuthenticationMode>]
-        [-MinimalHealthScore <Int32>]
-        [-RetryCount <Int32>]
-        [-RetryWait <Int32>]
-        [-RequestTimeout <Int32>]
-        [-CreateDrive [<SwitchParameter>]]
-        [-DriveName <String>]
-        [-TenantAdminUrl <String>]
-        [-SkipTenantAdminCheck [<SwitchParameter>]]
-        -Url <String>
+Connect-SPOnline [-Credentials <CredentialPipeBind>]
+                 [-CurrentCredentials [<SwitchParameter>]]
+                 [-UseAdfs [<SwitchParameter>]]
+                 [-AuthenticationMode <ClientAuthenticationMode>]
+                 [-MinimalHealthScore <Int32>]
+                 [-RetryCount <Int32>]
+                 [-RetryWait <Int32>]
+                 [-RequestTimeout <Int32>]
+                 [-CreateDrive [<SwitchParameter>]]
+                 [-DriveName <String>]
+                 [-TenantAdminUrl <String>]
+                 [-SkipTenantAdminCheck [<SwitchParameter>]]
+                 -Url <String>
 ```
 
 
 ```powershell
-Connect-SPOnline
-        -ClientId <String>
-        -RedirectUri <String>
-        [-ClearTokenCache [<SwitchParameter>]]
-        [-MinimalHealthScore <Int32>]
-        [-RetryCount <Int32>]
-        [-RetryWait <Int32>]
-        [-RequestTimeout <Int32>]
-        [-CreateDrive [<SwitchParameter>]]
-        [-DriveName <String>]
-        [-TenantAdminUrl <String>]
-        [-SkipTenantAdminCheck [<SwitchParameter>]]
-        -Url <String>
+Connect-SPOnline -ClientId <String>
+                 -RedirectUri <String>
+                 [-ClearTokenCache [<SwitchParameter>]]
+                 [-MinimalHealthScore <Int32>]
+                 [-RetryCount <Int32>]
+                 [-RetryWait <Int32>]
+                 [-RequestTimeout <Int32>]
+                 [-CreateDrive [<SwitchParameter>]]
+                 [-DriveName <String>]
+                 [-TenantAdminUrl <String>]
+                 [-SkipTenantAdminCheck [<SwitchParameter>]]
+                 -Url <String>
 ```
 
 
 ```powershell
-Connect-SPOnline
-        [-Realm <String>]
-        -AppId <String>
-        -AppSecret <String>
-        [-MinimalHealthScore <Int32>]
-        [-RetryCount <Int32>]
-        [-RetryWait <Int32>]
-        [-RequestTimeout <Int32>]
-        [-CreateDrive [<SwitchParameter>]]
-        [-DriveName <String>]
-        [-TenantAdminUrl <String>]
-        [-SkipTenantAdminCheck [<SwitchParameter>]]
-        -Url <String>
+Connect-SPOnline [-Realm <String>]
+                 -AppId <String>
+                 -AppSecret <String>
+                 [-MinimalHealthScore <Int32>]
+                 [-RetryCount <Int32>]
+                 [-RetryWait <Int32>]
+                 [-RequestTimeout <Int32>]
+                 [-CreateDrive [<SwitchParameter>]]
+                 [-DriveName <String>]
+                 [-TenantAdminUrl <String>]
+                 [-SkipTenantAdminCheck [<SwitchParameter>]]
+                 -Url <String>
 ```
 
 
 ```powershell
-Connect-SPOnline
-        -UseWebLogin [<SwitchParameter>]
-        [-MinimalHealthScore <Int32>]
-        [-RetryCount <Int32>]
-        [-RetryWait <Int32>]
-        [-RequestTimeout <Int32>]
-        [-CreateDrive [<SwitchParameter>]]
-        [-DriveName <String>]
-        [-TenantAdminUrl <String>]
-        [-SkipTenantAdminCheck [<SwitchParameter>]]
-        -Url <String>
+Connect-SPOnline -UseWebLogin [<SwitchParameter>]
+                 [-MinimalHealthScore <Int32>]
+                 [-RetryCount <Int32>]
+                 [-RetryWait <Int32>]
+                 [-RequestTimeout <Int32>]
+                 [-CreateDrive [<SwitchParameter>]]
+                 [-DriveName <String>]
+                 [-TenantAdminUrl <String>]
+                 [-SkipTenantAdminCheck [<SwitchParameter>]]
+                 -Url <String>
 ```
 
 

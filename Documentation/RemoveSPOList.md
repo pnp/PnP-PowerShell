@@ -2,10 +2,9 @@
 Deletes a list
 ##Syntax
 ```powershell
-Remove-SPOList
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
-        -Identity <ListPipeBind>
+Remove-SPOList [-Force [<SwitchParameter>]]
+               [-Web <WebPipeBind>]
+               -Identity <ListPipeBind>
 ```
 
 

@@ -2,14 +2,12 @@
 Imports a taxonomy TermGroup from either the input or from an XML file.
 ##Syntax
 ```powershell
-Import-SPOTermGroupFromXml
-        [-Path <String>]
+Import-SPOTermGroupFromXml [-Path <String>]
 ```
 
 
 ```powershell
-Import-SPOTermGroupFromXml
-        [-Xml <String>]
+Import-SPOTermGroupFromXml [-Xml <String>]
 ```
 
 

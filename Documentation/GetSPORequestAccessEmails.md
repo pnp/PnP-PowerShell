@@ -2,8 +2,7 @@
 Returns the request access e-mail addresses
 ##Syntax
 ```powershell
-Get-SPORequestAccessEmails
-        [-Web <WebPipeBind>]
+Get-SPORequestAccessEmails [-Web <WebPipeBind>]
 ```
 
 
