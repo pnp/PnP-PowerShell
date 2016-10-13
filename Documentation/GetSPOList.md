@@ -7,6 +7,9 @@ Get-SPOList [-Web <WebPipeBind>]
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.List](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.list.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

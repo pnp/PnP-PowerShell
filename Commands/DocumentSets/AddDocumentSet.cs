@@ -8,7 +8,8 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Add, "SPODocumentSet")]
     [CmdletHelp("Creates a new document set in a library.",
-      Category = CmdletHelpCategory.DocumentSets)]
+      Category = CmdletHelpCategory.DocumentSets,
+        OutputType=typeof(string))]
     [CmdletExample(
       Code = @"PS:> Add-SPODocumentSet -List ""Documents"" -ContentType ""Test Document Set"" -Name ""Test""",
       Remarks = "This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test'",

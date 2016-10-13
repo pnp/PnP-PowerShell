@@ -8,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Get, "SPOContentType")]
     [CmdletHelp("Retrieves a content type",
-        Category = CmdletHelpCategory.ContentTypes)]
+        Category = CmdletHelpCategory.ContentTypes,
+        OutputType = typeof(ContentType),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.contenttype.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-SPOContentType ",
         Remarks = @"This will get a listing of all available content types within the current web",

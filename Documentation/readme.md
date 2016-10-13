@@ -5,6 +5,19 @@ Below you can find a list of all the available cmdlets. Many commands provide bu
 Get-Help Connect-SPOnline -Detailed
 ```
 
+##
+Cmdlet|Description
+:-----|:----------
+**[Remove&#8209;SPOFile](RemoveSPOFile.md)** |Removes a file.
+**[Get&#8209;SPOFile](GetSPOFile.md)** |Downloads a file.
+**[Find&#8209;SPOFile](FindSPOFile.md)** |Finds a file in the virtual file system of the web.
+**[Add&#8209;SPOFile](AddSPOFile.md)** |Uploads a file to Web
+**[Set&#8209;SPOFileCheckedIn](SetSPOFileCheckedIn.md)** |Checks in a file
+**[Set&#8209;SPOFileCheckedOut](SetSPOFileCheckedOut.md)** |Checks out a file
+**[Ensure&#8209;SPOFolder](EnsureSPOFolder.md)** |Returns a folder given a site relative path, and will create it does not exist.
+**[Add&#8209;SPOFolder](AddSPOFolder.md)** |Creates a folder within a parent folder
+**[Remove&#8209;SPOFolder](RemoveSPOFolder.md)** |Deletes a folder within a parent folder
+**[Get&#8209;SPOFolderItem](GetSPOFolderItem.md)** |List content in folder
 ##Apps
 Cmdlet|Description
 :-----|:----------
@@ -206,16 +219,6 @@ Cmdlet|Description
 ##Webs
 Cmdlet|Description
 :-----|:----------
-**[Remove&#8209;SPOFile](RemoveSPOFile.md)** |Removes a file.
-**[Get&#8209;SPOFile](GetSPOFile.md)** |Downloads a file.
-**[Find&#8209;SPOFile](FindSPOFile.md)** |Finds a file in the virtual file system of the web.
-**[Add&#8209;SPOFile](AddSPOFile.md)** |Uploads a file to Web
-**[Set&#8209;SPOFileCheckedIn](SetSPOFileCheckedIn.md)** |Checks in a file
-**[Set&#8209;SPOFileCheckedOut](SetSPOFileCheckedOut.md)** |Checks out a file
-**[Ensure&#8209;SPOFolder](EnsureSPOFolder.md)** |Returns a folder given a site relative path, and will create it does not exist.
-**[Add&#8209;SPOFolder](AddSPOFolder.md)** |Creates a folder within a parent folder
-**[Remove&#8209;SPOFolder](RemoveSPOFolder.md)** |Deletes a folder within a parent folder
-**[Get&#8209;SPOFolderItem](GetSPOFolderItem.md)** |List content in folder
 **[Set&#8209;SPOIndexedProperties](SetSPOIndexedProperties.md)** |Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, i.e. only the properties you define with the cmdlet will be indexed.
 **[Remove&#8209;SPOIndexedProperty](RemoveSPOIndexedProperty.md)** |Removes a key from propertybag to be indexed by search. The key and it's value remain in the propertybag, however it will not be indexed anymore.
 **[Add&#8209;SPOIndexedProperty](AddSPOIndexedProperty.md)** |Marks the value of the propertybag key to be indexed by search.

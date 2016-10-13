@@ -8,7 +8,8 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOPropertyBag")]
     [CmdletHelp("Returns the property bag values.",
-        Category = CmdletHelpCategory.Webs)]
+        Category = CmdletHelpCategory.Webs,
+        OutputType = typeof(PropertyBagValue))]
     [CmdletExample(
        Code = @"PS:> Get-SPOPropertyBag",
        Remarks = "This will return all web property bag values",

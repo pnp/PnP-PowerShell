@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using Microsoft.SharePoint.Client.DocumentSet;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
@@ -6,7 +7,9 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Get,"SPODocumentSetTemplate")]
     [CmdletHelp("Retrieves a document set template", 
-        Category = CmdletHelpCategory.DocumentSets)]
+        Category = CmdletHelpCategory.DocumentSets,
+        OutputType=typeof(DocumentSetTemplate),
+        OutputTypeLink= "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.documentset.documentsettemplate.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-SPODocumentSetTemplate -Identity ""Test Document Set""",
         Remarks = @"This will get the document set template with the name ""Test Document Set""",

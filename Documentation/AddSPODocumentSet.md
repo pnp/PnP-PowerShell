@@ -9,6 +9,9 @@ Add-SPODocumentSet -List <ListPipeBind>
 ```
 
 
+##Returns
+```System.String```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

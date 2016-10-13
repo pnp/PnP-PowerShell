@@ -25,6 +25,9 @@ Get-SPOGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
 ```
 
 
+##Returns
+```[System.Collections.Generic.List`1[Microsoft.SharePoint.Client.Group]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

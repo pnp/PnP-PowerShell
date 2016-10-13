@@ -8,6 +8,9 @@ Get-SPOJavaScriptLink [-Scope <CustomActionScope>]
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.UserCustomAction](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.usercustomaction.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

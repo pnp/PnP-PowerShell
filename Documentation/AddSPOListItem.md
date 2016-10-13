@@ -10,6 +10,9 @@ Add-SPOListItem [-ContentType <ContentTypePipeBind>]
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

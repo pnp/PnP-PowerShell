@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.CmdletHelpGenerator
 {
@@ -17,7 +19,11 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
 
         public string Copyright { get; set; }
 
-        public List<CmdletSyntax> Syntaxes { get; set; } 
+        public List<CmdletSyntax> Syntaxes { get; set; }
+
+        public Type OutputType { get; set; }
+        public string OutputTypeDescription { get; set; }
+        public string OutputTypeLink { get; set; }
 
         public string FullCommand
         {

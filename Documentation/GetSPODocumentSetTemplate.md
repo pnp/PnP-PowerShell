@@ -7,6 +7,9 @@ Get-SPODocumentSetTemplate [-Web <WebPipeBind>]
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.DocumentSet.DocumentSetTemplate](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.documentset.documentsettemplate.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

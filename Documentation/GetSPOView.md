@@ -8,6 +8,9 @@ Get-SPOView [-Identity <ViewPipeBind>]
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.View](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

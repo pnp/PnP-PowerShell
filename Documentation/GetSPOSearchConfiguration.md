@@ -8,6 +8,11 @@ Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>]
 ```
 
 
+##Returns
+```System.String```
+
+Does not return a string when the -Path parameter has been specified.
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

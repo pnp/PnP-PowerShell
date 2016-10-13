@@ -14,6 +14,9 @@ New-SPOGroup -Title <String>
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.Group](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

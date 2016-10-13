@@ -9,6 +9,9 @@ New-SPOTermGroup -GroupName <String>
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.Taxonomy.TermGroup](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termgroup.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

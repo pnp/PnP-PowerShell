@@ -8,6 +8,9 @@ Get-SPOWorkflowSubscription [-Web <WebPipeBind>]
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.WorkflowServices.WorkflowSubscription](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowsubscription.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

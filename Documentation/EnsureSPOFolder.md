@@ -7,6 +7,9 @@ Ensure-SPOFolder -SiteRelativePath <String>
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.Folder](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.folder.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

@@ -1,6 +1,9 @@
 #Get-SPOAuditing
 Get the Auditing setting of a site
 ##Syntax
+##Returns
+```[Microsoft.SharePoint.Client.Audit](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.audit.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

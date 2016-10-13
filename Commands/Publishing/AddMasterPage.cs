@@ -6,7 +6,9 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Add, "SPOMasterPage")]
     [CmdletHelp("Adds a Masterpage",
-        Category = CmdletHelpCategory.Publishing)]
+        Category = CmdletHelpCategory.Publishing,
+        OutputType = typeof(File),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
     [CmdletExample(
         Code = @"PS:> Add-SPOMasterPage -SourceFilePath ""page.master"" -Title ""MasterPage"" -Description ""MasterPage for Web"" -DestinationFolderHierarchy ""SubFolder""",
         Remarks = "Adds a MasterPage to the web",

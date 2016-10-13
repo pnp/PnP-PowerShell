@@ -9,6 +9,9 @@ New-SPOExtensbilityHandlerObject -Type <String>
 ```
 
 
+##Returns
+```OfficeDevPnP.Core.Framework.Provisioning.Model.ExtensibilityHandler```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

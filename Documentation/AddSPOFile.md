@@ -16,6 +16,9 @@ Add-SPOFile -Path <String>
 ```
 
 
+##Returns
+```[Microsoft.SharePoint.Client.File](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
