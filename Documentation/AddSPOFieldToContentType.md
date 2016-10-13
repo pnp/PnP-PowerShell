@@ -2,7 +2,12 @@
 Adds an existing site column to a content type
 ##Syntax
 ```powershell
-Add-SPOFieldToContentType -Field <FieldPipeBind> -ContentType <ContentTypePipeBind> [-Required [<SwitchParameter>]] [-Hidden [<SwitchParameter>]] [-Web <WebPipeBind>]
+Add-SPOFieldToContentType
+        -Field <FieldPipeBind>
+        -ContentType <ContentTypePipeBind>
+        [-Required [<SwitchParameter>]]
+        [-Hidden [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
 ```
 
 

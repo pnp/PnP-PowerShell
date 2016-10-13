@@ -2,7 +2,15 @@
 Imports a taxonomy term set from a file in the standard format.
 ##Syntax
 ```powershell
-Import-SPOTermSet -GroupName <String> -Path <String> [-TermSetId <Guid>] [-SynchronizeDeletions [<SwitchParameter>]] [-IsOpen <Nullable`1>] [-Contact <String>] [-Owner <String>] [-TermStoreName <String>]
+Import-SPOTermSet
+        -GroupName <String>
+        -Path <String>
+        [-TermSetId <Guid>]
+        [-SynchronizeDeletions [<SwitchParameter>]]
+        [-IsOpen <Nullable`1>]
+        [-Contact <String>]
+        [-Owner <String>]
+        [-TermStoreName <String>]
 ```
 
 

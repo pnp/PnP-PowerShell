@@ -2,7 +2,9 @@
 Loads a PnP file from the file systems
 ##Syntax
 ```powershell
-Load-SPOProvisioningTemplate [-TemplateProviderExtensions <ITemplateProviderExtension[]>] -Path <String>
+Load-SPOProvisioningTemplate
+        [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+        -Path <String>
 ```
 
 

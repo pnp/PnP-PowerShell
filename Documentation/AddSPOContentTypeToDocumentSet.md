@@ -2,7 +2,10 @@
 Adds a content type to a document set
 ##Syntax
 ```powershell
-Add-SPOContentTypeToDocumentSet -ContentType <ContentTypePipeBind[]> -DocumentSet <DocumentSetPipeBind> [-Web <WebPipeBind>]
+Add-SPOContentTypeToDocumentSet
+        -ContentType <ContentTypePipeBind[]>
+        -DocumentSet <DocumentSetPipeBind>
+        [-Web <WebPipeBind>]
 ```
 
 

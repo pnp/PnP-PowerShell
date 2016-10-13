@@ -2,7 +2,13 @@
 Sets metadata of a provisioning template
 ##Syntax
 ```powershell
-Set-SPOProvisioningTemplateMetadata [-TemplateDisplayName <String>] [-TemplateImagePreviewUrl <String>] [-TemplateProperties <Hashtable>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Web <WebPipeBind>] -Path <String>
+Set-SPOProvisioningTemplateMetadata
+        [-TemplateDisplayName <String>]
+        [-TemplateImagePreviewUrl <String>]
+        [-TemplateProperties <Hashtable>]
+        [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+        [-Web <WebPipeBind>]
+        -Path <String>
 ```
 
 

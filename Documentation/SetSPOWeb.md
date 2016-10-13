@@ -2,7 +2,14 @@
 Sets properties on a web
 ##Syntax
 ```powershell
-Set-SPOWeb [-SiteLogoUrl <String>] [-AlternateCssUrl <String>] [-Title <String>] [-Description <String>] [-MasterUrl <String>] [-CustomMasterUrl <String>] [-Web <WebPipeBind>]
+Set-SPOWeb
+        [-SiteLogoUrl <String>]
+        [-AlternateCssUrl <String>]
+        [-Title <String>]
+        [-Description <String>]
+        [-MasterUrl <String>]
+        [-CustomMasterUrl <String>]
+        [-Web <WebPipeBind>]
 ```
 
 

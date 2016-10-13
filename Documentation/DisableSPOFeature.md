@@ -2,7 +2,11 @@
 Disables a feature
 ##Syntax
 ```powershell
-Disable-SPOFeature [-Force [<SwitchParameter>]] [-Scope <FeatureScope>] [-Web <WebPipeBind>] -Identity <GuidPipeBind>
+Disable-SPOFeature
+        [-Force [<SwitchParameter>]]
+        [-Scope <FeatureScope>]
+        [-Web <WebPipeBind>]
+        -Identity <GuidPipeBind>
 ```
 
 

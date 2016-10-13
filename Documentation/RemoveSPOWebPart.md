@@ -2,12 +2,18 @@
 Removes a webpart from a page
 ##Syntax
 ```powershell
-Remove-SPOWebPart -Identity <GuidPipeBind> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
+Remove-SPOWebPart
+        -Identity <GuidPipeBind>
+        -ServerRelativePageUrl <String>
+        [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Remove-SPOWebPart -Title <String> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
+Remove-SPOWebPart
+        -Title <String>
+        -ServerRelativePageUrl <String>
+        [-Web <WebPipeBind>]
 ```
 
 

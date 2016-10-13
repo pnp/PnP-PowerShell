@@ -2,7 +2,20 @@
 Updates a group
 ##Syntax
 ```powershell
-Set-SPOGroup -Identity <GroupPipeBind> [-SetAssociatedGroup <AssociatedGroupType>] [-AddRole <String>] [-RemoveRole <String>] [-Title <String>] [-Owner <String>] [-Description <String>] [-AllowRequestToJoinLeave <Boolean>] [-AutoAcceptRequestToJoinLeave <Boolean>] [-AllowMembersEditMembership <Boolean>] [-OnlyAllowMembersViewMembership <Boolean>] [-RequestToJoinEmail <String>] [-Web <WebPipeBind>]
+Set-SPOGroup
+        -Identity <GroupPipeBind>
+        [-SetAssociatedGroup <AssociatedGroupType>]
+        [-AddRole <String>]
+        [-RemoveRole <String>]
+        [-Title <String>]
+        [-Owner <String>]
+        [-Description <String>]
+        [-AllowRequestToJoinLeave <Boolean>]
+        [-AutoAcceptRequestToJoinLeave <Boolean>]
+        [-AllowMembersEditMembership <Boolean>]
+        [-OnlyAllowMembersViewMembership <Boolean>]
+        [-RequestToJoinEmail <String>]
+        [-Web <WebPipeBind>]
 ```
 
 

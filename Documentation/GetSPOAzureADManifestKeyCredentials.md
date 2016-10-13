@@ -2,7 +2,8 @@
 Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps
 ##Syntax
 ```powershell
-Get-SPOAzureADManifestKeyCredentials -CertPath <String>
+Get-SPOAzureADManifestKeyCredentials
+        -CertPath <String>
 ```
 
 

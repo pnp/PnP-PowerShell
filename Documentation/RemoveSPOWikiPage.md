@@ -2,12 +2,16 @@
 Removes a wiki page
 ##Syntax
 ```powershell
-Remove-SPOWikiPage [-Web <WebPipeBind>] -ServerRelativePageUrl <String>
+Remove-SPOWikiPage
+        [-Web <WebPipeBind>]
+        -ServerRelativePageUrl <String>
 ```
 
 
 ```powershell
-Remove-SPOWikiPage [-Web <WebPipeBind>] -SiteRelativePageUrl <String>
+Remove-SPOWikiPage
+        [-Web <WebPipeBind>]
+        -SiteRelativePageUrl <String>
 ```
 
 

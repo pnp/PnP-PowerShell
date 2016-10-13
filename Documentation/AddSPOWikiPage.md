@@ -2,12 +2,18 @@
 Adds a wiki page
 ##Syntax
 ```powershell
-Add-SPOWikiPage -Content <String> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
+Add-SPOWikiPage
+        -Content <String>
+        -ServerRelativePageUrl <String>
+        [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Add-SPOWikiPage -Layout <WikiPageLayout> -ServerRelativePageUrl <String> [-Web <WebPipeBind>]
+Add-SPOWikiPage
+        -Layout <WikiPageLayout>
+        -ServerRelativePageUrl <String>
+        [-Web <WebPipeBind>]
 ```
 
 

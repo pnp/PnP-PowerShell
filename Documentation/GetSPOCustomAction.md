@@ -2,7 +2,10 @@
 Returns all or a specific custom action(s)
 ##Syntax
 ```powershell
-Get-SPOCustomAction [-Identity <GuidPipeBind>] [-Scope <CustomActionScope>] [-Web <WebPipeBind>]
+Get-SPOCustomAction
+        [-Identity <GuidPipeBind>]
+        [-Scope <CustomActionScope>]
+        [-Web <WebPipeBind>]
 ```
 
 

@@ -2,7 +2,15 @@
 Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.
 ##Syntax
 ```powershell
-Send-SPOMail [-Server <String>] [-From <String>] [-Password <String>] -To <String[]> [-Cc <String[]>] -Subject <String> -Body <String> [-Web <WebPipeBind>]
+Send-SPOMail
+        [-Server <String>]
+        [-From <String>]
+        [-Password <String>]
+        -To <String[]>
+        [-Cc <String[]>]
+        -Subject <String>
+        -Body <String>
+        [-Web <WebPipeBind>]
 ```
 
 

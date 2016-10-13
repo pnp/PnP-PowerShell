@@ -2,7 +2,10 @@
 Removes a taxonomy term group and all its containing termsets
 ##Syntax
 ```powershell
-Remove-SPOTermGroup [-TermStoreName <String>] [-Force [<SwitchParameter>]] -GroupName <String>
+Remove-SPOTermGroup
+        [-TermStoreName <String>]
+        [-Force [<SwitchParameter>]]
+        -GroupName <String>
 ```
 
 

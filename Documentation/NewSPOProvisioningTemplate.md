@@ -2,7 +2,8 @@
 Creates a new provisioning template object
 ##Syntax
 ```powershell
-New-SPOProvisioningTemplate [-Web <WebPipeBind>]
+New-SPOProvisioningTemplate
+        [-Web <WebPipeBind>]
 ```
 
 

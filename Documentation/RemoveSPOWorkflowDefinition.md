@@ -2,7 +2,9 @@
 Removes a workflow definition
 ##Syntax
 ```powershell
-Remove-SPOWorkflowDefinition [-Web <WebPipeBind>] -Identity <WorkflowDefinitionPipeBind>
+Remove-SPOWorkflowDefinition
+        [-Web <WebPipeBind>]
+        -Identity <WorkflowDefinitionPipeBind>
 ```
 
 

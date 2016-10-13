@@ -2,7 +2,13 @@
 Adds a HTML based publishing page layout
 ##Syntax
 ```powershell
-Add-SPOHtmlPublishingPageLayout -SourceFilePath <String> -Title <String> -Description <String> -AssociatedContentTypeID <String> [-DestinationFolderHierarchy <String>] [-Web <WebPipeBind>]
+Add-SPOHtmlPublishingPageLayout
+        -SourceFilePath <String>
+        -Title <String>
+        -Description <String>
+        -AssociatedContentTypeID <String>
+        [-DestinationFolderHierarchy <String>]
+        [-Web <WebPipeBind>]
 ```
 
 

@@ -2,7 +2,10 @@
 Adds a workflow definition
 ##Syntax
 ```powershell
-Add-SPOWorkflowDefinition -Definition <WorkflowDefinition> [-DoNotPublish [<SwitchParameter>]] [-Web <WebPipeBind>]
+Add-SPOWorkflowDefinition
+        -Definition <WorkflowDefinition>
+        [-DoNotPublish [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
 ```
 
 

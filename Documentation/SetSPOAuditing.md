@@ -2,17 +2,30 @@
 Set Auditing setting for a site
 ##Syntax
 ```powershell
-Set-SPOAuditing [-DisableAll [<SwitchParameter>]]
+Set-SPOAuditing
+        [-DisableAll [<SwitchParameter>]]
 ```
 
 
 ```powershell
-Set-SPOAuditing [-EnableAll [<SwitchParameter>]] [-RetentionTime <Int32>] [-TrimAuditLog [<SwitchParameter>]]
+Set-SPOAuditing
+        [-EnableAll [<SwitchParameter>]]
+        [-RetentionTime <Int32>]
+        [-TrimAuditLog [<SwitchParameter>]]
 ```
 
 
 ```powershell
-Set-SPOAuditing [-RetentionTime <Int32>] [-TrimAuditLog [<SwitchParameter>]] [-EditItems [<SwitchParameter>]] [-CheckOutCheckInItems [<SwitchParameter>]] [-MoveCopyItems [<SwitchParameter>]] [-DeleteRestoreItems [<SwitchParameter>]] [-EditContentTypesColumns [<SwitchParameter>]] [-SearchContent [<SwitchParameter>]] [-EditUsersPermissions [<SwitchParameter>]]
+Set-SPOAuditing
+        [-RetentionTime <Int32>]
+        [-TrimAuditLog [<SwitchParameter>]]
+        [-EditItems [<SwitchParameter>]]
+        [-CheckOutCheckInItems [<SwitchParameter>]]
+        [-MoveCopyItems [<SwitchParameter>]]
+        [-DeleteRestoreItems [<SwitchParameter>]]
+        [-EditContentTypesColumns [<SwitchParameter>]]
+        [-SearchContent [<SwitchParameter>]]
+        [-EditUsersPermissions [<SwitchParameter>]]
 ```
 
 

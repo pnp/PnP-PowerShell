@@ -2,7 +2,9 @@
 Returns a taxonomy term group
 ##Syntax
 ```powershell
-Get-SPOTermGroup [-TermStoreName <String>] -GroupName <String>
+Get-SPOTermGroup
+        [-TermStoreName <String>]
+        -GroupName <String>
 ```
 
 

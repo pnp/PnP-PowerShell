@@ -2,7 +2,8 @@
 Gets the authentication realm for the current web
 ##Syntax
 ```powershell
-Get-SPOAuthenticationRealm [-Url <String>]
+Get-SPOAuthenticationRealm
+        [-Url <String>]
 ```
 
 

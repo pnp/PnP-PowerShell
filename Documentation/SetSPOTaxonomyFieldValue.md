@@ -2,12 +2,19 @@
 Sets a taxonomy term value in a listitem field
 ##Syntax
 ```powershell
-Set-SPOTaxonomyFieldValue -Label <String> -TermId <GuidPipeBind> -ListItem <ListItem> -InternalFieldName <String>
+Set-SPOTaxonomyFieldValue
+        -Label <String>
+        -TermId <GuidPipeBind>
+        -ListItem <ListItem>
+        -InternalFieldName <String>
 ```
 
 
 ```powershell
-Set-SPOTaxonomyFieldValue -TermPath <String> -ListItem <ListItem> -InternalFieldName <String>
+Set-SPOTaxonomyFieldValue
+        -TermPath <String>
+        -ListItem <ListItem>
+        -InternalFieldName <String>
 ```
 
 

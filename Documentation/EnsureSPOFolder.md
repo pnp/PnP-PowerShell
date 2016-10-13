@@ -2,7 +2,9 @@
 Returns a folder given a site relative path, and will create it does not exist.
 ##Syntax
 ```powershell
-Ensure-SPOFolder -SiteRelativePath <String> [-Web <WebPipeBind>]
+Ensure-SPOFolder
+        -SiteRelativePath <String>
+        [-Web <WebPipeBind>]
 ```
 
 

@@ -2,7 +2,8 @@
 Marks the web for full indexing during the next incremental crawl
 ##Syntax
 ```powershell
-Request-SPOReIndexWeb [-Web <WebPipeBind>]
+Request-SPOReIndexWeb
+        [-Web <WebPipeBind>]
 ```
 
 

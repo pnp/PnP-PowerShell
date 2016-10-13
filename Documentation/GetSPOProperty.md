@@ -2,7 +2,9 @@
 Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.
 ##Syntax
 ```powershell
-Get-SPOProperty -ClientObject <ClientObject> -Property <String[]>
+Get-SPOProperty
+        -ClientObject <ClientObject>
+        -Property <String[]>
 ```
 
 

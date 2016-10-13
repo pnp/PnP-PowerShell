@@ -2,12 +2,35 @@
 Adds a taxonomy field to a list or as a site column.
 ##Syntax
 ```powershell
-Add-SPOTaxonomyField [-TaxonomyItemId <GuidPipeBind>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+Add-SPOTaxonomyField
+        [-TaxonomyItemId <GuidPipeBind>]
+        [-List <ListPipeBind>]
+        -DisplayName <String>
+        -InternalName <String>
+        [-Group <String>]
+        [-Id <GuidPipeBind>]
+        [-AddToDefaultView [<SwitchParameter>]]
+        [-MultiValue [<SwitchParameter>]]
+        [-Required [<SwitchParameter>]]
+        [-FieldOptions <AddFieldOptions>]
+        [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Add-SPOTaxonomyField -TermSetPath <String> [-TermPathDelimiter <String>] [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> [-Group <String>] [-Id <GuidPipeBind>] [-AddToDefaultView [<SwitchParameter>]] [-MultiValue [<SwitchParameter>]] [-Required [<SwitchParameter>]] [-FieldOptions <AddFieldOptions>] [-Web <WebPipeBind>]
+Add-SPOTaxonomyField
+        -TermSetPath <String>
+        [-TermPathDelimiter <String>]
+        [-List <ListPipeBind>]
+        -DisplayName <String>
+        -InternalName <String>
+        [-Group <String>]
+        [-Id <GuidPipeBind>]
+        [-AddToDefaultView [<SwitchParameter>]]
+        [-MultiValue [<SwitchParameter>]]
+        [-Required [<SwitchParameter>]]
+        [-FieldOptions <AddFieldOptions>]
+        [-Web <WebPipeBind>]
 ```
 
 

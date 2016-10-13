@@ -2,7 +2,10 @@
 Creates a folder within a parent folder
 ##Syntax
 ```powershell
-Add-SPOFolder -Name <String> -Folder <String> [-Web <WebPipeBind>]
+Add-SPOFolder
+        -Name <String>
+        -Folder <String>
+        [-Web <WebPipeBind>]
 ```
 
 

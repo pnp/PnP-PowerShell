@@ -2,7 +2,14 @@
 Adds a Masterpage
 ##Syntax
 ```powershell
-Add-SPOMasterPage -SourceFilePath <String> -Title <String> -Description <String> [-DestinationFolderHierarchy <String>] [-UiVersion <String>] [-DefaultCssFile <String>] [-Web <WebPipeBind>]
+Add-SPOMasterPage
+        -SourceFilePath <String>
+        -Title <String>
+        -Description <String>
+        [-DestinationFolderHierarchy <String>]
+        [-UiVersion <String>]
+        [-DefaultCssFile <String>]
+        [-Web <WebPipeBind>]
 ```
 
 

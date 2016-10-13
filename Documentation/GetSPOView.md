@@ -2,7 +2,10 @@
 Returns one or all views from a list
 ##Syntax
 ```powershell
-Get-SPOView [-Identity <ViewPipeBind>] [-Web <WebPipeBind>] -List <ListPipeBind>
+Get-SPOView
+        [-Identity <ViewPipeBind>]
+        [-Web <WebPipeBind>]
+        -List <ListPipeBind>
 ```
 
 

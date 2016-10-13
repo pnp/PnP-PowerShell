@@ -2,7 +2,11 @@
 Retrieves a content type
 ##Syntax
 ```powershell
-Get-SPOContentType [-Web <WebPipeBind>] [-Identity <ContentTypePipeBind>] [-List <ListPipeBind>] [-InSiteHierarchy [<SwitchParameter>]]
+Get-SPOContentType
+        [-Web <WebPipeBind>]
+        [-Identity <ContentTypePipeBind>]
+        [-List <ListPipeBind>]
+        [-InSiteHierarchy [<SwitchParameter>]]
 ```
 
 

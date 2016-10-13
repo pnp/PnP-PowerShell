@@ -2,7 +2,12 @@
 Adds a publishing page
 ##Syntax
 ```powershell
-Add-SPOPublishingPage [-Title <String>] -PageName <String> -PageTemplateName <String> [-Publish [<SwitchParameter>]] [-Web <WebPipeBind>]
+Add-SPOPublishingPage
+        [-Title <String>]
+        -PageName <String>
+        -PageTemplateName <String>
+        [-Publish [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
 ```
 
 

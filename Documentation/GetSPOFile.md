@@ -2,12 +2,22 @@
 Downloads a file.
 ##Syntax
 ```powershell
-Get-SPOFile [-Path <String>] [-Filename <String>] [-AsString [<SwitchParameter>]] [-Web <WebPipeBind>] -ServerRelativeUrl <String>
+Get-SPOFile
+        [-Path <String>]
+        [-Filename <String>]
+        [-AsString [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
+        -ServerRelativeUrl <String>
 ```
 
 
 ```powershell
-Get-SPOFile [-Path <String>] [-Filename <String>] [-AsString [<SwitchParameter>]] [-Web <WebPipeBind>] -SiteRelativeUrl <String>
+Get-SPOFile
+        [-Path <String>]
+        [-Filename <String>]
+        [-AsString [<SwitchParameter>]]
+        [-Web <WebPipeBind>]
+        -SiteRelativeUrl <String>
 ```
 
 
