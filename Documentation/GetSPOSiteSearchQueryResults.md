@@ -10,7 +10,7 @@ Get-SPOSiteSearchQueryResults [-StartRow <Int32>]
 
 
 ##Returns
-```System.Collections.Generic.List`1[System.Object]```
+>System.Collections.Generic.List`1[System.Object]
 
 ##Parameters
 Parameter|Type|Required|Description

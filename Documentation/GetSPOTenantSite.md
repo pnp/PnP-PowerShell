@@ -10,7 +10,7 @@ Get-SPOTenantSite [-Detailed [<SwitchParameter>]]
 
 
 ##Returns
-```[Microsoft.Online.SharePoint.TenantAdministration.SiteProperties](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.siteproperties.aspx)```
+>[Microsoft.Online.SharePoint.TenantAdministration.SiteProperties](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.siteproperties.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

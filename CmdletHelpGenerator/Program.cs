@@ -522,11 +522,11 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                     docBuilder.Append("##Returns\n");
                     if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeLink))
                     {
-                        docBuilder.Append($"```[{cmdletInfo.OutputType}]({cmdletInfo.OutputTypeLink})```");
+                        docBuilder.Append($">[{cmdletInfo.OutputType}]({cmdletInfo.OutputTypeLink})");
                     }
                     else
                     {
-                        docBuilder.Append($"```{cmdletInfo.OutputType}```");
+                        docBuilder.Append($">{cmdletInfo.OutputType}");
                     }
                     if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeDescription))
                     {

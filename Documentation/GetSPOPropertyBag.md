@@ -9,7 +9,7 @@ Get-SPOPropertyBag [-Folder <String>]
 
 
 ##Returns
-```SharePointPnP.PowerShell.Commands.PropertyBagValue```
+>SharePointPnP.PowerShell.Commands.PropertyBagValue
 
 ##Parameters
 Parameter|Type|Required|Description

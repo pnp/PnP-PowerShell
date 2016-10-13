@@ -9,7 +9,7 @@ Get-SPOWebPart -ServerRelativePageUrl <String>
 
 
 ##Returns
-```[System.Collections.Generic.IEnumerable`1[Microsoft.SharePoint.Client.WebParts.WebPartDefinition]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.webparts.webpartdefinition.aspx)```
+>[System.Collections.Generic.IEnumerable`1[Microsoft.SharePoint.Client.WebParts.WebPartDefinition]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.webparts.webpartdefinition.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

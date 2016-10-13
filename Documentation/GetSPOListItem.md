@@ -13,7 +13,7 @@ Get-SPOListItem [-Id <Int32>]
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)```
+>[Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

@@ -8,7 +8,7 @@ Get-SPOTheme [-DetectCurrentComposedLook [<SwitchParameter>]]
 
 
 ##Returns
-```OfficeDevPnP.Core.Entities.ThemeEntity```
+>OfficeDevPnP.Core.Entities.ThemeEntity
 
 ##Parameters
 Parameter|Type|Required|Description

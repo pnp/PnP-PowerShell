@@ -8,7 +8,7 @@ Get-SPOWikiPageContent [-Web <WebPipeBind>]
 
 
 ##Returns
-```System.String```
+>System.String
 
 ##Parameters
 Parameter|Type|Required|Description

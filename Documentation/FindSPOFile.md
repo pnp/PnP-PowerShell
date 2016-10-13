@@ -8,7 +8,7 @@ Find-SPOFile -Match <String>
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.File](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)```
+>[Microsoft.SharePoint.Client.File](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description
