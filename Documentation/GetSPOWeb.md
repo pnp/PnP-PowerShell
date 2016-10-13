@@ -7,7 +7,7 @@ Get-SPOWeb [-Identity <WebPipeBind>]
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.Web](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)```
+>[Microsoft.SharePoint.Client.Web](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

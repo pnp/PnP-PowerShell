@@ -9,7 +9,7 @@ Get-SPOWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.WorkflowServices.WorkflowDefinition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowdefinition.aspx)```
+>[Microsoft.SharePoint.Client.WorkflowServices.WorkflowDefinition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowdefinition.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

@@ -8,7 +8,7 @@ Get-SPOProperty -ClientObject <ClientObject>
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.ClientObject](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientobject.aspx)```
+>[Microsoft.SharePoint.Client.ClientObject](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientobject.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

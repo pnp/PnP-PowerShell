@@ -16,7 +16,7 @@ Add-SPOView -Title <String>
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.View](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx)```
+>[Microsoft.SharePoint.Client.View](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

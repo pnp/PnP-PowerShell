@@ -8,7 +8,7 @@ New-SPOUser -LoginName <String>
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.User](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx)```
+>[Microsoft.SharePoint.Client.User](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

@@ -9,7 +9,7 @@ Get-SPOEventReceiver [-List <ListPipeBind>]
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.EventReceiverDefinition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceiverdefinition.aspx)```
+>[Microsoft.SharePoint.Client.EventReceiverDefinition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceiverdefinition.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

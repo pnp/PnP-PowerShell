@@ -13,7 +13,7 @@ Get-SPOUserProfileProperty -Account <String[]>
 Requires a connection to a SharePoint Tenant Admin site.
 
 ##Returns
-```[Microsoft.SharePoint.Client.UserProfiles.PersonProperties](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.userprofiles.personproperties.aspx)```
+>[Microsoft.SharePoint.Client.UserProfiles.PersonProperties](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.userprofiles.personproperties.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

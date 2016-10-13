@@ -10,7 +10,7 @@ Get-SPOContentType [-Web <WebPipeBind>]
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.ContentType](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.contenttype.aspx)```
+>[Microsoft.SharePoint.Client.ContentType](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.contenttype.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

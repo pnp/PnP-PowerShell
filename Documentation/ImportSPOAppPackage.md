@@ -14,7 +14,7 @@ Import-SPOAppPackage -Path <String>
 This commands requires that you have an addin package to deploy
 
 ##Returns
-```[Microsoft.SharePoint.Client.AppInstance](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.appinstance.aspx)```
+>[Microsoft.SharePoint.Client.AppInstance](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.appinstance.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

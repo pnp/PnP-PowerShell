@@ -5,19 +5,6 @@ Below you can find a list of all the available cmdlets. Many commands provide bu
 Get-Help Connect-SPOnline -Detailed
 ```
 
-##
-Cmdlet|Description
-:-----|:----------
-**[Remove&#8209;SPOFile](RemoveSPOFile.md)** |Removes a file.
-**[Get&#8209;SPOFile](GetSPOFile.md)** |Downloads a file.
-**[Find&#8209;SPOFile](FindSPOFile.md)** |Finds a file in the virtual file system of the web.
-**[Add&#8209;SPOFile](AddSPOFile.md)** |Uploads a file to Web
-**[Set&#8209;SPOFileCheckedIn](SetSPOFileCheckedIn.md)** |Checks in a file
-**[Set&#8209;SPOFileCheckedOut](SetSPOFileCheckedOut.md)** |Checks out a file
-**[Ensure&#8209;SPOFolder](EnsureSPOFolder.md)** |Returns a folder given a site relative path, and will create it does not exist.
-**[Add&#8209;SPOFolder](AddSPOFolder.md)** |Creates a folder within a parent folder
-**[Remove&#8209;SPOFolder](RemoveSPOFolder.md)** |Deletes a folder within a parent folder
-**[Get&#8209;SPOFolderItem](GetSPOFolderItem.md)** |List content in folder
 ##Apps
 Cmdlet|Description
 :-----|:----------
@@ -98,6 +85,19 @@ Cmdlet|Description
 **[Add&#8209;SPOField](AddSPOField.md)** |Adds a field to a list or as a site column
 **[Add&#8209;SPOFieldFromXml](AddSPOFieldFromXml.md)** |Adds a field to a list or as a site column based upon a CAML/XML field definition
 **[Add&#8209;SPOTaxonomyField](AddSPOTaxonomyField.md)** |Adds a taxonomy field to a list or as a site column.
+##Files and Folders
+Cmdlet|Description
+:-----|:----------
+**[Remove&#8209;SPOFile](RemoveSPOFile.md)** |Removes a file.
+**[Get&#8209;SPOFile](GetSPOFile.md)** |Downloads a file.
+**[Find&#8209;SPOFile](FindSPOFile.md)** |Finds a file in the virtual file system of the web.
+**[Add&#8209;SPOFile](AddSPOFile.md)** |Uploads a file to Web
+**[Set&#8209;SPOFileCheckedIn](SetSPOFileCheckedIn.md)** |Checks in a file
+**[Set&#8209;SPOFileCheckedOut](SetSPOFileCheckedOut.md)** |Checks out a file
+**[Ensure&#8209;SPOFolder](EnsureSPOFolder.md)** |Returns a folder given a site relative path, and will create it does not exist.
+**[Add&#8209;SPOFolder](AddSPOFolder.md)** |Creates a folder within a parent folder
+**[Remove&#8209;SPOFolder](RemoveSPOFolder.md)** |Deletes a folder within a parent folder
+**[Get&#8209;SPOFolderItem](GetSPOFolderItem.md)** |List content in folder
 ##Information Management
 Cmdlet|Description
 :-----|:----------

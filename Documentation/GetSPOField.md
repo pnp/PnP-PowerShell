@@ -9,7 +9,7 @@ Get-SPOField [-List <ListPipeBind>]
 
 
 ##Returns
-```[Microsoft.SharePoint.Client.Field](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx)```
+>[Microsoft.SharePoint.Client.Field](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description
