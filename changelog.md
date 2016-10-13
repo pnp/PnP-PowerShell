@@ -1,5 +1,8 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2016-10-13**
+Moved cmdlets related to provisioning to a new Provisioning folder / documentation category
+
 **2016-10-01**
 * Added Load-SPOPRovisioningTemplate
 * Added Save-SPOProvisioningTemplate

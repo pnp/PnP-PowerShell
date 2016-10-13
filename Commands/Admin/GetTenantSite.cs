@@ -62,7 +62,7 @@ namespace SharePointPnP.PowerShell.Commands
                             var personalUrl = ClientContext.Url.ToLower().Replace("-admin", "-my");
                             foreach (var site in onedriveSites)
                             {
-                                var siteprops = Tenant.GetSitePropertiesByUrl(string.Format("{0}/{1}", personalUrl.TrimEnd('/'), site.Url.Trim('/')), Detailed);
+                                var siteprops = Tenant.GetSitePropertiesByUrl($"{personalUrl.TrimEnd('/')}/{site.Url.Trim('/')}", Detailed);
                                 ClientContext.Load(siteprops);
                                 ClientContext.ExecuteQueryRetry();
                                 siteProperties.Add(siteprops);

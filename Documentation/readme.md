@@ -31,9 +31,6 @@ Cmdlet|Description
 **[Remove&#8209;SPOCustomAction](RemoveSPOCustomAction.md)** |Removes a custom action
 **[Get&#8209;SPOCustomAction](GetSPOCustomAction.md)** |Returns all or a specific custom action(s)
 **[Add&#8209;SPOCustomAction](AddSPOCustomAction.md)** |Adds a custom action to a web
-**[Remove&#8209;SPOFileFromProvisioningTemplate](RemoveSPOFileFromProvisioningTemplate.md)** |Removes a file from an in-memory PnP Provisioning Template
-**[Add&#8209;SPOFileToProvisioningTemplate](AddSPOFileToProvisioningTemplate.md)** |Adds a file to an in-memory PnP Provisioning Template
-**[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |Creates a pnp package file of an existing template xml, and includes all files in the current folder
 **[Get&#8209;SPOHomePage](GetSPOHomePage.md)** |Returns the URL to the home page
 **[Set&#8209;SPOHomePage](SetSPOHomePage.md)** |Sets the home page of the current web.
 **[Add&#8209;SPOJavaScriptBlock](AddSPOJavaScriptBlock.md)** |Adds a link to a JavaScript snippet/block to a web or site collection
@@ -44,14 +41,6 @@ Cmdlet|Description
 **[Set&#8209;SPOMinimalDownloadStrategy](SetSPOMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.
 **[Add&#8209;SPONavigationNode](AddSPONavigationNode.md)** |Adds a menu item to either the quicklaunch or top navigation
 **[Remove&#8209;SPONavigationNode](RemoveSPONavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation
-**[Load&#8209;SPOProvisioningTemplate](LoadSPOProvisioningTemplate.md)** |Loads a PnP file from the file systems
-**[New&#8209;SPOProvisioningTemplate](NewSPOProvisioningTemplate.md)** |Creates a new provisioning template object
-**[Save&#8209;SPOProvisioningTemplate](SaveSPOProvisioningTemplate.md)** |Saves a PnP file to the file systems
-**[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
-**[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
-**[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
-**[New&#8209;SPOProvisioningTemplateFromFolder](NewSPOProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
-**[Set&#8209;SPOProvisioningTemplateMetadata](SetSPOProvisioningTemplateMetadata.md)** |Sets metadata of a provisioning template
 **[Disable&#8209;SPOResponsiveUI](DisableSPOResponsiveUI.md)** |Disables the PnP Responsive UI implementation on a classic SharePoint Site
 **[Enable&#8209;SPOResponsiveUI](EnableSPOResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Site
 **[Get&#8209;SPOTheme](GetSPOTheme.md)** |Returns the current theme/composed look of the current web.
@@ -118,6 +107,20 @@ Cmdlet|Description
 **[Add&#8209;SPOView](AddSPOView.md)** |Adds a view to a list
 **[Get&#8209;SPOView](GetSPOView.md)** |Returns one or all views from a list
 **[Remove&#8209;SPOView](RemoveSPOView.md)** |Deletes a view from a list
+##Provisioning
+Cmdlet|Description
+:-----|:----------
+**[Remove&#8209;SPOFileFromProvisioningTemplate](RemoveSPOFileFromProvisioningTemplate.md)** |Removes a file from an in-memory PnP Provisioning Template
+**[Add&#8209;SPOFileToProvisioningTemplate](AddSPOFileToProvisioningTemplate.md)** |Adds a file to an in-memory PnP Provisioning Template
+**[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |Creates a pnp package file of an existing template xml, and includes all files in the current folder
+**[Load&#8209;SPOProvisioningTemplate](LoadSPOProvisioningTemplate.md)** |Loads a PnP file from the file systems
+**[New&#8209;SPOProvisioningTemplate](NewSPOProvisioningTemplate.md)** |Creates a new provisioning template object
+**[Save&#8209;SPOProvisioningTemplate](SaveSPOProvisioningTemplate.md)** |Saves a PnP file to the file systems
+**[Convert&#8209;SPOProvisioningTemplate](ConvertSPOProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
+**[Apply&#8209;SPOProvisioningTemplate](ApplySPOProvisioningTemplate.md)** |Applies a provisioning template to a web
+**[Get&#8209;SPOProvisioningTemplate](GetSPOProvisioningTemplate.md)** |Generates a provisioning template from a web
+**[New&#8209;SPOProvisioningTemplateFromFolder](NewSPOProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
+**[Set&#8209;SPOProvisioningTemplateMetadata](SetSPOProvisioningTemplateMetadata.md)** |Sets metadata of a provisioning template
 ##Publishing
 Cmdlet|Description
 :-----|:----------

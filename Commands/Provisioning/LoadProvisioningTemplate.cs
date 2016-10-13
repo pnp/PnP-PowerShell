@@ -11,11 +11,11 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Load", "SPOProvisioningTemplate")]
     [CmdletHelp("Loads a PnP file from the file systems",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Load-SPOProvisioningTemplate -Path template.pnp",
        Remarks = "Loads a PnP file from the file systems",
