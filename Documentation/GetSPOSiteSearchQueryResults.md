@@ -2,7 +2,10 @@
 Executes a search query to retrieve indexed site collections
 ##Syntax
 ```powershell
-Get-SPOSiteSearchQueryResults [-StartRow <Int32>] [-MaxResults <Int32>] [-Web <WebPipeBind>] [-Query <String>]
+Get-SPOSiteSearchQueryResults [-StartRow <Int32>]
+                              [-MaxResults <Int32>]
+                              [-Web <WebPipeBind>]
+                              [-Query <String>]
 ```
 
 

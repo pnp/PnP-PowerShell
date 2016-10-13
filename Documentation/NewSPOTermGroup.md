@@ -2,7 +2,10 @@
 Creates a taxonomy term group
 ##Syntax
 ```powershell
-New-SPOTermGroup -GroupName <String> [-GroupId <Guid>] [-Description <String>] [-TermStoreName <String>]
+New-SPOTermGroup -GroupName <String>
+                 [-GroupId <Guid>]
+                 [-Description <String>]
+                 [-TermStoreName <String>]
 ```
 
 

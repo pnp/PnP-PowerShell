@@ -2,7 +2,8 @@
 Returns the current theme/composed look of the current web.
 ##Syntax
 ```powershell
-Get-SPOTheme [-DetectCurrentComposedLook [<SwitchParameter>]] [-Web <WebPipeBind>]
+Get-SPOTheme [-DetectCurrentComposedLook [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
 ```
 
 

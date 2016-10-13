@@ -2,7 +2,10 @@
 Office365 only: Uses the tenant API to retrieve site information.
 ##Syntax
 ```powershell
-Get-SPOTenantSite [-Detailed [<SwitchParameter>]] [-IncludeOneDriveSites [<SwitchParameter>]] [-Force [<SwitchParameter>]] [-Url <String>]
+Get-SPOTenantSite [-Detailed [<SwitchParameter>]]
+                  [-IncludeOneDriveSites [<SwitchParameter>]]
+                  [-Force [<SwitchParameter>]]
+                  [-Url <String>]
 ```
 
 

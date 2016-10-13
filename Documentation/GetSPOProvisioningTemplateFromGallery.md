@@ -2,12 +2,16 @@
 Retrieves or searches provisioning templates from the PnP Template Gallery
 ##Syntax
 ```powershell
-Get-SPOProvisioningTemplateFromGallery [-Identity <Guid>] [-Path <String>] [-Force [<SwitchParameter>]]
+Get-SPOProvisioningTemplateFromGallery [-Identity <Guid>]
+                                       [-Path <String>]
+                                       [-Force [<SwitchParameter>]]
 ```
 
 
 ```powershell
-Get-SPOProvisioningTemplateFromGallery [-Search <String>] [-TargetPlatform <TargetPlatform>] [-TargetScope <TargetScope>]
+Get-SPOProvisioningTemplateFromGallery [-Search <String>]
+                                       [-TargetPlatform <TargetPlatform>]
+                                       [-TargetScope <TargetScope>]
 ```
 
 

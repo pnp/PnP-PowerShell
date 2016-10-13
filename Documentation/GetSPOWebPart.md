@@ -2,7 +2,9 @@
 Returns a webpart definition object
 ##Syntax
 ```powershell
-Get-SPOWebPart -ServerRelativePageUrl <String> [-Identity <WebPartPipeBind>] [-Web <WebPipeBind>]
+Get-SPOWebPart -ServerRelativePageUrl <String>
+               [-Identity <WebPartPipeBind>]
+               [-Web <WebPipeBind>]
 ```
 
 

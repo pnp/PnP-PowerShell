@@ -2,7 +2,10 @@
 Removes/unregisters a specific event receiver
 ##Syntax
 ```powershell
-Remove-SPOEventReceiver [-List <ListPipeBind>] -Identity <GuidPipeBind> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+Remove-SPOEventReceiver [-List <ListPipeBind>]
+                        -Identity <GuidPipeBind>
+                        [-Force [<SwitchParameter>]]
+                        [-Web <WebPipeBind>]
 ```
 
 

@@ -2,7 +2,8 @@
 Stops a workflow instance
 ##Syntax
 ```powershell
-Stop-SPOWorkflowInstance [-Web <WebPipeBind>] -Identity <WorkflowInstancePipeBind>
+Stop-SPOWorkflowInstance [-Web <WebPipeBind>]
+                         -Identity <WorkflowInstancePipeBind>
 ```
 
 

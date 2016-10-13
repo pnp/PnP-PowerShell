@@ -2,7 +2,8 @@
 Marks the list for full indexing during the next incremental crawl
 ##Syntax
 ```powershell
-Request-SPOReIndexList [-Web <WebPipeBind>] -Identity <ListPipeBind>
+Request-SPOReIndexList [-Web <WebPipeBind>]
+                       -Identity <ListPipeBind>
 ```
 
 

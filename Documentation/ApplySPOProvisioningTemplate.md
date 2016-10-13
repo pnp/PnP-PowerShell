@@ -2,17 +2,41 @@
 Applies a provisioning template to a web
 ##Syntax
 ```powershell
-Apply-SPOProvisioningTemplate [-GalleryTemplateId <Guid>] [-ResourceFolder <String>] [-OverwriteSystemPropertyBagValues [<SwitchParameter>]] [-Parameters <Hashtable>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Web <WebPipeBind>]
+Apply-SPOProvisioningTemplate [-GalleryTemplateId <Guid>]
+                              [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                              [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Apply-SPOProvisioningTemplate [-InputInstance <ProvisioningTemplate>] [-ResourceFolder <String>] [-OverwriteSystemPropertyBagValues [<SwitchParameter>]] [-Parameters <Hashtable>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Web <WebPipeBind>]
+Apply-SPOProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
+                              [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                              [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Apply-SPOProvisioningTemplate [-ResourceFolder <String>] [-OverwriteSystemPropertyBagValues [<SwitchParameter>]] [-Parameters <Hashtable>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Web <WebPipeBind>] -Path <String>
+Apply-SPOProvisioningTemplate [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                              [-Web <WebPipeBind>]
+                              -Path <String>
 ```
 
 

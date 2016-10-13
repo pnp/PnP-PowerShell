@@ -2,7 +2,9 @@
 Returns a workflow definition
 ##Syntax
 ```powershell
-Get-SPOWorkflowDefinition [-PublishedOnly [<SwitchParameter>]] [-Web <WebPipeBind>] [-Name <String>]
+Get-SPOWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
+                          [-Web <WebPipeBind>]
+                          [-Name <String>]
 ```
 
 

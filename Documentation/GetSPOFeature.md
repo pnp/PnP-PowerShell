@@ -2,7 +2,9 @@
 Returns all activated or a specific activated feature
 ##Syntax
 ```powershell
-Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+Get-SPOFeature [-Scope <FeatureScope>]
+               [-Web <WebPipeBind>]
+               [-Identity <FeaturePipeBind>]
 ```
 
 

@@ -2,7 +2,11 @@
 Adds a file to an in-memory PnP Provisioning Template
 ##Syntax
 ```powershell
-Add-SPOFileToProvisioningTemplate -Path <String> -Source <String> -Folder <String> [-Container <String>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+Add-SPOFileToProvisioningTemplate -Path <String>
+                                  -Source <String>
+                                  -Folder <String>
+                                  [-Container <String>]
+                                  [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
 ```
 
 
