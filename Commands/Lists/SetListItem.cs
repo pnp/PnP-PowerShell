@@ -106,7 +106,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                 {
                                     List<FieldUserValue> userValues = new List<FieldUserValue>();
 
-                                    var value = Values[key];
+                                    var value = values[key];
                                     if (value.GetType().IsArray)
                                     {
                                         foreach (var arrayItem in value as object[])
@@ -145,7 +145,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                 }
                             default:
                                 {
-                                    item[key as string] = Values[key];
+                                    item[key as string] = values[key];
                                     break;
                                 }
                         }

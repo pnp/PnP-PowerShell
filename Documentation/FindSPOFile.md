@@ -2,22 +2,22 @@
 Finds a file in the virtual file system of the web.
 ##Syntax
 ```powershell
-Find-SPOFile -Match <String>
-             -Folder <FolderPipeBind>
+Find-SPOFile -Folder <FolderPipeBind>
              [-Web <WebPipeBind>]
+             -Match <String>
 ```
 
 
 ```powershell
-Find-SPOFile -Match <String>
-             -List <ListPipeBind>
+Find-SPOFile -List <ListPipeBind>
              [-Web <WebPipeBind>]
+             -Match <String>
 ```
 
 
 ```powershell
-Find-SPOFile -Match <String>
-             [-Web <WebPipeBind>]
+Find-SPOFile [-Web <WebPipeBind>]
+             -Match <String>
 ```
 
 
