@@ -7,7 +7,10 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOTimeZoneId")]
-    [CmdletHelp("Returns a time zone ID", Category = CmdletHelpCategory.TenantAdmin)]
+    [CmdletHelp("Returns a time zone ID", 
+        Category = CmdletHelpCategory.TenantAdmin,
+        OutputType = typeof(IEnumerable<Zone>),
+        OutputTypeDescription = "Returns a list of matching zones. Use the ID property of the object for use in New-SPOTenantSite")]
     [CmdletExample(Code = @"PS:> Get-SPOTimeZoneId",Remarks = @"This will return all time zone IDs in use by Office 365.", SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Get-SPOTimeZoneId -Match Stockholm", Remarks = @"This will return the time zone IDs for Stockholm", SortOrder = 2)]
     public class GetTimeZoneId : PSCmdlet

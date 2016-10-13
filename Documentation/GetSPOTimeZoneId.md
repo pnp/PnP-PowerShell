@@ -6,6 +6,11 @@ Get-SPOTimeZoneId [-Match <String>]
 ```
 
 
+##Returns
+System.Collections.Generic.IEnumerable`1[SharePointPnP.PowerShell.Commands.GetTimeZoneId+Zone]
+
+Returns a list of matching zones. Use the ID property of the object for use in New-SPOTenantSite
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
