@@ -6,7 +6,8 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Get, "SPOSitePolicy")]
     [CmdletHelp("Retrieves all or a specific site policy",
-        Category = CmdletHelpCategory.InformationManagement)]
+        Category = CmdletHelpCategory.InformationManagement,
+        OutputType=typeof(OfficeDevPnP.Core.Entities.SitePolicyEntity))]
     [CmdletExample(
      Code = @"PS:> Get-SPOSitePolicy",
      Remarks = @"Retrieves the current applied site policy.", SortOrder = 1)]

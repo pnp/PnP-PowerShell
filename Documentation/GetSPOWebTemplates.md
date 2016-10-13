@@ -7,6 +7,9 @@ Get-SPOWebTemplates [-Lcid <UInt32>]
 ```
 
 
+##Returns
+```[Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.spotenantwebtemplatecollection.aspx)```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

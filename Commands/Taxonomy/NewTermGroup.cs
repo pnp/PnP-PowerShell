@@ -8,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.New, "SPOTermGroup", SupportsShouldProcess = false)]
     [CmdletHelp(@"Creates a taxonomy term group",
-        Category = CmdletHelpCategory.Taxonomy)]
+        Category = CmdletHelpCategory.Taxonomy,
+        OutputType = typeof(TermGroup),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termgroup.aspx")]
     public class NewTermGroup : SPOCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, 

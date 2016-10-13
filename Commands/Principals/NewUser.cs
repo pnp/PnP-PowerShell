@@ -6,7 +6,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet("New", "SPOUser")]
     [CmdletHelp("Adds a user to the built-in Site User Info List and returns a user object",
-        Category = CmdletHelpCategory.Principals)]
+        Category = CmdletHelpCategory.Principals,
+        OutputType = typeof(User),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx")]
     [CmdletExample(
         Code = @"PS:> New-SPOUser -LoginName user@company.com",
         SortOrder = 1)]

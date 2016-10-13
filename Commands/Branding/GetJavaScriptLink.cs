@@ -9,7 +9,9 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOJavaScriptLink")]
     [CmdletHelp("Returns all or a specific custom action(s) with location type ScriptLink", 
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Branding,
+        OutputType = typeof(UserCustomAction),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.usercustomaction.aspx")]
     [CmdletExample(Code = "PS:> Get-SPOJavaScriptLink",
                 Remarks = "Returns all web scoped JavaScript links",
                 SortOrder = 1)]

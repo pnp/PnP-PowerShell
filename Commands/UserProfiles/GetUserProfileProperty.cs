@@ -11,7 +11,9 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
 
 You must connect to the admin website (https://:<tenant>-admin.sharepoint.com) with Connect-SPOnline in order to use this command. 
 ", DetailedDescription = "Requires a connection to a SharePoint Tenant Admin site.", 
-        Category = CmdletHelpCategory.UserProfiles)]
+        Category = CmdletHelpCategory.UserProfiles,
+         OutputType = typeof(PersonProperties),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.userprofiles.personproperties.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-SPOUserProfileProperty -Account 'user@domain.com'", 
         Remarks = "Returns the profile properties for the specified user",

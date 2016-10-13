@@ -8,6 +8,11 @@ Add-SPOWorkflowDefinition -Definition <WorkflowDefinition>
 ```
 
 
+##Returns
+```System.Guid```
+
+Returns the Id of the workflow definition
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

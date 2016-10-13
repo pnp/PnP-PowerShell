@@ -11,7 +11,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "SPOListItem")]
     [CmdletHelp("Updates a list item",
-        Category = CmdletHelpCategory.Lists)]
+        Category = CmdletHelpCategory.Lists,
+        OutputType = typeof(ListItem),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx")]
     [CmdletExample(
         Code = @"Set-SPOListItem -List ""Demo List"" -Identity 1 -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
         Remarks = @"Sets fields value in the list item with ID 1 in the ""Demo List"". It sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",

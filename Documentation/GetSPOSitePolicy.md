@@ -8,6 +8,9 @@ Get-SPOSitePolicy [-AllAvailable [<SwitchParameter>]]
 ```
 
 
+##Returns
+```OfficeDevPnP.Core.Entities.SitePolicyEntity```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

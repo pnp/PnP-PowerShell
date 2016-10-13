@@ -11,7 +11,9 @@ namespace SharePointPnP.PowerShell.Commands
     
     [CmdletHelp("Adds a SharePoint Addin to a site",
         DetailedDescription = "This commands requires that you have an addin package to deploy", 
-        Category = CmdletHelpCategory.Apps)]
+        Category = CmdletHelpCategory.Apps,
+         OutputType= typeof(AppInstance),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.appinstance.aspx")]
     [CmdletExample(
         Code = @"PS:> Import-SPOAppPackage -Path c:\files\demo.app -LoadOnly",
         Remarks = @"This will load the addin in the demo.app package, but will not install it to the site.

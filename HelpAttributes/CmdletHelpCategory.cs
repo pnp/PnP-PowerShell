@@ -34,7 +34,9 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         [EnumMember(Value = "Web Parts")]
         WebParts = 19,
         Workflows = 20,
-        Provisioning = 21
+        Provisioning = 21,
+        [EnumMember(Value = "Files and Folders")]
+        Files = 22
 
     }
 }

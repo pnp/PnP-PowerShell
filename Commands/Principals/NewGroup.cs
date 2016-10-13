@@ -8,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet("New", "SPOGroup")]
     [CmdletHelp("Adds group to the Site Groups List and returns a group object",
-        Category = CmdletHelpCategory.Principals)]
+        Category = CmdletHelpCategory.Principals,
+        OutputType = typeof(Group),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx")]
     [CmdletExample(
         Code = @"PS:> New-SPOGroup -Title ""My Site Users""",
         SortOrder = 1)]

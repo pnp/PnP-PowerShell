@@ -5,7 +5,9 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Extensibility
 {
     [Cmdlet(VerbsCommon.New, "SPOExtensbilityHandlerObject")]
-    [CmdletHelp("Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet", Category = CmdletHelpCategory.Features)]
+    [CmdletHelp("Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet", 
+        Category = CmdletHelpCategory.Features,
+        OutputType=typeof(ExtensibilityHandler))]
     [CmdletExample(
         Code = @"
 PS:> $handler = New-SPOExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler

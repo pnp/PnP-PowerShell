@@ -10,7 +10,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "SPOView")]
     [CmdletHelp("Returns one or all views from a list",
-        Category = CmdletHelpCategory.Lists)]
+        Category = CmdletHelpCategory.Lists,
+        OutputType = typeof(View),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx")]
     [CmdletExample(
         Code = @"Get-SPOView -List ""Demo List""",
         Remarks = @"Returns all views associated from the specified list",

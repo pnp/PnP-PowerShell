@@ -8,6 +8,9 @@ Get-SPOWebPartXml -ServerRelativePageUrl <String>
 ```
 
 
+##Returns
+```System.String```
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

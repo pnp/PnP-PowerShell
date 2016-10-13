@@ -6,6 +6,11 @@ Get-SPOAzureADManifestKeyCredentials -CertPath <String>
 ```
 
 
+##Returns
+```System.String```
+
+Outputs a JSON formatted string
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

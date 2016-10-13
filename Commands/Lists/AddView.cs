@@ -7,7 +7,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Add, "SPOView")]
     [CmdletHelp("Adds a view to a list",
-        Category = CmdletHelpCategory.Lists)]
+        Category = CmdletHelpCategory.Lists,
+          OutputType = typeof(View),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx")]
     [CmdletExample(
         Code = @"Add-SPOView -List ""Demo List"" -Title ""Demo View"" -Fields ""Title"",""Address""",
         Remarks = @"Adds a view named ""Demo view"" to the ""Demo List"" list.",

@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
                 }
                 else
                 {
-                    throw new Exception(string.Format("File {0} does not exist", Path));
+                    throw new Exception($"File {Path} does not exist");
                 }
             }
             else

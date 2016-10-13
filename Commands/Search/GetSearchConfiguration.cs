@@ -11,7 +11,9 @@ namespace SharePointPnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "SPOSearchConfiguration")]
     [CmdletHelp("Returns the search configuration",
-        Category = CmdletHelpCategory.Search)]
+        Category = CmdletHelpCategory.Search,
+        OutputType = typeof(string),
+        OutputTypeDescription = "Does not return a string when the -Path parameter has been specified.")]
     [CmdletExample(
         Code = @"PS:> Get-SPOSearchConfiguration",
         Remarks = "Returns the search configuration for the current web",
