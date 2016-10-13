@@ -2,9 +2,16 @@
 Returns the search configuration
 ##Syntax
 ```powershell
-Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>] [-Web <WebPipeBind>]
+Get-SPOSearchConfiguration [-Scope <SearchConfigurationScope>]
+                           [-Path <String>]
+                           [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>System.String
+
+Does not return a string when the -Path parameter has been specified.
 
 ##Parameters
 Parameter|Type|Required|Description

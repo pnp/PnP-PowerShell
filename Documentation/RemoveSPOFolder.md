@@ -2,7 +2,10 @@
 Deletes a folder within a parent folder
 ##Syntax
 ```powershell
-Remove-SPOFolder -Name <String> -Folder <String> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+Remove-SPOFolder -Name <String>
+                 -Folder <String>
+                 [-Force [<SwitchParameter>]]
+                 [-Web <WebPipeBind>]
 ```
 
 

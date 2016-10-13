@@ -2,9 +2,14 @@
 Returns a webpart definition object
 ##Syntax
 ```powershell
-Get-SPOWebPart -ServerRelativePageUrl <String> [-Identity <WebPartPipeBind>] [-Web <WebPipeBind>]
+Get-SPOWebPart -ServerRelativePageUrl <String>
+               [-Identity <WebPartPipeBind>]
+               [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[System.Collections.Generic.IEnumerable`1[Microsoft.SharePoint.Client.WebParts.WebPartDefinition]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.webparts.webpartdefinition.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

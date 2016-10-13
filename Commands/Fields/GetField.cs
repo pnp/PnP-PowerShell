@@ -8,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Get, "SPOField")]
     [CmdletHelp("Returns a field from a list or site",
-        Category = CmdletHelpCategory.Fields)]
+        Category = CmdletHelpCategory.Fields,
+        OutputType = typeof(Field),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-SPOField",
         Remarks = @"Gets all the fields from the current site",

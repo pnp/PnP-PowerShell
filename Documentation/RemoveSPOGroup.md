@@ -2,7 +2,9 @@
 Removes a group.
 ##Syntax
 ```powershell
-Remove-SPOGroup [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] [-Identity <GroupPipeBind>]
+Remove-SPOGroup [-Force [<SwitchParameter>]]
+                [-Web <WebPipeBind>]
+                [-Identity <GroupPipeBind>]
 ```
 
 

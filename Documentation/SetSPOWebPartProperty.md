@@ -2,7 +2,11 @@
 Sets a web part property
 ##Syntax
 ```powershell
-Set-SPOWebPartProperty -ServerRelativePageUrl <String> -Identity <GuidPipeBind> -Key <String> -Value <PSObject> [-Web <WebPipeBind>]
+Set-SPOWebPartProperty -ServerRelativePageUrl <String>
+                       -Identity <GuidPipeBind>
+                       -Key <String>
+                       -Value <PSObject>
+                       [-Web <WebPipeBind>]
 ```
 
 

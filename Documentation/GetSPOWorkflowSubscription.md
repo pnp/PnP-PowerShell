@@ -2,9 +2,14 @@
 Returns a workflow subscriptions from a list
 ##Syntax
 ```powershell
-Get-SPOWorkflowSubscription [-Web <WebPipeBind>] [-Name <String>] [-List <ListPipeBind>]
+Get-SPOWorkflowSubscription [-Web <WebPipeBind>]
+                            [-Name <String>]
+                            [-List <ListPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.WorkflowServices.WorkflowSubscription](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowsubscription.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

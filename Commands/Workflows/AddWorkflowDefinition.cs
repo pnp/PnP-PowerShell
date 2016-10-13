@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.WorkflowServices;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -7,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Add, "SPOWorkflowDefinition")]
     [CmdletHelp("Adds a workflow definition",
-        Category = CmdletHelpCategory.Workflows)]
+        Category = CmdletHelpCategory.Workflows,
+        OutputType=typeof(Guid),
+        OutputTypeDescription = "Returns the Id of the workflow definition")]
     [CmdletExample(
         Code = @"Add-SPOWorkflowDefinition -Definition $wfdef", 
         Remarks = "Adds an existing workflow definition, retrieved by Get-SPOWorkflowDefinition, to a site.",

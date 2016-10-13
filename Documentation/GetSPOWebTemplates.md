@@ -2,9 +2,13 @@
 Office365 only: Returns the available web templates.
 ##Syntax
 ```powershell
-Get-SPOWebTemplates [-Lcid <UInt32>] [-CompatibilityLevel <Int32>]
+Get-SPOWebTemplates [-Lcid <UInt32>]
+                    [-CompatibilityLevel <Int32>]
 ```
 
+
+##Returns
+>[Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.spotenantwebtemplatecollection.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

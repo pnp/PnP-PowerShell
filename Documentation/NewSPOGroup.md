@@ -2,9 +2,20 @@
 Adds group to the Site Groups List and returns a group object
 ##Syntax
 ```powershell
-New-SPOGroup -Title <String> [-Description <String>] [-Owner <String>] [-AllowRequestToJoinLeave [<SwitchParameter>]] [-AutoAcceptRequestToJoinLeave [<SwitchParameter>]] [-AllowMembersEditMembership [<SwitchParameter>]] [-OnlyAllowMembersViewMembership [<SwitchParameter>]] [-RequestToJoinEmail <String>] [-Web <WebPipeBind>]
+New-SPOGroup -Title <String>
+             [-Description <String>]
+             [-Owner <String>]
+             [-AllowRequestToJoinLeave [<SwitchParameter>]]
+             [-AutoAcceptRequestToJoinLeave [<SwitchParameter>]]
+             [-AllowMembersEditMembership [<SwitchParameter>]]
+             [-OnlyAllowMembersViewMembership [<SwitchParameter>]]
+             [-RequestToJoinEmail <String>]
+             [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.Group](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

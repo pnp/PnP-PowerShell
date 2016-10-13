@@ -9,7 +9,9 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "SPOSubWebs")]
     [CmdletHelp("Returns the subwebs", 
-        Category = CmdletHelpCategory.Webs)]
+        Category = CmdletHelpCategory.Webs,
+        OutputType = typeof(List<web>),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
     public class GetSubWebs : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

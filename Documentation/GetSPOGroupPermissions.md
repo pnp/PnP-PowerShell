@@ -2,9 +2,13 @@
 Returns the permissions for a specific SharePoint group
 ##Syntax
 ```powershell
-Get-SPOGroupPermissions [-Web <WebPipeBind>] -Identity <GroupPipeBind>
+Get-SPOGroupPermissions [-Web <WebPipeBind>]
+                        -Identity <GroupPipeBind>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.RoleDefinitionBindingCollection](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.roledefinitionbindingcollection.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

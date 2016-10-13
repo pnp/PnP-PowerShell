@@ -2,9 +2,17 @@
 Adds a new content type
 ##Syntax
 ```powershell
-Add-SPOContentType -Name <String> [-ContentTypeId <String>] [-Description <String>] [-Group <String>] [-ParentContentType <ContentType>] [-Web <WebPipeBind>]
+Add-SPOContentType -Name <String>
+                   [-ContentTypeId <String>]
+                   [-Description <String>]
+                   [-Group <String>]
+                   [-ParentContentType <ContentType>]
+                   [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.ContentType](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.contenttype.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

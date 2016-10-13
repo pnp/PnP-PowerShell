@@ -2,7 +2,13 @@
 Sets a site column from the available content types to a document set
 ##Syntax
 ```powershell
-Set-SPODocumentSetField -DocumentSet <DocumentSetPipeBind> -Field <FieldPipeBind> [-SetSharedField [<SwitchParameter>]] [-SetWelcomePageField [<SwitchParameter>]] [-RemoveSharedField [<SwitchParameter>]] [-RemoveWelcomePageField [<SwitchParameter>]] [-Web <WebPipeBind>]
+Set-SPODocumentSetField -DocumentSet <DocumentSetPipeBind>
+                        -Field <FieldPipeBind>
+                        [-SetSharedField [<SwitchParameter>]]
+                        [-SetWelcomePageField [<SwitchParameter>]]
+                        [-RemoveSharedField [<SwitchParameter>]]
+                        [-RemoveWelcomePageField [<SwitchParameter>]]
+                        [-Web <WebPipeBind>]
 ```
 
 

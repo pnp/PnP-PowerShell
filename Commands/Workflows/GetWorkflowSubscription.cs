@@ -8,7 +8,10 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "SPOWorkflowSubscription")]
     [CmdletHelp("Returns a workflow subscriptions from a list",
-        Category = CmdletHelpCategory.Workflows)]
+        Category = CmdletHelpCategory.Workflows,
+        OutputType=typeof(WorkflowSubscription),
+        OutputTypeLink= "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowsubscription.aspx"
+        )]
 
     public class GetWorkflowSubscription : SPOWebCmdlet
     {

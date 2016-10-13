@@ -2,14 +2,25 @@
 Downloads a file.
 ##Syntax
 ```powershell
-Get-SPOFile [-Path <String>] [-Filename <String>] [-AsString [<SwitchParameter>]] [-Web <WebPipeBind>] -ServerRelativeUrl <String>
+Get-SPOFile [-Path <String>]
+            [-Filename <String>]
+            [-AsString [<SwitchParameter>]]
+            [-Web <WebPipeBind>]
+            -ServerRelativeUrl <String>
 ```
 
 
 ```powershell
-Get-SPOFile [-Path <String>] [-Filename <String>] [-AsString [<SwitchParameter>]] [-Web <WebPipeBind>] -SiteRelativeUrl <String>
+Get-SPOFile [-Path <String>]
+            [-Filename <String>]
+            [-AsString [<SwitchParameter>]]
+            [-Web <WebPipeBind>]
+            -SiteRelativeUrl <String>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.File](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System.Collections.Generic;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -7,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "SPOGroup",DefaultParameterSetName="All")]
     [CmdletHelp("Returns a specific group or all groups.",
-        Category = CmdletHelpCategory.Principals)]
+        Category = CmdletHelpCategory.Principals,
+        OutputType = typeof(List<Group>),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-SPOGroup", 
         Remarks = "Returns all groups",

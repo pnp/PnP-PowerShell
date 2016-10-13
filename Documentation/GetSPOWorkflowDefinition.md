@@ -2,9 +2,14 @@
 Returns a workflow definition
 ##Syntax
 ```powershell
-Get-SPOWorkflowDefinition [-PublishedOnly [<SwitchParameter>]] [-Web <WebPipeBind>] [-Name <String>]
+Get-SPOWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
+                          [-Web <WebPipeBind>]
+                          [-Name <String>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.WorkflowServices.WorkflowDefinition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowdefinition.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

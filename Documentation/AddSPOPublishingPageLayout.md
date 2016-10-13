@@ -2,7 +2,12 @@
 Adds a publishing page layout
 ##Syntax
 ```powershell
-Add-SPOPublishingPageLayout -SourceFilePath <String> -Title <String> -Description <String> -AssociatedContentTypeID <String> [-DestinationFolderHierarchy <String>] [-Web <WebPipeBind>]
+Add-SPOPublishingPageLayout -SourceFilePath <String>
+                            -Title <String>
+                            -Description <String>
+                            -AssociatedContentTypeID <String>
+                            [-DestinationFolderHierarchy <String>]
+                            [-Web <WebPipeBind>]
 ```
 
 

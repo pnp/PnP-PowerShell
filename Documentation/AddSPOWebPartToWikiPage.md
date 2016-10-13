@@ -2,12 +2,22 @@
 Adds a webpart to a wiki page in a specified table row and column
 ##Syntax
 ```powershell
-Add-SPOWebPartToWikiPage -Path <String> -ServerRelativePageUrl <String> -Row <Int32> -Column <Int32> [-AddSpace [<SwitchParameter>]] [-Web <WebPipeBind>]
+Add-SPOWebPartToWikiPage -Path <String>
+                         -ServerRelativePageUrl <String>
+                         -Row <Int32>
+                         -Column <Int32>
+                         [-AddSpace [<SwitchParameter>]]
+                         [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Add-SPOWebPartToWikiPage -Xml <String> -ServerRelativePageUrl <String> -Row <Int32> -Column <Int32> [-AddSpace [<SwitchParameter>]] [-Web <WebPipeBind>]
+Add-SPOWebPartToWikiPage -Xml <String>
+                         -ServerRelativePageUrl <String>
+                         -Row <Int32>
+                         -Column <Int32>
+                         [-AddSpace [<SwitchParameter>]]
+                         [-Web <WebPipeBind>]
 ```
 
 

@@ -2,9 +2,18 @@
 Retrieves list items
 ##Syntax
 ```powershell
-Get-SPOListItem [-Id <Int32>] [-UniqueId <GuidPipeBind>] [-Query <String>] [-Fields <String[]>] [-PageSize <Int32>] [-Web <WebPipeBind>] -List <ListPipeBind>
+Get-SPOListItem [-Id <Int32>]
+                [-UniqueId <GuidPipeBind>]
+                [-Query <String>]
+                [-Fields <String[]>]
+                [-PageSize <Int32>]
+                [-Web <WebPipeBind>]
+                -List <ListPipeBind>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

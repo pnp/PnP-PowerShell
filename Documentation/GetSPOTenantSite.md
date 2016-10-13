@@ -2,9 +2,15 @@
 Office365 only: Uses the tenant API to retrieve site information.
 ##Syntax
 ```powershell
-Get-SPOTenantSite [-Detailed [<SwitchParameter>]] [-IncludeOneDriveSites [<SwitchParameter>]] [-Force [<SwitchParameter>]] [-Url <String>]
+Get-SPOTenantSite [-Detailed [<SwitchParameter>]]
+                  [-IncludeOneDriveSites [<SwitchParameter>]]
+                  [-Force [<SwitchParameter>]]
+                  [-Url <String>]
 ```
 
+
+##Returns
+>[Microsoft.Online.SharePoint.TenantAdministration.SiteProperties](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.siteproperties.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

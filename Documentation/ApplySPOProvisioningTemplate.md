@@ -2,7 +2,16 @@
 Applies a provisioning template to a web
 ##Syntax
 ```powershell
-Apply-SPOProvisioningTemplate [-ResourceFolder <String>] [-OverwriteSystemPropertyBagValues [<SwitchParameter>]] [-Parameters <Hashtable>] [-Handlers <Handlers>] [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>] [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-InputInstance <ProvisioningTemplate>] [-Web <WebPipeBind>] -Path <String>
+Apply-SPOProvisioningTemplate [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                              [-InputInstance <ProvisioningTemplate>]
+                              [-Web <WebPipeBind>]
+                              -Path <String>
 ```
 
 

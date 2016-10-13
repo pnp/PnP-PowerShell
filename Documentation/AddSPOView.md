@@ -2,9 +2,21 @@
 Adds a view to a list
 ##Syntax
 ```powershell
-Add-SPOView -Title <String> [-Query <String>] -Fields <String[]> [-ViewType <ViewType>] [-RowLimit <UInt32>] [-Personal [<SwitchParameter>]] [-SetAsDefault [<SwitchParameter>]] [-Paged [<SwitchParameter>]] [-Web <WebPipeBind>] -List <ListPipeBind>
+Add-SPOView -Title <String>
+            [-Query <String>]
+            -Fields <String[]>
+            [-ViewType <ViewType>]
+            [-RowLimit <UInt32>]
+            [-Personal [<SwitchParameter>]]
+            [-SetAsDefault [<SwitchParameter>]]
+            [-Paged [<SwitchParameter>]]
+            [-Web <WebPipeBind>]
+            -List <ListPipeBind>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.View](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

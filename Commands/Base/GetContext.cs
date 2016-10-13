@@ -7,7 +7,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "SPOContext")]
     [CmdletHelp("Returns a Client Side Object Model context",
-        Category = CmdletHelpCategory.Base)]
+        Category = CmdletHelpCategory.Base,
+        OutputType = typeof(Microsoft.SharePoint.Client.ClientContext),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientcontext.aspx")]
     [CmdletExample(
         Code = @"PS:> $ctx = Get-SPOContext",
         Remarks = @"This will put the current context in the $ctx variable.",

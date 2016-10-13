@@ -2,7 +2,10 @@
 Removes a field from a list or a site
 ##Syntax
 ```powershell
-Remove-SPOField [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] -Identity <FieldPipeBind> [-List <ListPipeBind>]
+Remove-SPOField [-Force [<SwitchParameter>]]
+                [-Web <WebPipeBind>]
+                -Identity <FieldPipeBind>
+                [-List <ListPipeBind>]
 ```
 
 

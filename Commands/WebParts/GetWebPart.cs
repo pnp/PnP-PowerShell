@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
@@ -11,7 +12,9 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "SPOWebPart")]
     [CmdletHelp("Returns a webpart definition object",
-        Category = CmdletHelpCategory.WebParts)]
+        Category = CmdletHelpCategory.WebParts,
+        OutputType=typeof(IEnumerable<WebPartDefinition>),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.webparts.webpartdefinition.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-SPOWebPart -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx""",
         Remarks = @"Returns all webparts defined on the given page.", SortOrder = 1)]

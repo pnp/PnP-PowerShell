@@ -2,9 +2,15 @@
 Creates a new document set in a library.
 ##Syntax
 ```powershell
-Add-SPODocumentSet -List <ListPipeBind> -Name <String> -ContentType <ContentTypePipeBind> [-Web <WebPipeBind>]
+Add-SPODocumentSet -List <ListPipeBind>
+                   -Name <String>
+                   -ContentType <ContentTypePipeBind>
+                   [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>System.String
 
 ##Parameters
 Parameter|Type|Required|Description

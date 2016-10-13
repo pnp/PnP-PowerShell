@@ -2,9 +2,15 @@
 Retrieves a content type
 ##Syntax
 ```powershell
-Get-SPOContentType [-Web <WebPipeBind>] [-Identity <ContentTypePipeBind>] [-List <ListPipeBind>] [-InSiteHierarchy [<SwitchParameter>]]
+Get-SPOContentType [-Web <WebPipeBind>]
+                   [-Identity <ContentTypePipeBind>]
+                   [-List <ListPipeBind>]
+                   [-InSiteHierarchy [<SwitchParameter>]]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.ContentType](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.contenttype.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

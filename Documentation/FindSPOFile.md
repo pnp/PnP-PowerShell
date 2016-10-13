@@ -2,9 +2,13 @@
 Finds a file in the virtual file system of the web.
 ##Syntax
 ```powershell
-Find-SPOFile -Match <String> [-Web <WebPipeBind>]
+Find-SPOFile -Match <String>
+             [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.File](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

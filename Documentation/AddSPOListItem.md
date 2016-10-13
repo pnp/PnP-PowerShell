@@ -2,9 +2,16 @@
 Adds an item to a list
 ##Syntax
 ```powershell
-Add-SPOListItem [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>] [-Folder <String>] [-Web <WebPipeBind>] -List <ListPipeBind>
+Add-SPOListItem [-ContentType <ContentTypePipeBind>]
+                [-Values <Hashtable>]
+                [-Folder <String>]
+                [-Web <WebPipeBind>]
+                -List <ListPipeBind>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

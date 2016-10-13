@@ -10,11 +10,11 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Remove", "SPOFileFromProvisioningTemplate")]
     [CmdletHelp("Removes a file from an in-memory PnP Provisioning Template",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Remove-SPOFileFromProvisioningTemplate -Path template.pnp -FilePath filePath",
        Remarks = "Removes a file from an in-memory PnP Provisioning Template",

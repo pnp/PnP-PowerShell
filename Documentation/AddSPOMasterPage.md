@@ -2,9 +2,18 @@
 Adds a Masterpage
 ##Syntax
 ```powershell
-Add-SPOMasterPage -SourceFilePath <String> -Title <String> -Description <String> [-DestinationFolderHierarchy <String>] [-UiVersion <String>] [-DefaultCssFile <String>] [-Web <WebPipeBind>]
+Add-SPOMasterPage -SourceFilePath <String>
+                  -Title <String>
+                  -Description <String>
+                  [-DestinationFolderHierarchy <String>]
+                  [-UiVersion <String>]
+                  [-DefaultCssFile <String>]
+                  [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.File](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

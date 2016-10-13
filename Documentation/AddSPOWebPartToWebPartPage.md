@@ -2,12 +2,20 @@
 Adds a webpart to a web part page in a specified zone
 ##Syntax
 ```powershell
-Add-SPOWebPartToWebPartPage -Path <String> -ServerRelativePageUrl <String> -ZoneId <String> -ZoneIndex <Int32> [-Web <WebPipeBind>]
+Add-SPOWebPartToWebPartPage -Path <String>
+                            -ServerRelativePageUrl <String>
+                            -ZoneId <String>
+                            -ZoneIndex <Int32>
+                            [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Add-SPOWebPartToWebPartPage -Xml <String> -ServerRelativePageUrl <String> -ZoneId <String> -ZoneIndex <Int32> [-Web <WebPipeBind>]
+Add-SPOWebPartToWebPartPage -Xml <String>
+                            -ServerRelativePageUrl <String>
+                            -ZoneId <String>
+                            -ZoneIndex <Int32>
+                            [-Web <WebPipeBind>]
 ```
 
 

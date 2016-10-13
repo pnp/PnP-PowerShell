@@ -11,7 +11,9 @@ namespace SharePointPnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsCommon.Get, "SPOFeature")]
     [CmdletHelp("Returns all activated or a specific activated feature",
-        Category = CmdletHelpCategory.Features)]
+        Category = CmdletHelpCategory.Features,
+        OutputType=typeof(IEnumerable<Feature>),
+        OutputTypeLink= "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.feature.aspx")]
     [CmdletExample(
      Code = @"PS:> Get-SPOFeature",
      Remarks = @"This will return all activated web scoped features", SortOrder = 1)]

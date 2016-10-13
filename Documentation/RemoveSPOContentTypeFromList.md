@@ -2,7 +2,9 @@
 Removes a content type from a list
 ##Syntax
 ```powershell
-Remove-SPOContentTypeFromList -List <ListPipeBind> -ContentType <ContentTypePipeBind> [-Web <WebPipeBind>]
+Remove-SPOContentTypeFromList -List <ListPipeBind>
+                              -ContentType <ContentTypePipeBind>
+                              [-Web <WebPipeBind>]
 ```
 
 

@@ -2,9 +2,14 @@
 Returns a field from a list or site
 ##Syntax
 ```powershell
-Get-SPOField [-List <ListPipeBind>] [-Web <WebPipeBind>] [-Identity <FieldPipeBind>]
+Get-SPOField [-List <ListPipeBind>]
+             [-Web <WebPipeBind>]
+             [-Identity <FieldPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.Field](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

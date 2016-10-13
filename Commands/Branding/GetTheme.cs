@@ -8,7 +8,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOTheme")]
     [CmdletHelp("Returns the current theme/composed look of the current web.",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Branding,
+        OutputType = typeof(OfficeDevPnP.Core.Entities.ThemeEntity))]
     [CmdletExample(
         Code = @"PS:> Get-SPOTheme",
         Remarks = "Returns the current composed look of the current web.",

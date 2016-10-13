@@ -2,9 +2,13 @@
 Returns a List object
 ##Syntax
 ```powershell
-Get-SPOList [-Web <WebPipeBind>] [-Identity <ListPipeBind>]
+Get-SPOList [-Web <WebPipeBind>]
+            [-Identity <ListPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.List](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.list.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

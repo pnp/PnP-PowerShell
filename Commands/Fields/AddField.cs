@@ -9,7 +9,9 @@ namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "SPOField")]
     [CmdletHelp("Adds a field to a list or as a site column",
-        Category = CmdletHelpCategory.Fields)]
+        Category = CmdletHelpCategory.Fields,
+        OutputType = typeof(Field),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
     [CmdletExample(
      Code = @"PS:> Add-SPOField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
      Remarks = @"This will add field of type Choice to a the list ""Demo List"".", SortOrder = 1)]

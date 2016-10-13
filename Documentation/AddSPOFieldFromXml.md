@@ -2,9 +2,14 @@
 Adds a field to a list or as a site column based upon a CAML/XML field definition
 ##Syntax
 ```powershell
-Add-SPOFieldFromXml [-List <ListPipeBind>] [-Web <WebPipeBind>] -FieldXml <String>
+Add-SPOFieldFromXml [-List <ListPipeBind>]
+                    [-Web <WebPipeBind>]
+                    -FieldXml <String>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.Field](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

@@ -15,6 +15,10 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         public string Copyright { get; set; }
         public string Version { get; set; }
 
+        public Type OutputType { get; set; }
+        public string OutputTypeDescription { get; set; }
+        public string OutputTypeLink { get; set; }
+
         public CmdletHelpCategory Category { get; set; }
         public CmdletHelpAttribute(string description)
         {

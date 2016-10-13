@@ -2,9 +2,14 @@
 Returns all or a specific custom action(s) with location type ScriptLink
 ##Syntax
 ```powershell
-Get-SPOJavaScriptLink [-Scope <CustomActionScope>] [-Web <WebPipeBind>] [-Name <String>]
+Get-SPOJavaScriptLink [-Scope <CustomActionScope>]
+                      [-Web <WebPipeBind>]
+                      [-Name <String>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.UserCustomAction](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.usercustomaction.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

@@ -2,7 +2,9 @@
 Removes a content type from a document set
 ##Syntax
 ```powershell
-Remove-SPOContentTypeFromDocumentSet -ContentType <ContentTypePipeBind> -DocumentSet <DocumentSetPipeBind> [-Web <WebPipeBind>]
+Remove-SPOContentTypeFromDocumentSet -ContentType <ContentTypePipeBind>
+                                     -DocumentSet <DocumentSetPipeBind>
+                                     [-Web <WebPipeBind>]
 ```
 
 

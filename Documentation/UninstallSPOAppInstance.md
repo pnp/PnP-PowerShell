@@ -2,7 +2,9 @@
 Removes an app from a site
 ##Syntax
 ```powershell
-Uninstall-SPOAppInstance -Identity <AppPipeBind> [-Force [<SwitchParameter>]] [-Web <WebPipeBind>]
+Uninstall-SPOAppInstance -Identity <AppPipeBind>
+                         [-Force [<SwitchParameter>]]
+                         [-Web <WebPipeBind>]
 ```
 
 

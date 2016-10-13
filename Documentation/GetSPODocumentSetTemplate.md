@@ -2,9 +2,13 @@
 Retrieves a document set template
 ##Syntax
 ```powershell
-Get-SPODocumentSetTemplate [-Web <WebPipeBind>] -Identity <DocumentSetPipeBind>
+Get-SPODocumentSetTemplate [-Web <WebPipeBind>]
+                           -Identity <DocumentSetPipeBind>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.DocumentSet.DocumentSetTemplate](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.documentset.documentsettemplate.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

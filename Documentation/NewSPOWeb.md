@@ -2,9 +2,19 @@
 Creates a new subweb to the current web
 ##Syntax
 ```powershell
-New-SPOWeb -Title <String> -Url <String> [-Description <String>] [-Locale <Int32>] -Template <String> [-BreakInheritance [<SwitchParameter>]] [-InheritNavigation [<SwitchParameter>]] [-Web <WebPipeBind>]
+New-SPOWeb -Title <String>
+           -Url <String>
+           [-Description <String>]
+           [-Locale <Int32>]
+           -Template <String>
+           [-BreakInheritance [<SwitchParameter>]]
+           [-InheritNavigation [<SwitchParameter>]]
+           [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.Web](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

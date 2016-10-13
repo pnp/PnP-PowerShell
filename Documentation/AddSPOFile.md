@@ -2,9 +2,22 @@
 Uploads a file to Web
 ##Syntax
 ```powershell
-Add-SPOFile -Path <String> -Folder <String> [-Checkout [<SwitchParameter>]] [-CheckInComment <String>] [-Approve [<SwitchParameter>]] [-ApproveComment <String>] [-Publish [<SwitchParameter>]] [-PublishComment <String>] [-UseWebDav [<SwitchParameter>]] [-Values <Hashtable>] [-Web <WebPipeBind>]
+Add-SPOFile -Path <String>
+            -Folder <String>
+            [-Checkout [<SwitchParameter>]]
+            [-CheckInComment <String>]
+            [-Approve [<SwitchParameter>]]
+            [-ApproveComment <String>]
+            [-Publish [<SwitchParameter>]]
+            [-PublishComment <String>]
+            [-UseWebDav [<SwitchParameter>]]
+            [-Values <Hashtable>]
+            [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.File](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

@@ -10,7 +10,9 @@ namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "SPOTaxonomyField")]
     [CmdletHelp("Adds a taxonomy field to a list or as a site column.",
-        Category = CmdletHelpCategory.Fields)]
+        Category = CmdletHelpCategory.Fields,
+        OutputType = typeof(Field),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
     [CmdletExample(
         Code = @"PS:> Add-SPOTaxonomyField -DisplayName ""Test"" -InternalName ""Test"" -TermSetPath ""TestTermGroup|TestTermSet""",
         Remarks = @"Adds a new taxonomy field called ""Test"" that points to the TestTermSet which is located in the TestTermGroup",

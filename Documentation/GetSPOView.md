@@ -2,9 +2,14 @@
 Returns one or all views from a list
 ##Syntax
 ```powershell
-Get-SPOView [-Identity <ViewPipeBind>] [-Web <WebPipeBind>] -List <ListPipeBind>
+Get-SPOView [-Identity <ViewPipeBind>]
+            [-Web <WebPipeBind>]
+            -List <ListPipeBind>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.View](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

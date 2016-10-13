@@ -58,7 +58,7 @@ namespace SharePointPnP.PowerShell.Commands
             if (Owners != null && Owners.Count > 0)
             {
                 var admins = new List<UserEntity>();
-                foreach (string owner in Owners)
+                foreach (var owner in Owners)
                 {
                     var userEntity = new UserEntity { LoginName = owner };
                     admins.Add(userEntity);

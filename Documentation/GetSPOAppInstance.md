@@ -2,9 +2,13 @@
 Returns a SharePoint AddIn Instance in the site
 ##Syntax
 ```powershell
-Get-SPOAppInstance [-Web <WebPipeBind>] [-Identity <GuidPipeBind>]
+Get-SPOAppInstance [-Web <WebPipeBind>]
+                   [-Identity <GuidPipeBind>]
 ```
 
+
+##Returns
+>[System.Collections.Generic.List`1[Microsoft.SharePoint.Client.AppInstance]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.appinstance.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description
