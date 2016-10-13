@@ -2,10 +2,9 @@
 Adds a field to a list or as a site column based upon a CAML/XML field definition
 ##Syntax
 ```powershell
-Add-SPOFieldFromXml
-        [-List <ListPipeBind>]
-        [-Web <WebPipeBind>]
-        -FieldXml <String>
+Add-SPOFieldFromXml [-List <ListPipeBind>]
+                    [-Web <WebPipeBind>]
+                    -FieldXml <String>
 ```
 
 

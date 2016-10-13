@@ -2,25 +2,24 @@
 Executes operations on web, lists, list items.
 ##Syntax
 ```powershell
-Invoke-SPOWebAction
-        [-Webs <Web[]>]
-        [-WebAction <Action`1>]
-        [-ShouldProcessWebAction <Func`2>]
-        [-PostWebAction <Action`1>]
-        [-ShouldProcessPostWebAction <Func`2>]
-        [-WebProperties <String[]>]
-        [-ListAction <Action`1>]
-        [-ShouldProcessListAction <Func`2>]
-        [-PostListAction <Action`1>]
-        [-ShouldProcessPostListAction <Func`2>]
-        [-ListProperties <String[]>]
-        [-ListItemAction <Action`1>]
-        [-ShouldProcessListItemAction <Func`2>]
-        [-ListItemProperties <String[]>]
-        [-SubWebs [<SwitchParameter>]]
-        [-DisableStatisticsOutput [<SwitchParameter>]]
-        [-SkipCounting [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
+Invoke-SPOWebAction [-Webs <Web[]>]
+                    [-WebAction <Action`1>]
+                    [-ShouldProcessWebAction <Func`2>]
+                    [-PostWebAction <Action`1>]
+                    [-ShouldProcessPostWebAction <Func`2>]
+                    [-WebProperties <String[]>]
+                    [-ListAction <Action`1>]
+                    [-ShouldProcessListAction <Func`2>]
+                    [-PostListAction <Action`1>]
+                    [-ShouldProcessPostListAction <Func`2>]
+                    [-ListProperties <String[]>]
+                    [-ListItemAction <Action`1>]
+                    [-ShouldProcessListItemAction <Func`2>]
+                    [-ListItemProperties <String[]>]
+                    [-SubWebs [<SwitchParameter>]]
+                    [-DisableStatisticsOutput [<SwitchParameter>]]
+                    [-SkipCounting [<SwitchParameter>]]
+                    [-Web <WebPipeBind>]
 ```
 
 

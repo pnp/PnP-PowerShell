@@ -2,9 +2,8 @@
 Checks out a file
 ##Syntax
 ```powershell
-Set-SPOFileCheckedOut
-        [-Web <WebPipeBind>]
-        -Url <String>
+Set-SPOFileCheckedOut [-Web <WebPipeBind>]
+                      -Url <String>
 ```
 
 

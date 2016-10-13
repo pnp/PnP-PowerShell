@@ -2,10 +2,9 @@
 Returns all or a specific custom action(s) with location type ScriptLink
 ##Syntax
 ```powershell
-Get-SPOJavaScriptLink
-        [-Scope <CustomActionScope>]
-        [-Web <WebPipeBind>]
-        [-Name <String>]
+Get-SPOJavaScriptLink [-Scope <CustomActionScope>]
+                      [-Web <WebPipeBind>]
+                      [-Name <String>]
 ```
 
 

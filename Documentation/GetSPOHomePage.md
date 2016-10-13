@@ -2,8 +2,7 @@
 Returns the URL to the home page
 ##Syntax
 ```powershell
-Get-SPOHomePage
-        [-Web <WebPipeBind>]
+Get-SPOHomePage [-Web <WebPipeBind>]
 ```
 
 

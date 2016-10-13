@@ -2,18 +2,16 @@
 Activates or deactivates the minimal downloading strategy.
 ##Syntax
 ```powershell
-Set-SPOMinimalDownloadStrategy
-        -Off [<SwitchParameter>]
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
+Set-SPOMinimalDownloadStrategy -Off [<SwitchParameter>]
+                               [-Force [<SwitchParameter>]]
+                               [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-SPOMinimalDownloadStrategy
-        -On [<SwitchParameter>]
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
+Set-SPOMinimalDownloadStrategy -On [<SwitchParameter>]
+                               [-Force [<SwitchParameter>]]
+                               [-Web <WebPipeBind>]
 ```
 
 

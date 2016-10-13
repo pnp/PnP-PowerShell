@@ -467,10 +467,19 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                 foreach (var cmdletSyntax in cmdletInfo.Syntaxes.OrderBy(s => s.ParameterSetName))
                 {
                     var syntaxText = new StringBuilder();
-                    syntaxText.AppendFormat("```powershell\r\n{0}\r\n", cmdletInfo.FullCommand);
+                    syntaxText.AppendFormat("```powershell\r\n{0} ", cmdletInfo.FullCommand);
+                    var cmdletLength = cmdletInfo.FullCommand.Length;
+                    var first = true;
                     foreach (var par in cmdletSyntax.Parameters.OrderBy(p => p.Position))
                     {
-                        syntaxText.Append("        ");
+                        if (first)
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            syntaxText.Append(new string(' ',cmdletLength + 1));
+                        }
                         if (!par.Required)
                         {
                             syntaxText.Append("[");

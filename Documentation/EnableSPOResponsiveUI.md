@@ -2,9 +2,8 @@
 Enables the PnP Responsive UI implementation on a classic SharePoint Site
 ##Syntax
 ```powershell
-Enable-SPOResponsiveUI
-        [-InfrastructureSiteUrl <String>]
-        [-Web <WebPipeBind>]
+Enable-SPOResponsiveUI [-InfrastructureSiteUrl <String>]
+                       [-Web <WebPipeBind>]
 ```
 
 

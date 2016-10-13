@@ -2,8 +2,7 @@
 Returns a taxonomy session
 ##Syntax
 ```powershell
-Get-SPOTaxonomySession
-        [-Web <WebPipeBind>]
+Get-SPOTaxonomySession [-Web <WebPipeBind>]
 ```
 
 

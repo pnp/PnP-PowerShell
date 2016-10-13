@@ -2,12 +2,11 @@
 Removes a menu item from either the quicklaunch or top navigation
 ##Syntax
 ```powershell
-Remove-SPONavigationNode
-        -Location <NavigationType>
-        -Title <String>
-        [-Header <String>]
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
+Remove-SPONavigationNode -Location <NavigationType>
+                         -Title <String>
+                         [-Header <String>]
+                         [-Force [<SwitchParameter>]]
+                         [-Web <WebPipeBind>]
 ```
 
 

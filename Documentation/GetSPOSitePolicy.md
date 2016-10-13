@@ -2,10 +2,9 @@
 Retrieves all or a specific site policy
 ##Syntax
 ```powershell
-Get-SPOSitePolicy
-        [-AllAvailable [<SwitchParameter>]]
-        [-Name <String>]
-        [-Web <WebPipeBind>]
+Get-SPOSitePolicy [-AllAvailable [<SwitchParameter>]]
+                  [-Name <String>]
+                  [-Web <WebPipeBind>]
 ```
 
 

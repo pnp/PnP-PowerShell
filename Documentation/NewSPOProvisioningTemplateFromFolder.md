@@ -2,18 +2,17 @@
 Generates a provisioning template from a given folder, including only files that are present in that folder
 ##Syntax
 ```powershell
-New-SPOProvisioningTemplateFromFolder
-        [-Match <String>]
-        [-ContentType <ContentTypePipeBind>]
-        [-Properties <Hashtable>]
-        [-AsIncludeFile [<SwitchParameter>]]
-        [-Force [<SwitchParameter>]]
-        [-Encoding <Encoding>]
-        [-Web <WebPipeBind>]
-        [-Out <String>]
-        [-Folder <String>]
-        [-TargetFolder <String>]
-        [-Schema <XMLPnPSchemaVersion>]
+New-SPOProvisioningTemplateFromFolder [-Match <String>]
+                                      [-ContentType <ContentTypePipeBind>]
+                                      [-Properties <Hashtable>]
+                                      [-AsIncludeFile [<SwitchParameter>]]
+                                      [-Force [<SwitchParameter>]]
+                                      [-Encoding <Encoding>]
+                                      [-Web <WebPipeBind>]
+                                      [-Out <String>]
+                                      [-Folder <String>]
+                                      [-TargetFolder <String>]
+                                      [-Schema <XMLPnPSchemaVersion>]
 ```
 
 

@@ -2,12 +2,11 @@
 Updates a list item
 ##Syntax
 ```powershell
-Set-SPOListItem
-        -Identity <ListItemPipeBind>
-        [-ContentType <ContentTypePipeBind>]
-        [-Values <Hashtable>]
-        [-Web <WebPipeBind>]
-        -List <ListPipeBind>
+Set-SPOListItem -Identity <ListItemPipeBind>
+                [-ContentType <ContentTypePipeBind>]
+                [-Values <Hashtable>]
+                [-Web <WebPipeBind>]
+                -List <ListPipeBind>
 ```
 
 

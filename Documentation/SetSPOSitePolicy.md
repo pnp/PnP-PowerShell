@@ -2,9 +2,8 @@
 Sets a site policy
 ##Syntax
 ```powershell
-Set-SPOSitePolicy
-        -Name <String>
-        [-Web <WebPipeBind>]
+Set-SPOSitePolicy -Name <String>
+                  [-Web <WebPipeBind>]
 ```
 
 

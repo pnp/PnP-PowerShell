@@ -2,9 +2,8 @@
 Sets Request Access Emails on a web
 ##Syntax
 ```powershell
-Set-SPORequestAccessEmails
-        -Emails <String[]>
-        [-Web <WebPipeBind>]
+Set-SPORequestAccessEmails -Emails <String[]>
+                           [-Web <WebPipeBind>]
 ```
 
 

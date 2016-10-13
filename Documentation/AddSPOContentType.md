@@ -2,13 +2,12 @@
 Adds a new content type
 ##Syntax
 ```powershell
-Add-SPOContentType
-        -Name <String>
-        [-ContentTypeId <String>]
-        [-Description <String>]
-        [-Group <String>]
-        [-ParentContentType <ContentType>]
-        [-Web <WebPipeBind>]
+Add-SPOContentType -Name <String>
+                   [-ContentTypeId <String>]
+                   [-Description <String>]
+                   [-Group <String>]
+                   [-ParentContentType <ContentType>]
+                   [-Web <WebPipeBind>]
 ```
 
 

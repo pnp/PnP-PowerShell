@@ -2,18 +2,16 @@
 Sets the contents of a wikipage
 ##Syntax
 ```powershell
-Set-SPOWikiPageContent
-        -Path <String>
-        -ServerRelativePageUrl <String>
-        [-Web <WebPipeBind>]
+Set-SPOWikiPageContent -Path <String>
+                       -ServerRelativePageUrl <String>
+                       [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-SPOWikiPageContent
-        -Content <String>
-        -ServerRelativePageUrl <String>
-        [-Web <WebPipeBind>]
+Set-SPOWikiPageContent -Content <String>
+                       -ServerRelativePageUrl <String>
+                       [-Web <WebPipeBind>]
 ```
 
 

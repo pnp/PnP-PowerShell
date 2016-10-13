@@ -2,10 +2,9 @@
 Returns the subwebs
 ##Syntax
 ```powershell
-Get-SPOSubWebs
-        [-Recurse [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
-        [-Identity <WebPipeBind>]
+Get-SPOSubWebs [-Recurse [<SwitchParameter>]]
+               [-Web <WebPipeBind>]
+               [-Identity <WebPipeBind>]
 ```
 
 

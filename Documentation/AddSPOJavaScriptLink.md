@@ -2,12 +2,11 @@
 Adds a link to a JavaScript file to a web or sitecollection
 ##Syntax
 ```powershell
-Add-SPOJavaScriptLink
-        -Name <String>
-        -Url <String[]>
-        [-Sequence <Int32>]
-        [-Scope <CustomActionScope>]
-        [-Web <WebPipeBind>]
+Add-SPOJavaScriptLink -Name <String>
+                      -Url <String[]>
+                      [-Sequence <Int32>]
+                      [-Scope <CustomActionScope>]
+                      [-Web <WebPipeBind>]
 ```
 
 

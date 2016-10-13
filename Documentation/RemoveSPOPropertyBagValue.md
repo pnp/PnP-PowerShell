@@ -2,11 +2,10 @@
 Removes a value from the property bag
 ##Syntax
 ```powershell
-Remove-SPOPropertyBagValue
-        [-Folder <String>]
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
-        -Key <String>
+Remove-SPOPropertyBagValue [-Folder <String>]
+                           [-Force [<SwitchParameter>]]
+                           [-Web <WebPipeBind>]
+                           -Key <String>
 ```
 
 

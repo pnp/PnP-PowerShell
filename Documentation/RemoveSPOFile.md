@@ -2,18 +2,16 @@
 Removes a file.
 ##Syntax
 ```powershell
-Remove-SPOFile
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
-        -ServerRelativeUrl <String>
+Remove-SPOFile [-Force [<SwitchParameter>]]
+               [-Web <WebPipeBind>]
+               -ServerRelativeUrl <String>
 ```
 
 
 ```powershell
-Remove-SPOFile
-        [-Force [<SwitchParameter>]]
-        [-Web <WebPipeBind>]
-        -SiteRelativeUrl <String>
+Remove-SPOFile [-Force [<SwitchParameter>]]
+               [-Web <WebPipeBind>]
+               -SiteRelativeUrl <String>
 ```
 
 

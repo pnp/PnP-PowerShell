@@ -2,22 +2,20 @@
 Sets list permissions
 ##Syntax
 ```powershell
-Set-SPOListPermission
-        -Group <GroupPipeBind>
-        -Identity <ListPipeBind>
-        [-AddRole <String>]
-        [-RemoveRole <String>]
-        [-Web <WebPipeBind>]
+Set-SPOListPermission -Group <GroupPipeBind>
+                      -Identity <ListPipeBind>
+                      [-AddRole <String>]
+                      [-RemoveRole <String>]
+                      [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-SPOListPermission
-        -User <String>
-        -Identity <ListPipeBind>
-        [-AddRole <String>]
-        [-RemoveRole <String>]
-        [-Web <WebPipeBind>]
+Set-SPOListPermission -User <String>
+                      -Identity <ListPipeBind>
+                      [-AddRole <String>]
+                      [-RemoveRole <String>]
+                      [-Web <WebPipeBind>]
 ```
 
 

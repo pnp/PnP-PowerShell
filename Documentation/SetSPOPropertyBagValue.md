@@ -2,22 +2,20 @@
 Sets a property bag value
 ##Syntax
 ```powershell
-Set-SPOPropertyBagValue
-        -Key <String>
-        -Value <String>
-        [-Folder <String>]
-        -Value <String>
-        [-Web <WebPipeBind>]
+Set-SPOPropertyBagValue -Key <String>
+                        -Value <String>
+                        [-Folder <String>]
+                        -Value <String>
+                        [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-SPOPropertyBagValue
-        -Key <String>
-        -Value <String>
-        -Indexed [<SwitchParameter>]
-        -Value <String>
-        [-Web <WebPipeBind>]
+Set-SPOPropertyBagValue -Key <String>
+                        -Value <String>
+                        -Indexed [<SwitchParameter>]
+                        -Value <String>
+                        [-Web <WebPipeBind>]
 ```
 
 
