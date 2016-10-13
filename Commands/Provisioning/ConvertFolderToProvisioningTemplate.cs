@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Convert", "SPOFolderToProvisioningTemplate")]
     [CmdletHelp("Creates a pnp package file of an existing template xml, and includes all files in the current folder",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Convert-SPOFolderToProvisioningTemplate -Out template.pnp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the current folder",

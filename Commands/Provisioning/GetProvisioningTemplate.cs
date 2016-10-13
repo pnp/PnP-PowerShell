@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Get, "SPOProvisioningTemplate", SupportsShouldProcess = true)]
     [CmdletHelp("Generates a provisioning template from a web",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Get-SPOProvisioningTemplate -Out template.pnp",
        Remarks = "Extracts a provisioning template in Office Open XML from the current web.",

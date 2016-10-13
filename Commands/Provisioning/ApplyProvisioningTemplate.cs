@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Apply", "SPOProvisioningTemplate")]
     [CmdletHelp("Applies a provisioning template to a web",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
      Code = @"PS:> Apply-SPOProvisioningTemplate -Path template.xml",
      Remarks = @"Applies a provisioning template in XML format to the current web.",
