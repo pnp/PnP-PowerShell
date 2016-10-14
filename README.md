@@ -85,7 +85,7 @@ Get-Module SharePointPnPPowerShell* -ListAvailable | Select-Object Name,Version 
 ## HOW TO USE DURING DEVELOPMENT ##
 
 A build script will copy the required files to a folder in your users folder, called:
-*C:\Users\<YourUserName>\Documents\WindowsPowerShell\Modules\SharePointPnPPowerShellOnline*
+*C:\Users\\\<YourUserName\>\Documents\WindowsPowerShell\Modules\SharePointPnPPowerShell\<Platform\>*
 
 # GETTING STARTED #
 
