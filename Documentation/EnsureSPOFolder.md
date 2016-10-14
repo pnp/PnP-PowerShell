@@ -1,5 +1,5 @@
 #Ensure-SPOFolder
-Returns a folder given a site relative path, and will create it does not exist.
+Returns a folder given a site relative path, and will create it if it does not exist.
 ##Syntax
 ```powershell
 Ensure-SPOFolder [-Web <WebPipeBind>]
