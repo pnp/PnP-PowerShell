@@ -2,9 +2,16 @@
 Updates a list item
 ##Syntax
 ```powershell
-Set-SPOListItem -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>] [-Web <WebPipeBind>] -List <ListPipeBind>
+Set-SPOListItem -Identity <ListItemPipeBind>
+                [-ContentType <ContentTypePipeBind>]
+                [-Values <Hashtable>]
+                [-Web <WebPipeBind>]
+                -List <ListPipeBind>
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

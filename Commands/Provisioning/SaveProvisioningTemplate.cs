@@ -11,11 +11,11 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Save", "SPOProvisioningTemplate")]
     [CmdletHelp("Saves a PnP file to the file systems",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Save-SPOProvisioningTemplate -InputInstance $template -Out .\template.pnp",
        Remarks = "Saves a PnP file to the file systems",

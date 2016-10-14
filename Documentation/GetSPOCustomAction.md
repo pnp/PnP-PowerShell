@@ -2,9 +2,14 @@
 Returns all or a specific custom action(s)
 ##Syntax
 ```powershell
-Get-SPOCustomAction [-Identity <GuidPipeBind>] [-Scope <CustomActionScope>] [-Web <WebPipeBind>]
+Get-SPOCustomAction [-Identity <GuidPipeBind>]
+                    [-Scope <CustomActionScope>]
+                    [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[System.Collections.Generic.List`1[Microsoft.SharePoint.Client.UserCustomAction]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.usercustomaction.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

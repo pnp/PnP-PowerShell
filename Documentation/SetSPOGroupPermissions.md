@@ -2,7 +2,11 @@
 Adds and/or removes permissions of a specific SharePoint group
 ##Syntax
 ```powershell
-Set-SPOGroupPermissions [-List <ListPipeBind>] [-AddRole <String[]>] [-RemoveRole <String[]>] [-Web <WebPipeBind>] -Identity <GroupPipeBind>
+Set-SPOGroupPermissions [-List <ListPipeBind>]
+                        [-AddRole <String[]>]
+                        [-RemoveRole <String[]>]
+                        [-Web <WebPipeBind>]
+                        -Identity <GroupPipeBind>
 ```
 
 

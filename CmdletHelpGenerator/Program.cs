@@ -65,7 +65,9 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                     var attrs = t.GetCustomAttributes();
                     var examples = new List<CmdletExampleAttribute>();
                     var relatedLinks = new List<CmdletRelatedLinkAttribute>();
-
+                    Type outputType = null;
+                    var outputTypeLink = string.Empty;
+                    var outputTypeDescription = string.Empty;
 
                     // Get info from attributes
                     foreach (var attr in attrs)
@@ -85,6 +87,9 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                             version = a.Version;
                             detaileddescription = a.DetailedDescription;
                             category = ToEnumString(a.Category);
+                            outputType = a.OutputType;
+                            outputTypeLink = a.OutputTypeLink;
+                            outputTypeDescription = a.OutputTypeDescription;
                         }
                         if (attr is CmdletExampleAttribute)
                         {
@@ -105,6 +110,9 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                     cmdletInfo.Version = version;
                     cmdletInfo.Copyright = copyright;
                     cmdletInfo.Category = category;
+                    cmdletInfo.OutputType = outputType;
+                    cmdletInfo.OutputTypeLink = outputTypeLink;
+                    cmdletInfo.OutputTypeDescription = outputTypeDescription;
 
                     // Build XElement for command
                     var commandElement = new XElement(command + "command", mamlNsAttr, commandNsAttr, devNsAttr);
@@ -467,10 +475,19 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                 foreach (var cmdletSyntax in cmdletInfo.Syntaxes.OrderBy(s => s.ParameterSetName))
                 {
                     var syntaxText = new StringBuilder();
-                    syntaxText.AppendFormat("```powershell\r\n{0}", cmdletInfo.FullCommand);
+                    syntaxText.AppendFormat("```powershell\r\n{0} ", cmdletInfo.FullCommand);
+                    var cmdletLength = cmdletInfo.FullCommand.Length;
+                    var first = true;
                     foreach (var par in cmdletSyntax.Parameters.OrderBy(p => p.Position))
                     {
-                        syntaxText.Append(" ");
+                        if (first)
+                        {
+                            first = false;
+                        }
+                        else
+                        {
+                            syntaxText.Append(new string(' ',cmdletLength + 1));
+                        }
                         if (!par.Required)
                         {
                             syntaxText.Append("[");
@@ -487,10 +504,11 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                         {
                             syntaxText.Append("]");
                         }
+                        syntaxText.Append("\r\n");
                     }
                     // Add All ParameterSet ones
                     docBuilder.Append(syntaxText);
-                    docBuilder.AppendFormat("\n```\n\n\n");
+                    docBuilder.AppendFormat("```\n\n\n");
                 }
 
                 if (!string.IsNullOrEmpty(cmdletInfo.DetailedDescription))
@@ -498,6 +516,25 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                     docBuilder.Append("##Detailed Description\n");
                     docBuilder.AppendFormat("{0}\n\n", cmdletInfo.DetailedDescription);
                 }
+
+                if (cmdletInfo.OutputType != null)
+                {
+                    docBuilder.Append("##Returns\n");
+                    if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeLink))
+                    {
+                        docBuilder.Append($">[{cmdletInfo.OutputType}]({cmdletInfo.OutputTypeLink})");
+                    }
+                    else
+                    {
+                        docBuilder.Append($">{cmdletInfo.OutputType}");
+                    }
+                    if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeDescription))
+                    {
+                        docBuilder.Append($"\n\n{cmdletInfo.OutputTypeDescription}");
+                    }
+                    docBuilder.Append("\n\n");
+                }
+
                 docBuilder.Append("##Parameters\n");
                 docBuilder.Append("Parameter|Type|Required|Description\n");
                 docBuilder.Append("---------|----|--------|-----------\n");

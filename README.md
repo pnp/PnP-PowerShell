@@ -51,6 +51,11 @@ _SharePoint 2013_
 Install-Module SharePointPnPPowerShell2013
 ```
 
+*Notice*: if you installed the latest PowerShellGet from Github, you might receive an error message stating 
+>PackageManagement\Install-Package : The version '2.8.x.x' of the module 'SharePointPnPPowerShellOnline' being installed is not catalog signed.
+
+In order to install the cmdlets when you get this error specify the -SkipPublisherCheck switch with the Install-Module cmdlet, e.g. ```Install-Module SharePointPnPPowerShellOnline -SkipPublisherCheck
+
 Alternatively for installation on machines that have at least PowerShell v3 installed (you can find this out by opening PowerShell and running ```$PSVersionTable.PSVersion```. The value for ```Major``` should be above 3) you can run the below command which will install PowerShell Package Management and then install the PowerShell Modules from the PowerShell Gallery
 
 ```powershell

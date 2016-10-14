@@ -2,9 +2,15 @@
 Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet
 ##Syntax
 ```powershell
-New-SPOExtensbilityHandlerObject -Type <String> [-Configuration <String>] [-Disabled [<SwitchParameter>]] -Assembly <String>
+New-SPOExtensbilityHandlerObject -Type <String>
+                                 [-Configuration <String>]
+                                 [-Disabled [<SwitchParameter>]]
+                                 -Assembly <String>
 ```
 
+
+##Returns
+>OfficeDevPnP.Core.Framework.Provisioning.Model.ExtensibilityHandler
 
 ##Parameters
 Parameter|Type|Required|Description

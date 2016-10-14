@@ -11,11 +11,11 @@ using System.Collections;
 using System.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Apply", "SPOProvisioningTemplate")]
     [CmdletHelp("Applies a provisioning template to a web",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
      Code = @"PS:> Apply-SPOProvisioningTemplate -Path template.xml",
      Remarks = @"Applies a provisioning template in XML format to the current web.",
@@ -239,8 +239,6 @@ PS:> Apply-SPOProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             applyingInformation.OverwriteSystemPropertyBagValues = OverwriteSystemPropertyBagValues;
             SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
-
-            WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
         }
 
         internal static bool IsOpenOfficeFile(Stream stream)

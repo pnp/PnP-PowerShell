@@ -2,7 +2,11 @@
 Exports a taxonomy TermGroup to either the output or to an XML file.
 ##Syntax
 ```powershell
-Export-SPOTermGroupToXml [-Identity <TermGroupPipeBind>] [-Out <String>] [-FullTemplate [<SwitchParameter>]] [-Encoding <Encoding>] [-Force [<SwitchParameter>]]
+Export-SPOTermGroupToXml [-Identity <TermGroupPipeBind>]
+                         [-Out <String>]
+                         [-FullTemplate [<SwitchParameter>]]
+                         [-Encoding <Encoding>]
+                         [-Force [<SwitchParameter>]]
 ```
 
 

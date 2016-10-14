@@ -8,7 +8,8 @@ namespace SharePointPnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "SPOSiteSearchQueryResults")]
     [CmdletHelp("Executes a search query to retrieve indexed site collections",
-        Category = CmdletHelpCategory.Search)]
+        Category = CmdletHelpCategory.Search,
+        OutputType = typeof(List<dynamic>))]
     [CmdletExample(
         Code = @"PS:> Get-SPOSiteSearchQueryResults",
         Remarks = "Returns all site collections indexed by SharePoint Search",

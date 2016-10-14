@@ -2,7 +2,10 @@
 Deletes a view from a list
 ##Syntax
 ```powershell
-Remove-SPOView [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] -Identity <ViewPipeBind> -List <ListPipeBind>
+Remove-SPOView [-Force [<SwitchParameter>]]
+               [-Web <WebPipeBind>]
+               -Identity <ViewPipeBind>
+               -List <ListPipeBind>
 ```
 
 

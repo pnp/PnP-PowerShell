@@ -8,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet("New", "SPOGroup")]
     [CmdletHelp("Adds group to the Site Groups List and returns a group object",
-        Category = CmdletHelpCategory.Principals)]
+        Category = CmdletHelpCategory.Principals,
+        OutputType = typeof(Group),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx")]
     [CmdletExample(
         Code = @"PS:> New-SPOGroup -Title ""My Site Users""",
         SortOrder = 1)]
@@ -33,7 +35,11 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         public SwitchParameter AllowMembersEditMembership;
 
         [Parameter(Mandatory = false, HelpMessage = "A switch parameter that specifies whether only group members are allowed to view the list of members in the group")]
+        [Obsolete("This is done by default. Use DisallowMembersViewMembership to disallow group members viewing membership")]
         public SwitchParameter OnlyAllowMembersViewMembership;
+
+        [Parameter(Mandatory = false, HelpMessage = "A switch parameter that disallows group members to view membership.")]
+        public SwitchParameter DisallowMembersViewMembership;
 
         [Parameter(Mandatory = false, HelpMessage = "The e-mail address to which membership requests are sent")]
         public string RequestToJoinEmail;
@@ -73,6 +79,11 @@ namespace SharePointPnP.PowerShell.Commands.Principals
             if (OnlyAllowMembersViewMembership)
             {
                 group.OnlyAllowMembersViewMembership = true;
+                dirty = true;
+            }
+            if (DisallowMembersViewMembership)
+            {
+                group.OnlyAllowMembersViewMembership = false;
                 dirty = true;
             }
             if (!string.IsNullOrEmpty(RequestToJoinEmail))

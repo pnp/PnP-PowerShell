@@ -2,9 +2,14 @@
 Returns all or a specific event receiver
 ##Syntax
 ```powershell
-Get-SPOEventReceiver [-List <ListPipeBind>] [-Identity <GuidPipeBind>] [-Web <WebPipeBind>]
+Get-SPOEventReceiver [-List <ListPipeBind>]
+                     [-Identity <GuidPipeBind>]
+                     [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.EventReceiverDefinition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceiverdefinition.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

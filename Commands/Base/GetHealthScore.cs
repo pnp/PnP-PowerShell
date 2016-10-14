@@ -7,7 +7,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Get", "SPOHealthScore")]
     [CmdletHelp("Retrieves the current health score value of the server", 
-        Category = CmdletHelpCategory.Base)]
+        Category = CmdletHelpCategory.Base,
+        OutputType=typeof(int),
+        OutputTypeDescription = "Returns a int value representing the current health score value of the server.")]
     [CmdletExample(
         Code = "PS:> Get-SPOHealthScore", 
         Remarks = @"This will retrieve the current health score of the server.",        

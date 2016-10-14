@@ -2,7 +2,9 @@
 Removes a content type
 ##Syntax
 ```powershell
-Remove-SPOContentType [-Force [<SwitchParameter>]] [-Web <WebPipeBind>] -Identity <ContentTypePipeBind>
+Remove-SPOContentType [-Force [<SwitchParameter>]]
+                      [-Web <WebPipeBind>]
+                      -Identity <ContentTypePipeBind>
 ```
 
 

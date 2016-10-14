@@ -2,24 +2,31 @@
 Returns a specific group or all groups.
 ##Syntax
 ```powershell
-Get-SPOGroup [-Web <WebPipeBind>] [-Identity <GroupPipeBind>]
+Get-SPOGroup [-Web <WebPipeBind>]
+             [-Identity <GroupPipeBind>]
 ```
 
 
 ```powershell
-Get-SPOGroup [-AssociatedMemberGroup [<SwitchParameter>]] [-Web <WebPipeBind>]
+Get-SPOGroup [-AssociatedMemberGroup [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Get-SPOGroup [-AssociatedOwnerGroup [<SwitchParameter>]] [-Web <WebPipeBind>]
+Get-SPOGroup [-AssociatedOwnerGroup [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Get-SPOGroup [-AssociatedVisitorGroup [<SwitchParameter>]] [-Web <WebPipeBind>]
+Get-SPOGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[System.Collections.Generic.List`1[Microsoft.SharePoint.Client.Group]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

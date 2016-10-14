@@ -2,9 +2,14 @@
 Returns all activated or a specific activated feature
 ##Syntax
 ```powershell
-Get-SPOFeature [-Scope <FeatureScope>] [-Web <WebPipeBind>] [-Identity <FeaturePipeBind>]
+Get-SPOFeature [-Scope <FeatureScope>]
+               [-Web <WebPipeBind>]
+               [-Identity <FeaturePipeBind>]
 ```
 
+
+##Returns
+>[System.Collections.Generic.IEnumerable`1[Microsoft.SharePoint.Client.Feature]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.feature.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

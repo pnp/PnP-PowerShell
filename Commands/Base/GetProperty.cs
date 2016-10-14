@@ -8,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "SPOProperty")]
     [CmdletHelp("Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.",
-       Category = CmdletHelpCategory.Base)]
+        Category = CmdletHelpCategory.Base,
+        OutputType = typeof(ClientObject),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientobject.aspx")]
     [CmdletExample(Code = @"
 PS:> $web = Get-SPOWeb
 PS:> Get-SPOProperty -ClientObject $web -Property Id, Lists

@@ -2,9 +2,13 @@
 Adds a user to the built-in Site User Info List and returns a user object
 ##Syntax
 ```powershell
-New-SPOUser -LoginName <String> [-Web <WebPipeBind>]
+New-SPOUser -LoginName <String>
+            [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.User](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

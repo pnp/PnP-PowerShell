@@ -7,7 +7,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "SPOList")]
     [CmdletHelp("Returns a List object",
-        Category = CmdletHelpCategory.Lists)]
+        Category = CmdletHelpCategory.Lists,
+        OutputType = typeof(List),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.list.aspx")]
     [CmdletExample(
         Code = "PS:> Get-SPOList",
         Remarks = "Returns all lists in the current web",

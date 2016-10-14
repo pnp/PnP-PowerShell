@@ -2,9 +2,14 @@
 Returns the property bag values.
 ##Syntax
 ```powershell
-Get-SPOPropertyBag [-Folder <String>] [-Web <WebPipeBind>] [-Key <String>]
+Get-SPOPropertyBag [-Folder <String>]
+                   [-Web <WebPipeBind>]
+                   [-Key <String>]
 ```
 
+
+##Returns
+>SharePointPnP.PowerShell.Commands.PropertyBagValue
 
 ##Parameters
 Parameter|Type|Required|Description

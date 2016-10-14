@@ -7,7 +7,12 @@ Set-SPOTraceLog -Off [<SwitchParameter>]
 
 
 ```powershell
-Set-SPOTraceLog -On [<SwitchParameter>] [-LogFile <String>] [-Level <LogLevel>] [-Delimiter <String>] [-IndentSize <Int32>] [-AutoFlush <Boolean>]
+Set-SPOTraceLog -On [<SwitchParameter>]
+                [-LogFile <String>]
+                [-Level <LogLevel>]
+                [-Delimiter <String>]
+                [-IndentSize <Int32>]
+                [-AutoFlush <Boolean>]
 ```
 
 

@@ -11,7 +11,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "SPOListItem")]
     [CmdletHelp("Updates a list item",
-        Category = CmdletHelpCategory.Lists)]
+        Category = CmdletHelpCategory.Lists,
+        OutputType = typeof(ListItem),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx")]
     [CmdletExample(
         Code = @"Set-SPOListItem -List ""Demo List"" -Identity 1 -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
         Remarks = @"Sets fields value in the list item with ID 1 in the ""Demo List"". It sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
@@ -29,7 +31,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
         public ListItemPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type")]
@@ -91,7 +93,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title, f => f.FieldTypeKind));
                 ClientContext.ExecuteQueryRetry();
 
-                foreach (var key in Values.Keys)
+                Hashtable values = Values ?? new Hashtable();
+
+                foreach (var key in values.Keys)
                 {
                     var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
                     if (field != null)
@@ -102,7 +106,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                 {
                                     List<FieldUserValue> userValues = new List<FieldUserValue>();
 
-                                    var value = Values[key];
+                                    var value = values[key];
                                     if (value.GetType().IsArray)
                                     {
                                         foreach (var arrayItem in value as object[])
@@ -141,7 +145,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                 }
                             default:
                                 {
-                                    item[key as string] = Values[key];
+                                    item[key as string] = values[key];
                                     break;
                                 }
                         }

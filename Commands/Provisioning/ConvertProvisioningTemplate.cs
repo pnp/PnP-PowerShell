@@ -5,11 +5,11 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Convert, "SPOProvisioningTemplate")]
     [CmdletHelp("Converts a provisioning template to a other schema version",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
      Code = @"PS:> Convert-SPOProvisioningTemplate -Path template.xml",
      Remarks = @"Converts a provisioning template to the latest schema and outputs the result to current console.",

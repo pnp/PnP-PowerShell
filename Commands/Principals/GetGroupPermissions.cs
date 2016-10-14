@@ -7,7 +7,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "SPOGroupPermissions")]
     [CmdletHelp("Returns the permissions for a specific SharePoint group",
-        Category = CmdletHelpCategory.Principals)]
+        Category = CmdletHelpCategory.Principals,
+        OutputType = typeof(RoleDefinitionBindingCollection),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.roledefinitionbindingcollection.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-SPOGroupPermissions -Identity 'My Site Members'", 
         Remarks = "Returns the permissions for the SharePoint group with the name 'My Site Members'",

@@ -2,7 +2,10 @@
 Removes a site column from a content type
 ##Syntax
 ```powershell
-Remove-SPOFieldFromContentType -Field <FieldPipeBind> -ContentType <ContentTypePipeBind> [-DoNotUpdateChildren [<SwitchParameter>]] [-Web <WebPipeBind>]
+Remove-SPOFieldFromContentType -Field <FieldPipeBind>
+                               -ContentType <ContentTypePipeBind>
+                               [-DoNotUpdateChildren [<SwitchParameter>]]
+                               [-Web <WebPipeBind>]
 ```
 
 

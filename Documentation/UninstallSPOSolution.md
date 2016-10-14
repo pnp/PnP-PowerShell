@@ -2,7 +2,10 @@
 Uninstalls a sandboxed solution from a site collection
 ##Syntax
 ```powershell
-Uninstall-SPOSolution -PackageId <GuidPipeBind> -PackageName <String> [-MajorVersion <Int32>] [-MinorVersion <Int32>]
+Uninstall-SPOSolution -PackageId <GuidPipeBind>
+                      -PackageName <String>
+                      [-MajorVersion <Int32>]
+                      [-MinorVersion <Int32>]
 ```
 
 

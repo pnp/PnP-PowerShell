@@ -2,9 +2,14 @@
 Returns the subwebs
 ##Syntax
 ```powershell
-Get-SPOSubWebs [-Recurse [<SwitchParameter>]] [-Web <WebPipeBind>] [-Identity <WebPipeBind>]
+Get-SPOSubWebs [-Recurse [<SwitchParameter>]]
+               [-Web <WebPipeBind>]
+               [-Identity <WebPipeBind>]
 ```
 
+
+##Returns
+>[System.Collections.Generic.List`1[Microsoft.SharePoint.Client.Web]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

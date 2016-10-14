@@ -2,7 +2,13 @@
 Adds a menu item to either the quicklaunch or top navigation
 ##Syntax
 ```powershell
-Add-SPONavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Header <String>] [-First [<SwitchParameter>]] [-External [<SwitchParameter>]] [-Web <WebPipeBind>]
+Add-SPONavigationNode -Location <NavigationType>
+                      -Title <String>
+                      [-Url <String>]
+                      [-Header <String>]
+                      [-First [<SwitchParameter>]]
+                      [-External [<SwitchParameter>]]
+                      [-Web <WebPipeBind>]
 ```
 
 

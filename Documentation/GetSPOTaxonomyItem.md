@@ -6,6 +6,9 @@ Get-SPOTaxonomyItem -TermPath <String>
 ```
 
 
+##Returns
+>[Microsoft.SharePoint.Client.Taxonomy.TaxonomyItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.taxonomyitem.aspx)
+
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------

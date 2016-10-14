@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -7,7 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Get, "SPOEventReceiver")]
     [CmdletHelp("Returns all or a specific event receiver",
-        Category = CmdletHelpCategory.EventReceivers)]
+        Category = CmdletHelpCategory.EventReceivers,
+        OutputType = typeof(EventReceiverDefinition),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceiverdefinition.aspx")]
     [CmdletExample(
       Code = @"PS:> Get-SPOEventReceiver",
       Remarks = @"This will return all registered event receivers on the current web", SortOrder = 1)]

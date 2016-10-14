@@ -7,11 +7,11 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Convert", "SPOFolderToProvisioningTemplate")]
     [CmdletHelp("Creates a pnp package file of an existing template xml, and includes all files in the current folder",
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Convert-SPOFolderToProvisioningTemplate -Out template.pnp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the current folder",

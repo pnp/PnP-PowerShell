@@ -6,7 +6,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "SPOHomePage")]
     [CmdletHelp("Returns the URL to the home page", 
-        Category = CmdletHelpCategory.Branding)]
+        Category = CmdletHelpCategory.Branding,
+        OutputType = typeof(string))]
     [CmdletExample(Code = @"PS:> Get-SPOHomePage",
         Remarks = "Will return the URL of the home page of the web.",
         SortOrder = 1)]

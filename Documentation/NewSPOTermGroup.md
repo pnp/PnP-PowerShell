@@ -2,9 +2,15 @@
 Creates a taxonomy term group
 ##Syntax
 ```powershell
-New-SPOTermGroup -GroupName <String> [-GroupId <Guid>] [-Description <String>] [-TermStoreName <String>]
+New-SPOTermGroup -GroupName <String>
+                 [-GroupId <Guid>]
+                 [-Description <String>]
+                 [-TermStoreName <String>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.Taxonomy.TermGroup](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termgroup.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

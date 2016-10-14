@@ -2,7 +2,8 @@
 Resumes a previously stopped workflow instance
 ##Syntax
 ```powershell
-Resume-SPOWorkflowInstance [-Web <WebPipeBind>] -Identity <WorkflowInstancePipeBind>
+Resume-SPOWorkflowInstance [-Web <WebPipeBind>]
+                           -Identity <WorkflowInstancePipeBind>
 ```
 
 

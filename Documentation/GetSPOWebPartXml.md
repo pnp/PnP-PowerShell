@@ -2,9 +2,14 @@
 Returns the webpart XML of a webpart registered on a site
 ##Syntax
 ```powershell
-Get-SPOWebPartXml -ServerRelativePageUrl <String> -Identity <WebPartPipeBind> [-Web <WebPipeBind>]
+Get-SPOWebPartXml -ServerRelativePageUrl <String>
+                  -Identity <WebPartPipeBind>
+                  [-Web <WebPipeBind>]
 ```
 
+
+##Returns
+>System.String
 
 ##Parameters
 Parameter|Type|Required|Description

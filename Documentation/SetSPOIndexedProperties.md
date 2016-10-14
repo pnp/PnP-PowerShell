@@ -2,7 +2,8 @@
 Marks values of the propertybag to be indexed by search. Notice that this will overwrite the existing flags, i.e. only the properties you define with the cmdlet will be indexed.
 ##Syntax
 ```powershell
-Set-SPOIndexedProperties -Keys <List`1> [-Web <WebPipeBind>]
+Set-SPOIndexedProperties -Keys <List`1>
+                         [-Web <WebPipeBind>]
 ```
 
 
