@@ -607,7 +607,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 {
                     var serverRelativePath = GetServerRelativePath(IsPropertyAvailable(folder, "ServerRelativeUrl") ? folder.ServerRelativeUrl : folder.EnsureProperty(f => f.ServerRelativeUrl));
 
-                    //Get cached cild items
+                    //Get cached child items
                     var cachedFolderAndFiles = GetCachedChildItems(serverRelativePath);
                     if (cachedFolderAndFiles != null) return cachedFolderAndFiles;
 
