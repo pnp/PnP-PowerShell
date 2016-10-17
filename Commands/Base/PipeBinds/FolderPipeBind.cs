@@ -21,10 +21,12 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             _folder = folder;
         }
 
+#if !SP2013
         public FolderPipeBind(Guid guid)
         {
             _id = guid;
         }
+#endif
 
         public FolderPipeBind(string id)
         {
@@ -34,7 +36,9 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
+#if !SP2013
         public Guid Id => _id;
+#endif
 
         public Folder Folder
         {
@@ -56,10 +60,12 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             {
                 folder = Folder;
             }
+#if !SP2013
             else if (Id != Guid.Empty)
             {
                 folder = web.GetFolderById(Id);
             }
+#endif
             else if (!string.IsNullOrEmpty(ServerRelativeUrl))
             {
                 folder = web.GetFolderByServerRelativeUrl(ServerRelativeUrl);
