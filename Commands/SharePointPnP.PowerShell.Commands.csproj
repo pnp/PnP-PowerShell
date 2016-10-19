@@ -383,6 +383,7 @@
     <Compile Include="Components\GalleryHelper.cs" />
     <Compile Include="Enums\TargetPlatform.cs" />
     <Compile Include="Enums\TargetScope.cs" />
+    <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Provisioning\AddFileToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\LoadProvisioningTemplate.cs" />
     <Compile Include="Provisioning\NewProvisioningTemplate.cs" />
