@@ -2,6 +2,32 @@
 Applies a provisioning template to a web
 ##Syntax
 ```powershell
+Apply-SPOProvisioningTemplate [-GalleryTemplateId <Guid>]
+                              [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                              [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Apply-SPOProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
+                              [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                              [-Web <WebPipeBind>]
+```
+
+
+```powershell
 Apply-SPOProvisioningTemplate [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
                               [-Parameters <Hashtable>]
@@ -9,7 +35,6 @@ Apply-SPOProvisioningTemplate [-ResourceFolder <String>]
                               [-ExcludeHandlers <Handlers>]
                               [-ExtensibilityHandlers <ExtensibilityHandler[]>]
                               [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
-                              [-InputInstance <ProvisioningTemplate>]
                               [-Web <WebPipeBind>]
                               -Path <String>
 ```
@@ -20,6 +45,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |ExcludeHandlers|Handlers|False|Allows you to run all handlers, excluding the ones specified.|
 |ExtensibilityHandlers|ExtensibilityHandler[]|False|Allows you to specify ExtensbilityHandlers to execute while applying a template|
+|GalleryTemplateId|Guid|False||
 |Handlers|Handlers|False|Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.|
 |InputInstance|ProvisioningTemplate|False|Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.|
 |OverwriteSystemPropertyBagValues|SwitchParameter|False|Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)|
