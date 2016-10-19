@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Components
     {
         private static string BaseTemplateGalleryUrl = "https://templates-gallery.sharepointpnp.com";
 
-        internal static void SaveTemplate(Guid templateId, string path, Func<string, bool> overWriteFileAction)
+        internal static void SaveTemplate(Guid templateId, string path, Func<string, bool> overWriteFileAction  = null, Action<string> itemSavedAction = null)
         {
             HttpContentHeaders headers = null;
             // Get the template via HTTP REST
@@ -45,7 +45,14 @@ namespace SharePointPnP.PowerShell.Commands.Components
                         bool doSave = false;
                         if (System.IO.File.Exists(fileName))
                         {
-                            doSave = overWriteFileAction(fileName);
+                            if (overWriteFileAction != null)
+                            {
+                                doSave = overWriteFileAction(fileName);
+                            }
+                            else
+                            {
+                                doSave = true;
+                            }
                         }
                         else
                         {
@@ -59,6 +66,7 @@ namespace SharePointPnP.PowerShell.Commands.Components
                                 templateStream.Seek(0, SeekOrigin.Begin);
                                 templateStream.CopyTo(fileStream);
                             }
+                            itemSavedAction?.Invoke(fileName);
                         }
                     }
                 }

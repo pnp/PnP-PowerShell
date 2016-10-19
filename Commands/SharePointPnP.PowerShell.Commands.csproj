@@ -390,7 +390,7 @@
     <Compile Include="Components\ProvisioningTemplateInformation.cs" />
     <Compile Include="Provisioning\RemoveFileFromProvisioningTemplate.cs" />
     <Compile Include="Provisioning\SaveProvisioningTemplate.cs" />
-    <Compile Include="Provisioning\GetTemplateFromGallery.cs" />
+    <Compile Include="Provisioning\GetProvisioningTemplateFromGallery.cs" />
     <Compile Include="Provisioning\SetProvisioningTemplateMetadata.cs" />
     <Compile Include="Provisioning\ConvertFolderToProvisioningTemplate.cs" />
     <Compile Include="Branding\DisableResponsiveUI.cs" />

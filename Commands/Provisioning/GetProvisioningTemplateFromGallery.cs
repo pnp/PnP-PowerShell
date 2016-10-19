@@ -76,6 +76,9 @@ Apply-SPOProvisioningTemplate -InputInstance $template",
                             return true;
                         }
                         return false;
+                    }, f =>
+                    {
+                        WriteObject($"Template saved: {f}");
                     });
                 }
                 else
