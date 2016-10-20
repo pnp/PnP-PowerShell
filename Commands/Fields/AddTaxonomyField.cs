@@ -113,7 +113,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
             {
                 field = SelectedWeb.CreateTaxonomyField(fieldCI);
             }
-            WriteObject(field);
+            WriteObject(ClientContext.CastTo<TaxonomyField>(field));
         }
 
     }
