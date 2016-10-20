@@ -117,6 +117,7 @@ Cmdlet|Description
 **[Set&#8209;SPOListItem](SetSPOListItem.md)** |Updates a list item
 **[Get&#8209;SPOListItem](GetSPOListItem.md)** |Retrieves list items
 **[Set&#8209;SPOListPermission](SetSPOListPermission.md)** |Sets list permissions
+**[Get&#8209;SPOProvisioningTemplateFromGallery](GetSPOProvisioningTemplateFromGallery.md)** |Retrieves or searches provisioning templates from the PnP Template Gallery
 **[Request&#8209;SPOReIndexList](RequestSPOReIndexList.md)** |Marks the list for full indexing during the next incremental crawl
 **[Add&#8209;SPOView](AddSPOView.md)** |Adds a view to a list
 **[Get&#8209;SPOView](GetSPOView.md)** |Returns one or all views from a list

@@ -1,5 +1,7 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2016-10-19**
+* Added Get-SPOProvisioningTemplateFromGallery cmdlet
 
 **2016-10-13**
 * Added Get-SPOFolder cmdlet

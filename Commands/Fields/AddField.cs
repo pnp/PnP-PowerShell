@@ -7,7 +7,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "SPOField")]
+    [Cmdlet(VerbsCommon.Add, "SPOField", DefaultParameterSetName = "ListPara")]
     [CmdletHelp("Adds a field to a list or as a site column",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
@@ -194,8 +194,75 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
                     ClientContext.Load(f);
                     ClientContext.ExecuteQueryRetry();
                 }
-
-                WriteObject(f);
+                switch (f.FieldTypeKind)
+                {
+                    case FieldType.DateTime:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldDateTime>(f));
+                            break;
+                        }
+                    case FieldType.Choice:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldChoice>(f));
+                            break;
+                        }
+                    case FieldType.Calculated:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldCalculated>(f));
+                            break;
+                        }
+                    case FieldType.Computed:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldComputed>(f));
+                            break;
+                        }
+                    case FieldType.Geolocation:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldGeolocation>(f));
+                            break;
+                            
+                        }
+                    case FieldType.User:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldUser>(f));
+                            break;
+                        }
+                    case FieldType.Currency:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldCurrency>(f));
+                            break;
+                        }
+                    case FieldType.Guid:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldGuid>(f));
+                            break;
+                        }
+                    case FieldType.URL:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldUrl>(f));
+                            break;
+                        }
+                    case FieldType.Lookup:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldLookup>(f));
+                            break;
+                        }
+                    case FieldType.MultiChoice:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldMultiChoice>(f));
+                            break;
+                        }
+                    case FieldType.Number:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldNumber>(f));
+                            break;
+                        }
+                    default:
+                        {
+                            WriteObject(f);
+                            break;
+                        }
+                }
             }
         }
 
