@@ -843,7 +843,7 @@
                 <PropertyName>SiteUrl</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Id</PropertyName>
+                <PropertyName>GroupId</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

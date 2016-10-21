@@ -16,4 +16,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Connect-PnPMicrosoftGraph -Scopes $arrayOfScopes
 ```
-Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes
+Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes
