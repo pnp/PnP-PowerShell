@@ -124,6 +124,7 @@ Cmdlet|Description
 ##Provisioning
 Cmdlet|Description
 :-----|:----------
+**[Connect&#8209;PnPMicrosoftGraph](ConnectPnPMicrosoftGraph.md)** |Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API
 **[Remove&#8209;SPOFileFromProvisioningTemplate](RemoveSPOFileFromProvisioningTemplate.md)** |Removes a file from an in-memory PnP Provisioning Template
 **[Add&#8209;SPOFileToProvisioningTemplate](AddSPOFileToProvisioningTemplate.md)** |Adds a file to an in-memory PnP Provisioning Template
 **[Convert&#8209;SPOFolderToProvisioningTemplate](ConvertSPOFolderToProvisioningTemplate.md)** |Creates a pnp package file of an existing template xml, and includes all files in the current folder

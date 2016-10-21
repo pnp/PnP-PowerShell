@@ -229,4 +229,7 @@
   <data name="RemoveTerm0AndAllUnderlyingTerms" xml:space="preserve">
     <value>Remove Term '{0}' and all underlying Terms?</value>
   </data>
+  <data name="NoAzureADAccessToken" xml:space="preserve">
+    <value>No Azure AD connection, please connect first with Connect-PnPMicrosoftGraph</value>
+  </data>
 </root>
