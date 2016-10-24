@@ -8,11 +8,11 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet("New", "PnPUnifiedGroup")]
     [CmdletHelp("Creates a new Office 365 Group (aka Unified Group)",
-        Category = CmdletHelpCategory.TenantAdmin)]
+        Category = CmdletHelpCategory.Graph)]
     [CmdletExample(
        Code = "PS:> New-PnPUnifiedGroup -DisplayName $displayName -Description $description -MailNickname $nickname",
        Remarks = "Creates a public Office 365 Group with all the required properties",

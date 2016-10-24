@@ -10,11 +10,11 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Admin
+namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet("Get", "PnPUnifiedGroup")]
     [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups",
-        Category = CmdletHelpCategory.TenantAdmin)]
+        Category = CmdletHelpCategory.Graph)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroup",
        Remarks = "Retrieves all the Office 365 Groups",
@@ -38,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
     public class GetUnifiedGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The Identity of the Office 365 Group.")]
-        public UnifiedGroupBind Identity;
+        public UnifiedGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {

@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     /// <summary>
     /// Base class for all the PnP Microsoft Graph related cmdlets
     /// </summary>
-    public class PnPGraphCmdlet : PSCmdlet
+    public abstract class PnPGraphCmdlet : PSCmdlet
     {
         public String AccessToken
         {

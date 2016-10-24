@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
-    public class UnifiedGroupBind
+    public class UnifiedGroupPipeBind
     {
         private readonly UnifiedGroupEntity _group;
         private readonly String _groupId;
         private readonly String _displayName;
 
-        public UnifiedGroupBind()
+        public UnifiedGroupPipeBind()
         {
         }
 
-        public UnifiedGroupBind(UnifiedGroupEntity group)
+        public UnifiedGroupPipeBind(UnifiedGroupEntity group)
         {
             _group = group;
         }
 
-        public UnifiedGroupBind(String input)
+        public UnifiedGroupPipeBind(String input)
         {
             Guid idValue;
             if (Guid.TryParse(input, out idValue))

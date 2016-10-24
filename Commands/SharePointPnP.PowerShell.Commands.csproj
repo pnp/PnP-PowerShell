@@ -357,11 +357,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin\GetUnifiedGroup.cs" />
+    <Compile Include="Graph\GetUnifiedGroup.cs" />
     <Compile Include="Admin\GetWebTemplates.cs" />
     <Compile Include="Admin\GetTimeZoneId.cs" />
-    <Compile Include="Admin\NewUnifiedGroup.cs" />
-    <Compile Include="Admin\RemoveUnifiedGroup.cs" />
+    <Compile Include="Graph\NewUnifiedGroup.cs" />
+    <Compile Include="Graph\RemoveUnifiedGroup.cs" />
     <Compile Include="Admin\SetTenantSite.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -377,7 +377,7 @@
     <Compile Include="Base\PipeBinds\ListItemPipeBind.cs" />
     <Compile Include="Base\PipeBinds\FolderPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TermGroupPipeBind.cs" />
-    <Compile Include="Base\PipeBinds\UnifiedGroupBind.cs" />
+    <Compile Include="Base\PipeBinds\UnifiedGroupPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowInstancePipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowDefinitionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowSubscriptionPipeBind.cs" />

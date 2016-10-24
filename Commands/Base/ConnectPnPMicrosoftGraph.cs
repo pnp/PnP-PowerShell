@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Connect", "PnPMicrosoftGraph")]
     [CmdletHelp("Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API",
-        Category = CmdletHelpCategory.Provisioning)]
+        Category = CmdletHelpCategory.Graph)]
     [CmdletExample(
        Code = "PS:> Connect-PnPMicrosoftGraph -Scopes $arrayOfScopes",
        Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes",
