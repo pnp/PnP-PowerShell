@@ -142,6 +142,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Unified Group with MailNickname of {0} already exists. Do you want to create another one?.
+        /// </summary>
+        internal static string ForceCreationOfExistingGroup0 {
+            get {
+                return ResourceManager.GetString("ForceCreationOfExistingGroup0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This request can take a long time to execute. Continue?.
         /// </summary>
         internal static string GetTenantSite_ExecuteCmdlet_This_request_can_take_a_long_time_to_execute__Continue_ {
@@ -166,6 +175,24 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string ListNotFound {
             get {
                 return ResourceManager.GetString("ListNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet..
+        /// </summary>
+        internal static string MicrosoftGraphOAuthAccessTokenExpired {
+            get {
+                return ResourceManager.GetString("MicrosoftGraphOAuthAccessTokenExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Azure AD connection, please connect first with Connect-PnPMicrosoftGraph.
+        /// </summary>
+        internal static string NoAzureADAccessToken {
+            get {
+                return ResourceManager.GetString("NoAzureADAccessToken", resourceCulture);
             }
         }
         
