@@ -74,7 +74,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             }
             else if (groups != null)
             {
-                WriteObject(groups);
+                WriteObject(groups, true);
             }
         }
     }

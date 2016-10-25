@@ -1,7 +1,9 @@
-﻿using OfficeDevPnP.Core.Framework.Graph;
+﻿using OfficeDevPnP.Core.Entities;
+using OfficeDevPnP.Core.Framework.Graph;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,18 +52,39 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected.")]
         public SwitchParameter IsPrivate;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        public SwitchParameter Force;
+
         protected override void ExecuteCmdlet()
         {
-            var group = UnifiedGroupsUtility.CreateUnifiedGroup(
-                DisplayName,
-                Description,
-                MailNickname,
-                AccessToken,
-                Owners,
-                Members,
-                IsPrivate);
+            bool forceCreation = false;
 
-            WriteObject(group);
+            if (!Force)
+            {
+                var existingGroup = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken,
+                    mailNickname: MailNickname,
+                    endIndex: 1).Any();
+
+                forceCreation = !existingGroup || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
+            }
+            else
+            {
+                forceCreation = true;
+            }
+
+            if (forceCreation)
+            {
+                var group = UnifiedGroupsUtility.CreateUnifiedGroup(
+                    DisplayName,
+                    Description,
+                    MailNickname,
+                    AccessToken,
+                    Owners,
+                    Members,
+                    IsPrivate);
+
+                WriteObject(group);
+            }
         }
     }
 }

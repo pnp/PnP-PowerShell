@@ -235,4 +235,7 @@
   <data name="MicrosoftGraphOAuthAccessTokenExpired" xml:space="preserve">
     <value>The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet.</value>
   </data>
+  <data name="ForceCreationOfExistingGroup0" xml:space="preserve">
+    <value>The Unified Group with MailNickname of {0} already exists. Do you want to create another one?</value>
+  </data>
 </root>
