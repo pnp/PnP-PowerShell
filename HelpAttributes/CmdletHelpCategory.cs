@@ -36,7 +36,8 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         Workflows = 20,
         Provisioning = 21,
         [EnumMember(Value = "Files and Folders")]
-        Files = 22
-
+        Files = 22,
+        [EnumMember(Value = "Microsoft Graph")]
+        Graph = 23
     }
 }

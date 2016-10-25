@@ -229,4 +229,13 @@
   <data name="RemoveTerm0AndAllUnderlyingTerms" xml:space="preserve">
     <value>Remove Term '{0}' and all underlying Terms?</value>
   </data>
+  <data name="NoAzureADAccessToken" xml:space="preserve">
+    <value>No Azure AD connection, please connect first with Connect-PnPMicrosoftGraph</value>
+  </data>
+  <data name="MicrosoftGraphOAuthAccessTokenExpired" xml:space="preserve">
+    <value>The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet.</value>
+  </data>
+  <data name="ForceCreationOfExistingGroup0" xml:space="preserve">
+    <value>The Unified Group with MailNickname of {0} already exists. Do you want to create another one?</value>
+  </data>
 </root>
