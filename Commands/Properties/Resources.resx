@@ -232,4 +232,7 @@
   <data name="NoAzureADAccessToken" xml:space="preserve">
     <value>No Azure AD connection, please connect first with Connect-PnPMicrosoftGraph</value>
   </data>
+  <data name="MicrosoftGraphOAuthAccessTokenExpired" xml:space="preserve">
+    <value>The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet.</value>
+  </data>
 </root>

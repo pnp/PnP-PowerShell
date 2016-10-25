@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
     public class PnPAzureADConnection
     {
         /// <summary>
-        /// Holds the OAuth 2.0 Access Token
+        /// Holds the OAuth 2.0 Authentication Result
         /// </summary>
-        public static String AccessToken;
+        public static AuthenticationResult AuthenticationResult;
     }
 }

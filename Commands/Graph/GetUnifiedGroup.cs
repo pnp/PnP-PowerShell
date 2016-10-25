@@ -1,4 +1,5 @@
 ﻿using OfficeDevPnP.Core.Entities;
+using OfficeDevPnP.Core.Framework.Graph;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -42,10 +43,11 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
+            UnifiedGroupEntity group = null;
+            List<UnifiedGroupEntity> groups = null;
+
             if (Identity != null)
             {
-                UnifiedGroupEntity group = null;
-
                 // We have to retrieve a specific group
                 if (Identity.Group != null)
                 {
@@ -53,27 +55,26 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 }
                 else if (!String.IsNullOrEmpty(Identity.DisplayName))
                 {
-                    group = UnifiedGroupsUtility.GetUnifiedGroupByDisplayName(Identity.DisplayName, AccessToken);
+                    groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, Identity.DisplayName);
                 }
                 else if (!String.IsNullOrEmpty(Identity.GroupId))
                 {
                     group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.GroupId, AccessToken);
                 }
-
-                if (group != null)
-                {
-                    WriteObject(group);
-                }
             }
             else
             {
                 // Retrieve all the groups
-                var groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken);
+                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken);
+            }
 
-                if (groups != null)
-                {
-                    WriteObject(groups);
-                }
+            if (group != null)
+            {
+                WriteObject(group);
+            }
+            else if (groups != null)
+            {
+                WriteObject(groups);
             }
         }
     }

@@ -18,7 +18,24 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             get
             {
-                return (PnPAzureADConnection.AccessToken);
+                if (PnPAzureADConnection.AuthenticationResult != null)
+                {
+                    if (PnPAzureADConnection.AuthenticationResult.ExpiresOn < DateTimeOffset.Now)
+                    {
+                        WriteWarning(Resources.MicrosoftGraphOAuthAccessTokenExpired);
+                        PnPAzureADConnection.AuthenticationResult = null;
+                        return (null);
+                    }
+                    else
+                    {
+                        return (PnPAzureADConnection.AuthenticationResult.Token);
+                    }
+                }
+                else
+                {
+                    WriteError(new ErrorRecord(new InvalidOperationException(Resources.NoAzureADAccessToken), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
+                    return (null);
+                }
             }
         }
 
@@ -26,7 +43,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             base.BeginProcessing();
 
-            if (String.IsNullOrEmpty(PnPAzureADConnection.AccessToken))
+            if (PnPAzureADConnection.AuthenticationResult == null || 
+                String.IsNullOrEmpty(PnPAzureADConnection.AuthenticationResult.Token))
             {
                 throw new InvalidOperationException(Resources.NoAzureADAccessToken);
             }

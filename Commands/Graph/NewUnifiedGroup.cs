@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Utilities;
+﻿using OfficeDevPnP.Core.Framework.Graph;
+using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System;

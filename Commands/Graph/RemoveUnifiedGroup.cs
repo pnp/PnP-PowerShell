@@ -1,4 +1,5 @@
 ﻿using OfficeDevPnP.Core.Entities;
+using OfficeDevPnP.Core.Framework.Graph;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -38,10 +39,6 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 if (Identity.Group != null)
                 {
                     group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken);
-                }
-                else if (!String.IsNullOrEmpty(Identity.DisplayName))
-                {
-                    group = UnifiedGroupsUtility.GetUnifiedGroupByDisplayName(Identity.DisplayName, AccessToken);
                 }
                 else if (!String.IsNullOrEmpty(Identity.GroupId))
                 {

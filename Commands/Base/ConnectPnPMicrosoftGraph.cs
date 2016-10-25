@@ -32,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
 
             // Get back the Access Token and the Refresh Token
-            PnPAzureADConnection.AccessToken = authenticationResult.Token;
+            PnPAzureADConnection.AuthenticationResult = authenticationResult;
         }
     }
 }
