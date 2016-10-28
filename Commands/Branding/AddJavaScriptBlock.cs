@@ -6,14 +6,15 @@ using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "SPOJavaScriptBlock")]
+    [Cmdlet(VerbsCommon.Add, "PnPJavaScriptBlock")]
+    [CmdletAlias("Add-SPOJavaScriptBlock")]
     [CmdletHelp("Adds a link to a JavaScript snippet/block to a web or site collection",
         DetailedDescription = "Specify a scope as 'Site' to add the custom action to all sites in a site collection.",
         Category = CmdletHelpCategory.Branding)]
-    [CmdletExample(Code = "PS:> Add-SPOJavaScriptBlock -Name myAction -script '<script>Alert(\"This is my Script block\");</script>' -Sequence 9999 -Scope Site",
+    [CmdletExample(Code = "PS:> Add-PnPJavaScriptBlock -Name myAction -script '<script>Alert(\"This is my Script block\");</script>' -Sequence 9999 -Scope Site",
                 Remarks = "Add a JavaScript code block  to all pages within the current site collection under the name myAction and at order 9999",
                 SortOrder = 1)]
-    [CmdletExample(Code = "PS:> Add-SPOJavaScriptBlock -Name myAction -script '<script>Alert(\"This is my Script block\");</script>'",
+    [CmdletExample(Code = "PS:> Add-PnPJavaScriptBlock -Name myAction -script '<script>Alert(\"This is my Script block\");</script>'",
                 Remarks = "Add a JavaScript code block  to all pages within the current web under the name myAction",
                 SortOrder = 2)]
     public class AddJavaScriptBlock : SPOWebCmdlet

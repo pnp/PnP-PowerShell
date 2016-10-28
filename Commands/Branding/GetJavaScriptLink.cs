@@ -7,24 +7,25 @@ using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "SPOJavaScriptLink")]
+    [Cmdlet(VerbsCommon.Get, "PnPJavaScriptLink")]
+    [CmdletAlias("Get-SPOJavaScriptLink")]
     [CmdletHelp("Returns all or a specific custom action(s) with location type ScriptLink", 
         Category = CmdletHelpCategory.Branding,
         OutputType = typeof(UserCustomAction),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.usercustomaction.aspx")]
-    [CmdletExample(Code = "PS:> Get-SPOJavaScriptLink",
+    [CmdletExample(Code = "PS:> Get-PnPJavaScriptLink",
                 Remarks = "Returns all web scoped JavaScript links",
                 SortOrder = 1)]
-    [CmdletExample(Code = "PS:> Get-SPOJavaScriptLink -Scope All",
+    [CmdletExample(Code = "PS:> Get-PnPJavaScriptLink -Scope All",
                 Remarks = "Returns all web and site scoped JavaScript links",
                 SortOrder = 2)]
-    [CmdletExample(Code = "PS:> Get-SPOJavaScriptLink -Scope Web",
+    [CmdletExample(Code = "PS:> Get-PnPJavaScriptLink -Scope Web",
                 Remarks = "Returns all Web scoped JavaScript links",
                 SortOrder = 3)]
-    [CmdletExample(Code = "PS:> Get-SPOJavaScriptLink -Scope Site",
+    [CmdletExample(Code = "PS:> Get-PnPJavaScriptLink -Scope Site",
                 Remarks = "Returns all Site scoped JavaScript links",
                 SortOrder = 4)]
-    [CmdletExample(Code = "PS:> Get-SPOJavaScriptLink -Name Test",
+    [CmdletExample(Code = "PS:> Get-PnPJavaScriptLink -Name Test",
                 Remarks = "Returns the web scoped JavaScript link named Test",
                 SortOrder = 5)]
     public class GetJavaScriptLink : SPOWebCmdlet

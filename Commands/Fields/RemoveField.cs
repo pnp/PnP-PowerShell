@@ -6,15 +6,16 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOField", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPField", SupportsShouldProcess = true)]
+    [CmdletAlias("Remove-SPOField")]
     [CmdletHelp("Removes a field from a list or a site",
         Category = CmdletHelpCategory.Fields)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOField -Identity ""Speakers""",
+        Code = @"PS:> Remove-PnPField -Identity ""Speakers""",
         Remarks = @"Gets the speakers field from the site columns",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOField -List ""Demo list"" -Identity ""Speakers""",
+        Code = @"PS:> Remove-PnPField -List ""Demo list"" -Identity ""Speakers""",
         Remarks = @"Gets the speakers field from the list Demo list",
         SortOrder = 1)]
     public class RemoveField : SPOWebCmdlet

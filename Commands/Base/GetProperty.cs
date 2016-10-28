@@ -6,7 +6,8 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "SPOProperty")]
+    [Cmdlet(VerbsCommon.Get, "PnPProperty")]
+    [CmdletAlias("Get-SPOProperty")]
     [CmdletHelp("Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.",
         Category = CmdletHelpCategory.Base,
         OutputType = typeof(ClientObject),

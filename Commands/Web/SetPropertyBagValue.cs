@@ -6,19 +6,20 @@ using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "SPOPropertyBagValue")]
+    [Cmdlet(VerbsCommon.Set, "PnPPropertyBagValue")]
+    [CmdletAlias(("Set-SPOPropertyBagValue"))]
     [CmdletHelp("Sets a property bag value",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
-      Code = @"PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue",
+      Code = @"PS:> Set-PnPPropertyBagValue -Key MyKey -Value MyValue",
       Remarks = "This sets or adds a value to the current web property bag",
       SortOrder = 1)]
     [CmdletExample(
-      Code = @"PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue -Folder /",
+      Code = @"PS:> Set-PnPPropertyBagValue -Key MyKey -Value MyValue -Folder /",
       Remarks = "This sets or adds a value to the root folder of the current web",
       SortOrder = 2)]
     [CmdletExample(
-      Code = @"PS:> Set-SPOPropertyBagValue -Key MyKey -Value MyValue -Folder /MyFolder",
+      Code = @"PS:> Set-PnPPropertyBagValue -Key MyKey -Value MyValue -Folder /MyFolder",
       Remarks = "This sets or adds a value to the folder MyFolder which is located in the root folder of the current web",
       SortOrder = 3)]
     public class SetPropertyBagValue : SPOWebCmdlet

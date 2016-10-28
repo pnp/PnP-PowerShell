@@ -6,16 +6,17 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "SPOTheme")]
+    [Cmdlet(VerbsCommon.Get, "PnPTheme")]
+    [CmdletAlias("Get-SPOTheme")]
     [CmdletHelp("Returns the current theme/composed look of the current web.",
         Category = CmdletHelpCategory.Branding,
         OutputType = typeof(OfficeDevPnP.Core.Entities.ThemeEntity))]
     [CmdletExample(
-        Code = @"PS:> Get-SPOTheme",
+        Code = @"PS:> Get-PnPTheme",
         Remarks = "Returns the current composed look of the current web.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOTheme -DetectCurrentComposedLook",
+        Code = @"PS:> Get-PnPTheme -DetectCurrentComposedLook",
         Remarks = "Returns the current composed look of the current web, and will try to detect the currently applied composed look based upon the actual site. Without this switch the cmdlet will first check for the presence of a property bag variable called _PnP_ProvisioningTemplateComposedLookInfo that contains composed look information when applied through the provisioning engine or the Set-SPOTheme cmdlet.",
         SortOrder = 2)]
     public class GetTheme : SPOWebCmdlet

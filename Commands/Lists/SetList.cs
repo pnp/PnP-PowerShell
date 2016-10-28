@@ -5,11 +5,12 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Set, "SPOList")]
+    [Cmdlet(VerbsCommon.Set, "PnPList")]
+    [CmdletAlias("Set-SPOList")]
     [CmdletHelp("Updates list settings",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = @"Set-SPOList -Identity ""Demo List"" -EnableContentTypes $true", 
+        Code = @"Set-PnPList -Identity ""Demo List"" -EnableContentTypes $true", 
         Remarks = "Switches the Enable Content Type switch on the list",
         SortOrder = 1)]
     public class SetList : SPOWebCmdlet

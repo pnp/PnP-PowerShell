@@ -15,24 +15,25 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Export, "SPOTermGroupToXml", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.Export, "PnPTermGroupToXml", SupportsShouldProcess = true)]
+    [CmdletAlias("Export-SPOTermGroupToXml")]
     [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTermGroupToXml",
+        Code = @"PS:> Export-PnPTermGroupToXml",
         Remarks = "Exports all term groups in the default site collection term store to the standard output",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTermGroupToXml -Out output.xml",
+        Code = @"PS:> Export-PnPTermGroupToXml -Out output.xml",
         Remarks = "Exports all term groups in the default site collection term store to the file 'output.xml' in the current folder",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTermGroupToXml -Out c:\output.xml -Identity ""Test Group""",
+        Code = @"PS:> Export-PnPTermGroupToXml -Out c:\output.xml -Identity ""Test Group""",
         Remarks = "Exports the term group with the specified name to the file 'output.xml' located in the root folder of the C: drive.",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> $termgroup = Get-SPOTermGroup -GroupName Test
-PS:> $termgroup | Export-SPOTermGroupToXml -Out c:\output.xml",
+        Code = @"PS:> $termgroup = Get-PnPTermGroup -GroupName Test
+PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
         Remarks = "Retrieves a termgroup and subsequently exports that term group to a the file named 'output.xml'",
         SortOrder = 4)]
     public class ExportTermGroup : SPOCmdlet

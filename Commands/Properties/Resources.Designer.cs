@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Office Dev PnP PowerShell Library.
+        ///   Looks up a localized string similar to SharePoint PnP PowerShell Library.
         /// </summary>
         internal static string ApplicationName {
             get {
@@ -197,7 +197,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No connection, please connect first with Connect-SPOnline.
+        ///   Looks up a localized string similar to No connection, please connect first with Connect-PnPOnline.
         /// </summary>
         internal static string NoConnection {
             get {
@@ -215,7 +215,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No context present. Connect first with Connect-SPOnline.
+        ///   Looks up a localized string similar to No context present. Connect first with Connect-PnPOnline.
         /// </summary>
         internal static string NoContextPresent {
             get {
@@ -224,7 +224,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Office Dev PnP PowerShell Library ({0}).
+        ///   Looks up a localized string similar to SharePoint PnP PowerShell Library ({0}).
         /// </summary>
         internal static string OfficeDevPnPPowerShellLibrary0 {
             get {

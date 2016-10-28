@@ -7,15 +7,16 @@ using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
-    [Cmdlet("Set", "SPOGroup")]
+    [Cmdlet("Set", "PnPGroup")]
+    [CmdletAlias("Set-SPOGroup")]
     [CmdletHelp("Updates a group",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroup -Identity 'My Site Members' -SetAssociatedGroup Members",
+        Code = @"PS:> Set-PnPGroup -Identity 'My Site Members' -SetAssociatedGroup Members",
         Remarks = "Sets the SharePoint group with the name 'My Site Members' as the associated members group",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroup -Identity 'My Site Members' -Owner 'site owners'",
+        Code = @"PS:> Set-PnPGroup -Identity 'My Site Members' -Owner 'site owners'",
         Remarks = "Sets the SharePoint group with the name 'site owners' as the owner of the SharePoint group with the name 'My Site Members'",
         SortOrder = 2)]
     public class SetGroup : SPOWebCmdlet

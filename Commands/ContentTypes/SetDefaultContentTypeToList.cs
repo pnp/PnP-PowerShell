@@ -6,11 +6,12 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
 
-    [Cmdlet(VerbsCommon.Set, "SPODefaultContentTypeToList")]
+    [Cmdlet(VerbsCommon.Set, "PnPDefaultContentTypeToList")]
+    [CmdletAlias("Set-SPODefaultContentTypeToList")]
     [CmdletHelp("Sets the default content type for a list", 
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(
-        Code = @"PS:> Set-SPODefaultContentTypeToList -List ""Project Documents"" -ContentType ""Project""",
+        Code = @"PS:> Set-PnPDefaultContentTypeToList -List ""Project Documents"" -ContentType ""Project""",
         Remarks = @"This will set the Project content type (which has already been added to a list) as the default content type", 
         SortOrder = 1)]
     public class SetDefaultContentTypeToList : SPOWebCmdlet

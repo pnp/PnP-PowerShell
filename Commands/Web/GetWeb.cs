@@ -7,7 +7,8 @@ using SharePointPnP.PowerShell.Commands.Extensions;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "SPOWeb")]
+    [Cmdlet(VerbsCommon.Get, "PnPWeb")]
+    [CmdletAlias("Get-SPOWeb")]
     [CmdletHelp("Returns the current web object",
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(Web),

@@ -1,4 +1,5 @@
 ﻿#if !ONPREMISES
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Management.Automation;
@@ -11,7 +12,8 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands
 {
 
-    [Cmdlet(VerbsCommon.Get, "SPOTenantSite", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantSite", SupportsShouldProcess = true)]
+    [CmdletAlias("Get-SPOTenantSite")]
     [CmdletHelp(@"Office365 only: Uses the tenant API to retrieve site information.", 
         Category = CmdletHelpCategory.TenantAdmin,
         OutputType = typeof(Microsoft.Online.SharePoint.TenantAdministration.SiteProperties),
@@ -77,6 +79,5 @@ namespace SharePointPnP.PowerShell.Commands
             }
         }
     }
-
 }
 #endif

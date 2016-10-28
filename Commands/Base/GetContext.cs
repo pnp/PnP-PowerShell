@@ -5,7 +5,8 @@ using SharePointPnP.PowerShell.Commands.Properties;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "SPOContext")]
+    [Cmdlet(VerbsCommon.Get, "PnPContext")]
+    [CmdletAlias("Get-SPOContext")]
     [CmdletHelp("Returns a Client Side Object Model context",
         Category = CmdletHelpCategory.Base,
         OutputType = typeof(Microsoft.SharePoint.Client.ClientContext),

@@ -11,15 +11,16 @@ using File = System.IO.File;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Import, "SPOTermGroupFromXml", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.Import, "PnPTermGroupFromXml", SupportsShouldProcess = true)]
+    [CmdletAlias("Import-SPOTermGroupFromXml")]
     [CmdletHelp("Imports a taxonomy TermGroup from either the input or from an XML file.",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(
-        Code = @"PS:> Import-SPOTermGroupFromXml -Xml $xml",
+        Code = @"PS:> Import-PnPTermGroupFromXml -Xml $xml",
         Remarks = "Imports the XML based termgroup information located in the $xml variable",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Import-SPOTermGroupFromXml -Path input.xml",
+        Code = @"PS:> Import-PnPTermGroupFromXml -Path input.xml",
         Remarks = "Imports the XML file specified by the path.",
         SortOrder = 2)]
     public class ImportTermGroupFromXml : SPOCmdlet

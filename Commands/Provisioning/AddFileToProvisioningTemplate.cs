@@ -13,15 +13,16 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet("Add", "SPOFileToProvisioningTemplate")]
+    [Cmdlet("Add", "PnPFileToProvisioningTemplate")]
+    [CmdletAlias("Add-SPOFileToProvisioningTemplate")]
     [CmdletHelp("Adds a file to an in-memory PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Add-SPOFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
        Remarks = "Adds a file to an in-memory PnP Provisioning Template",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Add-SPOFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
        Remarks = "Adds a file to an in-memory PnP Provisioning Template with a custom container for the file",
        SortOrder = 2)]
     public class AddFileToProvisioningTemplate : PSCmdlet
@@ -43,18 +44,8 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
-            if (String.IsNullOrEmpty(Source))
-            {
-                throw new ArgumentNullException("Source");
-            }
-
-            if (String.IsNullOrEmpty(Folder))
-            {
-                throw new ArgumentNullException("Folder");
-            }
-
-            // Load the template
-            ProvisioningTemplate template = LoadProvisioningTemplate
+           // Load the template
+            var template = LoadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
                 SessionState.Path.CurrentFileSystemLocation.Path,
                 TemplateProviderExtensions);
@@ -65,13 +56,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             }
 
             // Load the file and add it to the .PNP file
-            using (FileStream fs = new FileStream(Source, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var fs = new FileStream(Source, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 Folder = Folder.Replace("\\", "/");
 
-                String fileName = Source.IndexOf("\\") > 0 ? Source.Substring(Source.LastIndexOf("\\") + 1) : Source;
-                String container = !String.IsNullOrEmpty(Container) ? Container : String.Empty;
-                String source = !String.IsNullOrEmpty(container) ? (container + "/" + fileName) : fileName;
+                var fileName = Source.IndexOf("\\") > 0 ? Source.Substring(Source.LastIndexOf("\\") + 1) : Source;
+                var container = !string.IsNullOrEmpty(Container) ? Container : string.Empty;
+                var source = !string.IsNullOrEmpty(container) ? (container + "/" + fileName) : fileName;
 
                 template.Connector.SaveFileStream(fileName, container, fs);
 
@@ -87,12 +78,12 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 });
 
                 // Determine the output file name and path
-                string outFileName = System.IO.Path.GetFileName(Path);
-                string outPath = new System.IO.FileInfo(Path).DirectoryName;
+                var outFileName = System.IO.Path.GetFileName(Path);
+                var outPath = new System.IO.FileInfo(Path).DirectoryName;
 
                 // Save the template back to the storage
                 var fileSystemConnector = new FileSystemConnector(outPath, "");
-                ITemplateFormatter formatter = XMLPnPSchemaFormatter.LatestFormatter;
+                var formatter = XMLPnPSchemaFormatter.LatestFormatter;
 
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                       Path, fileSystemConnector);

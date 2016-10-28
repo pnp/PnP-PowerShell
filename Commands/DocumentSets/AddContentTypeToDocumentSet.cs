@@ -4,21 +4,22 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Add,"SPOContentTypeToDocumentSet")]
+    [Cmdlet(VerbsCommon.Add,"PnPContentTypeToDocumentSet")]
+    [CmdletAlias("Add-SPOContentTypeToDocumentSet")]
     [CmdletHelp("Adds a content type to a document set", 
         Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOContentTypeToDocumentSet -ContentType ""Test CT"" -DocumentSet ""Test Document Set""",
+        Code = @"PS:> Add-PnPContentTypeToDocumentSet -ContentType ""Test CT"" -DocumentSet ""Test Document Set""",
         Remarks = "This will add the content type called 'Test CT' to the document set called ''Test Document Set'",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> $docset = Get-SPODocumentSetTemplate -Identity ""Test Document Set""
+        Code = @"PS:> $docset = Get-PnPDocumentSetTemplate -Identity ""Test Document Set""
 PS:> $ct = Get-SPOContentType -Identity ""Test CT""
-PS:> Add-SPOContentTypeToDocumentSet -ContentType $ct -DocumentSet $docset",
+PS:> Add-PnPContentTypeToDocumentSet -ContentType $ct -DocumentSet $docset",
         Remarks = "This will add the content type called 'Test CT' to the document set called ''Test Document Set'",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B",
+        Code = @"PS:> Add-PnPContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B",
         Remarks = "This will add the content type called 'Test CT' to the document set called ''Test Document Set'",
         SortOrder = 3)]
     public class AddContentTypeToDocumentSet : SPOWebCmdlet
