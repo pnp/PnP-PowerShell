@@ -7,7 +7,8 @@ using System.Collections.Generic;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "SPOSubWebs")]
+    [Cmdlet(VerbsCommon.Get, "PnPSubWebs")]
+    [CmdletAlias("Get-SPOSubWebs")]
     [CmdletHelp("Returns the subwebs", 
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(List<web>),

@@ -4,13 +4,14 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "SPOMasterPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPMasterPage")]
+    [CmdletAlias("Add-SPOMasterPage")]
     [CmdletHelp("Adds a Masterpage",
         Category = CmdletHelpCategory.Publishing,
         OutputType = typeof(File),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
     [CmdletExample(
-        Code = @"PS:> Add-SPOMasterPage -SourceFilePath ""page.master"" -Title ""MasterPage"" -Description ""MasterPage for Web"" -DestinationFolderHierarchy ""SubFolder""",
+        Code = @"PS:> Add-PnPMasterPage -SourceFilePath ""page.master"" -Title ""MasterPage"" -Description ""MasterPage for Web"" -DestinationFolderHierarchy ""SubFolder""",
         Remarks = "Adds a MasterPage to the web",
         SortOrder = 1)]
     public class AddMasterPage : SPOWebCmdlet
@@ -27,8 +28,8 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
         [Parameter(Mandatory = false, HelpMessage = "Folder hierarchy where the MasterPage layouts will be deployed")]
         public string DestinationFolderHierarchy;
 
-        [Parameter(Mandatory = false, HelpMessage = "UiVersion Masterpage. Default = 15")]
-        public string UiVersion;
+        [Parameter(Mandatory = false, HelpMessage = "UIVersion of the Masterpage. Default = 15")]
+        public string UIVersion = "15";
 
         [Parameter(Mandatory = false, HelpMessage = "Default CSS file for MasterPage, this Url is SiteRelative")]
         public string DefaultCssFile;
@@ -40,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
                 SourceFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, SourceFilePath);
             }
 
-            var masterPageFile = SelectedWeb.DeployMasterPage(SourceFilePath, Title, Description, UiVersion, DefaultCssFile, DestinationFolderHierarchy);
+            var masterPageFile = SelectedWeb.DeployMasterPage(SourceFilePath, Title, Description, UIVersion, DefaultCssFile, DestinationFolderHierarchy);
             WriteObject(masterPageFile);
         }
     }

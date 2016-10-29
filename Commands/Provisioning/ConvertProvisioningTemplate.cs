@@ -7,19 +7,20 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Convert, "SPOProvisioningTemplate")]
+    [Cmdlet(VerbsData.Convert, "PnPProvisioningTemplate")]
+    [CmdletAlias("Convert-SPOProvisioningTemplate")]
     [CmdletHelp("Converts a provisioning template to a other schema version",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-     Code = @"PS:> Convert-SPOProvisioningTemplate -Path template.xml",
+     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml",
      Remarks = @"Converts a provisioning template to the latest schema and outputs the result to current console.",
      SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Convert-SPOPRovisioningTemplate -Path template.xml -Out newtemplate.xml",
+     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml -Out newtemplate.xml",
      Remarks = @"Converts a provisioning template to the latest schema and outputs the result the newtemplate.xml file.",
      SortOrder = 2)]
     [CmdletExample(
-     Code = @"PS:> Convert-SPOPRovisioningTemplate -Path template.xml -Out newtemplate.xml -ToSchema V201512",
+     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml -Out newtemplate.xml -ToSchema V201512",
      Remarks = @"Converts a provisioning template to the latest schema using the 201512 schema and outputs the result the newtemplate.xml file.",
      SortOrder = 3)]
      [CmdletRelatedLink(

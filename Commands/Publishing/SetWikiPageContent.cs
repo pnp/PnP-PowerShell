@@ -7,7 +7,8 @@ using File = System.IO.File;
 
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Set, "SPOWikiPageContent")]
+    [Cmdlet(VerbsCommon.Set, "PnPWikiPageContent")]
+    [CmdletAlias("Set-SPOWikiPageContent")]
     [CmdletHelp("Sets the contents of a wikipage",
         Category = CmdletHelpCategory.Publishing)]
     public class SetWikiPageContent : SPOWebCmdlet

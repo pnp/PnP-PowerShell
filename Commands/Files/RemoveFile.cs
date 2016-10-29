@@ -6,14 +6,15 @@ using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOFile", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPFile", SupportsShouldProcess = true)]
+    [CmdletAlias("Remove-SPOFile")]
     [CmdletHelp("Removes a file.",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
-        Code = @"PS:>Remove-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor",
+        Code = @"PS:>Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:>Remove-SPOFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor",
+        Code = @"PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor",
         SortOrder = 2)]
 
     public class RemoveFile : SPOWebCmdlet

@@ -5,21 +5,22 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "SPOList")]
+    [Cmdlet(VerbsCommon.Get, "PnPList")]
+    [CmdletAlias("Get-SPOList")]
     [CmdletHelp("Returns a List object",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(List),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.list.aspx")]
     [CmdletExample(
-        Code = "PS:> Get-SPOList",
+        Code = "PS:> Get-PnPList",
         Remarks = "Returns all lists in the current web",
         SortOrder = 1)]
     [CmdletExample(
-        Code = "PS:> Get-SPOList -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
+        Code = "PS:> Get-PnPList -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
         Remarks = "Returns a list with the given id.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = "PS:> Get-SPOList -Identity /Lists/Announcements",
+        Code = "PS:> Get-PnPList -Identity /Lists/Announcements",
         Remarks = "Returns a list with the given url.",
         SortOrder = 3)]
     public class GetList : SPOWebCmdlet

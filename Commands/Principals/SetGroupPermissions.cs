@@ -7,27 +7,28 @@ using System;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Set, "SPOGroupPermissions")]
+    [Cmdlet(VerbsCommon.Set, "PnPGroupPermissions")]
+    [CmdletAlias("Set-SPOGroupPermissions")]
     [CmdletHelp("Adds and/or removes permissions of a specific SharePoint group",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -AddRole Contribute",
+        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole Contribute",
         Remarks = "Adds the 'Contribute' permission to the SharePoint group with the name 'My Site Members'",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -RemoveRole 'Full Control' -AddRole 'Read'",
+        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole 'Full Control' -AddRole 'Read'",
         Remarks = "Removes the 'Full Control' from and adds the 'Contribute' permissions to the SharePoint group with the name 'My Site Members'",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -AddRole @('Contribute', 'Design')",
+        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole @('Contribute', 'Design')",
         Remarks = "Adds the 'Contribute' and 'Design' permissions to the SharePoint group with the name 'My Site Members'",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -RemoveRole @('Contribute', 'Design')",
+        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole @('Contribute', 'Design')",
         Remarks = "Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')",
+        Code = @"PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')",
         Remarks = "Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'",
         SortOrder = 5)]
     public class SetGroupPermissions : SPOWebCmdlet
@@ -52,11 +53,11 @@ namespace SharePointPnP.PowerShell.Commands.Principals
             List list = List.GetList(SelectedWeb);
             if (list == null && !string.IsNullOrEmpty(List.Title))
             {
-                throw new Exception(string.Format("List with Title {0} not found", List.Title));
+                throw new Exception($"List with Title {List.Title} not found");
             }
             else if (list == null && List.Id != Guid.Empty )
             {
-                throw new Exception(string.Format("List with Id {0} not found", List.Id));
+                throw new Exception($"List with Id {List.Id} not found");
             }
 
             if (AddRole != null)

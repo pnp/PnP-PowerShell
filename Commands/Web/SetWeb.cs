@@ -4,7 +4,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "SPOWeb")]
+    [Cmdlet(VerbsCommon.Set, "PnPWeb")]
+    [CmdletAlias("Set-SPOWeb")]
     [CmdletHelp("Sets properties on a web",
         Category = CmdletHelpCategory.Webs)]
     public class SetWeb : SPOWebCmdlet

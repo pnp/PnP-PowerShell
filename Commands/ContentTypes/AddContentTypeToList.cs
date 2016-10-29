@@ -5,11 +5,12 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Add, "SPOContentTypeToList")]
+    [Cmdlet(VerbsCommon.Add, "PnPContentTypeToList")]
+    [CmdletAlias("Add-SPOContentTypeToList")]
     [CmdletHelp("Adds a new content type to a list", 
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOContentTypeToList -List ""Documents"" -ContentType ""Project Document"" -DefaultContentType",
+        Code = @"PS:> Add-PnPContentTypeToList -List ""Documents"" -ContentType ""Project Document"" -DefaultContentType",
         Remarks = @"This will add an existing content type to a list and sets it as the default content type", 
         SortOrder = 1)]
     public class AddContentTypeToList : SPOWebCmdlet

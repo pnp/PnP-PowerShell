@@ -13,11 +13,12 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet("Save", "SPOProvisioningTemplate")]
+    [Cmdlet(VerbsData.Save, "PnPProvisioningTemplate")]
+    [CmdletAlias("Save-SPOProvisioningTemplate")]
     [CmdletHelp("Saves a PnP file to the file systems",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Save-SPOProvisioningTemplate -InputInstance $template -Out .\template.pnp",
+       Code = @"PS:> Save-PnPProvisioningTemplate -InputInstance $template -Out .\template.pnp",
        Remarks = "Saves a PnP file to the file systems",
        SortOrder = 1)]
     public class SaveProvisioningTemplate : PSCmdlet
@@ -28,7 +29,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while saving a template.")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify the ITemplateProviderExtension to execute while saving a template.")]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ProcessRecord()

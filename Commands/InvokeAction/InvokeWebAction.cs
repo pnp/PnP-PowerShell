@@ -204,7 +204,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 				Web currentWeb = webs[webIndex];
 
 				//Update current connection context to the web that is beeing process
-				//So commands like Get-SPOList returns the correct list for the current web beeing proccess
+				//So commands like Get-PnPList returns the correct list for the current web beeing proccess
 				SPOnlineConnection.CurrentConnection.Context = (ClientContext) currentWeb.Context;
 
 				currentWeb.LoadProperties(_webActions.Properties);

@@ -4,15 +4,16 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "SPOMinimalDownloadStrategy")]
+    [Cmdlet(VerbsCommon.Set, "PnPMinimalDownloadStrategy")]
+    [CmdletAlias("Set-SPOMinimalDownloadStrategy")]
     [CmdletHelp("Activates or deactivates the minimal downloading strategy.", 
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOMinimalDownloadStrategy -Off",
+        Code = @"PS:> Set-PnPMinimalDownloadStrategy -Off",
         Remarks = "Will deactivate minimal download strategy (MDS) for the current web.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOMinimalDownloadStrategy -On",
+        Code = @"PS:> Set-PnPMinimalDownloadStrategy -On",
         Remarks = "Will activate minimal download strategy (MDS) for the current web.",
         SortOrder = 2)]
     public class SetMDS : SPOWebCmdlet

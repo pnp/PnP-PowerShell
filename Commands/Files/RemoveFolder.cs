@@ -6,11 +6,12 @@ using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOFolder")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFolder")]
+    [CmdletAlias("Remove-SPOFolder")]
     [CmdletHelp("Deletes a folder within a parent folder",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOFolder -Name NewFolder -Folder _catalogs/masterpage/newfolder",
+        Code = @"PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage/newfolder",
         SortOrder = 1)]
     public class RemoveFolder : SPOWebCmdlet
     {

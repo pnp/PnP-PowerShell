@@ -11,19 +11,20 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Export, "SPOTaxonomy", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.Export, "PnPTaxonomy", SupportsShouldProcess = true)]
+    [CmdletAlias("Export-SPOTaxonomy")]
     [CmdletHelp("Exports a taxonomy to either the output or to a file.",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample
-        (Code = @"PS:> Export-SPOTaxonomy",
+        (Code = @"PS:> Export-PnPTaxonomy",
         Remarks = "Exports the full taxonomy to the standard output",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTaxonomy -Path c:\output.txt",
+        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt",
         Remarks = "Exports the full taxonomy the file output.txt",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Export-SPOTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254 ",
+        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254 ",
         Remarks = "Exports the term set with the specified id",
         SortOrder = 3)]
     public class ExportTaxonomy : SPOCmdlet

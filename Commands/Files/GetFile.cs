@@ -6,33 +6,34 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "SPOFile")]
+    [Cmdlet(VerbsCommon.Get, "PnPFile")]
+    [CmdletAlias("Get-SPOFile")]
     [CmdletHelp("Downloads a file.",
         Category = CmdletHelpCategory.Files,
         OutputType = typeof(File),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
     [CmdletExample(
-        Code = @"PS:> Get-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor",
+        Code = @"PS:> Get-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor",
         Remarks = "Retrieves the file and downloads it to the current folder",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor",
+        Code = @"PS:> Get-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor",
         Remarks = "Retrieves the file and downloads it to c:\\temp\\company.spcolor",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -AsString",
+        Code = @"PS:> Get-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -AsString",
         Remarks = "Retrieves the file and outputs its contents to the console",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -AsFile",
+        Code = @"PS:> Get-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -AsFile",
         Remarks = "Retrieves the file and returns it as a File object",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -AsListItem",
+        Code = @"PS:> Get-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor -AsListItem",
         Remarks = "Retrieves the file and returns it as a ListItem object",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor",
+        Code = @"PS:> Get-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor",
         Remarks = "Retrieves the file by site relative URL and downloads it to c:\\temp\\company.spcolor",
         SortOrder = 6)]
 

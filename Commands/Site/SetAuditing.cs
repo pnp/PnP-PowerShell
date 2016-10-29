@@ -4,28 +4,29 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Set, "SPOAuditing")]
+    [Cmdlet(VerbsCommon.Set, "PnPAuditing")]
+    [CmdletAlias("Set-SPOAuditing")]
     [CmdletHelp("Set Auditing setting for a site",
         Category = CmdletHelpCategory.Sites)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOAuditing -EnableAll",
+        Code = @"PS:> Set-PnPAuditing -EnableAll",
         Remarks = "Enables all auditing settings for the current site",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOAuditing -DisableAll",
+        Code = @"PS:> Set-PnPAuditing -DisableAll",
         Remarks = @"Disables all auditing settings for the current site
                     This also disables the automatic trimming of the audit log",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOAuditing -RetentionTime 7",
+        Code = @"PS:> Set-PnPAuditing -RetentionTime 7",
         Remarks = "Sets the audit log trimming to 7 days, this also enables the automatic trimming of the audit log",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOAuditing -TrimAuditLog",
+        Code = @"PS:> Set-PnPAuditing -TrimAuditLog",
         Remarks = "Enables the automatic trimming of the audit log",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOAuditing -RetentionTime 7 -CheckOutCheckInItems -MoveCopyItems -SearchContent",
+        Code = @"PS:> Set-PnPAuditing -RetentionTime 7 -CheckOutCheckInItems -MoveCopyItems -SearchContent",
         Remarks = @"Sets the audit log trimming to 7 days, this also enables the automatic trimming of the audit log.
                     Do auditing for:
                     - Checking out or checking in items

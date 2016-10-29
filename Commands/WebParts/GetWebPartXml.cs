@@ -12,12 +12,13 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.WebParts
 {
-    [Cmdlet(VerbsCommon.Get, "SPOWebPartXml")]
+    [Cmdlet(VerbsCommon.Get, "PnPWebPartXml")]
+    [CmdletAlias("Get-SPOWebPartXml")]
     [CmdletHelp("Returns the webpart XML of a webpart registered on a site",
         Category = CmdletHelpCategory.WebParts,
         OutputType = typeof(string))]
     [CmdletExample(
-        Code = @"PS:> Get-SPOWebPartXml -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
+        Code = @"PS:> Get-PnPWebPartXml -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
         Remarks = @"Returns the webpart XML for a given webpart on a page.", SortOrder = 1)]
     public class GetWebPartXml : SPOWebCmdlet
     {
@@ -25,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "Id or title of the webpart. Use Get-SPOWebPart to retrieve all webpart Ids")]
+        [Parameter(Mandatory = true, HelpMessage = "Id or title of the webpart. Use Get-PnPWebPart to retrieve all webpart Ids")]
         public WebPartPipeBind Identity;
 
         protected override void ExecuteCmdlet()

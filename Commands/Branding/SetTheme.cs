@@ -7,11 +7,12 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "SPOTheme")]
+    [Cmdlet(VerbsCommon.Set, "PnPTheme")]
+    [CmdletAlias("Set-SPOTheme")]
     [CmdletHelp("Sets the theme of the current web.", DetailedDescription = " Sets the theme of the current web, if any of the attributes is not set, that value will be set to null",Category = CmdletHelpCategory.Branding)]
-    [CmdletExample(Code = @"PS:> Set-SPOTheme", Remarks = "Removes the current theme", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Set-SPOTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor", SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Set-SPOTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png'", SortOrder = 3)]
+    [CmdletExample(Code = @"PS:> Set-PnPTheme", Remarks = "Removes the current theme", SortOrder = 1)]
+    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor", SortOrder = 2)]
+    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png'", SortOrder = 3)]
     public class SetTheme : SPOWebCmdlet
     {
         private const string PROPBAGKEY = "_PnP_ProvisioningTemplateComposedLookInfo";

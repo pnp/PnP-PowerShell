@@ -7,15 +7,16 @@ using System.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Import, "SPOTaxonomy", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsData.Import, "PnPTaxonomy", SupportsShouldProcess = true)]
+    [CmdletAlias("Import-SPOTaxonomy")]
     [CmdletHelp("Imports a taxonomy from either a string array or a file",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(
-        Code = @"PS:> Import-SPOTaxonomy -Terms 'Company|Locations|Stockholm'",
+        Code = @"PS:> Import-PnPTaxonomy -Terms 'Company|Locations|Stockholm'",
         Remarks = "Creates a new termgroup, 'Company', a termset 'Locations' and a term 'Stockholm'",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Import-SPOTaxonomy -Terms 'Company|Locations|Stockholm|Central','Company|Locations|Stockholm|North'",
+        Code = @"PS:> Import-PnPTaxonomy -Terms 'Company|Locations|Stockholm|Central','Company|Locations|Stockholm|North'",
         Remarks = "Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm' and two subterms: 'Central', and 'North'",
         SortOrder = 2)]
     public class ImportTaxonomy : SPOCmdlet

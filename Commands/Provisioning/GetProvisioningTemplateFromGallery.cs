@@ -16,27 +16,28 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommon.Get, "SPOProvisioningTemplateFromGallery", DefaultParameterSetName = "Search")]
+    [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplateFromGallery", DefaultParameterSetName = "Search")]
+    [CmdletAlias("Get-SPOProvisioningTemplateFromGallery")]
     [CmdletHelp("Retrieves or searches provisioning templates from the PnP Template Gallery", Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = @"Get-SPOProvisionTemplateFromGallery",
+        Code = @"Get-PnPProvisioningTemplateFromGallery",
         Remarks = @"Retrieves all templates from the gallery",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"Get-SPOProvisionTemplateFromGallery -Search ""Data""",
+        Code = @"Get-PnPProvisioningTemplateFromGallery -Search ""Data""",
         Remarks = @"Searches for a templates containing the word 'Data' in the Display Name",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"Get-SPOProvisionTemplateFromGallery -Identity ae925674-8aa6-438b-acd0-d2699a022edd",
+        Code = @"Get-PnPProvisioningTemplateFromGallery -Identity ae925674-8aa6-438b-acd0-d2699a022edd",
         Remarks = @"Retrieves a template with the specified ID",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"$template = Get-SPOProvisionTemplateFromGallery -Identity ae925674-8aa6-438b-acd0-d2699a022edd
-Apply-SPOProvisioningTemplate -InputInstance $template",
+        Code = @"$template = Get-PnPProvisioningTemplateFromGallery -Identity ae925674-8aa6-438b-acd0-d2699a022edd
+Apply-PnPProvisioningTemplate -InputInstance $template",
         Remarks = @"Retrieves a template with the specified ID and applies it to the site.",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"$template = Get-SPOProvisionTemplateFromGallery -Identity ae925674-8aa6-438b-acd0-d2699a022edd -Path c:\temp",
+        Code = @"$template = Get-PnPProvisioningTemplateFromGallery -Identity ae925674-8aa6-438b-acd0-d2699a022edd -Path c:\temp",
         Remarks = @"Retrieves a template with the specified ID and saves the template to the specified path",
         SortOrder = 4)]
     public class GetProvisioningTemplateFromGallery : PSCmdlet

@@ -4,13 +4,14 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Add, "SPOContentType")]
+    [Cmdlet(VerbsCommon.Add, "PnPContentType")]
+    [CmdletAlias("Add-SPOContentType")]
     [CmdletHelp("Adds a new content type", 
         Category = CmdletHelpCategory.ContentTypes,
         OutputType = typeof(ContentType),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.contenttype.aspx")]
     [CmdletExample(
-        Code = @"PS:> Add-SPOContentType -Name ""Project Document"" -Description ""Use for Contoso projects"" -Group ""Contoso Content Types"" -ParentContentType $ct",
+        Code = @"PS:> Add-PnPContentType -Name ""Project Document"" -Description ""Use for Contoso projects"" -Group ""Contoso Content Types"" -ParentContentType $ct",
         Remarks = @"This will add a new content type based on the parent content type stored in the $ct variable.", 
         SortOrder = 1)]
     public class AddContentType : SPOWebCmdlet

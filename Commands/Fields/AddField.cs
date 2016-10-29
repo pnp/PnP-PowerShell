@@ -7,16 +7,17 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "SPOField", DefaultParameterSetName = "ListPara")]
+    [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "ListPara")]
+    [CmdletAlias("Add-SPOField")]
     [CmdletHelp("Adds a field to a list or as a site column",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
     [CmdletExample(
-     Code = @"PS:> Add-SPOField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
+     Code = @"PS:> Add-PnPField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
      Remarks = @"This will add field of type Choice to a the list ""Demo List"".", SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:>Add-SPOField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
+     Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
 Remarks = @"This will add field of type Multiple Choice to a the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
     public class AddField : SPOWebCmdlet, IDynamicParameters
     {

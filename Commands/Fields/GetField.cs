@@ -6,17 +6,18 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Get, "SPOField")]
+    [Cmdlet(VerbsCommon.Get, "PnPField")]
+    [CmdletAlias("Get-SPOField")]
     [CmdletHelp("Returns a field from a list or site",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
     [CmdletExample(
-        Code = @"PS:> Get-SPOField",
+        Code = @"PS:> Get-PnPField",
         Remarks = @"Gets all the fields from the current site",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOField -List ""Demo list"" -Identity ""Speakers""",
+        Code = @"PS:> Get-PnPField -List ""Demo list"" -Identity ""Speakers""",
         Remarks = @"Gets the speakers field from the list Demo list",
         SortOrder = 2)]
     public class GetField : SPOWebCmdlet

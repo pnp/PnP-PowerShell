@@ -9,25 +9,26 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsCommon.Get, "SPOSearchConfiguration")]
+    [Cmdlet(VerbsCommon.Get, "PnPSearchConfiguration")]
+    [CmdletAlias("Get-SPOSearchConfiguration")]
     [CmdletHelp("Returns the search configuration",
         Category = CmdletHelpCategory.Search,
         OutputType = typeof(string),
         OutputTypeDescription = "Does not return a string when the -Path parameter has been specified.")]
     [CmdletExample(
-        Code = @"PS:> Get-SPOSearchConfiguration",
+        Code = @"PS:> Get-PnPSearchConfiguration",
         Remarks = "Returns the search configuration for the current web",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOSearchConfiguration -Scope Site",
+        Code = @"PS:> Get-PnPSearchConfiguration -Scope Site",
         Remarks = "Returns the search configuration for the current site collection",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOSearchConfiguration -Scope Subscription",
+        Code = @"PS:> Get-PnPSearchConfiguration -Scope Subscription",
         Remarks = "Returns the search configuration for the current tenant",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOSearchConfiguration -Path searchconfig.xml -Scope Subscription",
+        Code = @"PS:> Get-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription",
         Remarks = "Returns the search configuration for the current tenant and saves it to the specified file",
         SortOrder = 4)]
     public class GetSearchConfiguration : SPOWebCmdlet

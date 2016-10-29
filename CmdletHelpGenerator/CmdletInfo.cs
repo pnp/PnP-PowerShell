@@ -25,13 +25,9 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
         public string OutputTypeDescription { get; set; }
         public string OutputTypeLink { get; set; }
 
-        public string FullCommand
-        {
-            get
-            {
-                return string.Format("{0}-{1}", Verb, Noun);
-            }
-        }
+        public List<string> Aliases { get; set; }
+
+        public string FullCommand => $"{Verb}-{Noun}";
 
         public string Category { get; set; }
 
@@ -41,6 +37,7 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
             Noun = noun;
             Parameters = new List<CmdletParameterInfo>();
             Syntaxes = new List<CmdletSyntax>();
+            Aliases = new List<string>();
         }
     }
 }

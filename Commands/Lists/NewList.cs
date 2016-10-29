@@ -5,14 +5,15 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.New, "SPOList")]
+    [Cmdlet(VerbsCommon.New, "PnPList")]
+    [CmdletAlias("New-SPOList")]
     [CmdletHelp("Creates a new list",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = "PS:> New-SPOList -Title Announcements -Template Announcements",
+        Code = "PS:> New-PnPList -Title Announcements -Template Announcements",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> New-SPOList -Title ""Demo List"" -Url ""DemoList"" -Template Announcements",
+        Code = @"PS:> New-PnPList -Title ""Demo List"" -Url ""DemoList"" -Template Announcements",
         SortOrder = 2,
         Remarks = "Create a list with a title that is different from the url")]
     public class NewList : SPOWebCmdlet

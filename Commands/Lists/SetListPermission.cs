@@ -8,15 +8,16 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
-    [Cmdlet(VerbsCommon.Set, "SPOListPermission")]
+    [Cmdlet(VerbsCommon.Set, "PnPListPermission")]
+    [CmdletAlias("Set-SPOListPermission")]
     [CmdletHelp("Sets list permissions",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = "PS:> Set-SPOListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'",
+        Code = "PS:> Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'",
         Remarks = "Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'",
         SortOrder = 1)]        
     [CmdletExample(
-        Code = "PS:> Set-SPOListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'",
+        Code = "PS:> Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'",
         Remarks = "Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'",
         SortOrder = 2)]        
     public class SetListPermission : SPOWebCmdlet

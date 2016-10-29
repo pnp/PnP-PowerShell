@@ -5,21 +5,22 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Find, "SPOFile", DefaultParameterSetName = "Web")]
+    [Cmdlet(VerbsCommon.Find, "PnPFile", DefaultParameterSetName = "Web")]
+    [CmdletAlias("Find-SPOFile")]
     [CmdletHelp("Finds a file in the virtual file system of the web.",
          Category = CmdletHelpCategory.Files,
          OutputType = typeof(File),
          OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
     [CmdletExample(
-         Code = @"PS:> Find-SPOFile -Match *.master",
+         Code = @"PS:> Find-PnPFile -Match *.master",
          Remarks = "Will return all masterpages located in the current web.",
          SortOrder = 1)]
       [CmdletExample(
-         Code = @"PS:> Find-SPOFile -List ""Documents"" -Match *.pdf",
+         Code = @"PS:> Find-PnPFile -List ""Documents"" -Match *.pdf",
          Remarks = "Will return all pdf files located in given list.",
          SortOrder = 2)]
      [CmdletExample(
-         Code = @"PS:> Find-SPOFile -Folder ""Shared Documents/Sub Folder"" -Match *.docx",
+         Code = @"PS:> Find-PnPFile -Folder ""Shared Documents/Sub Folder"" -Match *.docx",
          Remarks = "Will return all docx files located in given folder.",
          SortOrder = 3)]
     public class FindFile : SPOWebCmdlet

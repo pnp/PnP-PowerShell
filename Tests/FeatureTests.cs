@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 using (var scope = new PSTestScope(true))
                 {
-                    scope.ExecuteCommand("Disable-SPOFeature",
+                    scope.ExecuteCommand("Disable-PnPFeature",
                         new CommandParameter("Identity", Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID));
                 }
 
@@ -51,7 +51,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 using (var scope = new PSTestScope(true))
                 {
-                    scope.ExecuteCommand("Enable-SPOFeature",
+                    scope.ExecuteCommand("Enable-PnPFeature",
                         new CommandParameter("Identity", Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID));
                 }
 
@@ -78,7 +78,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 using (var scope = new PSTestScope(true))
                 {
-                    var results = scope.ExecuteCommand("Get-SPOFeature",
+                    var results = scope.ExecuteCommand("Get-PnPFeature",
                         new CommandParameter("Identity", Core.Constants.MINIMALDOWNLOADSTRATEGYFEATUREID));
                     Assert.IsTrue(results.Any());
 

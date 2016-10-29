@@ -6,13 +6,14 @@ using System;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
-    [Cmdlet("New", "SPOGroup")]
+    [Cmdlet("New", "PnPGroup")]
+    [CmdletAlias("New-SPOGroup")]
     [CmdletHelp("Adds group to the Site Groups List and returns a group object",
         Category = CmdletHelpCategory.Principals,
         OutputType = typeof(Group),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx")]
     [CmdletExample(
-        Code = @"PS:> New-SPOGroup -Title ""My Site Users""",
+        Code = @"PS:> New-PnPGroup -Title ""My Site Users""",
         SortOrder = 1)]
     public class NewGroup : SPOWebCmdlet
     {
@@ -44,8 +45,8 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false, HelpMessage = "The e-mail address to which membership requests are sent")]
         public string RequestToJoinEmail;
 
-        [Parameter(Mandatory = false)] // Not promoted to use anymore. Use Set-SPOGroup
-        [Obsolete("Use Set-SPOGroup")]
+        [Parameter(Mandatory = false)] // Not promoted to use anymore. Use Set-PnPGroup
+        [Obsolete("Use Set-PnPGroup.")]
         public AssociatedGroupType SetAssociatedGroup = AssociatedGroupType.None;
 
         protected override void ExecuteCmdlet()

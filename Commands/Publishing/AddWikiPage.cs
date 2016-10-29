@@ -5,11 +5,12 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "SPOWikiPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPWikiPage")]
+    [CmdletAlias("Add-SPOWikiPage")]
     [CmdletHelp("Adds a wiki page",
         Category = CmdletHelpCategory.Publishing)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOWikiPage -PageUrl '/sites/demo1/pages/wikipage.aspx' -Content 'New WikiPage'",
+        Code = @"PS:> Add-PnPWikiPage -PageUrl '/sites/demo1/pages/wikipage.aspx' -Content 'New WikiPage'",
         Remarks = "Creates a new wiki page '/sites/demo1/pages/wikipage.aspx' and sets the content to 'New WikiPage'",
         SortOrder = 1)]
     public class AddWikiPage : SPOWebCmdlet

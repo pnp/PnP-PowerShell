@@ -5,14 +5,15 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOList", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPList", SupportsShouldProcess = true)]
+    [CmdletAlias("Remove-SPOList")]
     [CmdletHelp("Deletes a list",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = "PS:> Remove-SPOList -Title Announcements",
+        Code = "PS:> Remove-PnPList -Title Announcements",
         SortOrder = 1)]
     [CmdletExample(
-        Code = "PS:> Remove-SPOList -Title Announcements -Force",
+        Code = "PS:> Remove-PnPList -Title Announcements -Force",
         SortOrder = 2)]
     public class RemoveList : SPOWebCmdlet
     {

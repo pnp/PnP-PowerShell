@@ -12,11 +12,12 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet("Remove", "SPOFileFromProvisioningTemplate")]
+    [Cmdlet("Remove", "PnPFileFromProvisioningTemplate")]
+    [CmdletAlias("Remove-SPOFileFromProvisioningTemplate")]
     [CmdletHelp("Removes a file from an in-memory PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Remove-SPOFileFromProvisioningTemplate -Path template.pnp -FilePath filePath",
+       Code = @"PS:> Remove-PnPFileFromProvisioningTemplate -Path template.pnp -FilePath filePath",
        Remarks = "Removes a file from an in-memory PnP Provisioning Template",
        SortOrder = 1)]
     public class RemoveFileFromProvisioningTemplate : PSCmdlet

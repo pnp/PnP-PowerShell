@@ -29,7 +29,7 @@ namespace SharePointPnP.PowerShell.Tests
             var iss = InitialSessionState.CreateDefault();
             if (connect)
             {
-                SessionStateCmdletEntry ssce = new SessionStateCmdletEntry("Connect-SPOnline", typeof(ConnectSPOnline), null);
+                SessionStateCmdletEntry ssce = new SessionStateCmdletEntry("Connect-PnPOnline", typeof(ConnectOnline), null);
 
                 iss.Commands.Add(ssce);
             }

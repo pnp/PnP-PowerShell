@@ -5,7 +5,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "SPOTaxonomyItem", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "PnPTaxonomyItem", SupportsShouldProcess = true)]
+    [CmdletAlias("Get-SPOTaxonomyItem")]
     [CmdletHelp(@"Returns a taxonomy item", 
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(TaxonomyItem),

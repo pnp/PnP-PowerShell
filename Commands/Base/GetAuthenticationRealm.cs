@@ -5,15 +5,16 @@ using System.Net;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "SPOAuthenticationRealm")]
+    [Cmdlet(VerbsCommon.Get, "PnPAuthenticationRealm")]
+    [CmdletAlias("Get-SPOAuthenticationRealm")]
     [CmdletHelp("Gets the authentication realm for the current web", 
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOAuthenticationRealm", 
+        Code = @"PS:> Get-PnPAuthenticationRealm", 
         Remarks = @"This will get the authentication realm for the current connected site",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOAuthenticationRealm -Url https://contoso.sharepoint.com",
+        Code = @"PS:> Get-PnPAuthenticationRealm -Url https://contoso.sharepoint.com",
         Remarks = @"This will get the authentication realm for https://contoso.sharepoint.com",
         SortOrder = 2)]
     public class GetAuthenticationRealm : SPOCmdlet

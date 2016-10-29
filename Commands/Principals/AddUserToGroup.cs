@@ -5,14 +5,15 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Add, "SPOUserToGroup")]
+    [Cmdlet(VerbsCommon.Add, "PnPUserToGroup")]
+    [CmdletAlias("Add-SPOUserToGroup")]
     [CmdletHelp("Adds a user to a group", 
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOUserToGroup -LoginName user@company.com -Identity 'Marketing Site Members'",
+        Code = @"PS:> Add-PnPUserToGroup -LoginName user@company.com -Identity 'Marketing Site Members'",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOUserToGroup -LoginName user@company.com -Identity 5",
+        Code = @"PS:> Add-PnPUserToGroup -LoginName user@company.com -Identity 5",
         Remarks = "Add the specified user to the group with Id 5",
         SortOrder = 2)]
     public class AddUserToGroup : SPOWebCmdlet

@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Tests
             {
                 // retrieve homepage
 
-                var results = scope.ExecuteCommand("Get-SPOWebPart",
+                var results = scope.ExecuteCommand("Get-PnPWebPart",
                     new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl));
 
                 Assert.IsTrue(results.Count > 0);
@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Tests
                     if (wps.Any())
                     {
                         var wp = wps.FirstOrDefault();
-                        var results = scope.ExecuteCommand("Get-SPOWebPartProperty",
+                        var results = scope.ExecuteCommand("Get-PnPWebPartProperty",
                             new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl),
                             new CommandParameter("Identity", wp.Id));
 
@@ -84,7 +84,7 @@ namespace SharePointPnP.PowerShell.Tests
                     if (wps.Any())
                     {
                         var wp = wps.FirstOrDefault();
-                        var results = scope.ExecuteCommand("Get-SPOWebPartXml",
+                        var results = scope.ExecuteCommand("Get-PnPWebPartXml",
                             new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl),
                             new CommandParameter("Identity", wp.Id));
 
@@ -115,7 +115,7 @@ namespace SharePointPnP.PowerShell.Tests
             {
                 using (var ctx = TestCommon.CreateClientContext())
                 {
-                    var results = scope.ExecuteCommand("Add-SPOWebPartToWikiPage",
+                    var results = scope.ExecuteCommand("Add-PnPWebPartToWikiPage",
                         new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl),
                         new CommandParameter("Path", "..\\..\\Resources\\webpart.xml"),
                         new CommandParameter("Row", 1),
@@ -146,7 +146,7 @@ namespace SharePointPnP.PowerShell.Tests
             {
                 using (var ctx = TestCommon.CreateClientContext())
                 {
-                    var results = scope.ExecuteCommand("Add-SPOWebPartToWikiPage",
+                    var results = scope.ExecuteCommand("Add-PnPWebPartToWikiPage",
                         new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl),
                         new CommandParameter("Path", "..\\..\\Resources\\webpart.xml"),
                         new CommandParameter("Row", 1),
@@ -155,7 +155,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                     Assert.IsFalse(results.Any());
 
-                    results = scope.ExecuteCommand("Remove-SPOWebPart",
+                    results = scope.ExecuteCommand("Remove-PnPWebPart",
                           new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl),
                         new CommandParameter("Title", "Get start with your site"));
 
@@ -171,7 +171,7 @@ namespace SharePointPnP.PowerShell.Tests
             {
                 using (var ctx = TestCommon.CreateClientContext())
                 {
-                    var results = scope.ExecuteCommand("Add-SPOWebPartToWikiPage",
+                    var results = scope.ExecuteCommand("Add-PnPWebPartToWikiPage",
                         new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl),
                         new CommandParameter("Path", "..\\..\\Resources\\webpart.xml"),
                         new CommandParameter("Row", 1),
@@ -186,7 +186,7 @@ namespace SharePointPnP.PowerShell.Tests
                     {
                         if (wp.WebPart.Title == "Get started with your site")
                         {
-                            results = scope.ExecuteCommand("Set-SPOWebPartProperty",
+                            results = scope.ExecuteCommand("Set-PnPWebPartProperty",
                                 new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl),
                                 new CommandParameter("Identity", wp.Id),
                                 new CommandParameter("Key", "Title"),
@@ -194,7 +194,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                             Assert.IsFalse(results.Any());
 
-                            results = scope.ExecuteCommand("Remove-SPOWebPart",
+                            results = scope.ExecuteCommand("Remove-PnPWebPart",
                                 new CommandParameter("ServerRelativePageUrl", serverRelativeHomePageUrl),
                                 new CommandParameter("Title", "TESTTESTTEST"));
                             Assert.IsFalse(results.Any());

@@ -5,7 +5,8 @@ using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet("Get", "SPOStoredCredential")]
+    [Cmdlet("Get", "PnPStoredCredential")]
+    [CmdletAlias("Get-SPOStoredCredential")]
     [CmdletHelp("Returns a stored credential from the Windows Credential Manager", 
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(Code = "PS:> Get-SPOnlineStoredCredential -Name O365", 

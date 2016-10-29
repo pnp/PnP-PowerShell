@@ -5,11 +5,12 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOWikiPage", ConfirmImpact = ConfirmImpact.High)]
+    [Cmdlet(VerbsCommon.Remove, "PnPWikiPage", ConfirmImpact = ConfirmImpact.High)]
+    [CmdletAlias("Remove-SPOWikiPage")]
     [CmdletHelp("Removes a wiki page",
         Category = CmdletHelpCategory.Publishing)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOWikiPage -PageUrl '/pages/wikipage.aspx'",
+        Code = @"PS:> Remove-PnPWikiPage -PageUrl '/pages/wikipage.aspx'",
         Remarks = "Removes the page '/pages/wikipage.aspx'",
         SortOrder = 1)]
     public class RemoveWikiPage : SPOWebCmdlet

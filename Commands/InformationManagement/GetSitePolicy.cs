@@ -4,18 +4,19 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Get, "SPOSitePolicy")]
+    [Cmdlet(VerbsCommon.Get, "PnPSitePolicy")]
+    [CmdletAlias("Get-SPOSitePolicy")]
     [CmdletHelp("Retrieves all or a specific site policy",
         Category = CmdletHelpCategory.InformationManagement,
         OutputType=typeof(OfficeDevPnP.Core.Entities.SitePolicyEntity))]
     [CmdletExample(
-     Code = @"PS:> Get-SPOSitePolicy",
+     Code = @"PS:> Get-PnPSitePolicy",
      Remarks = @"Retrieves the current applied site policy.", SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Get-SPOSitePolicy -AllAvailable",
+     Code = @"PS:> Get-PnPSitePolicy -AllAvailable",
      Remarks = @"Retrieves all available site policies.", SortOrder = 2)]
     [CmdletExample(
-      Code = @"PS:> Get-SPOSitePolicy -Name ""Contoso HBI""",
+      Code = @"PS:> Get-PnPSitePolicy -Name ""Contoso HBI""",
       Remarks = @"Retrieves an available site policy with the name ""Contoso HBI"".", SortOrder = 3)]
 
     public class GetSitePolicy : SPOWebCmdlet
