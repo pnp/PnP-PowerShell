@@ -1,5 +1,9 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2016-10-29**
+* Marked Get-SPOSite as deprecated. We will remove this cmdlet in the January 2017 release. Please switch as soon as possible to Get-PnPSite instead. A warning will be shown the moment Get-SPOSite is used.
+* Renamed all cmdlet verbs from -SPO* to -PnP*. From now all cmdlets follow the *Verb*-PnP*Noun* pattern. There are corresponding aliases available now that allow existing scripts to continue to work.
+
 **2016-10-19**
 * Added Get-SPOProvisioningTemplateFromGallery cmdlet
 
