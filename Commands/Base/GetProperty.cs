@@ -13,14 +13,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
         OutputType = typeof(ClientObject),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientobject.aspx")]
     [CmdletExample(Code = @"
-PS:> $web = Get-SPOWeb
-PS:> Get-SPOProperty -ClientObject $web -Property Id, Lists
+PS:> $web = Get-PnPWeb
+PS:> Get-PnPProperty -ClientObject $web -Property Id, Lists
 PS:> $web.Lists",
         Remarks = "Will load both the Id and Lists properties of the specified Web object.",
         SortOrder = 1)]
     [CmdletExample(Code = @"
-PS:> $list = Get-SPOList -Identity 'Site Assets'
-PS:> Get-SPOProperty -ClientObject $list -Property Views",
+PS:> $list = Get-PnPList -Identity 'Site Assets'
+PS:> Get-PnPProperty -ClientObject $list -Property Views",
         Remarks = "Will load the views object of the specified list object and return its value to the output.",
         SortOrder = 2)]
     public class EnsureProperty : SPOCmdlet

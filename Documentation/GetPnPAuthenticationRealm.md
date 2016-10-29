@@ -14,12 +14,12 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Get-SPOAuthenticationRealm
+PS:> Get-PnPAuthenticationRealm
 ```
 This will get the authentication realm for the current connected site
 
 ###Example 2
 ```powershell
-PS:> Get-SPOAuthenticationRealm -Url https://contoso.sharepoint.com
+PS:> Get-PnPAuthenticationRealm -Url https://contoso.sharepoint.com
 ```
 This will get the authentication realm for https://contoso.sharepoint.com

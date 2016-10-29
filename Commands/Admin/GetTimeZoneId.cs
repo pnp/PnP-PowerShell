@@ -13,9 +13,9 @@ namespace SharePointPnP.PowerShell.Commands
          OutputType = typeof(IEnumerable<Zone>),
          OutputTypeDescription =
              "Returns a list of matching zones. Use the ID property of the object for use in New-SPOTenantSite")]
-    [CmdletExample(Code = @"PS:> Get-SPOTimeZoneId",
+    [CmdletExample(Code = @"PS:> Get-PnPTimeZoneId",
          Remarks = @"This will return all time zone IDs in use by Office 365.", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Get-SPOTimeZoneId -Match Stockholm",
+    [CmdletExample(Code = @"PS:> Get-PnPTimeZoneId -Match Stockholm",
          Remarks = @"This will return the time zone IDs for Stockholm", SortOrder = 2)]
     public class GetTimeZoneId : PSCmdlet
     {

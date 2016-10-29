@@ -30,24 +30,24 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt
+PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt
 ```
 This turns on trace logging to the file 'traceoutput.txt' and will capture events of at least 'Information' level.
 
 ###Example 2
 ```powershell
-PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level Debug
+PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt -Level Debug
 ```
 This turns on trace logging to the file 'traceoutput.txt' and will capture debug events.
 
 ###Example 3
 ```powershell
-PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level Debug -Delimiter ","
+PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt -Level Debug -Delimiter ","
 ```
 This turns on trace logging to the file 'traceoutput.txt' and will write the entries as comma separated. Debug events are captured.
 
 ###Example 4
 ```powershell
-PS:> Set-SPOTraceLog -Off
+PS:> Set-PnPTraceLog -Off
 ```
 This turns off trace logging. It will flush any remaining messages to the log file.

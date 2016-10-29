@@ -45,7 +45,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false, HelpMessage = "The e-mail address to which membership requests are sent")]
         public string RequestToJoinEmail;
 
-        [Parameter(Mandatory = false)] // Not promoted to use anymore. Use Set-SPOGroup
+        [Parameter(Mandatory = false)] // Not promoted to use anymore. Use Set-PnPGroup
         [Obsolete("Use Set-PnPGroup.")]
         public AssociatedGroupType SetAssociatedGroup = AssociatedGroupType.None;
 

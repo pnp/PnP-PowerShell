@@ -33,7 +33,7 @@ Parameter|Type|Required|Description
 |ResourceQuotaWarningLevel|Double|False|Specifies the warning level for the resource quota. This value must not exceed the value set for the ResourceQuota parameter|
 |StorageQuota|Int64|False|Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.|
 |StorageQuotaWarningLevel|Int64|False|Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageQuota parameter|
-|Template|String|False|Specifies the site collection template type. Use the Get-SPOWebTemplate cmdlet to get the list of valid templates. If no template is specified, one can be added later. The Template and LocaleId parameters must be a valid combination as returned from the Get-PnPWebTemplates cmdlet.|
+|Template|String|False|Specifies the site collection template type. Use the Get-PnPWebTemplate cmdlet to get the list of valid templates. If no template is specified, one can be added later. The Template and LocaleId parameters must be a valid combination as returned from the Get-PnPWebTemplates cmdlet.|
 |TimeZone|Int32|True|Use Get-PnPTimeZoneId to retrieve possible timezone values|
 |Title|String|True|Specifies the title of the new site collection|
 |Url|String|True|Specifies the full URL of the new site collection. It must be in a valid managed path in the company's site. For example, for company contoso, valid managed paths are https://contoso.sharepoint.com/sites and https://contoso.sharepoint.com/teams.|

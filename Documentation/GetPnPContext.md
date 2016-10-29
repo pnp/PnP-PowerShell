@@ -11,6 +11,6 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> $ctx = Get-SPOContext
+PS:> $ctx = Get-PnPContext
 ```
 This will put the current context in the $ctx variable.

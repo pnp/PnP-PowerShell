@@ -23,24 +23,24 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Get-SPOTenantSite
+PS:> Get-PnPTenantSite
 ```
 Returns all site collections
 
 ###Example 2
 ```powershell
-PS:> Get-SPOTenantSite -Url http://tenant.sharepoint.com/sites/projects
+PS:> Get-PnPTenantSite -Url http://tenant.sharepoint.com/sites/projects
 ```
 Returns information about the project site.
 
 ###Example 3
 ```powershell
-PS:> Get-SPOTenantSite -Detailed
+PS:> Get-PnPTenantSite -Detailed
 ```
 Returns all sites with the full details of these sites
 
 ###Example 4
 ```powershell
-PS:> Get-SPOTenantSite -IncludeOneDriveSites
+PS:> Get-PnPTenantSite -IncludeOneDriveSites
 ```
 Returns all sites including all OneDrive 4 Business sites

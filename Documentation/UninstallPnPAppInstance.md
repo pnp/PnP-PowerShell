@@ -20,7 +20,7 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Uninstall-PnPAppInstance -Identity $appinstance
 ```
-Uninstalls the app instance which was retrieved with the command Get-SPOAppInstance
+Uninstalls the app instance which was retrieved with the command Get-PnPAppInstance
 
 ###Example 2
 ```powershell

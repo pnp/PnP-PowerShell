@@ -8,6 +8,6 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Disconnect-SPOnline
+PS:> Disconnect-PnPOnline
 ```
 This will disconnect you from the server.

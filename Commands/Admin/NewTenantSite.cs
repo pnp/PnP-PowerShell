@@ -41,7 +41,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft: http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911.")]
         public uint Lcid = 1033;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the site collection template type. Use the Get-SPOWebTemplate cmdlet to get the list of valid templates. If no template is specified, one can be added later. The Template and LocaleId parameters must be a valid combination as returned from the Get-PnPWebTemplates cmdlet.")]
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the site collection template type. Use the Get-PnPWebTemplate cmdlet to get the list of valid templates. If no template is specified, one can be added later. The Template and LocaleId parameters must be a valid combination as returned from the Get-PnPWebTemplates cmdlet.")]
         public string Template = "STS#0";
 
         [Parameter(Mandatory = true, HelpMessage = "Use Get-PnPTimeZoneId to retrieve possible timezone values")]

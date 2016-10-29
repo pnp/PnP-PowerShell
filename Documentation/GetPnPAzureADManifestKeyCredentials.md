@@ -19,12 +19,12 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Get-SPOAzureADManifestKeyCredentials -CertPath .\mycert.cer
+PS:> Get-PnPAzureADManifestKeyCredentials -CertPath .\mycert.cer
 ```
 Output the JSON snippet which needs to be replaced in the application manifest file
 
 ###Example 2
 ```powershell
-PS:> Get-SPOAzureADManifestKeyCredentials -CertPath .\mycert.cer | Set-Clipboard
+PS:> Get-PnPAzureADManifestKeyCredentials -CertPath .\mycert.cer | Set-Clipboard
 ```
 Output the JSON snippet which needs to be replaced in the application manifest file and copies it to the clipboard

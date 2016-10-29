@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 2)]
     [CmdletExample(
         Code = @"Set-PnPListItem -List ""Demo List"" -Identity $item -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
-        Remarks = @"Sets fields value in the list item which has been retrieved by for instance Get-SPOListItem. It sets the content type of the item to ""Company"" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
+        Remarks = @"Sets fields value in the list item which has been retrieved by for instance Get-PnPListItem. It sets the content type of the item to ""Company"" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 3)]
     public class SetListItem : SPOWebCmdlet
     {

@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Add-SPOCustomAction",
+                var results = scope.ExecuteCommand("Add-PnPCustomAction",
                     new CommandParameter("Name", "TestCustomAction"),
                     new CommandParameter("Title", "TestCustomAction"),
                     new CommandParameter("Description", "Test Custom Action Description"),
@@ -42,7 +42,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Add-SPOJavascriptBlock",
+                var results = scope.ExecuteCommand("Add-PnPJavascriptBlock",
                     new CommandParameter("Name", "TestJavascriptBlock"),
                     new CommandParameter("Script", "<script type='text/javascript'>alert('1')</script>"));
 
@@ -63,7 +63,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Add-SPOJavascriptLink",
+                var results = scope.ExecuteCommand("Add-PnPJavascriptLink",
                     new CommandParameter("Key", "TestJavascriptLink"),
                     new CommandParameter("Url", "https://testserver.com/testtojavascriptlink.js"));
 
@@ -84,7 +84,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Add-SPONavigationNode",
+                var results = scope.ExecuteCommand("Add-PnPNavigationNode",
                     new CommandParameter("Location", NavigationType.QuickLaunch),
                     new CommandParameter("Title", "Test Navigation Item"),
                     new CommandParameter("Url", "https://testserver.com/testtojavascriptlink.js"));
@@ -108,7 +108,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                scope.ExecuteCommand("Add-SPOJavascriptLink",
+                scope.ExecuteCommand("Add-PnPJavascriptLink",
                     new CommandParameter("Key", "TestJavascriptLink"),
                     new CommandParameter("Url", "https://testserver.com/testtojavascriptlink.js"));
 
@@ -131,11 +131,11 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                scope.ExecuteCommand("Add-SPOJavascriptLink",
+                scope.ExecuteCommand("Add-PnPJavascriptLink",
                     new CommandParameter("Key", "TestJavascriptLink"),
                     new CommandParameter("Url", "https://testserver.com/testtojavascriptlink.js"));
 
-                var results = scope.ExecuteCommand("Get-SPOJavaScriptLink");
+                var results = scope.ExecuteCommand("Get-PnPJavaScriptLink");
 
                 Assert.IsTrue(results.Any());
 
@@ -154,7 +154,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Get-SPOProvisioningTemplate");
+                var results = scope.ExecuteCommand("Get-PnPProvisioningTemplate");
 
                 Assert.IsTrue(results.Any());
 
@@ -167,7 +167,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Apply-SPOProvisioningTemplate",
+                var results = scope.ExecuteCommand("Apply-PnPProvisioningTemplate",
                     new CommandParameter("Path", "..\\..\\Resources\\template.xml")
                     );
 
@@ -196,7 +196,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                scope.ExecuteCommand("Add-SPOCustomAction",
+                scope.ExecuteCommand("Add-PnPCustomAction",
                     new CommandParameter("Name", "TestCustomAction"),
                     new CommandParameter("Title", "TestCustomAction"),
                     new CommandParameter("Description", "Test Custom Action Description"),
@@ -214,7 +214,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                     var id = actions.FirstOrDefault().Id;
 
-                    scope.ExecuteCommand("Remove-SPOCustomAction",
+                    scope.ExecuteCommand("Remove-PnPCustomAction",
                         new CommandParameter("Identity", id),
                         new CommandParameter("Force", true));
 
@@ -231,7 +231,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Add-SPOJavascriptLink",
+                var results = scope.ExecuteCommand("Add-PnPJavascriptLink",
                     new CommandParameter("Key", "TestJavascriptLink"),
                     new CommandParameter("Url", "https://testserver.com/testtojavascriptlink.js"));
 
@@ -243,7 +243,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                     var name = actions.FirstOrDefault().Name;
 
-                    scope.ExecuteCommand("Remove-SPOJavaScriptLink",
+                    scope.ExecuteCommand("Remove-PnPJavaScriptLink",
                         new CommandParameter("Name", name),
                         new CommandParameter("Force", true));
 
@@ -259,7 +259,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Add-SPONavigationNode",
+                var results = scope.ExecuteCommand("Add-PnPNavigationNode",
                     new CommandParameter("Location", NavigationType.QuickLaunch),
                     new CommandParameter("Title", "Test Navigation Item"),
                     new CommandParameter("Url", "https://testserver.com/testtojavascriptlink.js"));
@@ -272,7 +272,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                     Assert.IsTrue(nodes.Any());
 
-                    scope.ExecuteCommand("Remove-SPONavigationNode",
+                    scope.ExecuteCommand("Remove-PnPNavigationNode",
                         new CommandParameter("Location", NavigationType.QuickLaunch),
                         new CommandParameter("Title", "Test Navigation Item"),
                         new CommandParameter("Force", true)
@@ -298,7 +298,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 using (var scope = new PSTestScope(true))
                 {
-                    var results = scope.ExecuteCommand("Set-SPOHomePage",
+                    var results = scope.ExecuteCommand("Set-PnPHomePage",
                         new CommandParameter("RootFolderRelativeUrl", "sitepages/demo.aspx"));
 
                     context.Load(context.Web, w => w.RootFolder.WelcomePage);
@@ -326,7 +326,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 using (var scope = new PSTestScope(true))
                 {
-                    var results = scope.ExecuteCommand("Get-SPOHomePage");
+                    var results = scope.ExecuteCommand("Get-PnPHomePage");
 
                     Assert.IsInstanceOfType(results.FirstOrDefault().BaseObject, typeof(string));
                     Assert.IsTrue((results.FirstOrDefault().BaseObject as string).ToLowerInvariant() == existingHomePageUrl.ToLowerInvariant());
@@ -347,7 +347,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 using (var scope = new PSTestScope(true))
                 {
-                    var results = scope.ExecuteCommand("Set-SPOMasterPage",
+                    var results = scope.ExecuteCommand("Set-PnPMasterPage",
                         new CommandParameter("MasterPageServerRelativeUrl", "/sites/tests/_catalogs/default.master"),
                         new CommandParameter("CustomMasterPageServerRelativeUrl", "/sites/tests/_catalogs/custom.master"));
 
@@ -377,14 +377,14 @@ namespace SharePointPnP.PowerShell.Tests
                     if (isActive)
                     {
                         // Deactivate
-                        scope.ExecuteCommand("Set-SPOMinimalDownloadStrategy",
+                        scope.ExecuteCommand("Set-PnPMinimalDownloadStrategy",
                             new CommandParameter("Off"),
                             new CommandParameter("Force"));
 
                     }
                     else
                     {
-                        scope.ExecuteCommand("Set-SPOMinimalDownloadStrategy",
+                        scope.ExecuteCommand("Set-PnPMinimalDownloadStrategy",
                             new CommandParameter("On"));
                     }
                 }

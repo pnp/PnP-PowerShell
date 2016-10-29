@@ -13,9 +13,9 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.TenantAdmin,
         OutputType=typeof(Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.spotenantwebtemplatecollection.aspx")]
-    [CmdletExample(Code = @"PS:> Get-SPOWebTemplates", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Get-SPOWebTemplates -LCID 1033", Remarks = @"Returns all webtemplates for the Locale with ID 1033 (English)", SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Get-SPOWebTemplates -CompatibilityLevel 15", Remarks = @"Returns all webtemplates for the compatibility level 15", SortOrder = 2)]
+    [CmdletExample(Code = @"PS:> Get-PnPWebTemplates", SortOrder = 1)]
+    [CmdletExample(Code = @"PS:> Get-PnPWebTemplates -LCID 1033", Remarks = @"Returns all webtemplates for the Locale with ID 1033 (English)", SortOrder = 2)]
+    [CmdletExample(Code = @"PS:> Get-PnPWebTemplates -CompatibilityLevel 15", Remarks = @"Returns all webtemplates for the compatibility level 15", SortOrder = 2)]
     [CmdletRelatedLink(Text = "Locale IDs", Url = "http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911")]
     public class GetWebTemplates : SPOAdminCmdlet
     {

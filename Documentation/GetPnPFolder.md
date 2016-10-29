@@ -8,7 +8,7 @@ Get-PnPFolder [-Web <WebPipeBind>]
 
 
 ##Detailed Description
-Retrieves a folder if it exists. Use Ensure-SPOFolder to create the folder if it does not exist.
+Retrieves a folder if it exists. Use Ensure-PnPFolder to create the folder if it does not exist.
 
 ##Returns
 >[Microsoft.SharePoint.Client.Folder](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)

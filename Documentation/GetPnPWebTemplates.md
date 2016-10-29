@@ -19,18 +19,18 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Get-SPOWebTemplates
+PS:> Get-PnPWebTemplates
 ```
 
 
 ###Example 2
 ```powershell
-PS:> Get-SPOWebTemplates -LCID 1033
+PS:> Get-PnPWebTemplates -LCID 1033
 ```
 Returns all webtemplates for the Locale with ID 1033 (English)
 
 ###Example 3
 ```powershell
-PS:> Get-SPOWebTemplates -CompatibilityLevel 15
+PS:> Get-PnPWebTemplates -CompatibilityLevel 15
 ```
 Returns all webtemplates for the compatibility level 15

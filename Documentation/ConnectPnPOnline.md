@@ -152,6 +152,6 @@ This will prompt you for credentials and creates a context for the other PowerSh
 
 ###Example 7
 ```powershell
-PS:> Connect-SPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication
+PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication
 ```
 This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)

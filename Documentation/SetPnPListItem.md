@@ -63,4 +63,4 @@ Sets fields value in the list item with ID 1 in the "Demo List". It sets the con
 ```powershell
 Set-PnPListItem -List "Demo List" -Identity $item -Values @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
-Sets fields value in the list item which has been retrieved by for instance Get-SPOListItem. It sets the content type of the item to "Company" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
+Sets fields value in the list item which has been retrieved by for instance Get-PnPListItem. It sets the content type of the item to "Company" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.

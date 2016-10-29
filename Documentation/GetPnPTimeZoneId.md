@@ -19,12 +19,12 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Get-SPOTimeZoneId
+PS:> Get-PnPTimeZoneId
 ```
 This will return all time zone IDs in use by Office 365.
 
 ###Example 2
 ```powershell
-PS:> Get-SPOTimeZoneId -Match Stockholm
+PS:> Get-PnPTimeZoneId -Match Stockholm
 ```
 This will return the time zone IDs for Stockholm

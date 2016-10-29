@@ -26,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "Id or title of the webpart. Use Get-SPOWebPart to retrieve all webpart Ids")]
+        [Parameter(Mandatory = true, HelpMessage = "Id or title of the webpart. Use Get-PnPWebPart to retrieve all webpart Ids")]
         public WebPartPipeBind Identity;
 
         protected override void ExecuteCmdlet()

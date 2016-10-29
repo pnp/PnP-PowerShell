@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     [CmdletHelp("Disconnects the context", 
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> Disconnect-SPOnline", 
+        Code = @"PS:> Disconnect-PnPOnline", 
         Remarks = @"This will disconnect you from the server.",
         SortOrder = 1)]
     public class DisconnectSPOnline : PSCmdlet

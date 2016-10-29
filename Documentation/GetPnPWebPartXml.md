@@ -14,7 +14,7 @@ Get-PnPWebPartXml -ServerRelativePageUrl <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|WebPartPipeBind|True|Id or title of the webpart. Use Get-SPOWebPart to retrieve all webpart Ids|
+|Identity|WebPartPipeBind|True|Id or title of the webpart. Use Get-PnPWebPart to retrieve all webpart Ids|
 |ServerRelativePageUrl|String|True|Full server relative url of the webpart page, e.g. /sites/mysite/sitepages/home.aspx|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

@@ -8,7 +8,7 @@ Ensure-PnPFolder [-Web <WebPipeBind>]
 
 
 ##Detailed Description
-If you do not want the folder to be created, for instance just to test if a folder exists, check Get-SPOFolder
+If you do not want the folder to be created, for instance just to test if a folder exists, check Get-PnPFolder
 
 ##Returns
 >[Microsoft.SharePoint.Client.Folder](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.folder.aspx)

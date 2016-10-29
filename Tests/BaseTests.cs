@@ -100,7 +100,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Get-SPOContext");
+                var results = scope.ExecuteCommand("Get-PnPContext");
 
                 Assert.IsTrue(results.Count == 1);
                 Assert.IsTrue(results[0].BaseObject.GetType() == typeof(OfficeDevPnP.Core.PnPClientContext));
@@ -116,7 +116,7 @@ namespace SharePointPnP.PowerShell.Tests
                 using (var scope = new PSTestScope(true))
                 {
 
-                    var results = scope.ExecuteCommand("Get-SPOProperty",
+                    var results = scope.ExecuteCommand("Get-PnPProperty",
                         new CommandParameter("ClientObject", ctx.Web),
                         new CommandParameter("Property", "Lists"));
                     Assert.IsTrue(results.Count == 1);
