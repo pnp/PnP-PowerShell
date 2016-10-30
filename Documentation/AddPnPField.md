@@ -34,6 +34,7 @@ Add-PnPField [-List <ListPipeBind>]
              [-Required [<SwitchParameter>]]
              [-Group <String>]
              [-Web <WebPipeBind>]
+             [-Choices <String[]>]
 ```
 
 
@@ -67,6 +68,7 @@ Add-PnPField -DisplayName <String>
              [-Required [<SwitchParameter>]]
              [-Group <String>]
              [-Web <WebPipeBind>]
+             [-Choices <String[]>]
 ```
 
 
@@ -77,6 +79,7 @@ Add-PnPField -DisplayName <String>
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |AddToDefaultView|SwitchParameter|False||
+|Choices|String[]|False|Specify choices, only valid if the field type is Choice|
 |DisplayName|String|True||
 |Field|FieldPipeBind|True|The name of the field, its ID or an actual field object that needs to be added|
 |Group|String|False||

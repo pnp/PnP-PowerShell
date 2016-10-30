@@ -19,6 +19,8 @@ namespace SharePointPnP.PowerShell.Commands.Fields
     [CmdletExample(
      Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
 Remarks = @"This will add field of type Multiple Choice to a the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]),ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "ListPara")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "WebPara")]
     public class AddField : SPOWebCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara")]
@@ -221,7 +223,7 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
                         {
                             WriteObject(ClientContext.CastTo<FieldGeolocation>(f));
                             break;
-                            
+
                         }
                     case FieldType.User:
                         {
