@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Tests
             if (connect)
             {
                 pipeLine = _runSpace.CreatePipeline();
-                cmd = new Command("connect-sponline");
+                cmd = new Command("connect-pnponline");
                 cmd.Parameters.Add("Url", SiteUrl);
                 if (!string.IsNullOrEmpty(CredentialManagerEntry))
                 {
