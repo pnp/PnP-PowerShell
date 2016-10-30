@@ -98,7 +98,7 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                     var outputTypeLink = string.Empty;
                     var outputTypeDescription = string.Empty;
                     var aliases = new List<string>();
-
+                    var additionalParameters = new List<CmdletAdditionalParameter>();
                     // Get info from attributes
                     foreach (var attr in attrs)
                     {
@@ -136,6 +136,12 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                         {
                             var l = (CmdletRelatedLinkAttribute)attr;
                             relatedLinks.Add(l);
+                        }
+                        if (attr is CmdletAdditionalParameter)
+                        {
+                            
+                            var a = (CmdletAdditionalParameter)attr;
+                            additionalParameters.Add(a);
                         }
                     }
 
@@ -231,6 +237,38 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                         }
                     }
 
+                    foreach (var additionalParameter in additionalParameters)
+                    {
+
+                        if (additionalParameter.ParameterSetName != ParameterAttribute.AllParameterSets)
+                        {
+                            var cmdletSyntax = cmdletInfo.Syntaxes.FirstOrDefault(c => c.ParameterSetName == additionalParameter.ParameterSetName);
+                            if (cmdletSyntax == null)
+                            {
+                                cmdletSyntax = new CmdletSyntax();
+                                cmdletSyntax.ParameterSetName = additionalParameter.ParameterSetName;
+                                cmdletInfo.Syntaxes.Add(cmdletSyntax);
+                            }
+
+                            cmdletSyntax.Parameters.Add(new CmdletParameterInfo()
+                            {
+                                Name = additionalParameter.ParameterName,
+                                Description = additionalParameter.HelpMessage,
+                                Position = additionalParameter.Position,
+                                Required = additionalParameter.Mandatory,
+                                Type = additionalParameter.ParameterType.Name
+                            });
+
+                            var syntaxItem = syntaxItems.FirstOrDefault(x => x.Name == additionalParameter.ParameterSetName);
+                            if (syntaxItem == null)
+                            {
+                                syntaxItem = new SyntaxItem(additionalParameter.ParameterSetName);
+                                syntaxItems.Add(syntaxItem);
+                            }
+                            syntaxItem.Parameters.Add(new SyntaxItem.Parameter() { Name = additionalParameter.ParameterName, Description = additionalParameter.HelpMessage, Position = additionalParameter.Position, Required = additionalParameter.Mandatory, Type = additionalParameter.ParameterType.Name });
+                        }
+                    }
+
                     // all parameters
                     // Add AllParameterSets to all CmdletInfo syntax sets and syntaxItems sets (first checking there is at least one, i.e. if all are marked AllParameterSets)
                     foreach (var field in fields)
@@ -277,16 +315,17 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                         }
                     }
 
+
+
                     // Build XElement for parameters from syntaxItems list (note: syntax element is set above)
                     foreach (var syntaxItem in syntaxItems)
                     {
                         var syntaxItemElement = new XElement(command + "syntaxItem");
                         syntaxElement.Add(syntaxItemElement);
 
-                        syntaxItemElement.Add(new XElement(maml + "name", string.Format("{0}-{1}", verb, noun)));
+                        syntaxItemElement.Add(new XElement(maml + "name", $"{verb}-{noun}"));
                         foreach (var parameter in syntaxItem.Parameters)
                         {
-
                             var parameterElement = new XElement(command + "parameter", new XAttribute("required", parameter.Required), new XAttribute("position", parameter.Position > 0 ? parameter.Position.ToString() : "named"));
 
                             parameterElement.Add(new XElement(maml + "name", parameter.Name));
@@ -342,6 +381,36 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
 
                             }
                         }
+                    }
+
+                    foreach (var additionalParameter in additionalParameters.GroupBy(o => new { o.ParameterName}).Select(o => o.FirstOrDefault()))
+                    {
+                        cmdletInfo.Parameters.Add(new CmdletParameterInfo()
+                        {
+                            Name = additionalParameter.ParameterName,
+                            Description = additionalParameter.HelpMessage,
+                            Position = additionalParameter.Position,
+                            Required = additionalParameter.Mandatory,
+                            Type = additionalParameter.ParameterType.Name
+                        });
+
+                        
+                        var parameter2Element = new XElement(command + "parameter", new XAttribute("required", additionalParameter.Mandatory), new XAttribute("position", additionalParameter.Position > 0 ? additionalParameter.Position.ToString() : "named"));
+
+                        parameter2Element.Add(new XElement(maml + "name", additionalParameter.ParameterName));
+
+                        parameter2Element.Add(new XElement(maml + "description", new XElement(maml + "para", additionalParameter.HelpMessage)));
+                        var parameterValueElement = new XElement(command + "parameterValue", additionalParameter.ParameterType.Name, new XAttribute("required", additionalParameter.Mandatory));
+                        parameter2Element.Add(parameterValueElement);
+
+                        var devElement = new XElement(dev + "type");
+                        devElement.Add(new XElement(maml + "name", additionalParameter.ParameterType.Name));
+                        devElement.Add(new XElement(maml + "uri"));
+
+                        parameter2Element.Add(devElement);
+
+                        parametersElement.Add(parameter2Element);
+
                     }
 
                     // XElement inputTypes
