@@ -14,8 +14,8 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommon.New, "SPOProvisioningTemplateFromFolder")]
-    [CmdletAlias("New-PnPProvisioningTemplateFromFolder")]
+    [Cmdlet(VerbsCommon.New, "PnPProvisioningTemplateFromFolder")]
+    [CmdletAlias("New-SPOProvisioningTemplateFromFolder")]
     [CmdletHelp("Generates a provisioning template from a given folder, including only files that are present in that folder",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

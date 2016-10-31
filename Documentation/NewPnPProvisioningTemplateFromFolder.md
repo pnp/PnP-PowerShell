@@ -1,8 +1,8 @@
-#New-SPOProvisioningTemplateFromFolder
+#New-PnPProvisioningTemplateFromFolder
 Generates a provisioning template from a given folder, including only files that are present in that folder
 ##Syntax
 ```powershell
-New-SPOProvisioningTemplateFromFolder [-Match <String>]
+New-PnPProvisioningTemplateFromFolder [-Match <String>]
                                       [-ContentType <ContentTypePipeBind>]
                                       [-Properties <Hashtable>]
                                       [-AsIncludeFile [<SwitchParameter>]]

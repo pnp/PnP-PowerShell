@@ -1,8 +1,8 @@
-#Remove-SPOWorkflowSubscription
+#Remove-PnPWorkflowSubscription
 Removes a workflow subscription
 ##Syntax
 ```powershell
-Remove-SPOWorkflowSubscription [-Web <WebPipeBind>]
+Remove-PnPWorkflowSubscription [-Web <WebPipeBind>]
                                -Identity <WorkflowSubscriptionPipeBind>
 ```
 
