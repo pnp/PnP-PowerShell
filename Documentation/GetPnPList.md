@@ -13,7 +13,7 @@ Get-PnPList [-Web <WebPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|ListPipeBind|False|The ID or Url of the list.|
+|Identity|ListPipeBind|False|The ID, name or Url (Lists/<listname>) of the list.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
