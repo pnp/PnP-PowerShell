@@ -139,8 +139,8 @@ Cmdlet|Description
 **[Convert&#8209;PnPProvisioningTemplate](ConvertPnPProvisioningTemplate.md)** |Converts a provisioning template to a other schema version
 **[Apply&#8209;PnPProvisioningTemplate](ApplyPnPProvisioningTemplate.md)** |Applies a provisioning template to a web
 **[Get&#8209;PnPProvisioningTemplate](GetPnPProvisioningTemplate.md)** |Generates a provisioning template from a web
+**[New&#8209;PnPProvisioningTemplateFromFolder](NewPnPProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
 **[Set&#8209;PnPProvisioningTemplateMetadata](SetPnPProvisioningTemplateMetadata.md)** |Sets metadata of a provisioning template
-**[New&#8209;SPOProvisioningTemplateFromFolder](NewSPOProvisioningTemplateFromFolder.md)** |Generates a provisioning template from a given folder, including only files that are present in that folder
 ##Publishing
 Cmdlet|Description
 :-----|:----------
@@ -255,6 +255,6 @@ Cmdlet|Description
 **[Get&#8209;PnPWorkflowDefinition](GetPnPWorkflowDefinition.md)** |Returns a workflow definition
 **[Resume&#8209;PnPWorkflowInstance](ResumePnPWorkflowInstance.md)** |Resumes a previously stopped workflow instance
 **[Stop&#8209;PnPWorkflowInstance](StopPnPWorkflowInstance.md)** |Stops a workflow instance
+**[Remove&#8209;PnPWorkflowSubscription](RemovePnPWorkflowSubscription.md)** |Removes a workflow subscription
 **[Add&#8209;PnPWorkflowSubscription](AddPnPWorkflowSubscription.md)** |Adds a workflow subscription to a list
 **[Get&#8209;PnPWorkflowSubscription](GetPnPWorkflowSubscription.md)** |Returns a workflow subscriptions from a list
-**[Remove&#8209;SPOWorkflowSubscription](RemoveSPOWorkflowSubscription.md)** |Removes a workflow subscription
