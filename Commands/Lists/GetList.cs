@@ -20,12 +20,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Remarks = "Returns a list with the given id.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = "PS:> Get-PnPList -Identity /Lists/Announcements",
+        Code = "PS:> Get-PnPList -Identity Lists/Announcements",
         Remarks = "Returns a list with the given url.",
         SortOrder = 3)]
     public class GetList : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, name or Url (Lists/MyList) of the list.")]
         public ListPipeBind Identity;
 
         protected override void ExecuteCmdlet()
