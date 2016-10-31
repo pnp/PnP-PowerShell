@@ -5,7 +5,7 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    public class SPOAdminCmdlet : SPOCmdlet
+    public abstract class SPOAdminCmdlet : SPOCmdlet
     {
         private Tenant _tenant;
         public Tenant Tenant
