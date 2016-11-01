@@ -42,6 +42,6 @@ This will set the title of the site collection with the URL 'https://contoso.sha
 
 ###Example 3
 ```powershell
-PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners 'i:0#.f|membership|user@contoso.onmicrosoft.com'
+PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners 'user@contoso.onmicrosoft.com'
 ```
 This will set user@contoso.onmicrosoft.com as a site collection owner at 'https://contoso.sharepoint.com/sites/sales'.
