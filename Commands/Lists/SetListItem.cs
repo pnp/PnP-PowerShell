@@ -91,19 +91,24 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
-                var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title, f => f.FieldTypeKind));
-                ClientContext.ExecuteQueryRetry();
-
-                Hashtable values = Values ?? new Hashtable();
-
-                foreach (var key in values.Keys)
+                if (Values != null)
                 {
-                    var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
-                    if (field != null)
+                    var fields =
+                        ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title,
+                            f => f.FieldTypeKind));
+                    ClientContext.ExecuteQueryRetry();
+
+                    Hashtable values = Values ?? new Hashtable();
+
+                    foreach (var key in values.Keys)
                     {
-                        switch (field.FieldTypeKind)
+                        var field =
+                            fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                        if (field != null)
                         {
-                            case FieldType.User:
+                            switch (field.FieldTypeKind)
+                            {
+                                case FieldType.User:
                                 {
                                     List<FieldUserValue> userValues = new List<FieldUserValue>();
 
@@ -122,7 +127,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                             }
                                             else
                                             {
-                                                userValues.Add(new FieldUserValue() { LookupId = userId });
+                                                userValues.Add(new FieldUserValue() {LookupId = userId});
                                             }
                                         }
                                         item[key as string] = userValues.ToArray();
@@ -139,28 +144,29 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                         }
                                         else
                                         {
-                                            item[key as string] = new FieldUserValue() { LookupId = userId };
+                                            item[key as string] = new FieldUserValue() {LookupId = userId};
                                         }
                                     }
                                     break;
                                 }
-                            default:
+                                default:
                                 {
                                     item[key as string] = values[key];
                                     break;
                                 }
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("Field not present in list");
                         }
                     }
-                    else
-                    {
-                        throw new Exception("Field not present in list");
-                    }
+
+
+                    item.Update();
+                    ClientContext.Load(item);
+                    ClientContext.ExecuteQueryRetry();
                 }
-
-
-                item.Update();
-                ClientContext.Load(item);
-                ClientContext.ExecuteQueryRetry();
                 WriteObject(item);
             }
         }
