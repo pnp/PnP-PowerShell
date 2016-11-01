@@ -29,7 +29,7 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Set-PnPTheme
 ```
-Removes the current theme
+Removes the current theme and resets it to the default.
 
 ###Example 2
 ```powershell
@@ -42,3 +42,9 @@ PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor
 PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png'
 ```
 
+
+###Example 4
+```powershell
+PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png' -ResetSubwebsToInherit
+```
+Sets the theme to the web, and updates all subwebs to inherit the theme from this web.
