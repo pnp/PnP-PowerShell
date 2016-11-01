@@ -76,7 +76,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     if (field != null)
                     {
                         IDefaultColumnValue defaultColumnValue = null;
-                        if (field.TypeAsString == "Text" || field.TypeAsString == "Choice")
+                        if (field.TypeAsString == "Text" || field.TypeAsString == "Choice" ||field.TypeAsString == "MultiChoice")
                         {
                             var values = string.Join(";", Value);
                             defaultColumnValue = new DefaultColumnTextValue()
