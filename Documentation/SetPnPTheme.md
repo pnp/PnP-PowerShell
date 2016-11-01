@@ -5,7 +5,8 @@ Sets the theme of the current web.
 Set-PnPTheme [-ColorPaletteUrl <String>]
              [-FontSchemeUrl <String>]
              [-BackgroundImageUrl <String>]
-             [-ShareGenerated [<SwitchParameter>]]
+             [-ResetSubwebsToInherit [<SwitchParameter>]]
+             [-UpdateRootWebOnly [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
 
@@ -19,7 +20,8 @@ Parameter|Type|Required|Description
 |BackgroundImageUrl|String|False|Specifies the Background Image Url based on the server relative url|
 |ColorPaletteUrl|String|False|Specifies the Color Palette Url based on the site relative url|
 |FontSchemeUrl|String|False|Specifies the Font Scheme Url based on the server relative url|
-|ShareGenerated|SwitchParameter|False|true if the generated theme files should be placed in the root web, false to store them in this web. Default is false|
+|ResetSubwebsToInherit|SwitchParameter|False|Resets subwebs to inherit the theme from the rootweb|
+|UpdateRootWebOnly|SwitchParameter|False|Updates only the rootweb, even if subwebs are set to inherit the theme.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

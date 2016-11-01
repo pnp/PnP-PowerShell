@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
@@ -9,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPTheme")]
     [CmdletAlias("Set-SPOTheme")]
-    [CmdletHelp("Sets the theme of the current web.", DetailedDescription = " Sets the theme of the current web, if any of the attributes is not set, that value will be set to null",Category = CmdletHelpCategory.Branding)]
+    [CmdletHelp("Sets the theme of the current web.", DetailedDescription = " Sets the theme of the current web, if any of the attributes is not set, that value will be set to null", Category = CmdletHelpCategory.Branding)]
     [CmdletExample(Code = @"PS:> Set-PnPTheme", Remarks = "Removes the current theme", SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor", SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png'", SortOrder = 3)]
@@ -27,7 +28,15 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         public string BackgroundImageUrl = null;
 
         [Parameter(Mandatory = false, HelpMessage = "true if the generated theme files should be placed in the root web, false to store them in this web. Default is false")]
+        [Obsolete("This parameter is obsolete and its usage has no effect. Generated theme files will be placed in the root web by default.")]
         public SwitchParameter ShareGenerated = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Resets subwebs to inherit the theme from the rootweb")]
+        public SwitchParameter ResetSubwebsToInherit = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Updates only the rootweb, even if subwebs are set to inherit the theme.")]
+        public SwitchParameter UpdateRootWebOnly = false;
+
 
         protected override void ExecuteCmdlet()
         {
@@ -36,13 +45,13 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             {
                 ColorPaletteUrl = "/_catalogs/theme/15/palette001.spcolor";
             }
-            if(!ColorPaletteUrl.ToLower().StartsWith(serverRelativeUrl.ToLower()))
+            if (!ColorPaletteUrl.ToLower().StartsWith(serverRelativeUrl.ToLower()))
             {
                 ColorPaletteUrl = ColorPaletteUrl = UrlUtility.Combine(serverRelativeUrl, "/_catalogs/theme/15/palette001.spcolor");
             }
-            SelectedWeb.SetThemeByUrl(ColorPaletteUrl,FontSchemeUrl,BackgroundImageUrl);
+            SelectedWeb.SetThemeByUrl(ColorPaletteUrl, FontSchemeUrl, BackgroundImageUrl, ResetSubwebsToInherit, UpdateRootWebOnly);
 
-           // SelectedWeb.ApplyTheme(ColorPaletteUrl, FontSchemeUrl, BackgroundImageUrl, ShareGenerated);
+            // SelectedWeb.ApplyTheme(ColorPaletteUrl, FontSchemeUrl, BackgroundImageUrl, ShareGenerated);
 
             ClientContext.ExecuteQueryRetry();
 
@@ -63,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 composedLook.FontFile = "";
                 SelectedWeb.EnsureProperty(w => w.SiteLogoUrl);
             }
-            
+
             composedLook.Name = composedLook.Name ?? "Custom by PnP PowerShell";
             composedLook.ColorFile = ColorPaletteUrl ?? composedLook.ColorFile;
             composedLook.FontFile = FontSchemeUrl ?? composedLook.FontFile;
