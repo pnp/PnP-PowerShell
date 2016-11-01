@@ -1,7 +1,7 @@
 # SharePointPnP.PowerShell Changelog #
 
 **2016-11-01**
-* Exposed ResetSubwebsToInherit and UpdateRootwebOnly parameters to Set-SPOTheme.
+* Exposed ResetSubwebsToInherit and UpdateRootwebOnly parameters to Set-PnPTheme.
 
 **2016-10-29**
 * Marked Get-SPOSite as deprecated. We will remove this cmdlet in the January 2017 release. Please switch as soon as possible to Get-PnPSite instead. A warning will be shown the moment Get-SPOSite is used.
