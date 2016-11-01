@@ -39,7 +39,7 @@ param (
 
        if (!(Get-command -Module $moduleName).count -gt 0)
        {
-           Install-Module $moduleName -Force
+           Install-Module $moduleName -Force -SkipPublisherCheck
        }
 
        Write-Output "The modules for $moduleVersion have been installed and can now be used"
