@@ -121,7 +121,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 Assert.IsTrue(results.Any());
 
-                Assert.IsTrue(results[0].BaseObject.GetType().BaseType == typeof(Microsoft.SharePoint.Client.Field));
+                Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Microsoft.SharePoint.Client.Field));
             }
         }
 

@@ -13,7 +13,7 @@ Get-PnPList [-Web <WebPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|ListPipeBind|False|The ID, name or Url (Lists/<listname>) of the list.|
+|Identity|ListPipeBind|False|The ID, name or Url (Lists/MyList) of the list.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
@@ -31,6 +31,6 @@ Returns a list with the given id.
 
 ###Example 3
 ```powershell
-PS:> Get-PnPList -Identity /Lists/Announcements
+PS:> Get-PnPList -Identity Lists/Announcements
 ```
 Returns a list with the given url.
