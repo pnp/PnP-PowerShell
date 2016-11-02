@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -41,6 +42,11 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
+            if (SelectedWeb.IsNoScriptSite())
+            {
+                WriteError(new ErrorRecord(new Exception("Site has NoScript enabled, and setting property bag values is not supported"), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
+                return;
+            }
             if (!MyInvocation.BoundParameters.ContainsKey("Folder"))
             {
                 if (!Indexed)
@@ -62,12 +68,12 @@ namespace SharePointPnP.PowerShell.Commands
             else
             {
                 SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                
+
                 var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
                 var folder = SelectedWeb.GetFolderByServerRelativeUrl(folderUrl);
 
                 folder.EnsureProperty(f => f.Properties);
-                
+
                 folder.Properties[Key] = Value;
                 folder.Update();
                 ClientContext.ExecuteQueryRetry();
