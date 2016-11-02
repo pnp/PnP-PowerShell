@@ -54,31 +54,35 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
             ClientContext.ExecuteQueryRetry();
 
-            ComposedLook composedLook;
-            // Set the corresponding property bag value which is used by the provisioning engine
-            if (SelectedWeb.PropertyBagContainsKey(PROPBAGKEY))
+            if (!SelectedWeb.IsNoScriptSite())
             {
-                composedLook = JsonConvert.DeserializeObject<ComposedLook>(SelectedWeb.GetPropertyBagValueString(PROPBAGKEY, ""));
+                ComposedLook composedLook;
+                // Set the corresponding property bag value which is used by the provisioning engine
+                if (SelectedWeb.PropertyBagContainsKey(PROPBAGKEY))
+                {
+                    composedLook =
+                        JsonConvert.DeserializeObject<ComposedLook>(SelectedWeb.GetPropertyBagValueString(PROPBAGKEY, ""));
 
+                }
+                else
+                {
+                    composedLook = new ComposedLook();
+                    composedLook.BackgroundFile = "";
+                    SelectedWeb.EnsureProperty(w => w.AlternateCssUrl);
+                    composedLook.ColorFile = "";
+                    SelectedWeb.EnsureProperty(w => w.MasterUrl);
+                    composedLook.FontFile = "";
+                    SelectedWeb.EnsureProperty(w => w.SiteLogoUrl);
+                }
+
+                composedLook.Name = composedLook.Name ?? "Custom by PnP PowerShell";
+                composedLook.ColorFile = ColorPaletteUrl ?? composedLook.ColorFile;
+                composedLook.FontFile = FontSchemeUrl ?? composedLook.FontFile;
+                composedLook.BackgroundFile = BackgroundImageUrl ?? composedLook.BackgroundFile;
+                var composedLookJson = JsonConvert.SerializeObject(composedLook);
+
+                SelectedWeb.SetPropertyBagValue(PROPBAGKEY, composedLookJson);
             }
-            else
-            {
-                composedLook = new ComposedLook();
-                composedLook.BackgroundFile = "";
-                SelectedWeb.EnsureProperty(w => w.AlternateCssUrl);
-                composedLook.ColorFile = "";
-                SelectedWeb.EnsureProperty(w => w.MasterUrl);
-                composedLook.FontFile = "";
-                SelectedWeb.EnsureProperty(w => w.SiteLogoUrl);
-            }
-
-            composedLook.Name = composedLook.Name ?? "Custom by PnP PowerShell";
-            composedLook.ColorFile = ColorPaletteUrl ?? composedLook.ColorFile;
-            composedLook.FontFile = FontSchemeUrl ?? composedLook.FontFile;
-            composedLook.BackgroundFile = BackgroundImageUrl ?? composedLook.BackgroundFile;
-            var composedLookJson = JsonConvert.SerializeObject(composedLook);
-
-            SelectedWeb.SetPropertyBagValue(PROPBAGKEY, composedLookJson);
         }
     }
 }
