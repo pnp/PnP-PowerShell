@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -43,6 +44,12 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
+            if (SelectedWeb.IsNoScriptSite())
+            {
+                WriteError(new ErrorRecord(new Exception("Site has NoScript enabled, and setting custom master pages is not supported."), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
+                return;
+            }
+
             if (ParameterSetName == "SERVER")
             {
                 if (!string.IsNullOrEmpty(MasterPageServerRelativeUrl))
