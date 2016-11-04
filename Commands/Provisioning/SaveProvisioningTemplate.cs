@@ -29,6 +29,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
         public string Out;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        public SwitchParameter Force;
+
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify the ITemplateProviderExtension to execute while saving a template.")]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
@@ -36,11 +39,32 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         {
             // Determine the output file name and path
             string outFileName = System.IO.Path.GetFileName(Out);
+
+            if (!Path.IsPathRooted(Out))
+            {
+                Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
+            }
+
+            bool proceed = false;
+
+            if (System.IO.File.Exists(Out))
+            {
+                if (Force || ShouldContinue(string.Format(Properties.Resources.File0ExistsOverwrite, Out),
+                    Properties.Resources.Confirm))
+                {
+                    proceed = true;
+                }
+            }
+            else
+            {
+                proceed = true;
+            }
+
             string outPath = new System.IO.FileInfo(Out).DirectoryName;
 
             // Determine if it is an .XML or a .PNP file
             var extension = "";
-            if (outFileName != null)
+            if (proceed && outFileName != null)
             {
                 if (outFileName.IndexOf(".", StringComparison.Ordinal) > -1)
                 {
