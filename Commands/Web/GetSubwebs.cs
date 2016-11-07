@@ -15,9 +15,6 @@ namespace SharePointPnP.PowerShell.Commands
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
     public class GetSubWebs : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
-        public WebPipeBind Identity;
-
         [Parameter(Mandatory = false)]
         public SwitchParameter Recurse;
 
