@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSubWebs")]
     [CmdletAlias("Get-SPOSubWebs")]
-    [CmdletHelp("Returns the subwebs", 
+    [CmdletHelp("Returns the subwebs of the current web", 
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(List<web>),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
