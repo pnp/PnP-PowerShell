@@ -11,6 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
         Code = @"PS:> Add-PnPUserToGroup -LoginName user@company.com -Identity 'Marketing Site Members'",
+		Remarks = @"Add the specified user to the group ""Marketing Site Members""",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Add-PnPUserToGroup -LoginName user@company.com -Identity 5",
