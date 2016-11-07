@@ -33,10 +33,10 @@ namespace SharePointPnP.PowerShell.Commands.Search
         SortOrder = 4)]
     public class GetSearchConfiguration : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Scope to use. Either Web, Site, or Subscription. Defaults to Web")]
         public SearchConfigurationScope Scope = SearchConfigurationScope.Web;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Local path where the search configuration will be saved")]
         public string Path;
 
         protected override void ExecuteCmdlet()
