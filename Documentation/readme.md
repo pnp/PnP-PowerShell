@@ -190,12 +190,8 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[Get&#8209;PnPAccessToken](GetPnPAccessToken.md)** |Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
-**[Set&#8209;PnPTenantSite](SetPnPTenantSite.md)** |Office365 only: Uses the tenant API to set site information.
-**[Get&#8209;PnPTenantSite](GetPnPTenantSite.md)** |Office365 only: Uses the tenant API to retrieve site information.
-**[Remove&#8209;PnPTenantSite](RemovePnPTenantSite.md)** |Office365 only: Removes a site collection from the current tenant
 **[New&#8209;PnPTenantSite](NewPnPTenantSite.md)** |Creates a new site collection for the current tenant
 **[Get&#8209;PnPTimeZoneId](GetPnPTimeZoneId.md)** |Returns a time zone ID
-**[Get&#8209;PnPWebTemplates](GetPnPWebTemplates.md)** |Office365 only: Returns the available web templates.
 ##User and group management
 Cmdlet|Description
 :-----|:----------
@@ -208,16 +204,6 @@ Cmdlet|Description
 **[New&#8209;PnPUser](NewPnPUser.md)** |Adds a user to the built-in Site User Info List and returns a user object
 **[Remove&#8209;PnPUserFromGroup](RemovePnPUserFromGroup.md)** |Removes a user from a group
 **[Add&#8209;PnPUserToGroup](AddPnPUserToGroup.md)** |Adds a user to a group
-##User Profiles
-Cmdlet|Description
-:-----|:----------
-**[New&#8209;PnPPersonalSite](NewPnPPersonalSite.md)** |Office365 only: Creates a personal / OneDrive For Business site
-**[Set&#8209;PnPUserProfileProperty](SetPnPUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.
-
-You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command. 
-
-**[Get&#8209;PnPUserProfileProperty](GetPnPUserProfileProperty.md)** |You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet. 
-
 ##Utilities
 Cmdlet|Description
 :-----|:----------
@@ -243,8 +229,6 @@ Cmdlet|Description
 **[Remove&#8209;PnPPropertyBagValue](RemovePnPPropertyBagValue.md)** |Removes a value from the property bag
 **[Set&#8209;PnPPropertyBagValue](SetPnPPropertyBagValue.md)** |Sets a property bag value
 **[Request&#8209;PnPReIndexWeb](RequestPnPReIndexWeb.md)** |Marks the web for full indexing during the next incremental crawl
-**[Get&#8209;PnPRequestAccessEmails](GetPnPRequestAccessEmails.md)** |Returns the request access e-mail addresses
-**[Set&#8209;PnPRequestAccessEmails](SetPnPRequestAccessEmails.md)** |Sets Request Access Emails on a web
 **[Get&#8209;PnPSubWebs](GetPnPSubWebs.md)** |Returns the subwebs
 **[Remove&#8209;PnPWeb](RemovePnPWeb.md)** |Removes a subweb in the current web
 **[Get&#8209;PnPWeb](GetPnPWeb.md)** |Returns the current web object

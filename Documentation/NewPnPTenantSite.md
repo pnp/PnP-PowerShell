@@ -13,7 +13,6 @@ New-PnPTenantSite -Title <String>
                   [-ResourceQuotaWarningLevel <Double>]
                   [-StorageQuota <Int64>]
                   [-StorageQuotaWarningLevel <Int64>]
-                  [-RemoveDeletedSite [<SwitchParameter>]]
                   [-Wait [<SwitchParameter>]]
 ```
 
@@ -28,7 +27,6 @@ Parameter|Type|Required|Description
 |Description|String|False|Specifies the description of the new site collection|
 |Lcid|UInt32|False|Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft: http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911.|
 |Owner|String|True|Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.|
-|RemoveDeletedSite|SwitchParameter|False||
 |ResourceQuota|Double|False|Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.|
 |ResourceQuotaWarningLevel|Double|False|Specifies the warning level for the resource quota. This value must not exceed the value set for the ResourceQuota parameter|
 |StorageQuota|Int64|False|Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.|
