@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Get-PnPContentType -Identity ""Project Document""",
-        Remarks = @"This will get a listing of content types within the current context",
+        Remarks = @"This will get the content type with the name ""Project Document"" within the current context",
         SortOrder = 3)]
     [CmdletExample(
         Code = @"PS:> Get-PnPContentType -List ""Documents""",

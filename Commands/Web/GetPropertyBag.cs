@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands
      SortOrder = 5)]
     public class GetPropertyBag : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "Key that should be looked up")]
         public string Key = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "Site relative url of the folder. See examples for use.")]

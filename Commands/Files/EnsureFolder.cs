@@ -6,7 +6,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet("Ensure", "PnPFolder")]
     [CmdletAlias("Ensure-SPOFolder")]
-    [CmdletHelp("Returns a folder given a site relative path, and will create it if it does not exist.",
+    [CmdletHelp("Returns a folder from a given site relative path, and will create it if it does not exist.",
         Category = CmdletHelpCategory.Files,
         DetailedDescription = "If you do not want the folder to be created, for instance just to test if a folder exists, check Get-PnPFolder",
         OutputType = typeof(Folder),

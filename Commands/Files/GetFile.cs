@@ -39,24 +39,24 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
     public class GetFile : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName = "SERVER", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = "ServerAsString", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = "ServerAsFile", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = "ServerAsListItem", Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "SERVER", Position = 0, ValueFromPipeline = true, HelpMessage = "Server relative URL to the file")]
+        [Parameter(Mandatory = true, ParameterSetName = "ServerAsString", Position = 0, ValueFromPipeline = true, HelpMessage = "Server relative URL to the file")]
+        [Parameter(Mandatory = true, ParameterSetName = "ServerAsFile", Position = 0, ValueFromPipeline = true, HelpMessage = "Server relative URL to the file")]
+        [Parameter(Mandatory = true, ParameterSetName = "ServerAsListItem", Position = 0, ValueFromPipeline = true, HelpMessage = "Server relative URL to the file")]
         public string ServerRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "SITE", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = "SiteAsString", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = "SiteAsFile", Position = 0, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, ParameterSetName = "SiteAsListItem", Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "SITE", Position = 0, ValueFromPipeline = true, HelpMessage = "Site relative URL to the file")]
+        [Parameter(Mandatory = true, ParameterSetName = "SiteAsString", Position = 0, ValueFromPipeline = true, HelpMessage = "Site relative URL to the file")]
+        [Parameter(Mandatory = true, ParameterSetName = "SiteAsFile", Position = 0, ValueFromPipeline = true, HelpMessage = "Site relative URL to the file")]
+        [Parameter(Mandatory = true, ParameterSetName = "SiteAsListItem", Position = 0, ValueFromPipeline = true, HelpMessage = "Site relative URL to the file")]
         public string SiteRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = false, ParameterSetName = "SERVER")]
-        [Parameter(Mandatory = false, ParameterSetName = "SITE")]
+        [Parameter(Mandatory = false, ParameterSetName = "SERVER", HelpMessage = "Local path where the file should be saved")]
+        [Parameter(Mandatory = false, ParameterSetName = "SITE", HelpMessage = "Local path where the file should be saved")]
         public string Path = string.Empty;
 
-        [Parameter(Mandatory = false, ParameterSetName = "SERVER")]
-        [Parameter(Mandatory = false, ParameterSetName = "SITE")]
+        [Parameter(Mandatory = false, ParameterSetName = "SERVER", HelpMessage = "Name for the local file")]
+        [Parameter(Mandatory = false, ParameterSetName = "SITE", HelpMessage = "Name for the local file")]
         public string Filename = string.Empty;
 
         [Parameter(Mandatory = false, ParameterSetName = "ServerAsFile")]
@@ -67,8 +67,8 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = "SiteAsListItem")]
         public SwitchParameter AsListItem;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ServerAsString")]
-        [Parameter(Mandatory = false, ParameterSetName = "SiteAsString")]
+        [Parameter(Mandatory = false, ParameterSetName = "ServerAsString", HelpMessage = "Retrieve the file contents as a string")]
+        [Parameter(Mandatory = false, ParameterSetName = "SiteAsString", HelpMessage = "Retrieve the file contents as a string")]
         public SwitchParameter AsString;
 
         protected override void ExecuteCmdlet()

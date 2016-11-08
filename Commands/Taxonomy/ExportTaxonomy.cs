@@ -38,16 +38,16 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, HelpMessage = "File to export the data to.")]
         public string Path;
 
-        [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
+        [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "Term store to export; if not specified the default term store is used.")]
         public string TermStoreName;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The path delimiter to be used, by default this is '|'")]
         public string Delimiter = "|";
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Defaults to Unicode")]
         public Encoding Encoding = Encoding.Unicode;
 
 

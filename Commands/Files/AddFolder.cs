@@ -11,6 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
         Code = @"PS:> Add-PnPFolder -Name NewFolder -Folder _catalogs/masterpage",
+		Remarks = "This will create the folder NewFolder in the masterpage catalog",
         SortOrder = 1)]
     public class AddFolder : SPOWebCmdlet
     {
