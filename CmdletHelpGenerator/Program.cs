@@ -26,13 +26,12 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
             bool generateMarkdown = false;
             string solutionDir = null;
             string spVersion = "Online";
-
             if (args.Length > 2)
             {
                 var configuration = args[2];
                 solutionDir = args[3];
                 generateMarkdown = true;
-                switch (configuration)
+                switch (configuration.ToLowerInvariant())
                 {
                     case "debug":
                     case "release":
@@ -55,8 +54,6 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
                         }
                 }
             }
-
-
             var doc = new XDocument(new XDeclaration("1.0", "UTF-8", string.Empty));
 
             XNamespace ns = "http://msh";
