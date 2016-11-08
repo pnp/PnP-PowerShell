@@ -1,7 +1,7 @@
 # SharePointPnP.PowerShell Commands #
 
 ### Summary ###
-This solution shows how you can build a library of PowerShell commands that act towards SharePoint Online. The commands use CSOM and can work against both SharePoint Online as SharePoint On-Premises.
+This solution contains a library of PowerShell commands that allows you to perform complex provisioning and artifact management actions towards SharePoint. The commands use CSOM and can work against both SharePoint Online as SharePoint On-Premises.
 
 ### Applies to ###
 -  Office 365 Multi Tenant (MT)
@@ -10,9 +10,7 @@ This solution shows how you can build a library of PowerShell commands that act 
 -  SharePoint 2016 on-premises
 
 ### Prerequisites ###
-In order to build the setup project the WiX toolset needs to be installed. You can obtain this from http://wix.codeplex.com. If you use Visual Studio 2015 you will need at least WiX 3.10, but do not install WiX v4.x, which can be downloaded from here: http://wixtoolset.org/releases/
-
-In order to generate the Cmdlet help you need Windows Management Framework v4.0 which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
+In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
 
 ### Solution ###
 Solution | Author(s)
@@ -39,23 +37,23 @@ If you main OS is Windows 10, you can run the following commands to install the 
 
 _SharePoint Online_
 ```powershell
-Install-Module SharePointPnPPowerShellOnline
+Install-Module SharePointPnPPowerShellOnline -AllowClobber
 ```
 
 _SharePoint 2016_
 ```powershell
-Install-Module SharePointPnPPowerShell2016
+Install-Module SharePointPnPPowerShell2016 -AllowClobber
 ```
 
 _SharePoint 2013_
 ```powershell
-Install-Module SharePointPnPPowerShell2013
+Install-Module SharePointPnPPowerShell2013 -AllowClobber
 ```
 
 *Notice*: if you installed the latest PowerShellGet from Github, you might receive an error message stating 
 >PackageManagement\Install-Package : The version '2.8.x.x' of the module 'SharePointPnPPowerShellOnline' being installed is not catalog signed.
 
-In order to install the cmdlets when you get this error specify the -SkipPublisherCheck switch with the Install-Module cmdlet, e.g. ```Install-Module SharePointPnPPowerShellOnline -SkipPublisherCheck
+In order to install the cmdlets when you get this error specify the -SkipPublisherCheck switch with the Install-Module cmdlet, e.g. ```Install-Module SharePointPnPPowerShellOnline -SkipPublisherCheck -AllowClobber
 
 Alternatively for installation on machines that have at least PowerShell v3 installed (you can find this out by opening PowerShell and running ```$PSVersionTable.PSVersion```. The value for ```Major``` should be above 3) you can run the below command which will install PowerShell Package Management and then install the PowerShell Modules from the PowerShell Gallery
 
