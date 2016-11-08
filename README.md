@@ -91,7 +91,7 @@ A build script will copy the required files to a folder in your users folder, ca
 To use the library you first need to connect to your tenant:
 
 ```powershell
-Connect-SPOnline –Url https://yoursite.sharepoint.com –Credentials (Get-Credential)
+Connect-PnPOnline –Url https://yoursite.sharepoint.com –Credentials (Get-Credential)
 ```
 
 To view all cmdlets, enter
@@ -107,22 +107,7 @@ At the following links you will find a few videos on how to get started with the
 * https://channel9.msdn.com/blogs/OfficeDevPnP/PnP-Webcast-PnP-PowerShell-Getting-started-with-latest-updates
 
 # SETTINGS UP CREDENTIALS #
-In case of an unattended script you might want to add a new entry in your credential manager of windows. 
-
-![](http://i.imgur.com/6NiMaFL.png)
- 
-Select Windows Credentials and add a new *generic* credential:
-
-![](http://i.imgur.com/rhtgL1U.png)
- 
-Now you can use this entry to connect to your tenant as follows:
-
-```powershell
-Connect-SPOnline –Url https://yoursite.sharepoint.com –Credentials yourlabel
-```
-
-Alternatively you can create a credential manager entry with an internet or network address starting with your tenant url, e.g. https://mytenant.sharepoint.com. If you then use Connect-SPOnline -Url https://mytenant.sharepoint.com/sites/yoursite
-to create a new connection, the cmdlet will resolve the credentials to use based upon the URL.
+See this [wiki page](https://github.com/OfficeDev/PnP-PowerShell/wiki/How-to-use-the-Windows-Credential-Manager-to-ease-authentication-with-PnP-PowerShell) for more information on how to use the Windows Credential Manager to setup credentials that you can use in unattended scripts
 
 # Contributing #
 
