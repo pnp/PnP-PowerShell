@@ -4,14 +4,15 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet("Execute", "SPOQuery")]
+    [Cmdlet("Execute", "PnPQuery")]
+    [CmdletAlias("Execute-SPOQuery")]
     [CmdletHelp("Executes any queued actions / changes on the SharePoint Client Side Object Model Context",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-      Code = @"PS:> Execute-SPOQuery -RetryCount 5",
+      Code = @"PS:> Execute-PnPQuery -RetryCount 5",
       Remarks = @"This will execute any queued actions / changes on the SharePoint Client Side Object Model Context and will retry 5 times in case of throttling.", SortOrder = 1)]
     [CmdletExample(
-      Code = @"PS:> Execute-SPOQuery -RetryWait 10",
+      Code = @"PS:> Execute-PnPQuery -RetryWait 10",
       Remarks = @"This will execute any queued actions / changes on the SharePoint Client Side Object Model Context and delay the execution with 10 seconds when it needs to retry the execution.", SortOrder = 2)]
 
     public class ExecuteSPOQuery : SPOCmdlet

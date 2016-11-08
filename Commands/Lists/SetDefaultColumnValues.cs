@@ -12,16 +12,17 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
 
-    [Cmdlet(VerbsCommon.Set, "SPODefaultColumnValues")]
+    [Cmdlet(VerbsCommon.Set, "PnPDefaultColumnValues")]
+    [CmdletAlias("Set-SPODefaultColumnValues")]
     [CmdletHelp("Sets default column values for a document library",
         DetailedDescription = "Sets default column values for a document library, per folder, or for the root folder if the folder parameter has not been specified. Supports both text and taxonomy fields.",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = "PS:> Set-SPODefaultColumnValues -List Documents -Field TaxKeyword -Value \"Company|Locations|Stockholm\"",
+        Code = "PS:> Set-PnPDefaultColumnValues -List Documents -Field TaxKeyword -Value \"Company|Locations|Stockholm\"",
         SortOrder = 1,
         Remarks = "Sets a default value for the enterprise keywords field on a library to a term called \"Stockholm\", located in the \"Locations\" term set, which is part of the \"Company\" term group")]
     [CmdletExample(
-        Code = "PS:> Set-SPODefaultColumnValues -List Documents -Field MyTextField -Value \"DefaultValue\"",
+        Code = "PS:> Set-PnPDefaultColumnValues -List Documents -Field MyTextField -Value \"DefaultValue\"",
         SortOrder = 2,
         Remarks = "Sets a default value for the MyTextField text field on a library to a value of \"DefaultValue\"")]
     public class SetDefaultColumnValues : SPOWebCmdlet
@@ -75,7 +76,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     if (field != null)
                     {
                         IDefaultColumnValue defaultColumnValue = null;
-                        if (field.TypeAsString == "Text" || field.TypeAsString == "Choice")
+                        if (field.TypeAsString == "Text" || field.TypeAsString == "Choice" ||field.TypeAsString == "MultiChoice")
                         {
                             var values = string.Join(";", Value);
                             defaultColumnValue = new DefaultColumnTextValue()

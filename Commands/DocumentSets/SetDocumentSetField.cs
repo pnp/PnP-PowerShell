@@ -7,15 +7,16 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Set, "SPODocumentSetField")]
+    [Cmdlet(VerbsCommon.Set, "PnPDocumentSetField")]
+    [CmdletAlias("Set-SPODocumentSetField")]
     [CmdletHelp("Sets a site column from the available content types to a document set", 
         Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(
-        Code = @"PS:> Set-SPODocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -SetSharedField -SetWelcomePageField",
+        Code = @"PS:> Set-PnPDocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -SetSharedField -SetWelcomePageField",
         Remarks = "This will set the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPODocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -RemoveSharedField -RemoveWelcomePageField",
+        Code = @"PS:> Set-PnPDocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -RemoveSharedField -RemoveWelcomePageField",
         Remarks = "This will remove the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.",
         SortOrder = 1)]
     public class SetFieldInDocumentSet : SPOWebCmdlet

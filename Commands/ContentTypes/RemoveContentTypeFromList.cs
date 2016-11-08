@@ -6,11 +6,12 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
 
-    [Cmdlet(VerbsCommon.Remove, "SPOContentTypeFromList")]
+    [Cmdlet(VerbsCommon.Remove, "PnPContentTypeFromList")]
+    [CmdletAlias("Remove-SPOContentTypeFromList")]
     [CmdletHelp("Removes a content type from a list", 
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOContentTypeFromList -List ""Documents"" -ContentType ""Project Document""",
+        Code = @"PS:> Remove-PnPContentTypeFromList -List ""Documents"" -ContentType ""Project Document""",
         Remarks = @"This will remove a content type called ""Project Document"" from the ""Documents"" list",
         SortOrder = 1)]
     public class RemoveContentTypeFromList : SPOWebCmdlet

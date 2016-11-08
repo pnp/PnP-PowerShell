@@ -6,18 +6,19 @@ using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Features
 {
-    [Cmdlet("Enable", "SPOFeature")]
+    [Cmdlet(VerbsLifecycle.Enable, "PnPFeature")]
+    [CmdletAlias("Enable-SPOFeature")]
     [CmdletHelp("Enables a feature", Category = CmdletHelpCategory.Features)]
     [CmdletExample(
-        Code = "PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe", 
+        Code = "PS:> Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe", 
         Remarks = @"This will enable the feature with the id ""99a00f6e-fb81-4dc7-8eac-e09c6f9132fe""", 
         SortOrder = 1)]
     [CmdletExample(
-        Code = "PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force", 
+        Code = "PS:> Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force", 
         Remarks = @"This will enable the feature with the id ""99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"" with force.", 
         SortOrder = 2)]
     [CmdletExample(
-        Code = "PS:> Enable-SPOFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web",
+        Code = "PS:> Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web",
         Remarks = @"This will enable the feature with the id ""99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"" with the web scope.",  
         SortOrder = 3)]
     public class EnableFeature : SPOWebCmdlet

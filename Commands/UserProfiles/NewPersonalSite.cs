@@ -8,12 +8,13 @@ using SharePointPnP.PowerShell.Commands.Base;
 namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
 
-    [Cmdlet(VerbsCommon.New, "SPOPersonalSite")]
+    [Cmdlet(VerbsCommon.New, "PnPPersonalSite")]
+    [CmdletAlias("New-SPOPersonalSite")]
     [CmdletHelp(@"Office365 only: Creates a personal / OneDrive For Business site",
         Category = CmdletHelpCategory.UserProfiles)]
     [CmdletExample(
         Code = @"PS:> $users = ('katiej@contoso.onmicrosoft.com','garth@contoso.onmicrosoft.com')
-                 PS:> New-SPOPersonalSite -Email $users",
+                 PS:> New-PnPPersonalSite -Email $users",
         Remarks = "Creates a personal / OneDrive For Business site for the 2 users in the variable $users",
         SortOrder = 1)]
 

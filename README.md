@@ -7,6 +7,7 @@ This solution shows how you can build a library of PowerShell commands that act 
 -  Office 365 Multi Tenant (MT)
 -  Office 365 Dedicated (D)
 -  SharePoint 2013 on-premises
+-  SharePoint 2016 on-premises
 
 ### Prerequisites ###
 In order to build the setup project the WiX toolset needs to be installed. You can obtain this from http://wix.codeplex.com. If you use Visual Studio 2015 you will need at least WiX 3.10, but do not install WiX v4.x, which can be downloaded from here: http://wixtoolset.org/releases/
@@ -71,7 +72,7 @@ Once the above has been completed you can then start to use the PowerShell Modul
 Once new releases of the module are made available on the PowerShell Gallery you will be able to use the the following command to install the latest updated version
 
 ```powershell
-Update-Module
+Update-Module SharePointPnPPowerShell*
 ``` 
 
 This will automatically load the module after starting PowerShell 3.0.
@@ -79,13 +80,13 @@ This will automatically load the module after starting PowerShell 3.0.
 You can check the installed PnP-PowerShell versions with the following command:
 
 ```powershell
-Get-Module OfficeDevPnP.Powershell.* -ListAvailable | Select-Object Name,Version | Sort-Object Version -Descending
+Get-Module SharePointPnPPowerShell* -ListAvailable | Select-Object Name,Version | Sort-Object Version -Descending
 ```
 
 ## HOW TO USE DURING DEVELOPMENT ##
 
 A build script will copy the required files to a folder in your users folder, called:
-*C:\Users\<YourUserName>\Documents\WindowsPowerShell\Modules\OfficeDevPnP.PowerShell.V16.Commands*
+*C:\Users\\\<YourUserName\>\Documents\WindowsPowerShell\Modules\SharePointPnPPowerShell\<Platform\>*
 
 # GETTING STARTED #
 

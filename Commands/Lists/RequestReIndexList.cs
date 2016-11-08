@@ -5,11 +5,12 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsLifecycle.Request, "SPOReIndexList")]
+    [Cmdlet(VerbsLifecycle.Request, "PnPReIndexList")]
+    [CmdletAlias("Request-SPOReIndexList")]
     [CmdletHelp("Marks the list for full indexing during the next incremental crawl",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = @"PS:> Request-SPOReIndexList -Identity ""Demo List""",
+        Code = @"PS:> Request-PnPReIndexList -Identity ""Demo List""",
         SortOrder = 1)]
     public class RequestReIndexList : SPOWebCmdlet
     {

@@ -4,7 +4,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Set, "SPOFileCheckedIn")]
+    [Cmdlet(VerbsCommon.Set, "PnPFileCheckedIn")]
+    [CmdletAlias("Set-SPOFileCheckedIn")]
     [CmdletHelp("Checks in a file", 
         Category = CmdletHelpCategory.Files)]
     public class SetFileCheckedIn : SPOWebCmdlet

@@ -5,7 +5,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Set, "SPOAppSideLoading")]
+    [Cmdlet(VerbsCommon.Set, "PnPAppSideLoading")]
+    [CmdletAlias("Set-SPOAppSideLoading")]
     [CmdletHelp("Enables the App SideLoading Feature on a site",
         Category = CmdletHelpCategory.Sites)]
     public class SetAppSideLoading : SPOCmdlet

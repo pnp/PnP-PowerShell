@@ -5,23 +5,24 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Set, "SPOTraceLog")]
+    [Cmdlet(VerbsCommon.Set, "PnPTraceLog")]
+    [CmdletAlias("Set-SPOTraceLog")]
     [CmdletHelp("Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt",
+        Code = @"PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt",
         Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will capture events of at least 'Information' level.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level Debug",
+        Code = @"PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt -Level Debug",
         Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will capture debug events.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTraceLog -On -LogFile traceoutput.txt -Level Debug -Delimiter "",""",
+        Code = @"PS:> Set-PnPTraceLog -On -LogFile traceoutput.txt -Level Debug -Delimiter "",""",
         Remarks = @"This turns on trace logging to the file 'traceoutput.txt' and will write the entries as comma separated. Debug events are captured.",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTraceLog -Off",
+        Code = @"PS:> Set-PnPTraceLog -Off",
         Remarks = @"This turns off trace logging. It will flush any remaining messages to the log file.",
         SortOrder = 3)]
     public class SetTraceLog : PSCmdlet

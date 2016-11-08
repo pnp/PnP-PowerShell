@@ -5,19 +5,20 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "SPOFieldFromXml")]
+    [Cmdlet(VerbsCommon.Add, "PnPFieldFromXml")]
+    [CmdletAlias("Add-SPOFieldFromXml")]
     [CmdletHelp("Adds a field to a list or as a site column based upon a CAML/XML field definition",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
     [CmdletExample(
         Code = @"PS:> $xml = '<Field Type=""Text"" Name=""PSCmdletTest"" DisplayName=""PSCmdletTest"" ID=""{27d81055-f208-41c9-a976-61c5473eed4a}"" Group=""Test"" Required=""FALSE"" StaticName=""PSCmdletTest"" />'
-PS:> Add-SPOFieldFromXml -FieldXml $xml",
+PS:> Add-PnPFieldFromXml -FieldXml $xml",
         Remarks = "Adds a field with the specified field CAML code to the site.",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> $xml = '<Field Type=""Text"" Name=""PSCmdletTest"" DisplayName=""PSCmdletTest"" ID=""{27d81055-f208-41c9-a976-61c5473eed4a}"" Group=""Test"" Required=""FALSE"" StaticName=""PSCmdletTest"" />'
-PS:> Add-SPOFieldFromXml -List ""Demo List"" -FieldXml $xml",
+PS:> Add-PnPFieldFromXml -List ""Demo List"" -FieldXml $xml",
         Remarks = "Adds a field with the specified field CAML code to the site.",
         SortOrder = 2)]
     [CmdletRelatedLink(
@@ -47,7 +48,75 @@ PS:> Add-SPOFieldFromXml -List ""Demo List"" -FieldXml $xml",
             }
             ClientContext.Load(f);
             ClientContext.ExecuteQueryRetry();
-            WriteObject(f);
+            switch (f.FieldTypeKind)
+            {
+                case FieldType.DateTime:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldDateTime>(f));
+                        break;
+                    }
+                case FieldType.Choice:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldChoice>(f));
+                        break;
+                    }
+                case FieldType.Calculated:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldCalculated>(f));
+                        break;
+                    }
+                case FieldType.Computed:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldComputed>(f));
+                        break;
+                    }
+                case FieldType.Geolocation:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldGeolocation>(f));
+                        break;
+
+                    }
+                case FieldType.User:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldUser>(f));
+                        break;
+                    }
+                case FieldType.Currency:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldCurrency>(f));
+                        break;
+                    }
+                case FieldType.Guid:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldGuid>(f));
+                        break;
+                    }
+                case FieldType.URL:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldUrl>(f));
+                        break;
+                    }
+                case FieldType.Lookup:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldLookup>(f));
+                        break;
+                    }
+                case FieldType.MultiChoice:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldMultiChoice>(f));
+                        break;
+                    }
+                case FieldType.Number:
+                    {
+                        WriteObject(ClientContext.CastTo<FieldNumber>(f));
+                        break;
+                    }
+                default:
+                    {
+                        WriteObject(f);
+                        break;
+                    }
+            }
         }
 
     }

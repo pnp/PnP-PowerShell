@@ -84,6 +84,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdletAdditionalParameterAttribute.cs" />
+    <Compile Include="CmdletAliasAttribute.cs" />
     <Compile Include="CmdletExampleAttribute.cs" />
     <Compile Include="CmdletHelpCategory.cs" />
     <Compile Include="CmdletRelatedLinkAttribute.cs" />

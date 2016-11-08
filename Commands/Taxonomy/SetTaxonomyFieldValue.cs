@@ -6,14 +6,17 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Set, "SPOTaxonomyFieldValue")]
+    [Cmdlet(VerbsCommon.Set, "PnPTaxonomyFieldValue", DefaultParameterSetName = "ITEM")]
+    [CmdletAlias("Set-SPOTaxonomyFieldValue")]
     [CmdletHelp("Sets a taxonomy term value in a listitem field",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -Label 'HR'",
+        Code = @"PS:> Set-PnPTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -TermId 863b832b-6818-4e6a-966d-2d3ee057931c",
+        Remarks = @"Sets the field called 'Department' to the value of the term with the ID specified",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -TermPath 'CORPORATE|DEPARTMENTS|HR'",
+        Code = @"PS:> Set-PnPTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -TermPath 'CORPORATE|DEPARTMENTS|HR'",
+        Remarks = @"Sets the field called 'Department' to the term called HR which is located in the DEPARTMENTS termset, which in turn is located in the CORPORATE termgroup.",
         SortOrder = 2)]
     public class SetTaxonomyFieldValue : SPOCmdlet
     {
@@ -23,11 +26,11 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The internal name of the field")]
         public string InternalFieldName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ITEM", HelpMessage = "The Label value of the term")]
-        public string Label;
-
         [Parameter(Mandatory = true, ParameterSetName = "ITEM", HelpMessage = "The Id of the Term")]
         public GuidPipeBind TermId;
+
+        [Parameter(Mandatory = false, ParameterSetName = "ITEM", HelpMessage = "The Label value of the term")]
+        public string Label;
 
         [Parameter(Mandatory = true, ParameterSetName = "PATH", HelpMessage = "A path in the form of GROUPLABEL|TERMSETLABEL|TERMLABEL")]
         public string TermPath;
@@ -48,11 +51,6 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                 case "PATH":
                     {
                         ListItem.SetTaxonomyFieldValueByTermPath(TermPath, field.Id);
-                        break;
-                    }
-                case "ID":
-                    {
-                        WriteError(new ErrorRecord(new Exception("Not implemented"), "0", ErrorCategory.NotImplemented, null));
                         break;
                     }
             }

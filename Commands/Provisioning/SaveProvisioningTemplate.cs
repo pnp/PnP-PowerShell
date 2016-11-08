@@ -13,11 +13,12 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet("Save", "SPOProvisioningTemplate")]
+    [Cmdlet(VerbsData.Save, "PnPProvisioningTemplate")]
+    [CmdletAlias("Save-SPOProvisioningTemplate")]
     [CmdletHelp("Saves a PnP file to the file systems",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Save-SPOProvisioningTemplate -InputInstance $template -Out .\template.pnp",
+       Code = @"PS:> Save-PnPProvisioningTemplate -InputInstance $template -Out .\template.pnp",
        Remarks = "Saves a PnP file to the file systems",
        SortOrder = 1)]
     public class SaveProvisioningTemplate : PSCmdlet
@@ -28,18 +29,42 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while saving a template.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        public SwitchParameter Force;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify the ITemplateProviderExtension to execute while saving a template.")]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
         protected override void ProcessRecord()
         {
             // Determine the output file name and path
             string outFileName = System.IO.Path.GetFileName(Out);
+
+            if (!Path.IsPathRooted(Out))
+            {
+                Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
+            }
+
+            bool proceed = false;
+
+            if (System.IO.File.Exists(Out))
+            {
+                if (Force || ShouldContinue(string.Format(Properties.Resources.File0ExistsOverwrite, Out),
+                    Properties.Resources.Confirm))
+                {
+                    proceed = true;
+                }
+            }
+            else
+            {
+                proceed = true;
+            }
+
             string outPath = new System.IO.FileInfo(Out).DirectoryName;
 
             // Determine if it is an .XML or a .PNP file
             var extension = "";
-            if (outFileName != null)
+            if (proceed && outFileName != null)
             {
                 if (outFileName.IndexOf(".", StringComparison.Ordinal) > -1)
                 {

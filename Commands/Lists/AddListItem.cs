@@ -10,25 +10,26 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Add, "SPOListItem")]
+    [Cmdlet(VerbsCommon.Add, "PnPListItem")]
+    [CmdletAlias("Add-SPOListItem")]
     [CmdletHelp("Adds an item to a list",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx")]
     [CmdletExample(
-        Code = @"Add-SPOListItem -List ""Demo List"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
+        Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
         Remarks = @"Adds a new list item to the ""Demo List"", and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"Add-SPOListItem -List ""Demo List"" -ContentType ""Company"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
+        Code = @"Add-PnPListItem -List ""Demo List"" -ContentType ""Company"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
         Remarks = @"Adds a new list item to the ""Demo List"", sets the content type to ""Company"" and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"Add-SPOListItem -List ""Demo List"" -Values @{""MultiUserField""=""user1@domain.com"",""user2@domain.com""}",
+        Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""MultiUserField""=""user1@domain.com"",""user2@domain.com""}",
         Remarks = @"Adds a new list item to the ""Demo List"" and sets the user field called MultiUserField to 2 users. Separate multiple users with a comma.",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"Add-SPOListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Folder ""projects/europe""",
+        Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Folder ""projects/europe""",
         Remarks = @"Adds a new list item to the ""Demo List"". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.",
         SortOrder = 3)]
     public class AddListItem : SPOWebCmdlet

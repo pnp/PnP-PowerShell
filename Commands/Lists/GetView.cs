@@ -8,21 +8,22 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "SPOView")]
+    [Cmdlet(VerbsCommon.Get, "PnPView")]
+    [CmdletAlias("Get-SPOView")]
     [CmdletHelp("Returns one or all views from a list",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(View),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx")]
     [CmdletExample(
-        Code = @"Get-SPOView -List ""Demo List""",
+        Code = @"Get-PnPView -List ""Demo List""",
         Remarks = @"Returns all views associated from the specified list",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"Get-SPOView -List ""Demo List"" -Identity ""Demo View""",
+        Code = @"Get-PnPView -List ""Demo List"" -Identity ""Demo View""",
         Remarks = @"Returns the view called ""Demo View"" from the specified list",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"Get-SPOView -List ""Demo List"" -Identity ""5275148a-6c6c-43d8-999a-d2186989a661""",
+        Code = @"Get-PnPView -List ""Demo List"" -Identity ""5275148a-6c6c-43d8-999a-d2186989a661""",
         Remarks = @"Returns the view with the specified ID from the specified list",
         SortOrder = 3)]
     public class GetView : SPOWebCmdlet

@@ -7,21 +7,22 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Add, "SPOFile")]
+    [Cmdlet(VerbsCommon.Add, "PnPFile")]
+    [CmdletAlias("Add-SPOFile")]
     [CmdletHelp("Uploads a file to Web", 
         Category = CmdletHelpCategory.Files,
         OutputType=typeof(Microsoft.SharePoint.Client.File),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
     [CmdletExample(
-        Code = @"PS:> Add-SPOFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage""", 
+        Code = @"PS:> Add-PnPFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage""", 
         Remarks = "This will upload the file company.master to the masterpage catalog",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOFile -Path .\displaytemplate.html -Folder ""_catalogs/masterpage/display templates/test""", 
+        Code = @"PS:> Add-PnPFile -Path .\displaytemplate.html -Folder ""_catalogs/masterpage/display templates/test""", 
         Remarks = "This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder not exists it will create it.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOFile -Path .\sample.doc -Folder ""Shared Documents"" -Values @{Modified=""1/1/2016""}",
+        Code = @"PS:> Add-PnPFile -Path .\sample.doc -Folder ""Shared Documents"" -Values @{Modified=""1/1/2016""}",
         Remarks = "This will upload the file sample.doc to the Shared Documnets folder. After uploading it will set the Modified date to 1/1/2016.",
         SortOrder = 3)]
     public class AddFile : SPOWebCmdlet

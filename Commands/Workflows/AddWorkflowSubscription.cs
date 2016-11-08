@@ -6,7 +6,8 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsCommon.Add, "SPOWorkflowSubscription")]
+    [Cmdlet(VerbsCommon.Add, "PnPWorkflowSubscription")]
+    [CmdletAlias("Add-SPOWorkflowSubscription")]
     [CmdletHelp("Adds a workflow subscription to a list",
         Category = CmdletHelpCategory.Workflows)]
     public class AddWorkflowSubscription : SPOWebCmdlet

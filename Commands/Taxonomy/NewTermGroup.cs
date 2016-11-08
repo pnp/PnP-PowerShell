@@ -6,7 +6,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.New, "SPOTermGroup", SupportsShouldProcess = false)]
+    [Cmdlet(VerbsCommon.New, "PnPTermGroup", SupportsShouldProcess = false)]
+    [CmdletAlias("New-SPOTermGroup")]
     [CmdletHelp(@"Creates a taxonomy term group",
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(TermGroup),

@@ -5,11 +5,12 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOGroup", DefaultParameterSetName = "All")]
+    [Cmdlet(VerbsCommon.Remove, "PnPGroup", DefaultParameterSetName = "All")]
+    [CmdletAlias("Remove-SPOGroup")]
     [CmdletHelp("Removes a group.",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOGroup -Identity ""My Users""",
+        Code = @"PS:> Remove-PnPGroup -Identity ""My Users""",
         SortOrder = 1)]
     public class RemoveGroup : SPOWebCmdlet
     {

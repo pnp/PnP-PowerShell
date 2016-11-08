@@ -4,11 +4,12 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "SPOPublishingPage")]
+    [Cmdlet(VerbsCommon.Add, "PnPPublishingPage")]
+    [CmdletAlias("Add-SPOPublishingPage")]
     [CmdletHelp("Adds a publishing page",
       Category = CmdletHelpCategory.Publishing)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOPublishingPage -PageName 'OurNewPage' -Title 'Our new page' -PageTemplateName 'ArticleLeft'",
+        Code = @"PS:> Add-PnPPublishingPage -PageName 'OurNewPage' -Title 'Our new page' -PageTemplateName 'ArticleLeft'",
         Remarks = "Creates a new page based on the pagelayout 'ArticleLeft'",
         SortOrder = 1)]
     public class AddPublishingPage : SPOWebCmdlet

@@ -4,13 +4,14 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
-    [Cmdlet("New", "SPOUser")]
+    [Cmdlet("New", "PnPUser")]
+    [CmdletAlias("New-SPOUser")]
     [CmdletHelp("Adds a user to the built-in Site User Info List and returns a user object",
         Category = CmdletHelpCategory.Principals,
         OutputType = typeof(User),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx")]
     [CmdletExample(
-        Code = @"PS:> New-SPOUser -LoginName user@company.com",
+        Code = @"PS:> New-PnPUser -LoginName user@company.com",
         SortOrder = 1)]
     public class NewUser : SPOWebCmdlet
     {

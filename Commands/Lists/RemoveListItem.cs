@@ -5,11 +5,12 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOListItem", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPListItem", SupportsShouldProcess = true)]
+    [CmdletAlias("Remove-SPOListItem")]
     [CmdletHelp("Deletes an item from a list",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOListItem -List ""Demo List"" -Identity ""1"" -Force",
+        Code = @"PS:> Remove-PnPListItem -List ""Demo List"" -Identity ""1"" -Force",
         SortOrder = 1,
         Remarks = @"Removes the listitem with id ""1"" from the ""Demo List"" list.")]
     public class RemoveListItem : SPOWebCmdlet

@@ -9,29 +9,30 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Set, "SPOListItem")]
+    [Cmdlet(VerbsCommon.Set, "PnPListItem")]
+    [CmdletAlias("Set-SPOListItem")]
     [CmdletHelp("Updates a list item",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx")]
     [CmdletExample(
-        Code = @"Set-SPOListItem -List ""Demo List"" -Identity 1 -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
+        Code = @"Set-PnPListItem -List ""Demo List"" -Identity 1 -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
         Remarks = @"Sets fields value in the list item with ID 1 in the ""Demo List"". It sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"Set-SPOListItem -List ""Demo List"" -Identity 1 -ContentType ""Company"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
+        Code = @"Set-PnPListItem -List ""Demo List"" -Identity 1 -ContentType ""Company"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
         Remarks = @"Sets fields value in the list item with ID 1 in the ""Demo List"". It sets the content type of the item to ""Company"" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"Set-SPOListItem -List ""Demo List"" -Identity $item -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
-        Remarks = @"Sets fields value in the list item which has been retrieved by for instance Get-SPOListItem. It sets the content type of the item to ""Company"" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
+        Code = @"Set-PnPListItem -List ""Demo List"" -Identity $item -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
+        Remarks = @"Sets fields value in the list item which has been retrieved by for instance Get-PnPListItem. It sets the content type of the item to ""Company"" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 3)]
     public class SetListItem : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The ID of the listitem, or actual ListItem object")]
         public ListItemPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type")]
@@ -90,21 +91,28 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
-                var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title, f => f.FieldTypeKind));
-                ClientContext.ExecuteQueryRetry();
-
-                foreach (var key in Values.Keys)
+                if (Values != null)
                 {
-                    var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
-                    if (field != null)
+                    var fields =
+                        ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title,
+                            f => f.FieldTypeKind));
+                    ClientContext.ExecuteQueryRetry();
+
+                    Hashtable values = Values ?? new Hashtable();
+
+                    foreach (var key in values.Keys)
                     {
-                        switch (field.FieldTypeKind)
+                        var field =
+                            fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                        if (field != null)
                         {
-                            case FieldType.User:
+                            switch (field.FieldTypeKind)
+                            {
+                                case FieldType.User:
                                 {
                                     List<FieldUserValue> userValues = new List<FieldUserValue>();
 
-                                    var value = Values[key];
+                                    var value = values[key];
                                     if (value.GetType().IsArray)
                                     {
                                         foreach (var arrayItem in value as object[])
@@ -119,7 +127,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                             }
                                             else
                                             {
-                                                userValues.Add(new FieldUserValue() { LookupId = userId });
+                                                userValues.Add(new FieldUserValue() {LookupId = userId});
                                             }
                                         }
                                         item[key as string] = userValues.ToArray();
@@ -136,28 +144,29 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                         }
                                         else
                                         {
-                                            item[key as string] = new FieldUserValue() { LookupId = userId };
+                                            item[key as string] = new FieldUserValue() {LookupId = userId};
                                         }
                                     }
                                     break;
                                 }
-                            default:
+                                default:
                                 {
-                                    item[key as string] = Values[key];
+                                    item[key as string] = values[key];
                                     break;
                                 }
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("Field not present in list");
                         }
                     }
-                    else
-                    {
-                        throw new Exception("Field not present in list");
-                    }
+
+
+                    item.Update();
+                    ClientContext.Load(item);
+                    ClientContext.ExecuteQueryRetry();
                 }
-
-
-                item.Update();
-                ClientContext.Load(item);
-                ClientContext.ExecuteQueryRetry();
                 WriteObject(item);
             }
         }

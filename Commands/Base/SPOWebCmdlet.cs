@@ -7,7 +7,7 @@ using SharePointPnP.PowerShell.Commands.Extensions;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    public class SPOWebCmdlet : SPOCmdlet
+    public abstract class SPOWebCmdlet : SPOCmdlet
     {
         private Web _selectedWeb;
 

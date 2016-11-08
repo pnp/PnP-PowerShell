@@ -13,15 +13,16 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet("Load", "SPOProvisioningTemplate")]
+    [Cmdlet("Load", "PnPProvisioningTemplate")]
+    [CmdletAlias("Load-SPOProvisioningTemplate")]
     [CmdletHelp("Loads a PnP file from the file systems",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Load-SPOProvisioningTemplate -Path template.pnp",
+       Code = @"PS:> Load-PnPProvisioningTemplate -Path template.pnp",
        Remarks = "Loads a PnP file from the file systems",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Load-SPOProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
+       Code = @"PS:> Load-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
        Remarks = "Loads a PnP file from the file systems using some custom template provider extenions while loading the file.",
        SortOrder = 2)]
     public class LoadProvisioningTemplate : PSCmdlet

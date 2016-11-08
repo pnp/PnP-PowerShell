@@ -8,17 +8,18 @@ using System;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
+    [CmdletAlias("Remove-SPOTenantSite")]
     [CmdletHelp("Office365 only: Removes a site collection from the current tenant",
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-      Code = @"PS:> Remove-SPOTenantSite -Url https://tenant.sharepoint.com/sites/contoso",
+      Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso",
       Remarks = @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.", SortOrder = 1)]
     [CmdletExample(
-      Code = @"PS:> Remove-SPOTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
+      Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
       Remarks = @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.", SortOrder = 2)]
     [CmdletExample(
-      Code = @"PS:> Remove-SPOTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin",
+      Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin",
       Remarks = @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.", SortOrder = 3)]
     public class RemoveSite : SPOAdminCmdlet
     {

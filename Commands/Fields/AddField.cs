@@ -7,17 +7,20 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "SPOField")]
+    [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "ListPara")]
+    [CmdletAlias("Add-SPOField")]
     [CmdletHelp("Adds a field to a list or as a site column",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
     [CmdletExample(
-     Code = @"PS:> Add-SPOField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
+     Code = @"PS:> Add-PnPField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
      Remarks = @"This will add field of type Choice to a the list ""Demo List"".", SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:>Add-SPOField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
+     Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
 Remarks = @"This will add field of type Multiple Choice to a the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]),ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "ListPara")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "WebPara")]
     public class AddField : SPOWebCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara")]
@@ -194,8 +197,75 @@ Remarks = @"This will add field of type Multiple Choice to a the list ""Demo Lis
                     ClientContext.Load(f);
                     ClientContext.ExecuteQueryRetry();
                 }
+                switch (f.FieldTypeKind)
+                {
+                    case FieldType.DateTime:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldDateTime>(f));
+                            break;
+                        }
+                    case FieldType.Choice:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldChoice>(f));
+                            break;
+                        }
+                    case FieldType.Calculated:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldCalculated>(f));
+                            break;
+                        }
+                    case FieldType.Computed:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldComputed>(f));
+                            break;
+                        }
+                    case FieldType.Geolocation:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldGeolocation>(f));
+                            break;
 
-                WriteObject(f);
+                        }
+                    case FieldType.User:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldUser>(f));
+                            break;
+                        }
+                    case FieldType.Currency:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldCurrency>(f));
+                            break;
+                        }
+                    case FieldType.Guid:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldGuid>(f));
+                            break;
+                        }
+                    case FieldType.URL:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldUrl>(f));
+                            break;
+                        }
+                    case FieldType.Lookup:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldLookup>(f));
+                            break;
+                        }
+                    case FieldType.MultiChoice:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldMultiChoice>(f));
+                            break;
+                        }
+                    case FieldType.Number:
+                        {
+                            WriteObject(ClientContext.CastTo<FieldNumber>(f));
+                            break;
+                        }
+                    default:
+                        {
+                            WriteObject(f);
+                            break;
+                        }
+                }
             }
         }
 

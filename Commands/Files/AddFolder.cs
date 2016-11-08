@@ -5,11 +5,12 @@ using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Add, "SPOFolder")]
+    [Cmdlet(VerbsCommon.Add, "PnPFolder")]
+    [CmdletAlias("Add-SPOFolder")]
     [CmdletHelp("Creates a folder within a parent folder",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOFolder -Name NewFolder -Folder _catalogs/masterpage",
+        Code = @"PS:> Add-PnPFolder -Name NewFolder -Folder _catalogs/masterpage",
         SortOrder = 1)]
     public class AddFolder : SPOWebCmdlet
     {

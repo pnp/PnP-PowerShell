@@ -14,39 +14,40 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommon.New, "SPOProvisioningTemplateFromFolder")]
+    [Cmdlet(VerbsCommon.New, "PnPProvisioningTemplateFromFolder")]
+    [CmdletAlias("New-SPOProvisioningTemplateFromFolder")]
     [CmdletHelp("Generates a provisioning template from a given folder, including only files that are present in that folder",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml",
+       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml",
        Remarks = "Creates an empty provisioning template, and includes all files in the current folder.",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp",
+       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp",
        Remarks = "Creates an empty provisioning template, and includes all files in the c:\\temp folder.",
        SortOrder = 2)]
     [CmdletExample(
-       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js",
+       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js",
        Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder.",
        SortOrder = 3)]
     [CmdletExample(
-       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents""",
+       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents""",
        Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder",
        SortOrder = 4)]
     [CmdletExample(
-       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -ContentType ""Test Content Type""",
+       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -ContentType ""Test Content Type""",
        Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add a property to the item for the content type.",
        SortOrder = 5)]
     [CmdletExample(
-       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -Properties @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
+       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.xml -Folder c:\temp -Match *.js -TargetFolder ""Shared Documents"" -Properties @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
        Remarks = "Creates an empty provisioning template, and includes all files with a JS extension in the c:\\temp folder and marks the files in the template to be added to the 'Shared Documents' folder. It will add the specified properties to the file entries.",
        SortOrder = 6)]
     [CmdletExample(
-       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.pnp",
+       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.pnp",
        Remarks = "Creates an empty provisioning template as a pnp package file, and includes all files in the current folder",
        SortOrder = 7)]
     [CmdletExample(
-       Code = @"PS:> New-SPOProvisioningTemplateFromFolder -Out template.pnp -Folder c:\temp",
+       Code = @"PS:> New-PnPProvisioningTemplateFromFolder -Out template.pnp -Folder c:\temp",
        Remarks = "Creates an empty provisioning template as a pnp package file, and includes all files in the c:\\temp folder",
        SortOrder = 8)]
     [CmdletRelatedLink(

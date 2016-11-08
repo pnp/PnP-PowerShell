@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Office Dev PnP PowerShell Library.
+        ///   Looks up a localized string similar to SharePoint PnP PowerShell Library.
         /// </summary>
         internal static string ApplicationName {
             get {
@@ -142,6 +142,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Unified Group with MailNickname of {0} already exists. Do you want to create another one?.
+        /// </summary>
+        internal static string ForceCreationOfExistingGroup0 {
+            get {
+                return ResourceManager.GetString("ForceCreationOfExistingGroup0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This request can take a long time to execute. Continue?.
         /// </summary>
         internal static string GetTenantSite_ExecuteCmdlet_This_request_can_take_a_long_time_to_execute__Continue_ {
@@ -170,7 +179,25 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No connection, please connect first with Connect-SPOnline.
+        ///   Looks up a localized string similar to The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet..
+        /// </summary>
+        internal static string MicrosoftGraphOAuthAccessTokenExpired {
+            get {
+                return ResourceManager.GetString("MicrosoftGraphOAuthAccessTokenExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Azure AD connection, please connect first with Connect-PnPMicrosoftGraph.
+        /// </summary>
+        internal static string NoAzureADAccessToken {
+            get {
+                return ResourceManager.GetString("NoAzureADAccessToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No connection, please connect first with Connect-PnPOnline.
         /// </summary>
         internal static string NoConnection {
             get {
@@ -188,7 +215,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No context present. Connect first with Connect-SPOnline.
+        ///   Looks up a localized string similar to No context present. Connect first with Connect-PnPOnline.
         /// </summary>
         internal static string NoContextPresent {
             get {
@@ -197,7 +224,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Office Dev PnP PowerShell Library ({0}).
+        ///   Looks up a localized string similar to SharePoint PnP PowerShell Library ({0}).
         /// </summary>
         internal static string OfficeDevPnPPowerShellLibrary0 {
             get {

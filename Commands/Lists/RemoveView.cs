@@ -6,11 +6,12 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOView", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPView", SupportsShouldProcess = true)]
+    [CmdletAlias("Remove-SPOView")]
     [CmdletHelp("Deletes a view from a list",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOView -List ""Demo List"" -Identity ""All Items""",
+        Code = @"PS:> Remove-PnPView -List ""Demo List"" -Identity ""All Items""",
         SortOrder = 1,
         Remarks = @"Removes the view with title ""All Items"" from the ""Demo List"" list.")]
     public class RemoveView : SPOWebCmdlet

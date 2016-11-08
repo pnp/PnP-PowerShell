@@ -7,14 +7,15 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOFieldFromContentType")]
+    [Cmdlet(VerbsCommon.Remove, "PnPFieldFromContentType")]
+    [CmdletAlias("Remove-SPOFieldFromContentType")]
     [CmdletHelp("Removes a site column from a content type",
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(
-     Code = @"PS:> Remove-SPOFieldFromContentType -Field ""Project_Name"" -ContentType ""Project Document""",
+     Code = @"PS:> Remove-PnPFieldFromContentType -Field ""Project_Name"" -ContentType ""Project Document""",
      Remarks = @"This will remove the site column with an internal name of ""Project_Name"" from a content type called ""Project Document""", SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Remove-SPOFieldFromContentType -Field ""Project_Name"" -ContentType ""Project Document"" -DoNotUpdateChildren",
+     Code = @"PS:> Remove-PnPFieldFromContentType -Field ""Project_Name"" -ContentType ""Project Document"" -DoNotUpdateChildren",
      Remarks = @"This will remove the site column with an internal name of ""Project_Name"" from a content type called ""Project Document"". It will not update content types that inherit from the ""Project Document"" content type.", SortOrder = 1)]
     public class RemoveFieldFromContentType : SPOWebCmdlet
     {

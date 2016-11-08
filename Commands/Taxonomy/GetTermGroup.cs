@@ -6,7 +6,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsCommon.Get, "SPOTermGroup", SupportsShouldProcess = false)]
+    [Cmdlet(VerbsCommon.Get, "PnPTermGroup", SupportsShouldProcess = false)]
+    [CmdletAlias("Get-SPOTermGroup")]
     [CmdletHelp(@"Returns a taxonomy term group",
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(TermGroup),
