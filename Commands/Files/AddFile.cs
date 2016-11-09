@@ -27,11 +27,18 @@ namespace SharePointPnP.PowerShell.Commands.Files
         SortOrder = 3)]
     public class AddFile : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The local file path.")]
+
+        [Parameter(Mandatory = true, ParameterSetName = "AsFile", HelpMessage = "The local file path.")]
         public string Path = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The destination folder in the site")]
         public string Folder = string.Empty;
+
+        [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Name for file")]
+        public string FileName = string.Empty;
+        [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Stream with the file contents")]
+        public Stream Stream ;
+
 
         [Parameter(Mandatory = false, HelpMessage = "If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.")]
         public SwitchParameter Checkout;
@@ -59,16 +66,19 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            if (!System.IO.Path.IsPathRooted(Path))
-            {
-                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+            if (ParameterSetName == "AsFile") {
+                if (!System.IO.Path.IsPathRooted(Path))
+                {
+                    Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+                }
+                FileName = System.IO.Path.GetFileName(Path);
             }
 
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
             
             var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
             
-            var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, System.IO.Path.GetFileName(Path));
+            var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName );
 
             // Check if the file exists
             if (Checkout)
@@ -86,10 +96,16 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 { // Swallow exception, file does not exist 
                 }
             }
+            Microsoft.SharePoint.Client.File file =null ;
+            if (ParameterSetName == "AsFile")
+            {
 
-            var file = folder.UploadFile(new FileInfo(Path).Name, Path, true);
+                file = folder.UploadFile(FileName, Path, true);
+            }
+            else {
+                file = folder.UploadFile(FileName, Stream, true);
+            }
 
-       
             if (Values != null)
             {
                 var item = file.ListItemAllFields;
