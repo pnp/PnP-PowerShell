@@ -1,5 +1,8 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2016-11-09**
+* Added Set-PnPUnifiedGroup cmdlet
+
 **2016-11-01**
 * Exposed ResetSubwebsToInherit and UpdateRootwebOnly parameters to Set-PnPTheme.
 
