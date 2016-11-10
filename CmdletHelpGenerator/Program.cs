@@ -527,15 +527,15 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
             var psd1Path = $"{new FileInfo(inFile).Directory}\\ModuleFiles\\SharePointPnPPowerShell{spVersion}.psd1";
             var cmdletsToExportString = string.Join(",", cmdletsToExport.Select(x => "'" + x + "'"));
             var aliasesToExportString = string.Join(",", aliasesToExport.Select(x => "'" + x + "'"));
-            WriteModuleManifest(psd1Path, spVersion, cmdletsToExportString, aliasesToExportString);
+            WriteModuleManifest(psd1Path, spVersion, cmdletsToExportString, aliasesToExportString, assembly);
         }
 
-        private static void WriteModuleManifest(string path, string version, string cmdletsToExport, string aliasesToExport)
+        private static void WriteModuleManifest(string path, string version, string cmdletsToExport, string aliasesToExport, Assembly assembly)
         {
             var manifest = $@"@{{
     ModuleToProcess = 'SharePointPnPPowerShell{version}.psm1'
     NestedModules   = 'SharePointPnP.PowerShell.{version}.Commands.dll'
-    ModuleVersion = '2.9.1611.0'
+    ModuleVersion = '{assembly.GetName().Version}'
     Description = 'SharePoint Patterns and Practices PowerShell Cmdlets for SharePoint {version}'
     GUID = '8f1147be-a8e4-4bd2-a705-841d5334edc0'
     Author = 'SharePoint Patterns and Practices'
