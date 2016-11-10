@@ -46,15 +46,20 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         protected override void ExecuteCmdlet()
         {
             UnifiedGroupEntity group = null;
-            // We have to retrieve a specific group
-            if (Identity.Group != null)
+
+            if (Identity != null)
             {
-                group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken);
+                // We have to retrieve a specific group
+                if (Identity.Group != null)
+                {
+                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken);
+                }
+                else if (!String.IsNullOrEmpty(Identity.GroupId))
+                {
+                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.GroupId, AccessToken);
+                }
             }
-            else if (!string.IsNullOrEmpty(Identity.GroupId))
-            {
-                group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.GroupId, AccessToken);
-            }
+
             Stream groupLogoStream = null;
 
             if (group != null)
@@ -67,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     }
                     groupLogoStream = new FileStream(GroupLogoPath, FileMode.Open, FileAccess.Read);
                 }
-                UnifiedGroupsUtility.UpdateUnifiedGroup(Identity.GroupId, AccessToken, displayName: DisplayName,
+                UnifiedGroupsUtility.UpdateUnifiedGroup(group.GroupId, AccessToken, displayName: DisplayName,
                     description: Description, groupLogo: groupLogoStream);
             }
         }
