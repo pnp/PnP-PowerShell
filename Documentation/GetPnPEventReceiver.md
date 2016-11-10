@@ -15,7 +15,7 @@ Get-PnPEventReceiver [-List <ListPipeBind>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|GuidPipeBind|False|The Guid of the event receiver on the list|
-|List|ListPipeBind|False|The list object from where to get the event receiver object|
+|List|ListPipeBind|False|The list object from which to get the event receiver object|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
@@ -29,7 +29,7 @@ This will return all registered event receivers on the current web
 ```powershell
 PS:> Get-PnPEventReceiver -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
 ```
-This will return a specific registered event receivers from the current web
+This will return a specific registered event receiver from the current web
 
 ###Example 3
 ```powershell

@@ -15,13 +15,13 @@ Export-PnPTaxonomy [-TermSetId <GuidPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Delimiter|String|False||
-|Encoding|Encoding|False||
+|Delimiter|String|False|The path delimiter to be used, by default this is '|'|
+|Encoding|Encoding|False|Defaults to Unicode|
 |Force|SwitchParameter|False|Overwrites the output file if it exists.|
 |IncludeID|SwitchParameter|False|If specified will include the ids of the taxonomy items in the output. Format: <label>;#<guid>|
 |Path|String|False|File to export the data to.|
 |TermSetId|GuidPipeBind|False|If specified, will export the specified termset only|
-|TermStoreName|String|False||
+|TermStoreName|String|False|Term store to export; if not specified the default term store is used.|
 ##Examples
 
 ###Example 1

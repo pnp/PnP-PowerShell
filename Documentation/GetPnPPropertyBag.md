@@ -15,7 +15,7 @@ Get-PnPPropertyBag [-Folder <String>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Folder|String|False|Site relative url of the folder. See examples for use.|
-|Key|String|False||
+|Key|String|False|Key that should be looked up|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
