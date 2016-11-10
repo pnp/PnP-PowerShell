@@ -45,7 +45,7 @@ This will upload the file company.master to the masterpage catalog
 ```powershell
 PS:> Add-PnPFile -Path .\displaytemplate.html -Folder "_catalogs/masterpage/display templates/test"
 ```
-This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder not exists it will create it.
+This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder does not exist it will create it.
 
 ###Example 3
 ```powershell

@@ -67,11 +67,11 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |AsFile|SwitchParameter|False||
 |AsListItem|SwitchParameter|False||
-|AsString|SwitchParameter|False||
-|Filename|String|False||
-|Path|String|False||
-|ServerRelativeUrl|String|True||
-|SiteRelativeUrl|String|True||
+|AsString|SwitchParameter|False|Retrieve the file contents as a string|
+|Filename|String|False|Name for the local file|
+|Path|String|False|Local path where the file should be saved|
+|ServerRelativeUrl|String|True|Server relative URL to the file|
+|SiteRelativeUrl|String|True|Site relative URL to the file|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

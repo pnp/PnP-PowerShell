@@ -20,4 +20,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Add-PnPFolder -Name NewFolder -Folder _catalogs/masterpage
 ```
-
+This will create the folder NewFolder in the masterpage catalog
