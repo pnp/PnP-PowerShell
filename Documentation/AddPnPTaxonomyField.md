@@ -40,7 +40,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |AddToDefaultView|SwitchParameter|False|Switch Parameter if this field must be added to the default view|
 |DisplayName|String|True|The display name of the field|
-|FieldOptions|AddFieldOptions|False||
+|FieldOptions|AddFieldOptions|False|Specifies the control settings while adding a field. See https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.addfieldoptions.aspx for details|
 |Group|String|False|The group name to where this field belongs to|
 |Id|GuidPipeBind|False|The ID for the field, must be unique|
 |InternalName|String|True|The internal name of the field|

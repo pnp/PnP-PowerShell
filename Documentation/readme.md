@@ -96,7 +96,7 @@ Cmdlet|Description
 **[Set&#8209;PnPFileCheckedIn](SetPnPFileCheckedIn.md)** |Checks in a file
 **[Set&#8209;PnPFileCheckedOut](SetPnPFileCheckedOut.md)** |Checks out a file
 **[Get&#8209;PnPFolder](GetPnPFolder.md)** |Return a folder object
-**[Ensure&#8209;PnPFolder](EnsurePnPFolder.md)** |Returns a folder given a site relative path, and will create it if it does not exist.
+**[Ensure&#8209;PnPFolder](EnsurePnPFolder.md)** |Returns a folder from a given site relative path, and will create it if it does not exist.
 **[Add&#8209;PnPFolder](AddPnPFolder.md)** |Creates a folder within a parent folder
 **[Remove&#8209;PnPFolder](RemovePnPFolder.md)** |Deletes a folder within a parent folder
 **[Get&#8209;PnPFolderItem](GetPnPFolderItem.md)** |List content in folder
@@ -212,12 +212,8 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[New&#8209;PnPPersonalSite](NewPnPPersonalSite.md)** |Office365 only: Creates a personal / OneDrive For Business site
-**[Set&#8209;PnPUserProfileProperty](SetPnPUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.
-
-You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command. 
-
-**[Get&#8209;PnPUserProfileProperty](GetPnPUserProfileProperty.md)** |You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet. 
-
+**[Set&#8209;PnPUserProfileProperty](SetPnPUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.  
+**[Get&#8209;PnPUserProfileProperty](GetPnPUserProfileProperty.md)** |You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.  
 ##Utilities
 Cmdlet|Description
 :-----|:----------
@@ -245,7 +241,7 @@ Cmdlet|Description
 **[Request&#8209;PnPReIndexWeb](RequestPnPReIndexWeb.md)** |Marks the web for full indexing during the next incremental crawl
 **[Get&#8209;PnPRequestAccessEmails](GetPnPRequestAccessEmails.md)** |Returns the request access e-mail addresses
 **[Set&#8209;PnPRequestAccessEmails](SetPnPRequestAccessEmails.md)** |Sets Request Access Emails on a web
-**[Get&#8209;PnPSubWebs](GetPnPSubWebs.md)** |Returns the subwebs
+**[Get&#8209;PnPSubWebs](GetPnPSubWebs.md)** |Returns the subwebs of the current web
 **[Remove&#8209;PnPWeb](RemovePnPWeb.md)** |Removes a subweb in the current web
 **[Get&#8209;PnPWeb](GetPnPWeb.md)** |Returns the current web object
 **[New&#8209;PnPWeb](NewPnPWeb.md)** |Creates a new subweb to the current web

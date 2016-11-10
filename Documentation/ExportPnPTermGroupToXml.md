@@ -13,7 +13,7 @@ Export-PnPTermGroupToXml [-Identity <TermGroupPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Encoding|Encoding|False||
+|Encoding|Encoding|False|Defaults to Unicode|
 |Force|SwitchParameter|False|Overwrites the output file if it exists.|
 |FullTemplate|SwitchParameter|False|If specified, a full provisioning template structure will be returned|
 |Identity|TermGroupPipeBind|False|The ID or name of the termgroup|

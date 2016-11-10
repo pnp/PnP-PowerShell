@@ -20,7 +20,7 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Add-PnPUserToGroup -LoginName user@company.com -Identity 'Marketing Site Members'
 ```
-
+Add the specified user to the group "Marketing Site Members"
 
 ###Example 2
 ```powershell

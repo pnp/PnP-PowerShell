@@ -16,8 +16,8 @@ Does not return a string when the -Path parameter has been specified.
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Path|String|False||
-|Scope|SearchConfigurationScope|False||
+|Path|String|False|Local path where the search configuration will be saved|
+|Scope|SearchConfigurationScope|False|Scope to use. Either Web, Site, or Subscription. Defaults to Web|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

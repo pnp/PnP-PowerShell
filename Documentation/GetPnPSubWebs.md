@@ -1,5 +1,5 @@
 #Get-PnPSubWebs
-Returns the subwebs
+Returns the subwebs of the current web
 ##Syntax
 ```powershell
 Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
