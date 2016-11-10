@@ -85,8 +85,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     Owners,
                     Members,
                     GroupLogoPath,
-                    IsPrivate, 
-                    retryCount: 20, delay: 1000);
+                    IsPrivate);
 
                 WriteObject(group);
             }
