@@ -25,6 +25,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Code = @"PS:> Add-PnPFile -Path .\sample.doc -Folder ""Shared Documents"" -Values @{Modified=""1/1/2016""}",
         Remarks = "This will upload the file sample.doc to the Shared Documnets folder. After uploading it will set the Modified date to 1/1/2016.",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPFile -FileName sample.doc -Folder ""Shared Documents"" -Stream $fileStream -Values @{Modified=""1/1/2016""}",
+        Remarks = "This will add a file sample.doc with the contents of the stream into the Shared Documnets folder. After adding it will set the Modified date to 1/1/2016.",
+        SortOrder = 4)]
+
     public class AddFile : SPOWebCmdlet
     {
 
