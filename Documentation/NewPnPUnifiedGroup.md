@@ -8,6 +8,7 @@ New-PnPUnifiedGroup -DisplayName <String>
                     [-Owners <String[]>]
                     [-Members <String[]>]
                     [-IsPrivate [<SwitchParameter>]]
+                    [-GroupLogoPath <String>]
                     [-Force [<SwitchParameter>]]
 ```
 
@@ -18,6 +19,7 @@ Parameter|Type|Required|Description
 |Description|String|True|The Description of the Office 365 Group.|
 |DisplayName|String|True|The Display Name of the Office 365 Group.|
 |Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
+|GroupLogoPath|String|False|The path to the logo file of to set.|
 |IsPrivate|SwitchParameter|False|Makes the group private when selected.|
 |MailNickname|String|True|The Mail Nickname of the Office 365 Group.|
 |Members|String[]|False|The array UPN values of the group's members.|

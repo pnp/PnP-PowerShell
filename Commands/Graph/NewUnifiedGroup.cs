@@ -52,6 +52,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected.")]
         public SwitchParameter IsPrivate;
 
+        [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set.")]
+        public string GroupLogoPath;
+
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
@@ -81,6 +84,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     AccessToken,
                     Owners,
                     Members,
+                    GroupLogoPath,
                     IsPrivate);
 
                 WriteObject(group);
