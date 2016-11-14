@@ -12,7 +12,8 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx")]
     [CmdletExample(
         Code = @"PS:> New-PnPUser -LoginName user@company.com",
-        SortOrder = 1)]
+        SortOrder = 1,
+        Remarks = "Adds a new user with the login user@company.com to the current site")]
     public class NewUser : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The users login name (user@company.com)")]

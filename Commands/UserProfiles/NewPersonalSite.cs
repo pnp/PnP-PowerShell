@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
 
     public class NewPersonalSite : SPOAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The UserPrincipalName (UPN) of the user", Position = 0)]
+        [Parameter(Mandatory = true, HelpMessage = "The UserPrincipalName (UPN) of the users", Position = 0)]
         public string[] Email;
 
         protected override void ExecuteCmdlet()

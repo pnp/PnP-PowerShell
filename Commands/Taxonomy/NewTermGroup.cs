@@ -12,6 +12,10 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(TermGroup),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termgroup.aspx")]
+    [CmdletExample
+        (Code = @"PS:> New-PnPTermGroup -GroupName ""Countries""",
+        Remarks = @"Creates a new taxonomy term group named ""Countries""",
+        SortOrder = 1)]
     public class NewTermGroup : SPOCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, 
@@ -45,7 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             }
             // Create Group
             var group = termStore.CreateTermGroup(GroupName, GroupId, Description);
-
+            ClientContext.ExecuteQueryRetry();
             WriteObject(group);
         }
 
