@@ -7,11 +7,12 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPGroup", DefaultParameterSetName = "All")]
     [CmdletAlias("Remove-SPOGroup")]
-    [CmdletHelp("Removes a group.",
+    [CmdletHelp("Removes a group from a web.",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
         Code = @"PS:> Remove-PnPGroup -Identity ""My Users""",
-        SortOrder = 1)]
+        SortOrder = 1,
+        Remarks = @"Removes the group ""My Users""")]
     public class RemoveGroup : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "A group object, an ID or a name of a group to remove")]
