@@ -1,5 +1,8 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2016-11-21**
+* Updated Add-PnPUserToGroup to allow to send invites to external users
+
 **2016-11-09**
 * Added Set-PnPUnifiedGroup cmdlet
 
