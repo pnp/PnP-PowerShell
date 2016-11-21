@@ -52,10 +52,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "The title of the list")]
         public string Title = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning")]
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning. Set to $true to enable, $false to disable.")]
         public bool EnableVersioning;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enable or disable minor versions versioning")]
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable minor versions versioning. Set to $true to enable, $false to disable.")]
         public bool EnableMinorVersions;
 
         [Parameter(Mandatory = false, HelpMessage = "Maximum major versions to keep")]
