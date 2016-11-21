@@ -8,6 +8,10 @@ Set-PnPList -Identity <ListPipeBind>
             [-CopyRoleAssignments [<SwitchParameter>]]
             [-ClearSubscopes [<SwitchParameter>]]
             [-Title <String>]
+            [-EnableVersioning <Boolean>]
+            [-EnableMinorVersions <Boolean>]
+            [-MajorVersions <UInt32>]
+            [-MinorVersions <UInt32>]
             [-Web <WebPipeBind>]
 ```
 
@@ -19,7 +23,11 @@ Parameter|Type|Required|Description
 |ClearSubscopes|SwitchParameter|False|If used the unique permissions are cleared from child objects and they can inherit role assignments from this object|
 |CopyRoleAssignments|SwitchParameter|False|If used the roles are copied from the parent web|
 |EnableContentTypes|Boolean|False|Set to $true to enable content types, set to $false to disable content types|
+|EnableMinorVersions|Boolean|False|Enable or disable minor versions versioning|
+|EnableVersioning|Boolean|False|Enable or disable versioning|
 |Identity|ListPipeBind|True|The ID, Title or Url of the list.|
+|MajorVersions|UInt32|False|Maximum major versions to keep|
+|MinorVersions|UInt32|False|Maximum minor versions to keep|
 |Title|String|False|The title of the list|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

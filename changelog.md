@@ -1,6 +1,7 @@
 # SharePointPnP.PowerShell Changelog #
 
 **2016-11-21**
+* Added support to enable versionining and set the maximum number of versions to keep on a list and library with Set-PnPList
 * Updated Add-PnPUserToGroup to allow to send invites to external users
 
 **2016-11-09**
