@@ -63,8 +63,13 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         {
             var list = List.GetList(SelectedWeb);
 
-            if (Id != -1)
+            if (HasId())
             {
+                if (HasUniqueId() || HasCamlQuery() || HasPageSize())
+                {
+                    WriteWarning("UniqueId, Query and PageSize parameters will be ignored when specifying Id.");
+                }
+
                 var listItem = list.GetItemById(Id);
                 if (Fields != null)
                 {
@@ -80,11 +85,16 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(listItem);
             }
-            else if (UniqueId != null && UniqueId.Id != Guid.Empty)
+            else if (HasUniqueId())
             {
+                if (HasCamlQuery() || HasPageSize())
+                {
+                    WriteWarning("Query and PageSize parameters will be ignored when specifying UniqueId");
+                }
+
                 CamlQuery query = new CamlQuery();
                 var viewFieldsStringBuilder = new StringBuilder();
-                if (Fields != null)
+                if (HasFields())
                 {
                     viewFieldsStringBuilder.Append("<ViewFields>");
                     foreach (var field in Fields)
@@ -99,8 +109,13 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(listItem);
             }
-            else if (Query != null)
+            else if (HasCamlQuery())
             {
+                if (HasFields() || HasPageSize())
+                {
+                    WriteWarning("Fields and PageSize parameters will be ignored when specifying Query. Include them in the CAML query instead.");
+                }
+
                 CamlQuery query = new CamlQuery { ViewXml = Query };
                 var listItems = list.GetItems(query);
                 ClientContext.Load(listItems);
@@ -134,7 +149,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     query.ViewXml = queryElement.ToString();
                 }
 
-                if (PageSize > 0)
+                if (HasPageSize())
                 {
                     var queryElement = XElement.Parse(query.ViewXml);
 
@@ -165,6 +180,31 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
                 } while (query.ListItemCollectionPosition != null);
             }
+        }
+
+        private bool HasId()
+        {
+            return Id != -1;
+        }
+
+        private bool HasUniqueId()
+        {
+            return UniqueId != null && UniqueId.Id != Guid.Empty;
+        }
+
+        private bool HasCamlQuery()
+        {
+            return Query != null;
+        }
+
+        private bool HasFields()
+        {
+            return Fields != null;
+        }
+
+        private bool HasPageSize()
+        {
+            return PageSize > 0;
         }
     }
 }
