@@ -9,7 +9,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPListItem")]
+    [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = "ById")]
     [CmdletAlias("Get-SPOListItem")]
     [CmdletHelp("Retrieves list items",
         Category = CmdletHelpCategory.Lists,
@@ -41,22 +41,24 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 6)]
     public class GetListItem : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0)]
+        [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve")]
+        [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve", ParameterSetName = "ById")]
         public int Id = -1;
 
-        [Parameter(Mandatory = false, HelpMessage = "The unique id (GUID) of the item to retrieve")]
+        [Parameter(Mandatory = false, HelpMessage = "The unique id (GUID) of the item to retrieve", ParameterSetName = "ByUniqueId")]
         public GuidPipeBind UniqueId;
 
-        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list")]
+        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list", ParameterSetName = "ByQuery")]
         public string Query;
 
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "AllItems")]
+        [Parameter(Mandatory = false, HelpMessage = "TThe fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ById")]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ByUniqueId")]
         public string[] Fields;
 
-        [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.")]
+        [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = "AllItems")]
         public int PageSize = -1;
 
         protected override void ExecuteCmdlet()
@@ -65,11 +67,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
             if (HasId())
             {
-                if (HasUniqueId() || HasCamlQuery() || HasPageSize())
-                {
-                    WriteWarning("UniqueId, Query and PageSize parameters will be ignored when specifying Id.");
-                }
-
                 var listItem = list.GetItemById(Id);
                 if (Fields != null)
                 {
@@ -87,11 +84,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             }
             else if (HasUniqueId())
             {
-                if (HasCamlQuery() || HasPageSize())
-                {
-                    WriteWarning("Query and PageSize parameters will be ignored when specifying UniqueId");
-                }
-
                 CamlQuery query = new CamlQuery();
                 var viewFieldsStringBuilder = new StringBuilder();
                 if (HasFields())
@@ -111,11 +103,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             }
             else if (HasCamlQuery())
             {
-                if (HasFields() || HasPageSize())
-                {
-                    WriteWarning("Fields and PageSize parameters will be ignored when specifying Query. Include them in the CAML query instead.");
-                }
-
                 CamlQuery query = new CamlQuery { ViewXml = Query };
                 var listItems = list.GetItems(query);
                 ClientContext.Load(listItems);
