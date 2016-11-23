@@ -9,7 +9,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPListItem")]
+    [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = "ById")]
     [CmdletAlias("Get-SPOListItem")]
     [CmdletHelp("Retrieves list items",
         Category = CmdletHelpCategory.Lists,
@@ -41,29 +41,31 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 6)]
     public class GetListItem : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0)]
+        [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve")]
+        [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve", ParameterSetName = "ById")]
         public int Id = -1;
 
-        [Parameter(Mandatory = false, HelpMessage = "The unique id (GUID) of the item to retrieve")]
+        [Parameter(Mandatory = false, HelpMessage = "The unique id (GUID) of the item to retrieve", ParameterSetName = "ByUniqueId")]
         public GuidPipeBind UniqueId;
 
-        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list")]
+        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list", ParameterSetName = "ByQuery")]
         public string Query;
 
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "AllItems")]
+        [Parameter(Mandatory = false, HelpMessage = "TThe fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ById")]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ByUniqueId")]
         public string[] Fields;
 
-        [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.")]
+        [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = "AllItems")]
         public int PageSize = -1;
 
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
 
-            if (Id != -1)
+            if (HasId())
             {
                 var listItem = list.GetItemById(Id);
                 if (Fields != null)
@@ -80,11 +82,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(listItem);
             }
-            else if (UniqueId != null && UniqueId.Id != Guid.Empty)
+            else if (HasUniqueId())
             {
                 CamlQuery query = new CamlQuery();
                 var viewFieldsStringBuilder = new StringBuilder();
-                if (Fields != null)
+                if (HasFields())
                 {
                     viewFieldsStringBuilder.Append("<ViewFields>");
                     foreach (var field in Fields)
@@ -99,7 +101,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(listItem);
             }
-            else if (Query != null)
+            else if (HasCamlQuery())
             {
                 CamlQuery query = new CamlQuery { ViewXml = Query };
                 var listItems = list.GetItems(query);
@@ -134,7 +136,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     query.ViewXml = queryElement.ToString();
                 }
 
-                if (PageSize > 0)
+                if (HasPageSize())
                 {
                     var queryElement = XElement.Parse(query.ViewXml);
 
@@ -165,6 +167,31 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
                 } while (query.ListItemCollectionPosition != null);
             }
+        }
+
+        private bool HasId()
+        {
+            return Id != -1;
+        }
+
+        private bool HasUniqueId()
+        {
+            return UniqueId != null && UniqueId.Id != Guid.Empty;
+        }
+
+        private bool HasCamlQuery()
+        {
+            return Query != null;
+        }
+
+        private bool HasFields()
+        {
+            return Fields != null;
+        }
+
+        private bool HasPageSize()
+        {
+            return PageSize > 0;
         }
     }
 }
