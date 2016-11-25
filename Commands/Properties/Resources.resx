@@ -238,4 +238,13 @@
   <data name="ForceCreationOfExistingGroup0" xml:space="preserve">
     <value>The Unified Group with MailNickname of {0} already exists. Do you want to create another one?</value>
   </data>
+  <data name="CopyFile0To1" xml:space="preserve">
+    <value>Copy file '{0}' to '{1}'?</value>
+  </data>
+  <data name="MoveFile0To1" xml:space="preserve">
+    <value>Move file '{0}' to '{1}'?</value>
+  </data>
+  <data name="RenameFile0To1" xml:space="preserve">
+    <value>Rename file '{0}' to '{1}'?</value>
+  </data>
 </root>
