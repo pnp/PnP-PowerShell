@@ -4,17 +4,18 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOContentType")]
+    [Cmdlet(VerbsCommon.Remove, "PnPContentType")]
+    [CmdletAlias("Remove-SPOContentType")]
     [CmdletHelp("Removes a content type", 
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOContentType -Identity ""Project Document""",
+        Code = @"PS:> Remove-PnPContentType -Identity ""Project Document""",
         Remarks = @"This will remove a content type called ""Project Document"" from the current web",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Remove-SPOContentType -Identity ""Project Document"" -Force",
+        Code = @"PS:> Remove-PnPContentType -Identity ""Project Document"" -Force",
         Remarks = @"This will remove a content type called ""Project Document"" from the current web with force",
         SortOrder = 2)]
     public class RemoveContentType : SPOWebCmdlet
@@ -23,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true, HelpMessage="The name or ID of the content type to remove")]
         public ContentTypePipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

@@ -7,15 +7,16 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
-    [Cmdlet(VerbsCommon.Set, "SPODocumentSetField")]
+    [Cmdlet(VerbsCommon.Set, "PnPDocumentSetField")]
+    [CmdletAlias("Set-SPODocumentSetField")]
     [CmdletHelp("Sets a site column from the available content types to a document set", 
         Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(
-        Code = @"PS:> Set-SPODocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -SetSharedField -SetWelcomePageField",
+        Code = @"PS:> Set-PnPDocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -SetSharedField -SetWelcomePageField",
         Remarks = "This will set the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPODocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -RemoveSharedField -RemoveWelcomePageField",
+        Code = @"PS:> Set-PnPDocumentSetField -Field ""Test Field"" -DocumentSet ""Test Document Set"" -RemoveSharedField -RemoveWelcomePageField",
         Remarks = "This will remove the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.",
         SortOrder = 1)]
     public class SetFieldInDocumentSet : SPOWebCmdlet
@@ -40,18 +41,19 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
 
         protected override void ExecuteCmdlet()
         {
-            if (this.MyInvocation.BoundParameters.ContainsKey("SetSharedField") && this.MyInvocation.BoundParameters.ContainsKey("RemoveSharedField"))
+            if (MyInvocation.BoundParameters.ContainsKey("SetSharedField") && MyInvocation.BoundParameters.ContainsKey("RemoveSharedField"))
             {
                 WriteWarning("Cannot set and remove a shared field at the same time");
                 return;
             }
-            if (this.MyInvocation.BoundParameters.ContainsKey("SetWelcomePageField") && this.MyInvocation.BoundParameters.ContainsKey("RemoveWelcomePageField"))
+            if (MyInvocation.BoundParameters.ContainsKey("SetWelcomePageField") && MyInvocation.BoundParameters.ContainsKey("RemoveWelcomePageField"))
             {
                 WriteWarning("Cannot set and remove a welcome page field at the same time");
                 return;
             }
          
             var docSetTemplate = DocumentSet.GetDocumentSetTemplate(SelectedWeb);
+            
 
             ClientContext.Load(docSetTemplate, dt => dt.AllowedContentTypes, dt => dt.SharedFields, dt => dt.WelcomePageFields);
             ClientContext.ExecuteQueryRetry();
@@ -86,6 +88,14 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
                     {
                         break;
                     }
+                }
+                if (existingField == null)
+                {
+                    var docSetCt = DocumentSet.ContentType;
+                    var fields = docSetCt.Fields;
+                    ClientContext.Load(fields, fs => fs.Include(f => f.Id));
+                    ClientContext.ExecuteQueryRetry();
+                    existingField = fields.FirstOrDefault(f => f.Id == field.Id);
                 }
                 if (existingField != null)
                 {

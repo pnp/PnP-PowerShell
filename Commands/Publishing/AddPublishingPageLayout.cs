@@ -2,11 +2,16 @@
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.PageLayout
+namespace SharePointPnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Add, "SPOPublishingPageLayout")]
+    [Cmdlet(VerbsCommon.Add, "PnPPublishingPageLayout")]
+    [CmdletAlias("Add-SPOPublishingPageLayout")]
     [CmdletHelp("Adds a publishing page layout",
       Category = CmdletHelpCategory.Publishing)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPPublishingPageLayout -Title 'Our custom page layout' -SourceFilePath 'customlayout.aspx' -Description 'A custom page layout' -AssociatedContentTypeID 0x01010901",
+        Remarks = "Uploads the pagelayout 'customlayout.aspx' to the current site as a 'web part page' pagelayout",
+        SortOrder = 1)]
     public class AddPublishingPageLayout : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Path to the file which will be uploaded")]

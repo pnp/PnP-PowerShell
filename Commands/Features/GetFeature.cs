@@ -9,24 +9,27 @@ using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Features
 {
-    [Cmdlet(VerbsCommon.Get, "SPOFeature")]
+    [Cmdlet(VerbsCommon.Get, "PnPFeature")]
+    [CmdletAlias("Get-SPOFeature")]
     [CmdletHelp("Returns all activated or a specific activated feature",
-        Category = CmdletHelpCategory.Features)]
+        Category = CmdletHelpCategory.Features,
+        OutputType=typeof(IEnumerable<Feature>),
+        OutputTypeLink= "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.feature.aspx")]
     [CmdletExample(
-     Code = @"PS:> Get-SPOFeature",
+     Code = @"PS:> Get-PnPFeature",
      Remarks = @"This will return all activated web scoped features", SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Get-SPOFeature -Scope Site",
+     Code = @"PS:> Get-PnPFeature -Scope Site",
      Remarks = @"This will return all activated site scoped features", SortOrder = 2)]
     [CmdletExample(
-     Code = @"PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22",
+     Code = @"PS:> Get-PnPFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22",
      Remarks = @"This will return a specific activated web scoped feature", SortOrder = 3)]
     [CmdletExample(
-     Code = @"PS:> Get-SPOFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site",
+     Code = @"PS:> Get-PnPFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site",
      Remarks = @"This will return a specific activated site scoped feature", SortOrder = 4)]
     public class GetFeature : SPOWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The feature ID or name to query for, Querying by name is not supported in version 15 of the Client Side Object Model")]
         public FeaturePipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "The scope of the feature. Defaults to Web.")]

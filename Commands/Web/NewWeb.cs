@@ -4,11 +4,14 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.New, "SPOWeb")]
+    [Cmdlet(VerbsCommon.New, "PnPWeb")]
+    [CmdletAlias("New-SPOWeb")]
     [CmdletHelp("Creates a new subweb to the current web",
-        Category = CmdletHelpCategory.Webs)]
+        Category = CmdletHelpCategory.Webs,
+        OutputType = typeof(Web),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
     [CmdletExample(
-        Code = @"PS:> New-SPOWeb -Title ""Project A Web"" -Url projectA -Description ""Information about Project A"" -Locale 1033 -Template ""STS#0""", 
+        Code = @"PS:> New-PnPWeb -Title ""Project A Web"" -Url projectA -Description ""Information about Project A"" -Locale 1033 -Template ""STS#0""", 
         Remarks = "Creates a new subweb under the current web with URL projectA", 
         SortOrder = 1)]
     public class NewWeb : SPOWebCmdlet

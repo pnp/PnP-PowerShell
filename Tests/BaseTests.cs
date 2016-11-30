@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Tests
                 var creds = GetCredentials(ConfigurationManager.AppSettings["SPODevSiteUrl"]);
                 if (creds != null)
                 {
-                    var results = scope.ExecuteCommand("Connect-SPOnline", new CommandParameter("Url", ConfigurationManager.AppSettings["SPODevSiteUrl"]));
+                    var results = scope.ExecuteCommand("Connect-PnPOnline", new CommandParameter("Url", ConfigurationManager.AppSettings["SPODevSiteUrl"]));
                     Assert.IsTrue(results.Count == 0);
                 } else
                 {
@@ -37,7 +37,7 @@ namespace SharePointPnP.PowerShell.Tests
                     var script = String.Format(@" [ValidateNotNullOrEmpty()] $userPassword = ""{1}""
                                               $userPassword = ConvertTo-SecureString -String {1} -AsPlainText -Force
                                               $cred = New-Object –TypeName System.Management.Automation.PSCredential –ArgumentList {0}, $userPassword
-                                              Connect-SPOnline -Url {2} -Credentials $cred"
+                                              Connect-PnPOnline -Url {2} -Credentials $cred"
                                            , ConfigurationManager.AppSettings["SPOUserName"],
                                            ConfigurationManager.AppSettings["SPOPassword"],
                                            ConfigurationManager.AppSettings["SPODevSiteUrl"]);
@@ -100,10 +100,10 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Get-SPOContext");
+                var results = scope.ExecuteCommand("Get-PnPContext");
 
                 Assert.IsTrue(results.Count == 1);
-                Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Microsoft.SharePoint.Client.ClientContext));
+                Assert.IsTrue(results[0].BaseObject.GetType() == typeof(OfficeDevPnP.Core.PnPClientContext));
 
             }
         }
@@ -116,7 +116,7 @@ namespace SharePointPnP.PowerShell.Tests
                 using (var scope = new PSTestScope(true))
                 {
 
-                    var results = scope.ExecuteCommand("Get-SPOProperty",
+                    var results = scope.ExecuteCommand("Get-PnPProperty",
                         new CommandParameter("ClientObject", ctx.Web),
                         new CommandParameter("Property", "Lists"));
                     Assert.IsTrue(results.Count == 1);

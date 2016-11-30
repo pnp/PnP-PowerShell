@@ -115,7 +115,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 
         private string GetTimeSpanText(TimeSpan timeSpan)
         {
-            string text = string.Empty;
+            var text = string.Empty;
 
             if (timeSpan.Days > 0)
                 text += $"{timeSpan.Days} days";
@@ -125,9 +125,9 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
             return text;
         }
 
-        private void AddTableRow(DataTable table, string title, object value)
+        private static void AddTableRow(DataTable table, string title, object value)
         {
-            System.Data.DataRow row = table.NewRow();
+            var row = table.NewRow();
 
             row["Title"] = title;
             row["Value"] = value?.ToString();

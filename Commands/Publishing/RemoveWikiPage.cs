@@ -1,14 +1,18 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System;
 using OfficeDevPnP.Core.Utilities;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Publishing
 {
-    [Cmdlet(VerbsCommon.Remove, "SPOWikiPage", ConfirmImpact = ConfirmImpact.High)]
+    [Cmdlet(VerbsCommon.Remove, "PnPWikiPage", ConfirmImpact = ConfirmImpact.High)]
+    [CmdletAlias("Remove-SPOWikiPage")]
     [CmdletHelp("Removes a wiki page",
         Category = CmdletHelpCategory.Publishing)]
+    [CmdletExample(
+        Code = @"PS:> Remove-PnPWikiPage -PageUrl '/pages/wikipage.aspx'",
+        Remarks = "Removes the page '/pages/wikipage.aspx'",
+        SortOrder = 1)]
     public class RemoveWikiPage : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0,ValueFromPipeline=true, ParameterSetName = "SERVER")]

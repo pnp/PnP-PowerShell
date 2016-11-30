@@ -1,31 +1,30 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "SPOMinimalDownloadStrategy")]
+    [Cmdlet(VerbsCommon.Set, "PnPMinimalDownloadStrategy")]
+    [CmdletAlias("Set-SPOMinimalDownloadStrategy")]
     [CmdletHelp("Activates or deactivates the minimal downloading strategy.", 
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOMinimalDownloadStrategy -Off",
+        Code = @"PS:> Set-PnPMinimalDownloadStrategy -Off",
         Remarks = "Will deactivate minimal download strategy (MDS) for the current web.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOMinimalDownloadStrategy -On",
+        Code = @"PS:> Set-PnPMinimalDownloadStrategy -On",
         Remarks = "Will activate minimal download strategy (MDS) for the current web.",
         SortOrder = 2)]
     public class SetMDS : SPOWebCmdlet
     {
-        [Parameter(ParameterSetName = "On", Mandatory = true)]
+        [Parameter(ParameterSetName = "On", Mandatory = true, HelpMessage = "Turn minimal download strategy on")]
         public SwitchParameter On;
 
-        [Parameter(ParameterSetName = "Off", Mandatory = true)]
+        [Parameter(ParameterSetName = "Off", Mandatory = true, HelpMessage = "Turn minimal download strategy off")]
         public SwitchParameter Off;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()

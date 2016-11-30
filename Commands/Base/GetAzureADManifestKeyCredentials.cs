@@ -5,15 +5,18 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "SPOAzureADManifestKeyCredentials")]
+    [Cmdlet(VerbsCommon.Get, "PnPAzureADManifestKeyCredentials")]
+    [CmdletAlias("Get-SPOAzureADManifestKeyCredentials")]
     [CmdletHelp("Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps", 
-        Category = CmdletHelpCategory.Base)]
+        Category = CmdletHelpCategory.Base,
+        OutputType=typeof(string),
+        OutputTypeDescription = "Outputs a JSON formatted string")]
     [CmdletExample(
-        Code = @"PS:> Get-SPOAzureADManifestKeyCredentials -CertPath .\mycert.cer",
+        Code = @"PS:> Get-PnPAzureADManifestKeyCredentials -CertPath .\mycert.cer",
         Remarks = "Output the JSON snippet which needs to be replaced in the application manifest file", 
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-SPOAzureADManifestKeyCredentials -CertPath .\mycert.cer | Set-Clipboard",
+        Code = @"PS:> Get-PnPAzureADManifestKeyCredentials -CertPath .\mycert.cer | Set-Clipboard",
         Remarks = "Output the JSON snippet which needs to be replaced in the application manifest file and copies it to the clipboard",
         SortOrder = 2)]
     public class GetAzureADManifestKeyCredentials : PSCmdlet

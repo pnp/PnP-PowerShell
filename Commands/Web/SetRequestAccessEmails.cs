@@ -1,20 +1,20 @@
 ﻿#if !ONPREMISES
-using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Set, "SPORequestAccessEmails")]
+    [Cmdlet(VerbsCommon.Set, "PnPRequestAccessEmails")]
+    [CmdletAlias("Set-SPORequestAccessEmails")]
     [CmdletHelp("Sets Request Access Emails on a web",
        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
-       Code = @"PS:> Set-SPORequestAccessEmails -Emails someone@example.com ",
+       Code = @"PS:> Set-PnPRequestAccessEmails -Emails someone@example.com ",
        Remarks = "This will update the request access e-mail address",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Set-SPORequestAccessEmails -Emails @( someone@example.com; someoneelse@example.com )",
+       Code = @"PS:> Set-PnPRequestAccessEmails -Emails @( someone@example.com; someoneelse@example.com )",
        Remarks = "This will update multiple request access e-mail addresses",
        SortOrder = 2)]
     public class SetRequestAccessEmails : SPOWebCmdlet

@@ -3,10 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 using SharePointPnP.PowerShell.Commands.Extensions;
 using SharePointPnP.PowerShell.Commands.Base;
 
@@ -14,35 +11,35 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 {
 	internal class InvokeWebAction
 	{
-        private const int WebProgressBarId = 1;
+		private const int WebProgressBarId = 1;
 		private const int ListProgressBarId = 2;
 		private const int ListItemProgressBarId = 3;
-        
+		
 		private readonly Cmdlet _cmdlet;
-        
+		
 		private InvokeWebActionResult _result;
-		private int _currentWebsProcessed = 0;
-		private int _currentListsProcessed = 0;
-		private int _currentListItemsProcessed = 0;
-        
-		private int _currentPostWebsProcessed = 0;
-		private int _currentPostListsProcessed = 0;
+		private int _currentWebsProcessed;
+		private int _currentListsProcessed;
+		private int _currentListItemsProcessed;
+		
+		private int _currentPostWebsProcessed;
+		private int _currentPostListsProcessed;
 
-        private double _averageShouldProcessWebTime = 0;
-        private double _averageWebTime = 0;
+		private double _averageShouldProcessWebTime;
+		private double _averageWebTime;
 
-        private double _averageShouldProcessListTime = 0;
-        private double _averageListTime = 0;
+		private double _averageShouldProcessListTime;
+		private double _averageListTime;
 
-        private double _averageShouldProcessListItemTime = 0;
-        private double _averageListItemTime = 0;
+		private double _averageShouldProcessListItemTime;
+		private double _averageListItemTime;
 
-        private double _averageShouldProcessPostWebTime = 0;
-        private double _averagePostWebTime = 0;
+		private double _averageShouldProcessPostWebTime;
+		private double _averagePostWebTime;
 
-        private double _averageShouldProcessPostListTime = 0;
-        private double _averagePostListTime = 0;
-        
+		private double _averageShouldProcessPostListTime;
+		private double _averagePostListTime;
+		
 		private readonly IEnumerable<Web> _webs;
 		private readonly bool _subWebs;
 		private readonly string _listName;
@@ -50,9 +47,9 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 		private readonly InvokeActionParameter<Web> _webActions;
 		private readonly InvokeActionParameter<List> _listActions;
 		private readonly InvokeActionParameter<ListItem> _listItemActions;
-        
+		
 		private readonly bool _skipCounting;
-        
+		
 		private Stopwatch _totalExecutionTimeStopWatch;
 
 		private InvokeWebAction(Cmdlet cmdlet, bool subWebs, InvokeActionParameter<Web> webActions, InvokeActionParameter<List> listActions, InvokeActionParameter<ListItem> listItemActions, bool skipCounting)
@@ -92,9 +89,9 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 			_result = new InvokeWebActionResult();
 			_result.StartDate = DateTime.Now;
 
-            ClientContext previousContext = SPOnlineConnection.CurrentConnection.Context;
+			ClientContext previousContext = SPOnlineConnection.CurrentConnection.Context;
 
-            UpdatePropertiesToLoad();
+			UpdatePropertiesToLoad();
 
 			List<Web> webs;
 			if (_subWebs)
@@ -109,10 +106,10 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 
 			UpdateResult();
 
-            //Reset context to where the user were before.
-            SPOnlineConnection.CurrentConnection.Context = previousContext;
+			//Reset context to where the user were before.
+			SPOnlineConnection.CurrentConnection.Context = previousContext;
 
-            return _result;
+			return _result;
 		}
 
 		private void UpdatePropertiesToLoad()
@@ -141,8 +138,6 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 				allWebs.AddRange(currentWeb.GetAllWebsRecursive());
 				allWebs.Add(currentWeb);
 			}
-
-			webs = allWebs;
 
 			CompleteProgressBar(WebProgressBarId);
 
@@ -182,9 +177,11 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 					for (int listIndex = 0; listIndex < listCount; listIndex++)
 					{
 						List currentList = lists[listIndex];
-                        WriteIterationProgress(ListProgressBarId, WebProgressBarId, "Counting list", GetTitle(currentList), listIndex, listCount);
+						currentList.LoadProperties(_listActions.Properties);
 
-                        if ((_isListNameSpecified && currentList.Title.Equals(_listName, StringComparison.CurrentCultureIgnoreCase)) || _listActions.ShouldProcessAnyAction(currentList))
+						WriteIterationProgress(ListProgressBarId, WebProgressBarId, "Counting list", GetTitle(currentList), listIndex, listCount);
+
+						if ((_isListNameSpecified && currentList.Title.Equals(_listName, StringComparison.CurrentCultureIgnoreCase)) || _listActions.ShouldProcessAnyAction(currentList))
 						{
 							_result.ProcessedListCount++;
 							_result.ProcessedListItemCount += currentList.ItemCount;
@@ -206,18 +203,18 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 			{
 				Web currentWeb = webs[webIndex];
 
-                //Update current connection context to the web that is beeing process
-                //So commands like Get-SPOList returns the correct list for the current web beeing proccess
-                SPOnlineConnection.CurrentConnection.Context = (ClientContext) currentWeb.Context;
+				//Update current connection context to the web that is beeing process
+				//So commands like Get-PnPList returns the correct list for the current web beeing proccess
+				SPOnlineConnection.CurrentConnection.Context = (ClientContext) currentWeb.Context;
 
-                currentWeb.LoadProperties(_webActions.Properties);
+				currentWeb.LoadProperties(_webActions.Properties);
 
-                UpdateWebProgressBar(webs, webIndex, webCount, 0, _totalExecutionTimeStopWatch);
+				UpdateWebProgressBar(webs, webIndex, webCount, 0, _totalExecutionTimeStopWatch);
 
-                if (!_webActions.ShouldProcessAnyAction(currentWeb))
+				if (!_webActions.ShouldProcessAnyAction(currentWeb))
 					continue;
 
-				processAction = ProccessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessAction, _webActions.Action, ref _currentWebsProcessed, ref _averageWebTime, ref _averageShouldProcessWebTime);
+				processAction = ProcessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessAction, _webActions.Action, ref _currentWebsProcessed, ref _averageWebTime, ref _averageShouldProcessWebTime);
 
 				if (!processAction)
 					continue;
@@ -230,6 +227,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 					for (int listIndex = 0; listIndex < listCount; listIndex++)
 					{
 						List currentList = lists[listIndex];
+						currentList.LoadProperties(_listActions.Properties);
 
 						if (_isListNameSpecified && !currentList.Title.Equals(_listName, StringComparison.CurrentCultureIgnoreCase))
 							continue;
@@ -238,7 +236,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 
 						UpdateListProgressBar(lists, listIndex, listCount);
 
-						processAction = ProccessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessAction, _listActions.Action, ref _currentListsProcessed, ref _averageListTime, ref _averageShouldProcessListTime);
+						processAction = ProcessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessAction, _listActions.Action, ref _currentListsProcessed, ref _averageListTime, ref _averageShouldProcessListTime);
 
 						if (!processAction)
 							continue;
@@ -255,21 +253,23 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 							{
 								ListItem currentListItem = listItems[listItemIndex];
 
+								currentListItem.LoadProperties(_listItemActions.Properties);
+
 								WriteIterationProgress(ListItemProgressBarId, ListProgressBarId, "Iterating list items", GetTitle(currentListItem), listItemIndex, listItemCount, CalculateRemainingTimeForListItems(listItemCount, listItemIndex));
 
-								ProccessAction(currentListItem, GetTitle, _listItemActions.Properties, _listItemActions.ShouldProcessAction, _listItemActions.Action, ref _currentListItemsProcessed, ref _averageListItemTime, ref _averageShouldProcessListItemTime);
+								ProcessAction(currentListItem, GetTitle, _listItemActions.Properties, _listItemActions.ShouldProcessAction, _listItemActions.Action, ref _currentListItemsProcessed, ref _averageListItemTime, ref _averageShouldProcessListItemTime);
 							}
 
 							CompleteProgressBar(ListItemProgressBarId);
 						}
 
-						processAction = ProccessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessPostAction, _listActions.PostAction, ref _currentPostListsProcessed, ref _averagePostListTime, ref _averageShouldProcessPostListTime);
+						processAction = ProcessAction(currentList, GetTitle, _listActions.Properties, _listActions.ShouldProcessPostAction, _listActions.PostAction, ref _currentPostListsProcessed, ref _averagePostListTime, ref _averageShouldProcessPostListTime);
 					}
 
 					CompleteProgressBar(ListProgressBarId);
 				}
 
-				processAction = ProccessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessPost, _webActions.PostAction, ref _currentPostWebsProcessed, ref _averagePostWebTime, ref _averageShouldProcessPostWebTime);
+				processAction = ProcessAction(currentWeb, GetTitle, _webActions.Properties, _webActions.ShouldProcessPost, _webActions.PostAction, ref _currentPostWebsProcessed, ref _averagePostWebTime, ref _averageShouldProcessPostWebTime);
 			}
 
 			CompleteProgressBar(WebProgressBarId);
@@ -279,30 +279,30 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 		{
 			_result.ProcessedWebCount = _currentWebsProcessed;
 
-            if(_webActions.HasPostAction)
-                _result.ProcessedPostWebCount = _currentPostWebsProcessed;
+			if(_webActions.HasPostAction)
+				_result.ProcessedPostWebCount = _currentPostWebsProcessed;
 
-            _result.ProcessedListCount = _currentListsProcessed;
+			_result.ProcessedListCount = _currentListsProcessed;
 
-            if (_listActions.HasPostAction)
-                _result.ProcessedPostListCount = _currentPostListsProcessed;
+			if (_listActions.HasPostAction)
+				_result.ProcessedPostListCount = _currentPostListsProcessed;
 
-            _result.ProcessedListItemCount = _currentListItemsProcessed;
+			_result.ProcessedListItemCount = _currentListItemsProcessed;
 
-            if(_webActions.HasAction)
-			    _result.AverageWebTime = _averageWebTime;
+			if(_webActions.HasAction)
+				_result.AverageWebTime = _averageWebTime;
 
-            if(_webActions.HasPostAction)
-                _result.AveragePostWebTime = _averagePostWebTime;
+			if(_webActions.HasPostAction)
+				_result.AveragePostWebTime = _averagePostWebTime;
 
-            if (_listActions.HasAction)
-			    _result.AverageListTime = _averageListTime;
+			if (_listActions.HasAction)
+				_result.AverageListTime = _averageListTime;
 
-            if(_listActions.HasPostAction)
-                _result.AveragePostListTime = _averagePostListTime;
+			if(_listActions.HasPostAction)
+				_result.AveragePostListTime = _averagePostListTime;
 
-            if (_listItemActions.HasAction)
-			    _result.AverageListItemTime = _averageListItemTime;
+			if (_listItemActions.HasAction)
+				_result.AverageListItemTime = _averageListItemTime;
 
 			_result.EndDate = DateTime.Now;
 		}
@@ -317,38 +317,38 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 			WriteIterationProgress(ListProgressBarId, WebProgressBarId, "Iterating lists", GetTitle(lists[index]), index, count, CalculateRemainingTimeForList(lists, index));
 		}
 
-		private bool ProccessAction<T>(T item, Func<T, string> getTitle, string[] properties, Func<T, bool> shouldProcessAction, Action<T> action, ref int itemsProcessed, ref double averageActionTime, ref double averageShouldProcessTime) where T : SecurableObject
+		private bool ProcessAction<T>(T item, Func<T, string> getTitle, string[] properties, Func<T, bool> shouldProcessAction, Action<T> action, ref int itemsProcessed, ref double averageActionTime, ref double averageShouldProcessTime) where T : SecurableObject
 		{
-            Stopwatch shouldProcessStopWatch = Stopwatch.StartNew();
+			Stopwatch shouldProcessStopWatch = Stopwatch.StartNew();
 
-            item.LoadProperties(properties);
+			item.LoadProperties(properties);
 
 			string title = getTitle(item);
 
-            bool processAction = false;
+			bool processAction;
 
-            if (shouldProcessAction == null)
-                processAction = true;
-            else
-                processAction = shouldProcessAction(item);
+			if (shouldProcessAction == null)
+				processAction = true;
+			else
+				processAction = shouldProcessAction(item);
 
-            averageShouldProcessTime = CalculateAverage(averageShouldProcessTime, shouldProcessStopWatch.Elapsed.TotalSeconds, itemsProcessed);
+			averageShouldProcessTime = CalculateAverage(averageShouldProcessTime, shouldProcessStopWatch.Elapsed.TotalSeconds, itemsProcessed);
 
-            if (processAction && action != null)
-            {
-                if (_cmdlet.ShouldProcess(title, "Process action"))
-                {
-                    Stopwatch actionStopWatch = Stopwatch.StartNew();
+			if (processAction && action != null)
+			{
+				if (_cmdlet.ShouldProcess(title, "Process action"))
+				{
+					Stopwatch actionStopWatch = Stopwatch.StartNew();
 
-                    action(item);
-                    averageActionTime = CalculateAverage(averageActionTime, actionStopWatch.Elapsed.TotalSeconds, itemsProcessed);
-                }
-            }
+					action(item);
+					averageActionTime = CalculateAverage(averageActionTime, actionStopWatch.Elapsed.TotalSeconds, itemsProcessed);
+				}
+			}
 
-            if(processAction)
-                itemsProcessed++;
+			if(processAction)
+				itemsProcessed++;
 
-            return processAction;
+			return processAction;
 		}
 
 		private string GetTitle(Web web) => $"{web.Title} - {web.Url}";
@@ -357,7 +357,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 
 		private string GetTitle(ListItem listItem)
 		{
-			string statusText = "";
+			string statusText;
 
 			if (!string.IsNullOrEmpty(listItem["Title"]?.ToString()) &&
 				listItem.File != null &&
@@ -381,12 +381,12 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 
 			double timeRemaining = ((_averageWebTime + _averagePostWebTime) + (_averageShouldProcessWebTime + _averageShouldProcessPostWebTime)) * (webs.Count - websProcessed);
 
-            //We have already processed the WebAction on current web, this will make the WebProgressBar and ListProgressBar in sync when iteration one web.
-            if (listProcessedOnCurrentWeb > 0)
-            {
-                timeRemaining -= _averageWebTime;
-                timeRemaining -= _averageShouldProcessWebTime;
-            }
+			//We have already processed the WebAction on current web, this will make the WebProgressBar and ListProgressBar in sync when iteration one web.
+			if (listProcessedOnCurrentWeb > 0)
+			{
+				timeRemaining -= _averageWebTime;
+				timeRemaining -= _averageShouldProcessWebTime;
+			}
 
 			if (_listActions.HasAnyAction || _listItemActions.HasAnyAction)
 			{
@@ -419,29 +419,29 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 			return (_averageListItemTime + _averageShouldProcessListItemTime) * (listItemsCount - itemsProcessed);
 		}
 
-        private double CalculateAverage(double averageTime, double totalSeconds, int currentItemsProcessed)
-        {
-            if (currentItemsProcessed == 0)
-                return totalSeconds;
+		private double CalculateAverage(double averageTime, double totalSeconds, int currentItemsProcessed)
+		{
+			if (currentItemsProcessed == 0)
+				return totalSeconds;
 
-            return averageTime + ((totalSeconds - averageTime) / currentItemsProcessed);
-        }
+			return averageTime + ((totalSeconds - averageTime) / currentItemsProcessed);
+		}
 
 			private void WriteIterationProgress(int id, int? parentId, string activity, string status, int currentIndex, int itemCount, double? secondsRemaining = null, Stopwatch stopwatch = null)
 		{
 			string activityText = $"{activity}, {currentIndex + 1}/{itemCount}";
 
-            if (stopwatch != null)
-            {
-                activityText += ", ";
+			if (stopwatch != null)
+			{
+				activityText += ", ";
 
-                if (stopwatch.Elapsed.Days > 0)
-                    activityText += $"{stopwatch.Elapsed.Days} days ";
+				if (stopwatch.Elapsed.Days > 0)
+					activityText += $"{stopwatch.Elapsed.Days} days ";
 
-                activityText += stopwatch.Elapsed.ToString("hh\\:mm\\:ss");
-            }
+				activityText += stopwatch.Elapsed.ToString("hh\\:mm\\:ss");
+			}
 
-            string statusText = status;
+			string statusText = status;
 
 			if (string.IsNullOrEmpty(statusText))
 				statusText = " ";
@@ -464,19 +464,19 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 
 		private void CompleteProgressBar(int id)
 		{
-            //HACK: Since you need the Activity name to close the progress bar we write an empty temporary activity first.
-            _cmdlet.WriteProgress(new ProgressRecord(id, " ", " ")
-            {
-                PercentComplete = 100
-            });
+			//HACK: Since you need the Activity name to close the progress bar we write an empty temporary activity first.
+			_cmdlet.WriteProgress(new ProgressRecord(id, " ", " ")
+			{
+				PercentComplete = 100
+			});
 
-            _cmdlet.WriteProgress(new ProgressRecord(id, " ", " ")
+			_cmdlet.WriteProgress(new ProgressRecord(id, " ", " ")
 			{
 				RecordType = ProgressRecordType.Completed
 			});
 		}
 
-        private string[] AddProperties(string[] properties, params string[] propertiesToAdd)
+		private string[] AddProperties(string[] properties, params string[] propertiesToAdd)
 		{
 			if (properties == null)
 				return propertiesToAdd;

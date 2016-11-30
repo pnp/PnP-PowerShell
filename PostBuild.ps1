@@ -32,14 +32,17 @@ if($ConfigurationName -like "Debug*")
 		"Debug15" {
 			Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2013.psd1" -Destination  "$DestinationFolder"
 			Copy-Item "$TargetDir\ModuleFiles\SharePointPnP.PowerShell.2013.Commands.Format.ps1xml" -Destination "$DestinationFolder"
+			Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2013.psm1" -Destination "$DestinationFolder"
 		} 
 		"Debug16" {
 			Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2016.psd1" -Destination  "$DestinationFolder"
 			Copy-Item "$TargetDir\ModuleFiles\SharePointPnP.PowerShell.2016.Commands.Format.ps1xml" -Destination "$DestinationFolder"
+			Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2016.psm1" -Destination "$DestinationFolder"
 		} 
 		"Debug" {
 			Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShellOnline.psd1" -Destination  "$DestinationFolder"
 			Copy-Item "$TargetDir\ModuleFiles\SharePointPnP.PowerShell.Online.Commands.Format.ps1xml" -Destination "$DestinationFolder"
+			Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShellOnline.psm1" -Destination "$DestinationFolder"
 		}
 	}
 } elseif ($ConfigurationName -like "Release*")

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
-using Microsoft.PowerShell.Commands;
-using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Enums;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    public class SPOAdminCmdlet : SPOCmdlet
+    public abstract class SPOAdminCmdlet : SPOCmdlet
     {
         private Tenant _tenant;
         public Tenant Tenant
@@ -45,8 +42,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             else
             {
-                Uri uri = new Uri(this.ClientContext.Url);
-                var urlParts = uri.Authority.Split(new[] { '.' });
+                Uri uri = new Uri(ClientContext.Url);
+                var urlParts = uri.Authority.Split('.');
                 if (!urlParts[0].EndsWith("-admin") &&
                     SPOnlineConnection.CurrentConnection.ConnectionType == ConnectionType.O365)
                 {

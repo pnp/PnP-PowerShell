@@ -29,7 +29,7 @@ namespace SharePointPnP.PowerShell.Tests
             var iss = InitialSessionState.CreateDefault();
             if (connect)
             {
-                SessionStateCmdletEntry ssce = new SessionStateCmdletEntry("Connect-SPOnline", typeof(ConnectSPOnline), null);
+                SessionStateCmdletEntry ssce = new SessionStateCmdletEntry("Connect-PnPOnline", typeof(ConnectOnline), null);
 
                 iss.Commands.Add(ssce);
             }
@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Tests
             if (connect)
             {
                 pipeLine = _runSpace.CreatePipeline();
-                cmd = new Command("connect-sponline");
+                cmd = new Command("connect-pnponline");
                 cmd.Parameters.Add("Url", SiteUrl);
                 if (!string.IsNullOrEmpty(CredentialManagerEntry))
                 {

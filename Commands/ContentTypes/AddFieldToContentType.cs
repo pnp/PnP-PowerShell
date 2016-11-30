@@ -4,13 +4,14 @@ using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Add, "SPOFieldToContentType")]
+    [Cmdlet(VerbsCommon.Add, "PnPFieldToContentType")]
+    [CmdletAlias("Add-SPOFieldToContentType")]
     [CmdletHelp("Adds an existing site column to a content type", 
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(
-        Code = @"PS:> Add-SPOFieldToContentType -Field ""Project_Name"" -ContentType ""Project Document""",
+        Code = @"PS:> Add-PnPFieldToContentType -Field ""Project_Name"" -ContentType ""Project Document""",
         Remarks = @"This will add an existing site column with an internal name of ""Project_Name"" to a content type called ""Project Document""", 
         SortOrder = 1)]
     public class AddFieldToContentType : SPOWebCmdlet

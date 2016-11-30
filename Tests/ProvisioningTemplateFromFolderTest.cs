@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("New-SPOProvisioningTemplateFromFolder",
+                var results = scope.ExecuteCommand("New-PnPProvisioningTemplateFromFolder",
                     new CommandParameter("Out", @"dummy.xml"),
                     new CommandParameter("Folder", @".\Dummy"),
                     new CommandParameter("TargetFolder", @""),
@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("New-SPOProvisioningTemplateFromFolder",
+                var results = scope.ExecuteCommand("New-PnPProvisioningTemplateFromFolder",
                     new CommandParameter("Out", @"dummy.pnp"),
                     new CommandParameter("Folder", @".\Dummy"),
                     new CommandParameter("Force")
@@ -53,7 +53,7 @@ namespace SharePointPnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Apply-SPOProvisioningTemplate",
+                var results = scope.ExecuteCommand("Apply-PnPProvisioningTemplate",
                     new CommandParameter("Path", @"dummy.pnp")
                     );
 

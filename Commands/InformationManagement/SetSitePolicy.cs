@@ -2,13 +2,14 @@
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Set, "SPOSitePolicy")]
+    [Cmdlet(VerbsCommon.Set, "PnPSitePolicy")]
+    [CmdletAlias("Set-SPOSitePolicy")]
     [CmdletHelp("Sets a site policy", 
         Category = CmdletHelpCategory.InformationManagement)]
     [CmdletExample(
-      Code = @"PS:> Set-SPOSitePolicy -Name ""Contoso HBI""",
+      Code = @"PS:> Set-PnPSitePolicy -Name ""Contoso HBI""",
       Remarks = @"This applies a site policy with the name ""Contoso HBI"" to the current site. The policy needs to be available in the site.", SortOrder = 1)]
     public class ApplySitePolicy : SPOWebCmdlet
     {

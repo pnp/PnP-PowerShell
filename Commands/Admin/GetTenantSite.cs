@@ -1,4 +1,5 @@
 ﻿#if !ONPREMISES
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Management.Automation;
@@ -11,12 +12,16 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands
 {
 
-    [Cmdlet(VerbsCommon.Get, "SPOTenantSite", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Office365 only: Uses the tenant API to retrieve site information.", Category = CmdletHelpCategory.TenantAdmin)]
-    [CmdletExample(Code = @"PS:> Get-SPOTenantSite", Remarks = "Returns all site collections", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Get-SPOTenantSite -Url http://tenant.sharepoint.com/sites/projects", Remarks = "Returns information about the project site.",SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Get-SPOTenantSite -Detailed", Remarks = "Returns all sites with the full details of these sites", SortOrder = 3)]
-    [CmdletExample(Code = @"PS:> Get-SPOTenantSite -IncludeOneDriveSites", Remarks = "Returns all sites including all OneDrive 4 Business sites", SortOrder = 4)]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantSite", SupportsShouldProcess = true)]
+    [CmdletAlias("Get-SPOTenantSite")]
+    [CmdletHelp(@"Office365 only: Uses the tenant API to retrieve site information.", 
+        Category = CmdletHelpCategory.TenantAdmin,
+        OutputType = typeof(Microsoft.Online.SharePoint.TenantAdministration.SiteProperties),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.siteproperties.aspx")]
+    [CmdletExample(Code = @"PS:> Get-PnPTenantSite", Remarks = "Returns all site collections", SortOrder = 1)]
+    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Url http://tenant.sharepoint.com/sites/projects", Remarks = "Returns information about the project site.",SortOrder = 2)]
+    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Detailed", Remarks = "Returns all sites with the full details of these sites", SortOrder = 3)]
+    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -IncludeOneDriveSites", Remarks = "Returns all sites including all OneDrive 4 Business sites", SortOrder = 4)]
     public class GetTenantSite : SPOAdminCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The URL of the site", Position = 0, ValueFromPipeline = true)]
@@ -62,7 +67,7 @@ namespace SharePointPnP.PowerShell.Commands
                             var personalUrl = ClientContext.Url.ToLower().Replace("-admin", "-my");
                             foreach (var site in onedriveSites)
                             {
-                                var siteprops = Tenant.GetSitePropertiesByUrl(string.Format("{0}/{1}", personalUrl.TrimEnd('/'), site.Url.Trim('/')), Detailed);
+                                var siteprops = Tenant.GetSitePropertiesByUrl($"{personalUrl.TrimEnd('/')}/{site.Url.Trim('/')}", Detailed);
                                 ClientContext.Load(siteprops);
                                 ClientContext.ExecuteQueryRetry();
                                 siteProperties.Add(siteprops);
@@ -74,6 +79,5 @@ namespace SharePointPnP.PowerShell.Commands
             }
         }
     }
-
 }
 #endif

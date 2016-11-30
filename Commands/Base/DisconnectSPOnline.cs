@@ -4,12 +4,12 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet("Disconnect", "SPOnline")]
-
+    [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
+    [CmdletAlias("Disconnect-SPOnline")]
     [CmdletHelp("Disconnects the context", 
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> Disconnect-SPOnline", 
+        Code = @"PS:> Disconnect-PnPOnline", 
         Remarks = @"This will disconnect you from the server.",
         SortOrder = 1)]
     public class DisconnectSPOnline : PSCmdlet

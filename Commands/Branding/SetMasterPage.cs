@@ -1,27 +1,29 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Utilities;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "SPOMasterPage")]
+    [Cmdlet(VerbsCommon.Set, "PnPMasterPage")]
+    [CmdletAlias("Set-SPOMasterPage")]
     [CmdletHelp("Sets the default master page of the current web.",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master",
+        Code = @"PS:> Set-PnPMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master",
         Remarks = "Sets the master page based on a server relative URL", 
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master -CustomMasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master",
+        Code = @"PS:> Set-PnPMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master -CustomMasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master",
         Remarks = "Sets the master page and custom master page based on a server relative URL",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOMasterPage -MasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master",
+        Code = @"PS:> Set-PnPMasterPage -MasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master",
         Remarks = "Sets the master page based on a site relative URL",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOMasterPage -MasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master -CustomMasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master",
+        Code = @"PS:> Set-PnPMasterPage -MasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master -CustomMasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master",
         Remarks = "Sets the master page and custom master page based on a site relative URL",
         SortOrder = 4)]
     public class SetMasterPage : SPOWebCmdlet
@@ -42,6 +44,12 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
+            if (SelectedWeb.IsNoScriptSite())
+            {
+                WriteError(new ErrorRecord(new Exception("Site has NoScript enabled, and setting custom master pages is not supported."), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
+                return;
+            }
+
             if (ParameterSetName == "SERVER")
             {
                 if (!string.IsNullOrEmpty(MasterPageServerRelativeUrl))

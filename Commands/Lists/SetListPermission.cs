@@ -8,20 +8,21 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
-    [Cmdlet(VerbsCommon.Set, "SPOListPermission")]
+    [Cmdlet(VerbsCommon.Set, "PnPListPermission")]
+    [CmdletAlias("Set-SPOListPermission")]
     [CmdletHelp("Sets list permissions",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
-        Code = "PS:> Set-SPOListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'",
+        Code = "PS:> Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'",
         Remarks = "Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'",
         SortOrder = 1)]        
     [CmdletExample(
-        Code = "PS:> Set-SPOListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'",
+        Code = "PS:> Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'",
         Remarks = "Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'",
         SortOrder = 2)]        
     public class SetListPermission : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The ID or Title of the list.")]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = "Group")]
@@ -30,10 +31,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, ParameterSetName = "User")]
         public string User;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The role that must be assigned to the group or user")]
         public string AddRole = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "The role that must be removed from the group or user")]
         public string RemoveRole = string.Empty;
 
         protected override void ExecuteCmdlet()

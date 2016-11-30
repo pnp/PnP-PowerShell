@@ -1,28 +1,23 @@
 ﻿using Microsoft.SharePoint.Client;
 using web = Microsoft.SharePoint.Client.Web;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.InvokeAction;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet("Invoke", "SPOWebAction", SupportsShouldProcess = true)]
-    [CmdletHelp("Executes operations on web, lists, list items.",
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPWebAction", SupportsShouldProcess = true)]
+    [CmdletAlias("Invoke-SPOWebAction")]
+    [CmdletHelp("Executes operations on web, lists and list items.",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
-        Code = @"PS:> Invoke-SPOWebAction -ListAction ${function:ListAction}",
+        Code = @"PS:> Invoke-PnPWebAction -ListAction ${function:ListAction}",
         Remarks = "This will call the function ListAction on all the lists located on the current web.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Invoke-SPOWebAction -ShouldProcessListAction ${function:ShouldProcessList} -ListAction ${function:ListAction}",
+        Code = @"PS:> Invoke-PnPWebAction -ShouldProcessListAction ${function:ShouldProcessList} -ListAction ${function:ListAction}",
         Remarks = "This will call the function ShouldProcessList, if it returns true the function ListAction will then be called. This will occur on all lists located on the current web",
         SortOrder = 2)]
     public class InvokeWebAction : SPOWebCmdlet

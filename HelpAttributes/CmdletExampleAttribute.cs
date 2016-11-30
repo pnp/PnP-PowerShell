@@ -11,10 +11,5 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         public string Introduction { get; set; }
         public string Remarks { get; set; }
         public int SortOrder { get; set; }
-        
-        public CmdletExampleAttribute()
-        {
-           
-        }
     }
 }

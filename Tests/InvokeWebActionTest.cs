@@ -149,7 +149,7 @@ namespace SharePointPnP.PowerShell.Tests
                     id = web.Id;
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("WebAction", webAction),
                     new CommandParameter("WebProperties", new[] { "Id" })
                 );
@@ -176,7 +176,7 @@ namespace SharePointPnP.PowerShell.Tests
                     id = web.Id;
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("PostWebAction", webPostAction),
                     new CommandParameter("WebProperties", new[] { "Id" })
                 );
@@ -210,7 +210,7 @@ namespace SharePointPnP.PowerShell.Tests
                     titles.Add(web.Title);
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("WebAction", webAction),
                     new CommandParameter("WebProperties", new[] { "Id", "Title" }),
                     new CommandParameter("SubWebs", true)
@@ -259,7 +259,7 @@ namespace SharePointPnP.PowerShell.Tests
                     titles.Add(web.Title);
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("Webs", webs),
                     new CommandParameter("WebAction", webAction),
                     new CommandParameter("WebProperties", new[] { "Id", "Title" })
@@ -298,7 +298,7 @@ namespace SharePointPnP.PowerShell.Tests
                     listNames.Add(list.Title);
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("ListAction", listAction),
                     new CommandParameter("ListProperties", new[] { "Title" })
                 );
@@ -331,7 +331,7 @@ namespace SharePointPnP.PowerShell.Tests
                     listNames.Add(list.Title);
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("PostListAction", listPostAction),
                     new CommandParameter("ListProperties", new[] { "Title" })
                 );
@@ -369,7 +369,7 @@ namespace SharePointPnP.PowerShell.Tests
                     return list.Title.Contains("PnPTestList");
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("ListAction", listAction),
                     new CommandParameter("ShouldProcessListAction", shouldProcessListAction),
                     new CommandParameter("ListProperties", new[] { "Title" })
@@ -402,7 +402,7 @@ namespace SharePointPnP.PowerShell.Tests
                     listUrls.Add(list.RootFolder.ServerRelativeUrl);
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("ListAction", listAction),
                     new CommandParameter("ListProperties", new[] { "Title", "RootFolder" })
                 );
@@ -439,7 +439,7 @@ namespace SharePointPnP.PowerShell.Tests
                     return list.Title.Contains("PnPTestList");
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("ListItemAction", listItemAction),
                     new CommandParameter("ShouldProcessListAction", shouldProcessListAction)
                 );
@@ -480,7 +480,7 @@ namespace SharePointPnP.PowerShell.Tests
                     return list.Title.Contains("PnPTestList");
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("ListItemAction", listItemAction),
                     new CommandParameter("ShouldProcessListAction", shouldProcessListAction),
                     new CommandParameter("SkipCounting", true)
@@ -517,7 +517,7 @@ namespace SharePointPnP.PowerShell.Tests
                     listItemTitles.Add(listItem["Title"]?.ToString());
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("ListItemAction", listItemAction),
                     new CommandParameter("ListName", "PnPTestList1")
                 );
@@ -565,7 +565,7 @@ namespace SharePointPnP.PowerShell.Tests
                     return number % 2 == 0;
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("ListItemAction", listItemAction),
                     new CommandParameter("ShouldProcessListAction", shouldProcessListAction),
                     new CommandParameter("ShouldProcessListItemAction", shouldProcessListItemAction)
@@ -631,7 +631,7 @@ namespace SharePointPnP.PowerShell.Tests
                     listItemActionFired = true;
                 };
 
-                var results = scope.ExecuteCommand("Invoke-SPOWebAction",
+                var results = scope.ExecuteCommand("Invoke-PnPWebAction",
                     new CommandParameter("WebAction", webAction),
                     new CommandParameter("PostWebAction", webPostAction),
                     new CommandParameter("ShouldProcessListAction", shouldProcessListAction),

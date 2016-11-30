@@ -3,12 +3,16 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Extensions;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "SPOWeb")]
+    [Cmdlet(VerbsCommon.Get, "PnPWeb")]
+    [CmdletAlias("Get-SPOWeb")]
     [CmdletHelp("Returns the current web object",
-        Category = CmdletHelpCategory.Webs)]
+        Category = CmdletHelpCategory.Webs,
+        OutputType = typeof(Web),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
     public class GetWeb : SPOCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
