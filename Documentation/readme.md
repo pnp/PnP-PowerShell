@@ -89,6 +89,9 @@ Cmdlet|Description
 ##Files and Folders
 Cmdlet|Description
 :-----|:----------
+**[Copy&#8209;PnPFile](CopyPnPFile.md)** |Copies a file to a different location
+**[Move&#8209;PnPFile](MovePnPFile.md)** |Moves a file to a different location
+**[Rename&#8209;PnPFile](RenamePnPFile.md)** |Renames a file in its current location
 **[Remove&#8209;PnPFile](RemovePnPFile.md)** |Removes a file.
 **[Get&#8209;PnPFile](GetPnPFile.md)** |Downloads a file.
 **[Find&#8209;PnPFile](FindPnPFile.md)** |Finds a file in the virtual file system of the web.
