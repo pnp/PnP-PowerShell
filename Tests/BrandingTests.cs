@@ -339,6 +339,59 @@ namespace SharePointPnP.PowerShell.Tests
         }
 
         [TestMethod]
+        public void SetAvailablePageLayoutsTest()
+        {
+            using (var context = TestCommon.CreateClientContext())
+            {
+                // Arrange
+                var newPageLayouts = new string[3];
+                newPageLayouts[0] = "articleleft.aspx";
+                newPageLayouts[1] = "articleright.aspx";
+                newPageLayouts[2] = "projectpage.aspx";
+
+                using (var scope = new PSTestScope(true))
+                {
+                    // Act
+                    var results = scope.ExecuteCommand("Set-PnPAvailablePageLayouts",
+                        new CommandParameter("PageLayouts", newPageLayouts));
+
+                    var pageLayouts = context.Web.GetPropertyBagValueString(
+                        "__PageLayouts", string.Empty);
+
+                    // Assert
+                    Assert.IsTrue(!string.IsNullOrWhiteSpace(pageLayouts));
+
+                    foreach (var item in newPageLayouts)
+                    {
+                        Assert.IsTrue(pageLayouts.ToLowerInvariant().Contains(item));
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void SetAllowAllPageLayoutsTest()
+        {
+            using (var context = TestCommon.CreateClientContext())
+            {
+                // Arrange
+
+                using (var scope = new PSTestScope(true))
+                {
+                    // Act
+                    var results = scope.ExecuteCommand("Set-PnPAvailablePageLayouts",
+                        new CommandParameter("AllowAllPageLayouts"));
+
+                    var pageLayouts = context.Web.GetPropertyBagValueString(
+                        "__PageLayouts", string.Empty);
+
+                    // Assert
+                    Assert.IsTrue(string.IsNullOrWhiteSpace(pageLayouts));
+                }
+            }
+        }
+
+        [TestMethod]
         public void SetMasterPageTest()
         {
             using (var context = TestCommon.CreateClientContext())
