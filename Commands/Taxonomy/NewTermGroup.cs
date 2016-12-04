@@ -49,7 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             }
             // Create Group
             var group = termStore.CreateTermGroup(GroupName, GroupId, Description);
-            ClientContext.ExecuteQueryRetry();
+            
             WriteObject(group);
         }
 
