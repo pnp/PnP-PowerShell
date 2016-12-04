@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands
         SortOrder = 3)]
     public class RemovePropertyBagValue : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Key of the property bag value to be removed")]
         public string Key;
 
         [Parameter(Mandatory = false, HelpMessage = "Site relative url of the folder. See examples for use.")]
