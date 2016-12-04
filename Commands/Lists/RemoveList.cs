@@ -11,10 +11,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = "PS:> Remove-PnPList -Title Announcements",
-        SortOrder = 1)]
+        SortOrder = 1,
+        Remarks = @"Removes the list named 'Announcements'. Asks for confirmation.")]
     [CmdletExample(
         Code = "PS:> Remove-PnPList -Title Announcements -Force",
-        SortOrder = 2)]
+        SortOrder = 2,
+        Remarks = @"Removes the list named 'Announcements' without asking for confirmation.")]
     public class RemoveList : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]

@@ -11,7 +11,8 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(
         Code = @"PS:> Remove-PnPUserFromGroup -LoginName user@company.com -GroupName 'Marketing Site Members'",
-        SortOrder = 1)]
+        SortOrder = 1,
+        Remarks = @"Removes the user user@company.com from the Group 'Marketing Site Members'")]
     public class RemoveUserFromGroup : SPOWebCmdlet
     {
 

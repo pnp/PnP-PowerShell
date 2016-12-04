@@ -31,10 +31,10 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public int Lcid = 1033;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Term store to import to; if not specified the default term store is used.")]
         public string TermStoreName;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The path delimiter to be used, by default this is '|'")]
         public string Delimiter = "|";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "If specified, terms that exist in the termset, but are not in the imported data, will be removed.")]

@@ -12,17 +12,19 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
         Code = @"PS:>Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor",
-        SortOrder = 1)]
+        SortOrder = 1,
+        Remarks = @"Removes the file company.spcolor")]
     [CmdletExample(
         Code = @"PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor",
-        SortOrder = 2)]
+        SortOrder = 2,
+        Remarks = @"Removes the file company.spcolor")]
 
     public class RemoveFile : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER", HelpMessage = "Server relative URL to the file")]
         public string ServerRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SITE")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SITE", HelpMessage = "Site relative URL to the file")]
         public string SiteRelativeUrl = string.Empty;
 
         [Parameter(Mandatory = false)]
