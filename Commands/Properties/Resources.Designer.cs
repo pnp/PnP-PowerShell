@@ -70,6 +70,42 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Permanently delete all items in the first and second stage recycle bins?.
+        /// </summary>
+        internal static string ClearBothRecycleBins {
+            get {
+                return ResourceManager.GetString("ClearBothRecycleBins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permanently delete file &apos;{0}&apos; from the recycle bin?.
+        /// </summary>
+        internal static string ClearRecycleBinItem {
+            get {
+                return ResourceManager.GetString("ClearRecycleBinItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permanently delete all the items in the second stage recycle bin?.
+        /// </summary>
+        internal static string ClearSecondStageRecycleBin {
+            get {
+                return ResourceManager.GetString("ClearSecondStageRecycleBin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permanently delete the site collection previously located at &apos;{0}&apos; from the recycle bin?.
+        /// </summary>
+        internal static string ClearTenantRecycleBinItem {
+            get {
+                return ResourceManager.GetString("ClearTenantRecycleBinItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command not executed due to healthscore value of {0}.
         /// </summary>
         internal static string CommandNotExecutedDueToHealthscoreValueOf0 {
@@ -184,6 +220,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string MicrosoftGraphOAuthAccessTokenExpired {
             get {
                 return ResourceManager.GetString("MicrosoftGraphOAuthAccessTokenExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move all items from the first stage recycle bin to the second stage recycle bin?.
+        /// </summary>
+        internal static string MoveFirstStageRecycleBinItemsToSecondStage {
+            get {
+                return ResourceManager.GetString("MoveFirstStageRecycleBinItemsToSecondStage", resourceCulture);
             }
         }
         
@@ -392,6 +437,33 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string RemoveWeb0 {
             get {
                 return ResourceManager.GetString("RemoveWeb0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore the file &apos;{0}&apos; from the recycle bin to its original location?.
+        /// </summary>
+        internal static string ResetRecycleBinItem {
+            get {
+                return ResourceManager.GetString("ResetRecycleBinItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore all items from the first and second stage recycle bins to their original locations?.
+        /// </summary>
+        internal static string ResetRecycleBinItems {
+            get {
+                return ResourceManager.GetString("ResetRecycleBinItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore the site collection previously located at &apos;{0}&apos; from the recycle bin to its original location?.
+        /// </summary>
+        internal static string ResetTenantRecycleBinItem {
+            get {
+                return ResourceManager.GetString("ResetTenantRecycleBinItem", resourceCulture);
             }
         }
         

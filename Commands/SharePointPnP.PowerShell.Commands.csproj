@@ -359,6 +359,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
     <Compile Include="Graph\GetUnifiedGroup.cs" />
     <Compile Include="Admin\GetWebTemplates.cs" />
     <Compile Include="Admin\GetTimeZoneId.cs" />
@@ -493,10 +494,18 @@
     <Compile Include="Provider\SPODriveParameters.cs" />
     <Compile Include="Provider\SPOProvider.cs" />
     <Compile Include="Publishing\AddMasterPage.cs" />
+    <Compile Include="RecycleBin\ClearTenantRecycleBinItem.cs" />
+    <Compile Include="RecycleBin\ResetTenantRecycleBinItem.cs" />
+    <Compile Include="RecycleBin\ResetRecycleBinItem.cs" />
+    <Compile Include="RecycleBin\ClearRecycleBinItem.cs" />
     <Compile Include="Search\GetSiteSearchQueryResults.cs" />
     <Compile Include="Search\SetSearchConfiguration.cs" />
     <Compile Include="Search\GetSearchConfiguration.cs" />
+    <Compile Include="RecycleBin\ResetRecycleBinItems.cs" />
+    <Compile Include="RecycleBin\MoveRecycleBinItems.cs" />
     <Compile Include="Site\GetAuditing.cs" />
+    <Compile Include="RecycleBin\ClearRecycleBinItems.cs" />
+    <Compile Include="RecycleBin\GetRecycleBinItems.cs" />
     <Compile Include="Site\SetAuditing.cs" />
     <Compile Include="Taxonomy\RemoveTaxonomyItem.cs" />
     <Compile Include="Taxonomy\RemoveTermGroup.cs" />
