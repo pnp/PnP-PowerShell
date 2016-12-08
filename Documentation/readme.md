@@ -49,7 +49,7 @@ Cmdlet|Description
 ##Content Types
 Cmdlet|Description
 :-----|:----------
-**[Remove&#8209;PnPContentType](RemovePnPContentType.md)** |Removes a content type
+**[Remove&#8209;PnPContentType](RemovePnPContentType.md)** |Removes a content type from a web
 **[Get&#8209;PnPContentType](GetPnPContentType.md)** |Retrieves a content type
 **[Add&#8209;PnPContentType](AddPnPContentType.md)** |Adds a new content type
 **[Remove&#8209;PnPContentTypeFromList](RemovePnPContentTypeFromList.md)** |Removes a content type from a list
@@ -151,6 +151,8 @@ Cmdlet|Description
 ##Publishing
 Cmdlet|Description
 :-----|:----------
+**[Set&#8209;PnPAvailablePageLayouts](SetPnPAvailablePageLayouts.md)** |Sets the available page layouts for the current site
+**[Set&#8209;PnPDefaultPageLayout](SetPnPDefaultPageLayout.md)** |Sets a specific page layout to be the default page layout for a publishing site
 **[Add&#8209;PnPHtmlPublishingPageLayout](AddPnPHtmlPublishingPageLayout.md)** |Adds a HTML based publishing page layout
 **[Add&#8209;PnPMasterPage](AddPnPMasterPage.md)** |Adds a Masterpage
 **[Add&#8209;PnPPublishingPage](AddPnPPublishingPage.md)** |Adds a publishing page
@@ -203,7 +205,7 @@ Cmdlet|Description
 ##User and group management
 Cmdlet|Description
 :-----|:----------
-**[Remove&#8209;PnPGroup](RemovePnPGroup.md)** |Removes a group.
+**[Remove&#8209;PnPGroup](RemovePnPGroup.md)** |Removes a group from a web.
 **[Set&#8209;PnPGroup](SetPnPGroup.md)** |Updates a group
 **[New&#8209;PnPGroup](NewPnPGroup.md)** |Adds group to the Site Groups List and returns a group object
 **[Get&#8209;PnPGroup](GetPnPGroup.md)** |Returns a specific group or all groups.
@@ -248,7 +250,7 @@ Cmdlet|Description
 **[Get&#8209;PnPSubWebs](GetPnPSubWebs.md)** |Returns the subwebs of the current web
 **[Remove&#8209;PnPWeb](RemovePnPWeb.md)** |Removes a subweb in the current web
 **[Get&#8209;PnPWeb](GetPnPWeb.md)** |Returns the current web object
-**[New&#8209;PnPWeb](NewPnPWeb.md)** |Creates a new subweb to the current web
+**[New&#8209;PnPWeb](NewPnPWeb.md)** |Creates a new subweb under the current web
 **[Set&#8209;PnPWeb](SetPnPWeb.md)** |Sets properties on a web
 **[Invoke&#8209;PnPWebAction](InvokePnPWebAction.md)** |Executes operations on web, lists and list items.
 ##Workflows

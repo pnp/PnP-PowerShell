@@ -1,5 +1,5 @@
 #Remove-PnPGroup
-Removes a group.
+Removes a group from a web.
 ##Syntax
 ```powershell
 Remove-PnPGroup [-Force [<SwitchParameter>]]
@@ -20,4 +20,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Remove-PnPGroup -Identity "My Users"
 ```
-
+Removes the group "My Users"

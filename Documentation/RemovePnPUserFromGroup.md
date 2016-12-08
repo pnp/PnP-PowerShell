@@ -20,4 +20,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Remove-PnPUserFromGroup -LoginName user@company.com -GroupName 'Marketing Site Members'
 ```
-
+Removes the user user@company.com from the Group 'Marketing Site Members'

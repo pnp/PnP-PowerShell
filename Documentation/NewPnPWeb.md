@@ -1,5 +1,5 @@
 #New-PnPWeb
-Creates a new subweb to the current web
+Creates a new subweb under the current web
 ##Syntax
 ```powershell
 New-PnPWeb -Title <String>
@@ -23,7 +23,7 @@ Parameter|Type|Required|Description
 |Description|String|False|The description of the new web|
 |InheritNavigation|SwitchParameter|False|Specifies whether the site inherits navigation.|
 |Locale|Int32|False||
-|Template|String|True|The site definition template to use for the new web, e.g. STS#0|
+|Template|String|True|The site definition template to use for the new web, e.g. STS#0. Use Get-PnPWebTemplates to fetch a list of available templates|
 |Title|String|True|The title of the new web|
 |Url|String|True|The URL of the new web|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|

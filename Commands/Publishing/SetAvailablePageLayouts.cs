@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
             }
             else if (ParameterSetName == "INHERIT")
             {
-                SelectedWeb.SetSiteToInheritAllowedPageLayouts();
+                SelectedWeb.SetSiteToInheritPageLayouts();
             }
             else
             {

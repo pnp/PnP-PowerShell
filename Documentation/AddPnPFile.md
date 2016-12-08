@@ -75,4 +75,4 @@ This will upload the file sample.doc to the Shared Documnets folder. After uploa
 ```powershell
 PS:> Add-PnPFile -FileName sample.doc -Folder "Shared Documents" -Stream $fileStream -Values @{Modified="1/1/2016"}
 ```
-This will add a file sample.doc with the contents of the stream into the Shared Documnets folder. After adding it will set the Modified date to 1/1/2016.
+This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 1/1/2016.
