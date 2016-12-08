@@ -1,22 +1,24 @@
 #Set-PnPDefaultPageLayout
-Sets a specific page layout to be the default page layout for a publishing site. Assumes the current site in context.
-
+Sets a specific page layout to be the default page layout for a publishing site
 ##Syntax
 ```powershell
-Set-PnPDefaultPageLayout [-Title <String>]
+Set-PnPDefaultPageLayout -InheritFromParentSite [<SwitchParameter>]
+                         [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-PnPDefaultPageLayout [-InheritFromParentSite]
+Set-PnPDefaultPageLayout -Title <String>
+                         [-Web <WebPipeBind>]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Title|String|False|The file name of the page layout to set as a default page layout|
-|InheritFromParentSite|SwitchParameter|False|Set the default page layout to be inherited from the parent site.|
+|InheritFromParentSite|SwitchParameter|True|Set the default page layout to be inherited from the parent site.|
+|Title|String|True|Title of the page layout|
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
 ###Example 1

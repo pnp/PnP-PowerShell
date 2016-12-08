@@ -21,4 +21,4 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> New-PnPUser -LoginName user@company.com
 ```
-
+Adds a new user with the login user@company.com to the current site

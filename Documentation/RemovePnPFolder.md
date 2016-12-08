@@ -20,6 +20,6 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage/newfolder
+PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage
 ```
-
+Removes the folder 'NewFolder' from '_catalogsmasterpage'
