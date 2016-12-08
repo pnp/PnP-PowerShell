@@ -8,6 +8,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletAlias("Set-SPOFileCheckedOut")]
     [CmdletHelp("Checks out a file",
         Category = CmdletHelpCategory.Files)]
+    [CmdletExample(
+        Code = @"Set-PnPFileCheckedOut -Url /sites/testsite/subsite/Pages/default.aspx",
+        Remarks = @"Checks out a file supplied with a server relative Url",
+        SortOrder = 1)]   
     public class SetFileCheckedOut : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]
