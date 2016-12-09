@@ -2,6 +2,15 @@
 Adds a user to a group
 ##Syntax
 ```powershell
+Add-PnPUserToGroup -Identity <GroupPipeBind>
+                   -EmailAddress <String>
+                   [-SendEmail [<SwitchParameter>]]
+                   [-EmailBody <String>]
+                   [-Web <WebPipeBind>]
+```
+
+
+```powershell
 Add-PnPUserToGroup -LoginName <String>
                    -Identity <GroupPipeBind>
                    [-Web <WebPipeBind>]
@@ -11,8 +20,11 @@ Add-PnPUserToGroup -LoginName <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|EmailAddress|String|True|The email address of the user|
+|EmailBody|String|False||
 |Identity|GroupPipeBind|True|The group id, group name or group object to add the user to.|
 |LoginName|String|True|The login name of the user|
+|SendEmail|SwitchParameter|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
@@ -20,7 +32,7 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Add-PnPUserToGroup -LoginName user@company.com -Identity 'Marketing Site Members'
 ```
-
+Add the specified user to the group "Marketing Site Members"
 
 ###Example 2
 ```powershell

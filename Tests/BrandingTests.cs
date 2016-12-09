@@ -10,6 +10,10 @@ namespace SharePointPnP.PowerShell.Tests
     [TestClass]
     public class BrandingTests
     {
+        // Planning to move to Core.Constants
+        private readonly Guid PUBLISHING_FEATURE_WEB = new Guid("94c94ca6-b32f-4da9-a9e3-1f3d343d7ecb");
+        private readonly Guid PUBLISHING_FEATURE_SITE = new Guid("f6924d36-2fa8-4f0b-b16d-06b7250180fa");
+
         [TestMethod]
         public void AddCustomActionTest()
         {
@@ -335,6 +339,59 @@ namespace SharePointPnP.PowerShell.Tests
         }
 
         [TestMethod]
+        public void SetAvailablePageLayoutsTest()
+        {
+            using (var context = TestCommon.CreateClientContext())
+            {
+                // Arrange
+                var newPageLayouts = new string[3];
+                newPageLayouts[0] = "articleleft.aspx";
+                newPageLayouts[1] = "articleright.aspx";
+                newPageLayouts[2] = "projectpage.aspx";
+
+                using (var scope = new PSTestScope(true))
+                {
+                    // Act
+                    var results = scope.ExecuteCommand("Set-PnPAvailablePageLayouts",
+                        new CommandParameter("PageLayouts", newPageLayouts));
+
+                    var pageLayouts = context.Web.GetPropertyBagValueString(
+                        "__PageLayouts", string.Empty);
+
+                    // Assert
+                    Assert.IsTrue(!string.IsNullOrWhiteSpace(pageLayouts));
+
+                    foreach (var item in newPageLayouts)
+                    {
+                        Assert.IsTrue(pageLayouts.ToLowerInvariant().Contains(item));
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void SetAllowAllPageLayoutsTest()
+        {
+            using (var context = TestCommon.CreateClientContext())
+            {
+                // Arrange
+
+                using (var scope = new PSTestScope(true))
+                {
+                    // Act
+                    var results = scope.ExecuteCommand("Set-PnPAvailablePageLayouts",
+                        new CommandParameter("AllowAllPageLayouts"));
+
+                    var pageLayouts = context.Web.GetPropertyBagValueString(
+                        "__PageLayouts", string.Empty);
+
+                    // Assert
+                    Assert.IsTrue(string.IsNullOrWhiteSpace(pageLayouts));
+                }
+            }
+        }
+
+        [TestMethod]
         public void SetMasterPageTest()
         {
             using (var context = TestCommon.CreateClientContext())
@@ -363,6 +420,122 @@ namespace SharePointPnP.PowerShell.Tests
                 }
             }
         }
+
+        /// <summary>
+        /// Sets projectpage.aspx as the default layout and checks if it is set correctly
+        /// </summary>
+        /// <remarks>
+        /// Activates the publishing feature if not activated, then deactivates it
+        /// </remarks>
+        [TestMethod]
+        public void SetDefaultPageLayoutTest()
+        {
+            using (var ctx = TestCommon.CreateClientContext())
+            {
+                // Arrange
+                var pageLayoutFileName = "projectpage.aspx";
+                var isSiteFeatureActive = ctx.Site.IsFeatureActive(PUBLISHING_FEATURE_SITE);
+                var isWebFeatureActive = ctx.Web.IsFeatureActive(PUBLISHING_FEATURE_WEB);
+
+                if (!isSiteFeatureActive)
+                {
+                    ctx.Site.ActivateFeature(PUBLISHING_FEATURE_SITE);
+                }
+
+                if (!isWebFeatureActive)
+                {
+                    ctx.Web.ActivateFeature(PUBLISHING_FEATURE_WEB);
+                }
+
+                using (var scope = new PSTestScope(true))
+                {
+                    // Act
+                    var results = scope.ExecuteCommand(
+                        "Set-PnPDefaultPageLayout",
+                        new CommandParameter("Title", pageLayoutFileName));
+
+                    var defaultPageLayout = ctx.Web.GetPropertyBagValueString(
+                        "__DefaultPageLayout",
+                        string.Empty);
+
+                    // Assert
+                    Assert.AreNotEqual(defaultPageLayout, "__inherit", true); //confirm it is not set to inherit
+                    Assert.IsTrue(defaultPageLayout.ToLowerInvariant().Contains(pageLayoutFileName));
+                }
+
+                // Cleanup
+                if (!isWebFeatureActive)
+                {
+                    ctx.Web.DeactivateFeature(PUBLISHING_FEATURE_WEB);
+                }
+
+                if (!isSiteFeatureActive)
+                {
+                    ctx.Site.DeactivateFeature(PUBLISHING_FEATURE_SITE);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets projectpage.aspx as the default page layout, then resets the site to inherit,\
+        /// then checks if it is set correctly
+        /// </summary>
+        /// <remarks>
+        /// Activates the publishing feature if not activated, then deactivates it
+        /// </remarks>
+        [TestMethod]
+        public void SetPageLayoutToInheritTest()
+        {
+            using (var ctx = TestCommon.CreateClientContext())
+            {
+                // Arrange
+                var pageLayoutFileName = "projectpage.aspx";
+                var isSiteFeatureActive = ctx.Site.IsFeatureActive(PUBLISHING_FEATURE_SITE);
+                var isWebFeatureActive = ctx.Web.IsFeatureActive(PUBLISHING_FEATURE_WEB);
+
+                if (!isSiteFeatureActive)
+                {
+                    ctx.Site.ActivateFeature(PUBLISHING_FEATURE_SITE);
+                }
+
+                if (!isWebFeatureActive)
+                {
+                    ctx.Web.ActivateFeature(PUBLISHING_FEATURE_WEB);
+                }
+
+                using (var scope = new PSTestScope(true))
+                {
+                    // Act
+                    scope.ExecuteCommand(
+                        "Set-PnPDefaultPageLayout",
+                        new CommandParameter("Title", pageLayoutFileName));
+
+                    scope.ExecuteCommand(
+                        "Set-PnPDefaultPageLayout",
+                        new CommandParameter("InheritFromParentSite"));
+
+                    var defaultPageLayout = ctx.Web.GetPropertyBagValueString(
+                        "__DefaultPageLayout",
+                        string.Empty);
+
+                    // Assert
+                    Assert.AreEqual(defaultPageLayout, "__inherit", true); //confirm it is set to inherit
+                    Assert.IsFalse(defaultPageLayout.ToLowerInvariant().Contains(pageLayoutFileName));
+                }
+
+                // Cleanup
+                if (!isWebFeatureActive)
+                {
+                    ctx.Web.DeactivateFeature(PUBLISHING_FEATURE_WEB);
+                }
+
+                if (!isSiteFeatureActive)
+                {
+                    ctx.Site.DeactivateFeature(PUBLISHING_FEATURE_SITE);
+                }
+            }
+        }
+
 
         [TestMethod]
         public void SetMinimalDownloadStrategyTest()

@@ -31,4 +31,4 @@ Adds a field with the specified field CAML code to the site.
 PS:> $xml = '<Field Type="Text" Name="PSCmdletTest" DisplayName="PSCmdletTest" ID="{27d81055-f208-41c9-a976-61c5473eed4a}" Group="Test" Required="FALSE" StaticName="PSCmdletTest" />'
 PS:> Add-PnPFieldFromXml -List "Demo List" -FieldXml $xml
 ```
-Adds a field with the specified field CAML code to the site.
+Adds a field with the specified field CAML code to the list "Demo List".

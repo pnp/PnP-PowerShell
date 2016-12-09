@@ -20,10 +20,10 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Remove-PnPList -Title Announcements
 ```
-
+Removes the list named 'Announcements'. Asks for confirmation.
 
 ###Example 2
 ```powershell
 PS:> Remove-PnPList -Title Announcements -Force
 ```
-
+Removes the list named 'Announcements' without asking for confirmation.

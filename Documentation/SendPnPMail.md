@@ -16,13 +16,13 @@ Send-PnPMail [-Server <String>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Body|String|True||
-|Cc|String[]|False||
+|Body|String|True|Body of the email|
+|Cc|String[]|False|List of recipients on CC|
 |From|String|False|If using from address, you also have to provide a password|
 |Password|String|False|If using a password, you also have to provide the associated from address|
 |Server|String|False||
-|Subject|String|True||
-|To|String[]|True||
+|Subject|String|True|Subject of the email|
+|To|String[]|True|List of recipients|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

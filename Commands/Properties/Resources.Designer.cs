@@ -88,6 +88,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy file &apos;{0}&apos; to &apos;{1}&apos;?.
+        /// </summary>
+        internal static string CopyFile0To1 {
+            get {
+                return ResourceManager.GetString("CopyFile0To1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current site is not a tenant administration site.
         /// </summary>
         internal static string CurrentSiteIsNoTenantAdminSite {
@@ -184,6 +193,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string MicrosoftGraphOAuthAccessTokenExpired {
             get {
                 return ResourceManager.GetString("MicrosoftGraphOAuthAccessTokenExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move file &apos;{0}&apos; to &apos;{1}&apos;?.
+        /// </summary>
+        internal static string MoveFile0To1 {
+            get {
+                return ResourceManager.GetString("MoveFile0To1", resourceCulture);
             }
         }
         
@@ -392,6 +410,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string RemoveWeb0 {
             get {
                 return ResourceManager.GetString("RemoveWeb0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename file &apos;{0}&apos; to &apos;{1}&apos;?.
+        /// </summary>
+        internal static string RenameFile0To1 {
+            get {
+                return ResourceManager.GetString("RenameFile0To1", resourceCulture);
             }
         }
         

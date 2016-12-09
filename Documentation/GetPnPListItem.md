@@ -2,11 +2,31 @@
 Retrieves list items
 ##Syntax
 ```powershell
-Get-PnPListItem [-Id <Int32>]
-                [-UniqueId <GuidPipeBind>]
-                [-Query <String>]
-                [-Fields <String[]>]
+Get-PnPListItem [-Fields <String[]>]
                 [-PageSize <Int32>]
+                [-Web <WebPipeBind>]
+                -List <ListPipeBind>
+```
+
+
+```powershell
+Get-PnPListItem [-Id <Int32>]
+                [-Fields <String[]>]
+                [-Web <WebPipeBind>]
+                -List <ListPipeBind>
+```
+
+
+```powershell
+Get-PnPListItem [-Query <String>]
+                [-Web <WebPipeBind>]
+                -List <ListPipeBind>
+```
+
+
+```powershell
+Get-PnPListItem [-UniqueId <GuidPipeBind>]
+                [-Fields <String[]>]
                 [-Web <WebPipeBind>]
                 -List <ListPipeBind>
 ```

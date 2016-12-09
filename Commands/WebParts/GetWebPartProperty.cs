@@ -21,14 +21,14 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
         SortOrder = 2)]
     public class GetWebPartProperty : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "Full server relative URL of the webpart page, e.g. /sites/mysite/sitepages/home.aspx")]
         [Alias("PageUrl")]
         public string ServerRelativePageUrl = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The id of the webpart")]
         public GuidPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Name of a single property to be returned")]
         public string Key;
 
         protected override void ExecuteCmdlet()

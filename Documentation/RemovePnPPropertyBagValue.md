@@ -14,7 +14,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Folder|String|False|Site relative url of the folder. See examples for use.|
 |Force|SwitchParameter|False||
-|Key|String|True||
+|Key|String|True|Key of the property bag value to be removed|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

@@ -12,26 +12,26 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
     [CmdletExample(
         Code = @"PS:> Add-PnPMasterPage -SourceFilePath ""page.master"" -Title ""MasterPage"" -Description ""MasterPage for Web"" -DestinationFolderHierarchy ""SubFolder""",
-        Remarks = "Adds a MasterPage to the web",
+        Remarks = @"Adds a MasterPage from the local file ""page.master"" to the folder ""SubFolder"" in the Masterpage gallery.",
         SortOrder = 1)]
     public class AddMasterPage : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Path to the file which will be uploaded")]
         public string SourceFilePath = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "Title for the page layout")]
+        [Parameter(Mandatory = true, HelpMessage = "Title for the Masterpage")]
         public string Title = string.Empty;
 
-        [Parameter(Mandatory = true, HelpMessage = "Description for the page layout")]
+        [Parameter(Mandatory = true, HelpMessage = "Description for the Masterpage")]
         public string Description = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Folder hierarchy where the MasterPage layouts will be deployed")]
+        [Parameter(Mandatory = false, HelpMessage = "Folder hierarchy where the MasterPage will be deployed")]
         public string DestinationFolderHierarchy;
 
         [Parameter(Mandatory = false, HelpMessage = "UIVersion of the Masterpage. Default = 15")]
         public string UIVersion = "15";
 
-        [Parameter(Mandatory = false, HelpMessage = "Default CSS file for MasterPage, this Url is SiteRelative")]
+        [Parameter(Mandatory = false, HelpMessage = "Default CSS file for the MasterPage, this Url is SiteRelative")]
         public string DefaultCssFile;
 
         protected override void ExecuteCmdlet()

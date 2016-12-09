@@ -37,7 +37,7 @@ This will get a listing of all available content types within the site collectio
 ```powershell
 PS:> Get-PnPContentType -Identity "Project Document"
 ```
-This will get a listing of content types within the current context
+This will get the content type with the name "Project Document" within the current context
 
 ###Example 4
 ```powershell

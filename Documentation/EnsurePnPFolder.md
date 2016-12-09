@@ -1,5 +1,5 @@
 #Ensure-PnPFolder
-Returns a folder given a site relative path, and will create it if it does not exist.
+Returns a folder from a given site relative path, and will create it if it does not exist.
 ##Syntax
 ```powershell
 Ensure-PnPFolder [-Web <WebPipeBind>]

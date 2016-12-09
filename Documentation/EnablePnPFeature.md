@@ -15,8 +15,8 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Force|SwitchParameter|False|Forcibly enable the feature.|
 |Identity|GuidPipeBind|True|The id of the feature to enable.|
-|Sandboxed|SwitchParameter|False|Specify this parameter if the feature you're trying to active is part of a sandboxed solution.|
-|Scope|FeatureScope|False|Specify the scope of the feature to active, either Web or Site. Defaults to Web.|
+|Sandboxed|SwitchParameter|False|Specify this parameter if the feature you're trying to activate is part of a sandboxed solution.|
+|Scope|FeatureScope|False|Specify the scope of the feature to activate, either Web or Site. Defaults to Web.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

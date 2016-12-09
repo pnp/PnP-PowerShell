@@ -48,7 +48,7 @@ PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
         [Parameter(Mandatory = false, HelpMessage = "If specified, a full provisioning template structure will be returned")]
         public SwitchParameter FullTemplate;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Defaults to Unicode")]
         public Encoding Encoding = Encoding.Unicode;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
