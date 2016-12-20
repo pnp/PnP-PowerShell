@@ -31,6 +31,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
             ClientContext.ExecuteQueryRetry();
 
             sourceFolder.MoveTo(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, TargetName));
+            ClientContext.ExecuteQueryRetry();
         }
     }
 }
