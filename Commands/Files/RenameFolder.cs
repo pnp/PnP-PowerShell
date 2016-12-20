@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletHelp("Renames a folder",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
-        Code = @"PS:> Rename-PnPFolder -Folder Documents/Reports -TargetName 'Documents/Archived Reports'",
+        Code = @"PS:> Rename-PnPFolder -Folder Documents/Reports -TargetFolderName 'Archived Reports'",
         Remarks = "This will rename the folder Reports in the Documents library to 'Archived Reports'",
         SortOrder = 1)]
     public class RenameFolder : SPOWebCmdlet
@@ -20,17 +20,18 @@ namespace SharePointPnP.PowerShell.Commands.Files
         public string Folder = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The new folder name")]
-        public string TargetName = string.Empty;
+        public string TargetFolderName = string.Empty;
 
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             Folder sourceFolder = SelectedWeb.GetFolderByServerRelativeUrl(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder));
-            ClientContext.Load(sourceFolder, f => f.ServerRelativeUrl);
+            ClientContext.Load(sourceFolder, f => f.Name, f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
 
-            sourceFolder.MoveTo(UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, TargetName));
+            var targetPath = string.Concat(sourceFolder.ServerRelativeUrl.Remove(sourceFolder.ServerRelativeUrl.Length - sourceFolder.Name.Length), TargetFolderName);
+            sourceFolder.MoveTo(targetPath);
             ClientContext.ExecuteQueryRetry();
         }
     }
