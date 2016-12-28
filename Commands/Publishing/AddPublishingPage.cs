@@ -12,6 +12,11 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
         Code = @"PS:> Add-PnPPublishingPage -PageName 'OurNewPage' -Title 'Our new page' -PageTemplateName 'ArticleLeft'",
         Remarks = "Creates a new page based on the pagelayout 'ArticleLeft'",
         SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPPublishingPage -PageName 'OurNewPage' -Title 'Our new page' -PageTemplateName 'ArticleLeft' -Folder '/Pages/folder'",
+        Remarks = "Creates a new page based on the pagelayout 'ArticleLeft' with a site relative folder path",
+        SortOrder = 2)]
+
     public class AddPublishingPage : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The name of the page to be added as an aspx file")]
