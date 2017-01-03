@@ -11,8 +11,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletHelp("Deletes a folder within a parent folder",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage/newfolder",
-        SortOrder = 1)]
+        Code = @"PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage",
+        SortOrder = 1,
+        Remarks = @"Removes the folder 'NewFolder' from '_catalogsmasterpage'")]
     public class RemoveFolder : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The folder name")]

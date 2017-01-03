@@ -11,7 +11,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = "PS:> New-PnPList -Title Announcements -Template Announcements",
-        SortOrder = 1)]
+        SortOrder = 1,
+        Remarks = "Create a new announcements list")]
     [CmdletExample(
         Code = @"PS:> New-PnPList -Title ""Demo List"" -Url ""DemoList"" -Template Announcements",
         SortOrder = 2,

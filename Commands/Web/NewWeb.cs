@@ -6,7 +6,7 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPWeb")]
     [CmdletAlias("New-SPOWeb")]
-    [CmdletHelp("Creates a new subweb to the current web",
+    [CmdletHelp("Creates a new subweb under the current web",
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(Web),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
@@ -28,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public int Locale = 1033;
 
-        [Parameter(Mandatory = true, HelpMessage="The site definition template to use for the new web, e.g. STS#0")]
+        [Parameter(Mandatory = true, HelpMessage= "The site definition template to use for the new web, e.g. STS#0. Use Get-PnPWebTemplates to fetch a list of available templates")]
         public string Template = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage="By default the subweb will inherit its security from its parent, specify this switch to break this inheritance")]
