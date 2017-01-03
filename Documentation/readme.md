@@ -157,6 +157,9 @@ Cmdlet|Description
 **[Set&#8209;PnPDefaultPageLayout](SetPnPDefaultPageLayout.md)** |Sets a specific page layout to be the default page layout for a publishing site
 **[Add&#8209;PnPHtmlPublishingPageLayout](AddPnPHtmlPublishingPageLayout.md)** |Adds a HTML based publishing page layout
 **[Add&#8209;PnPMasterPage](AddPnPMasterPage.md)** |Adds a Masterpage
+**[Remove&#8209;PnPPublishingImageRendition](RemovePnPPublishingImageRendition.md)** |Removes an existing image rendition
+**[Get&#8209;PnPPublishingImageRendition](GetPnPPublishingImageRendition.md)** |Returns all image renditions or if Identity is specified a specific one
+**[Add&#8209;PnPPublishingImageRendition](AddPnPPublishingImageRendition.md)** |Adds an Image Rendition if the Name of the Image Rendition does not already exist. This prevents creating two Image Renditions that share the same name.
 **[Add&#8209;PnPPublishingPage](AddPnPPublishingPage.md)** |Adds a publishing page
 **[Add&#8209;PnPPublishingPageLayout](AddPnPPublishingPageLayout.md)** |Adds a publishing page layout
 **[Remove&#8209;PnPWikiPage](RemovePnPWikiPage.md)** |Removes a wiki page
