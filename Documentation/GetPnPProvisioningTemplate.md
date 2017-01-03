@@ -6,6 +6,7 @@ Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
                             [-IncludeSiteCollectionTermGroup [<SwitchParameter>]]
                             [-IncludeSiteGroups [<SwitchParameter>]]
                             [-IncludeTermGroupsSecurity [<SwitchParameter>]]
+                            [-IncludeSearchConfiguration [<SwitchParameter>]]
                             [-PersistBrandingFiles [<SwitchParameter>]]
                             [-PersistPublishingFiles [<SwitchParameter>]]
                             [-IncludeNativePublishingFiles [<SwitchParameter>]]
@@ -37,6 +38,7 @@ Parameter|Type|Required|Description
 |Handlers|Handlers|False|Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.|
 |IncludeAllTermGroups|SwitchParameter|False|If specified, all term groups will be included. Overrides IncludeSiteCollectionTermGroup.|
 |IncludeNativePublishingFiles|SwitchParameter|False|If specified, out of the box / native publishing files will be saved.|
+|IncludeSearchConfiguration|SwitchParameter|False|If specified the template will contain the current search configuration of the site.|
 |IncludeSiteCollectionTermGroup|SwitchParameter|False|If specified, all the site collection term groups will be included. Overridden by IncludeAllTermGroups.|
 |IncludeSiteGroups|SwitchParameter|False|If specified all site groups will be included.|
 |IncludeTermGroupsSecurity|SwitchParameter|False|If specified all the managers and contributors of term groups will be included.|

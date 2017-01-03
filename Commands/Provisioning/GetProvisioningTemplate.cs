@@ -93,6 +93,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified all the managers and contributors of term groups will be included.")]
         public SwitchParameter IncludeTermGroupsSecurity;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified the template will contain the current search configuration of the site.")]
+        public SwitchParameter IncludeSearchConfiguration;
+
         [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
         public SwitchParameter PersistBrandingFiles;
 
@@ -231,6 +234,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
+            creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
             if (!string.IsNullOrEmpty(ResourceFilePrefix))
