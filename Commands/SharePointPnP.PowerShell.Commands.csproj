@@ -361,8 +361,10 @@
   <ItemGroup>
     <Compile Include="Files\CopyFile.cs" />
     <Compile Include="Files\MoveFile.cs" />
+    <Compile Include="Files\MoveFolder.cs" />
     <Compile Include="Files\RenameFile.cs" />
     <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
+    <Compile Include="Files\RenameFolder.cs" />
     <Compile Include="Graph\GetUnifiedGroup.cs" />
     <Compile Include="Admin\GetWebTemplates.cs" />
     <Compile Include="Admin\GetTimeZoneId.cs" />
