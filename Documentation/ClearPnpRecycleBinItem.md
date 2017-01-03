@@ -1,17 +1,26 @@
 #Clear-PnpRecycleBinItem
-Permanently deletes the provided recycle bin item
+Permanently deletes all or a specific recycle bin item
 ##Syntax
 ```powershell
-Clear-PnpRecycleBinItem [-Force [<SwitchParameter>]]
-                        -Identity <RecycleBinItemPipeBind>
+Clear-PnpRecycleBinItem [-All [<SwitchParameter>]]
+                        [-SecondStageOnly [<SwitchParameter>]]
+                        [-Force [<SwitchParameter>]]
+```
+
+
+```powershell
+Clear-PnpRecycleBinItem -Identity <RecycleBinItemPipeBind>
+                        [-Force [<SwitchParameter>]]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|All|SwitchParameter|False|Clears all items|
 |Force|SwitchParameter|False|If provided, no confirmation will be asked to permanently delete the recycle bin item|
 |Identity|RecycleBinItemPipeBind|True|Id of the recycle bin item or the recycle bin item itself to permanently delete|
+|SecondStageOnly|SwitchParameter|False|If provided, only all the items in the second stage recycle bin will be cleared|
 ##Examples
 
 ###Example 1

@@ -1,10 +1,10 @@
-#Reset-PnPTenantRecycleBinItem
+#Restore-PnPTenantRecycleBinItem
 Restores a site collection from the tenant scoped recycle bin
 ##Syntax
 ```powershell
-Reset-PnPTenantRecycleBinItem -Url <String>
-                              [-Wait [<SwitchParameter>]]
-                              [-Force [<SwitchParameter>]]
+Restore-PnPTenantRecycleBinItem -Url <String>
+                                [-Wait [<SwitchParameter>]]
+                                [-Force [<SwitchParameter>]]
 ```
 
 

@@ -5,15 +5,6 @@ Below you can find a list of all the available cmdlets. Many commands provide bu
 Get-Help Connect-PnPOnline -Detailed
 ```
 
-##
-Cmdlet|Description
-:-----|:----------
-**[Reset&#8209;PnpRecycleBinItem](ResetPnpRecycleBinItem.md)** |Restores the provided recycle bin item to its original location
-**[Clear&#8209;PnpRecycleBinItem](ClearPnpRecycleBinItem.md)** |Permanently deletes the provided recycle bin item
-**[Reset&#8209;PnpRecycleBinItems](ResetPnpRecycleBinItems.md)** |Restores all the items from the first and second stage recycle bin of the current context to their original locations
-**[Move&#8209;PnpRecycleBinItems](MovePnpRecycleBinItems.md)** |Moves all the items in the first stage recycle bin of the current context to the second stage recycle bin
-**[Clear&#8209;PnpRecycleBinItems](ClearPnpRecycleBinItems.md)** |Permanently deletes all the items in the recycle bins from the context
-**[Get&#8209;PnPRecycleBinItems](GetPnPRecycleBinItems.md)** |Returns the items in the recycle bin from the context
 ##Apps
 Cmdlet|Description
 :-----|:----------
@@ -176,6 +167,13 @@ Cmdlet|Description
 **[Set&#8209;PnPSearchConfiguration](SetPnPSearchConfiguration.md)** |Sets the search configuration
 **[Get&#8209;PnPSearchConfiguration](GetPnPSearchConfiguration.md)** |Returns the search configuration
 **[Get&#8209;PnPSiteSearchQueryResults](GetPnPSiteSearchQueryResults.md)** |Executes a search query to retrieve indexed site collections
+##SharePoint Recycle Bin
+Cmdlet|Description
+:-----|:----------
+**[Restore&#8209;PnpRecycleBinItem](RestorePnpRecycleBinItem.md)** |Restores the provided recycle bin item to its original location
+**[Clear&#8209;PnpRecycleBinItem](ClearPnpRecycleBinItem.md)** |Permanently deletes all or a specific recycle bin item
+**[Move&#8209;PnpRecycleBinItem](MovePnpRecycleBinItem.md)** |Moves all items or a specific item in the first stage recycle bin of the current site collection to the second stage recycle bin
+**[Get&#8209;PnPRecycleBinItem](GetPnPRecycleBinItem.md)** |Returns the items in the recycle bin from the context
 ##Sites
 Cmdlet|Description
 :-----|:----------
@@ -206,7 +204,7 @@ Cmdlet|Description
 :-----|:----------
 **[Get&#8209;PnPAccessToken](GetPnPAccessToken.md)** |Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
 **[Clear&#8209;PnPTenantRecycleBinItem](ClearPnPTenantRecycleBinItem.md)** |Permanently deletes a site collection from the tenant scoped recycle bin
-**[Reset&#8209;PnPTenantRecycleBinItem](ResetPnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin
+**[Restore&#8209;PnPTenantRecycleBinItem](RestorePnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin
 **[Set&#8209;PnPTenantSite](SetPnPTenantSite.md)** |Office365 only: Uses the tenant API to set site information.
 **[Get&#8209;PnPTenantSite](GetPnPTenantSite.md)** |Office365 only: Uses the tenant API to retrieve site information.
 **[Remove&#8209;PnPTenantSite](RemovePnPTenantSite.md)** |Office365 only: Removes a site collection from the current tenant

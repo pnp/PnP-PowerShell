@@ -262,13 +262,16 @@
   <data name="MoveFirstStageRecycleBinItemsToSecondStage" xml:space="preserve">
     <value>Move all items from the first stage recycle bin to the second stage recycle bin?</value>
   </data>
-  <data name="ResetRecycleBinItem" xml:space="preserve">
+  <data name="RestoreRecycleBinItem" xml:space="preserve">
     <value>Restore the file '{0}' from the recycle bin to its original location?</value>
   </data>
-  <data name="ResetRecycleBinItems" xml:space="preserve">
+  <data name="RestoreRecycleBinItems" xml:space="preserve">
     <value>Restore all items from the first and second stage recycle bins to their original locations?</value>
   </data>
   <data name="ResetTenantRecycleBinItem" xml:space="preserve">
     <value>Restore the site collection previously located at '{0}' from the recycle bin to its original location?</value>
+  </data>
+  <data name="MoveRecycleBinItemWithLeaf0ToSecondStage" xml:space="preserve">
+    <value>Move recycle bin item with leaf '{0}' to the second stage recycle bin?</value>
   </data>
 </root>

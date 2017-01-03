@@ -52,6 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             if (!_id.HasValue) return null;
 
             _item = site.RecycleBin.GetById(_id.Value);
+            site.Context.Load(_item);
             site.Context.ExecuteQueryRetry();
             return Item;
         }
