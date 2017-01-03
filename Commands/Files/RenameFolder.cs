@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿#if !ONPREMISES
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Utilities;
@@ -35,3 +36,4 @@ namespace SharePointPnP.PowerShell.Commands.Files
         }
     }
 }
+#endif

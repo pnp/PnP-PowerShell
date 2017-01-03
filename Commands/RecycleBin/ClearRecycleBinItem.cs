@@ -29,9 +29,10 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         [Parameter(Mandatory = false, ParameterSetName = "All", HelpMessage = "Clears all items")]
         public SwitchParameter All;
 
+#if !ONPREMISES
         [Parameter(Mandatory = false, HelpMessage = "If provided, only all the items in the second stage recycle bin will be cleared", ParameterSetName = "All")]
         public SwitchParameter SecondStageOnly = false;
-
+#endif
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to permanently delete the recycle bin item")]
         public SwitchParameter Force;
 
@@ -54,6 +55,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                     }
                     break;
                 case "All":
+#if !ONPREMISES
                     if (SecondStageOnly)
                     {
                         if (Force || ShouldContinue(Resources.ClearSecondStageRecycleBin, Resources.Confirm))
@@ -71,6 +73,14 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                         }
                     }
                     break;
+#else
+                        if (Force || ShouldContinue(Resources.ClearBothRecycleBins, Resources.Confirm))
+                        {
+                            ClientContext.Site.RecycleBin.DeleteAll();
+                            ClientContext.ExecuteQueryRetry();
+                        }
+                    break;
+#endif
             }
         }
     }
