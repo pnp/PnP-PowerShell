@@ -6,7 +6,6 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Rename, "PnPFolder")]
-    [CmdletAlias("Rename-SPOFolder")]
     [CmdletHelp("Renames a folder",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
