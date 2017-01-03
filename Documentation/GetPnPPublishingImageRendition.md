@@ -2,15 +2,18 @@
 Returns all image renditions or if Identity is specified a specific one
 ##Syntax
 ```powershell
-Get-PnPPublishingImageRendition [-Identity <ImageRenditionPipeBind>]
-                                [-Web <WebPipeBind>]
+Get-PnPPublishingImageRendition [-Web <WebPipeBind>]
+                                [-Identity <ImageRenditionPipeBind>]
 ```
 
+
+##Returns
+>[Microsoft.SharePoint.Client.Publishing.ImageRendition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.publishing.imagerendition.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|ImageRenditionPipeBind|False||
+|Identity|ImageRenditionPipeBind|False|Id or name of an existing image rendition|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
