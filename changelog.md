@@ -4,6 +4,7 @@
 * HAPPY NEW YEAR!
 * Added Clear-PnPRecyclyBinItem, Clear-PnPTenantRecyclyBinItem, Get-PnPRecyclyBinItem, Move-PnPRecyclyBinItem, Restore-PnPRecyclyBinItem, Restore-PnPTenantRecyclyBinItem cmdlets
 * Added Move-PnPFolder, Rename-PnPFolder cmdlets
+* Added Add-PnPPublishingImageRendition, Get-PnPPublishingImageRendition and Remove-PnPPublishingImageRendition cmdlets
 
 **2016-11-21**
 * Added support to enable versionining and set the maximum number of versions to keep on a list and library with Set-PnPList

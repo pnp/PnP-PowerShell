@@ -351,6 +351,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove Image Rendition with name &apos;{0}&apos;?.
+        /// </summary>
+        internal static string RemoveImageRenditionWithName0 {
+            get {
+                return ResourceManager.GetString("RemoveImageRenditionWithName0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove JavaScript (&apos;{0}&apos;)?.
         /// </summary>
         internal static string RemoveJavaScript0 {

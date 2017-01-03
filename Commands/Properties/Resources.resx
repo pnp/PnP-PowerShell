@@ -274,4 +274,7 @@
   <data name="MoveRecycleBinItemWithLeaf0ToSecondStage" xml:space="preserve">
     <value>Move recycle bin item with leaf '{0}' to the second stage recycle bin?</value>
   </data>
+  <data name="RemoveImageRenditionWithName0" xml:space="preserve">
+    <value>Remove Image Rendition with name '{0}'?</value>
+  </data>
 </root>
