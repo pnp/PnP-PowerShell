@@ -9,7 +9,7 @@ New-PnPPersonalSite -Email <String[]>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Email|String[]|True|The UserPrincipalName (UPN) of the user|
+|Email|String[]|True|The UserPrincipalName (UPN) of the users|
 ##Examples
 
 ###Example 1

@@ -22,10 +22,10 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Remove-PnPField -Identity "Speakers"
 ```
-Gets the speakers field from the site columns
+Removes the speakers field from the site columns
 
 ###Example 2
 ```powershell
 PS:> Remove-PnPField -List "Demo list" -Identity "Speakers"
 ```
-Gets the speakers field from the list Demo list
+Removes the speakers field from the list Demo list

@@ -60,7 +60,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         public long StorageQuotaWarningLevel = 100;
 
 #if !ONPREMISES
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies if any existing site with the same URL should be removed from the recycle bin")]
         public SwitchParameter RemoveDeletedSite;
 #endif
         [Parameter(Mandatory = false)]

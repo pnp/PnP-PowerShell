@@ -1,5 +1,5 @@
 #Remove-PnPContentType
-Removes a content type
+Removes a content type from a web
 ##Syntax
 ```powershell
 Remove-PnPContentType [-Force [<SwitchParameter>]]

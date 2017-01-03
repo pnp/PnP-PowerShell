@@ -12,11 +12,11 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         Category = CmdletHelpCategory.Fields)]
     [CmdletExample(
         Code = @"PS:> Remove-PnPField -Identity ""Speakers""",
-        Remarks = @"Gets the speakers field from the site columns",
+        Remarks = @"Removes the speakers field from the site columns",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Remove-PnPField -List ""Demo list"" -Identity ""Speakers""",
-        Remarks = @"Gets the speakers field from the list Demo list",
+        Remarks = @"Removes the speakers field from the list Demo list",
         SortOrder = 1)]
     public class RemoveField : SPOWebCmdlet
     {

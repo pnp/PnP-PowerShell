@@ -28,16 +28,16 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         [Parameter(Mandatory = false, HelpMessage = "If using a password, you also have to provide the associated from address")]
         public string Password;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = @"List of recipients")]
         public string[] To;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = @"List of recipients on CC")]
         public string[] Cc;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = @"Subject of the email")]
         public string Subject;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = @"Body of the email")]
         public string Body;
         
         protected override void ExecuteCmdlet()

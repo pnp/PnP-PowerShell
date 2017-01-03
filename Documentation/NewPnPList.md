@@ -28,7 +28,7 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> New-PnPList -Title Announcements -Template Announcements
 ```
-
+Create a new announcements list
 
 ###Example 2
 ```powershell

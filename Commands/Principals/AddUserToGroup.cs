@@ -24,9 +24,12 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         public string LoginName;
 
         [Parameter(Mandatory = true, HelpMessage = "The group id, group name or group object to add the user to.", ValueFromPipeline = true, ParameterSetName = "Internal")]
+#if !ONPREMISES
         [Parameter(Mandatory = true, HelpMessage = "The group id, group name or group object to add the user to.", ValueFromPipeline = true, ParameterSetName = "External")]
+#endif
         public GroupPipeBind Identity;
 
+#if !ONPREMISES
         [Parameter(Mandatory = true, HelpMessage = "The email address of the user", ParameterSetName = "External")]
         public string EmailAddress;
 
@@ -35,11 +38,11 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 
         [Parameter(Mandatory = false, ParameterSetName = "External")]
         public string EmailBody = "Site shared with you.";
-
+#endif
         protected override void ExecuteCmdlet()
         {
             var group = Identity.GetGroup(SelectedWeb);
-
+#if !ONPREMISES
             if (ParameterSetName == "External")
             {
                 group.InviteExternalUser(EmailAddress, SendEmail, EmailBody);
@@ -48,7 +51,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
             {
                 SelectedWeb.AddUserToGroup(group, LoginName);
             }
-
+#else
+            SelectedWeb.AddUserToGroup(group, LoginName);
+#endif
         }
     }
 }
