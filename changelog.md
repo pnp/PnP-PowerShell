@@ -1,5 +1,10 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2017-01-03**
+* HAPPY NEW YEAR!
+* Added Clear-PnPRecyclyBinItem, Clear-PnPTenantRecyclyBinItem, Get-PnPRecyclyBinItem, Move-PnPRecyclyBinItem, Restore-PnPRecyclyBinItem, Restore-PnPTenantRecyclyBinItem cmdlets
+* Added Move-PnPFolder, Rename-PnPFolder cmdlets
+
 **2016-11-21**
 * Added support to enable versionining and set the maximum number of versions to keep on a list and library with Set-PnPList
 * Updated Add-PnPUserToGroup to allow to send invites to external users
