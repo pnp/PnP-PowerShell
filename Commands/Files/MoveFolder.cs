@@ -6,7 +6,6 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Move, "PnPFolder")]
-    [CmdletAlias("Move-SPOFolder")]
     [CmdletHelp("Move a folder to another location in the current web",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
