@@ -2,60 +2,31 @@
 Downloads a file.
 ##Syntax
 ```powershell
-Get-PnPFile [-Path <String>]
-            [-Filename <String>]
-            [-Web <WebPipeBind>]
-            -ServerRelativeUrl <String>
-```
-
-
-```powershell
-Get-PnPFile [-AsFile [<SwitchParameter>]]
-            [-Web <WebPipeBind>]
-            -ServerRelativeUrl <String>
+Get-PnPFile [-Web <WebPipeBind>]
+            -Url <String>
 ```
 
 
 ```powershell
 Get-PnPFile [-AsListItem [<SwitchParameter>]]
             [-Web <WebPipeBind>]
-            -ServerRelativeUrl <String>
+            -Url <String>
 ```
 
 
 ```powershell
 Get-PnPFile [-AsString [<SwitchParameter>]]
             [-Web <WebPipeBind>]
-            -ServerRelativeUrl <String>
+            -Url <String>
 ```
 
 
 ```powershell
 Get-PnPFile [-Path <String>]
             [-Filename <String>]
+            -AsFile [<SwitchParameter>]
             [-Web <WebPipeBind>]
-            -SiteRelativeUrl <String>
-```
-
-
-```powershell
-Get-PnPFile [-AsFile [<SwitchParameter>]]
-            [-Web <WebPipeBind>]
-            -SiteRelativeUrl <String>
-```
-
-
-```powershell
-Get-PnPFile [-AsListItem [<SwitchParameter>]]
-            [-Web <WebPipeBind>]
-            -SiteRelativeUrl <String>
-```
-
-
-```powershell
-Get-PnPFile [-AsString [<SwitchParameter>]]
-            [-Web <WebPipeBind>]
-            -SiteRelativeUrl <String>
+            -Url <String>
 ```
 
 
@@ -65,13 +36,12 @@ Get-PnPFile [-AsString [<SwitchParameter>]]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|AsFile|SwitchParameter|False||
+|AsFile|SwitchParameter|True||
 |AsListItem|SwitchParameter|False||
 |AsString|SwitchParameter|False|Retrieve the file contents as a string|
 |Filename|String|False|Name for the local file|
 |Path|String|False|Local path where the file should be saved|
-|ServerRelativeUrl|String|True|Server relative URL to the file|
-|SiteRelativeUrl|String|True|Site relative URL to the file|
+|Url|String|True|The URL (server or site relative) to the file|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
