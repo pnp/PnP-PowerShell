@@ -109,6 +109,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified, out of the box / native publishing files will be saved.")]
         public SwitchParameter IncludeNativePublishingFiles;
 
+        [Parameter(Mandatory = false, HelpMessage = "During extraction the version of the server will be checked for certain actions. If you specify this switch, this check will be skipped.")]
+        public SwitchParameter SkipVersionCheck;
+
 #if !SP2013
         [Parameter(Mandatory = false, HelpMessage = "If specified, resource values for applicable artifacts will be persisted to a resource file")]
         public SwitchParameter PersistMultiLanguageResources;
@@ -235,6 +238,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
+            creationInformation.SkipVersionCheck = SkipVersionCheck;
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
             if (!string.IsNullOrEmpty(ResourceFilePrefix))
