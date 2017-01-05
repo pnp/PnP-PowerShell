@@ -98,6 +98,8 @@ Cmdlet|Description
 **[Add&#8209;PnPFile](AddPnPFile.md)** |Uploads a file to Web
 **[Set&#8209;PnPFileCheckedIn](SetPnPFileCheckedIn.md)** |Checks in a file
 **[Set&#8209;PnPFileCheckedOut](SetPnPFileCheckedOut.md)** |Checks out a file
+**[Move&#8209;PnPFolder](MovePnPFolder.md)** |Move a folder to another location in the current web
+**[Rename&#8209;PnPFolder](RenamePnPFolder.md)** |Renames a folder
 **[Get&#8209;PnPFolder](GetPnPFolder.md)** |Return a folder object
 **[Ensure&#8209;PnPFolder](EnsurePnPFolder.md)** |Returns a folder from a given site relative path, and will create it if it does not exist.
 **[Add&#8209;PnPFolder](AddPnPFolder.md)** |Creates a folder within a parent folder
@@ -155,6 +157,9 @@ Cmdlet|Description
 **[Set&#8209;PnPDefaultPageLayout](SetPnPDefaultPageLayout.md)** |Sets a specific page layout to be the default page layout for a publishing site
 **[Add&#8209;PnPHtmlPublishingPageLayout](AddPnPHtmlPublishingPageLayout.md)** |Adds a HTML based publishing page layout
 **[Add&#8209;PnPMasterPage](AddPnPMasterPage.md)** |Adds a Masterpage
+**[Remove&#8209;PnPPublishingImageRendition](RemovePnPPublishingImageRendition.md)** |Removes an existing image rendition
+**[Get&#8209;PnPPublishingImageRendition](GetPnPPublishingImageRendition.md)** |Returns all image renditions or if Identity is specified a specific one
+**[Add&#8209;PnPPublishingImageRendition](AddPnPPublishingImageRendition.md)** |Adds an Image Rendition if the Name of the Image Rendition does not already exist. This prevents creating two Image Renditions that share the same name.
 **[Add&#8209;PnPPublishingPage](AddPnPPublishingPage.md)** |Adds a publishing page
 **[Add&#8209;PnPPublishingPageLayout](AddPnPPublishingPageLayout.md)** |Adds a publishing page layout
 **[Remove&#8209;PnPWikiPage](RemovePnPWikiPage.md)** |Removes a wiki page

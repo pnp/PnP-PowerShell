@@ -359,10 +359,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\PipeBinds\ImageRenditionPipeBind.cs" />
     <Compile Include="Files\CopyFile.cs" />
     <Compile Include="Files\MoveFile.cs" />
+    <Compile Include="Files\MoveFolder.cs" />
     <Compile Include="Files\RenameFile.cs" />
     <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
+    <Compile Include="Files\RenameFolder.cs" />
     <Compile Include="Graph\GetUnifiedGroup.cs" />
     <Compile Include="Admin\GetWebTemplates.cs" />
     <Compile Include="Admin\GetTimeZoneId.cs" />
@@ -498,10 +501,13 @@
     <Compile Include="Provider\SPODriveParameters.cs" />
     <Compile Include="Provider\SPOProvider.cs" />
     <Compile Include="Publishing\AddMasterPage.cs" />
+    <Compile Include="Publishing\RemovePublishingImageRendition.cs" />
+    <Compile Include="Publishing\GetPublishingImageRendition.cs" />
     <Compile Include="RecycleBin\ClearTenantRecycleBinItem.cs" />
     <Compile Include="RecycleBin\RestoreTenantRecycleBinItem.cs" />
     <Compile Include="RecycleBin\RestoreRecycleBinItem.cs" />
     <Compile Include="RecycleBin\ClearRecycleBinItem.cs" />
+    <Compile Include="Publishing\AddPublishingImageRendition.cs" />
     <Compile Include="Publishing\SetDefaultPageLayout.cs" />
     <Compile Include="Publishing\SetAvailablePageLayouts.cs" />
     <Compile Include="Search\GetSiteSearchQueryResults.cs" />

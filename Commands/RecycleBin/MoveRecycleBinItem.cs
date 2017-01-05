@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !ONPREMISES
+using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -51,3 +52,4 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         }
     }
 }
+#endif

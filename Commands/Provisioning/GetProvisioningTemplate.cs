@@ -93,6 +93,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified all the managers and contributors of term groups will be included.")]
         public SwitchParameter IncludeTermGroupsSecurity;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified the template will contain the current search configuration of the site.")]
+        public SwitchParameter IncludeSearchConfiguration;
+
         [Parameter(Mandatory = false, HelpMessage = "If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.")]
         public SwitchParameter PersistBrandingFiles;
 
@@ -105,6 +108,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         [Parameter(Mandatory = false, HelpMessage = "If specified, out of the box / native publishing files will be saved.")]
         public SwitchParameter IncludeNativePublishingFiles;
+
+        [Parameter(Mandatory = false, HelpMessage = "During extraction the version of the server will be checked for certain actions. If you specify this switch, this check will be skipped.")]
+        public SwitchParameter SkipVersionCheck;
 
 #if !SP2013
         [Parameter(Mandatory = false, HelpMessage = "If specified, resource values for applicable artifacts will be persisted to a resource file")]
@@ -231,6 +237,8 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
             creationInformation.IncludeSiteGroups = IncludeSiteGroups;
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
+            creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
+            creationInformation.SkipVersionCheck = SkipVersionCheck;
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
             if (!string.IsNullOrEmpty(ResourceFilePrefix))
