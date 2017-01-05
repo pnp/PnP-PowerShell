@@ -1,6 +1,8 @@
-﻿using System.Management.Automation;
-using System.Threading;
+﻿#if !ONPREMISES
+using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
@@ -19,6 +21,9 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         Remarks = @"This will permanently delete site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the tenant recycle bin and will wait with executing further PowerShell commands until the operation has completed", SortOrder = 2)]
     public class ClearTenantRecycleBinItem : SPOAdminCmdlet
     {
+        private ProgressRecord progressRecord;
+
+
         [Parameter(Mandatory = true, HelpMessage = "Url of the site collection to permanently delete from the tenant recycle bin", ValueFromPipeline = false)]
         public string Url;
 
@@ -32,20 +37,25 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         {
             if (Force || ShouldContinue(string.Format(Resources.ClearTenantRecycleBinItem, Url), Resources.Confirm))
             {
-                var spOperation = Tenant.RemoveDeletedSite(Url);
-                Tenant.Context.Load(spOperation);
-                Tenant.Context.ExecuteQueryRetry();
-                
-                if (Wait)
+                progressRecord = new ProgressRecord(0, "Removing site collection from recycle bin", "Polling for site collection removal status")
                 {
-                    while (!spOperation.IsComplete)
-                    {
-                        Thread.Sleep(3000);
-                        Tenant.Context.Load(spOperation);
-                        Tenant.Context.ExecuteQueryRetry();
-                    }
-                }
+                    RecordType = ProgressRecordType.Processing
+                };
+                Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
+
+                Tenant.DeleteSiteCollectionFromRecycleBin(Url, Wait, Wait ? timeoutFunction : null);
             }
+        }
+
+        private bool TimeoutFunction(TenantOperationMessage message)
+        {
+            if (message == TenantOperationMessage.RemovingDeletedSiteCollectionFromRecycleBin)
+            {
+                progressRecord.PercentComplete = 50;
+                WriteProgress(progressRecord);
+            }
+            return false;
         }
     }
 }
+#endif
