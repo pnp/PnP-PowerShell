@@ -5,28 +5,37 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System;
+using OfficeDevPnP.Core;
 
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
     [CmdletAlias("Remove-SPOTenantSite")]
     [CmdletHelp("Office365 only: Removes a site collection from the current tenant",
-        Category = CmdletHelpCategory.TenantAdmin)]
+         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-      Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso",
-      Remarks = @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.", SortOrder = 1)]
+         Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso",
+         Remarks =
+             @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.",
+         SortOrder = 1)]
     [CmdletExample(
-      Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
-      Remarks = @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.", SortOrder = 2)]
+         Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
+         Remarks =
+             @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.",
+         SortOrder = 2)]
     [CmdletExample(
-      Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin",
-      Remarks = @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.", SortOrder = 3)]
+         Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin",
+         Remarks =
+             @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.",
+         SortOrder = 3)]
     public class RemoveSite : SPOAdminCmdlet
     {
+        private ProgressRecord progressRecord;
+
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the full URL of the site collection that needs to be deleted")]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "Do not add to the trashcan when selected.")]
+        [Parameter(Mandatory = false, HelpMessage = "Do not add to the tenant scoped recycle bin when selected.")]
         [Alias("SkipTrash")]
         public SwitchParameter SkipRecycleBin;
 
@@ -35,27 +44,54 @@ namespace SharePointPnP.PowerShell.Commands
         public SwitchParameter Wait;
 
         [Parameter(Mandatory = false, HelpMessage = "If specified, will search for the site in the Recycle Bin and remove it from there.")]
+        [Obsolete("Use Clear-PnPTenantRecycleBinItem instead.")]
         public SwitchParameter FromRecycleBin;
-
-
-        [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation.")]
-        public SwitchParameter Force;
+        
+        [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation.")] public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
             if (Force || ShouldContinue(string.Format(Resources.RemoveSiteCollection0, Url), Resources.Confirm))
             {
+                progressRecord = new ProgressRecord(0, "Deleting site collection", "Polling for site created status")
+                {
+                    RecordType = ProgressRecordType.Processing
+                };
+                Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
+
+
                 if (!FromRecycleBin)
                 {
-                    Tenant.DeleteSiteCollection(Url, !SkipRecycleBin);
+                    
+                    Tenant.DeleteSiteCollection(Url, !MyInvocation.BoundParameters.ContainsKey("SkipRecycleBin"), timeoutFunction);
                 }
                 else
                 {
-                    Tenant.DeleteSiteCollectionFromRecycleBin(Url);
+                    Tenant.DeleteSiteCollectionFromRecycleBin(Url, true, timeoutFunction);
                 }
+                progressRecord.RecordType = ProgressRecordType.Completed;
+                progressRecord.PercentComplete = 100;
+                WriteProgress(progressRecord);
             }
         }
 
+        private bool TimeoutFunction(TenantOperationMessage message)
+        {
+            switch (message)
+            {
+                case TenantOperationMessage.DeletingSiteCollection:
+                    progressRecord.StatusDescription = "Polling for site deleted status";
+                    progressRecord.PercentComplete = 50;
+                    WriteProgress(progressRecord);
+                    break;
+                case TenantOperationMessage.RemovingDeletedSiteCollectionFromRecycleBin:
+                    progressRecord.StatusDescription = "Polling for site removal status";
+                    progressRecord.PercentComplete = 75;
+                    WriteProgress(progressRecord);
+                    break;
+            }
+            return false;
+        }
     }
 }
 #endif
