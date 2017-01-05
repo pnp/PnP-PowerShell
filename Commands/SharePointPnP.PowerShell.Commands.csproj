@@ -504,6 +504,7 @@
     <Compile Include="Publishing\RemovePublishingImageRendition.cs" />
     <Compile Include="Publishing\GetPublishingImageRendition.cs" />
     <Compile Include="RecycleBin\ClearTenantRecycleBinItem.cs" />
+    <Compile Include="RecycleBin\GetTenantRecycleBinItem.cs" />
     <Compile Include="RecycleBin\RestoreTenantRecycleBinItem.cs" />
     <Compile Include="RecycleBin\RestoreRecycleBinItem.cs" />
     <Compile Include="RecycleBin\ClearRecycleBinItem.cs" />

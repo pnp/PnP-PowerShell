@@ -983,5 +983,42 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>DeletedSiteProperties</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Online.SharePoint.TenantAdministration.DeletedSiteProperties</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>DaysRemaining</Label>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DeletionTime</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Url</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>DaysRemaining</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DeletionTime</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Url</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
   </ViewDefinitions>
 </Configuration>
