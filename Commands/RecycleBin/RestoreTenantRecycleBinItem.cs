@@ -34,15 +34,15 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
             if (Force || ShouldContinue(string.Format(Resources.ResetTenantRecycleBinItem, Url), Resources.Confirm))
             {
                 var spOperation = Tenant.RestoreDeletedSite(Url);
-                Tenant.Context.Load(spOperation);
+                Tenant.Context.Load(spOperation, spo => spo.PollingInterval, spo => spo.IsComplete);
                 Tenant.Context.ExecuteQueryRetry();
 
                 if (Wait)
                 {
                     while (!spOperation.IsComplete)
                     {
-                        Thread.Sleep(3000);
-                        Tenant.Context.Load(spOperation);
+                        Thread.Sleep(spOperation.PollingInterval);
+                        Tenant.Context.Load(spOperation, spo => spo.PollingInterval, spo => spo.IsComplete);
                         Tenant.Context.ExecuteQueryRetry();
                         Host.UI.Write(".");
                     }
