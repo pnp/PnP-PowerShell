@@ -76,7 +76,7 @@ namespace SharePointPnP.PowerShell.Commands
                     Host.UI.Write(".");
                     break;
             }
-            return false;
+            return Stopping;
         }
     }
 }
