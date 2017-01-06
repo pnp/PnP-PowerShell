@@ -28,8 +28,6 @@ Online site collection fails if a deleted site with the same URL exists in the R
         Url = "http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx")]
     public class NewTenantSite : SPOAdminCmdlet
     {
-        private ProgressRecord progressRecord;
-
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the title of the new site collection")]
         public string Title;
 
@@ -87,20 +85,11 @@ Online site collection fails if a deleted site with the same URL exists in the R
 
             Tenant.CreateSiteCollection(entity);
 #else
-            progressRecord = new ProgressRecord(0, "Creating site collection", "Polling for site created status")
-            {
-                RecordType = ProgressRecordType.Processing
-            };
             Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
             Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
                 (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid,
                 RemoveDeletedSite, Wait, Wait == true ? timeoutFunction : null);
-            if (Wait)
-            {
-                progressRecord.RecordType = ProgressRecordType.Completed;
-                progressRecord.PercentComplete = 100;
-                WriteProgress(progressRecord);
-            }
+
 #endif
         }
 
@@ -108,8 +97,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         {
             if (message == TenantOperationMessage.CreatingSiteCollection)
             {
-                progressRecord.PercentComplete = 50;
-                WriteProgress(progressRecord);
+                Host.UI.Write(".");
             }
             return false;
         }

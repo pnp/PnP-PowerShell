@@ -21,9 +21,6 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         Remarks = @"This will permanently delete site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the tenant recycle bin and will wait with executing further PowerShell commands until the operation has completed", SortOrder = 2)]
     public class ClearTenantRecycleBinItem : SPOAdminCmdlet
     {
-        private ProgressRecord progressRecord;
-
-
         [Parameter(Mandatory = true, HelpMessage = "Url of the site collection to permanently delete from the tenant recycle bin", ValueFromPipeline = false)]
         public string Url;
 
@@ -37,10 +34,6 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         {
             if (Force || ShouldContinue(string.Format(Resources.ClearTenantRecycleBinItem, Url), Resources.Confirm))
             {
-                progressRecord = new ProgressRecord(0, "Removing site collection from recycle bin", "Polling for site collection removal status")
-                {
-                    RecordType = ProgressRecordType.Processing
-                };
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
                 Tenant.DeleteSiteCollectionFromRecycleBin(Url, Wait, Wait ? timeoutFunction : null);
@@ -51,8 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         {
             if (message == TenantOperationMessage.RemovingDeletedSiteCollectionFromRecycleBin)
             {
-                progressRecord.PercentComplete = 50;
-                WriteProgress(progressRecord);
+                this.Host.UI.Write(".");
             }
             return false;
         }

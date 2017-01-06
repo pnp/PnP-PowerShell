@@ -30,8 +30,6 @@ namespace SharePointPnP.PowerShell.Commands
          SortOrder = 3)]
     public class RemoveSite : SPOAdminCmdlet
     {
-        private ProgressRecord progressRecord;
-
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the full URL of the site collection that needs to be deleted")]
         public string Url;
 
@@ -53,10 +51,6 @@ namespace SharePointPnP.PowerShell.Commands
         {
             if (Force || ShouldContinue(string.Format(Resources.RemoveSiteCollection0, Url), Resources.Confirm))
             {
-                progressRecord = new ProgressRecord(0, "Deleting site collection", "Polling for site created status")
-                {
-                    RecordType = ProgressRecordType.Processing
-                };
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
 
@@ -69,9 +63,7 @@ namespace SharePointPnP.PowerShell.Commands
                 {
                     Tenant.DeleteSiteCollectionFromRecycleBin(Url, true, timeoutFunction);
                 }
-                progressRecord.RecordType = ProgressRecordType.Completed;
-                progressRecord.PercentComplete = 100;
-                WriteProgress(progressRecord);
+
             }
         }
 
@@ -80,14 +72,8 @@ namespace SharePointPnP.PowerShell.Commands
             switch (message)
             {
                 case TenantOperationMessage.DeletingSiteCollection:
-                    progressRecord.StatusDescription = "Polling for site deleted status";
-                    progressRecord.PercentComplete = 50;
-                    WriteProgress(progressRecord);
-                    break;
                 case TenantOperationMessage.RemovingDeletedSiteCollectionFromRecycleBin:
-                    progressRecord.StatusDescription = "Polling for site removal status";
-                    progressRecord.PercentComplete = 75;
-                    WriteProgress(progressRecord);
+                    Host.UI.Write(".");
                     break;
             }
             return false;

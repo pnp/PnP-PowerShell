@@ -44,6 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                         Thread.Sleep(3000);
                         Tenant.Context.Load(spOperation);
                         Tenant.Context.ExecuteQueryRetry();
+                        Host.UI.Write(".");
                     }
                 }
             }
