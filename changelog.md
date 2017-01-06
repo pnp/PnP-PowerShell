@@ -1,5 +1,10 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2017-01-05**
+* Added Get-PnPTenantRecyclyBinItem cmdlet to list all items in the tenant scoped recycle bin
+* Added -Wait and -LockState properties to Set-PnPTenantSite
+* The Tenant cmdlets now report progress if the -Wait parameter is specified (where applicable)
+
 **2017-01-03**
 * HAPPY NEW YEAR!
 * Added Clear-PnPRecyclyBinItem, Clear-PnPTenantRecyclyBinItem, Get-PnPRecyclyBinItem, Move-PnPRecyclyBinItem, Restore-PnPRecyclyBinItem, Restore-PnPTenantRecyclyBinItem cmdlets

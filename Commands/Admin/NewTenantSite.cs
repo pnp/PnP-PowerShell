@@ -1,5 +1,7 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using OfficeDevPnP.Core.Entities;
@@ -8,18 +10,18 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSite")]
     [CmdletAlias("New-SPOTenantSite")]
-    [CmdletHelp("Creates a new site collection for the current tenant", 
+    [CmdletHelp("Creates a new site collection for the current tenant",
         DetailedDescription = @"The New-PnPTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
-Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx ", 
+Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx ",
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
         Code = @"PS:> New-PnPTenantSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Owner user@example.org -TimeZone 4",
-        Remarks = @"This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contoso', the timezone 'UTC+01:00' and the owner 'user@example.org'", SortOrder = 1)]        
+        Remarks = @"This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contoso', the timezone 'UTC+01:00' and the owner 'user@example.org'", SortOrder = 1)]
     [CmdletRelatedLink(
-        Text ="Locale IDs", 
+        Text = "Locale IDs",
         Url = "http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911")]
     [CmdletRelatedLink(
-        Text = "Resource Usage Limits on Sandboxed Solutions in SharePoint 2010", 
+        Text = "Resource Usage Limits on Sandboxed Solutions in SharePoint 2010",
         Url = "http://msdn.microsoft.com/en-us/library/gg615462.aspx.")]
     [CmdletRelatedLink(
         Text = "Creating on-premises site collections using CSOM",
@@ -83,9 +85,21 @@ Online site collection fails if a deleted site with the same URL exists in the R
 
             Tenant.CreateSiteCollection(entity);
 #else
-            Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota, (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid, RemoveDeletedSite, Wait);
+            Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
+            Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
+                (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid,
+                RemoveDeletedSite, Wait, Wait == true ? timeoutFunction : null);
+
 #endif
         }
 
+        private bool TimeoutFunction(TenantOperationMessage message)
+        {
+            if (message == TenantOperationMessage.CreatingSiteCollection)
+            {
+                Host.UI.Write(".");
+            }
+            return Stopping;
+        }
     }
 }

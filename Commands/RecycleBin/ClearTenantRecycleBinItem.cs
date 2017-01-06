@@ -1,6 +1,8 @@
-﻿using System.Management.Automation;
-using System.Threading;
+﻿#if !ONPREMISES
+using System;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
@@ -32,20 +34,20 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         {
             if (Force || ShouldContinue(string.Format(Resources.ClearTenantRecycleBinItem, Url), Resources.Confirm))
             {
-                var spOperation = Tenant.RemoveDeletedSite(Url);
-                Tenant.Context.Load(spOperation);
-                Tenant.Context.ExecuteQueryRetry();
-                
-                if (Wait)
-                {
-                    while (!spOperation.IsComplete)
-                    {
-                        Thread.Sleep(3000);
-                        Tenant.Context.Load(spOperation);
-                        Tenant.Context.ExecuteQueryRetry();
-                    }
-                }
+                Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
+
+                Tenant.DeleteSiteCollectionFromRecycleBin(Url, Wait, Wait ? timeoutFunction : null);
             }
+        }
+
+        private bool TimeoutFunction(TenantOperationMessage message)
+        {
+            if (message == TenantOperationMessage.RemovingDeletedSiteCollectionFromRecycleBin)
+            {
+                this.Host.UI.Write(".");
+            }
+            return Stopping;
         }
     }
 }
+#endif
