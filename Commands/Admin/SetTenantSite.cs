@@ -87,7 +87,7 @@ namespace SharePointPnP.PowerShell.Commands
             {
                 Host.UI.Write(".");
             }
-            return false;
+            return Stopping;
         }
 
     }

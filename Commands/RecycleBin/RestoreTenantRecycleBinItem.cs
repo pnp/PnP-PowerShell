@@ -45,6 +45,10 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                         Tenant.Context.Load(spOperation, spo => spo.PollingInterval, spo => spo.IsComplete);
                         Tenant.Context.ExecuteQueryRetry();
                         Host.UI.Write(".");
+                        if (Stopping)
+                        {
+                            break;
+                        }
                     }
                 }
             }

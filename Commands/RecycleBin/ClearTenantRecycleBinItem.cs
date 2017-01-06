@@ -46,7 +46,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
             {
                 this.Host.UI.Write(".");
             }
-            return false;
+            return Stopping;
         }
     }
 }

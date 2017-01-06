@@ -99,7 +99,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
             {
                 Host.UI.Write(".");
             }
-            return false;
+            return Stopping;
         }
     }
 }
