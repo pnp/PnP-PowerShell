@@ -44,7 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if (SPOnlineConnection.CurrentConnection.TenantAdminUrl != null && SPOnlineConnection.CurrentConnection.ConnectionType == ConnectionType.O365)
             {
                 var uri = new Uri(SPOnlineConnection.CurrentConnection.Url);
-                var uriParts = uri.Authority.Split('.');
+                var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))
                 {
                     _baseUri =
@@ -53,20 +53,20 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
+                    _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}");
                 }
                 SPOnlineConnection.CurrentConnection.CloneContext(SPOnlineConnection.CurrentConnection.TenantAdminUrl);
             }
             else
             {
                 Uri uri = new Uri(ClientContext.Url);
-                var uriParts = uri.Authority.Split('.');
+                var uriParts = uri.Host.Split('.');
                 if (!uriParts[0].EndsWith("-admin") &&
                     SPOnlineConnection.CurrentConnection.ConnectionType == ConnectionType.O365)
                 {
-                    _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
+                    _baseUri = new Uri($"{uri.Scheme}://{uri.Authority}");
 
-                    var adminUrl = string.Format("https://{0}-admin.{1}", uriParts[0], string.Join(".",uriParts.Skip(1)));
+                    var adminUrl = $"https://{uriParts[0]}-admin.{string.Join(".", uriParts.Skip(1))}";
 
                     SPOnlineConnection.CurrentConnection.Context =
                         SPOnlineConnection.CurrentConnection.CloneContext(adminUrl);
