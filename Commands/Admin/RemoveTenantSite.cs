@@ -49,12 +49,19 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
+            if (!Url.ToLower().StartsWith("https://") && !Url.ToLower().StartsWith("http://"))
+            {
+                Uri uri = BaseUri;
+                Url = $"{uri.ToString().TrimEnd('/')}/{Url.TrimStart('/')}";
+            }
+
             if (Force || ShouldContinue(string.Format(Resources.RemoveSiteCollection0, Url), Resources.Confirm))
             {
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-
+#pragma warning disable 618
                 if (!FromRecycleBin)
+#pragma warning restore 618
                 {
                     
                     Tenant.DeleteSiteCollection(Url, !MyInvocation.BoundParameters.ContainsKey("SkipRecycleBin"), timeoutFunction);

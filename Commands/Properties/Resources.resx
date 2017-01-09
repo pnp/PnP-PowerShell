@@ -277,4 +277,7 @@
   <data name="RemoveImageRenditionWithName0" xml:space="preserve">
     <value>Remove Image Rendition with name '{0}'?</value>
   </data>
+  <data name="CreateSiteWithUrl0" xml:space="preserve">
+    <value>Create site with url '{0}'?</value>
+  </data>
 </root>

@@ -133,6 +133,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create site with url &apos;{0}&apos;?.
+        /// </summary>
+        internal static string CreateSiteWithUrl0 {
+            get {
+                return ResourceManager.GetString("CreateSiteWithUrl0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current site is not a tenant administration site.
         /// </summary>
         internal static string CurrentSiteIsNoTenantAdminSite {
