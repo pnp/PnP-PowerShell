@@ -352,6 +352,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -359,9 +360,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\PipeBinds\ImageRenditionPipeBind.cs" />
     <Compile Include="Files\CopyFile.cs" />
     <Compile Include="Files\MoveFile.cs" />
+    <Compile Include="Files\MoveFolder.cs" />
     <Compile Include="Files\RenameFile.cs" />
+    <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
+    <Compile Include="Files\RenameFolder.cs" />
     <Compile Include="Graph\GetUnifiedGroup.cs" />
     <Compile Include="Admin\GetWebTemplates.cs" />
     <Compile Include="Admin\GetTimeZoneId.cs" />
@@ -497,12 +502,22 @@
     <Compile Include="Provider\SPODriveParameters.cs" />
     <Compile Include="Provider\SPOProvider.cs" />
     <Compile Include="Publishing\AddMasterPage.cs" />
+    <Compile Include="Publishing\RemovePublishingImageRendition.cs" />
+    <Compile Include="Publishing\GetPublishingImageRendition.cs" />
+    <Compile Include="RecycleBin\ClearTenantRecycleBinItem.cs" />
+    <Compile Include="RecycleBin\GetTenantRecycleBinItem.cs" />
+    <Compile Include="RecycleBin\RestoreTenantRecycleBinItem.cs" />
+    <Compile Include="RecycleBin\RestoreRecycleBinItem.cs" />
+    <Compile Include="RecycleBin\ClearRecycleBinItem.cs" />
+    <Compile Include="Publishing\AddPublishingImageRendition.cs" />
     <Compile Include="Publishing\SetDefaultPageLayout.cs" />
     <Compile Include="Publishing\SetAvailablePageLayouts.cs" />
     <Compile Include="Search\GetSiteSearchQueryResults.cs" />
     <Compile Include="Search\SetSearchConfiguration.cs" />
     <Compile Include="Search\GetSearchConfiguration.cs" />
+    <Compile Include="RecycleBin\MoveRecycleBinItem.cs" />
     <Compile Include="Site\GetAuditing.cs" />
+    <Compile Include="RecycleBin\GetRecycleBinItem.cs" />
     <Compile Include="Site\SetAuditing.cs" />
     <Compile Include="Taxonomy\RemoveTaxonomyItem.cs" />
     <Compile Include="Taxonomy\RemoveTermGroup.cs" />
