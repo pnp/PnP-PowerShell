@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
         {
             var isClosed = SelectedWeb.IsClosedBySitePolicy();
 
-            WriteObject(isClosed ? ClosureState.Open : ClosureState.Closed, false);
+            WriteObject(isClosed ? ClosureState.Closed : ClosureState.Open, false);
         }
     }
 }
