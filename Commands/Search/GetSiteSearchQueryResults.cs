@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteSearchQueryResults")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteSearchQueryResults", DefaultParameterSetName = "Limit")]
     [CmdletAlias("Get-SPOSiteSearchQueryResults")]
     [CmdletHelp("Executes a search query to retrieve indexed site collections",
         Category = CmdletHelpCategory.Search,
