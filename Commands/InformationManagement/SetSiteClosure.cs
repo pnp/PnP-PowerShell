@@ -4,12 +4,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
-    public enum ClosureState
-    {
-        Open,
-        Close
-    }
-
     [Cmdlet(VerbsCommon.Set, "PnPSiteClosure")]
     [CmdletAlias("Set-SPOSiteClosure")]
     [CmdletHelp("Opens or closes a site which has a site policy applied", Category = CmdletHelpCategory.InformationManagement)]
@@ -17,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
       Code = @"PS:> Set-PnPSiteClosure -State Open",
       Remarks = @"This opens a site which has been closed and has a site policy applied.", SortOrder = 1)]
     [CmdletExample(
-      Code = @"PS:> Set-PnPSiteClosure -State Close",
+      Code = @"PS:> Set-PnPSiteClosure -State Closed",
       Remarks = @"This closes a site which is open and has a site policy applied.", SortOrder = 2)]
     public class SetSiteClosure : SPOWebCmdlet
     {
@@ -29,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
             if (State == ClosureState.Open)
             {
                 SelectedWeb.SetOpenBySitePolicy();
-            } else if (State == ClosureState.Close)
+            } else if (State == ClosureState.Closed)
             {
                 SelectedWeb.SetClosedBySitePolicy();
             }
