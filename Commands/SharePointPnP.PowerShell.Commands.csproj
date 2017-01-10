@@ -419,6 +419,7 @@
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
+    <Compile Include="InformationManagement\SetSiteClosure.cs" />
     <Compile Include="Provisioning\AddFileToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\LoadProvisioningTemplate.cs" />
     <Compile Include="Provisioning\NewProvisioningTemplate.cs" />
