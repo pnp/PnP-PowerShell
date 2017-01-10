@@ -516,6 +516,7 @@
     <Compile Include="Search\SetSearchConfiguration.cs" />
     <Compile Include="Search\GetSearchConfiguration.cs" />
     <Compile Include="RecycleBin\MoveRecycleBinItem.cs" />
+    <Compile Include="Search\SubmitSearchQuery.cs" />
     <Compile Include="Site\GetAuditing.cs" />
     <Compile Include="RecycleBin\GetRecycleBinItem.cs" />
     <Compile Include="Site\SetAuditing.cs" />
