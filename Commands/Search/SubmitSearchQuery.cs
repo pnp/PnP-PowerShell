@@ -23,9 +23,13 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Remarks = "Returns the top 10 items indexed by SharePoint Search of which the title starts with the word Intranet",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSearchQuery -Query ""Title:Intranet*"" -AutoPaging $true",
+        Code = @"PS:> Get-PnPSearchQuery -Query ""Title:Intranet*"" -All",
         Remarks = "Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPSearchQuery -Query ""Title:Intranet*"" -Refiners ""contentclass,FileType(filter=6/0/*)""",
+        Remarks = "Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties",
+        SortOrder = 4)]
     public class SubmitSearchQuery : SPOWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Search query in Keyword Query Language (KQL).", ParameterSetName = ParameterAttribute.AllParameterSets)]
