@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Search
 {
-    [Cmdlet("Submit", "PnPSearchQuery")]
+    [Cmdlet("Submit", "PnPSearchQuery", DefaultParameterSetName = "Limit")]
     [CmdletAlias("Submit-SPOSearchQuery")]
     [CmdletHelp("Executes an arbitrary search query against the SharePoint search index",
         Category = CmdletHelpCategory.Search,
@@ -28,89 +28,93 @@ namespace SharePointPnP.PowerShell.Commands.Search
         SortOrder = 3)]
     public class SubmitSearchQuery : SPOWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Search query in Keyword Query Language (KQL).")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Search query in Keyword Query Language (KQL).", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Query = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.")]
+        [Parameter(Mandatory = false, HelpMessage = "Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.", ParameterSetName = "Limit")]
         public int StartRow = 0;
 
-        [Parameter(Mandatory = false, HelpMessage = "Maximum amount of search results to return. Default and max per page is 500 search results.")]
+        [Parameter(Mandatory = false, HelpMessage = "Maximum amount of search results to return. Default and max per page is 500 search results.", ParameterSetName = "Limit")]
         [ValidateRange(0, 500)]
         public int MaxResults = 500;
 
-        [Parameter(Mandatory = false, HelpMessage = "Automatically page results until the end. Use with caution!")]
-        public bool AutoPaging = false;
+        [Parameter(Mandatory = false, HelpMessage = "Automatically page results until the end to get more than 500. Use with caution!", ParameterSetName = "All")]
+        public SwitchParameter All;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether near duplicate items should be removed from the search results.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies whether near duplicate items should be removed from the search results.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool TrimDuplicates = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Extra query properties. Can for example be used for Office Graph queries.")]
+        [Parameter(Mandatory = false, HelpMessage = "Extra query properties. Can for example be used for Office Graph queries.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Properties;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list of refiners to be returned in a search result.")]
+        [Parameter(Mandatory = false, HelpMessage = "The list of refiners to be returned in a search result.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Refiners;
 
-        [Parameter(Mandatory = false, HelpMessage = "The locale for the query.")]
+        [Parameter(Mandatory = false, HelpMessage = "The locale for the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public int Culture;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the query template that is used at run time to transform the query based on user input.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the query template that is used at run time to transform the query based on user input.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string QueryTemplate;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list of properties to return in the search results.")]
+        [Parameter(Mandatory = false, HelpMessage = "The list of properties to return in the search results.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] SelectProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "The set of refinement filters used.")]
+        [Parameter(Mandatory = false, HelpMessage = "The set of refinement filters used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] RefinementFilters;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list of properties by which the search results are ordered.")]
+        [Parameter(Mandatory = false, HelpMessage = "The list of properties by which the search results are ordered.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable SortList;
 
-        [Parameter(Mandatory = false, HelpMessage = "The identifier (ID) of the ranking model to use for the query.")]
+        [Parameter(Mandatory = false, HelpMessage = "The identifier (ID) of the ranking model to use for the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string RankingModelId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the name of the client which issued the query.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the name of the client which issued the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ClientType = "ContentSearchLow";
 
-        [Parameter(Mandatory = false, HelpMessage = "The keyword query’s hidden constraints.")]
+        [Parameter(Mandatory = false, HelpMessage = "The keyword query’s hidden constraints.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string HiddenConstraints;
 
-        [Parameter(Mandatory = false, HelpMessage = "The identifier for the search query time zone.")]
+        [Parameter(Mandatory = false, HelpMessage = "The identifier for the search query time zone.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public int TimeZoneId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether the phonetic forms of the query terms are used to find matches.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies whether the phonetic forms of the query terms are used to find matches.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool EnablePhonetic;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether stemming is enabled.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies whether stemming is enabled.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool EnableStemming;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies whether Query Rules are enabled for this query.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies whether Query Rules are enabled for this query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool EnableQueryRules;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the identifier (ID or name) of the result source to be used to run the query.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the identifier (ID or name) of the result source to be used to run the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Guid SourceId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Determines whether Best Bets are enabled.")]
+        [Parameter(Mandatory = false, HelpMessage = "Determines whether Best Bets are enabled.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool ProcessBestBets;
 
-        [Parameter(Mandatory = false, HelpMessage = "Determines whether personal favorites data is processed or not.")]
+        [Parameter(Mandatory = false, HelpMessage = "Determines whether personal favorites data is processed or not.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool ProcessPersonalFavorites;
 
         protected override void ExecuteCmdlet()
         {
-            KeywordQuery keywordQuery = CreateKeywordQuery();
-            if (AutoPaging)
+            int startRow = StartRow;
+            int rowLimit = MaxResults;
+            if (All.IsPresent)
             {
-                keywordQuery.RowLimit = 500;
-                keywordQuery.StartRow = 0;
+                startRow = 0;
+                rowLimit = 500;
             }
 
             var currentCount = 0;
-            int start = 0;
-            ResultTableCollection finalResults = new ResultTableCollection();
+            PnPResultTableCollection finalResults = null;
             do
             {
+                KeywordQuery keywordQuery = CreateKeywordQuery();
+                keywordQuery.StartRow = startRow;
+                keywordQuery.RowLimit = rowLimit;
+
                 var searchExec = new SearchExecutor(ClientContext);
-                if (start > 0 && AutoPaging)
+                if (startRow > 0 && All.IsPresent)
                 {
                     keywordQuery.Refiners = null; // Only need to set on first page for auto paging
                 }
@@ -120,41 +124,43 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
                 if (results.Value != null)
                 {
-                    if (!string.IsNullOrWhiteSpace(keywordQuery.Refiners))
+                    if (finalResults == null)
                     {
-                        var refinementTable = results.Value.SingleOrDefault(t => t.TableType == "RefinementResults");
-                        if(refinementTable != null) finalResults.Add(refinementTable);
+                        finalResults = (PnPResultTableCollection)results.Value;
+                        foreach (ResultTable resultTable in results.Value)
+                        {
+                            if (resultTable.TableType == "RelevantResults")
+                            {
+                                currentCount = resultTable.RowCount;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // we're in paging mode
+                        foreach (ResultTable resultTable in results.Value)
+                        {
+                            PnPResultTable pnpResultTable = (PnPResultTable)resultTable;
+                            var existingTable = finalResults.SingleOrDefault(t => t.TableType == resultTable.TableType);
+                            if (existingTable != null)
+                            {
+                                existingTable.ResultRows.AddRange(pnpResultTable.ResultRows);
+                            }
+                            else
+                            {
+                                finalResults.Add(pnpResultTable);
+                            }
+                            if (pnpResultTable.TableType == "RelevantResults")
+                            {
+                                currentCount = resultTable.RowCount;
+                            }
+                        }
                     }
 
-                    var table = results.Value.Single(t => t.TableType == "RelevantResults");
-                    
-                    currentCount = table.RowCount;
-                    start = (start + keywordQuery.RowLimit);
-                    foreach (IDictionary<string, object> dictionary in table.ResultRows)
-                    {
-                        //var path = dictionary["path"] + "";
-                        //sites.Add(path);
-                    }
                 }
-            } while (currentCount == keywordQuery.RowLimit && AutoPaging);
-
-            //var dynamicList = new List<dynamic>();
-            //if (results?.Value[0].RowCount > 0)
-            //{
-            //    foreach (var row in results.Value[0].ResultRows)
-            //    {
-            //        dynamicList.Add(
-            //            new
-            //            {
-            //                Title = row["Title"]?.ToString() ?? "",
-            //                Url = row["SPSiteUrl"]?.ToString() ?? "",
-            //                Description = row["Description"]?.ToString() ?? "",
-            //                WebTemplate = row["WebTemplate"]?.ToString() ?? ""
-            //            });
-            //    }
-            //}
-
-            WriteObject(dynamicList, true);
+                startRow += rowLimit;
+            } while (currentCount == rowLimit && All.IsPresent);
+            WriteObject(finalResults, true);
         }
 
         private KeywordQuery CreateKeywordQuery()
@@ -168,8 +174,6 @@ namespace SharePointPnP.PowerShell.Commands.Search
                 query = Query;
             }
 
-            keywordQuery.RowLimit = MaxResults;
-            keywordQuery.StartRow = StartRow;
             keywordQuery.QueryText = query;
             keywordQuery.TrimDuplicates = TrimDuplicates;
             keywordQuery.Refiners = Refiners;
@@ -188,25 +192,30 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
             if (SortList != null)
             {
-                keywordQuery.SortList.Clear();
+                var sortList = keywordQuery.SortList;
+                sortList.Clear();
                 foreach (string key in SortList.Keys)
                 {
                     SortDirection sort = (SortDirection)Enum.Parse(typeof(SortDirection), SortList[key] as string, true);
-                    keywordQuery.SortList.Add(key, sort);
+                    sortList.Add(key, sort);
                 }
             }
             if (SelectProperties != null)
             {
+                var selectProperties = keywordQuery.SelectProperties;
+                selectProperties.Clear();
                 foreach (string property in SelectProperties)
                 {
-                    keywordQuery.SelectProperties.Add(property);
+                    selectProperties.Add(property);
                 }
             }
             if (RefinementFilters != null)
             {
+                var refinementFilters = keywordQuery.RefinementFilters;
+                refinementFilters.Clear();
                 foreach (string property in RefinementFilters)
                 {
-                    keywordQuery.RefinementFilters.Add(property);
+                    refinementFilters.Add(property);
                 }
             }
             if (Properties != null)

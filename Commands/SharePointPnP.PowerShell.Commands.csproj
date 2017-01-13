@@ -513,6 +513,8 @@
     <Compile Include="Publishing\SetDefaultPageLayout.cs" />
     <Compile Include="Publishing\SetAvailablePageLayouts.cs" />
     <Compile Include="Search\GetSiteSearchQueryResults.cs" />
+    <Compile Include="Search\PnPResultTable.cs" />
+    <Compile Include="Search\PnPResultTableCollection.cs" />
     <Compile Include="Search\SetSearchConfiguration.cs" />
     <Compile Include="Search\GetSearchConfiguration.cs" />
     <Compile Include="RecycleBin\MoveRecycleBinItem.cs" />
