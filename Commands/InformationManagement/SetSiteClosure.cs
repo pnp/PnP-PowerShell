@@ -25,7 +25,14 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
                 SelectedWeb.SetOpenBySitePolicy();
             } else if (State == ClosureState.Closed)
             {
-                SelectedWeb.SetClosedBySitePolicy();
+                if (this.SelectedWeb.GetAppliedSitePolicy() != null)
+                {
+                    SelectedWeb.SetClosedBySitePolicy();
+                }
+                else
+                {
+                    WriteWarning("No site policy applied. Set the Site Policy with Set-PnPSitePolicy and retrieve all available policies with Get-PnPSitePolicy -AllAvailable");
+                }
             }
         }
     }
