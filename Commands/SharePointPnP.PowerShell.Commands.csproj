@@ -364,6 +364,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\PipeBinds\ImageRenditionPipeBind.cs" />
+    <Compile Include="ContentTypes\GetContentTypePublishingHubUrl.cs" />
     <Compile Include="Files\CopyFile.cs" />
     <Compile Include="Files\MoveFile.cs" />
     <Compile Include="Files\MoveFolder.cs" />
