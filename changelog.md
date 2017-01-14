@@ -1,6 +1,7 @@
 # SharePointPnP.PowerShell Changelog #
 
 **2017-01-14**
+* Added Get-PnPContentTypePublishingHubUrl
 * Added Get-PnPSiteCollectionTermStore which returns the Site Collection Term Store.
 
 **2017-01-05**
