@@ -1,6 +1,7 @@
 # SharePointPnP.PowerShell Changelog #
 
 **2017-01-14**
+* Added Submit-PnPSearchQuery cmdlet
 * Added Set-PnPSiteClosure and Get-PnPSiteClosure cmdlets
 * Added Get-PnPContentTypePublishingHubUrl
 * Added Get-PnPSiteCollectionTermStore which returns the Site Collection Term Store.
