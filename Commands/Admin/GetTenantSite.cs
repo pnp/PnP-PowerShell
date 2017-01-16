@@ -58,10 +58,28 @@ namespace SharePointPnP.PowerShell.Commands
                 }
                 else
                 {
+
+
                     var list = Tenant.GetSiteProperties(0, Detailed);
-                    list.Context.Load(list);
-                    list.Context.ExecuteQueryRetry();
+                  
+                    Tenant.Context.Load(list);
+                    Tenant.Context.ExecuteQueryRetry();
                     var siteProperties = list.ToList();
+                    var returnedEntries = list.Count;
+
+                    var startIndex = 0;
+                    while (returnedEntries > 299)
+                    {
+                        startIndex = startIndex + 300;
+                        var nextList = Tenant.GetSiteProperties(startIndex, Detailed);
+                        Tenant.Context.Load(nextList);
+                        Tenant.Context.ExecuteQueryRetry();
+                        siteProperties.AddRange(nextList);
+                        returnedEntries = nextList.Count;
+                    }
+
+                    
+                    
                     if (IncludeOneDriveSites)
                     {
                         if (Force || ShouldContinue(Resources.GetTenantSite_ExecuteCmdlet_This_request_can_take_a_long_time_to_execute__Continue_, Resources.Confirm))
