@@ -193,7 +193,6 @@ Cmdlet|Description
 **[Get&#8209;PnPSite](GetPnPSite.md)** |Returns the current site collection from the context.
 **[Uninstall&#8209;PnPSolution](UninstallPnPSolution.md)** |Uninstalls a sandboxed solution from a site collection
 **[Install&#8209;PnPSolution](InstallPnPSolution.md)** |Installs a sandboxed solution to a site collection. WARNING! This method can delete your composed look gallery due to the method used to activate the solution. We recommend you to only to use this cmdlet if you are okay with that.
-**[Get&#8209;SPOSite](GetSPOSite.md)** |Returns the current site collection from the context.
 ##Taxonomy
 Cmdlet|Description
 :-----|:----------
