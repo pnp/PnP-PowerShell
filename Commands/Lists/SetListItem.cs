@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names." +
-                                                    "\n\nSingle line of text: -Values @{\"TitleField\" = \"Title New\"}" +
+                                                    "\n\nSingle line of text: -Values @{\"TextField\" = \"Title New\"}" +
                                                     "\n\nMultiple lines of text: -Values @{\"MultiTextField\" = \"New text\\n\\nMore text\"}" +
                                                     "\n\nRich text: -Values @{\"MultiTextField\" = \"<strong>New</strong> text\"}" +
             "\n\nChoice: -Values @{\"ChoiceField\" = \"Value 1\"}" +
@@ -54,11 +54,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             "\n\nMulti value lookup (id of lookup values as string): -Values @{\"MultiLookupField\" = \"1,2\"}" +
             "\n\nYes/No: -Values @{\"YesNoField\" = \"No\"}" +
             "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"PersonField\" = \"user1@domain.com\",\"21\"}" +
-            "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataFieldField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}" +
-            "\n\nManaged Metadata (singel value with id of term): -Values @{\"MetadataFieldField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
-            "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataFieldField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}" +
-            "\n\nManaged Metadata (multiple values with ids of terms): -Values @{\"MetadataFieldField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\",\"52d88107-c2a8-4bf0-adfa-04bc2305b593\"}" +
-            "\n\nHyperlink or Picture: -Values @{\"Hyperlink\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
+            "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}" +
+            "\n\nManaged Metadata (singel value with id of term): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
+            "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}" +
+            "\n\nManaged Metadata (multiple values with ids of terms): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\",\"52d88107-c2a8-4bf0-adfa-04bc2305b593\"}" +
+            "\n\nHyperlink or Picture: -Values @{\"HyperlinkField\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
 
 #if !ONPREMISES
