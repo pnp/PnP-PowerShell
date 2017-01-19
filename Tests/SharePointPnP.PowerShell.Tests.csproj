@@ -293,6 +293,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="App.config.sample" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Commands\SharePointPnP.PowerShell.Commands.csproj">
