@@ -22,8 +22,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 1,
         Remarks = "Sets a default value for the enterprise keywords field on a library to a term called \"Stockholm\", located in the \"Locations\" term set, which is part of the \"Company\" term group")]
     [CmdletExample(
-        Code = "PS:> Set-PnPDefaultColumnValues -List Documents -Field MyTextField -Value \"DefaultValue\"",
+        Code = "PS:> Set-PnPDefaultColumnValues -List Documents -Field TaxKeyword -Value \"15c4c4e4-4b67-4894-a1d8-de5ff811c791\"",
         SortOrder = 2,
+        Remarks = "Sets a default value for the enterprise keywords field on a library to a term with the id \"15c4c4e4-4b67-4894-a1d8-de5ff811c791\". You need to ensure the term is valid for the field.")]
+    [CmdletExample(
+        Code = "PS:> Set-PnPDefaultColumnValues -List Documents -Field MyTextField -Value \"DefaultValue\"",
+        SortOrder = 3,
         Remarks = "Sets a default value for the MyTextField text field on a library to a value of \"DefaultValue\"")]
     public class SetDefaultColumnValues : SPOWebCmdlet
     {
@@ -76,7 +80,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     if (field != null)
                     {
                         IDefaultColumnValue defaultColumnValue = null;
-                        if (field.TypeAsString == "Text" || field.TypeAsString == "Choice" ||field.TypeAsString == "MultiChoice")
+                        if (field.TypeAsString == "Text" || field.TypeAsString == "Choice" || field.TypeAsString == "MultiChoice")
                         {
                             var values = string.Join(";", Value);
                             defaultColumnValue = new DefaultColumnTextValue()
@@ -96,6 +100,20 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                 if (term != null)
                                 {
                                     terms.Add(term as Term);
+                                }
+                                else
+                                {
+                                    Guid termGuid;
+                                    if (Guid.TryParse(termString, out termGuid))
+                                    {
+                                        var taxSession = ClientContext.Site.GetTaxonomySession();
+                                        var foundTerm = taxSession.GetTerm(termGuid);
+                                        ClientContext.ExecuteQueryRetry();
+                                        if (foundTerm != null)
+                                        {
+                                            terms.Add(foundTerm);
+                                        }
+                                    }
                                 }
                             }
                             if (terms.Any())
