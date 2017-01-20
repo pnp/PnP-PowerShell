@@ -93,27 +93,23 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                         else
                         {
                             List<Term> terms = new List<Term>();
-
                             foreach (var termString in Value)
                             {
-                                var term = ClientContext.Site.GetTaxonomyItemByPath(termString);
-                                if (term != null)
+                                Guid termGuid;
+                                Term term;
+                                if (Guid.TryParse(termString, out termGuid))
                                 {
-                                    terms.Add(term as Term);
+                                    var taxSession = ClientContext.Site.GetTaxonomySession();
+                                    term = taxSession.GetTerm(termGuid);
+                                    ClientContext.ExecuteQueryRetry();                                    
                                 }
                                 else
                                 {
-                                    Guid termGuid;
-                                    if (Guid.TryParse(termString, out termGuid))
-                                    {
-                                        var taxSession = ClientContext.Site.GetTaxonomySession();
-                                        var foundTerm = taxSession.GetTerm(termGuid);
-                                        ClientContext.ExecuteQueryRetry();
-                                        if (foundTerm != null)
-                                        {
-                                            terms.Add(foundTerm);
-                                        }
-                                    }
+                                    term = ClientContext.Site.GetTaxonomyItemByPath(termString) as Term;
+                                }
+                                if (term != null)
+                                {
+                                    terms.Add(term);
                                 }
                             }
                             if (terms.Any())
