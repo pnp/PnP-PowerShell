@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
@@ -12,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true)]
     [CmdletAlias("Copy-SPOFile")]
-    [CmdletHelp("Copies a file to a different location",
+    [CmdletHelp("Copies a file or folder to a different location",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
         Remarks = "Copies a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to the site collection otherproject located in the managed path sites. If a file named company.aspx already exists, it won't perform the copy.",
@@ -44,8 +45,8 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, the source folder name will not be created, only the contents within it.")]
-        public SwitchParameter SkipSourceFolder;
+        [Parameter(Mandatory = false, HelpMessage = "If the source is a folder, the source folder name will not be created, only the contents within it.")]
+        public SwitchParameter SkipSourceFolderName;
 
         protected override void ExecuteCmdlet()
         {
@@ -68,58 +69,66 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 Uri uri = new Uri(ClientContext.Url);
                 Uri targetUri = new Uri(uri, TargetUrl);
                 var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
-                var srcSite = ClientContext.Site;
-                ClientContext.Load(srcSite, s => s.Url);
+                var srcWeb = ClientContext.Web;
+                ClientContext.Load(srcWeb, s => s.Url);
                 ClientContext.ExecuteQueryRetry();
 
                 var targetContext = ClientContext.Clone(webUrl.AbsoluteUri);
-                var dstSite = targetContext.Site;
-                targetContext.Load(dstSite, s => s.Url);
+                var dstWeb = targetContext.Web;
+                targetContext.Load(dstWeb, s => s.Url);
                 targetContext.ExecuteQueryRetry();
-                if (srcSite.Url == dstSite.Url)
+                if (srcWeb.Url == dstWeb.Url)
                 {
-                    //same site collection
-                    file.CopyTo(TargetUrl, OverwriteIfAlreadyExists);
-                    ClientContext.ExecuteQueryRetry();
+                    try
+                    {
+                        // If src/dst are on the same Web, then try using CopyTo - backwards compability
+                        file.CopyTo(TargetUrl, OverwriteIfAlreadyExists);
+                        ClientContext.ExecuteQueryRetry();
+                        return;
+                    }
+                    catch
+                    {
+                        //swallow exception, in case target was a lib/folder
+                    }
+                }
+
+                //different site/site collection
+                Folder targetFolder = null;
+                string fileOrFolderName = null;
+                try
+                {
+                    targetFolder = targetContext.Web.GetFolderByServerRelativeUrl(TargetUrl);
+                    targetContext.Load(targetFolder, f => f.Name, f => f.Exists);
+                    targetContext.ExecuteQueryRetry();
+                    if(!targetFolder.Exists) throw new Exception("TargetUrl is an existing file, not folder");
+                }
+                catch (Exception)
+                {
+                    Expression<Func<List, object>> expressionRelativeUrl = l => l.RootFolder.ServerRelativeUrl;
+                    var query = targetContext.Web.Lists.IncludeWithDefaultProperties(expressionRelativeUrl);
+                    var lists = targetContext.LoadQuery(query);
+                    targetContext.ExecuteQueryRetry();
+                    lists = lists.OrderByDescending(l => l.RootFolder.ServerRelativeUrl); // order descending in case more lists start with the same
+                    foreach (List targetList in lists)
+                    {
+                        if (!TargetUrl.StartsWith(targetList.RootFolder.ServerRelativeUrl, StringComparison.InvariantCultureIgnoreCase)) continue;
+                        fileOrFolderName = Regex.Replace(TargetUrl, targetList.RootFolder.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
+                        targetFolder = srcIsFolder ? targetList.RootFolder.EnsureFolder(fileOrFolderName) : targetList.RootFolder;
+                        break;
+                    }
+                }
+                if (targetFolder == null) throw new Exception("Target does not exist");
+                if (srcIsFolder)
+                {
+                    if (!SkipSourceFolderName)
+                    {
+                        targetFolder = targetFolder.EnsureFolder(folder.Name);
+                    }
+                    CopyFolder(folder, targetFolder);
                 }
                 else
                 {
-                    //different site collections
-                    Folder targetFolder = null;
-                    string fileOrFolderName = null;
-                    try
-                    {
-                        targetFolder = targetContext.Web.GetFolderByServerRelativeUrl(TargetUrl);
-                        targetContext.Load(targetFolder, f => f.Name, f => f.Exists);
-                        targetContext.ExecuteQueryRetry();
-                    }
-                    catch (Exception)
-                    {
-                        Expression<Func<List, object>> expressionRelativeUrl = l => l.RootFolder.ServerRelativeUrl;
-                        var query = targetContext.Web.Lists.IncludeWithDefaultProperties(expressionRelativeUrl);
-                        var lists = targetContext.LoadQuery(query);
-                        targetContext.ExecuteQueryRetry();
-                        foreach (List targetList in lists)
-                        {
-                            if (!TargetUrl.StartsWith(targetList.RootFolder.ServerRelativeUrl, StringComparison.InvariantCultureIgnoreCase)) continue;
-                            fileOrFolderName = Regex.Replace(TargetUrl, targetList.RootFolder.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
-                            targetFolder = srcIsFolder ? targetList.RootFolder.EnsureFolder(fileOrFolderName) : targetList.RootFolder;
-                            break;
-                        }
-                    }
-                    if (targetFolder == null) throw new Exception("Target does not exist");
-                    if (srcIsFolder)
-                    {
-                        if (!SkipSourceFolder)
-                        {
-                            targetFolder = targetFolder.EnsureFolder(folder.Name);
-                        }
-                        CopyFolder(folder, targetFolder);
-                    }
-                    else
-                    {
-                        UploadFile(file, targetFolder, fileOrFolderName);
-                    }
+                    UploadFile(file, targetFolder, fileOrFolderName);
                 }
             }
         }
