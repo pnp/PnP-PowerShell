@@ -64,17 +64,35 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
                     List list = List.GetList(SelectedWeb);
 
                     ClientContext.ExecuteQueryRetry();
+
                     if (!string.IsNullOrEmpty(Identity.Id))
                     {
-                        var cts = ClientContext.LoadQuery(list.ContentTypes.Include(ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group).Where(ct => ct.StringId == Identity.Id));
-                        ClientContext.ExecuteQueryRetry();
-                        WriteObject(cts, true);
+                        if(list.ContentTypeExistsById(Identity.Id))
+                        {
+                            var cts = list.GetContentTypeById(Identity.Id);
+                            ClientContext.Load(cts);
+                            ClientContext.ExecuteQueryRetry();
+                            WriteObject(cts, false);
+                        }
+                        else
+                        {
+                            WriteVerbose(string.Format("Content Type Id: {0} does not exist in the list: {1}", Identity.Id, List.Title));
+                        }
                     }
-                    else
+                    else if (!string.IsNullOrEmpty(Identity.Name))
                     {
-                        var cts = ClientContext.LoadQuery(list.ContentTypes.Include(ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group).Where(ct => ct.Name == Identity.Name));
-                        ClientContext.ExecuteQueryRetry();
-                        WriteObject(cts, true);
+                        if (list.ContentTypeExistsByName(Identity.Name))
+                        {
+                            var cts = list.GetContentTypeByName(Identity.Name);
+                            ClientContext.Load(cts);
+                            ClientContext.ExecuteQueryRetry();
+                            WriteObject(cts, false);
+                        }
+                        else
+                        {
+                            WriteVerbose(string.Format("Content Type Name: {0} does not exist in the list: {1}", Identity.Name, List.Title));
+                        }
+                     
                     }
                 }
             }

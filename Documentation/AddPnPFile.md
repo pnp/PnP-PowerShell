@@ -12,6 +12,7 @@ Add-PnPFile -Path <String>
             [-PublishComment <String>]
             [-UseWebDav [<SwitchParameter>]]
             [-Values <Hashtable>]
+            [-ContentType <ContentTypePipeBind>]
             [-Web <WebPipeBind>]
 ```
 
@@ -28,6 +29,7 @@ Add-PnPFile -FileName <String>
             [-PublishComment <String>]
             [-UseWebDav [<SwitchParameter>]]
             [-Values <Hashtable>]
+            [-ContentType <ContentTypePipeBind>]
             [-Web <WebPipeBind>]
 ```
 
@@ -42,6 +44,7 @@ Parameter|Type|Required|Description
 |ApproveComment|String|False|The comment added to the approval.|
 |CheckInComment|String|False|The comment added to the checkin.|
 |Checkout|SwitchParameter|False|If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.|
+|ContentType|ContentTypePipeBind|False|Use to assign a ContentType to the file.|
 |FileName|String|True|Name for file|
 |Folder|String|True|The destination folder in the site|
 |Path|String|True|The local file path.|

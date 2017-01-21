@@ -4,6 +4,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
@@ -69,6 +70,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names")]
         public Hashtable Values;
 
+        [Parameter(Mandatory = false, HelpMessage = "Use to assign a ContentType to the file.")]
+        public ContentTypePipeBind ContentType;
+
         protected override void ExecuteCmdlet()
         {
             if (ParameterSetName == "AsFile") {
@@ -123,6 +127,47 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 item.Update();
 
                 ClientContext.ExecuteQueryRetry();
+            }
+            if (ContentType != null)
+            {
+                ClientContext.Load(file, f=>f.ListId);
+                ClientContext.ExecuteQueryRetry();
+
+                List list = SelectedWeb.Lists.GetById(file.ListId);
+                ClientContext.Load(list);
+                ClientContext.ExecuteQueryRetry();
+
+                ContentType ct;
+                if (!string.IsNullOrEmpty(ContentType.Id))
+                {
+                    ct = list.GetContentTypeById(ContentType.Id);
+                }
+                else if(!string.IsNullOrEmpty(ContentType.Name))
+                {
+                    ct = list.GetContentTypeByName(ContentType.Name);
+                }
+                else if(ContentType.ContentType != null)
+                {
+                    ct = ContentType.ContentType;
+                }
+                else
+                {
+                    ct = null;
+                   
+                }
+
+                if (ct != null)
+                {
+                    var item = file.ListItemAllFields;
+                    item["ContentTypeId"] = ct.Id.StringValue;
+                    item.Update();
+                    ClientContext.ExecuteQueryRetry();
+                }
+                else
+                {
+                    WriteVerbose("Content Type was 'null' was not found.");
+                }
+
             }
 
             if (Checkout)
