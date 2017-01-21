@@ -78,7 +78,6 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
 
             foreach (var t in types)
             {
-                Console.WriteLine(t.BaseType.Name);
                 if (t.BaseType.Name == "SPOCmdlet" || t.BaseType.Name == "PSCmdlet" || t.BaseType.Name == "SPOWebCmdlet" || t.BaseType.Name == "SPOAdminCmdlet" || t.BaseType.Name == "PnPGraphCmdlet" ||t.BaseType.Name == "PnPWebRetrievalCmdlet`1")
                 {
 
