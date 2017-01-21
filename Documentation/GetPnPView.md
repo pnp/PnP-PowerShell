@@ -16,7 +16,7 @@ Get-PnPView [-Identity <ViewPipeBind>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|ViewPipeBind|False|The ID or name of the view|
-|Includes|String[]|False|Specify properties to load|
+|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
 |List|ListPipeBind|True|The ID or Url of the list.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

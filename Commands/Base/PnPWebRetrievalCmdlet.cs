@@ -12,7 +12,7 @@ using SharePointPnP.PowerShell.Commands.Extensions;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes", HelpMessage = "Specify properties to load")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes", HelpMessage = "Specify properties to include when retrieving objects from the server.")]
     public abstract class PnPWebRetrievalCmdlet<TType> : SPOCmdlet, IDynamicParameters
     {
         private Web _selectedWeb;

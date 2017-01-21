@@ -32,10 +32,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, name or Url (Lists/MyList) of the list.")]
         public ListPipeBind Identity;
 
-        //[Parameter(Mandatory = false, ValueFromPipeline = false, Position = 1, HelpMessage = "Additional Properties to retrieve for the List item(s) to be returned")]  
-        //[ValidateSet("AllowDeletion","BrowserFileHandling","ContentTypes","DataSource","DefaultDisplayFormUrl","DefaultEditFormUrl","DefaultNewFormUrl","DefaultViewPath","DocumentTemplateUrl","EffectiveBasePermissions","EffectiveBasePermissionsForUI","EnableAssignToEmail","EventReceivers","ExcludeFromOfflineClient","Fields","Forms","HasUniqueRoleAssignments","IsSiteAssetsLibrary","IsSystemList","ReadSecurity","RoleAssignments","SchemaXml","Tag","UserCustomActions","ValidationFormula","ValidationMessage","Views","WorkflowAssociations","WriteSecurity")]
-        //public string[] Includes;
-
         protected override void ExecuteCmdlet()
         {
 
@@ -63,36 +59,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 WriteObject(lists, true);
             }
         }
-
-        private static List<Expression<Func<T, object>>> GetPropertyExpression<T>(List<string> Includes)
-        {
-            var type = typeof(T);
-            var expressions = new List<Expression<Func<T, object>>>();
-
-            var properties = type.GetProperties();
-
-            foreach (var Include in Includes)
-            {
-                //Add . checking for nested includes.. then it would call this T function recursively suing the type of the property
-                // example RootFolder.ServerRelativeUrl GetPropertyExpression<Folder>(new string [] { "ServerRelativeUrl" }
-                var sanityCheck = (from property in properties where property.Name == Include select property).FirstOrDefault();
-                if (sanityCheck != null)
-                {
-                    //the property exists in the parent type.
-
-                    ParameterExpression paramExpression = Expression.Parameter(type, "l");
-                    MemberExpression propertyExpression = Expression.Property(paramExpression, Include);
-                    var bodyExpression = Expression.Convert(propertyExpression, typeof(Object));
-                    //MemberExpression propertyExpression = Expression.Property(instance,  Include);
-                    var expression = Expression.Lambda<Func<T, object>>(bodyExpression, new[] { paramExpression });
-                    expressions.Add(expression);
-                }
-            }
-
-            return expressions;
-        }
-
-
     }
 
 }
