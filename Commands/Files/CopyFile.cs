@@ -27,6 +27,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "Copies a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to the site collection otherproject located in the managed path sites. If a file named company.aspx already exists, it will still perform the copy and replace the original company.aspx file.",
         Code = @"PS:>Copy-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetUrl /sites/otherproject/Documents/company.docx -OverwriteIfAlreadyExists",
         SortOrder = 3)]
+    [CmdletExample(
+        Remarks = "Copies a folder named MyDocs located in the document library called Documents located in the projects sitecollection under the managed path sites to the site collection otherproject located in the managed path sites. If a folder already exists, it will still perform the copy and replace the original folder.",
+        Code = @"PS:>Copy-PnPFile -ServerRelativeUrl /sites/project/Documents/MyDocs -TargetUrl /sites/otherproject/Documents -OverwriteIfAlreadyExists",
+        SortOrder = 3)]
+
 
     public class CopyFile : SPOWebCmdlet
     {
@@ -66,13 +71,13 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
             if (Force || ShouldContinue(string.Format(Resources.CopyFile0To1, ServerRelativeUrl, TargetUrl), Resources.Confirm))
             {
-                Uri uri = new Uri(ClientContext.Url);
-                Uri targetUri = new Uri(uri, TargetUrl);
-                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
                 var srcWeb = ClientContext.Web;
                 ClientContext.Load(srcWeb, s => s.Url);
                 ClientContext.ExecuteQueryRetry();
 
+                Uri uri = new Uri(ClientContext.Url);
+                Uri targetUri = new Uri(uri, TargetUrl);
+                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
                 var targetContext = ClientContext.Clone(webUrl.AbsoluteUri);
                 var dstWeb = targetContext.Web;
                 targetContext.Load(dstWeb, s => s.Url);
@@ -95,12 +100,14 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 //different site/site collection
                 Folder targetFolder = null;
                 string fileOrFolderName = null;
+                bool targetFolderExists = false;
                 try
                 {
                     targetFolder = targetContext.Web.GetFolderByServerRelativeUrl(TargetUrl);
                     targetContext.Load(targetFolder, f => f.Name, f => f.Exists);
                     targetContext.ExecuteQueryRetry();
-                    if(!targetFolder.Exists) throw new Exception("TargetUrl is an existing file, not folder");
+                    if (!targetFolder.Exists) throw new Exception("TargetUrl is an existing file, not folder");
+                    targetFolderExists = true;
                 }
                 catch (Exception)
                 {
@@ -120,7 +127,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 if (targetFolder == null) throw new Exception("Target does not exist");
                 if (srcIsFolder)
                 {
-                    if (!SkipSourceFolderName)
+                    if (!SkipSourceFolderName && targetFolderExists)
                     {
                         targetFolder = targetFolder.EnsureFolder(folder.Name);
                     }
