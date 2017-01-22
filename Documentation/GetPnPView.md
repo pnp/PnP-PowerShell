@@ -5,6 +5,7 @@ Returns one or all views from a list
 Get-PnPView [-Identity <ViewPipeBind>]
             [-Web <WebPipeBind>]
             [-Includes <String[]>]
+            [-Includes <String[]>]
             -List <ListPipeBind>
 ```
 
