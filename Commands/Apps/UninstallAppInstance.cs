@@ -23,15 +23,8 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         {
             AppInstance instance;
 
-            if (Identity.Instance != null)
-            {
-                instance = Identity.Instance;
-            }
-            else
-            {
-                instance = SelectedWeb.GetAppInstanceById(Identity.Id);
-            }
-
+            instance = Identity.GetAppInstance(SelectedWeb);
+            
             if(instance != null)
             {
                 if(!instance.IsObjectPropertyInstantiated("Title"))
