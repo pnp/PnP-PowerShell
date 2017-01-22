@@ -183,7 +183,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                             var terms = new List<KeyValuePair<Guid, string>>();
                                             foreach (var arrayItem in value as object[])
                                             {
-                                                TaxonomyItem taxonomyItem = null;
+                                                TaxonomyItem taxonomyItem;
                                                 Guid termGuid = Guid.Empty;
                                                 if (!Guid.TryParse(arrayItem as string, out termGuid))
                                                 {

@@ -4,7 +4,6 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
-using OfficeDevPnP.Core.Entities;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 

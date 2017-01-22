@@ -6,7 +6,6 @@ using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System.Collections.Generic;
-using System.Threading;
 using OfficeDevPnP.Core;
 using OfficeDevPnP.Core.Entities;
 

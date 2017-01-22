@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
                 }
                 else
                 {
-                    throw new Exception(string.Format("Web Part with title '{0}' cannot be found on page with URL {1}", Identity.Title, ServerRelativePageUrl));
+                    throw new Exception($"Web Part with title '{Identity.Title}' cannot be found on page with URL {ServerRelativePageUrl}");
                 }
             }
             else

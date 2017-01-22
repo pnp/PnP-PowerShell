@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         private const string PROPBAGKEY = "_PnP_ProvisioningTemplateComposedLookInfo";
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the Color Palette Url based on the site relative url")]
-        public string ColorPaletteUrl = null;
+        public string ColorPaletteUrl;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the Font Scheme Url based on the server relative url")]
         public string FontSchemeUrl = null;
@@ -66,8 +66,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 }
                 else
                 {
-                    composedLook = new ComposedLook();
-                    composedLook.BackgroundFile = "";
+                    composedLook = new ComposedLook {BackgroundFile = ""};
                     SelectedWeb.EnsureProperty(w => w.AlternateCssUrl);
                     composedLook.ColorFile = "";
                     SelectedWeb.EnsureProperty(w => w.MasterUrl);

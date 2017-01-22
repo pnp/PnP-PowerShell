@@ -13,7 +13,7 @@ using SharePointPnP.PowerShell.Commands.Extensions;
 namespace SharePointPnP.PowerShell.Commands
 {
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes", HelpMessage = "Specify properties to include when retrieving objects from the server.")]
-    public abstract class PnPWebRetrievalsCmdlet<TType> : PnPRetrievalsCmdlet<TType>, IDynamicParameters where TType : ClientObject
+    public abstract class PnPWebRetrievalsCmdlet<TType> : PnPRetrievalsCmdlet<TType> where TType : ClientObject
     {
         private Web _selectedWeb;
 

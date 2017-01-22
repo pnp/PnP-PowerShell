@@ -42,7 +42,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             {
                 var group = termStore.GetTermGroupByName(GroupName);
                 group.EnsureProperties(RetrievalExpressions);
-                WriteObject(@group);
+                WriteObject(group);
             }
             else
             {

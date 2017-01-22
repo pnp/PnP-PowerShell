@@ -1,5 +1,4 @@
 ﻿#if !ONPREMISES
-using System;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Base;

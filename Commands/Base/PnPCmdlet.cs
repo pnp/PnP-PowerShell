@@ -10,10 +10,7 @@ namespace SharePointPnP.PowerShell.Commands
 {
     public class PnPCmdlet : PSCmdlet
     {
-        public ClientContext ClientContext
-        {
-            get { return SPOnlineConnection.CurrentConnection.Context; }
-        }
+        public ClientContext ClientContext => SPOnlineConnection.CurrentConnection.Context;
 
         protected override void BeginProcessing()
         {
