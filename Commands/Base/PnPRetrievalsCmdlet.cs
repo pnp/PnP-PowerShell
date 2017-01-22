@@ -59,10 +59,7 @@ namespace SharePointPnP.PowerShell.Commands
             }
         }
 
-        protected Expression<Func<TType, object>>[] RetrievalExpressions
-        {
-            get { return GetPropertyExpressions(); }
-        }
+        protected Expression<Func<TType, object>>[] RetrievalExpressions => GetPropertyExpressions();
 
         protected Expression<Func<TType, object>>[] DefaultRetrievalExpressions { get; set; }
 
@@ -90,7 +87,7 @@ namespace SharePointPnP.PowerShell.Commands
 
             foreach (var include in fieldsToLoad)
             {
-                var exp = (Expression<Func<TType, object>>)SharePointPnP.PowerShell.Commands.Utilities.DynamicExpression.ParseLambda(type, typeof(object), include, null);
+                var exp = (Expression<Func<TType, object>>)Utilities.DynamicExpression.ParseLambda(type, typeof(object), include, null);
 
                 expressions.Add(exp);
 

@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     [CmdletAlias("Get-SPOCustomAction")]
     [CmdletHelp("Returns all or a specific custom action(s)",
         Category = CmdletHelpCategory.Branding,
-        OutputType = typeof(List<Microsoft.SharePoint.Client.UserCustomAction>),
+        OutputType = typeof(List<UserCustomAction>),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.usercustomaction.aspx")]
     [CmdletExample(Code = @"PS:> Get-PnPCustomAction", Remarks = @"Returns all custom actions of the current site.", SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Get-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", Remarks = @"Returns the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.", SortOrder = 2)]

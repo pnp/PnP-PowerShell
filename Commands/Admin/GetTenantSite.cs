@@ -1,6 +1,4 @@
 ﻿#if !ONPREMISES
-using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;

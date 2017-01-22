@@ -101,7 +101,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 { // Swallow exception, file does not exist 
                 }
             }
-            Microsoft.SharePoint.Client.File file =null ;
+            Microsoft.SharePoint.Client.File file;
             if (ParameterSetName == "AsFile")
             {
 

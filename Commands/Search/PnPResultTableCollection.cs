@@ -39,12 +39,6 @@ namespace SharePointPnP.PowerShell.Commands.Search
         }
 
 
-        public override string TypeId
-        {
-            get
-            {
-                return "{11f20d08-7f42-49c1-8c0c-8ee4c32b203e}";
-            }
-        }
+        public override string TypeId => "{11f20d08-7f42-49c1-8c0c-8ee4c32b203e}";
     }
 }

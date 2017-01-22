@@ -81,7 +81,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                     }
                     catch
                     {
-                        throw new Exception(string.Format("Taxonomy Item with Id {0} not found", TaxonomyItemId.Id));
+                        throw new Exception($"Taxonomy Item with Id {TaxonomyItemId.Id} not found");
                     }
                 }
                 taxItem.EnsureProperty(t => t.Id);

@@ -34,23 +34,11 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public Guid Id
-        {
-            get { return _id; }
-        }
+        public Guid Id => _id;
 
-        public List List
-        {
-            get
-            {
-                return _list;
-            }
-        }
+        public List List => _list;
 
-        public string Title
-        {
-            get { return _name; }
-        }
+        public string Title => _name;
 
         public override string ToString()
         {
