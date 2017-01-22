@@ -4,6 +4,7 @@ Returns a List object
 ```powershell
 Get-PnPList [-Web <WebPipeBind>]
             [-Includes <String[]>]
+            [-Includes <String[]>]
             [-Identity <ListPipeBind>]
 ```
 
