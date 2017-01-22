@@ -16,25 +16,39 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletHelp("Copies a file or folder to a different location",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
-        Remarks = "Copies a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to the site collection otherproject located in the managed path sites. If a file named company.aspx already exists, it won't perform the copy.",
+        Remarks = "Copies a file named company.docx located in a document library called Documents in the projects sitecollection to the site collection otherproject. If a file named company.aspx already exists, it won't perform the copy.",
         Code = @"PS:>Copy-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetUrl /sites/otherproject/Documents/company.docx",
         SortOrder = 1)]
     [CmdletExample(
-        Remarks = "Copies a file named company.docx located in the document library called Documents located in the current site to the Documents library in the site collection otherproject located in the managed path sites. If a file named company.aspx already exists, it won't perform the copy.",
+        Remarks = "Copies a file named company.docx located in a document library called Documents in the current site to the Documents library in the site collection otherproject. If a file named company.aspx already exists, it won't perform the copy.",
         Code = @"PS:>Copy-PnPFile -SiteRelativeUrl Documents/company.aspx -TargetUrl /sites/otherproject/Documents/company.docx",
         SortOrder = 2)]
     [CmdletExample(
-        Remarks = "Copies a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to the site collection otherproject located in the managed path sites. If a file named company.aspx already exists, it will still perform the copy and replace the original company.aspx file.",
+        Remarks = "Copies a file named company.docx located in a document library called Documents in the projects sitecollection to the site collection otherproject. If a file named company.aspx already exists, it will still perform the copy and replace the original company.aspx file.",
         Code = @"PS:>Copy-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetUrl /sites/otherproject/Documents/company.docx -OverwriteIfAlreadyExists",
         SortOrder = 3)]
     [CmdletExample(
-        Remarks = "Copies a folder named MyDocs located in the document library called Documents located in the projects sitecollection under the managed path sites to the site collection otherproject located in the managed path sites. If a folder already exists, it will still perform the copy and replace the original folder.",
+        Remarks = "Copies a folder named MyDocs in the document library called Documents located in the projects sitecollection to the site collection otherproject. If the MyDocs folder exist it will copy into it, if not it will be created.",
         Code = @"PS:>Copy-PnPFile -ServerRelativeUrl /sites/project/Documents/MyDocs -TargetUrl /sites/otherproject/Documents -OverwriteIfAlreadyExists",
-        SortOrder = 3)]
-
+        SortOrder = 4)]
+    [CmdletExample(
+        Remarks = "Copies a folder named MyDocs in the document library called Documents located in the projects sitecollection to the root folder of the library named Documents in the site collection otherproject.",
+        Code = @"PS:>Copy-PnPFile -ServerRelativeUrl /sites/project/Documents/MyDocs -TargetUrl /sites/otherproject/Documents -SkipSourceFolderName -OverwriteIfAlreadyExists",
+        SortOrder = 5)]
+    [CmdletExample(
+        Remarks = "Copies a folder named MyDocs in the MyDocs folder of the library named Documents. If the MyDocs folder does not exists, it will be created.",
+        Code = @"PS:>Copy-PnPFile -ServerRelativeUrl /sites/project/Documents/MyDocs -TargetUrl /sites/otherproject/Documents/MyDocs -SkipSourceFolderName -OverwriteIfAlreadyExists",
+        SortOrder = 6)]
+    [CmdletExample(
+        Remarks = "Copies a folder named MyDocs in the root of the library named Documents. If the MyDocs folder exists in the target, a subfolder also named MyDocs is created.",
+        Code = @"PS:>Copy-PnPFile -ServerRelativeUrl /sites/project/Documents/MyDocs -TargetUrl /sites/otherproject/Documents/MyDocs -OverwriteIfAlreadyExists",
+        SortOrder = 7)]
 
     public class CopyFile : SPOWebCmdlet
     {
+        private ProgressRecord _progressFolder = new ProgressRecord(0, "Activity", "Status") { Activity = "Copying folder" };
+        private ProgressRecord _progressFile = new ProgressRecord(1, "Activity", "Status") { Activity = "Copying file" };
+
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER", HelpMessage = "Server relative Url specifying the file to move. Must include the file name.")]
         public string ServerRelativeUrl = string.Empty;
 
@@ -142,13 +156,35 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         private void CopyFolder(Folder sourceFolder, Folder targetFolder)
         {
-            ClientContext.Load(sourceFolder, f => f.Files, f => f.Folders);
+            ClientContext.Load(sourceFolder, folder => folder.Files, folder => folder.Folders, folder => folder.Files.Include(f => f.ServerRelativeUrl));
+            sourceFolder.EnsureProperty(f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
+            targetFolder.EnsureProperty(f => f.ServerRelativeUrl);
+            targetFolder.Context.ExecuteQueryRetry();
 
+            _progressFolder.RecordType = ProgressRecordType.Processing;
+            _progressFolder.StatusDescription = $"{sourceFolder.ServerRelativeUrl} to {targetFolder.ServerRelativeUrl}";
+            _progressFolder.PercentComplete = 0;
+            WriteProgress(_progressFolder);
+
+
+            _progressFile.RecordType = ProgressRecordType.Processing;
             foreach (File file in sourceFolder.Files)
             {
+                _progressFile.StatusDescription = $"{file.ServerRelativeUrl}";
+                _progressFile.PercentComplete = 0;
+                WriteProgress(_progressFile);
                 UploadFile(file, targetFolder);
+                _progressFile.PercentComplete = 100;
+                WriteProgress(_progressFile);
             }
+            _progressFile.RecordType = ProgressRecordType.Completed;
+            WriteProgress(_progressFile);
+
+            _progressFolder.RecordType = ProgressRecordType.Processing;
+            _progressFolder.PercentComplete = 100;
+            WriteProgress(_progressFolder);
+
             foreach (Folder folder in sourceFolder.Folders)
             {
                 var childFolder = targetFolder.EnsureFolder(folder.Name);
