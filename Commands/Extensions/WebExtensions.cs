@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Extensions
             exps.Add(item => item.Webs);
 
             currentWeb.Context.Load(currentWeb, exps.ToArray());
-            currentWeb.Context.ExecuteQuery();
+            currentWeb.Context.ExecuteQueryRetry();
 
             foreach (var subWeb in currentWeb.Webs)
             {
