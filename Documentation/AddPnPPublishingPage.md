@@ -4,7 +4,7 @@ Adds a publishing page
 ```powershell
 Add-PnPPublishingPage [-Title <String>]
                       -PageName <String>
-                      -FolderPath <String>
+                      [-FolderPath <String>]
                       -PageTemplateName <String>
                       [-Publish [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
@@ -14,7 +14,7 @@ Add-PnPPublishingPage [-Title <String>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|FolderPath|String|True|The site relative folder path of the page to be added|
+|FolderPath|String|False|The site relative folder path of the page to be added|
 |PageName|String|True|The name of the page to be added as an aspx file|
 |PageTemplateName|String|True|The name of the page layout you want to use. Specify without the .aspx extension. So 'ArticleLeft' or 'BlankWebPartPage'|
 |Publish|SwitchParameter|False|Publishes the page. Also Approves it if moderation is enabled on the Pages library.|
