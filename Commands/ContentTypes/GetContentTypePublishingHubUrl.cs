@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
         Remarks = @"This will retrieve the url to the content type hub, connect to it, and then retrieve the content types form that site",
         SortOrder = 1)]
 
-    public class GetContentTypePublishingHub : SPOCmdlet
+    public class GetContentTypePublishingHub : PnPCmdlet
     {
    
         protected override void ExecuteCmdlet()

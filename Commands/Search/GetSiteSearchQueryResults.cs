@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Code = @"PS:> Get-PnPSiteSearchQueryResults -All",
         Remarks = "Returns absolutely all site collections indexed by SharePoint Search",
         SortOrder = 6)]
-    public class GetSiteSearchQueryResults : SPOWebCmdlet
+    public class GetSiteSearchQueryResults : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "Search query in Keyword Query Language (KQL) to execute to refine the returned sites. If omitted, all indexed sites will be returned.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Query = string.Empty;

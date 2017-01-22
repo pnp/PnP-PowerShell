@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Code = @"PS:> Get-PnPSearchQuery -Query ""Title:Intranet*"" -Refiners ""contentclass,FileType(filter=6/0/*)""",
         Remarks = "Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties",
         SortOrder = 4)]
-    public class SubmitSearchQuery : SPOWebCmdlet
+    public class SubmitSearchQuery : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Search query in Keyword Query Language (KQL).", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Query = string.Empty;

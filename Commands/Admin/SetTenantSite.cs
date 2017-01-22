@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletExample(
       Code = @"PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners 'user@contoso.onmicrosoft.com'",
       Remarks = @"This will set user@contoso.onmicrosoft.com as a site collection owner at 'https://contoso.sharepoint.com/sites/sales'.", SortOrder = 3)]   
-    public class SetTenantSite : SPOAdminCmdlet
+    public class SetTenantSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specifies the URL of the site", Position = 0, ValueFromPipeline = true)]
         public string Url;
