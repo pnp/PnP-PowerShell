@@ -10,6 +10,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Taxonomy;
 
+// IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Set-PnPListItem Cmdlet
+
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Add, "PnPListItem")]
@@ -52,11 +54,14 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             "\n\nCurrency: -Values @{\"Currency\" = \"10\"}" +
             "\n\nDate and Time: -Values @{\"DateAndTime\" = \"03/10/2015 14:16\"}" +
             "\n\nLookup (id of lookup value): -Values @{\"Lookup\" = \"2\"}" +
+            "\n\nMulti value lookup (id of lookup values as array 1): -Values @{\"MultiLookupField\" = \"1\",\"2\"}" +
+            "\n\nMulti value lookup (id of lookup values as array 2): -Values @{\"MultiLookupField\" = 1,2}" +
+            "\n\nMulti value lookup (id of lookup values as string): -Values @{\"MultiLookupField\" = \"1,2\"}" +
             "\n\nYes/No: -Values @{\"YesNo\" = \"No\"}" +
             "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"Person\" = \"user1@domain.com\",\"21\"}" +
-            "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}"+
-            "\n\nManaged Metadata (singel value with id of term): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
-            "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}"+ 
+            "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}" +
+            "\n\nManaged Metadata (single value with id of term): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
+            "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}" +
             "\n\nManaged Metadata (multiple values with ids of terms): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\",\"52d88107-c2a8-4bf0-adfa-04bc2305b593\"}" +
             "\n\nHyperlink or Picture: -Values @{\"Hyperlink\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
@@ -115,11 +120,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
                 if (Values != null)
                 {
+                    Hashtable values = Values ?? new Hashtable();
                     // Load all list fields and their types
                     var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.Id, f => f.InternalName, f => f.Title, f => f.TypeAsString));
                     ClientContext.ExecuteQueryRetry();
 
-                    foreach (var key in Values.Keys)
+                    foreach (var key in values.Keys)
                     {
                         var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
                         if (field != null)
@@ -131,7 +137,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                     {
                                         var userValues = new List<FieldUserValue>();
 
-                                        var value = Values[key];
+                                        var value = values[key];
                                         if (value.GetType().IsArray)
                                         {
                                             foreach (var arrayItem in value as object[])
@@ -176,7 +182,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                 case "TaxonomyFieldType":
                                 case "TaxonomyFieldTypeMulti":
                                     {
-                                        var value = Values[key];
+                                        var value = values[key];
                                         if (value.GetType().IsArray)
                                         {
                                             var taxSession = ClientContext.Site.GetTaxonomySession();
@@ -248,9 +254,45 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 #endif
                                         break;
                                     }
+                                case "Lookup":
+                                case "LookupMulti":
+                                    {
+                                        int[] multiValue;
+                                        if (values[key] is Array)
+                                        {
+                                            var arr = (object[])values[key];
+                                            multiValue = new int[arr.Length];
+                                            for (int i = 0; i < arr.Length; i++)
+                                            {
+                                                multiValue[i] = int.Parse(arr[i].ToString());
+                                            }
+                                        }
+                                        else
+                                        {
+                                            string valStr = values[key].ToString();
+                                            multiValue = valStr.Split(',', ';').Select(int.Parse).ToArray();
+                                        }
+
+                                        var newVals = multiValue.Select(id => new FieldLookupValue { LookupId = id }).ToArray();
+
+                                        FieldLookup lookupField = ClientContext.CastTo<FieldLookup>(field);
+                                        lookupField.EnsureProperty(lf => lf.AllowMultipleValues);
+                                        if (!lookupField.AllowMultipleValues && newVals.Length > 1)
+                                        {
+                                            WriteWarning($@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
+                                        }
+
+                                        item[key as string] = newVals;
+#if !ONPREMISES
+                                        item.SystemUpdate();
+#else
+                                        item.Update();
+#endif
+                                        break;
+                                    }
                                 default:
                                     {
-                                        item[key as string] = Values[key];
+                                        item[key as string] = values[key];
 #if !ONPREMISES
                                         item.SystemUpdate();
 #else
@@ -262,7 +304,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                         }
                         else
                         {
-                            throw new Exception("Field not present in list");
+                            ThrowTerminatingError(new ErrorRecord(new Exception("Field not present in list"), "FIELDNOTINLIST", ErrorCategory.InvalidData, key));
                         }
                     }
                 }
