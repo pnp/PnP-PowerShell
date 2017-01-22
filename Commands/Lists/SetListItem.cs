@@ -40,22 +40,25 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names." +
-                                                    "\n\nSingle line of text: -Values @{\"Title\" = \"Title New\"}" +
-                                                    "\n\nMultiple lines of text: -Values @{\"MultiText\" = \"New text\\n\\nMore text\"}" +
-                                                    "\n\nRich text: -Values @{\"MultiText\" = \"<strong>New</strong> text\"}" +
-            "\n\nChoice: -Values @{\"Choice\" = \"Value 1\"}" +
-            "\n\nNumber: -Values @{\"Number\" = \"10\"}" +
-            "\n\nCurrency: -Values @{\"Number\" = \"10\"}" +
-            "\n\nCurrency: -Values @{\"Currency\" = \"10\"}" +
-            "\n\nDate and Time: -Values @{\"DateAndTime\" = \"03/10/2015 14:16\"}" +
-            "\n\nLookup (id of lookup value): -Values @{\"Lookup\" = \"2\"}" +
-            "\n\nYes/No: -Values @{\"YesNo\" = \"No\"}" +
-            "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"Person\" = \"user1@domain.com\",\"21\"}" +
+                                                    "\n\nSingle line of text: -Values @{\"TextField\" = \"Title New\"}" +
+                                                    "\n\nMultiple lines of text: -Values @{\"MultiTextField\" = \"New text\\n\\nMore text\"}" +
+                                                    "\n\nRich text: -Values @{\"MultiTextField\" = \"<strong>New</strong> text\"}" +
+            "\n\nChoice: -Values @{\"ChoiceField\" = \"Value 1\"}" +
+            "\n\nNumber: -Values @{\"NumberField\" = \"10\"}" +
+            "\n\nCurrency: -Values @{\"NumberField\" = \"10\"}" +
+            "\n\nCurrency: -Values @{\"CurrencyField\" = \"10\"}" +
+            "\n\nDate and Time: -Values @{\"DateAndTimeField\" = \"03/10/2015 14:16\"}" +
+            "\n\nLookup (id of lookup value): -Values @{\"LookupField\" = \"2\"}" +
+            "\n\nMulti value lookup (id of lookup values as array 1): -Values @{\"MultiLookupField\" = \"1\",\"2\"}" +
+            "\n\nMulti value lookup (id of lookup values as array 2): -Values @{\"MultiLookupField\" = 1,2}" +
+            "\n\nMulti value lookup (id of lookup values as string): -Values @{\"MultiLookupField\" = \"1,2\"}" +
+            "\n\nYes/No: -Values @{\"YesNoField\" = \"No\"}" +
+            "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"PersonField\" = \"user1@domain.com\",\"21\"}" +
             "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}" +
             "\n\nManaged Metadata (singel value with id of term): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
             "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}" +
             "\n\nManaged Metadata (multiple values with ids of terms): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\",\"52d88107-c2a8-4bf0-adfa-04bc2305b593\"}" +
-            "\n\nHyperlink or Picture: -Values @{\"Hyperlink\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
+            "\n\nHyperlink or Picture: -Values @{\"HyperlinkField\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
 
 #if !ONPREMISES
@@ -123,48 +126,48 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                     {
                                         List<FieldUserValue> userValues = new List<FieldUserValue>();
 
-                                    var value = values[key];
-                                    if (value.GetType().IsArray)
-                                    {
-                                        foreach (var arrayItem in value as object[])
+                                        var value = values[key];
+                                        if (value.GetType().IsArray)
                                         {
-                                            int userId;
-                                            if (!int.TryParse(arrayItem as string, out userId))
+                                            foreach (var arrayItem in value as object[])
                                             {
-                                                var user = SelectedWeb.EnsureUser(arrayItem as string);
-                                                ClientContext.Load(user);
-                                                ClientContext.ExecuteQueryRetry();
-                                                userValues.Add(new FieldUserValue() {LookupId = user.Id});
+                                                int userId;
+                                                if (!int.TryParse(arrayItem as string, out userId))
+                                                {
+                                                    var user = SelectedWeb.EnsureUser(arrayItem as string);
+                                                    ClientContext.Load(user);
+                                                    ClientContext.ExecuteQueryRetry();
+                                                    userValues.Add(new FieldUserValue() { LookupId = user.Id });
+                                                }
+                                                else
+                                                {
+                                                    userValues.Add(new FieldUserValue() { LookupId = userId });
+                                                }
                                             }
-                                            else
-                                            {
-                                                userValues.Add(new FieldUserValue() {LookupId = userId});
-                                            }
-                                        }
-                                        item[key as string] = userValues.ToArray();
-                                    }
-                                    else
-                                    {
-                                        int userId;
-                                        if (!int.TryParse(value as string, out userId))
-                                        {
-                                            var user = SelectedWeb.EnsureUser(value as string);
-                                            ClientContext.Load(user);
-                                            ClientContext.ExecuteQueryRetry();
-                                            item[key as string] = new FieldUserValue() {LookupId = user.Id};
+                                            item[key as string] = userValues.ToArray();
                                         }
                                         else
                                         {
-                                            item[key as string] = new FieldUserValue() {LookupId = userId};
+                                            int userId;
+                                            if (!int.TryParse(value as string, out userId))
+                                            {
+                                                var user = SelectedWeb.EnsureUser(value as string);
+                                                ClientContext.Load(user);
+                                                ClientContext.ExecuteQueryRetry();
+                                                item[key as string] = new FieldUserValue() { LookupId = user.Id };
+                                            }
+                                            else
+                                            {
+                                                item[key as string] = new FieldUserValue() { LookupId = userId };
+                                            }
                                         }
-                                    }
 #if !ONPREMISES
                                         item.SystemUpdate();
 #else
                                         item.Update();
 #endif
                                         break;
-                                }
+                                    }
                                 case "TaxonomyFieldType":
                                 case "TaxonomyFieldTypeMulti":
                                     {
@@ -240,16 +243,52 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 #endif
                                         break;
                                     }
-                                default:
-                                {
-                                    item[key as string] = values[key];
+                                case "Lookup":
+                                case "LookupMulti":
+                                    {
+                                        int[] multiValue;
+                                        if (values[key] is Array)
+                                        {
+                                            var arr = (object[])values[key];
+                                            multiValue = new int[arr.Length];
+                                            for (int i = 0; i < arr.Length; i++)
+                                            {
+                                                multiValue[i] = int.Parse(arr[i].ToString());
+                                            }
+                                        }
+                                        else
+                                        {
+                                            string valStr = values[key].ToString();
+                                            multiValue = valStr.Split(',', ';').Select(int.Parse).ToArray();
+                                        }
+
+                                        var newVals = multiValue.Select(id => new FieldLookupValue { LookupId = id }).ToArray();
+
+                                        FieldLookup lookupField = ClientContext.CastTo<FieldLookup>(field);
+                                        lookupField.EnsureProperty(lf => lf.AllowMultipleValues);
+                                        if (!lookupField.AllowMultipleValues && newVals.Length > 1)
+                                        {
+                                            throw new Exception("Field " + field.InternalName + " does not support multiple values");
+                                        }
+
+                                        item[key as string] = newVals;
 #if !ONPREMISES
                                         item.SystemUpdate();
 #else
                                         item.Update();
 #endif
                                         break;
-                                }
+                                    }
+                                default:
+                                    {
+                                        item[key as string] = values[key];
+#if !ONPREMISES
+                                        item.SystemUpdate();
+#else
+                                        item.Update();
+#endif
+                                        break;
+                                    }
                             }
                         }
                         else
