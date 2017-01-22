@@ -14,19 +14,19 @@ namespace SharePointPnP.PowerShell.Commands
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.appinstance.aspx")]
     [CmdletExample(Code = @"PS:> Get-PnPAppInstance", Remarks = @"This will return all addin instances in the site.", SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Get-PnPAppInstance -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe", Remarks = @"This will return an addin instance with the specified id.", SortOrder = 2)]
+    [CmdletExample(Code = @"PS:> Get-PnPAppInstance -Identity AppTitle", Remarks = @"This will return an addin instance with the specified title.", SortOrder = 3)]
+
     public class GetAppInstance : SPOWebCmdlet
     {
         [Parameter(Mandatory = false, Position=0, ValueFromPipeline = true, HelpMessage = "Specifies the Id of the App Instance")]
-        public GuidPipeBind Identity;
+        public AppPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
             
             if (Identity != null)
             {
-                var instance = SelectedWeb.GetAppInstanceById(Identity.Id);
-                ClientContext.Load(instance);
-                ClientContext.ExecuteQueryRetry();
+                var instance = Identity.GetAppInstance(SelectedWeb);
                 WriteObject(instance);
             }
             else
