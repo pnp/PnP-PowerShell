@@ -31,6 +31,12 @@ Sets a default value for the enterprise keywords field on a library to a term ca
 
 ###Example 2
 ```powershell
+PS:> Set-PnPDefaultColumnValues -List Documents -Field TaxKeyword -Value "15c4c4e4-4b67-4894-a1d8-de5ff811c791"
+```
+Sets a default value for the enterprise keywords field on a library to a term with the id "15c4c4e4-4b67-4894-a1d8-de5ff811c791". You need to ensure the term is valid for the field.
+
+###Example 3
+```powershell
 PS:> Set-PnPDefaultColumnValues -List Documents -Field MyTextField -Value "DefaultValue"
 ```
 Sets a default value for the MyTextField text field on a library to a value of "DefaultValue"

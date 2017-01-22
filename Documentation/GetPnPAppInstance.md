@@ -5,7 +5,7 @@ Returns a SharePoint AddIn Instance in the site
 Get-PnPAppInstance [-Web <WebPipeBind>]
                    [-Includes <String[]>]
                    [-Includes <String[]>]
-                   [-Identity <GuidPipeBind>]
+                   [-Identity <AppPipeBind>]
 ```
 
 
@@ -15,7 +15,7 @@ Get-PnPAppInstance [-Web <WebPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|GuidPipeBind|False|Specifies the Id of the App Instance|
+|Identity|AppPipeBind|False|Specifies the Id of the App Instance|
 |Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
