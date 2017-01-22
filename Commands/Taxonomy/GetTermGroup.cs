@@ -46,7 +46,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             }
             else
             {
-                ThrowTerminatingError(new ErrorRecord(new Exception("Cannot find termstore"), "INCORRECTTERMSTORE", ErrorCategory.ObjectNotFound, TermStoreName));
+                WriteError(new ErrorRecord(new Exception("Cannot find termstore"), "INCORRECTTERMSTORE", ErrorCategory.ObjectNotFound, TermStoreName));
             }
         }
 

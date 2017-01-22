@@ -96,7 +96,7 @@ namespace SharePointPnP.PowerShell.Commands
             catch (Exception ex)
             {
                 SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
-                ThrowTerminatingError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
+                WriteError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
             }
         }
 
