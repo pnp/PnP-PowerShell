@@ -306,7 +306,7 @@ namespace SharePointPnP.PowerShell.Tests
                         new CommandParameter("RootFolderRelativeUrl", "sitepages/demo.aspx"));
 
                     context.Load(context.Web, w => w.RootFolder.WelcomePage);
-                    context.ExecuteQuery();
+                    context.ExecuteQueryRetry();
                     var homePageUrl = context.Web.RootFolder.WelcomePage;
                     Assert.IsTrue(homePageUrl == "sitepages/demo.aspx");
 
@@ -409,7 +409,7 @@ namespace SharePointPnP.PowerShell.Tests
                         new CommandParameter("CustomMasterPageServerRelativeUrl", "/sites/tests/_catalogs/custom.master"));
 
                     context.Load(context.Web, w => w.MasterUrl, w => w.CustomMasterUrl);
-                    context.ExecuteQuery();
+                    context.ExecuteQueryRetry();
                     Assert.IsTrue(context.Web.MasterUrl == "/sites/tests/_catalogs/default.master");
                     Assert.IsTrue(context.Web.CustomMasterUrl == "/sites/tests/_catalogs/custom.master");
 
