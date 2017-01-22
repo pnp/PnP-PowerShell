@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
     [CmdletExample(
       Code = @"PS:> Set-PnPSiteClosure -State Closed",
       Remarks = @"This closes a site which is open and has a site policy applied.", SortOrder = 2)]
-    public class SetSiteClosure : SPOWebCmdlet
+    public class SetSiteClosure : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The state of the site")]
         public ClosureState State;

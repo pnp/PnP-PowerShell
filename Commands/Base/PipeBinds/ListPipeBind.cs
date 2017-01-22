@@ -52,6 +52,11 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             get { return _name; }
         }
 
+        public override string ToString()
+        {
+            return Title ?? Id.ToString();
+        }
+
         internal List GetList(Web web)
         {
             List list = null;

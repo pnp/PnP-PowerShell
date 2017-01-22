@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Url http://tenant.sharepoint.com/sites/projects", Remarks = "Returns information about the project site.",SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Detailed", Remarks = "Returns all sites with the full details of these sites", SortOrder = 3)]
     [CmdletExample(Code = @"PS:> Get-PnPTenantSite -IncludeOneDriveSites", Remarks = "Returns all sites including all OneDrive 4 Business sites", SortOrder = 4)]
-    public class GetTenantSite : SPOAdminCmdlet
+    public class GetTenantSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The URL of the site", Position = 0, ValueFromPipeline = true)]
         [Alias("Identity")]

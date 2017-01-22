@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
@@ -27,21 +28,17 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = "PS:> Get-PnPList -Identity Lists/Announcements",
         Remarks = "Returns a list with the given url.",
         SortOrder = 3)]
-    public class GetList : PnPWebRetrievalCmdlet<List>
+    public class GetList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, name or Url (Lists/MyList) of the list.")]
         public ListPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
+            DefaultRetrievalExpressions = new Expression<Func<List, object>>[] { l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.RootFolder.ServerRelativeUrl };
 
-            AlwaysLoadProperties = new[] { "Id", "BaseTemplate", "OnQuickLaunch", "DefaultViewUrl", "Title", "Hidden" };
-
-            var expressions = Expressions.ToList();
-            Expression<Func<List, object>> expressionRelativeUrl = l => l.RootFolder.ServerRelativeUrl;
-
-            expressions.Add(expressionRelativeUrl);
-
+            var expressions = RetrievalExpressions.ToList();
+            
             if (Identity != null)
             {
                 var list = Identity.GetList(SelectedWeb);

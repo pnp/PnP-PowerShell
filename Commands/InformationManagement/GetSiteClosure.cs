@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
     [CmdletExample(
       Code = @"PS:> Get-PnPSiteClosure",
       Remarks = @"Get the site closure status of the site.", SortOrder = 1)]
-    public class GetSiteClosure : SPOWebCmdlet
+    public class GetSiteClosure : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()
         {

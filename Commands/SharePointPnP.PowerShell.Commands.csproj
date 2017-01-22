@@ -363,8 +363,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\PnPWebCmdlet.cs" />
+    <Compile Include="Base\PropertyLoadingAttribute.cs" />
     <Compile Include="Base\PipeBinds\ImageRenditionPipeBind.cs" />
-    <Compile Include="Base\PnPWebRetrievalCmdlet.cs" />
+    <Compile Include="Base\PnPRetrievalsCmdlet.cs" />
+    <Compile Include="Base\PnPWebRetrievalsCmdlet.cs" />
+    <Compile Include="Base\PnPCmdlet.cs" />
+    <Compile Include="Base\PnPAdminCmdlet.cs" />
     <Compile Include="ContentTypes\GetContentTypePublishingHubUrl.cs" />
     <Compile Include="Files\CopyFile.cs" />
     <Compile Include="Files\MoveFile.cs" />
@@ -413,7 +418,7 @@
     <Compile Include="Base\PnPAzureADConnection.cs" />
     <Compile Include="Base\PnPGraphCmdlet.cs" />
     <Compile Include="Base\SetContext.cs" />
-    <Compile Include="Base\SPOAdminCmdlet.cs" />
+    <Compile Include="Base\deprecated\SPOAdminCmdlet.deprecated.cs" />
     <Compile Include="Base\SPOnlineConnection.cs" />
     <Compile Include="Base\SPOnlineConnectionHelper.cs" />
     <Compile Include="Base\ConnectOnline.cs" />
@@ -539,6 +544,7 @@
     <Compile Include="Taxonomy\GetTermGroup.cs" />
     <Compile Include="Taxonomy\ImportTermSet.cs" />
     <Compile Include="UserProfiles\SetUserProfileProperty.cs" />
+    <Compile Include="Utilities\DynamicLinq.cs" />
     <Compile Include="Utilities\HttpHelper.cs" />
     <Compile Include="WebParts\GetWebPartProperty.cs" />
     <Compile Include="Branding\RemoveJavaScriptLink.cs" />
@@ -608,7 +614,7 @@
     <Compile Include="WebParts\SetWebPartProperty.cs" />
     <Compile Include="WebParts\RemoveWebPart.cs" />
     <Compile Include="WebParts\GetWebPart.cs" />
-    <Compile Include="Base\SPOCmdlet.cs" />
+    <Compile Include="Base\deprecated\SPOCmdlet.deprecated.cs" />
     <Compile Include="Apps\ImportAppPackage.cs" />
     <Compile Include="Apps\GetAppInstance.cs" />
     <Compile Include="Files\GetFile.cs" />
@@ -639,7 +645,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Branding\SetMasterPage.cs" />
     <Compile Include="Branding\SetTheme.cs" />
-    <Compile Include="Base\SPOWebCmdlet.cs" />
+    <Compile Include="Base\deprecated\SPOWebCmdlet.deprecated.cs" />
     <Compile Include="Web\SetWeb.cs" />
     <Compile Include="Publishing\RemoveWikiPage.cs" />
     <Compile Include="Publishing\AddWikiPage.cs" />

@@ -73,7 +73,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
     [CmdletRelatedLink(
         Text = "Encoding",
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
-    public class GetProvisioningTemplate : SPOWebCmdlet
+    public class GetProvisioningTemplate : PnPWebCmdlet
     {
         private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");

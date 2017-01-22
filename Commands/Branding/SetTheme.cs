@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor", SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png'", SortOrder = 3)]
     [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png' -ResetSubwebsToInherit", SortOrder = 4, Remarks = @"Sets the theme to the web, and updates all subwebs to inherit the theme from this web.")]
-    public class SetTheme : SPOWebCmdlet
+    public class SetTheme : PnPWebCmdlet
     {
         private const string PROPBAGKEY = "_PnP_ProvisioningTemplateComposedLookInfo";
 

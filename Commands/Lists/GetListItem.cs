@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000",
         Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items. This parameter is ignored if the Query parameter is specified.",
         SortOrder = 6)]
-    public class GetListItem : SPOWebCmdlet
+    public class GetListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;

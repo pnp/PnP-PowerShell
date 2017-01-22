@@ -38,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "Retrieves the file by site relative URL and downloads it to c:\\temp\\company.spcolor",
         SortOrder = 6)]
 
-    public class GetFile : SPOWebCmdlet
+    public class GetFile : PnPWebCmdlet
     {
         private const string URLTOPATH = "URLTOPATH";
         private const string URLASSTRING = "URLASSTRING";
