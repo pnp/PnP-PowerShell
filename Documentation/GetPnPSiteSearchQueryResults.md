@@ -4,15 +4,15 @@ Executes a search query to retrieve indexed site collections
 ```powershell
 Get-PnPSiteSearchQueryResults [-StartRow <Int>]
                               [-MaxResults <Int>]
-                              [-Query <String>]
                               [-Web <WebPipeBind>]
+                              [-Query <String>]
 ```
 
 
 ```powershell
 Get-PnPSiteSearchQueryResults [-All [<SwitchParameter>]]
-                              [-Query <String>]
                               [-Web <WebPipeBind>]
+                              [-Query <String>]
 ```
 
 

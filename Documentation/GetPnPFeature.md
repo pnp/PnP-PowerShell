@@ -2,11 +2,10 @@
 Returns all activated or a specific activated feature
 ##Syntax
 ```powershell
-Get-PnPFeature [-Includes <String[]>]
+Get-PnPFeature [-Scope <FeatureScope>]
+               [-Web <WebPipeBind>]
                [-Includes <String[]>]
                [-Identity <FeaturePipeBind>]
-               [-Scope <FeatureScope>]
-               [-Web <WebPipeBind>]
 ```
 
 

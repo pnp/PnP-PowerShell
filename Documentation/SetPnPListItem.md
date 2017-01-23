@@ -2,8 +2,8 @@
 Updates a list item
 ##Syntax
 ```powershell
-Set-PnPListItem -List <ListPipeBind>
-                -Identity <ListItemPipeBind>
+Set-PnPListItem -Identity <ListItemPipeBind>
+                -List <ListPipeBind>
                 [-ContentType <ContentTypePipeBind>]
                 [-Values <Hashtable>]
                 [-SystemUpdate [<SwitchParameter>]]

@@ -2,9 +2,9 @@
 Removes a group from a web.
 ##Syntax
 ```powershell
-Remove-PnPGroup [-Identity <GroupPipeBind>]
-                [-Force [<SwitchParameter>]]
+Remove-PnPGroup [-Force [<SwitchParameter>]]
                 [-Web <WebPipeBind>]
+                [-Identity <GroupPipeBind>]
 ```
 
 

@@ -4,9 +4,9 @@ Converts a provisioning template to an other schema version
 ```powershell
 Convert-PnPProvisioningTemplate -Path <String>
                                 [-Out <String>]
-                                [-ToSchema <XMLPnPSchemaVersion>]
                                 [-Encoding <Encoding>]
                                 [-Force [<SwitchParameter>]]
+                                [-ToSchema <XMLPnPSchemaVersion>]
 ```
 
 

@@ -2,10 +2,10 @@
 List content in folder
 ##Syntax
 ```powershell
-Get-PnPFolderItem [-FolderSiteRelativeUrl <String>]
-                  [-ItemType <String>]
+Get-PnPFolderItem [-ItemType <String>]
                   [-ItemName <String>]
                   [-Web <WebPipeBind>]
+                  [-FolderSiteRelativeUrl <String>]
 ```
 
 

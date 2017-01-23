@@ -9,10 +9,9 @@ Get-PnPEventReceiver [-List <ListPipeBind>]
 
 
 ```powershell
-Get-PnPEventReceiver [-Includes <String[]>]
-                     [-Includes <String[]>]
-                     [-Identity <GuidPipeBind>]
+Get-PnPEventReceiver [-Identity <GuidPipeBind>]
                      [-Web <WebPipeBind>]
+                     [-Includes <String[]>]
 ```
 
 

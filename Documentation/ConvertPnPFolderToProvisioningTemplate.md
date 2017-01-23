@@ -3,8 +3,8 @@ Creates a pnp package file of an existing template xml, and includes all files i
 ##Syntax
 ```powershell
 Convert-PnPFolderToProvisioningTemplate -Out <String>
-                                        [-Folder <String>]
                                         [-Force [<SwitchParameter>]]
+                                        [-Folder <String>]
 ```
 
 

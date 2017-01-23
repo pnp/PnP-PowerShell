@@ -22,8 +22,8 @@ Get-PnPFile -Url <String>
 
 
 ```powershell
-Get-PnPFile -Url <String>
-            -AsFile [<SwitchParameter>]
+Get-PnPFile -AsFile [<SwitchParameter>]
+            -Url <String>
             [-Path <String>]
             [-Filename <String>]
             [-Web <WebPipeBind>]

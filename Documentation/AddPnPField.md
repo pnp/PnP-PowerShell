@@ -16,8 +16,6 @@ Add-PnPField [-AddToDefaultView [<SwitchParameter>]]
 ```powershell
 Add-PnPField -List <ListPipeBind>
              -Field <FieldPipeBind>
-             [-List <ListPipeBind>]
-             [-Field <FieldPipeBind>]
              [-DisplayName <String>]
              [-InternalName <String>]
              [-Web <WebPipeBind>]
@@ -33,12 +31,9 @@ Add-PnPField -DisplayName <String>
              [-AddToDefaultView [<SwitchParameter>]]
              [-Required [<SwitchParameter>]]
              [-Group <String>]
-             [-Choices <String[]>]
-             [-List <ListPipeBind>]
              [-Field <FieldPipeBind>]
-             [-DisplayName <String>]
-             [-InternalName <String>]
              [-Web <WebPipeBind>]
+             [-Choices <String[]>]
 ```
 
 
@@ -47,12 +42,10 @@ Add-PnPField -DisplayName <String>
              -InternalName <String>
              -Type <FieldType>
              [-Id <GuidPipeBind>]
-             [-Choices <String[]>]
              [-List <ListPipeBind>]
              [-Field <FieldPipeBind>]
-             [-DisplayName <String>]
-             [-InternalName <String>]
              [-Web <WebPipeBind>]
+             [-Choices <String[]>]
 ```
 
 

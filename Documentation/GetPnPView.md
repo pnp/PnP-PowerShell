@@ -3,10 +3,9 @@ Returns one or all views from a list
 ##Syntax
 ```powershell
 Get-PnPView -List <ListPipeBind>
-            [-Includes <String[]>]
-            [-Includes <String[]>]
             [-Identity <ViewPipeBind>]
             [-Web <WebPipeBind>]
+            [-Includes <String[]>]
 ```
 
 

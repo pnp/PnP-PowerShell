@@ -3,9 +3,8 @@ Return a folder object
 ##Syntax
 ```powershell
 Get-PnPFolder -Url <String>
-              [-Includes <String[]>]
-              [-Includes <String[]>]
               [-Web <WebPipeBind>]
+              [-Includes <String[]>]
 ```
 
 
