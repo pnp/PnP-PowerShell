@@ -2,15 +2,15 @@
 Returns all or a specific event receiver
 ##Syntax
 ```powershell
-Get-PnPEventReceiver [-Identity <GuidPipeBind>]
+Get-PnPEventReceiver [-List <ListPipeBind>]
+                     [-Identity <GuidPipeBind>]
                      [-Web <WebPipeBind>]
-                     [-Includes <String[]>]
-                     [-Includes <String[]>]
 ```
 
 
 ```powershell
-Get-PnPEventReceiver [-List <ListPipeBind>]
+Get-PnPEventReceiver [-Includes <String[]>]
+                     [-Includes <String[]>]
                      [-Identity <GuidPipeBind>]
                      [-Web <WebPipeBind>]
 ```

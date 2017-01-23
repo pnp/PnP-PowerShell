@@ -14,8 +14,8 @@ Get-PnPWebPart -ServerRelativePageUrl <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|WebPartPipeBind|False||
 |ServerRelativePageUrl|String|True|Full server relative URL of the webpart page, e.g. /sites/mysite/sitepages/home.aspx|
+|Identity|WebPartPipeBind|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

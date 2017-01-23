@@ -15,11 +15,11 @@ Add-PnPNavigationNode -Location <NavigationType>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Location|NavigationType|True|The location of the node to add. Either TopNavigationBar, QuickLaunch or SearchNav|
+|Title|String|True|The title of the node to add|
 |External|SwitchParameter|False|Indicates the destination URL is outside of the site collection.|
 |First|SwitchParameter|False|Add the new menu item to beginning of the collection.|
 |Header|String|False|Optionally value of a header entry to add the menu item to.|
-|Location|NavigationType|True|The location of the node to add. Either TopNavigationBar, QuickLaunch or SearchNav|
-|Title|String|True|The title of the node to add|
 |Url|String|False|The url to navigate to when clicking the new menu item.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

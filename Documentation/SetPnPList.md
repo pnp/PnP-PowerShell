@@ -19,13 +19,13 @@ Set-PnPList -Identity <ListPipeBind>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Identity|ListPipeBind|True|The ID, Title or Url of the list.|
 |BreakRoleInheritance|SwitchParameter|False|If used the security inheritance is broken for this list|
 |ClearSubscopes|SwitchParameter|False|If used the unique permissions are cleared from child objects and they can inherit role assignments from this object|
 |CopyRoleAssignments|SwitchParameter|False|If used the roles are copied from the parent web|
 |EnableContentTypes|Boolean|False|Set to $true to enable content types, set to $false to disable content types|
 |EnableMinorVersions|Boolean|False|Enable or disable minor versions versioning. Set to $true to enable, $false to disable.|
 |EnableVersioning|Boolean|False|Enable or disable versioning. Set to $true to enable, $false to disable.|
-|Identity|ListPipeBind|True|The ID, Title or Url of the list.|
 |MajorVersions|UInt32|False|Maximum major versions to keep|
 |MinorVersions|UInt32|False|Maximum minor versions to keep|
 |Title|String|False|The title of the list|

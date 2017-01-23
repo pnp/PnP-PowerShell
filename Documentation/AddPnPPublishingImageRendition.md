@@ -3,8 +3,8 @@ Adds an Image Rendition if the Name of the Image Rendition does not already exis
 ##Syntax
 ```powershell
 Add-PnPPublishingImageRendition -Name <String>
-                                -Width <Int32>
-                                -Height <Int32>
+                                -Width <Int>
+                                -Height <Int>
                                 [-Web <WebPipeBind>]
 ```
 
@@ -12,10 +12,10 @@ Add-PnPPublishingImageRendition -Name <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Height|Int32|True|The height of the Image Rendition.|
+|Height|Int|True|The height of the Image Rendition.|
 |Name|String|True|The display name of the Image Rendition.|
+|Width|Int|True|The width of the Image Rendition.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-|Width|Int32|True|The width of the Image Rendition.|
 ##Examples
 
 ###Example 1

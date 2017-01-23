@@ -1,14 +1,10 @@
 #Get-PnPHealthScore
 Retrieves the current health score value of the server
-##Syntax
 ##Returns
 >System.Int32
 
 Returns a int value representing the current health score value of the server.
 
-##Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
 ##Examples
 
 ###Example 1

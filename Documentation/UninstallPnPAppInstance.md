@@ -11,8 +11,8 @@ Uninstall-PnPAppInstance -Identity <AppPipeBind>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Do not ask for confirmation.|
 |Identity|AppPipeBind|True|Appinstance or Id of the addin to remove.|
+|Force|SwitchParameter|False|Do not ask for confirmation.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

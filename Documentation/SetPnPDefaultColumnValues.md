@@ -2,11 +2,11 @@
 Sets default column values for a document library
 ##Syntax
 ```powershell
-Set-PnPDefaultColumnValues -Field <FieldPipeBind>
+Set-PnPDefaultColumnValues -List <ListPipeBind>
+                           -Field <FieldPipeBind>
                            -Value <String[]>
                            [-Folder <String>]
                            [-Web <WebPipeBind>]
-                           -List <ListPipeBind>
 ```
 
 
@@ -17,9 +17,9 @@ Sets default column values for a document library, per folder, or for the root f
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Field|FieldPipeBind|True|The internal name, id or a reference to a field|
-|Folder|String|False|A library relative folder path, if not specified it will set the default column values on the root folder of the library ('/')|
 |List|ListPipeBind|True|The ID, Name or Url of the list.|
 |Value|String[]|True|A list of values. In case of a text field the values will be concatenated, separated by a semi-colon. In case of a taxonomy field multiple values will added|
+|Folder|String|False|A library relative folder path, if not specified it will set the default column values on the root folder of the library ('/')|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

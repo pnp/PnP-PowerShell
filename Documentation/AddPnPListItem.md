@@ -2,11 +2,11 @@
 Adds an item to a list
 ##Syntax
 ```powershell
-Add-PnPListItem [-ContentType <ContentTypePipeBind>]
+Add-PnPListItem -List <ListPipeBind>
+                [-ContentType <ContentTypePipeBind>]
                 [-Values <Hashtable>]
                 [-Folder <String>]
                 [-Web <WebPipeBind>]
-                -List <ListPipeBind>
 ```
 
 
@@ -16,9 +16,9 @@ Add-PnPListItem [-ContentType <ContentTypePipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|List|ListPipeBind|True|The ID, Title or Url of the list.|
 |ContentType|ContentTypePipeBind|False|Specify either the name, ID or an actual content type.|
 |Folder|String|False|The list relative URL of a folder. E.g. "MyFolder" for a folder located in the root of the list, or "MyFolder/SubFolder" for a folder located in the MyFolder folder which is located in the root of the list.|
-|List|ListPipeBind|True|The ID, Title or Url of the list.|
 |Values|Hashtable|False|Use the internal names of the fields when specifying field names.
 
 Single line of text: -Values @{"Title" = "Title New"}

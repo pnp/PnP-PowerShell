@@ -3,7 +3,7 @@ Imports a taxonomy from either a string array or a file
 ##Syntax
 ```powershell
 Import-PnPTaxonomy [-Terms <String[]>]
-                   [-Lcid <Int32>]
+                   [-Lcid <Int>]
                    [-TermStoreName <String>]
                    [-Delimiter <String>]
                    [-SynchronizeDeletions [<SwitchParameter>]]
@@ -12,7 +12,7 @@ Import-PnPTaxonomy [-Terms <String[]>]
 
 ```powershell
 Import-PnPTaxonomy -Path <String>
-                   [-Lcid <Int32>]
+                   [-Lcid <Int>]
                    [-TermStoreName <String>]
                    [-Delimiter <String>]
                    [-SynchronizeDeletions [<SwitchParameter>]]
@@ -22,9 +22,9 @@ Import-PnPTaxonomy -Path <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Delimiter|String|False|The path delimiter to be used, by default this is '|'|
-|Lcid|Int32|False||
 |Path|String|True|Specifies a file containing terms per line, in the format as required by the Terms parameter.|
+|Delimiter|String|False|The path delimiter to be used, by default this is '|'|
+|Lcid|Int|False||
 |SynchronizeDeletions|SwitchParameter|False|If specified, terms that exist in the termset, but are not in the imported data, will be removed.|
 |Terms|String[]|False|An array of strings describing termgroup, termset, term, subterms using a default delimiter of '|'.|
 |TermStoreName|String|False|Term store to import to; if not specified the default term store is used.|

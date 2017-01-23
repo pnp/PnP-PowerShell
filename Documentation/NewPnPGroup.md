@@ -20,6 +20,7 @@ New-PnPGroup -Title <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Title|String|True|The Title of the group|
 |AllowMembersEditMembership|SwitchParameter|False|A switch parameter that specifies whether group members can modify membership in the group|
 |AllowRequestToJoinLeave|SwitchParameter|False|A switch parameter that specifies whether to allow users to request membership in the group and to allow users to request to leave the group|
 |AutoAcceptRequestToJoinLeave|SwitchParameter|False|A switch parameter that specifies whether users are automatically added or removed when they make a request|
@@ -27,7 +28,6 @@ Parameter|Type|Required|Description
 |DisallowMembersViewMembership|SwitchParameter|False|A switch parameter that disallows group members to view membership.|
 |Owner|String|False|The owner for the group, which can be a user or another group|
 |RequestToJoinEmail|String|False|The e-mail address to which membership requests are sent|
-|Title|String|True|The Title of the group|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

@@ -2,9 +2,9 @@
 Returns the property bag values.
 ##Syntax
 ```powershell
-Get-PnPPropertyBag [-Folder <String>]
+Get-PnPPropertyBag [-Key <String>]
+                   [-Folder <String>]
                    [-Web <WebPipeBind>]
-                   [-Key <String>]
 ```
 
 

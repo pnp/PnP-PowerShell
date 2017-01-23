@@ -2,11 +2,11 @@
 Returns a field from a list or site
 ##Syntax
 ```powershell
-Get-PnPField [-List <ListPipeBind>]
-             [-Web <WebPipeBind>]
+Get-PnPField [-Includes <String[]>]
              [-Includes <String[]>]
-             [-Includes <String[]>]
+             [-List <ListPipeBind>]
              [-Identity <FieldPipeBind>]
+             [-Web <WebPipeBind>]
 ```
 
 

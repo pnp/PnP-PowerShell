@@ -1,9 +1,5 @@
 #Get-PnPContentTypePublishingHubUrl
 Returns the url to Content Type Publishing Hub
-##Syntax
-##Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
 ##Examples
 
 ###Example 1

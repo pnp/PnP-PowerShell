@@ -2,7 +2,9 @@
 Generates a provisioning template from a web
 ##Syntax
 ```powershell
-Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
+Get-PnPProvisioningTemplate [-Out <String>]
+                            [-Schema <XMLPnPSchemaVersion>]
+                            [-IncludeAllTermGroups [<SwitchParameter>]]
                             [-IncludeSiteCollectionTermGroup [<SwitchParameter>]]
                             [-IncludeSiteGroups [<SwitchParameter>]]
                             [-IncludeTermGroupsSecurity [<SwitchParameter>]]
@@ -24,8 +26,6 @@ Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
                             [-TemplateProperties <Hashtable>]
                             [-OutputInstance [<SwitchParameter>]]
                             [-Web <WebPipeBind>]
-                            [-Out <String>]
-                            [-Schema <XMLPnPSchemaVersion>]
 ```
 
 

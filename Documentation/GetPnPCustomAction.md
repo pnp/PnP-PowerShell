@@ -2,11 +2,11 @@
 Returns all or a specific custom action(s)
 ##Syntax
 ```powershell
-Get-PnPCustomAction [-Identity <GuidPipeBind>]
+Get-PnPCustomAction [-Includes <String[]>]
+                    [-Includes <String[]>]
+                    [-Identity <GuidPipeBind>]
                     [-Scope <CustomActionScope>]
                     [-Web <WebPipeBind>]
-                    [-Includes <String[]>]
-                    [-Includes <String[]>]
 ```
 
 

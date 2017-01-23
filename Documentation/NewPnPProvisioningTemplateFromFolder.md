@@ -2,17 +2,17 @@
 Generates a provisioning template from a given folder, including only files that are present in that folder
 ##Syntax
 ```powershell
-New-PnPProvisioningTemplateFromFolder [-Match <String>]
+New-PnPProvisioningTemplateFromFolder [-Out <String>]
+                                      [-Folder <String>]
+                                      [-TargetFolder <String>]
+                                      [-Match <String>]
                                       [-ContentType <ContentTypePipeBind>]
                                       [-Properties <Hashtable>]
+                                      [-Schema <XMLPnPSchemaVersion>]
                                       [-AsIncludeFile [<SwitchParameter>]]
                                       [-Force [<SwitchParameter>]]
                                       [-Encoding <Encoding>]
                                       [-Web <WebPipeBind>]
-                                      [-Out <String>]
-                                      [-Folder <String>]
-                                      [-TargetFolder <String>]
-                                      [-Schema <XMLPnPSchemaVersion>]
 ```
 
 

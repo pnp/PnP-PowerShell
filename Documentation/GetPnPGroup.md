@@ -2,20 +2,19 @@
 Returns a specific group or all groups.
 ##Syntax
 ```powershell
-Get-PnPGroup [-Web <WebPipeBind>]
-             [-Includes <String[]>]
-             [-Includes <String[]>]
-```
-
-
-```powershell
-Get-PnPGroup [-Web <WebPipeBind>]
-             [-Identity <GroupPipeBind>]
+Get-PnPGroup [-Identity <GroupPipeBind>]
+             [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
 Get-PnPGroup [-AssociatedMemberGroup [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Get-PnPGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
 
@@ -27,7 +26,8 @@ Get-PnPGroup [-AssociatedOwnerGroup [<SwitchParameter>]]
 
 
 ```powershell
-Get-PnPGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
+Get-PnPGroup [-Includes <String[]>]
+             [-Includes <String[]>]
              [-Web <WebPipeBind>]
 ```
 

@@ -2,8 +2,8 @@
 Checks out a file
 ##Syntax
 ```powershell
-Set-PnPFileCheckedOut [-Web <WebPipeBind>]
-                      -Url <String>
+Set-PnPFileCheckedOut -Url <String>
+                      [-Web <WebPipeBind>]
 ```
 
 

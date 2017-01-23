@@ -2,9 +2,9 @@
 Returns a taxonomy term group
 ##Syntax
 ```powershell
-Get-PnPTermGroup [-TermStoreName <String>]
+Get-PnPTermGroup -GroupName <String>
                  [-Includes <String[]>]
-                 -GroupName <String>
+                 [-TermStoreName <String>]
 ```
 
 

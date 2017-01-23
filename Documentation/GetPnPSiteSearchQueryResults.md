@@ -2,17 +2,17 @@
 Executes a search query to retrieve indexed site collections
 ##Syntax
 ```powershell
-Get-PnPSiteSearchQueryResults [-All [<SwitchParameter>]]
-                              [-Web <WebPipeBind>]
+Get-PnPSiteSearchQueryResults [-StartRow <Int>]
+                              [-MaxResults <Int>]
                               [-Query <String>]
+                              [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Get-PnPSiteSearchQueryResults [-StartRow <Int32>]
-                              [-MaxResults <Int32>]
-                              [-Web <WebPipeBind>]
+Get-PnPSiteSearchQueryResults [-All [<SwitchParameter>]]
                               [-Query <String>]
+                              [-Web <WebPipeBind>]
 ```
 
 
@@ -23,9 +23,9 @@ Get-PnPSiteSearchQueryResults [-StartRow <Int32>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |All|SwitchParameter|False|Automatically page results until the end to get more than 500 sites. Use with caution!|
-|MaxResults|Int32|False|Maximum amount of search results to return. Default and max is 500 search results.|
+|MaxResults|Int|False|Maximum amount of search results to return. Default and max is 500 search results.|
 |Query|String|False|Search query in Keyword Query Language (KQL) to execute to refine the returned sites. If omitted, all indexed sites will be returned.|
-|StartRow|Int32|False|Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.|
+|StartRow|Int|False|Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

@@ -2,8 +2,8 @@
 Removes a workflow definition
 ##Syntax
 ```powershell
-Remove-PnPWorkflowDefinition [-Web <WebPipeBind>]
-                             -Identity <WorkflowDefinitionPipeBind>
+Remove-PnPWorkflowDefinition -Identity <WorkflowDefinitionPipeBind>
+                             [-Web <WebPipeBind>]
 ```
 
 

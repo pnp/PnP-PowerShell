@@ -2,8 +2,8 @@
 Loads a PnP file from the file systems
 ##Syntax
 ```powershell
-Load-PnPProvisioningTemplate [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
-                             -Path <String>
+Load-PnPProvisioningTemplate -Path <String>
+                             [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
 ```
 
 

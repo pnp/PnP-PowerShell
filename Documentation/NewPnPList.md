@@ -15,11 +15,11 @@ New-PnPList -Title <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Template|ListTemplateType|True|The type of list to create.|
+|Title|String|True|The Title of the list|
 |EnableContentTypes|SwitchParameter|False|Switch parameter if content types should be enabled on this list|
 |EnableVersioning|SwitchParameter|False|Switch parameter if versioning should be enabled|
 |OnQuickLaunch|SwitchParameter|False|Switch parameter if this list should be visible on the QuickLaunch|
-|Template|ListTemplateType|True|The type of list to create.|
-|Title|String|True|The Title of the list|
 |Url|String|False|If set, will override the url of the list.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

@@ -2,8 +2,8 @@
 Marks the list for full indexing during the next incremental crawl
 ##Syntax
 ```powershell
-Request-PnPReIndexList [-Web <WebPipeBind>]
-                       -Identity <ListPipeBind>
+Request-PnPReIndexList -Identity <ListPipeBind>
+                       [-Web <WebPipeBind>]
 ```
 
 

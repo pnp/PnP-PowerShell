@@ -22,11 +22,11 @@ Set-PnPListPermission -User <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|AddRole|String|False|The role that must be assigned to the group or user|
 |Group|GroupPipeBind|True||
 |Identity|ListPipeBind|True|The ID or Title of the list.|
-|RemoveRole|String|False|The role that must be removed from the group or user|
 |User|String|True||
+|AddRole|String|False|The role that must be assigned to the group or user|
+|RemoveRole|String|False|The role that must be removed from the group or user|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
