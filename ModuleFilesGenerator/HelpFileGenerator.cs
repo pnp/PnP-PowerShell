@@ -134,11 +134,32 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
         private XElement GetReturnValuesElement(Model.CmdletInfo cmdletInfo)
         {
-            var outputType = "String";
+            var outputType = "";
             var outputTypeDescription = "";
             if (cmdletInfo.OutputType != null)
             {
-                outputType = cmdletInfo.OutputType.Name;
+                if (cmdletInfo.OutputType.IsGenericType)
+                {
+                    if (cmdletInfo.OutputType.GetGenericTypeDefinition() == typeof(List<>) || cmdletInfo.OutputType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                    {
+                        if (cmdletInfo.OutputType.GenericTypeArguments.Any())
+                        {
+                            outputType = $"List<{cmdletInfo.OutputType.GenericTypeArguments[0].FullName}>";
+                        }
+                        else
+                        {
+                            outputType = cmdletInfo.OutputType.FullName;
+                        }
+                    }
+                    else
+                    {
+                        outputType = cmdletInfo.OutputType.FullName;
+                    }
+                }
+                else
+                {
+                    outputType = cmdletInfo.OutputType.FullName;
+                }
             }
             if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeDescription))
             {
