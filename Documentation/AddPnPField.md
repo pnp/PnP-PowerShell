@@ -5,6 +5,8 @@ Adds a field to a list or as a site column
 Add-PnPField [-AddToDefaultView [<SwitchParameter>]]
              [-Required [<SwitchParameter>]]
              [-Group <String>]
+             [-List <ListPipeBind>]
+             [-Field <FieldPipeBind>]
              [-DisplayName <String>]
              [-InternalName <String>]
              [-Web <WebPipeBind>]
@@ -14,6 +16,8 @@ Add-PnPField [-AddToDefaultView [<SwitchParameter>]]
 ```powershell
 Add-PnPField -List <ListPipeBind>
              -Field <FieldPipeBind>
+             [-List <ListPipeBind>]
+             [-Field <FieldPipeBind>]
              [-DisplayName <String>]
              [-InternalName <String>]
              [-Web <WebPipeBind>]
@@ -30,6 +34,8 @@ Add-PnPField -DisplayName <String>
              [-Required [<SwitchParameter>]]
              [-Group <String>]
              [-Choices <String[]>]
+             [-List <ListPipeBind>]
+             [-Field <FieldPipeBind>]
              [-DisplayName <String>]
              [-InternalName <String>]
              [-Web <WebPipeBind>]
@@ -42,6 +48,8 @@ Add-PnPField -DisplayName <String>
              -Type <FieldType>
              [-Id <GuidPipeBind>]
              [-Choices <String[]>]
+             [-List <ListPipeBind>]
+             [-Field <FieldPipeBind>]
              [-DisplayName <String>]
              [-InternalName <String>]
              [-Web <WebPipeBind>]
