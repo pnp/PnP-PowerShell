@@ -89,21 +89,20 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            var sourceServerRelativeUrl = SourceUrl ?? ServerRelativeUrl;
+            SourceUrl = SourceUrl ?? ServerRelativeUrl;
             var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-            if (!string.IsNullOrEmpty(SourceUrl) && !SourceUrl.StartsWith(webServerRelativeUrl, StringComparison.InvariantCultureIgnoreCase))
+
+            if (!SourceUrl.StartsWith("/"))
             {
-                sourceServerRelativeUrl = UrlUtility.Combine(webServerRelativeUrl, SourceUrl);
+                SourceUrl = UrlUtility.Combine(webServerRelativeUrl, SourceUrl);
             }
             if (!TargetUrl.StartsWith("/"))
             {
-                //site relative URL
                 TargetUrl = UrlUtility.Combine(webServerRelativeUrl, TargetUrl);
             }
 
             Uri currentContextUri = new Uri(ClientContext.Url);
-
-            Uri sourceUri = new Uri(currentContextUri, sourceServerRelativeUrl);
+            Uri sourceUri = new Uri(currentContextUri, SourceUrl);
             Uri sourceWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, sourceUri);
             Uri targetUri = new Uri(currentContextUri, TargetUrl);
             Uri targetWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
@@ -114,13 +113,13 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 _sourceContext = ClientContext.Clone(sourceWebUri);
             }
 
-            File file = _sourceContext.Web.GetFileByServerRelativeUrl(sourceServerRelativeUrl);
-            Folder folder = _sourceContext.Web.GetFolderByServerRelativeUrl(sourceServerRelativeUrl);
+            File file = _sourceContext.Web.GetFileByServerRelativeUrl(SourceUrl);
+            Folder folder = _sourceContext.Web.GetFolderByServerRelativeUrl(SourceUrl);
             file.EnsureProperties(f => f.Name, f => f.Exists);
             folder.EnsureProperties(f => f.Name, f => f.Exists);
             bool srcIsFolder = folder.Exists;
             
-            if (Force || ShouldContinue(string.Format(Resources.CopyFile0To1, sourceServerRelativeUrl, TargetUrl), Resources.Confirm))
+            if (Force || ShouldContinue(string.Format(Resources.CopyFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
             {
                 var srcWeb = _sourceContext.Web;
                 srcWeb.EnsureProperty(s => s.Url);
