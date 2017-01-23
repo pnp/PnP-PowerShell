@@ -2,8 +2,8 @@
 Returns a specific group or all groups.
 ##Syntax
 ```powershell
-Get-PnPGroup [-Identity <GroupPipeBind>]
-             [-Web <WebPipeBind>]
+Get-PnPGroup [-Web <WebPipeBind>]
+             [-Identity <GroupPipeBind>]
 ```
 
 
@@ -26,9 +26,8 @@ Get-PnPGroup [-AssociatedOwnerGroup [<SwitchParameter>]]
 
 
 ```powershell
-Get-PnPGroup [-Includes <String[]>]
+Get-PnPGroup [-Web <WebPipeBind>]
              [-Includes <String[]>]
-             [-Web <WebPipeBind>]
 ```
 
 

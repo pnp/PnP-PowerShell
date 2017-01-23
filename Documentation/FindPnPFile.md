@@ -8,15 +8,15 @@ Find-PnPFile -Match <String>
 
 
 ```powershell
-Find-PnPFile -Match <String>
-             -List <ListPipeBind>
+Find-PnPFile -List <ListPipeBind>
+             -Match <String>
              [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Find-PnPFile -Match <String>
-             -Folder <FolderPipeBind>
+Find-PnPFile -Folder <FolderPipeBind>
+             -Match <String>
              [-Web <WebPipeBind>]
 ```
 

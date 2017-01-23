@@ -2,9 +2,9 @@
 Adds a view to a list
 ##Syntax
 ```powershell
-Add-PnPView -List <ListPipeBind>
-            -Title <String>
+Add-PnPView -Title <String>
             -Fields <String[]>
+            -List <ListPipeBind>
             [-Query <String>]
             [-ViewType <ViewType>]
             [-RowLimit <UInt32>]

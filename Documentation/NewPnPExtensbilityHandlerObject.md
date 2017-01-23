@@ -2,8 +2,8 @@
 Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet
 ##Syntax
 ```powershell
-New-PnPExtensbilityHandlerObject -Assembly <String>
-                                 -Type <String>
+New-PnPExtensbilityHandlerObject -Type <String>
+                                 -Assembly <String>
                                  [-Configuration <String>]
                                  [-Disabled [<SwitchParameter>]]
 ```

@@ -23,11 +23,13 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "WebPara")]
     public class AddField : PnPWebCmdlet, IDynamicParameters
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef")]
+        [Parameter(HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
+        [Parameter(Mandatory = true, ParameterSetName = "FieldRef")]
+        [Parameter(HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = true, ParameterSetName = "ListPara")]

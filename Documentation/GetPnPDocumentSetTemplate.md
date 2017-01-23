@@ -3,9 +3,8 @@ Retrieves a document set template
 ##Syntax
 ```powershell
 Get-PnPDocumentSetTemplate -Identity <DocumentSetPipeBind>
-                           [-Includes <String[]>]
-                           [-Includes <String[]>]
                            [-Web <WebPipeBind>]
+                           [-Includes <String[]>]
 ```
 
 

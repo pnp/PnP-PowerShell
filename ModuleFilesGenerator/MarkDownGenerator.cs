@@ -76,7 +76,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                             syntaxText.AppendFormat("```powershell\r\n{0} ", cmdletInfo.FullCommand);
                             var cmdletLength = cmdletInfo.FullCommand.Length;
                             var first = true;
-                            foreach (var par in cmdletSyntax.Parameters.OrderBy(p => !p.Required))
+                            foreach (var par in cmdletSyntax.Parameters.Distinct(new ParameterComparer()).OrderBy(p => !p.Required).ThenBy(p => p.Position))
                             {
                                 if (first)
                                 {

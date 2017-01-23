@@ -3,9 +3,8 @@ Returns a folder from a given site relative path, and will create it if it does 
 ##Syntax
 ```powershell
 Ensure-PnPFolder -SiteRelativePath <String>
-                 [-Includes <String[]>]
-                 [-Includes <String[]>]
                  [-Web <WebPipeBind>]
+                 [-Includes <String[]>]
 ```
 
 

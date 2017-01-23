@@ -4,7 +4,6 @@ Sets a property bag value
 ```powershell
 Set-PnPPropertyBagValue -Key <String>
                         -Value <String>
-                        -Value <String>
                         [-Folder <String>]
                         [-Web <WebPipeBind>]
 ```
@@ -14,7 +13,6 @@ Set-PnPPropertyBagValue -Key <String>
 Set-PnPPropertyBagValue -Key <String>
                         -Value <String>
                         -Indexed [<SwitchParameter>]
-                        -Value <String>
                         [-Web <WebPipeBind>]
 ```
 

@@ -2,10 +2,9 @@
 Returns a SharePoint AddIn Instance in the site
 ##Syntax
 ```powershell
-Get-PnPAppInstance [-Includes <String[]>]
+Get-PnPAppInstance [-Web <WebPipeBind>]
                    [-Includes <String[]>]
                    [-Identity <AppPipeBind>]
-                   [-Web <WebPipeBind>]
 ```
 
 

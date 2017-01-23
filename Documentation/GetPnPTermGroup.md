@@ -3,8 +3,8 @@ Returns a taxonomy term group
 ##Syntax
 ```powershell
 Get-PnPTermGroup -GroupName <String>
-                 [-Includes <String[]>]
                  [-TermStoreName <String>]
+                 [-Includes <String[]>]
 ```
 
 

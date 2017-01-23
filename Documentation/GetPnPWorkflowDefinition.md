@@ -2,9 +2,9 @@
 Returns a workflow definition
 ##Syntax
 ```powershell
-Get-PnPWorkflowDefinition [-Name <String>]
-                          [-PublishedOnly [<SwitchParameter>]]
+Get-PnPWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
                           [-Web <WebPipeBind>]
+                          [-Name <String>]
 ```
 
 

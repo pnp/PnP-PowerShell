@@ -2,8 +2,8 @@
 Deletes an item from a list
 ##Syntax
 ```powershell
-Remove-PnPListItem -List <ListPipeBind>
-                   -Identity <ListItemPipeBind>
+Remove-PnPListItem -Identity <ListItemPipeBind>
+                   -List <ListPipeBind>
                    [-Force [<SwitchParameter>]]
                    [-Web <WebPipeBind>]
 ```

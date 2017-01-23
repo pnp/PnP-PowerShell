@@ -2,9 +2,9 @@
 Sets default column values for a document library
 ##Syntax
 ```powershell
-Set-PnPDefaultColumnValues -List <ListPipeBind>
-                           -Field <FieldPipeBind>
+Set-PnPDefaultColumnValues -Field <FieldPipeBind>
                            -Value <String[]>
+                           -List <ListPipeBind>
                            [-Folder <String>]
                            [-Web <WebPipeBind>]
 ```

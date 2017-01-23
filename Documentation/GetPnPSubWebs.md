@@ -2,9 +2,9 @@
 Returns the subwebs of the current web
 ##Syntax
 ```powershell
-Get-PnPSubWebs [-Identity <WebPipeBind>]
-               [-Recurse [<SwitchParameter>]]
+Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Identity <WebPipeBind>]
 ```
 
 
