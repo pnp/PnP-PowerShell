@@ -10,7 +10,7 @@ Get-PnPFeature [-Scope <FeatureScope>]
 
 
 ##Returns
->[System.Collections.Generic.IEnumerable`1[Microsoft.SharePoint.Client.Feature]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.feature.aspx)
+>[List<Microsoft.SharePoint.Client.Feature>](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.feature.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

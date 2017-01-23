@@ -53,7 +53,7 @@ Submit-PnPSearchQuery -Query <String>
 
 
 ##Returns
->System.Collections.Generic.List`1[System.Object]
+>List<System.Object>
 
 ##Parameters
 Parameter|Type|Required|Description

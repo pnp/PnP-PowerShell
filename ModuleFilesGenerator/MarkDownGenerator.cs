@@ -122,13 +122,39 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     if (cmdletInfo.OutputType != null)
                     {
                         docBuilder.Append("##Returns\n");
+                        var outputType = "";
+                        if (cmdletInfo.OutputType != null)
+                        {
+                            if (cmdletInfo.OutputType.IsGenericType)
+                            {
+                                if (cmdletInfo.OutputType.GetGenericTypeDefinition() == typeof(List<>) || cmdletInfo.OutputType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                                {
+                                    if (cmdletInfo.OutputType.GenericTypeArguments.Any())
+                                    {
+                                        outputType = $"List<{cmdletInfo.OutputType.GenericTypeArguments[0].FullName}>";
+                                    }
+                                    else
+                                    {
+                                        outputType = cmdletInfo.OutputType.FullName;
+                                    }
+                                }
+                                else
+                                {
+                                    outputType = cmdletInfo.OutputType.FullName;
+                                }
+                            }
+                            else
+                            {
+                                outputType = cmdletInfo.OutputType.FullName;
+                            }
+                        }
                         if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeLink))
                         {
-                            docBuilder.Append($">[{cmdletInfo.OutputType}]({cmdletInfo.OutputTypeLink})");
+                            docBuilder.Append($">[{outputType}]({cmdletInfo.OutputTypeLink})");
                         }
                         else
                         {
-                            docBuilder.Append($">{cmdletInfo.OutputType}");
+                            docBuilder.Append($">{outputType}");
                         }
                         if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeDescription))
                         {

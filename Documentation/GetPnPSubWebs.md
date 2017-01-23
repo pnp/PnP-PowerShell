@@ -9,7 +9,7 @@ Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
 
 
 ##Returns
->[System.Collections.Generic.List`1[Microsoft.SharePoint.Client.Web]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
+>[List<Microsoft.SharePoint.Client.Web>](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description

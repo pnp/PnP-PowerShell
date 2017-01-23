@@ -9,7 +9,7 @@ Get-PnPAppInstance [-Web <WebPipeBind>]
 
 
 ##Returns
->[System.Collections.Generic.List`1[Microsoft.SharePoint.Client.AppInstance]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.appinstance.aspx)
+>[List<Microsoft.SharePoint.Client.AppInstance>](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.appinstance.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description
