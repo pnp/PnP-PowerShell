@@ -31,11 +31,11 @@ The import file also supports an expanded syntax for the Term Set Name and term 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Contact|String|False|Contact for the term set; if not specified, the existing setting is retained.|
 |GroupName|String|True|Group to import the term set to; an error is returned if the group does not exist.|
+|Path|String|True|Local path to the file containing the term set to import, in the standard format (as the 'sample import file' available in the Term Store Administration).|
+|Contact|String|False|Contact for the term set; if not specified, the existing setting is retained.|
 |IsOpen|Nullable`1|False|Whether the term set should be marked open; if not specified, then the existing setting is not changed.|
 |Owner|String|False|Owner for the term set; if not specified, the existing setting is retained.|
-|Path|String|True|Local path to the file containing the term set to import, in the standard format (as the 'sample import file' available in the Term Store Administration).|
 |SynchronizeDeletions|SwitchParameter|False|If specified, the import will remove any terms (and children) previously in the term set but not in the import file; default is to leave them.|
 |TermSetId|Guid|False|GUID to use for the term set; if not specified, or the empty GUID, a random GUID is generated and used.|
 |TermStoreName|String|False|Term store to import into; if not specified the default term store is used.|

@@ -2,21 +2,21 @@
 Converts a provisioning template to an other schema version
 ##Syntax
 ```powershell
-Convert-PnPProvisioningTemplate [-Out <String>]
+Convert-PnPProvisioningTemplate -Path <String>
+                                [-Out <String>]
+                                [-ToSchema <XMLPnPSchemaVersion>]
                                 [-Encoding <Encoding>]
                                 [-Force [<SwitchParameter>]]
-                                -Path <String>
-                                [-ToSchema <XMLPnPSchemaVersion>]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Path|String|True|Path to the xml file containing the provisioning template|
 |Encoding|Encoding|False|The encoding type of the XML file, Unicode is default|
 |Force|SwitchParameter|False|Overwrites the output file if it exists|
 |Out|String|False|Filename to write to, optionally including full path|
-|Path|String|True|Path to the xml file containing the provisioning template|
 |ToSchema|XMLPnPSchemaVersion|False|The schema of the output to use, defaults to the latest schema|
 ##Examples
 

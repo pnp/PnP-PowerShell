@@ -2,8 +2,8 @@
 Stops a workflow instance
 ##Syntax
 ```powershell
-Stop-PnPWorkflowInstance [-Web <WebPipeBind>]
-                         -Identity <WorkflowInstancePipeBind>
+Stop-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
+                         [-Web <WebPipeBind>]
 ```
 
 

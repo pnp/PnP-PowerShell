@@ -2,11 +2,13 @@
 Executes an arbitrary search query against the SharePoint search index
 ##Syntax
 ```powershell
-Submit-PnPSearchQuery [-All [<SwitchParameter>]]
+Submit-PnPSearchQuery -Query <String>
+                      [-StartRow <Int>]
+                      [-MaxResults <Int>]
                       [-TrimDuplicates <Boolean>]
                       [-Properties <Hashtable>]
                       [-Refiners <String>]
-                      [-Culture <Int32>]
+                      [-Culture <Int>]
                       [-QueryTemplate <String>]
                       [-SelectProperties <String[]>]
                       [-RefinementFilters <String[]>]
@@ -14,7 +16,7 @@ Submit-PnPSearchQuery [-All [<SwitchParameter>]]
                       [-RankingModelId <String>]
                       [-ClientType <String>]
                       [-HiddenConstraints <String>]
-                      [-TimeZoneId <Int32>]
+                      [-TimeZoneId <Int>]
                       [-EnablePhonetic <Boolean>]
                       [-EnableStemming <Boolean>]
                       [-EnableQueryRules <Boolean>]
@@ -22,17 +24,16 @@ Submit-PnPSearchQuery [-All [<SwitchParameter>]]
                       [-ProcessBestBets <Boolean>]
                       [-ProcessPersonalFavorites <Boolean>]
                       [-Web <WebPipeBind>]
-                      -Query <String>
 ```
 
 
 ```powershell
-Submit-PnPSearchQuery [-StartRow <Int32>]
-                      [-MaxResults <Int32>]
+Submit-PnPSearchQuery -Query <String>
+                      [-All [<SwitchParameter>]]
                       [-TrimDuplicates <Boolean>]
                       [-Properties <Hashtable>]
                       [-Refiners <String>]
-                      [-Culture <Int32>]
+                      [-Culture <Int>]
                       [-QueryTemplate <String>]
                       [-SelectProperties <String[]>]
                       [-RefinementFilters <String[]>]
@@ -40,7 +41,7 @@ Submit-PnPSearchQuery [-StartRow <Int32>]
                       [-RankingModelId <String>]
                       [-ClientType <String>]
                       [-HiddenConstraints <String>]
-                      [-TimeZoneId <Int32>]
+                      [-TimeZoneId <Int>]
                       [-EnablePhonetic <Boolean>]
                       [-EnableStemming <Boolean>]
                       [-EnableQueryRules <Boolean>]
@@ -48,7 +49,6 @@ Submit-PnPSearchQuery [-StartRow <Int32>]
                       [-ProcessBestBets <Boolean>]
                       [-ProcessPersonalFavorites <Boolean>]
                       [-Web <WebPipeBind>]
-                      -Query <String>
 ```
 
 
@@ -58,18 +58,18 @@ Submit-PnPSearchQuery [-StartRow <Int32>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Query|String|True|Search query in Keyword Query Language (KQL).|
 |All|SwitchParameter|False|Automatically page results until the end to get more than 500. Use with caution!|
 |ClientType|String|False|Specifies the name of the client which issued the query.|
-|Culture|Int32|False|The locale for the query.|
+|Culture|Int|False|The locale for the query.|
 |EnablePhonetic|Boolean|False|Specifies whether the phonetic forms of the query terms are used to find matches.|
 |EnableQueryRules|Boolean|False|Specifies whether Query Rules are enabled for this query.|
 |EnableStemming|Boolean|False|Specifies whether stemming is enabled.|
 |HiddenConstraints|String|False|The keyword query’s hidden constraints.|
-|MaxResults|Int32|False|Maximum amount of search results to return. Default and max per page is 500 search results.|
+|MaxResults|Int|False|Maximum amount of search results to return. Default and max per page is 500 search results.|
 |ProcessBestBets|Boolean|False|Determines whether Best Bets are enabled.|
 |ProcessPersonalFavorites|Boolean|False|Determines whether personal favorites data is processed or not.|
 |Properties|Hashtable|False|Extra query properties. Can for example be used for Office Graph queries.|
-|Query|String|True|Search query in Keyword Query Language (KQL).|
 |QueryTemplate|String|False|Specifies the query template that is used at run time to transform the query based on user input.|
 |RankingModelId|String|False|The identifier (ID) of the ranking model to use for the query.|
 |RefinementFilters|String[]|False|The set of refinement filters used.|
@@ -77,8 +77,8 @@ Parameter|Type|Required|Description
 |SelectProperties|String[]|False|The list of properties to return in the search results.|
 |SortList|Hashtable|False|The list of properties by which the search results are ordered.|
 |SourceId|Guid|False|Specifies the identifier (ID or name) of the result source to be used to run the query.|
-|StartRow|Int32|False|Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.|
-|TimeZoneId|Int32|False|The identifier for the search query time zone.|
+|StartRow|Int|False|Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.|
+|TimeZoneId|Int|False|The identifier for the search query time zone.|
 |TrimDuplicates|Boolean|False|Specifies whether near duplicate items should be removed from the search results.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

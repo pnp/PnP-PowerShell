@@ -2,31 +2,31 @@
 Downloads a file.
 ##Syntax
 ```powershell
-Get-PnPFile [-Web <WebPipeBind>]
-            -Url <String>
-```
-
-
-```powershell
-Get-PnPFile [-AsListItem [<SwitchParameter>]]
+Get-PnPFile -Url <String>
             [-Web <WebPipeBind>]
-            -Url <String>
 ```
 
 
 ```powershell
-Get-PnPFile [-AsString [<SwitchParameter>]]
+Get-PnPFile -Url <String>
+            [-AsListItem [<SwitchParameter>]]
             [-Web <WebPipeBind>]
-            -Url <String>
 ```
 
 
 ```powershell
-Get-PnPFile [-Path <String>]
-            [-Filename <String>]
+Get-PnPFile -Url <String>
+            [-AsString [<SwitchParameter>]]
+            [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Get-PnPFile -Url <String>
             -AsFile [<SwitchParameter>]
+            [-Path <String>]
+            [-Filename <String>]
             [-Web <WebPipeBind>]
-            -Url <String>
 ```
 
 
@@ -37,11 +37,11 @@ Get-PnPFile [-Path <String>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |AsFile|SwitchParameter|True||
+|Url|String|True|The URL (server or site relative) to the file|
 |AsListItem|SwitchParameter|False||
 |AsString|SwitchParameter|False|Retrieve the file contents as a string|
 |Filename|String|False|Name for the local file|
 |Path|String|False|Local path where the file should be saved|
-|Url|String|True|The URL (server or site relative) to the file|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

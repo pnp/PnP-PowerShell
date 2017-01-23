@@ -5,7 +5,7 @@ Adds a SharePoint Addin to a site
 Import-PnPAppPackage -Path <String>
                      [-Force [<SwitchParameter>]]
                      [-LoadOnly [<SwitchParameter>]]
-                     [-Locale <Int32>]
+                     [-Locale <Int>]
                      [-Web <WebPipeBind>]
 ```
 
@@ -19,10 +19,10 @@ This commands requires that you have an addin package to deploy
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Path|String|True|Path pointing to the .app file|
 |Force|SwitchParameter|False|Will forcibly install the app by activating the addin sideloading feature, installing the addin, and deactivating the sideloading feature|
 |LoadOnly|SwitchParameter|False|Will only upload the addin, but not install it|
-|Locale|Int32|False|Will install the addin for the specified locale|
-|Path|String|True|Path pointing to the .app file|
+|Locale|Int|False|Will install the addin for the specified locale|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

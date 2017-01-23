@@ -2,20 +2,6 @@
 Applies a provisioning template to a web
 ##Syntax
 ```powershell
-Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
-                              [-ResourceFolder <String>]
-                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
-                              [-ClearNavigation [<SwitchParameter>]]
-                              [-Parameters <Hashtable>]
-                              [-Handlers <Handlers>]
-                              [-ExcludeHandlers <Handlers>]
-                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
-                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
-                              [-Web <WebPipeBind>]
-```
-
-
-```powershell
 Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
                               [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
@@ -30,7 +16,8 @@ Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
 
 
 ```powershell
-Apply-PnPProvisioningTemplate [-ResourceFolder <String>]
+Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
+                              [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
                               [-ClearNavigation [<SwitchParameter>]]
                               [-Parameters <Hashtable>]
@@ -39,13 +26,27 @@ Apply-PnPProvisioningTemplate [-ResourceFolder <String>]
                               [-ExtensibilityHandlers <ExtensibilityHandler[]>]
                               [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                               [-Web <WebPipeBind>]
-                              -Path <String>
+```
+
+
+```powershell
+Apply-PnPProvisioningTemplate -Path <String>
+                              [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-ClearNavigation [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                              [-Web <WebPipeBind>]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Path|String|True|Path to the xml or pnp file containing the provisioning template.|
 |ClearNavigation|SwitchParameter|False|Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template|
 |ExcludeHandlers|Handlers|False|Allows you to run all handlers, excluding the ones specified.|
 |ExtensibilityHandlers|ExtensibilityHandler[]|False|Allows you to specify ExtensbilityHandlers to execute while applying a template|
@@ -54,7 +55,6 @@ Parameter|Type|Required|Description
 |InputInstance|ProvisioningTemplate|False|Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.|
 |OverwriteSystemPropertyBagValues|SwitchParameter|False|Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)|
 |Parameters|Hashtable|False|Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.|
-|Path|String|True|Path to the xml or pnp file containing the provisioning template.|
 |ResourceFolder|String|False|Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.|
 |TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while applying a template.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|

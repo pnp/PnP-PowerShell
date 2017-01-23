@@ -2,11 +2,11 @@
 Office365 only: Uses the tenant API to retrieve site information.
 ##Syntax
 ```powershell
-Get-PnPTenantSite [-Template <String>]
+Get-PnPTenantSite [-Url <String>]
+                  [-Template <String>]
                   [-Detailed [<SwitchParameter>]]
                   [-IncludeOneDriveSites [<SwitchParameter>]]
                   [-Force [<SwitchParameter>]]
-                  [-Url <String>]
 ```
 
 

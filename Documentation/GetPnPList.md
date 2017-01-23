@@ -2,10 +2,10 @@
 Returns a List object
 ##Syntax
 ```powershell
-Get-PnPList [-Web <WebPipeBind>]
-            [-Includes <String[]>]
+Get-PnPList [-Includes <String[]>]
             [-Includes <String[]>]
             [-Identity <ListPipeBind>]
+            [-Web <WebPipeBind>]
 ```
 
 

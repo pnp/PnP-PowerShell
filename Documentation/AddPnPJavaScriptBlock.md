@@ -4,7 +4,7 @@ Adds a link to a JavaScript snippet/block to a web or site collection
 ```powershell
 Add-PnPJavaScriptBlock -Name <String>
                        -Script <String>
-                       [-Sequence <Int32>]
+                       [-Sequence <Int>]
                        [-Scope <CustomActionScope>]
                        [-Web <WebPipeBind>]
 ```
@@ -17,9 +17,9 @@ Specify a scope as 'Site' to add the custom action to all sites in a site collec
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Name|String|True|The name of the script block. Can be used to identify the script with other cmdlets or coded solutions|
-|Scope|CustomActionScope|False|The scope of the script to add to. Either Web or Site, defaults to Web. 'All' is not valid for this command.|
 |Script|String|True|The javascript block to add to the specified scope|
-|Sequence|Int32|False|A sequence number that defines the order on the page|
+|Scope|CustomActionScope|False|The scope of the script to add to. Either Web or Site, defaults to Web. 'All' is not valid for this command.|
+|Sequence|Int|False|A sequence number that defines the order on the page|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

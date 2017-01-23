@@ -2,19 +2,19 @@
 Set Auditing setting for a site
 ##Syntax
 ```powershell
-Set-PnPAuditing [-DisableAll [<SwitchParameter>]]
-```
-
-
-```powershell
 Set-PnPAuditing [-EnableAll [<SwitchParameter>]]
-                [-RetentionTime <Int32>]
+                [-RetentionTime <Int>]
                 [-TrimAuditLog [<SwitchParameter>]]
 ```
 
 
 ```powershell
-Set-PnPAuditing [-RetentionTime <Int32>]
+Set-PnPAuditing [-DisableAll [<SwitchParameter>]]
+```
+
+
+```powershell
+Set-PnPAuditing [-RetentionTime <Int>]
                 [-TrimAuditLog [<SwitchParameter>]]
                 [-EditItems [<SwitchParameter>]]
                 [-CheckOutCheckInItems [<SwitchParameter>]]
@@ -37,7 +37,7 @@ Parameter|Type|Required|Description
 |EditUsersPermissions|SwitchParameter|False||
 |EnableAll|SwitchParameter|False||
 |MoveCopyItems|SwitchParameter|False||
-|RetentionTime|Int32|False||
+|RetentionTime|Int|False||
 |SearchContent|SwitchParameter|False||
 |TrimAuditLog|SwitchParameter|False||
 ##Examples

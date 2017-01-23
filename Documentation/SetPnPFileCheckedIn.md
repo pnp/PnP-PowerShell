@@ -2,19 +2,19 @@
 Checks in a file
 ##Syntax
 ```powershell
-Set-PnPFileCheckedIn [-CheckinType <CheckinType>]
+Set-PnPFileCheckedIn -Url <String>
+                     [-CheckinType <CheckinType>]
                      [-Comment <String>]
                      [-Web <WebPipeBind>]
-                     -Url <String>
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Url|String|True|The server relative url of the file to check in|
 |CheckinType|CheckinType|False|The check in type to use. Defaults to Major|
 |Comment|String|False|The check in comment|
-|Url|String|True|The server relative url of the file to check in|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

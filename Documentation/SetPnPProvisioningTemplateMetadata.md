@@ -2,12 +2,12 @@
 Sets metadata of a provisioning template
 ##Syntax
 ```powershell
-Set-PnPProvisioningTemplateMetadata [-TemplateDisplayName <String>]
+Set-PnPProvisioningTemplateMetadata -Path <String>
+                                    [-TemplateDisplayName <String>]
                                     [-TemplateImagePreviewUrl <String>]
                                     [-TemplateProperties <Hashtable>]
                                     [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                                     [-Web <WebPipeBind>]
-                                    -Path <String>
 ```
 
 

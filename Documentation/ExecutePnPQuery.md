@@ -2,16 +2,16 @@
 Executes any queued actions / changes on the SharePoint Client Side Object Model Context
 ##Syntax
 ```powershell
-Execute-PnPQuery [-RetryCount <Int32>]
-                 [-RetryWait <Int32>]
+Execute-PnPQuery [-RetryCount <Int>]
+                 [-RetryWait <Int>]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|RetryCount|Int32|False|Number of times to retry in case of throttling. Defaults to 10.|
-|RetryWait|Int32|False|Delay in seconds. Defaults to 1.|
+|RetryCount|Int|False|Number of times to retry in case of throttling. Defaults to 10.|
+|RetryWait|Int|False|Delay in seconds. Defaults to 1.|
 ##Examples
 
 ###Example 1

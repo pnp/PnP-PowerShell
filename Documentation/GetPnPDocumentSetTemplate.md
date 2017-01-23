@@ -2,10 +2,10 @@
 Retrieves a document set template
 ##Syntax
 ```powershell
-Get-PnPDocumentSetTemplate [-Web <WebPipeBind>]
+Get-PnPDocumentSetTemplate -Identity <DocumentSetPipeBind>
                            [-Includes <String[]>]
                            [-Includes <String[]>]
-                           -Identity <DocumentSetPipeBind>
+                           [-Web <WebPipeBind>]
 ```
 
 

@@ -2,8 +2,8 @@
 Removes/unregisters a specific event receiver
 ##Syntax
 ```powershell
-Remove-PnPEventReceiver [-List <ListPipeBind>]
-                        -Identity <GuidPipeBind>
+Remove-PnPEventReceiver -Identity <GuidPipeBind>
+                        [-List <ListPipeBind>]
                         [-Force [<SwitchParameter>]]
                         [-Web <WebPipeBind>]
 ```
@@ -12,8 +12,8 @@ Remove-PnPEventReceiver [-List <ListPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
 |Identity|GuidPipeBind|True|The Guid of the event receiver on the list|
+|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
 |List|ListPipeBind|False|The list object from where to get the event receiver object|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

@@ -2,7 +2,7 @@
 Returns the items in the recycle bin from the context
 ##Syntax
 ```powershell
-Get-PnPRecycleBinItem [-Includes <String[]>]
+Get-PnPRecycleBinItem [-Identity <GuidPipeBind>]
 ```
 
 
@@ -12,12 +12,12 @@ Get-PnPRecycleBinItem [-FirstStage [<SwitchParameter>]]
 
 
 ```powershell
-Get-PnPRecycleBinItem [-Identity <GuidPipeBind>]
+Get-PnPRecycleBinItem [-SecondStage [<SwitchParameter>]]
 ```
 
 
 ```powershell
-Get-PnPRecycleBinItem [-SecondStage [<SwitchParameter>]]
+Get-PnPRecycleBinItem [-Includes <String[]>]
 ```
 
 

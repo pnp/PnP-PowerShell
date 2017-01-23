@@ -2,12 +2,12 @@
 Updates a list item
 ##Syntax
 ```powershell
-Set-PnPListItem -Identity <ListItemPipeBind>
+Set-PnPListItem -List <ListPipeBind>
+                -Identity <ListItemPipeBind>
                 [-ContentType <ContentTypePipeBind>]
                 [-Values <Hashtable>]
                 [-SystemUpdate [<SwitchParameter>]]
                 [-Web <WebPipeBind>]
-                -List <ListPipeBind>
 ```
 
 
@@ -17,9 +17,9 @@ Set-PnPListItem -Identity <ListItemPipeBind>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|ContentType|ContentTypePipeBind|False|Specify either the name, ID or an actual content type|
 |Identity|ListItemPipeBind|True|The ID of the listitem, or actual ListItem object|
 |List|ListPipeBind|True|The ID, Title or Url of the list.|
+|ContentType|ContentTypePipeBind|False|Specify either the name, ID or an actual content type|
 |SystemUpdate|SwitchParameter|False|Updating item without updating the modified and modified by fields|
 |Values|Hashtable|False|Use the internal names of the fields when specifying field names.
 

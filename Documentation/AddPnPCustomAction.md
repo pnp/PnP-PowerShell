@@ -7,7 +7,7 @@ Add-PnPCustomAction -Name <String>
                     -Description <String>
                     -Group <String>
                     -Location <String>
-                    [-Sequence <Int32>]
+                    [-Sequence <Int>]
                     [-Url <String>]
                     [-ImageUrl <String>]
                     [-CommandUIExtension <String>]
@@ -22,18 +22,18 @@ Add-PnPCustomAction -Name <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|CommandUIExtension|String|False|XML fragment that determines user interface properties of the custom action|
 |Description|String|True|The description of the custom action|
 |Group|String|True|The group where this custom action needs to be added like 'SiteActions'|
-|ImageUrl|String|False|The URL of the image associated with the custom action|
 |Location|String|True|The actual location where this custom action need to be added like 'CommandUI.Ribbon'|
 |Name|String|True|The name of the custom action|
+|Title|String|True|The title of the custom action|
+|CommandUIExtension|String|False|XML fragment that determines user interface properties of the custom action|
+|ImageUrl|String|False|The URL of the image associated with the custom action|
 |RegistrationId|String|False|The identifier of the object associated with the custom action.|
 |RegistrationType|UserCustomActionRegistrationType|False|Specifies the type of object associated with the custom action|
 |Rights|PermissionKind[]|False|A string array that contain the permissions needed for the custom action|
 |Scope|CustomActionScope|False|The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.|
-|Sequence|Int32|False|Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.|
-|Title|String|True|The title of the custom action|
+|Sequence|Int|False|Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.|
 |Url|String|False|The URL, URI or ECMAScript (JScript, JavaScript) function associated with the action|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

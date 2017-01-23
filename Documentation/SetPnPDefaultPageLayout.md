@@ -2,13 +2,13 @@
 Sets a specific page layout to be the default page layout for a publishing site
 ##Syntax
 ```powershell
-Set-PnPDefaultPageLayout -InheritFromParentSite [<SwitchParameter>]
+Set-PnPDefaultPageLayout -Title <String>
                          [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-PnPDefaultPageLayout -Title <String>
+Set-PnPDefaultPageLayout -InheritFromParentSite [<SwitchParameter>]
                          [-Web <WebPipeBind>]
 ```
 

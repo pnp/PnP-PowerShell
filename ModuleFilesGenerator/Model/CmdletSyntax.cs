@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.CmdletHelpGenerator
+namespace SharePointPnP.PowerShell.ModuleFilesGenerator.Model
 {
     public class CmdletSyntax
     {

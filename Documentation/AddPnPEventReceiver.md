@@ -2,12 +2,12 @@
 Adds a new event receiver
 ##Syntax
 ```powershell
-Add-PnPEventReceiver [-List <ListPipeBind>]
-                     -Name <String>
+Add-PnPEventReceiver -Name <String>
                      -Url <String>
                      -EventReceiverType <EventReceiverType>
                      -Synchronization <EventReceiverSynchronization>
-                     [-SequenceNumber <Int32>]
+                     [-List <ListPipeBind>]
+                     [-SequenceNumber <Int>]
                      [-Force [<SwitchParameter>]]
                      [-Web <WebPipeBind>]
 ```
@@ -20,12 +20,12 @@ Add-PnPEventReceiver [-List <ListPipeBind>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |EventReceiverType|EventReceiverType|True|The type of the event receiver like ItemAdded, ItemAdding|
-|Force|SwitchParameter|False|Overwrites the output file if it exists.|
-|List|ListPipeBind|False|The list object or name where the event receiver needs to be added|
 |Name|String|True|The name of the event receiver|
-|SequenceNumber|Int32|False|The sequence number where this event receiver should be placed|
 |Synchronization|EventReceiverSynchronization|True|The Synchronization type, Asynchronous or Synchronous|
 |Url|String|True|The URL of the event receiver web service|
+|Force|SwitchParameter|False|Overwrites the output file if it exists.|
+|List|ListPipeBind|False|The list object or name where the event receiver needs to be added|
+|SequenceNumber|Int|False|The sequence number where this event receiver should be placed|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

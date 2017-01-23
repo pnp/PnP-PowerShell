@@ -2,14 +2,14 @@
 Removes a wiki page
 ##Syntax
 ```powershell
-Remove-PnPWikiPage [-Web <WebPipeBind>]
-                   -ServerRelativePageUrl <String>
+Remove-PnPWikiPage -ServerRelativePageUrl <String>
+                   [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Remove-PnPWikiPage [-Web <WebPipeBind>]
-                   -SiteRelativePageUrl <String>
+Remove-PnPWikiPage -SiteRelativePageUrl <String>
+                   [-Web <WebPipeBind>]
 ```
 
 

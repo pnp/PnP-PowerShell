@@ -2,10 +2,10 @@
 Retrieves a content type
 ##Syntax
 ```powershell
-Get-PnPContentType [-List <ListPipeBind>]
+Get-PnPContentType [-Identity <ContentTypePipeBind>]
+                   [-List <ListPipeBind>]
                    [-InSiteHierarchy [<SwitchParameter>]]
                    [-Web <WebPipeBind>]
-                   [-Identity <ContentTypePipeBind>]
 ```
 
 

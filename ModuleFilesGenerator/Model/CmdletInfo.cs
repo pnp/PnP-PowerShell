@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Management.Automation;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.CmdletHelpGenerator
+namespace SharePointPnP.PowerShell.ModuleFilesGenerator.Model
 {
     public class CmdletInfo
     {
@@ -27,17 +27,25 @@ namespace SharePointPnP.PowerShell.CmdletHelpGenerator
 
         public List<string> Aliases { get; set; }
 
+        public List<CmdletExampleAttribute> Examples { get; set; }
+
+        public List<CmdletRelatedLinkAttribute> RelatedLinks { get; set; }
+
+        public List<CmdletAdditionalParameter> AdditionalParameters { get; set; }
         public string FullCommand => $"{Verb}-{Noun}";
 
         public string Category { get; set; }
 
-        public CmdletInfo(string verb, string noun)
+        public Type CmdletType { get; set; }
+
+        public CmdletInfo()
         {
-            Verb = verb;
-            Noun = noun;
             Parameters = new List<CmdletParameterInfo>();
             Syntaxes = new List<CmdletSyntax>();
             Aliases = new List<string>();
+            Examples = new List<CmdletExampleAttribute>();
+            RelatedLinks = new List<CmdletRelatedLinkAttribute>();
+            AdditionalParameters = new List<CmdletAdditionalParameter>();
         }
     }
 }

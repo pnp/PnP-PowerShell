@@ -2,14 +2,14 @@
 Removes a subweb in the current web
 ##Syntax
 ```powershell
-Remove-PnPWeb -Identity <WebPipeBind>
+Remove-PnPWeb -Url <String>
               [-Force [<SwitchParameter>]]
               [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Remove-PnPWeb -Url <String>
+Remove-PnPWeb -Identity <WebPipeBind>
               [-Force [<SwitchParameter>]]
               [-Web <WebPipeBind>]
 ```
@@ -18,9 +18,9 @@ Remove-PnPWeb -Url <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Do not ask for confirmation to delete the subweb|
 |Identity|WebPipeBind|True|Identity/Id/Web object to delete|
 |Url|String|True|The site relative url of the web, e.g. 'Subweb1'|
+|Force|SwitchParameter|False|Do not ask for confirmation to delete the subweb|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

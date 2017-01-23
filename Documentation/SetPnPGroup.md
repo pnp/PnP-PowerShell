@@ -21,12 +21,12 @@ Set-PnPGroup -Identity <GroupPipeBind>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Identity|GroupPipeBind|True|A group object, an ID or a name of a group|
 |AddRole|String|False|Name of the permission set to add to this SharePoint group|
 |AllowMembersEditMembership|Boolean|False|A switch parameter that specifies whether group members can modify membership in the group|
 |AllowRequestToJoinLeave|Boolean|False|A switch parameter that specifies whether to allow users to request membership in the group and to allow users to request to leave the group|
 |AutoAcceptRequestToJoinLeave|Boolean|False|A switch parameter that specifies whether users are automatically added or removed when they make a request|
 |Description|String|False|The description for the group|
-|Identity|GroupPipeBind|True|A group object, an ID or a name of a group|
 |OnlyAllowMembersViewMembership|Boolean|False|A switch parameter that specifies whether only group members are allowed to view the list of members in the group|
 |Owner|String|False|The owner for the group, which can be a user or another group|
 |RemoveRole|String|False|Name of the permission set to remove from this SharePoint group|

@@ -2,13 +2,13 @@
 Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.
 ##Syntax
 ```powershell
-Send-PnPMail [-Server <String>]
-             [-From <String>]
-             [-Password <String>]
-             -To <String[]>
-             [-Cc <String[]>]
+Send-PnPMail -To <String[]>
              -Subject <String>
              -Body <String>
+             [-Server <String>]
+             [-From <String>]
+             [-Password <String>]
+             [-Cc <String[]>]
              [-Web <WebPipeBind>]
 ```
 
@@ -17,12 +17,12 @@ Send-PnPMail [-Server <String>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Body|String|True|Body of the email|
+|Subject|String|True|Subject of the email|
+|To|String[]|True|List of recipients|
 |Cc|String[]|False|List of recipients on CC|
 |From|String|False|If using from address, you also have to provide a password|
 |Password|String|False|If using a password, you also have to provide the associated from address|
 |Server|String|False||
-|Subject|String|True|Subject of the email|
-|To|String[]|True|List of recipients|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

@@ -2,9 +2,9 @@
 Returns a workflow subscriptions from a list
 ##Syntax
 ```powershell
-Get-PnPWorkflowSubscription [-Web <WebPipeBind>]
-                            [-Name <String>]
+Get-PnPWorkflowSubscription [-Name <String>]
                             [-List <ListPipeBind>]
+                            [-Web <WebPipeBind>]
 ```
 
 

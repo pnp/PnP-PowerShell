@@ -14,8 +14,8 @@ The Reset-PnPTenantRecycleBinItem cmdlet allows a site collection that has been 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|If provided, no confirmation will be asked to restore the site collection from the tenant recycle bin|
 |Url|String|True|Url of the site collection to restore from the tenant recycle bin|
+|Force|SwitchParameter|False|If provided, no confirmation will be asked to restore the site collection from the tenant recycle bin|
 |Wait|SwitchParameter|False|If provided, the PowerShell execution will halt until the site restore process has completed|
 ##Examples
 

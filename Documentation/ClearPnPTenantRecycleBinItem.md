@@ -14,8 +14,8 @@ The Clear-PnPTenantRecycleBinItem cmdlet allows a site collection that has been 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|If provided, no confirmation will be asked to permanently delete the site collection from the tenant recycle bin|
 |Url|String|True|Url of the site collection to permanently delete from the tenant recycle bin|
+|Force|SwitchParameter|False|If provided, no confirmation will be asked to permanently delete the site collection from the tenant recycle bin|
 |Wait|SwitchParameter|False|If provided, the PowerShell execution will halt until the operation has completed|
 ##Examples
 

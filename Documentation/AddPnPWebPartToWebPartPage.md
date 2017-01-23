@@ -2,19 +2,19 @@
 Adds a webpart to a web part page in a specified zone
 ##Syntax
 ```powershell
-Add-PnPWebPartToWebPartPage -Path <String>
+Add-PnPWebPartToWebPartPage -Xml <String>
                             -ServerRelativePageUrl <String>
                             -ZoneId <String>
-                            -ZoneIndex <Int32>
+                            -ZoneIndex <Int>
                             [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Add-PnPWebPartToWebPartPage -Xml <String>
+Add-PnPWebPartToWebPartPage -Path <String>
                             -ServerRelativePageUrl <String>
                             -ZoneId <String>
-                            -ZoneIndex <Int32>
+                            -ZoneIndex <Int>
                             [-Web <WebPipeBind>]
 ```
 
@@ -24,10 +24,10 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Path|String|True|A path to a webpart file on a the file system.|
 |ServerRelativePageUrl|String|True|Server Relative Url of the page to add the webpart to.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 |Xml|String|True|A string containing the XML for the webpart.|
 |ZoneId|String|True||
-|ZoneIndex|Int32|True||
+|ZoneIndex|Int|True||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
 ###Example 1
