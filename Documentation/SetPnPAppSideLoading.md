@@ -2,12 +2,12 @@
 Enables the App SideLoading Feature on a site
 ##Syntax
 ```powershell
-Set-PnPAppSideLoading -Off [<SwitchParameter>]
+Set-PnPAppSideLoading -On [<SwitchParameter>]
 ```
 
 
 ```powershell
-Set-PnPAppSideLoading -On [<SwitchParameter>]
+Set-PnPAppSideLoading -Off [<SwitchParameter>]
 ```
 
 

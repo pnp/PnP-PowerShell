@@ -2,14 +2,14 @@
 Sets the contents of a wikipage
 ##Syntax
 ```powershell
-Set-PnPWikiPageContent -Path <String>
+Set-PnPWikiPageContent -Content <String>
                        -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Set-PnPWikiPageContent -Content <String>
+Set-PnPWikiPageContent -Path <String>
                        -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
 ```

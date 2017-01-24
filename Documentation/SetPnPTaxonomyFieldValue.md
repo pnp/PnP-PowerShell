@@ -2,17 +2,17 @@
 Sets a taxonomy term value in a listitem field
 ##Syntax
 ```powershell
-Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
-                          [-Label <String>]
-                          -ListItem <ListItem>
+Set-PnPTaxonomyFieldValue -ListItem <ListItem>
                           -InternalFieldName <String>
+                          [-Terms <Hashtable>]
 ```
 
 
 ```powershell
-Set-PnPTaxonomyFieldValue [-Terms <Hashtable>]
+Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
                           -ListItem <ListItem>
                           -InternalFieldName <String>
+                          [-Label <String>]
 ```
 
 
@@ -27,10 +27,10 @@ Set-PnPTaxonomyFieldValue -TermPath <String>
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |InternalFieldName|String|True|The internal name of the field|
-|Label|String|False|The Label value of the term|
 |ListItem|ListItem|True|The list item to set the field value to|
 |TermId|GuidPipeBind|True|The Id of the Term|
 |TermPath|String|True|A path in the form of GROUPLABEL|TERMSETLABEL|TERMLABEL|
+|Label|String|False|The Label value of the term|
 |Terms|Hashtable|False|Allows you to specify terms with key value pairs that can be referred to in the template by means of the {id:label} token. See examples on how to use this parameter.|
 ##Examples
 

@@ -1,4 +1,4 @@
-﻿namespace SharePointPnP.PowerShell.CmdletHelpGenerator
+﻿namespace SharePointPnP.PowerShell.ModuleFilesGenerator.Model
 {
     public class CmdletParameterInfo
     {

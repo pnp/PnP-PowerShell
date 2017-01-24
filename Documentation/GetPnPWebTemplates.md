@@ -3,7 +3,7 @@ Office365 only: Returns the available web templates.
 ##Syntax
 ```powershell
 Get-PnPWebTemplates [-Lcid <UInt32>]
-                    [-CompatibilityLevel <Int32>]
+                    [-CompatibilityLevel <Int>]
 ```
 
 
@@ -13,7 +13,7 @@ Get-PnPWebTemplates [-Lcid <UInt32>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|CompatibilityLevel|Int32|False|The version of SharePoint|
+|CompatibilityLevel|Int|False|The version of SharePoint|
 |Lcid|UInt32|False|The language ID. For instance: 1033 for English|
 ##Examples
 

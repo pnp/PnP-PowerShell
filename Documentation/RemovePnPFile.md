@@ -2,25 +2,25 @@
 Removes a file.
 ##Syntax
 ```powershell
-Remove-PnPFile [-Force [<SwitchParameter>]]
+Remove-PnPFile -ServerRelativeUrl <String>
+               [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
-               -ServerRelativeUrl <String>
 ```
 
 
 ```powershell
-Remove-PnPFile [-Force [<SwitchParameter>]]
+Remove-PnPFile -SiteRelativeUrl <String>
+               [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
-               -SiteRelativeUrl <String>
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False||
 |ServerRelativeUrl|String|True|Server relative URL to the file|
 |SiteRelativeUrl|String|True|Site relative URL to the file|
+|Force|SwitchParameter|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

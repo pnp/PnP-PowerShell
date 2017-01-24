@@ -2,22 +2,22 @@
 Finds a file in the virtual file system of the web.
 ##Syntax
 ```powershell
-Find-PnPFile -Folder <FolderPipeBind>
+Find-PnPFile -Match <String>
              [-Web <WebPipeBind>]
-             -Match <String>
 ```
 
 
 ```powershell
 Find-PnPFile -List <ListPipeBind>
-             [-Web <WebPipeBind>]
              -Match <String>
+             [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Find-PnPFile [-Web <WebPipeBind>]
+Find-PnPFile -Folder <FolderPipeBind>
              -Match <String>
+             [-Web <WebPipeBind>]
 ```
 
 

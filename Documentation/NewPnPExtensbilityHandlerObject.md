@@ -3,9 +3,9 @@ Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTem
 ##Syntax
 ```powershell
 New-PnPExtensbilityHandlerObject -Type <String>
+                                 -Assembly <String>
                                  [-Configuration <String>]
                                  [-Disabled [<SwitchParameter>]]
-                                 -Assembly <String>
 ```
 
 
@@ -16,9 +16,9 @@ New-PnPExtensbilityHandlerObject -Type <String>
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Assembly|String|True|The full assembly name of the handler|
+|Type|String|True|The type of the handler|
 |Configuration|String|False|Any configuration data you want to send to the handler|
 |Disabled|SwitchParameter|False|If set, the handler will be disabled|
-|Type|String|True|The type of the handler|
 ##Examples
 
 ###Example 1

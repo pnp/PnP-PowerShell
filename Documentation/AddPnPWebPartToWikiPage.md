@@ -2,20 +2,20 @@
 Adds a webpart to a wiki page in a specified table row and column
 ##Syntax
 ```powershell
-Add-PnPWebPartToWikiPage -Path <String>
+Add-PnPWebPartToWikiPage -Xml <String>
                          -ServerRelativePageUrl <String>
-                         -Row <Int32>
-                         -Column <Int32>
+                         -Row <Int>
+                         -Column <Int>
                          [-AddSpace [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Add-PnPWebPartToWikiPage -Xml <String>
+Add-PnPWebPartToWikiPage -Path <String>
                          -ServerRelativePageUrl <String>
-                         -Row <Int32>
-                         -Column <Int32>
+                         -Row <Int>
+                         -Column <Int>
                          [-AddSpace [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
 ```
@@ -24,13 +24,13 @@ Add-PnPWebPartToWikiPage -Xml <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|AddSpace|SwitchParameter|False||
-|Column|Int32|True||
+|Column|Int|True||
 |Path|String|True||
-|Row|Int32|True||
+|Row|Int|True||
 |ServerRelativePageUrl|String|True|Full server relative url of the webpart page, e.g. /sites/demo/sitepages/home.aspx|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 |Xml|String|True||
+|AddSpace|SwitchParameter|False||
+|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
 ###Example 1

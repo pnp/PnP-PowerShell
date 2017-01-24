@@ -15,9 +15,9 @@ New-PnPTermGroup -GroupName <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|GroupName|String|True|Name of the taxonomy term group to create.|
 |Description|String|False|Description to use for the term group.|
 |GroupId|Guid|False|GUID to use for the term group; if not specified, or the empty GUID, a random GUID is generated and used.|
-|GroupName|String|True|Name of the taxonomy term group to create.|
 |TermStoreName|String|False|Term store to check; if not specified the default term store is used.|
 ##Examples
 

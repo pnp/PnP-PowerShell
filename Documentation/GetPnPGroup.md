@@ -14,19 +14,25 @@ Get-PnPGroup [-AssociatedMemberGroup [<SwitchParameter>]]
 
 
 ```powershell
+Get-PnPGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
+```
+
+
+```powershell
 Get-PnPGroup [-AssociatedOwnerGroup [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
 
 
 ```powershell
-Get-PnPGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
-             [-Web <WebPipeBind>]
+Get-PnPGroup [-Web <WebPipeBind>]
+             [-Includes <String[]>]
 ```
 
 
 ##Returns
->[System.Collections.Generic.List`1[Microsoft.SharePoint.Client.Group]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx)
+>[List<Microsoft.SharePoint.Client.Group>](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description
@@ -35,6 +41,7 @@ Parameter|Type|Required|Description
 |AssociatedOwnerGroup|SwitchParameter|False|Retrieve the associated owner group|
 |AssociatedVisitorGroup|SwitchParameter|False|Retrieve the associated visitor group|
 |Identity|GroupPipeBind|False|Get a specific group by name|
+|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

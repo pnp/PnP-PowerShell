@@ -2,8 +2,9 @@
 Retrieves a document set template
 ##Syntax
 ```powershell
-Get-PnPDocumentSetTemplate [-Web <WebPipeBind>]
-                           -Identity <DocumentSetPipeBind>
+Get-PnPDocumentSetTemplate -Identity <DocumentSetPipeBind>
+                           [-Web <WebPipeBind>]
+                           [-Includes <String[]>]
 ```
 
 
@@ -14,6 +15,7 @@ Get-PnPDocumentSetTemplate [-Web <WebPipeBind>]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|DocumentSetPipeBind|True|Either specify a name, an id, a document set template object or a content type object|
+|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

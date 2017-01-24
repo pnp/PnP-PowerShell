@@ -2,18 +2,18 @@
 Disables a feature
 ##Syntax
 ```powershell
-Disable-PnPFeature [-Force [<SwitchParameter>]]
+Disable-PnPFeature -Identity <GuidPipeBind>
+                   [-Force [<SwitchParameter>]]
                    [-Scope <FeatureScope>]
                    [-Web <WebPipeBind>]
-                   -Identity <GuidPipeBind>
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Forcibly disable the feature.|
 |Identity|GuidPipeBind|True|The id of the feature to disable.|
+|Force|SwitchParameter|False|Forcibly disable the feature.|
 |Scope|FeatureScope|False|Specify the scope of the feature to deactivate, either Web or Site. Defaults to Web.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

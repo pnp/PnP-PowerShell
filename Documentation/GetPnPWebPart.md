@@ -9,13 +9,13 @@ Get-PnPWebPart -ServerRelativePageUrl <String>
 
 
 ##Returns
->[System.Collections.Generic.IEnumerable`1[Microsoft.SharePoint.Client.WebParts.WebPartDefinition]](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.webparts.webpartdefinition.aspx)
+>[List<Microsoft.SharePoint.Client.WebParts.WebPartDefinition>](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.webparts.webpartdefinition.aspx)
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|WebPartPipeBind|False||
 |ServerRelativePageUrl|String|True|Full server relative URL of the webpart page, e.g. /sites/mysite/sitepages/home.aspx|
+|Identity|WebPartPipeBind|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

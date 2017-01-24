@@ -2,33 +2,33 @@
 Retrieves list items
 ##Syntax
 ```powershell
-Get-PnPListItem [-Fields <String[]>]
-                [-PageSize <Int32>]
-                [-Web <WebPipeBind>]
-                -List <ListPipeBind>
-```
-
-
-```powershell
-Get-PnPListItem [-Id <Int32>]
+Get-PnPListItem -List <ListPipeBind>
+                [-Id <Int>]
                 [-Fields <String[]>]
                 [-Web <WebPipeBind>]
-                -List <ListPipeBind>
 ```
 
 
 ```powershell
-Get-PnPListItem [-Query <String>]
-                [-Web <WebPipeBind>]
-                -List <ListPipeBind>
-```
-
-
-```powershell
-Get-PnPListItem [-UniqueId <GuidPipeBind>]
+Get-PnPListItem -List <ListPipeBind>
+                [-UniqueId <GuidPipeBind>]
                 [-Fields <String[]>]
                 [-Web <WebPipeBind>]
-                -List <ListPipeBind>
+```
+
+
+```powershell
+Get-PnPListItem -List <ListPipeBind>
+                [-Query <String>]
+                [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Get-PnPListItem -List <ListPipeBind>
+                [-Fields <String[]>]
+                [-PageSize <Int>]
+                [-Web <WebPipeBind>]
 ```
 
 
@@ -38,10 +38,10 @@ Get-PnPListItem [-UniqueId <GuidPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Fields|String[]|False|The fields to retrieve. If not specified all fields will be loaded in the returned list object.|
-|Id|Int32|False|The ID of the item to retrieve|
 |List|ListPipeBind|True|The list to query|
-|PageSize|Int32|False|The number of items to retrieve per page request.|
+|Fields|String[]|False|The fields to retrieve. If not specified all fields will be loaded in the returned list object.|
+|Id|Int|False|The ID of the item to retrieve|
+|PageSize|Int|False|The number of items to retrieve per page request.|
 |Query|String|False|The CAML query to execute against the list|
 |UniqueId|GuidPipeBind|False|The unique id (GUID) of the item to retrieve|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|

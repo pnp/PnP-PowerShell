@@ -13,10 +13,10 @@ Remove-PnPNavigationNode -Location <NavigationType>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
-|Header|String|False|The header where the node is located|
 |Location|NavigationType|True|The location from where to remove the node (QuickLaunch, TopNavigationBar|
 |Title|String|True|The title of the node that needs to be removed|
+|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
+|Header|String|False|The header where the node is located|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

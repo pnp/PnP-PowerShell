@@ -2,8 +2,8 @@
 Resumes a previously stopped workflow instance
 ##Syntax
 ```powershell
-Resume-PnPWorkflowInstance [-Web <WebPipeBind>]
-                           -Identity <WorkflowInstancePipeBind>
+Resume-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
+                           [-Web <WebPipeBind>]
 ```
 
 

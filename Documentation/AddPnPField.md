@@ -2,55 +2,38 @@
 Adds a field to a list or as a site column
 ##Syntax
 ```powershell
-Add-PnPField -List <ListPipeBind>
-             -Field <FieldPipeBind>
-             [-List <ListPipeBind>]
-             [-DisplayName <String>]
-             [-InternalName <String>]
-             [-Type <FieldType>]
-             [-Id <GuidPipeBind>]
-             [-AddToDefaultView [<SwitchParameter>]]
-             [-Required [<SwitchParameter>]]
-             [-Group <String>]
-             [-Web <WebPipeBind>]
-```
-
-
-```powershell
-Add-PnPField [-List <ListPipeBind>]
-             -DisplayName <String>
-             -InternalName <String>
-             -Type <FieldType>
-             [-Id <GuidPipeBind>]
-             [-AddToDefaultView [<SwitchParameter>]]
-             [-Required [<SwitchParameter>]]
-             [-Group <String>]
-             [-List <ListPipeBind>]
-             [-DisplayName <String>]
-             [-InternalName <String>]
-             [-Type <FieldType>]
-             [-Id <GuidPipeBind>]
-             [-AddToDefaultView [<SwitchParameter>]]
-             [-Required [<SwitchParameter>]]
-             [-Group <String>]
-             [-Web <WebPipeBind>]
-             [-Choices <String[]>]
-```
-
-
-```powershell
 Add-PnPField [-AddToDefaultView [<SwitchParameter>]]
              [-Required [<SwitchParameter>]]
              [-Group <String>]
              [-List <ListPipeBind>]
+             [-Field <FieldPipeBind>]
              [-DisplayName <String>]
              [-InternalName <String>]
-             [-Type <FieldType>]
+             [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-PnPField -List <ListPipeBind>
+             -Field <FieldPipeBind>
+             [-DisplayName <String>]
+             [-InternalName <String>]
+             [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-PnPField -DisplayName <String>
+             -InternalName <String>
+             -Type <FieldType>
+             [-List <ListPipeBind>]
              [-Id <GuidPipeBind>]
              [-AddToDefaultView [<SwitchParameter>]]
              [-Required [<SwitchParameter>]]
              [-Group <String>]
+             [-Field <FieldPipeBind>]
              [-Web <WebPipeBind>]
+             [-Choices <String[]>]
 ```
 
 
@@ -60,13 +43,7 @@ Add-PnPField -DisplayName <String>
              -Type <FieldType>
              [-Id <GuidPipeBind>]
              [-List <ListPipeBind>]
-             [-DisplayName <String>]
-             [-InternalName <String>]
-             [-Type <FieldType>]
-             [-Id <GuidPipeBind>]
-             [-AddToDefaultView [<SwitchParameter>]]
-             [-Required [<SwitchParameter>]]
-             [-Group <String>]
+             [-Field <FieldPipeBind>]
              [-Web <WebPipeBind>]
              [-Choices <String[]>]
 ```
@@ -78,16 +55,16 @@ Add-PnPField -DisplayName <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|AddToDefaultView|SwitchParameter|False||
-|Choices|String[]|False|Specify choices, only valid if the field type is Choice|
-|DisplayName|String|True||
+|DisplayName|String|True|The display name of the field|
 |Field|FieldPipeBind|True|The name of the field, its ID or an actual field object that needs to be added|
-|Group|String|False||
-|Id|GuidPipeBind|False||
-|InternalName|String|True||
-|List|ListPipeBind|False||
-|Required|SwitchParameter|False||
-|Type|FieldType|True||
+|InternalName|String|True|The internal name of the field|
+|Type|FieldType|True|The type of the field like Choice, Note, MultiChoice|
+|AddToDefaultView|SwitchParameter|False|Switch Parameter if this field must be added to the default view|
+|Choices|String[]|False|Specify choices, only valid if the field type is Choice|
+|Group|String|False|The group name to where this field belongs to|
+|Id|GuidPipeBind|False|The ID of the field, must be unique|
+|List|ListPipeBind|False|The name of the list, its ID or an actual list object where this field needs to be added|
+|Required|SwitchParameter|False|Switch Parameter if the field is a required field|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 
