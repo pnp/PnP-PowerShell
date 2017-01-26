@@ -11,16 +11,16 @@ namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Add, "PnPFile")]
     [CmdletAlias("Add-SPOFile")]
-    [CmdletHelp("Uploads a file to Web", 
+    [CmdletHelp("Uploads a file to Web",
         Category = CmdletHelpCategory.Files,
-        OutputType=typeof(Microsoft.SharePoint.Client.File),
+        OutputType = typeof(Microsoft.SharePoint.Client.File),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage""", 
+        Code = @"PS:> Add-PnPFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage""",
         Remarks = "This will upload the file company.master to the masterpage catalog",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFile -Path .\displaytemplate.html -Folder ""_catalogs/masterpage/display templates/test""", 
+        Code = @"PS:> Add-PnPFile -Path .\displaytemplate.html -Folder ""_catalogs/masterpage/display templates/test""",
         Remarks = "This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder does not exist it will create it.",
         SortOrder = 2)]
     [CmdletExample(
@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Name for file")]
         public string FileName = string.Empty;
         [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Stream with the file contents")]
-        public Stream Stream ;
+        public Stream Stream;
 
 
         [Parameter(Mandatory = false, HelpMessage = "If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.")]
@@ -80,8 +80,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            
-            if (ParameterSetName == "AsFile") {
+
+            if (ParameterSetName == "AsFile")
+            {
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
@@ -90,20 +91,20 @@ namespace SharePointPnP.PowerShell.Commands.Files
             }
 
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-            
+
             var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
-            var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName );
+            var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName);
 
             ContentType targetContentType = null;
             //Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
-            if(ContentType != null)
+            if (ContentType != null)
             {
+
                 try
                 {
-                    // var docPath = docLibRelativePath.Split('/');
-                    List list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
+                    var list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
 
-                   
+
                     if (!string.IsNullOrEmpty(ContentType.Id))
                     {
                         targetContentType = list.GetContentTypeById(ContentType.Id);
@@ -116,16 +117,15 @@ namespace SharePointPnP.PowerShell.Commands.Files
                     {
                         targetContentType = ContentType.ContentType;
                     }
-                    if(targetContentType == null)
+                    if (targetContentType == null)
                     {
-                        ThrowTerminatingError(new ErrorRecord(new ArgumentException(String.Format("Content Type Argument: {0} does not exist in the list: {1}", ContentType, list.Title)), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                        ThrowTerminatingError(new ErrorRecord(new ArgumentException($"Content Type Argument: {ContentType} does not exist in the list: {list.Title}"), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
                     }
                 }
                 catch
                 {
-                    ThrowTerminatingError(new ErrorRecord(new ArgumentException(String.Format("The Folder specified ({0}) does not have a corresponding List, the -ContentType parameter is not valid.", folder.ServerRelativeUrl)), "RELATIVEPATHNOTINLIBRARY", ErrorCategory.InvalidArgument, this));
+                    ThrowTerminatingError(new ErrorRecord(new ArgumentException($"The Folder specified ({folder.ServerRelativeUrl}) does not have a corresponding List, the -ContentType parameter is not valid."), "RELATIVEPATHNOTINLIBRARY", ErrorCategory.InvalidArgument, this));
                 }
-                //Check to see if hte content type exists in the list.
             }
 
             // Check if the file exists
@@ -150,7 +150,8 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
                 file = folder.UploadFile(FileName, Path, true);
             }
-            else {
+            else
+            {
                 file = folder.UploadFile(FileName, Stream, true);
             }
 
@@ -169,11 +170,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
             }
             if (ContentType != null)
             {
-                //IF targetContentType == null, we should have already thrown an error.
-                    var item = file.ListItemAllFields;
-                    item["ContentTypeId"] = targetContentType.Id.StringValue;
-                    item.Update();
-                    ClientContext.ExecuteQueryRetry();
+                var item = file.ListItemAllFields;
+                item["ContentTypeId"] = targetContentType.Id.StringValue;
+                item.Update();
+                ClientContext.ExecuteQueryRetry();
             }
 
             if (Checkout)

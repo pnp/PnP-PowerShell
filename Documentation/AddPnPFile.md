@@ -40,17 +40,17 @@ Add-PnPFile -FileName <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|FileName|String|True|Name for file|
+|Folder|String|True|The destination folder in the site|
+|Path|String|True|The local file path.|
+|Stream|Stream|True|Stream with the file contents|
 |Approve|SwitchParameter|False|Will auto approve the uploaded file.|
 |ApproveComment|String|False|The comment added to the approval.|
 |CheckInComment|String|False|The comment added to the checkin.|
 |Checkout|SwitchParameter|False|If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.|
 |ContentType|ContentTypePipeBind|False|Use to assign a ContentType to the file.|
-|FileName|String|True|Name for file|
-|Folder|String|True|The destination folder in the site|
-|Path|String|True|The local file path.|
 |Publish|SwitchParameter|False|Will auto publish the file.|
 |PublishComment|String|False|The comment added to the publish action.|
-|Stream|Stream|True|Stream with the file contents|
 |UseWebDav|SwitchParameter|False||
 |Values|Hashtable|False|Use the internal names of the fields when specifying field names|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
