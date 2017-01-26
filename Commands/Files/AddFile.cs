@@ -4,6 +4,8 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
@@ -29,6 +31,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Code = @"PS:> Add-PnPFile -FileName sample.doc -Folder ""Shared Documents"" -Stream $fileStream -Values @{Modified=""1/1/2016""}",
         Remarks = "This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 1/1/2016.",
         SortOrder = 4)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPFile -FileName sample.doc -Folder ""Shared Documents"" -ContentType ""Document"" -Values @{Modified=""1/1/2016""}",
+        Remarks = "This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 1/1/2016.",
+        SortOrder = 5)]
 
     public class AddFile : PnPWebCmdlet
     {
@@ -69,8 +75,12 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names")]
         public Hashtable Values;
 
+        [Parameter(Mandatory = false, HelpMessage = "Use to assign a ContentType to the file.")]
+        public ContentTypePipeBind ContentType;
+
         protected override void ExecuteCmdlet()
         {
+            
             if (ParameterSetName == "AsFile") {
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
@@ -82,8 +92,41 @@ namespace SharePointPnP.PowerShell.Commands.Files
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
             
             var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
-            
             var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName );
+
+            ContentType targetContentType = null;
+            //Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
+            if(ContentType != null)
+            {
+                try
+                {
+                    // var docPath = docLibRelativePath.Split('/');
+                    List list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
+
+                   
+                    if (!string.IsNullOrEmpty(ContentType.Id))
+                    {
+                        targetContentType = list.GetContentTypeById(ContentType.Id);
+                    }
+                    else if (!string.IsNullOrEmpty(ContentType.Name))
+                    {
+                        targetContentType = list.GetContentTypeByName(ContentType.Name);
+                    }
+                    else if (ContentType.ContentType != null)
+                    {
+                        targetContentType = ContentType.ContentType;
+                    }
+                    if(targetContentType == null)
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new ArgumentException(String.Format("Content Type Argument: {0} does not exist in the list: {1}", ContentType, list.Title)), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                    }
+                }
+                catch
+                {
+                    ThrowTerminatingError(new ErrorRecord(new ArgumentException(String.Format("The Folder specified ({0}) does not have a corresponding List, the -ContentType parameter is not valid.", folder.ServerRelativeUrl)), "RELATIVEPATHNOTINLIBRARY", ErrorCategory.InvalidArgument, this));
+                }
+                //Check to see if hte content type exists in the list.
+            }
 
             // Check if the file exists
             if (Checkout)
@@ -123,6 +166,14 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 item.Update();
 
                 ClientContext.ExecuteQueryRetry();
+            }
+            if (ContentType != null)
+            {
+                //IF targetContentType == null, we should have already thrown an error.
+                    var item = file.ListItemAllFields;
+                    item["ContentTypeId"] = targetContentType.Id.StringValue;
+                    item.Update();
+                    ClientContext.ExecuteQueryRetry();
             }
 
             if (Checkout)
