@@ -23,23 +23,19 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "WebPara")]
     public class AddField : PnPWebCmdlet, IDynamicParameters
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef")]
-        [Parameter(HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = "FieldRef")]
-        [Parameter(HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
+        [Parameter(Mandatory = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = true, ParameterSetName = "WebPara")]
-        [Parameter(HelpMessage = "The display name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The display name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "WebPara", HelpMessage = "The display name of the field")]
         public string DisplayName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = true, ParameterSetName = "WebPara")]
-        [Parameter(HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "WebPara", HelpMessage = "The internal name of the field")]
         public string InternalName;
 
         [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
