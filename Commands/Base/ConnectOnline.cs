@@ -108,9 +108,8 @@ dir",
         public string DriveName = "SPO";
 
 #if !ONPREMISES
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD)]
-        [Parameter(HelpMessage = "The Client ID of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Client ID of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Client ID of the Azure AD Application")]
         public string ClientId;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Redirect URI of the Azure AD Application")]
@@ -128,9 +127,8 @@ dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Clears the token cache.")]
         public SwitchParameter ClearTokenCache;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD)]
-        [Parameter(HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage= "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 #endif
         [Parameter(Mandatory = false, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]

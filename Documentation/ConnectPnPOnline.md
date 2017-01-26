@@ -13,8 +13,6 @@ Connect-PnPOnline -Url <String>
                   [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
-                  [-ClientId <String>]
-                  [-AzureEnvironment <AzureEnvironment>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
 ```
@@ -29,8 +27,6 @@ Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
                   [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
-                  [-ClientId <String>]
-                  [-AzureEnvironment <AzureEnvironment>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
 ```
@@ -47,8 +43,6 @@ Connect-PnPOnline -AppId <String>
                   [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
-                  [-ClientId <String>]
-                  [-AzureEnvironment <AzureEnvironment>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
 ```
@@ -105,7 +99,7 @@ Parameter|Type|Required|Description
 |Url|String|True|The Url of the site collection to connect to.|
 |UseWebLogin|SwitchParameter|True|If you want to connect to SharePoint with browser based login|
 |AuthenticationMode|ClientAuthenticationMode|False|Specify to use for instance use forms based authentication (FBA)|
-|AzureEnvironment|AzureEnvironment|False|The Azure environment to use for authentication|
+|AzureEnvironment|AzureEnvironment|False|The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.|
 |ClearTokenCache|SwitchParameter|False|Clears the token cache.|
 |CreateDrive|SwitchParameter|False|If you want to create a PSDrive connected to the URL|
 |Credentials|CredentialPipeBind|False|Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.|
