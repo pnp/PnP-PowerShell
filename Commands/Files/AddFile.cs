@@ -4,21 +4,23 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Add, "PnPFile")]
     [CmdletAlias("Add-SPOFile")]
-    [CmdletHelp("Uploads a file to Web", 
+    [CmdletHelp("Uploads a file to Web",
         Category = CmdletHelpCategory.Files,
-        OutputType=typeof(Microsoft.SharePoint.Client.File),
+        OutputType = typeof(Microsoft.SharePoint.Client.File),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage""", 
+        Code = @"PS:> Add-PnPFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage""",
         Remarks = "This will upload the file company.master to the masterpage catalog",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFile -Path .\displaytemplate.html -Folder ""_catalogs/masterpage/display templates/test""", 
+        Code = @"PS:> Add-PnPFile -Path .\displaytemplate.html -Folder ""_catalogs/masterpage/display templates/test""",
         Remarks = "This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder does not exist it will create it.",
         SortOrder = 2)]
     [CmdletExample(
@@ -29,6 +31,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Code = @"PS:> Add-PnPFile -FileName sample.doc -Folder ""Shared Documents"" -Stream $fileStream -Values @{Modified=""1/1/2016""}",
         Remarks = "This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 1/1/2016.",
         SortOrder = 4)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPFile -FileName sample.doc -Folder ""Shared Documents"" -ContentType ""Document"" -Values @{Modified=""1/1/2016""}",
+        Remarks = "This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 1/1/2016.",
+        SortOrder = 5)]
 
     public class AddFile : PnPWebCmdlet
     {
@@ -42,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Name for file")]
         public string FileName = string.Empty;
         [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Stream with the file contents")]
-        public Stream Stream ;
+        public Stream Stream;
 
 
         [Parameter(Mandatory = false, HelpMessage = "If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.")]
@@ -69,9 +75,14 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names")]
         public Hashtable Values;
 
+        [Parameter(Mandatory = false, HelpMessage = "Use to assign a ContentType to the file.")]
+        public ContentTypePipeBind ContentType;
+
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSetName == "AsFile") {
+
+            if (ParameterSetName == "AsFile")
+            {
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
@@ -80,10 +91,42 @@ namespace SharePointPnP.PowerShell.Commands.Files
             }
 
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-            
+
             var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
-            
-            var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName );
+            var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName);
+
+            ContentType targetContentType = null;
+            //Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
+            if (ContentType != null)
+            {
+
+                try
+                {
+                    var list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
+
+
+                    if (!string.IsNullOrEmpty(ContentType.Id))
+                    {
+                        targetContentType = list.GetContentTypeById(ContentType.Id);
+                    }
+                    else if (!string.IsNullOrEmpty(ContentType.Name))
+                    {
+                        targetContentType = list.GetContentTypeByName(ContentType.Name);
+                    }
+                    else if (ContentType.ContentType != null)
+                    {
+                        targetContentType = ContentType.ContentType;
+                    }
+                    if (targetContentType == null)
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new ArgumentException($"Content Type Argument: {ContentType} does not exist in the list: {list.Title}"), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                    }
+                }
+                catch
+                {
+                    ThrowTerminatingError(new ErrorRecord(new ArgumentException($"The Folder specified ({folder.ServerRelativeUrl}) does not have a corresponding List, the -ContentType parameter is not valid."), "RELATIVEPATHNOTINLIBRARY", ErrorCategory.InvalidArgument, this));
+                }
+            }
 
             // Check if the file exists
             if (Checkout)
@@ -107,7 +150,8 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
                 file = folder.UploadFile(FileName, Path, true);
             }
-            else {
+            else
+            {
                 file = folder.UploadFile(FileName, Stream, true);
             }
 
@@ -122,6 +166,13 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
                 item.Update();
 
+                ClientContext.ExecuteQueryRetry();
+            }
+            if (ContentType != null)
+            {
+                var item = file.ListItemAllFields;
+                item["ContentTypeId"] = targetContentType.Id.StringValue;
+                item.Update();
                 ClientContext.ExecuteQueryRetry();
             }
 

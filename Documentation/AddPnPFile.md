@@ -12,6 +12,7 @@ Add-PnPFile -Path <String>
             [-PublishComment <String>]
             [-UseWebDav [<SwitchParameter>]]
             [-Values <Hashtable>]
+            [-ContentType <ContentTypePipeBind>]
             [-Web <WebPipeBind>]
 ```
 
@@ -28,6 +29,7 @@ Add-PnPFile -FileName <String>
             [-PublishComment <String>]
             [-UseWebDav [<SwitchParameter>]]
             [-Values <Hashtable>]
+            [-ContentType <ContentTypePipeBind>]
             [-Web <WebPipeBind>]
 ```
 
@@ -46,6 +48,7 @@ Parameter|Type|Required|Description
 |ApproveComment|String|False|The comment added to the approval.|
 |CheckInComment|String|False|The comment added to the checkin.|
 |Checkout|SwitchParameter|False|If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.|
+|ContentType|ContentTypePipeBind|False|Use to assign a ContentType to the file.|
 |Publish|SwitchParameter|False|Will auto publish the file.|
 |PublishComment|String|False|The comment added to the publish action.|
 |UseWebDav|SwitchParameter|False||
@@ -76,3 +79,9 @@ This will upload the file sample.doc to the Shared Documnets folder. After uploa
 PS:> Add-PnPFile -FileName sample.doc -Folder "Shared Documents" -Stream $fileStream -Values @{Modified="1/1/2016"}
 ```
 This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 1/1/2016.
+
+###Example 5
+```powershell
+PS:> Add-PnPFile -FileName sample.doc -Folder "Shared Documents" -ContentType "Document" -Values @{Modified="1/1/2016"}
+```
+This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 1/1/2016.
