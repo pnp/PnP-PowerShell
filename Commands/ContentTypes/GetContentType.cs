@@ -3,6 +3,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
@@ -76,7 +77,8 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
                         }
                         else
                         {
-                            WriteVerbose(string.Format("Content Type Id: {0} does not exist in the list: {1}", Identity.Id, List.Title));
+                            WriteError(new ErrorRecord(new ArgumentException(String.Format("Content Type Id: {0} does not exist in the list: {1}", Identity.Id, list.Title)), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                            
                         }
                     }
                     else if (!string.IsNullOrEmpty(Identity.Name))
@@ -90,7 +92,8 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
                         }
                         else
                         {
-                            WriteVerbose(string.Format("Content Type Name: {0} does not exist in the list: {1}", Identity.Name, List.Title));
+                            WriteError(new ErrorRecord(new ArgumentException(String.Format("Content Type Name: {0} does not exist in the list: {1}", Identity.Name, list.Title)), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                        
                         }
                      
                     }
@@ -104,7 +107,8 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
                     ClientContext.ExecuteQueryRetry();
 
                     WriteObject(cts, true);
-                } else
+                }
+                else
                 {
                     List list = List.GetList(SelectedWeb);
                     var cts = ClientContext.LoadQuery(list.ContentTypes.Include(ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group));

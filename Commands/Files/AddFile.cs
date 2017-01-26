@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
@@ -79,6 +80,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+            
             if (ParameterSetName == "AsFile") {
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
@@ -90,8 +92,41 @@ namespace SharePointPnP.PowerShell.Commands.Files
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
             
             var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
-            
             var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName );
+
+            ContentType targetContentType = null;
+            //Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
+            if(ContentType != null)
+            {
+                try
+                {
+                    // var docPath = docLibRelativePath.Split('/');
+                    List list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
+
+                   
+                    if (!string.IsNullOrEmpty(ContentType.Id))
+                    {
+                        targetContentType = list.GetContentTypeById(ContentType.Id);
+                    }
+                    else if (!string.IsNullOrEmpty(ContentType.Name))
+                    {
+                        targetContentType = list.GetContentTypeByName(ContentType.Name);
+                    }
+                    else if (ContentType.ContentType != null)
+                    {
+                        targetContentType = ContentType.ContentType;
+                    }
+                    if(targetContentType == null)
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new ArgumentException(String.Format("Content Type Argument: {0} does not exist in the list: {1}", ContentType, list.Title)), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                    }
+                }
+                catch
+                {
+                    ThrowTerminatingError(new ErrorRecord(new ArgumentException(String.Format("The Folder specified ({0}) does not have a corresponding List, the -ContentType parameter is not valid.", folder.ServerRelativeUrl)), "RELATIVEPATHNOTINLIBRARY", ErrorCategory.InvalidArgument, this));
+                }
+                //Check to see if hte content type exists in the list.
+            }
 
             // Check if the file exists
             if (Checkout)
@@ -109,6 +144,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 { // Swallow exception, file does not exist 
                 }
             }
+            
             Microsoft.SharePoint.Client.File file =null ;
             if (ParameterSetName == "AsFile")
             {
@@ -134,44 +170,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
             }
             if (ContentType != null)
             {
-                ClientContext.Load(file, f=>f.ListId);
-                ClientContext.ExecuteQueryRetry();
-
-                List list = SelectedWeb.Lists.GetById(file.ListId);
-                ClientContext.Load(list);
-                ClientContext.ExecuteQueryRetry();
-
-                ContentType ct;
-                if (!string.IsNullOrEmpty(ContentType.Id))
-                {
-                    ct = list.GetContentTypeById(ContentType.Id);
-                }
-                else if(!string.IsNullOrEmpty(ContentType.Name))
-                {
-                    ct = list.GetContentTypeByName(ContentType.Name);
-                }
-                else if(ContentType.ContentType != null)
-                {
-                    ct = ContentType.ContentType;
-                }
-                else
-                {
-                    ct = null;
-                   
-                }
-
-                if (ct != null)
-                {
+                //IF targetContentType == null, we should have already thrown an error.
                     var item = file.ListItemAllFields;
-                    item["ContentTypeId"] = ct.Id.StringValue;
+                    item["ContentTypeId"] = targetContentType.Id.StringValue;
                     item.Update();
                     ClientContext.ExecuteQueryRetry();
-                }
-                else
-                {
-                    WriteVerbose("Content Type was 'null' was not found.");
-                }
-
             }
 
             if (Checkout)
