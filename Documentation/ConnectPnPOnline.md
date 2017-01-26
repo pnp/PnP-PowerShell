@@ -53,6 +53,7 @@ Connect-PnPOnline -ClientId <String>
                   -RedirectUri <String>
                   -Url <String>
                   [-ClearTokenCache [<SwitchParameter>]]
+                  [-AzureEnvironment <AzureEnvironment>]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
@@ -69,6 +70,7 @@ Connect-PnPOnline -ClientId <String>
                   -Tenant <String>
                   -CertificatePath <String>
                   -CertificatePassword <SecureString>
+                  -AzureEnvironment <AzureEnvironment>
                   -Url <String>
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
@@ -97,6 +99,7 @@ Parameter|Type|Required|Description
 |Url|String|True|The Url of the site collection to connect to.|
 |UseWebLogin|SwitchParameter|True|If you want to connect to SharePoint with browser based login|
 |AuthenticationMode|ClientAuthenticationMode|False|Specify to use for instance use forms based authentication (FBA)|
+|AzureEnvironment|AzureEnvironment|False|The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.|
 |ClearTokenCache|SwitchParameter|False|Clears the token cache.|
 |CreateDrive|SwitchParameter|False|If you want to create a PSDrive connected to the URL|
 |Credentials|CredentialPipeBind|False|Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.|
@@ -155,3 +158,9 @@ This will prompt you for credentials and creates a context for the other PowerSh
 PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication
 ```
 This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)
+
+###Example 8
+```powershell
+PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -AppId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany
+```
+This will authenticate you to the German Azure environment using the German Azure endpoints for authentication
