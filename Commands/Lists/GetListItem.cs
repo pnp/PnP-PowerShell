@@ -39,6 +39,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000",
         Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items. This parameter is ignored if the Query parameter is specified.",
         SortOrder = 6)]
+    [CmdletExample(
+        Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { $args.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }",
+        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item.",
+        SortOrder = 7)]
     public class GetListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -60,6 +64,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = "AllItems")]
         public int PageSize = -1;
+
+        [Parameter(Mandatory = false, HelpMessage = "The script block to run after every page request.", ParameterSetName = "AllItems")]
+        public ScriptBlock ScriptBlock = null;
 
         protected override void ExecuteCmdlet()
         {
@@ -162,7 +169,13 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     var listItems = list.GetItems(query);
                     ClientContext.Load(listItems);
                     ClientContext.ExecuteQueryRetry();
+
                     WriteObject(listItems, true);
+
+                    if (ScriptBlock != null)
+                    {
+                        ScriptBlock.Invoke(listItems);
+                    }
 
                     query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
                 } while (query.ListItemCollectionPosition != null);
