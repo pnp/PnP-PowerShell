@@ -137,9 +137,11 @@ Cmdlet|Description
 ##Provisioning
 Cmdlet|Description
 :-----|:----------
+**[Add&#8209;PnPDataRowsToProvisioningTemplate](AddPnPDataRowsToProvisioningTemplate.md)** |Adds datarows to a List inside of  an in-memory PnP Provisioning Template
 **[Remove&#8209;PnPFileFromProvisioningTemplate](RemovePnPFileFromProvisioningTemplate.md)** |Removes a file from an in-memory PnP Provisioning Template
 **[Add&#8209;PnPFileToProvisioningTemplate](AddPnPFileToProvisioningTemplate.md)** |Adds a file to an in-memory PnP Provisioning Template
 **[Convert&#8209;PnPFolderToProvisioningTemplate](ConvertPnPFolderToProvisioningTemplate.md)** |Creates a pnp package file of an existing template xml, and includes all files in the current folder
+**[Add&#8209;PnPListFoldersToProvisioningTemplate](AddPnPListFoldersToProvisioningTemplate.md)** |Adds folders to a list in an in-memory PnP Provisioning Template
 **[Load&#8209;PnPProvisioningTemplate](LoadPnPProvisioningTemplate.md)** |Loads a PnP file from the file systems
 **[New&#8209;PnPProvisioningTemplate](NewPnPProvisioningTemplate.md)** |Creates a new provisioning template object
 **[Save&#8209;PnPProvisioningTemplate](SavePnPProvisioningTemplate.md)** |Saves a PnP file to the file systems

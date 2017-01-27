@@ -14,10 +14,10 @@ Add-PnPListFoldersToProvisioningTemplate [-Web <WebPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|IncludeSecurity|SwitchParameter|False|The target Folder for the file to add to the in-memory template.|
+|IncludeSecurity|SwitchParameter|False|A switch to include ObjectSecurity information.|
 |List|ListPipeBind|True|The list to query|
 |Path|String|True|Filename of the .PNP Open XML provisioning template to read from, optionally including full path.|
-|Recursive|SwitchParameter|False|The target Folder for the file to add to the in-memory template.|
+|Recursive|SwitchParameter|False|A switch parameter to include all folders in the list, or just top level folders.|
 |TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while loading the template.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

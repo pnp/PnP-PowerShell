@@ -42,10 +42,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 2)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, Position = 4, HelpMessage = "The target Folder for the file to add to the in-memory template.")]
+        [Parameter(Mandatory = false, Position = 4, HelpMessage = "A switch parameter to include all folders in the list, or just top level folders.")]
         public SwitchParameter Recursive;
 
-        [Parameter(Mandatory = false, Position = 5, HelpMessage = "The target Folder for the file to add to the in-memory template.")]
+        [Parameter(Mandatory = false, Position = 5, HelpMessage = "A switch to include ObjectSecurity information.")]
         public SwitchParameter IncludeSecurity;
 
         [Parameter(Mandatory = false, Position = 6, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template.")]
@@ -111,7 +111,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         {
             List<OfficeDevPnP.Core.Framework.Provisioning.Model.Folder> retFolders = new List<OfficeDevPnP.Core.Framework.Provisioning.Model.Folder>();
             ClientContext.Load(listFolder, l => l.Name, l => l.Folders);
-            ClientContext.ExecuteQuery();
+            ClientContext.ExecuteQueryRetry();
             var folders = listFolder.Folders;
             ClientContext.Load(folders, fl => fl.Include(f => f.Name, f => f.ServerRelativeUrl, f => f.ListItemAllFields));
             ClientContext.ExecuteQueryRetry();

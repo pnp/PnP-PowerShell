@@ -38,90 +38,90 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = true, HelpMessage = "The CAML query to execute against the list")]
         public string Query;
 
-        [Parameter(Mandatory = true, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
         public string[] Fields;
 
-        [Parameter(Mandatory = false, Position = 5, HelpMessage = "The target Folder for the file to add to the in-memory template.")]
+        [Parameter(Mandatory = false, Position = 5, HelpMessage = "A switch to include ObjectSecurity information.")]
         public SwitchParameter IncludeSecurity;
 
         [Parameter(Mandatory = false, Position = 4, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template." )]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
-    
+
 
         protected override void ExecuteCmdlet()
         {
 
-            
+
             var template = LoadProvisioningTemplate
                     .LoadProvisioningTemplateFromFile(Path,
                     SessionState.Path.CurrentFileSystemLocation.Path,
                     TemplateProviderExtensions);
-            
+
             if (template == null)
             {
                 throw new ApplicationException("Invalid template file!");
             }
-    //We will remove a list if it's found so we can get the list
+            //We will remove a list if it's found so we can get the list
 
             ListInstance listInstance = template.Lists.Find(l => l.Title == List.Title);
             if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file!");
             }
-            
+
             List spList = List.GetList(SelectedWeb);
             ClientContext.Load(spList, l => l.RootFolder, l => l.HasUniqueRoleAssignments);
             ClientContext.ExecuteQueryRetry();
 
             CamlQuery query = new CamlQuery();
-            var viewFieldsStringBuilder = new StringBuilder();
 
-            viewFieldsStringBuilder.Append("<ViewFields>");
-            foreach (var field in Fields)
+            var viewFieldsStringBuilder = new StringBuilder();
+            if (Fields != null)
             {
-                viewFieldsStringBuilder.AppendFormat("<FieldRef Name='{0}'/>", field);
+                viewFieldsStringBuilder.Append("<ViewFields>");
+                foreach (var field in Fields)
+                {
+                    viewFieldsStringBuilder.AppendFormat("<FieldRef Name='{0}'/>", field);
+                }
+                viewFieldsStringBuilder.Append("</ViewFields>");
             }
-            viewFieldsStringBuilder.Append("</ViewFields>");
+
             query.ViewXml = string.Format("<View>{0}{1}</View>", Query, viewFieldsStringBuilder);
             var listItems = spList.GetItems(query);
-            ClientContext.Load(listItems, lI=>lI.Include(l=>l.HasUniqueRoleAssignments, l=>l.ContentType.StringId));
+
+            ClientContext.Load(listItems, lI => lI.Include(l => l.HasUniqueRoleAssignments, l => l.ContentType.StringId));
             ClientContext.ExecuteQueryRetry();
 
             Microsoft.SharePoint.Client.FieldCollection fieldCollection = spList.Fields;
             ClientContext.Load(fieldCollection, fs => fs.Include(f => f.InternalName, f => f.FieldTypeKind));
             ClientContext.ExecuteQueryRetry();
 
-
             var rows = new DataRowCollection(template);
-            foreach(var listItem in listItems)
+            foreach (var listItem in listItems)
             {
                 //Make sure we don't pull Folders.. Of course this won't work
-                if (listItem.ServerObjectIsNull == false) {
+                if (listItem.ServerObjectIsNull == false)
+                {
 
                     ClientContext.Load(listItem);
                     ClientContext.ExecuteQueryRetry();
                     if (!(listItem.FileSystemObjectType == FileSystemObjectType.Folder))
                     {
-
-
-
                         DataRow row = new DataRow();
                         if (IncludeSecurity && listItem.HasUniqueRoleAssignments)
                         {
                             row.Security.ClearSubscopes = true;
                             row.Security.CopyRoleAssignments = false;
 
-                            var RoleAssignments = listItem.RoleAssignments;
-                            ClientContext.Load(RoleAssignments);
+                            var roleAssignments = listItem.RoleAssignments;
+                            ClientContext.Load(roleAssignments);
                             ClientContext.ExecuteQueryRetry();
 
-
-
-                            ClientContext.Load(RoleAssignments, r => r.Include(a => a.Member.LoginName, a => a.Member, a => a.RoleDefinitionBindings));
+                            ClientContext.Load(roleAssignments, r => r.Include(a => a.Member.LoginName, a => a.Member, a => a.RoleDefinitionBindings));
                             ClientContext.ExecuteQueryRetry();
 
-                            foreach (var roleAssignment in RoleAssignments)
+                            foreach (var roleAssignment in roleAssignments)
                             {
                                 var principalName = roleAssignment.Member.LoginName;
                                 var roleBindings = roleAssignment.RoleDefinitionBindings;
@@ -131,54 +131,59 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                                 }
                             }
                         }
-
-                        foreach (var field in Fields)
+                        if (Fields != null)
                         {
-                            Microsoft.SharePoint.Client.Field dataField = fieldCollection.FirstOrDefault(f => f.InternalName == field);
-
-                            if (dataField != null)
+                            foreach (var field in Fields)
                             {
-                                var defaultFieldValue = listItem[field] as string;
-                                row.Values.Add(field, defaultFieldValue);
+                                Microsoft.SharePoint.Client.Field dataField = fieldCollection.FirstOrDefault(f => f.InternalName == field);
+
+                                if (dataField != null)
+                                {
+                                    var defaultFieldValue = listItem[field] as string;
+                                    row.Values.Add(field, defaultFieldValue);
+
+                                }
+
 
                             }
-
-
                         }
-
-
-
+                        else
+                        {
+                            //All fields are added
+                            foreach (var field in fieldCollection)
+                            {
+                                var fldKey = (from f in listItem.FieldValues.Keys where f == field.InternalName select f).FirstOrDefault();
+                                if (!string.IsNullOrEmpty(fldKey))
+                                {
+                                    var fieldValue = listItem[field.InternalName] as string;
+                                    row.Values.Add(field.InternalName, fieldValue);
+                                }
+                            }
+                        }
 
                         rows.Add(row);
                     }
                 }
             }
-                template.Lists.Remove(listInstance);
-                listInstance.DataRows.AddRange(rows);
-                template.Lists.Add(listInstance);
+            template.Lists.Remove(listInstance);
+            listInstance.DataRows.AddRange(rows);
+            template.Lists.Add(listInstance);
 
-               
-                    // Determine the output file name and path
-                    var outFileName = System.IO.Path.GetFileName(Path);
-                    var outPath = new System.IO.FileInfo(Path).DirectoryName;
-                   
-                    // Save the template back to the storage
-                    var fileSystemConnector = new FileSystemConnector(outPath, "");
-                    var formatter = XMLPnPSchemaFormatter.LatestFormatter;
+            // Determine the output file name and path
+            var outFileName = System.IO.Path.GetFileName(Path);
+            var outPath = new System.IO.FileInfo(Path).DirectoryName;
 
-                    XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-                          Path, fileSystemConnector);
-                    var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+            // Save the template back to the storage
+            var fileSystemConnector = new FileSystemConnector(outPath, "");
+            var formatter = XMLPnPSchemaFormatter.LatestFormatter;
 
-                    provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
+            XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
+                    Path, fileSystemConnector);
+            var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
-                WriteObject(template);
-               
+            provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
+
+            WriteObject(template);
         }
-
-      
-
-       
-       
     }
 }

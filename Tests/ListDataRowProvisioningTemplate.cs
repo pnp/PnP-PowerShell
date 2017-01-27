@@ -31,7 +31,7 @@ namespace SharePointPnP.PowerShell.Tests
                 var list = ctx.Web.Lists.GetByTitle("PnPTestList");
                 var listFields = list.Fields;
                 ctx.Load(listFields, fields => fields.Include(field => field.Title, field => field.InternalName));
-                ctx.ExecuteQuery();
+                ctx.ExecuteQueryRetry();
                 //Create 10 list items.
                 for (var i = 0; i < 10; i++)
                 {
@@ -44,7 +44,7 @@ namespace SharePointPnP.PowerShell.Tests
                     {
                         listItem.BreakRoleInheritance(true, false);
                     }
-                    ctx.ExecuteQuery();
+                    ctx.ExecuteQueryRetry();
                 }
 
                 for(var i = 0; i < 10; i++)
@@ -55,7 +55,7 @@ namespace SharePointPnP.PowerShell.Tests
                     {
                         var listItem = testFolder.ListItemAllFields;
                         ctx.Load(listItem);
-                        ctx.ExecuteQuery();
+                        ctx.ExecuteQueryRetry();
 
                         for(var j = 0; j < 5; j++)
                         {
@@ -64,7 +64,7 @@ namespace SharePointPnP.PowerShell.Tests
                         }
 
                         listItem.BreakRoleInheritance(true, true);
-                        ctx.ExecuteQuery();
+                        ctx.ExecuteQueryRetry();
                     }
                 }
             }
@@ -94,9 +94,31 @@ namespace SharePointPnP.PowerShell.Tests
         }
 
         [TestMethod]
-        public void GetDataRowsFromList()
+        public void GetDataRowsFromListNoFields()
         {
             using(var scope = new PSTestScope(true))
+            {
+                //var template = scope.ExecuteCommand("Get-PnPProvisioningTemplate", new CommandParameter("OutputInstance", true));
+
+                //Assert.IsTrue(template.Any());
+
+                var results = scope.ExecuteCommand("Add-PnPDataRowsToProvisioningTemplate",
+                    new CommandParameter("Path", @"..\\..\\Resources\\PnPTestList.xml"),
+                    new CommandParameter("List", "PnPTestList"),
+                    new CommandParameter("Query", "<View></View>")
+                    );
+                var template = results[0].BaseObject as ProvisioningTemplate;
+                Assert.AreEqual(10, template.Lists[0].DataRows.Count);
+               
+                    
+            }
+        }
+
+
+        [TestMethod]
+        public void GetDataRowsFromListWithFields()
+        {
+            using (var scope = new PSTestScope(true))
             {
                 //var template = scope.ExecuteCommand("Get-PnPProvisioningTemplate", new CommandParameter("OutputInstance", true));
 
@@ -111,20 +133,19 @@ namespace SharePointPnP.PowerShell.Tests
                     );
                 var template = results[0].BaseObject as ProvisioningTemplate;
                 Assert.AreEqual(10, template.Lists[0].DataRows.Count);
-               
-                    
+
+
             }
         }
+
+
 
         [TestMethod]
         public void GetDataRowsWithSecurityFromList()
         {
             using (var scope = new PSTestScope(true))
             {
-                //var template = scope.ExecuteCommand("Get-PnPProvisioningTemplate", new CommandParameter("OutputInstance", true));
-
-                //Assert.IsTrue(template.Any());
-
+             
                 string[] fields = new string[] { "Title" };
                 var results = scope.ExecuteCommand("Add-PnPDataRowsToProvisioningTemplate",
                     new CommandParameter("Path", @"..\\..\\Resources\\PnPTestList.xml"),
