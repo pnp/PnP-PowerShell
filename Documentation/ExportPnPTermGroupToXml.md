@@ -2,7 +2,7 @@
 Exports a taxonomy TermGroup to either the output or to an XML file.
 ##Syntax
 ```powershell
-Export-PnPTermGroupToXml [-Identity <TermGroupPipeBind>]
+Export-PnPTermGroupToXml [-Identity <Id, Title or TermGroup>]
                          [-Out <String>]
                          [-FullTemplate [<SwitchParameter>]]
                          [-Encoding <Encoding>]
@@ -16,7 +16,7 @@ Parameter|Type|Required|Description
 |Encoding|Encoding|False|Defaults to Unicode|
 |Force|SwitchParameter|False|Overwrites the output file if it exists.|
 |FullTemplate|SwitchParameter|False|If specified, a full provisioning template structure will be returned|
-|Identity|TermGroupPipeBind|False|The ID or name of the termgroup|
+|Identity|Id, Title or TermGroup|False|The ID or name of the termgroup|
 |Out|String|False|File to export the data to.|
 ##Examples
 

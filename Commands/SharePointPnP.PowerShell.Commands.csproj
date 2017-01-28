@@ -364,6 +364,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\PipeBinds\GenericObjectNameIdPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
     <Compile Include="Base\PnPWebCmdlet.cs" />
     <Compile Include="Base\PropertyLoadingAttribute.cs" />
     <Compile Include="Base\PipeBinds\ImageRenditionPipeBind.cs" />
@@ -415,7 +417,7 @@
     <Compile Include="Base\PipeBinds\ContentTypePipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GuidPipeBind.cs" />
-    <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TaxonomyItemPipeBind.cs" />
     <Compile Include="Base\PnPAzureADConnection.cs" />
     <Compile Include="Base\PnPGraphCmdlet.cs" />
     <Compile Include="Base\SetContext.cs" />
@@ -537,6 +539,10 @@
     <Compile Include="RecycleBin\GetRecycleBinItem.cs" />
     <Compile Include="Site\SetAuditing.cs" />
     <Compile Include="Taxonomy\GetSiteCollectionTermStore.cs" />
+    <Compile Include="Taxonomy\GetTerm.cs" />
+    <Compile Include="Taxonomy\GetTermSet.cs" />
+    <Compile Include="Taxonomy\NewTerm.cs" />
+    <Compile Include="Taxonomy\NewTermSet.cs" />
     <Compile Include="Taxonomy\RemoveTaxonomyItem.cs" />
     <Compile Include="Taxonomy\RemoveTermGroup.cs" />
     <Compile Include="Taxonomy\ImportTermGroupFromXml.cs" />

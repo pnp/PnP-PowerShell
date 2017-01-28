@@ -151,6 +151,10 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                             outputType = cmdletInfo.OutputType.FullName;
                         }
                     }
+                    else if (cmdletInfo.OutputType.FullName == "GenericObjectNameIdPipeBind`1" || cmdletInfo.OutputType.FullName == "TaxonomyItemPipeBind`1")
+                    {
+                        outputType = cmdletInfo.OutputType.GenericTypeArguments[0].FullName;
+                    }
                     else
                     {
                         outputType = cmdletInfo.OutputType.FullName;
