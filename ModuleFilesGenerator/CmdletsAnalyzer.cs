@@ -21,9 +21,9 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
         internal List<CmdletInfo> Analyze()
         {
-            
+
             return GetCmdlets();
-            
+
         }
         private List<CmdletInfo> GetCmdlets()
         {
@@ -114,13 +114,27 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                             cmdletSyntax.ParameterSetName = parameterAttribute.ParameterSetName;
                             syntaxes.Add(cmdletSyntax);
                         }
+                        var typeString = field.FieldType.Name;
+                        var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
+                        if (fieldAttribute != null)
+                        {
+                            if (fieldAttribute.Type != null)
+                            {
+                                typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
+                            }
+                            else
+                            {
+                                typeString = fieldAttribute.Description;
+                            }
+                        }
+
                         cmdletSyntax.Parameters.Add(new CmdletParameterInfo()
                         {
                             Name = field.Name,
                             Description = parameterAttribute.HelpMessage,
                             Position = parameterAttribute.Position,
                             Required = parameterAttribute.Mandatory,
-                            Type = field.FieldType.Name
+                            Type = typeString
                         });
                     }
                 }
@@ -135,14 +149,26 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     cmdletSyntax.ParameterSetName = additionalParameter.ParameterSetName;
                     syntaxes.Add(cmdletSyntax);
                 }
-
+                var typeString = additionalParameter.ParameterType.Name;
+                var fieldAttribute = additionalParameter.ParameterType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
+                if (fieldAttribute != null)
+                {
+                    if (fieldAttribute.Type != null)
+                    {
+                        typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
+                    }
+                    else
+                    {
+                        typeString = fieldAttribute.Description;
+                    }
+                }
                 cmdletSyntax.Parameters.Add(new CmdletParameterInfo()
                 {
                     Name = additionalParameter.ParameterName,
                     Description = additionalParameter.HelpMessage,
                     Position = additionalParameter.Position,
                     Required = additionalParameter.Mandatory,
-                    Type = additionalParameter.ParameterType.Name
+                    Type = typeString
                 });
             }
 
@@ -160,16 +186,29 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         {
                             syntaxes.Add(new CmdletSyntax { ParameterSetName = ParameterAttribute.AllParameterSets });
                         }
-                      
+
                         foreach (var syntax in syntaxes)
                         {
+                            var typeString = field.FieldType.Name;
+                            var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
+                            if (fieldAttribute != null)
+                            {
+                                if (fieldAttribute.Type != null)
+                                {
+                                    typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
+                                }
+                                else
+                                {
+                                    typeString = fieldAttribute.Description;
+                                }
+                            }
                             syntax.Parameters.Add(new CmdletParameterInfo()
                             {
                                 Name = field.Name,
                                 Description = parameterAttribute.HelpMessage,
                                 Position = parameterAttribute.Position,
                                 Required = parameterAttribute.Mandatory,
-                                Type = field.FieldType.Name
+                                Type = typeString
                             });
                         }
                     }
@@ -202,10 +241,23 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                                 description = helpParameterAttribute.HelpMessage;
                             }
                         }
+                        var typeString = field.FieldType.Name;
+                        var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
+                        if (fieldAttribute != null)
+                        {
+                            if (fieldAttribute.Type != null)
+                            {
+                                typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
+                            }
+                            else
+                            {
+                                typeString = fieldAttribute.Description;
+                            }
+                        }
                         parameters.Add(new CmdletParameterInfo()
                         {
                             Description = description,
-                            Type = field.FieldType.Name,
+                            Type = typeString,
                             Name = field.Name,
                             Required = parameterAttribute.Mandatory,
                             Position = parameterAttribute.Position,
@@ -216,10 +268,23 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
             foreach (var additionalParameter in cmdletInfo.AdditionalParameters)
             {
+                var typeString = additionalParameter.ParameterType.Name;
+                var fieldAttribute = additionalParameter.ParameterType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
+                if (fieldAttribute != null)
+                {
+                    if (fieldAttribute.Type != null)
+                    {
+                        typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
+                    }
+                    else
+                    {
+                        typeString = fieldAttribute.Description;
+                    }
+                }
                 parameters.Add(new CmdletParameterInfo()
                 {
                     Description = additionalParameter.HelpMessage,
-                    Type = additionalParameter.ParameterType.Name,
+                    Type = typeString,
                     Name = additionalParameter.ParameterName,
                     Required = additionalParameter.Mandatory,
                     Position = additionalParameter.Position,
@@ -229,7 +294,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             return parameters;
         }
 
-        
+
 
         #region Helpers
         private static List<FieldInfo> GetFields(Type t)

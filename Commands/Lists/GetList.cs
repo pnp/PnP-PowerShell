@@ -37,19 +37,17 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         {
             DefaultRetrievalExpressions = new Expression<Func<List, object>>[] { l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.RootFolder.ServerRelativeUrl };
 
-            var expressions = RetrievalExpressions.ToList();
-
             if (Identity != null)
             {
                 var list = Identity.GetList(SelectedWeb);
-                list?.EnsureProperties(expressions.ToArray());
+                list?.EnsureProperties(RetrievalExpressions);
 
                 WriteObject(list);
 
             }
             else
             {
-                var query = (SelectedWeb.Lists.IncludeWithDefaultProperties(expressions.ToArray()));
+                var query = SelectedWeb.Lists.IncludeWithDefaultProperties(RetrievalExpressions);
                 var lists = ClientContext.LoadQuery(query);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(lists, true);

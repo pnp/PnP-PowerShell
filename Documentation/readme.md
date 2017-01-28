@@ -91,7 +91,7 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[Add&#8209;PnPFile](AddPnPFile.md)** |Uploads a file to Web
-**[Copy&#8209;PnPFile](CopyPnPFile.md)** |Copies a file to a different location
+**[Copy&#8209;PnPFile](CopyPnPFile.md)** |Copies a file or folder to a different location
 **[Find&#8209;PnPFile](FindPnPFile.md)** |Finds a file in the virtual file system of the web.
 **[Get&#8209;PnPFile](GetPnPFile.md)** |Downloads a file.
 **[Move&#8209;PnPFile](MovePnPFile.md)** |Moves a file to a different location
@@ -203,12 +203,16 @@ Cmdlet|Description
 **[Get&#8209;PnPTaxonomyItem](GetPnPTaxonomyItem.md)** |Returns a taxonomy item
 **[Remove&#8209;PnPTaxonomyItem](RemovePnPTaxonomyItem.md)** |Removes a taxonomy item
 **[Get&#8209;PnPTaxonomySession](GetPnPTaxonomySession.md)** |Returns a taxonomy session
+**[Get&#8209;PnPTerm](GetPnPTerm.md)** |Returns a taxonomy term
+**[New&#8209;PnPTerm](NewPnPTerm.md)** |Creates a taxonomy term
 **[Get&#8209;PnPTermGroup](GetPnPTermGroup.md)** |Returns a taxonomy term group
 **[New&#8209;PnPTermGroup](NewPnPTermGroup.md)** |Creates a taxonomy term group
 **[Remove&#8209;PnPTermGroup](RemovePnPTermGroup.md)** |Removes a taxonomy term group and all its containing termsets
 **[Import&#8209;PnPTermGroupFromXml](ImportPnPTermGroupFromXml.md)** |Imports a taxonomy TermGroup from either the input or from an XML file.
 **[Export&#8209;PnPTermGroupToXml](ExportPnPTermGroupToXml.md)** |Exports a taxonomy TermGroup to either the output or to an XML file.
+**[Get&#8209;PnPTermSet](GetPnPTermSet.md)** |Returns a taxonomy term set
 **[Import&#8209;PnPTermSet](ImportPnPTermSet.md)** |Imports a taxonomy term set from a file in the standard format.
+**[New&#8209;PnPTermSet](NewPnPTermSet.md)** |Creates a taxonomy term set
 ##Tenant Administration
 Cmdlet|Description
 :-----|:----------
