@@ -701,7 +701,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             ctx.ExecutingWebRequest += (sender, args) =>
             {
                 var psVariable = SessionState.PSVariable.Get("WebRequestCounter");
-                var counter = (psVariable != null && psVariable.Value != null) ? (int)psVariable.Value : 0;
+                var counter = (int?) psVariable?.Value ?? 0;
                 counter++;
                 SessionState.PSVariable.Set("WebRequestCounter", counter);
             };
