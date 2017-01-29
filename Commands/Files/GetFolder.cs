@@ -38,7 +38,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+#if !SP2013
             DefaultRetrievalExpressions = new Expression<Func<Folder, object>>[] { f => f.ServerRelativeUrl, f => f.Name, f => f.TimeLastModified, f => f.ItemCount };
+#else
+            DefaultRetrievalExpressions = new Expression<Func<Folder, object>>[] { f => f.ServerRelativeUrl, f => f.Name, f => f.ItemCount };
+#endif
             var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
             if (!Url.ToLower().StartsWith(webServerRelativeUrl))
             {

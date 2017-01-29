@@ -15,8 +15,8 @@ namespace SharePointPnP.PowerShell.Commands.Features
     [CmdletAlias("Get-SPOFeature")]
     [CmdletHelp("Returns all activated or a specific activated feature",
         Category = CmdletHelpCategory.Features,
-        OutputType=typeof(IEnumerable<Feature>),
-        OutputTypeLink= "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.feature.aspx")]
+        OutputType = typeof(IEnumerable<Feature>),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.feature.aspx")]
     [CmdletExample(
      Code = @"PS:> Get-PnPFeature",
      Remarks = @"This will return all activated web scoped features", SortOrder = 1)]
@@ -39,8 +39,11 @@ namespace SharePointPnP.PowerShell.Commands.Features
 
         protected override void ExecuteCmdlet()
         {
-            DefaultRetrievalExpressions = new Expression<Func<Feature, object>>[] {f => f.DisplayName};
-
+#if !SP2013
+            DefaultRetrievalExpressions = new Expression<Func<Feature, object>>[] { f => f.DisplayName };
+#else
+            DefaultRetrievalExpressions = new Expression<Func<Feature, object>>[] { f => f.DefinitionId };
+#endif
             FeatureCollection featureCollection;
             if (Scope == FeatureScope.Site)
             {
@@ -50,19 +53,7 @@ namespace SharePointPnP.PowerShell.Commands.Features
             {
                 featureCollection = SelectedWeb.Features;
             }
-            IEnumerable<Feature> query;
-#if !ONPREMISES
-            if (ClientContext.ServerVersion.Major > 15)
-            {
-                query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(RetrievalExpressions));
-            }
-            else
-            {
-                query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(RetrievalExpressions));
-            }
-#else
-            query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(RetrievalExpressions));
-#endif
+            IEnumerable<Feature> query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(RetrievalExpressions));
             ClientContext.ExecuteQueryRetry();
             if (Identity == null)
             {
@@ -76,7 +67,7 @@ namespace SharePointPnP.PowerShell.Commands.Features
                 }
                 else if (!string.IsNullOrEmpty(Identity.Name))
                 {
-#if !ONPREMISES
+#if !SP2013
                     WriteObject(query.Where(f => f.DisplayName.Equals(Identity.Name, StringComparison.OrdinalIgnoreCase)));
 #else
                     throw new Exception("Querying by name is not supported in version 15 of the Client Side Object Model");
