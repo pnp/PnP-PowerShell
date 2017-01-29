@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Features
                 query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(RetrievalExpressions));
             }
 #else
-            query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(Expressions));
+            query = ClientContext.LoadQuery(featureCollection.IncludeWithDefaultProperties(RetrievalExpressions));
 #endif
             ClientContext.ExecuteQueryRetry();
             if (Identity == null)
