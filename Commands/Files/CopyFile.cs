@@ -120,8 +120,18 @@ namespace SharePointPnP.PowerShell.Commands.Files
             folder.EnsureProperties(f => f.Name, f => f.Exists);
             bool srcIsFolder = folder.Exists;
 #else
-            folder.EnsureProperties(f => f.Name, f => f.ServerObjectIsNull);
-            bool srcIsFolder = folder.ServerObjectIsNull.HasValue && !folder.ServerObjectIsNull.Value;
+            folder.EnsureProperties(f => f.Name);
+            bool srcIsFolder;
+            try
+            {
+                folder.EnsureProperties(f => f.ItemCount); //Using ItemCount as marker if this is a file or folder
+                srcIsFolder = true;
+            }
+            catch
+            {
+                srcIsFolder = false;
+            }
+
 #endif
 
             if (Force || ShouldContinue(string.Format(Resources.CopyFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
@@ -160,9 +170,16 @@ namespace SharePointPnP.PowerShell.Commands.Files
                     if (!targetFolder.Exists) throw new Exception("TargetUrl is an existing file, not folder");
                      targetFolderExists = true;
 #else
-
-                    folder.EnsureProperties(f => f.Name, f => f.ServerObjectIsNull);
-                    targetFolderExists = folder.ServerObjectIsNull.HasValue && !folder.ServerObjectIsNull.Value;
+                    targetFolder.EnsureProperties(f => f.Name);
+                    try
+                    {
+                        targetFolder.EnsureProperties(f => f.ItemCount); //Using ItemCount as marker if this is a file or folder
+                        targetFolderExists = true;
+                    }
+                    catch
+                    {
+                        targetFolderExists = false;
+                    }
                     if (!targetFolderExists) throw new Exception("TargetUrl is an existing file, not folder");
 #endif
                 }
