@@ -71,6 +71,8 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
         [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter OverwriteSystemPropertyBagValues;
 
+        [Parameter(Mandatory = false, HelpMessage = "If set content types will be provisioned if the target web is a subweb.")]
+        public SwitchParameter ProvisionContentTypesToSubWebs;
         [Parameter(Mandatory = false, HelpMessage = "Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template")]
         public SwitchParameter ClearNavigation;
 
@@ -321,6 +323,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             applyingInformation.OverwriteSystemPropertyBagValues = OverwriteSystemPropertyBagValues;
             applyingInformation.ClearNavigation = ClearNavigation;
+            applyingInformation.ProvisionContentTypesToSubWebs = ProvisionContentTypesToSubWebs;
 
             SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
 
