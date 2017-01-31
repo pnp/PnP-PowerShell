@@ -5,6 +5,7 @@ Applies a provisioning template to a web
 Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
                               [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-ProvisionContentTypesToSubWebs [<SwitchParameter>]]
                               [-ClearNavigation [<SwitchParameter>]]
                               [-Parameters <Hashtable>]
                               [-Handlers <Handlers>]
@@ -19,6 +20,7 @@ Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
 Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
                               [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-ProvisionContentTypesToSubWebs [<SwitchParameter>]]
                               [-ClearNavigation [<SwitchParameter>]]
                               [-Parameters <Hashtable>]
                               [-Handlers <Handlers>]
@@ -33,6 +35,7 @@ Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
 Apply-PnPProvisioningTemplate -Path <String>
                               [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-ProvisionContentTypesToSubWebs [<SwitchParameter>]]
                               [-ClearNavigation [<SwitchParameter>]]
                               [-Parameters <Hashtable>]
                               [-Handlers <Handlers>]
@@ -55,6 +58,7 @@ Parameter|Type|Required|Description
 |InputInstance|ProvisioningTemplate|False|Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.|
 |OverwriteSystemPropertyBagValues|SwitchParameter|False|Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)|
 |Parameters|Hashtable|False|Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.|
+|ProvisionContentTypesToSubWebs|SwitchParameter|False|If set content types will be provisioned if the target web is a subweb.|
 |ResourceFolder|String|False|Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.|
 |TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while applying a template.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
