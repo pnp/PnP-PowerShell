@@ -52,7 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             }
             if (list != null)
             {
-                if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary || list.BaseTemplate == (int)ListTemplateType.WebPageLibrary)
+                if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary || list.BaseTemplate == (int)ListTemplateType.WebPageLibrary || list.BaseTemplate == (int)ListTemplateType.PictureLibrary)
                 {
                     Field field = null;
                     // Get the field
