@@ -1,5 +1,4 @@
-﻿#if !ONPREMISES
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.UserProfiles;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -10,11 +9,13 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Set, "PnPUserProfileProperty")]
     [CmdletAlias("Set-SPOUserProfileProperty")]
-    [CmdletHelp(@"Office365 only: Uses the tenant API to retrieve site information.
+#if !ONPREMISES
+    [CmdletHelp(@"For Office365: Uses the tenant API to retrieve site information.
 
 You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command. 
 ", DetailedDescription = "Requires a connection to a SharePoint Tenant Admin site.",
         Category = CmdletHelpCategory.UserProfiles)]
+#endif
     [CmdletExample(
         Code = @"PS:> Set-PnPUserProfileProperty -Account 'user@domain.com' -Property 'SPS-Location' -Value 'Stockholm'",
         Remarks = "Sets the SPS-Location property for the user as specified by the Account parameter",
@@ -42,16 +43,19 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
         {
             var peopleManager = new PeopleManager(ClientContext);
 
+#if !ONPREMISES
             var result = Tenant.EncodeClaim(Account);
             ClientContext.ExecuteQueryRetry();
+            Account = result.Value;
+#endif
 
             if (ParameterSetName == "Single")
             {
-                peopleManager.SetSingleValueProfileProperty(result.Value, PropertyName, Value);
+                peopleManager.SetSingleValueProfileProperty(Account, PropertyName, Value);
             }
             else
             {
-                peopleManager.SetMultiValuedProfileProperty(result.Value, PropertyName, Values.ToList());
+                peopleManager.SetMultiValuedProfileProperty(Account, PropertyName, Values.ToList());
             }
 
             ClientContext.ExecuteQueryRetry();
@@ -59,4 +63,3 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
         }
     }
 }
-#endif
