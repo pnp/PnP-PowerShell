@@ -1,5 +1,5 @@
 #Add-PnPFileToProvisioningTemplate
-Adds a file to an in-memory PnP Provisioning Template
+Adds a file to a PnP Provisioning Template
 ##Syntax
 ```powershell
 Add-PnPFileToProvisioningTemplate -Path <String>

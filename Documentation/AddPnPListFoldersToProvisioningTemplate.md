@@ -1,5 +1,5 @@
 #Add-PnPListFoldersToProvisioningTemplate
-Adds folders to a list in an existing PnP Provisioning Template
+Adds folders to a list in a PnP Provisioning Template
 ##Syntax
 ```powershell
 Add-PnPListFoldersToProvisioningTemplate -Path <String>
