@@ -34,7 +34,6 @@ if($ConfigurationName -like "Debug*")
 				Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2013.psd1" -Destination  "$DestinationFolder"
 				Copy-Item "$TargetDir\ModuleFiles\SharePointPnP.PowerShell.2013.Commands.Format.ps1xml" -Destination "$DestinationFolder"
 				Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2013Aliases.psm1" -Destination "$DestinationFolder"
-
 			} 
 			"Debug16" {
 				Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2016.psd1" -Destination  "$DestinationFolder"
