@@ -28,6 +28,7 @@ Get-PnPListItem -List <ListPipeBind>
 Get-PnPListItem -List <ListPipeBind>
                 [-Fields <String[]>]
                 [-PageSize <Int>]
+                [-ScriptBlock <ScriptBlock>]
                 [-Web <WebPipeBind>]
 ```
 
@@ -43,6 +44,7 @@ Parameter|Type|Required|Description
 |Id|Int|False|The ID of the item to retrieve|
 |PageSize|Int|False|The number of items to retrieve per page request.|
 |Query|String|False|The CAML query to execute against the list|
+|ScriptBlock|ScriptBlock|False|The script block to run after every page request.|
 |UniqueId|GuidPipeBind|False|The unique id (GUID) of the item to retrieve|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
@@ -82,3 +84,9 @@ Retrieves all list items based on the CAML query specified.
 PS:> Get-PnPListItem -List Tasks -PageSize 1000
 ```
 Retrieves all list items from the Tasks list in pages of 1000 items. This parameter is ignored if the Query parameter is specified.
+
+###Example 7
+```powershell
+PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { $args.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }
+```
+Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item.
