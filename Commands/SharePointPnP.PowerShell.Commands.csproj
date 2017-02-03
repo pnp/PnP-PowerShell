@@ -455,6 +455,8 @@
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
+    <Compile Include="Provisioning\AddListFoldersToProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\AddDataRowsToProvisioningTemplate.cs" />
     <Compile Include="InformationManagement\ClosureState.cs" />
     <Compile Include="InformationManagement\GetSiteClosure.cs" />
     <Compile Include="InformationManagement\SetSiteClosure.cs" />
@@ -601,7 +603,9 @@
     <Compile Include="Workflows\AddWorkflowSubscription.cs" />
     <Compile Include="Workflows\GetWorkflowDefinition.cs" />
     <Compile Include="Workflows\GetWorkflowSubscription.cs" />
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="ModuleFiles\SharePointPnP.PowerShell.Online.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
