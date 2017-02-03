@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Add", "PnPDataRowsToProvisioningTemplate")]
     
-    [CmdletHelp("Adds datarows to a List inside an existing PnP Provisioning Template",
+    [CmdletHelp("Adds datarows to a list inside a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice'",

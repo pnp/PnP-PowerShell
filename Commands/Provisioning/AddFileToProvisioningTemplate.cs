@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Add", "PnPFileToProvisioningTemplate")]
     [CmdletAlias("Add-SPOFileToProvisioningTemplate")]
-    [CmdletHelp("Adds a file to an in-memory PnP Provisioning Template",
+    [CmdletHelp("Adds a file to a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
