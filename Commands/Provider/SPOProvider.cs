@@ -368,7 +368,10 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                         fileCreationInfo.Content = new byte[0];
                     }
 
-                    parentFolder.Files.Add(fileCreationInfo);
+                    var file = parentFolder.Files.Add(fileCreationInfo);
+                    parentFolder.Context.Load(file);
+                    parentFolder.Context.ExecuteQueryRetry();
+                    SetCachedItem(itemUrl, file);
 
                 }
                 else if (itemTypeName.Equals("folder", StringComparison.InvariantCultureIgnoreCase) || itemTypeName.Equals("directory", StringComparison.InvariantCultureIgnoreCase))
@@ -376,14 +379,17 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     var folderName = itemUrl.Split(PathSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Last();
                     if (!parentFolder.FolderExists(folderName))
                     {
-                        parentFolder.Folders.Add(itemUrl);
+                        var folder = parentFolder.Folders.Add(itemUrl);
+                        parentFolder.Context.Load(folder);
+                        parentFolder.Context.ExecuteQueryRetry();
+                        SetCachedItem(itemUrl, folder);
                     }
                 }
                 else
                 {
                     WriteErrorInternal("Only File or Folder (Directory) supported for Type", path, ErrorCategory.InvalidArgument);
                 }
-                parentFolder.Context.ExecuteQueryRetry();
+                
             }
         }
 
@@ -694,15 +700,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         {
             ctx.ExecutingWebRequest += (sender, args) =>
             {
-                var counter = 0;
-                try
-                {
-                    counter = (int) SessionState.PSVariable.GetValue("WebRequestCounter");
-                }
-                catch
-                {
-                    // ignored
-                }
+                var psVariable = SessionState.PSVariable.Get("WebRequestCounter");
+                var counter = (int?) psVariable?.Value ?? 0;
                 counter++;
                 SessionState.PSVariable.Set("WebRequestCounter", counter);
             };
@@ -711,6 +710,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         //Copymove helper
         private void CopyMoveImplementation(string sourcePath, string targetPath, bool recurse = false, bool isCopyOperation = true, bool reCreateSourceFolder = true)
         {
+            var sourceUrl = GetServerRelativePath(sourcePath);
             var source = GetFileOrFolder(sourcePath) as ClientObject;
             if (source == null) return;
 
@@ -719,6 +719,14 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var targetFolderPath = (targetIsFile) ? GetParentServerRelativePath(targetUrl) : targetUrl;
             var sourceWeb = ((ClientContext)source.Context).Web;
             var targetWeb = FindWebInPath(targetFolderPath);
+
+            if (!isCopyOperation && targetUrl.StartsWith(sourceUrl))
+            {
+                var msg = "Cannot move source. Target is inside source";
+                var err = new ArgumentException(msg);
+                WriteErrorInternal(msg, sourcePath, ErrorCategory.InvalidOperation, true, err);
+                return;
+            }
 
             if (targetWeb == null)
             {
@@ -967,7 +975,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var spoDrive = GetCurrentDrive(serverRelativePath);
             if (spoDrive == null) return null;
 
-            var childItems = spoDrive.CachedItems.Where(c => GetParentServerRelativePath(c.Path) == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.ItemTimeout);
+            var nowTicks = DateTime.Now.Ticks;
+            var childItems = spoDrive.CachedItems.Where(c => GetParentServerRelativePath(c.Path) == serverRelativePath && (new TimeSpan(nowTicks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.ItemTimeout);
             var spoDriveCacheItems = childItems as SPODriveCacheItem[] ?? childItems.ToArray();
             return spoDriveCacheItems.Any() ? spoDriveCacheItems.Select(c => c.Item) : null;
         }
@@ -1000,7 +1009,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var spoDrive = GetCurrentDrive(serverRelativePath);
             if (spoDrive == null) return null;
 
-            var result = spoDrive.CachedWebs.FirstOrDefault(c => c.Path == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.ItemTimeout * 100);
+            var result = spoDrive.CachedWebs.FirstOrDefault(c => c.Path == serverRelativePath && (new TimeSpan(DateTime.Now.Ticks - c.LastRefresh.Ticks)).TotalMilliseconds < spoDrive.WebTimeout * 100);
             return result;
         }
 
