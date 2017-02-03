@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Remove", "PnPFileFromProvisioningTemplate")]
     [CmdletAlias("Remove-SPOFileFromProvisioningTemplate")]
-    [CmdletHelp("Removes a file from an in-memory PnP Provisioning Template",
+    [CmdletHelp("Removes a file from a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Remove-PnPFileFromProvisioningTemplate -Path template.pnp -FilePath filePath",

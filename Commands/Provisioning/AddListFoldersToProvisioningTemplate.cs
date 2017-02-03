@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Add", "PnPListFoldersToProvisioningTemplate")]
 
-    [CmdletHelp("Adds folders to a list in an existing PnP Provisioning Template",
+    [CmdletHelp("Adds folders to a list in a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList'",
