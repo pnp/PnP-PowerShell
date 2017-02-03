@@ -2,9 +2,9 @@
 Adds folders to a list in an in-memory PnP Provisioning Template
 ##Syntax
 ```powershell
-Add-PnPListFoldersToProvisioningTemplate [-Web <WebPipeBind>]
-                                         -Path <String>
+Add-PnPListFoldersToProvisioningTemplate -Path <String>
                                          -List <ListPipeBind>
+                                         [-Web <WebPipeBind>]
                                          [-Recursive [<SwitchParameter>]]
                                          [-IncludeSecurity [<SwitchParameter>]]
                                          [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
@@ -14,9 +14,9 @@ Add-PnPListFoldersToProvisioningTemplate [-Web <WebPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|IncludeSecurity|SwitchParameter|False|A switch to include ObjectSecurity information.|
 |List|ListPipeBind|True|The list to query|
 |Path|String|True|Filename of the .PNP Open XML provisioning template to read from, optionally including full path.|
+|IncludeSecurity|SwitchParameter|False|A switch to include ObjectSecurity information.|
 |Recursive|SwitchParameter|False|A switch parameter to include all folders in the list, or just top level folders.|
 |TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while loading the template.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|

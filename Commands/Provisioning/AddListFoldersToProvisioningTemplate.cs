@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Remarks = "Adds all folders from a list with unique permissions to an in-memory PnP Provisioning Template",
        SortOrder = 3)]
 
-    public class AddListFoldersToProvisioningTemplate : SPOWebCmdlet
+    public class AddListFoldersToProvisioningTemplate : PnPWebCmdlet
     {
        
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML provisioning template to read from, optionally including full path.")]

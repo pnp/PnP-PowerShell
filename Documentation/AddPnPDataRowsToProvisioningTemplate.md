@@ -4,9 +4,9 @@ Adds datarows to a List inside of  an in-memory PnP Provisioning Template
 ```powershell
 Add-PnPDataRowsToProvisioningTemplate -List <ListPipeBind>
                                       -Query <String>
+                                      -Path <String>
                                       [-Fields <String[]>]
                                       [-Web <WebPipeBind>]
-                                      -Path <String>
                                       [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                                       [-IncludeSecurity [<SwitchParameter>]]
 ```
@@ -15,11 +15,11 @@ Add-PnPDataRowsToProvisioningTemplate -List <ListPipeBind>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Fields|String[]|False|The fields to retrieve. If not specified all fields will be loaded in the returned list object.|
-|IncludeSecurity|SwitchParameter|False|A switch to include ObjectSecurity information.|
 |List|ListPipeBind|True|The list to query|
 |Path|String|True|Filename of the .PNP Open XML provisioning template to read from, optionally including full path.|
 |Query|String|True|The CAML query to execute against the list|
+|Fields|String[]|False|The fields to retrieve. If not specified all fields will be loaded in the returned list object.|
+|IncludeSecurity|SwitchParameter|False|A switch to include ObjectSecurity information.|
 |TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while loading the template.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

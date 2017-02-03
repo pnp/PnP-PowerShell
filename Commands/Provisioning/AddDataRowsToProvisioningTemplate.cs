@@ -27,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice' -IncludeSecurity",
       Remarks = "Adds datarows to a list in an in-memory PnP Provisioning Template",
        SortOrder = 2)]
-    public class AddDataRowsToProvisioningTemplate : SPOWebCmdlet
+    public class AddDataRowsToProvisioningTemplate : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML provisioning template to read from, optionally including full path.")]
         public string Path;
