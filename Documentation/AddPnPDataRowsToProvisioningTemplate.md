@@ -1,5 +1,5 @@
 #Add-PnPDataRowsToProvisioningTemplate
-Adds datarows to a List inside of  an in-memory PnP Provisioning Template
+Adds datarows to a List inside an existing PnP Provisioning Template
 ##Syntax
 ```powershell
 Add-PnPDataRowsToProvisioningTemplate -List <ListPipeBind>

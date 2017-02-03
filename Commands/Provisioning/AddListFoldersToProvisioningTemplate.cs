@@ -17,16 +17,16 @@ using Microsoft.SharePoint.Client;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Add", "PnPListFoldersToProvisioningTemplate")]
-  
-    [CmdletHelp("Adds folders to a list in an in-memory PnP Provisioning Template",
+
+    [CmdletHelp("Adds folders to a list in an existing PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList'",
-       Remarks = "Adds top level folders from a list to an in-memory PnP Provisioning Template",
+       Remarks = "Adds top level folders from a list to an existing template and returns an in-memory PnP Provisioning Template",
        SortOrder = 1)]
     [CmdletExample(
        Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive",
-       Remarks = "Adds all folders from a list to an in-memory PnP Provisioning Template",
+       Remarks = "Adds all folders from a list to an existing template and returns an in-memory PnP Provisioning Template",
        SortOrder = 2)]
     [CmdletExample(
        Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive -IncludeSecurity",
@@ -35,10 +35,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
     public class AddListFoldersToProvisioningTemplate : PnPWebCmdlet
     {
-       
+
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML provisioning template to read from, optionally including full path.")]
         public string Path;
-        
+
         [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 2)]
         public ListPipeBind List;
 
@@ -54,12 +54,16 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ExecuteCmdlet()
         {
-               // Load the template
-                var template = LoadProvisioningTemplate
-                    .LoadProvisioningTemplateFromFile(Path,
-                    SessionState.Path.CurrentFileSystemLocation.Path,
-                    TemplateProviderExtensions);
-           
+
+            if (!System.IO.Path.IsPathRooted(Path))
+            {
+                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+            }
+            // Load the template
+            var template = LoadProvisioningTemplate
+                .LoadProvisioningTemplateFromFile(Path,
+                TemplateProviderExtensions);
+
             if (template == null)
             {
                 throw new ApplicationException("Invalid template file!");
@@ -72,12 +76,12 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
             //We will remove a list if it's found so we can get the list
             ListInstance listInstance = template.Lists.Find(l => l.Title == spList.Title);
-            if(listInstance == null)
+            if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file!");
             }
 
-         
+
             Microsoft.SharePoint.Client.Folder listFolder = spList.RootFolder;
             ClientContext.Load(listFolder);
             ClientContext.ExecuteQueryRetry();
@@ -85,26 +89,28 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             IList<OfficeDevPnP.Core.Framework.Provisioning.Model.Folder> folders = GetChildFolders(listFolder);
 
             template.Lists.Remove(listInstance);
-                listInstance.Folders.AddRange(folders);
-                template.Lists.Add(listInstance);
+            listInstance.Folders.AddRange(folders);
+            template.Lists.Add(listInstance);
 
-                // Determine the output file name and path
-                var outFileName = System.IO.Path.GetFileName(Path);
-                var outPath = new System.IO.FileInfo(Path).DirectoryName;
+            // Determine the output file name and path
+            var outFileName = System.IO.Path.GetFileName(Path);
+            var outPath = new FileInfo(Path).DirectoryName;
 
-                // Save the template back to the storage
-                var fileSystemConnector = new FileSystemConnector(outPath, "");
-                var formatter = XMLPnPSchemaFormatter.LatestFormatter;
-
-                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-                      Path, fileSystemConnector);
+            var fileSystemConnector = new FileSystemConnector(outPath, "");
+            var formatter = XMLPnPSchemaFormatter.LatestFormatter;
+            var extension = new FileInfo(Path).Extension.ToLowerInvariant();
+            if (extension == ".pnp")
+            {
+                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(outPath, fileSystemConnector));
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                 provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
-            WriteObject(template);
-            
-
-
+            }
+            else
+            {
+                XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(Path, "");
+                provider.SaveAs(template, Path, formatter, TemplateProviderExtensions);
+            }
         }
 
         private IList<OfficeDevPnP.Core.Framework.Provisioning.Model.Folder> GetChildFolders(Microsoft.SharePoint.Client.Folder listFolder)
@@ -138,13 +144,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
             if (Recursive)
             {
-                foreach(var folder in listFolder.Folders)
+                foreach (var folder in listFolder.Folders)
                 {
                     var childFolder = GetFolder(folder);
                     retFolder.Folders.Add(childFolder);
                 }
             }
-            if(IncludeSecurity && folderItem.HasUniqueRoleAssignments)
+            if (IncludeSecurity && folderItem.HasUniqueRoleAssignments)
             {
                 var RoleAssignments = folderItem.RoleAssignments;
                 ClientContext.Load(RoleAssignments);
@@ -153,14 +159,14 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 retFolder.Security.ClearSubscopes = true;
                 retFolder.Security.CopyRoleAssignments = false;
 
-                ClientContext.Load(RoleAssignments, r => r.Include(a=>a.Member.LoginName, a => a.Member, a => a.RoleDefinitionBindings));
+                ClientContext.Load(RoleAssignments, r => r.Include(a => a.Member.LoginName, a => a.Member, a => a.RoleDefinitionBindings));
                 ClientContext.ExecuteQueryRetry();
 
-                foreach(var roleAssignment in RoleAssignments)
+                foreach (var roleAssignment in RoleAssignments)
                 {
                     var principalName = roleAssignment.Member.LoginName;
                     var roleBindings = roleAssignment.RoleDefinitionBindings;
-                    foreach (var roleBinding in roleBindings )
+                    foreach (var roleBinding in roleBindings)
                     {
                         retFolder.Security.RoleAssignments.Add(new OfficeDevPnP.Core.Framework.Provisioning.Model.RoleAssignment() { Principal = principalName, RoleDefinition = roleBinding.Name });
                     }
@@ -170,7 +176,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             return retFolder;
         }
 
-       
-       
+
+
     }
 }

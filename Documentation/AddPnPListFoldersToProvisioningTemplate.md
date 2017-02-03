@@ -1,5 +1,5 @@
 #Add-PnPListFoldersToProvisioningTemplate
-Adds folders to a list in an in-memory PnP Provisioning Template
+Adds folders to a list in an existing PnP Provisioning Template
 ##Syntax
 ```powershell
 Add-PnPListFoldersToProvisioningTemplate -Path <String>
@@ -26,13 +26,13 @@ Parameter|Type|Required|Description
 ```powershell
 PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList'
 ```
-Adds top level folders from a list to an in-memory PnP Provisioning Template
+Adds top level folders from a list to an existing template and returns an in-memory PnP Provisioning Template
 
 ###Example 2
 ```powershell
 PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive
 ```
-Adds all folders from a list to an in-memory PnP Provisioning Template
+Adds all folders from a list to an existing template and returns an in-memory PnP Provisioning Template
 
 ###Example 3
 ```powershell
