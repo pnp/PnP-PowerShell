@@ -626,7 +626,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                         //If root of web get subweb
                         if (serverRelativePath.Equals(webUrl, StringComparison.InvariantCultureIgnoreCase))
                         {
-                            var subWebs = ctx.Web.EnsureProperty(w => w.Webs.Include(sw => sw.RootFolder));
+                            var subWebs = ctx.Web.EnsureProperty(w => w.Webs.Include(sw => sw.RootFolder)).ToList();
                             folderAndFiles.AddRange(subWebs.Select(subWeb => subWeb.RootFolder));
                         }
                     }
