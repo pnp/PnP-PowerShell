@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -12,9 +13,12 @@ using PnPResources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Provider
 {
-    [CmdletProvider("SPO", ProviderCapabilities.ShouldProcess)]
+    [CmdletProvider(PSProviderName, ProviderCapabilities.ShouldProcess)]
     public class SPOProvider : NavigationCmdletProvider, IContentCmdletProvider
     {
+        //Constants
+        public const string PSProviderName = "SharePoint";
+
         //Private properties
         private const string Pattern = @"^[\\w\\d\\.\\s]*$";
         private const string PathSeparator = "/";

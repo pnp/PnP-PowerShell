@@ -7,6 +7,7 @@ using System.Security;
 using System.Linq;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
+using SharePointPnP.PowerShell.Commands.Provider;
 using File = System.IO.File;
 #if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
@@ -201,7 +202,7 @@ dir",
 
             if (CreateDrive && SPOnlineConnection.CurrentConnection.Context != null)
             {
-                var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals("SPO", StringComparison.InvariantCultureIgnoreCase));
+                var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
                 if (provider != null)
                 {
                     if (provider.Drives.Any(d => d.Name.Equals(DriveName, StringComparison.InvariantCultureIgnoreCase)))
