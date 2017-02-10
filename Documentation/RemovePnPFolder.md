@@ -13,8 +13,8 @@ Remove-PnPFolder -Name <String>
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Folder|String|True|The parent folder in the site|
-|Force|SwitchParameter|False||
 |Name|String|True|The folder name|
+|Force|SwitchParameter|False||
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

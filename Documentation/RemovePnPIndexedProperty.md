@@ -2,8 +2,8 @@
 Removes a key from propertybag to be indexed by search. The key and it's value remain in the propertybag, however it will not be indexed anymore.
 ##Syntax
 ```powershell
-Remove-PnPIndexedProperty [-Web <WebPipeBind>]
-                          -Key <String>
+Remove-PnPIndexedProperty -Key <String>
+                          [-Web <WebPipeBind>]
 ```
 
 

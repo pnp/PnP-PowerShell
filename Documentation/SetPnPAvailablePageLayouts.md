@@ -2,6 +2,12 @@
 Sets the available page layouts for the current site
 ##Syntax
 ```powershell
+Set-PnPAvailablePageLayouts -PageLayouts <String[]>
+                            [-Web <WebPipeBind>]
+```
+
+
+```powershell
 Set-PnPAvailablePageLayouts -AllowAllPageLayouts [<SwitchParameter>]
                             [-Web <WebPipeBind>]
 ```
@@ -9,12 +15,6 @@ Set-PnPAvailablePageLayouts -AllowAllPageLayouts [<SwitchParameter>]
 
 ```powershell
 Set-PnPAvailablePageLayouts -InheritPageLayouts [<SwitchParameter>]
-                            [-Web <WebPipeBind>]
-```
-
-
-```powershell
-Set-PnPAvailablePageLayouts -PageLayouts <String[]>
                             [-Web <WebPipeBind>]
 ```
 

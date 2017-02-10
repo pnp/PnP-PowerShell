@@ -12,10 +12,10 @@ Set-PnPUnifiedGroup -Identity <UnifiedGroupPipeBind>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Identity|UnifiedGroupPipeBind|True|The Identity of the Office 365 Group.|
 |Description|String|False|The Description of the group to set.|
 |DisplayName|String|False|The DisplayName of the group to set.|
 |GroupLogoPath|String|False|The path to the logo file of to set.|
-|Identity|UnifiedGroupPipeBind|True|The Identity of the Office 365 Group.|
 ##Examples
 
 ###Example 1

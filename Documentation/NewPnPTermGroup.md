@@ -2,10 +2,10 @@
 Creates a taxonomy term group
 ##Syntax
 ```powershell
-New-PnPTermGroup -GroupName <String>
-                 [-GroupId <Guid>]
+New-PnPTermGroup -Name <String>
+                 [-Id <Guid>]
                  [-Description <String>]
-                 [-TermStoreName <String>]
+                 [-TermStore <Id, Name or Object>]
 ```
 
 
@@ -15,10 +15,10 @@ New-PnPTermGroup -GroupName <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Name|String|True|Name of the taxonomy term group to create.|
 |Description|String|False|Description to use for the term group.|
-|GroupId|Guid|False|GUID to use for the term group; if not specified, or the empty GUID, a random GUID is generated and used.|
-|GroupName|String|True|Name of the taxonomy term group to create.|
-|TermStoreName|String|False|Term store to check; if not specified the default term store is used.|
+|Id|Guid|False|GUID to use for the term group; if not specified, or the empty GUID, a random GUID is generated and used.|
+|TermStore|Id, Name or Object|False|Term store to add the group to; if not specified the default term store is used.|
 ##Examples
 
 ###Example 1

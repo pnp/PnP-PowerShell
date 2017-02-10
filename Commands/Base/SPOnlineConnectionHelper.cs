@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 realm = GetRealmFromTargetUrl(url);
             }
 
-            PnPClientContext context = null;
+            PnPClientContext context;
             if (url.DnsSafeHost.Contains("spoppe.com"))
             {
                 context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: "windows-ppe.net", globalEndPointPrefix: "login"), retryCount, retryWait * 1000);
@@ -69,7 +69,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
 
 #if !ONPREMISES
-        internal static SPOnlineConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
+        internal static SPOnlineConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
 
@@ -78,7 +78,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             string configFile = Path.Combine(appDataFolder, "SharePointPnP.PowerShell\\tokencache.dat");
             FileTokenCache cache = new FileTokenCache(configFile);
 
-            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache), retryCount, retryWait * 10000);
+            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache, azureEnvironment), retryCount, retryWait * 10000);
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {
@@ -94,10 +94,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 
-        internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
+        internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificatePath, certificatePassword), retryCount, retryWait * 1000);
+            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificatePath, certificatePassword, azureEnvironment), retryCount, retryWait * 1000);
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {

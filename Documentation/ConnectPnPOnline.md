@@ -2,82 +2,84 @@
 Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets
 ##Syntax
 ```powershell
-Connect-PnPOnline -ClientId <String>
-                  -Tenant <String>
-                  -CertificatePath <String>
-                  -CertificatePassword <SecureString>
-                  [-MinimalHealthScore <Int32>]
-                  [-RetryCount <Int32>]
-                  [-RetryWait <Int32>]
-                  [-RequestTimeout <Int32>]
+Connect-PnPOnline -Url <String>
+                  [-Credentials <CredentialPipeBind>]
+                  [-CurrentCredentials [<SwitchParameter>]]
+                  [-UseAdfs [<SwitchParameter>]]
+                  [-AuthenticationMode <ClientAuthenticationMode>]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
-                  -Url <String>
 ```
 
 
 ```powershell
-Connect-PnPOnline [-Credentials <CredentialPipeBind>]
-                  [-CurrentCredentials [<SwitchParameter>]]
-                  [-UseAdfs [<SwitchParameter>]]
-                  [-AuthenticationMode <ClientAuthenticationMode>]
-                  [-MinimalHealthScore <Int32>]
-                  [-RetryCount <Int32>]
-                  [-RetryWait <Int32>]
-                  [-RequestTimeout <Int32>]
+Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
+                  -Url <String>
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
+```
+
+
+```powershell
+Connect-PnPOnline -AppId <String>
+                  -AppSecret <String>
                   -Url <String>
+                  [-Realm <String>]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-TenantAdminUrl <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
 ```
 
 
 ```powershell
 Connect-PnPOnline -ClientId <String>
                   -RedirectUri <String>
+                  -Url <String>
                   [-ClearTokenCache [<SwitchParameter>]]
-                  [-MinimalHealthScore <Int32>]
-                  [-RetryCount <Int32>]
-                  [-RetryWait <Int32>]
-                  [-RequestTimeout <Int32>]
+                  [-AzureEnvironment <AzureEnvironment>]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
-                  -Url <String>
 ```
 
 
 ```powershell
-Connect-PnPOnline [-Realm <String>]
-                  -AppId <String>
-                  -AppSecret <String>
-                  [-MinimalHealthScore <Int32>]
-                  [-RetryCount <Int32>]
-                  [-RetryWait <Int32>]
-                  [-RequestTimeout <Int32>]
+Connect-PnPOnline -ClientId <String>
+                  -Tenant <String>
+                  -CertificatePath <String>
+                  -CertificatePassword <SecureString>
+                  -AzureEnvironment <AzureEnvironment>
+                  -Url <String>
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
-                  -Url <String>
-```
-
-
-```powershell
-Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
-                  [-MinimalHealthScore <Int32>]
-                  [-RetryCount <Int32>]
-                  [-RetryWait <Int32>]
-                  [-RequestTimeout <Int32>]
-                  [-CreateDrive [<SwitchParameter>]]
-                  [-DriveName <String>]
-                  [-TenantAdminUrl <String>]
-                  [-SkipTenantAdminCheck [<SwitchParameter>]]
-                  -Url <String>
 ```
 
 
@@ -89,27 +91,28 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |AppId|String|True|The Application Client ID to use.|
 |AppSecret|String|True|The Application Client Secret to use.|
-|AuthenticationMode|ClientAuthenticationMode|False|Specify to use for instance use forms based authentication (FBA)|
 |CertificatePassword|SecureString|True|Password to the certificate (*.pfx)|
 |CertificatePath|String|True|Path to the certificate (*.pfx)|
-|ClearTokenCache|SwitchParameter|False|Clears the token cache.|
 |ClientId|String|True|The Client ID of the Azure AD Application|
+|RedirectUri|String|True|The Redirect URI of the Azure AD Application|
+|Tenant|String|True|The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com|
+|Url|String|True|The Url of the site collection to connect to.|
+|UseWebLogin|SwitchParameter|True|If you want to connect to SharePoint with browser based login|
+|AuthenticationMode|ClientAuthenticationMode|False|Specify to use for instance use forms based authentication (FBA)|
+|AzureEnvironment|AzureEnvironment|False|The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.|
+|ClearTokenCache|SwitchParameter|False|Clears the token cache.|
 |CreateDrive|SwitchParameter|False|If you want to create a PSDrive connected to the URL|
 |Credentials|CredentialPipeBind|False|Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.|
 |CurrentCredentials|SwitchParameter|False|If you want to connect with the current user credentials|
 |DriveName|String|False|Name of the PSDrive to create (default: SPO)|
-|MinimalHealthScore|Int32|False|Specifies a minimal server healthscore before any requests are executed.|
+|MinimalHealthScore|Int|False|Specifies a minimal server healthscore before any requests are executed.|
 |Realm|String|False|Authentication realm. If not specified will be resolved from the url specified.|
-|RedirectUri|String|True|The Redirect URI of the Azure AD Application|
-|RequestTimeout|Int32|False|The request timeout. Default is 180000|
-|RetryCount|Int32|False|Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.|
-|RetryWait|Int32|False|Defines how many seconds to wait before each retry. Default is 1 second.|
+|RequestTimeout|Int|False|The request timeout. Default is 180000|
+|RetryCount|Int|False|Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.|
+|RetryWait|Int|False|Defines how many seconds to wait before each retry. Default is 1 second.|
 |SkipTenantAdminCheck|SwitchParameter|False|Should we skip the check if this site is the Tenant admin site. Default is false|
-|Tenant|String|True|The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com|
 |TenantAdminUrl|String|False|The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.|
-|Url|String|True|The Url of the site collection to connect to.|
 |UseAdfs|SwitchParameter|False|If you want to connect to your on-premises SharePoint farm using ADFS|
-|UseWebLogin|SwitchParameter|True|If you want to connect to SharePoint with browser based login|
 ##Examples
 
 ###Example 1
@@ -155,3 +158,9 @@ This will prompt you for credentials and creates a context for the other PowerSh
 PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication
 ```
 This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)
+
+###Example 8
+```powershell
+PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -AppId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany
+```
+This will authenticate you to the German Azure environment using the German Azure endpoints for authentication

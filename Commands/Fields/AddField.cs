@@ -21,49 +21,41 @@ namespace SharePointPnP.PowerShell.Commands.Fields
 Remarks = @"This will add a field of type Multiple Choice to the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
     [CmdletAdditionalParameter(ParameterType = typeof(string[]),ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "ListPara")]
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "WebPara")]
-    public class AddField : SPOWebCmdlet, IDynamicParameters
+    public class AddField : PnPWebCmdlet, IDynamicParameters
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef")]
-        [Parameter(HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = true, ParameterSetName = "WebPara")]
-        [Parameter(HelpMessage = "The display name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The display name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "WebPara", HelpMessage = "The display name of the field")]
         public string DisplayName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = true, ParameterSetName = "WebPara")]
-        [Parameter(HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "WebPara", HelpMessage = "The internal name of the field")]
         public string InternalName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = true, ParameterSetName = "WebPara")]
-        [Parameter(HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
+        [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
+        [Parameter(Mandatory = true, ParameterSetName = "WebPara", HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
         public FieldType Type;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = false, ParameterSetName = "WebPara")]
-        [Parameter(HelpMessage = "The ID of the field, must be unique")]
+        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "The ID of the field, must be unique")]
+        [Parameter(Mandatory = false, ParameterSetName = "WebPara", HelpMessage = "The ID of the field, must be unique")]
         public GuidPipeBind Id = new GuidPipeBind();
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = false, ParameterSetName = "ListXML")]
-        [Parameter(HelpMessage = "Switch Parameter if this field must be added to the default view")]
+        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "Switch Parameter if this field must be added to the default view")]
+        [Parameter(Mandatory = false, ParameterSetName = "ListXML", HelpMessage = "Switch Parameter if this field must be added to the default view")]
         public SwitchParameter AddToDefaultView;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = false, ParameterSetName = "ListXML")]
-        [Parameter(HelpMessage = "Switch Parameter if the field is a required field")]
+        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "Switch Parameter if the field is a required field")]
+        [Parameter(Mandatory = false, ParameterSetName = "ListXML", HelpMessage = "Switch Parameter if the field is a required field")]
         public SwitchParameter Required;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara")]
-        [Parameter(Mandatory = false, ParameterSetName = "ListXML")]
-        [Parameter(HelpMessage = "The group name to where this field belongs to")]
+        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "The group name to where this field belongs to")]
+        [Parameter(Mandatory = false, ParameterSetName = "ListXML", HelpMessage = "The group name to where this field belongs to")]
         public string Group;
 
         [Parameter(Mandatory = false)]
@@ -79,6 +71,7 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
             }
             return null;
         }
+
         private ChoiceFieldDynamicParameters _context;
 
         protected override void ExecuteCmdlet()

@@ -3,6 +3,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
@@ -16,39 +17,49 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         (Code = @"PS:> New-PnPTermGroup -GroupName ""Countries""",
         Remarks = @"Creates a new taxonomy term group named ""Countries""",
         SortOrder = 1)]
-    public class NewTermGroup : SPOCmdlet
+    public class NewTermGroup : PnPCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, 
-            HelpMessage = "Name of the taxonomy term group to create.")]
-        public string GroupName;
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name of the taxonomy term group to create.")]
+        [Alias("GroupName")]
+        public string Name;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets,
-            HelpMessage = "GUID to use for the term group; if not specified, or the empty GUID, a random GUID is generated and used.")]
-        public Guid GroupId = default(Guid);
+        [Parameter(Mandatory = false, HelpMessage = "GUID to use for the term group; if not specified, or the empty GUID, a random GUID is generated and used.")]
+        [Alias("GroupId")]
+        public Guid Id = Guid.Empty;
 
-        [Parameter(Mandatory = false, 
-            HelpMessage = "Description to use for the term group.")]
+        [Parameter(Mandatory = false, HelpMessage = "Description to use for the term group.")]
         public string Description;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets,
-            HelpMessage = "Term store to check; if not specified the default term store is used.")]
-        public string TermStoreName;
+        [Parameter(Mandatory = false, HelpMessage = "Term store to add the group to; if not specified the default term store is used.")]
+        [Alias("TermStoreName")]
+        public GenericObjectNameIdPipeBind<TermStore> TermStore;
 
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
             var termStore = default(TermStore);
-            if (string.IsNullOrEmpty(TermStoreName))
+            if (TermStore != null)
             {
-                termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
+                if (TermStore.IdValue != Guid.Empty)
+                {
+                    termStore = taxonomySession.TermStores.GetById(TermStore.IdValue);
+                }
+                else if (!string.IsNullOrEmpty(TermStore.StringValue))
+                {
+                    termStore = taxonomySession.TermStores.GetByName(TermStore.StringValue);
+                }
+                else
+                {
+                    termStore = TermStore.Item;
+                }
             }
             else
             {
-                termStore = taxonomySession.TermStores.GetByName(TermStoreName);
+                termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
             }
             // Create Group
-            var group = termStore.CreateTermGroup(GroupName, GroupId, Description);
+            var group = termStore.CreateTermGroup(Name, Id, Description);
 
             WriteObject(group);
         }

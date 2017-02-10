@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Add", "PnPFileToProvisioningTemplate")]
     [CmdletAlias("Add-SPOFileToProvisioningTemplate")]
-    [CmdletHelp("Adds a file to an in-memory PnP Provisioning Template",
+    [CmdletHelp("Adds a file to a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
@@ -44,10 +44,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
-           // Load the template
+            if (!System.IO.Path.IsPathRooted(Path))
+            {
+                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+            }
+            // Load the template
             var template = LoadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
-                SessionState.Path.CurrentFileSystemLocation.Path,
                 TemplateProviderExtensions);
 
             if (template == null)
@@ -71,7 +74,8 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                     ((ICommitableFileConnector)template.Connector).Commit();
                 }
 
-                template.Files.Add(new OfficeDevPnP.Core.Framework.Provisioning.Model.File {
+                template.Files.Add(new OfficeDevPnP.Core.Framework.Provisioning.Model.File
+                {
                     Src = source,
                     Folder = Folder,
                     Overwrite = true,
@@ -79,17 +83,23 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
                 // Determine the output file name and path
                 var outFileName = System.IO.Path.GetFileName(Path);
-                var outPath = new System.IO.FileInfo(Path).DirectoryName;
+                var outPath = new FileInfo(Path).DirectoryName;
 
-                // Save the template back to the storage
                 var fileSystemConnector = new FileSystemConnector(outPath, "");
                 var formatter = XMLPnPSchemaFormatter.LatestFormatter;
+                var extension = new FileInfo(Path).Extension.ToLowerInvariant();
+                if (extension == ".pnp")
+                {
+                    XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(outPath, fileSystemConnector));
+                    var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
-                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-                      Path, fileSystemConnector);
-                var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
-
-                provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
+                    provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);
+                }
+                else
+                {
+                        XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(Path, "");
+                        provider.SaveAs(template, Path, formatter, TemplateProviderExtensions);
+                }
             }
         }
     }

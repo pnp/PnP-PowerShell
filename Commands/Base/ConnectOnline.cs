@@ -6,6 +6,7 @@ using System.Management.Automation;
 using System.Security;
 using System.Linq;
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core;
 using File = System.IO.File;
 #if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
@@ -48,18 +49,29 @@ dir",
         Code = @"PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication",
         Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)",
         SortOrder = 7)]
+    [CmdletExample(
+        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -AppId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany",
+        Remarks = @"This will authenticate you to the German Azure environment using the German Azure endpoints for authentication",
+        SortOrder = 8)]
     public class ConnectOnline : PSCmdlet
     {
+        private const string ParameterSet_MAIN = "Main";
+        private const string ParameterSet_TOKEN = "Token";
+        private const string ParameterSet_WEBLOGIN = "WebLogin";
+#if !ONPREMISES
+        private const string ParameterSet_NATIVEAAD = "NativeAAD";
+        private const string ParameterSet_APPONLYAAD = "AppOnlyAAD";
+#endif
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         public string Url;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Main", HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.")]
         public CredentialPipeBind Credentials;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Main", HelpMessage = "If you want to connect with the current user credentials")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect with the current user credentials")]
         public SwitchParameter CurrentCredentials;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Main", HelpMessage = "If you want to connect to your on-premises SharePoint farm using ADFS")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect to your on-premises SharePoint farm using ADFS")]
         public SwitchParameter UseAdfs;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
@@ -74,19 +86,19 @@ dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The request timeout. Default is 180000")]
         public int RequestTimeout = 1800000;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Token", HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
         public string Realm;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Token", HelpMessage = "The Application Client ID to use.")]
+        [Parameter(Mandatory = true, ParameterSetName =  ParameterSet_TOKEN, HelpMessage = "The Application Client ID to use.")]
         public string AppId;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Token", HelpMessage = "The Application Client Secret to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client Secret to use.")]
         public string AppSecret;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Weblogin", HelpMessage = "If you want to connect to SharePoint with browser based login")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to connect to SharePoint with browser based login")]
         public SwitchParameter UseWebLogin;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Main", HelpMessage = "Specify to use for instance use forms based authentication (FBA)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Specify to use for instance use forms based authentication (FBA)")]
         public ClientAuthenticationMode AuthenticationMode = ClientAuthenticationMode.Default;
 
         [Parameter(Mandatory = false, HelpMessage = "If you want to create a PSDrive connected to the URL")]
@@ -96,24 +108,28 @@ dir",
         public string DriveName = "SPO";
 
 #if !ONPREMISES
-        [Parameter(Mandatory = true, ParameterSetName = "NativeAAD", HelpMessage = "The Client ID of the Azure AD Application")]
-        [Parameter(Mandatory = true, ParameterSetName = "AppOnlyAAD", HelpMessage = "The Client ID of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Client ID of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Client ID of the Azure AD Application")]
         public string ClientId;
 
-        [Parameter(Mandatory = true, ParameterSetName = "NativeAAD", HelpMessage = "The Redirect URI of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Redirect URI of the Azure AD Application")]
         public string RedirectUri;
 
-        [Parameter(Mandatory = true, ParameterSetName = "AppOnlyAAD", HelpMessage = "The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com")]
         public string Tenant;
 
-        [Parameter(Mandatory = true, ParameterSetName = "AppOnlyAAD", HelpMessage = "Path to the certificate (*.pfx)")]
+        [Parameter(Mandatory = true, ParameterSetName =  ParameterSet_APPONLYAAD, HelpMessage = "Path to the certificate (*.pfx)")]
         public string CertificatePath;
 
-        [Parameter(Mandatory = true, ParameterSetName = "AppOnlyAAD", HelpMessage = "Password to the certificate (*.pfx)")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Password to the certificate (*.pfx)")]
         public SecureString CertificatePassword;
 
-        [Parameter(Mandatory = false, ParameterSetName = "NativeAAD", HelpMessage = "Clears the token cache.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Clears the token cache.")]
         public SwitchParameter ClearTokenCache;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage= "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
+        public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 #endif
         [Parameter(Mandatory = false, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
         public string TenantAdminUrl;
@@ -130,7 +146,7 @@ dir",
                 creds = Credentials.Credential;
             }
 
-            if (ParameterSetName == "Token")
+            if (ParameterSetName == ParameterSet_TOKEN)
             {
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
             }
@@ -147,11 +163,11 @@ dir",
                         creds = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
                     }
                 }
-                
+
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
             }
 #if !ONPREMISES
-            else if (ParameterSetName == "NativeAAD")
+            else if (ParameterSetName == ParameterSet_NATIVEAAD)
             {
                 if (ClearTokenCache)
                 {
@@ -162,11 +178,11 @@ dir",
                         File.Delete(configFile);
                     }
                 }
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADNativeApplicationConnection(new Uri(Url), ClientId, new Uri(RedirectUri), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADNativeApplicationConnection(new Uri(Url), ClientId, new Uri(RedirectUri), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
             }
-            else if (ParameterSetName == "AppOnlyAAD")
+            else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
             }
 #endif
             else
@@ -211,14 +227,14 @@ dir",
             if (creds == null)
             {
                 // Try to get the credentials by splitting up the path
-                var pathString = string.Format("{0}://{1}", connectionUri.Scheme, connectionUri.IsDefaultPort ? connectionUri.Host : string.Format("{0}:{1}", connectionUri.Host, connectionUri.Port));
+                var pathString = $"{connectionUri.Scheme}://{(connectionUri.IsDefaultPort ? connectionUri.Host : $"{connectionUri.Host}:{connectionUri.Port}")}";
                 var path = connectionUri.AbsolutePath;
                 while (path.IndexOf('/') != -1)
                 {
                     path = path.Substring(0, path.LastIndexOf('/'));
                     if (!string.IsNullOrEmpty(path))
                     {
-                        var pathUrl = string.Format("{0}{1}", pathString, path);
+                        var pathUrl = $"{pathString}{path}";
                         creds = Utilities.CredentialManager.GetCredential(pathUrl);
                         if (creds != null)
                         {

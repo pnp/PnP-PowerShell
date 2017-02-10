@@ -18,12 +18,12 @@ Parameter|Type|Required|Description
 
 ###Example 1
 ```powershell
-PS:> Move-PnPFolder -Folder Documents/Reports -TargetLocation 'Archived Reports'
+PS:> Move-PnPFolder -Folder Documents/Reports -TargetFolder 'Archived Reports'
 ```
 This will move the folder Reports in the Documents library to the 'Archived Reports' library
 
 ###Example 2
 ```powershell
-PS:> Move-PnPFolder -Folder 'Shared Documents/Reports/2016/Templates' -TargetLocation 'Shared Documents/Reports'
+PS:> Move-PnPFolder -Folder 'Shared Documents/Reports/2016/Templates' -TargetFolder 'Shared Documents/Reports'
 ```
 This will move the folder Templates to the new location in 'Shared Documents/Reports'

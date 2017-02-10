@@ -2,9 +2,10 @@
 Returns one or all views from a list
 ##Syntax
 ```powershell
-Get-PnPView [-Identity <ViewPipeBind>]
+Get-PnPView -List <ListPipeBind>
+            [-Identity <ViewPipeBind>]
             [-Web <WebPipeBind>]
-            -List <ListPipeBind>
+            [-Includes <String[]>]
 ```
 
 
@@ -14,8 +15,9 @@ Get-PnPView [-Identity <ViewPipeBind>]
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|ViewPipeBind|False|The ID or name of the view|
 |List|ListPipeBind|True|The ID or Url of the list.|
+|Identity|ViewPipeBind|False|The ID or name of the view|
+|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

@@ -2,9 +2,9 @@
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
+using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
-using OfficeDevPnP.Core.Entities;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 
@@ -33,7 +33,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
     [CmdletRelatedLink(
         Text = "Creating on-premises site collections using CSOM",
         Url = "http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx")]
-    public class NewTenantSite : SPOAdminCmdlet
+    public class NewTenantSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the title of the new site collection")]
         public string Title;

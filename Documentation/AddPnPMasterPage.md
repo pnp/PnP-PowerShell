@@ -18,11 +18,11 @@ Add-PnPMasterPage -SourceFilePath <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|DefaultCssFile|String|False|Default CSS file for the MasterPage, this Url is SiteRelative|
 |Description|String|True|Description for the Masterpage|
-|DestinationFolderHierarchy|String|False|Folder hierarchy where the MasterPage will be deployed|
 |SourceFilePath|String|True|Path to the file which will be uploaded|
 |Title|String|True|Title for the Masterpage|
+|DefaultCssFile|String|False|Default CSS file for the MasterPage, this Url is SiteRelative|
+|DestinationFolderHierarchy|String|False|Folder hierarchy where the MasterPage will be deployed|
 |UIVersion|String|False|UIVersion of the Masterpage. Default = 15|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples

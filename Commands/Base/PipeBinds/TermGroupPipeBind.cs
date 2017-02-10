@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
+    [CmdletPipeline(Description = "Id, Title or TermGroup")]
     public sealed class TermGroupPipeBind
     {
         private readonly Guid _id = Guid.Empty;
@@ -34,17 +36,8 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             _id = termGroup.Id;
         }
 
-        public Guid Id
-        {
-            get { return _id; }
-        }
+        public Guid Id => _id;
 
-        public string Name
-        {
-            get { return _name; }
-        }
-
-       
-
+        public string Name => _name;
     }
 }

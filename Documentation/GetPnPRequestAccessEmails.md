@@ -7,7 +7,7 @@ Get-PnPRequestAccessEmails [-Web <WebPipeBind>]
 
 
 ##Returns
->System.Collections.Generic.List`1[System.String]
+>List<System.String>
 
 ##Parameters
 Parameter|Type|Required|Description

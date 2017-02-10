@@ -35,23 +35,22 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
+            if (System.IO.Path.IsPathRooted(Path))
+            {
+                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path);
+            }
             WriteObject(LoadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path, 
-                SessionState.Path.CurrentFileSystemLocation.Path, 
                 TemplateProviderExtensions));
         }
 
-        internal static ProvisioningTemplate LoadProvisioningTemplateFromFile(String templatePath, String sessionPath, ITemplateProviderExtension[] templateProviderExtensions)
+        internal static ProvisioningTemplate LoadProvisioningTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions)
         {
             // Prepare the File Connector
             FileConnectorBase fileConnector;
             string templateFileName = System.IO.Path.GetFileName(templatePath);
 
             // Prepare the template path
-            if (!System.IO.Path.IsPathRooted(templatePath))
-            {
-                templatePath = System.IO.Path.Combine(sessionPath, templatePath);
-            }
             var fileInfo = new FileInfo(templatePath);
             fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
 

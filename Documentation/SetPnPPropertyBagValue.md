@@ -5,7 +5,6 @@ Sets a property bag value
 Set-PnPPropertyBagValue -Key <String>
                         -Value <String>
                         [-Folder <String>]
-                        -Value <String>
                         [-Web <WebPipeBind>]
 ```
 
@@ -14,7 +13,6 @@ Set-PnPPropertyBagValue -Key <String>
 Set-PnPPropertyBagValue -Key <String>
                         -Value <String>
                         -Indexed [<SwitchParameter>]
-                        -Value <String>
                         [-Web <WebPipeBind>]
 ```
 
@@ -22,10 +20,10 @@ Set-PnPPropertyBagValue -Key <String>
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Folder|String|False|Site relative url of the folder. See examples for use.|
 |Indexed|SwitchParameter|True||
 |Key|String|True||
 |Value|String|True||
+|Folder|String|False|Site relative url of the folder. See examples for use.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

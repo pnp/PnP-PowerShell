@@ -1,5 +1,5 @@
 #Remove-PnPFileFromProvisioningTemplate
-Removes a file from an in-memory PnP Provisioning Template
+Removes a file from a PnP Provisioning Template
 ##Syntax
 ```powershell
 Remove-PnPFileFromProvisioningTemplate -Path <String>

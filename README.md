@@ -3,6 +3,8 @@
 ### Summary ###
 This solution contains a library of PowerShell commands that allows you to perform complex provisioning and artifact management actions towards SharePoint. The commands use CSOM and can work against both SharePoint Online as SharePoint On-Premises.
 
+![SharePoint Patterns and Practices](https://devofficecdn.azureedge.net/media/Default/PnP/sppnp.png)
+
 ### Applies to ###
 -  Office 365 Multi Tenant (MT)
 -  Office 365 Dedicated (D)
@@ -15,7 +17,7 @@ In order to generate the Cmdlet help you need to have the Windows Management Fra
 ### Solution ###
 Solution | Author(s)
 ---------|----------
-SharePointPnP.PowerShell | Erwin van Hunen
+SharePointPnP.PowerShell | Erwin van Hunen and countless number of community contributors
 
 ### Disclaimer ###
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
@@ -111,6 +113,6 @@ See this [wiki page](https://github.com/OfficeDev/PnP-PowerShell/wiki/How-to-use
 
 # CONTRIBUTING #
 
-If you want to contribute to this OfficeDevPnP PowerShel library, please [proceed here](CONTRIBUTING.md)
+If you want to contribute to this SharePoint Patterns and Practices PowerShel library, please [proceed here](CONTRIBUTING.md)
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

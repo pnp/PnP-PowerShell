@@ -10,14 +10,14 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletHelp("Move a folder to another location in the current web",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
-        Code = @"PS:> Move-PnPFolder -Folder Documents/Reports -TargetLocation 'Archived Reports'",
+        Code = @"PS:> Move-PnPFolder -Folder Documents/Reports -TargetFolder 'Archived Reports'",
         Remarks = "This will move the folder Reports in the Documents library to the 'Archived Reports' library",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Move-PnPFolder -Folder 'Shared Documents/Reports/2016/Templates' -TargetLocation 'Shared Documents/Reports'",
+        Code = @"PS:> Move-PnPFolder -Folder 'Shared Documents/Reports/2016/Templates' -TargetFolder 'Shared Documents/Reports'",
         Remarks = "This will move the folder Templates to the new location in 'Shared Documents/Reports'",
         SortOrder = 2)]
-    public class MoveFolder : SPOWebCmdlet
+    public class MoveFolder : PnPWebCmdlet
     {
 
         [Parameter(Mandatory = true, HelpMessage = "The folder to move")]

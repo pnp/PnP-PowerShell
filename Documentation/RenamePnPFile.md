@@ -2,31 +2,31 @@
 Renames a file in its current location
 ##Syntax
 ```powershell
-Rename-PnPFile [-OverwriteIfAlreadyExists [<SwitchParameter>]]
+Rename-PnPFile -ServerRelativeUrl <String>
+               -TargetFileName <String>
+               [-OverwriteIfAlreadyExists [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
-               -ServerRelativeUrl <String>
-               -TargetFileName <String>
 ```
 
 
 ```powershell
-Rename-PnPFile [-OverwriteIfAlreadyExists [<SwitchParameter>]]
+Rename-PnPFile -SiteRelativeUrl <String>
+               -TargetFileName <String>
+               [-OverwriteIfAlreadyExists [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
-               -SiteRelativeUrl <String>
-               -TargetFileName <String>
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Force|SwitchParameter|False|If provided, no confirmation will be requested and the action will be performed|
-|OverwriteIfAlreadyExists|SwitchParameter|False|If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.|
 |ServerRelativeUrl|String|True|Server relative Url specifying the file to rename. Must include the file name.|
 |SiteRelativeUrl|String|True|Site relative Url specifying the file to rename. Must include the file name.|
 |TargetFileName|String|True|File name to rename the file to. Should only be the file name and not include the path to its location. Use Move-PnPFile to move the file to another location.|
+|Force|SwitchParameter|False|If provided, no confirmation will be requested and the action will be performed|
+|OverwriteIfAlreadyExists|SwitchParameter|False|If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

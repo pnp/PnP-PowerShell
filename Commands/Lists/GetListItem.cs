@@ -39,7 +39,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000",
         Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items. This parameter is ignored if the Query parameter is specified.",
         SortOrder = 6)]
-    public class GetListItem : SPOWebCmdlet
+    [CmdletExample(
+        Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { $args.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }",
+        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item.",
+        SortOrder = 7)]
+    public class GetListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
@@ -54,12 +58,15 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         public string Query;
 
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "AllItems")]
-        [Parameter(Mandatory = false, HelpMessage = "TThe fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ById")]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ById")]
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ByUniqueId")]
         public string[] Fields;
 
         [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = "AllItems")]
         public int PageSize = -1;
+
+        [Parameter(Mandatory = false, HelpMessage = "The script block to run after every page request.", ParameterSetName = "AllItems")]
+        public ScriptBlock ScriptBlock = null;
 
         protected override void ExecuteCmdlet()
         {
@@ -95,7 +102,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     }
                     viewFieldsStringBuilder.Append("</ViewFields>");
                 }
-                query.ViewXml = string.Format("<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{0}</Value></Eq></Where></Query>{1}</View>", UniqueId.Id, viewFieldsStringBuilder);
+                query.ViewXml = $"<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>{UniqueId.Id}</Value></Eq></Where></Query>{viewFieldsStringBuilder}</View>";
                 var listItem = list.GetItems(query);
                 ClientContext.Load(listItem);
                 ClientContext.ExecuteQueryRetry();
@@ -162,7 +169,13 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     var listItems = list.GetItems(query);
                     ClientContext.Load(listItems);
                     ClientContext.ExecuteQueryRetry();
+
                     WriteObject(listItems, true);
+
+                    if (ScriptBlock != null)
+                    {
+                        ScriptBlock.Invoke(listItems);
+                    }
 
                     query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
                 } while (query.ListItemCollectionPosition != null);

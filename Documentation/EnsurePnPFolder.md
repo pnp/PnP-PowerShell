@@ -2,8 +2,9 @@
 Returns a folder from a given site relative path, and will create it if it does not exist.
 ##Syntax
 ```powershell
-Ensure-PnPFolder [-Web <WebPipeBind>]
-                 -SiteRelativePath <String>
+Ensure-PnPFolder -SiteRelativePath <String>
+                 [-Web <WebPipeBind>]
+                 [-Includes <String[]>]
 ```
 
 
@@ -17,6 +18,7 @@ If you do not want the folder to be created, for instance just to test if a fold
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |SiteRelativePath|String|True|Site Relative Folder Path|
+|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
 

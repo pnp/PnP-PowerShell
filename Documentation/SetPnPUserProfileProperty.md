@@ -5,14 +5,14 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
 
 ##Syntax
 ```powershell
-Set-PnPUserProfileProperty -Values <String[]>
+Set-PnPUserProfileProperty -Value <String>
                            -Account <String>
                            -PropertyName <String>
 ```
 
 
 ```powershell
-Set-PnPUserProfileProperty -Value <String>
+Set-PnPUserProfileProperty -Values <String[]>
                            -Account <String>
                            -PropertyName <String>
 ```
