@@ -241,7 +241,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 //Restore item cache timeout
                 spoDrive.ItemTimeout = orginalItemTimeout;
 
-                //Itterate subfolders
+                //Iterate sub folders
                 if (recurse)
                 {
                     folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => GetChildItems(subFolder.ServerRelativeUrl, true));
@@ -673,7 +673,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     {
                         var webUrl = GetServerRelativePath(IsPropertyAvailable(ctx.Web, "ServerRelativeUrl") ? ctx.Web.ServerRelativeUrl : ctx.Web.EnsureProperty(w => w.ServerRelativeUrl));
 
-                        //If root of web get subweb
+                        //If root of web get sub-sites
                         if (serverRelativePath.Equals(webUrl, StringComparison.InvariantCultureIgnoreCase))
                         {
                             var subWebs = ctx.Web.EnsureProperty(w => w.Webs.Include(sw => sw.RootFolder)).ToList();
@@ -681,7 +681,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                         }
                     }
 
-                    //If large document library use caml query
+                    //If large document library use CamlQuery
                     folder.EnsureProperty(p => p.ItemCount);
                     if (folder.ItemCount > 5000)
                     {
@@ -807,7 +807,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             };
         }
 
-        //Copymove helper
+        //CopyMove helper
         private void CopyMoveImplementation(string sourcePath, string targetPath, bool recurse = false, bool isCopyOperation = true, bool reCreateSourceFolder = true)
         {
             var sourceUrl = GetServerRelativePath(sourcePath);
