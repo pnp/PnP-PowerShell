@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Provider.Parameters;
 using File = Microsoft.SharePoint.Client.File;
 using PnPResources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 

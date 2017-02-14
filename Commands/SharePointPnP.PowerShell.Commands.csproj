@@ -455,7 +455,9 @@
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
-    <Compile Include="Provider\SPOChildItemsParameters.cs" />
+    <Compile Include="Provider\Parameters\SPOChildItemsParameters.cs" />
+    <Compile Include="Provider\Parameters\SPOContentParameters.cs" />
+    <Compile Include="Provider\Parameters\SPODriveParameters.cs" />
     <Compile Include="Provisioning\AddListFoldersToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\AddDataRowsToProvisioningTemplate.cs" />
     <Compile Include="InformationManagement\ClosureState.cs" />
@@ -536,12 +538,10 @@
     <Compile Include="Principals\GetGroupPermissions.cs" />
     <Compile Include="Principals\RemoveGroup.cs" />
     <Compile Include="Principals\SetGroup.cs" />
-    <Compile Include="Provider\SPOContentParameters.cs" />
     <Compile Include="Provider\SPOContentReaderWriter.cs" />
     <Compile Include="Provider\SPODriveCacheWeb.cs" />
     <Compile Include="Provider\SPODriveCacheItem.cs" />
     <Compile Include="Provider\SPODriveInfo.cs" />
-    <Compile Include="Provider\SPODriveParameters.cs" />
     <Compile Include="Provider\SPOProvider.cs" />
     <Compile Include="Publishing\AddMasterPage.cs" />
     <Compile Include="Publishing\RemovePublishingImageRendition.cs" />
