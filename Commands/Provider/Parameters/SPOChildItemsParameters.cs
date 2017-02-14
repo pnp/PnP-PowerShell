@@ -1,7 +1,6 @@
 using System.Management.Automation;
-using System.Security.Cryptography.Pkcs;
 
-namespace SharePointPnP.PowerShell.Commands.Provider
+namespace SharePointPnP.PowerShell.Commands.Provider.Parameters
 {
     public class SPOChildItemsParameters
     {
