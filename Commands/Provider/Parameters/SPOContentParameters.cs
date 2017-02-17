@@ -1,6 +1,6 @@
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provider
+namespace SharePointPnP.PowerShell.Commands.Provider.Parameters
 {
     public class SPOContentParameters
     {

@@ -4,17 +4,22 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Provider.Parameters;
 using File = Microsoft.SharePoint.Client.File;
 using PnPResources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Provider
 {
-    [CmdletProvider("SPO", ProviderCapabilities.ShouldProcess)]
+    [CmdletProvider(PSProviderName, ProviderCapabilities.ShouldProcess)]
     public class SPOProvider : NavigationCmdletProvider, IContentCmdletProvider
     {
+        //Constants
+        public const string PSProviderName = "SharePoint";
+
         //Private properties
         private const string Pattern = @"^[\\w\\d\\.\\s]*$";
         private const string PathSeparator = "/";
@@ -37,19 +42,19 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var spoParametes = DynamicParameters as SPODriveParameters;
             Web web = null;
 
-            if (spoParametes != null && spoParametes.Context != null)
+            if (spoParametes?.Context != null)
             {
                 var webUrl = spoParametes.Url ?? spoParametes.Context.Url;
                 web = spoParametes.Context.Clone(webUrl).Web;
             }
-            else if (spoParametes != null && spoParametes.Web != null)
+            else if (spoParametes?.Web != null)
             {
                 var webUrl = spoParametes.Url ?? spoParametes.Web.EnsureProperty(w => w.Url);
                 web = spoParametes.Web.Context.Clone(webUrl).Web;
             }
             else if (SPOnlineConnection.CurrentConnection != null)
             {
-                var webUrl = (spoParametes != null && spoParametes.Url != null) ? spoParametes.Url : SPOnlineConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
+                var webUrl = spoParametes?.Url ?? SPOnlineConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
                 web = SPOnlineConnection.CurrentConnection.Context.Clone(webUrl).Web;
             }
             else
@@ -215,11 +220,28 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (folder != null)
             {
 
-                var serverRelativePath = GetServerRelativePath(path);
-                var folderAndFiles = GetFolderItems(folder).ToArray();
+                //Get current spo-drive
+                var spoDrive = GetCurrentDrive(path);
+                if (spoDrive == null) return;
 
+                //Save original timeout
+                var orginalItemTimeout = spoDrive.ItemTimeout;
+
+                //Set timeout temporary to 5 minutes
+                spoDrive.ItemTimeout = 1000 * 60 * 5;
+
+                //Get data
+                var spoParameters = DynamicParameters as SPOChildItemsParameters;
+                var folderAndFiles = spoParameters != null && spoParameters.Limit != SPOChildItemsParameters.Limits.Default ? GetFolderItems(folder, false, (int)spoParameters.Limit).ToArray() : GetFolderItems(folder).ToArray();
+
+                //Output result
                 folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => WriteItemObject(subFolder, subFolder.ServerRelativeUrl, true));
                 folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, file.ServerRelativeUrl, false));
+
+                //Restore item cache timeout
+                spoDrive.ItemTimeout = orginalItemTimeout;
+
+                //Iterate sub folders
                 if (recurse)
                 {
                     folderAndFiles.OfType<Folder>().ToList().ForEach(subFolder => GetChildItems(subFolder.ServerRelativeUrl, true));
@@ -231,6 +253,11 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             }
         }
 
+        protected override object GetChildItemsDynamicParameters(string path, bool recurse)
+        {
+            return new SPOChildItemsParameters();
+        }
+
         protected override void GetChildNames(string path, ReturnContainers returnContainers)
         {
             WriteVerbose($"SPOProvider::GetChildNames (Path = ’{path}’)");
@@ -238,8 +265,22 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var folder = GetFileOrFolder(path) as Folder;
             if (folder != null)
             {
-                var folderAndFiles = GetFolderItems(folder).ToArray();
+
+                //Get current spo-drive
+                var spoDrive = GetCurrentDrive(path);
+                if (spoDrive == null) return;
+
+                //Save original timeout
+                var orginalItemTimeout = spoDrive.ItemTimeout;
+
+                //Set timeout temporary to 5 minutes
+                spoDrive.ItemTimeout = 1000 * 60 * 5;
+
+                //Get data
+                var spoParameters = DynamicParameters as SPOChildItemsParameters;
+                var folderAndFiles = spoParameters != null && spoParameters.Limit != SPOChildItemsParameters.Limits.Default ? GetFolderItems(folder, false, (int)spoParameters.Limit).ToArray() : GetFolderItems(folder).ToArray();
                 var serverRelaitivePath = GetServerRelativePath(path);
+
                 foreach (var subFolder in folderAndFiles.OfType<Folder>().ToList())
                 {
                     string name;
@@ -254,15 +295,24 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     }
                     WriteItemObject(name, serverRelaitivePath, true);
                 }
+
                 foreach (var file in folderAndFiles.OfType<File>().ToList())
                 {
                     WriteItemObject(file.Name, serverRelaitivePath, false);
                 }
+
+                //Restore item cache timeout
+                spoDrive.ItemTimeout = orginalItemTimeout;
             }
             else
             {
                 WriteErrorInternal("No folder at end of path", path, ErrorCategory.InvalidOperation);
             }
+        }
+
+        protected override object GetChildNamesDynamicParameters(string path)
+        {
+            return new SPOChildItemsParameters();
         }
 
         //Set
@@ -389,7 +439,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 {
                     WriteErrorInternal("Only File or Folder (Directory) supported for Type", path, ErrorCategory.InvalidArgument);
                 }
-                
+
             }
         }
 
@@ -604,7 +654,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             return null;
         }
 
-        private IEnumerable<object> GetFolderItems(Folder folder, bool throwError = false)
+        private IEnumerable<object> GetFolderItems(Folder folder, bool throwError = false, int? limit = null)
         {
             var folderAndFiles = new List<object>();
             try
@@ -623,22 +673,38 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     {
                         var webUrl = GetServerRelativePath(IsPropertyAvailable(ctx.Web, "ServerRelativeUrl") ? ctx.Web.ServerRelativeUrl : ctx.Web.EnsureProperty(w => w.ServerRelativeUrl));
 
-                        //If root of web get subweb
+                        //If root of web get sub-sites
                         if (serverRelativePath.Equals(webUrl, StringComparison.InvariantCultureIgnoreCase))
                         {
-                            var subWebs = ctx.Web.EnsureProperty(w => w.Webs.Include(sw => sw.RootFolder));
+                            var subWebs = ctx.Web.EnsureProperty(w => w.Webs.Include(sw => sw.RootFolder)).ToList();
                             folderAndFiles.AddRange(subWebs.Select(subWeb => subWeb.RootFolder));
                         }
                     }
 
-                    //Get files and folders
-                    var files = folder.Context.LoadQuery(folder.Files).OrderBy(f => f.Name);
-                    var folders = folder.Context.LoadQuery(folder.Folders).OrderBy(f => f.Name);
-                    folder.Context.ExecuteQueryRetry();
+                    //If large document library use CamlQuery
+                    folder.EnsureProperty(p => p.ItemCount);
+                    if (folder.ItemCount > 5000)
+                    {
+                        if (!limit.HasValue)
+                        {
+                            WriteWarning("Large document library! Only displaying the 100 first items. Use Get-ChildItems -Limit <int>|All");
+                        }
+                        WriteWarning("Large document library! Template folder and files will not be shown.");
 
-                    //Merge
-                    folderAndFiles.AddRange(folders);
-                    folderAndFiles.AddRange(files);
+                        folderAndFiles.AddRange(limit.HasValue ? GetListItems(folder, limit.Value) : GetListItems(folder));
+                    }
+                    else
+                    {
+                        //Get files and folders
+                        var files = folder.Context.LoadQuery(folder.Files.Include(f => f.Name, f => f.ServerRelativeUrl, f => f.TimeLastModified, f => f.Length)).OrderBy(f => f.Name);
+                        var folders = folder.Context.LoadQuery(folder.Folders.Include(f => f.Name, f => f.ItemCount, f => f.TimeLastModified, f=>f.ServerRelativeUrl)).OrderBy(f => f.Name);
+
+                        folder.Context.ExecuteQueryRetry();
+
+                        //Merge
+                        folderAndFiles.AddRange(folders);
+                        folderAndFiles.AddRange(files);
+                    }
 
                     //Cache the result
                     SetCachedChildItems(serverRelativePath, folderAndFiles);
@@ -651,6 +717,40 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     WriteErrorInternal(e.Message, "GetFolderItems", exception: e);
                 }
             }
+            return limit.HasValue && limit > 0 ? folderAndFiles.Take(limit.Value) : folderAndFiles;
+        }
+
+        private IEnumerable<object> GetListItems(Folder folder, long limit = 100)
+        {
+            var list = ((ClientContext)folder.Context).Web.GetListByUrl(folder.ServerRelativeUrl);
+            var folderAndFiles = new List<object>();
+            limit = limit < 1 ? folder.ItemCount : limit;
+            var rowLimit = limit > 5000 ? 5000 : limit;
+
+            var query = new CamlQuery();
+            query.FolderServerRelativeUrl = folder.ServerRelativeUrl;
+
+            query.ViewXml = $@"
+                <View Scope=''>
+                    <Query>
+                        <OrderBy><FieldRef Name='FileRef' Ascending='true'/></OrderBy>
+                    </Query>
+                    <RowLimit>{rowLimit}</RowLimit>
+                </View>";
+
+            do
+            {
+                var listItems = list.GetItems(query);
+                folder.Context.Load(listItems, items => items.ListItemCollectionPosition, items => items.Include(i => i.File, i => i.Folder, i => i.FileSystemObjectType));
+                folder.Context.ExecuteQueryRetry();
+
+                folderAndFiles.AddRange(listItems.Where(i => i.FileSystemObjectType == FileSystemObjectType.Folder).Select(f => f.Folder));
+                folderAndFiles.AddRange(listItems.Where(i => i.FileSystemObjectType == FileSystemObjectType.File).Select(f => f.File));
+
+                query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+            }
+            while (query.ListItemCollectionPosition != null && folderAndFiles.Count < limit);
+
             return folderAndFiles;
         }
 
@@ -701,13 +801,13 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             ctx.ExecutingWebRequest += (sender, args) =>
             {
                 var psVariable = SessionState.PSVariable.Get("WebRequestCounter");
-                var counter = (int?) psVariable?.Value ?? 0;
+                var counter = (int?)psVariable?.Value ?? 0;
                 counter++;
                 SessionState.PSVariable.Set("WebRequestCounter", counter);
             };
         }
 
-        //Copymove helper
+        //CopyMove helper
         private void CopyMoveImplementation(string sourcePath, string targetPath, bool recurse = false, bool isCopyOperation = true, bool reCreateSourceFolder = true)
         {
             var sourceUrl = GetServerRelativePath(sourcePath);
