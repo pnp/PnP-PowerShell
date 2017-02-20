@@ -131,10 +131,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                         var value = values[key];
                                         if (value.GetType().IsArray)
                                         {
-                                            foreach (var arrayItem in value as object[])
+                                            foreach (var arrayItem in (value as IEnumerable))
                                             {
                                                 int userId;
-                                                if (!int.TryParse(arrayItem as string, out userId))
+                                                if (!int.TryParse(arrayItem.ToString(), out userId))
                                                 {
                                                     var user = SelectedWeb.EnsureUser(arrayItem as string);
                                                     ClientContext.Load(user);
