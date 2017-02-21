@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace SharePointPnP.PowerShell.ModuleFilesGenerator
@@ -331,7 +333,9 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             var docBuilder = new StringBuilder();
 
             // read base file from disk
-            string baseLandingPage = System.IO.File.ReadAllText("landingpage.md");
+            var assemblyPath = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
+
+            string baseLandingPage = System.IO.File.ReadAllText(Path.Combine(assemblyPath, "landingpage.md"));
 
             // Get all unique categories
             var categories = _cmdlets.Where(c => !string.IsNullOrEmpty(c.Category)).Select(c => c.Category).Distinct();
