@@ -6,49 +6,40 @@ SharePoint Patterns and Practices (PnP) contains a library of PowerShell command
 
 _**Applies to:** SharePoint Online | SharePoint 2016 | SharePoint 2013_
 
+## Installation #
 
-## INSTALLATION #
+There are 3 ways to install the cmdlets. We recommend, where possible, to install them from the [PowerShell Gallery](https://www.powershellgallery.com). Alternatively you can download the setup files or run a PowerShell script to download the PowerShellGet module and install the cmdlets subsequently.
+
+### PowerShell Gallery ###
+If you main OS is Windows 10, of if you have [PowerShellGet](https://github.com/powershell/powershellget) installed, you can run the following commands to install the PowerShell cmdlets:
+
+|**SharePoint Version**|**Command to install**|
+|------------------|------------------|
+|SharePoint Online|```Install-Module SharePointPnPPowerShellOnline ```|
+|SharePoint 2016|```Install-Module SharePointPnPPowerShell2016```|
+|SharePoint 2013|```Install-Module SharePointPnPPowerShell2013```|
+
+*Notice*: if you install the latest PowerShellGet from Github, you might receive an error message stating 
+>PackageManagement\Install-Package : The version 'x.x.x.x' of the module 'SharePointPnPPowerShellOnline' being installed is not catalog signed.
+
+In order to install the cmdlets when you get this error specify the -SkipPublisherCheck switch with the Install-Module cmdlet, e.g. ```Install-Module SharePointPnPPowerShellOnline -SkipPublisherCheck -AllowClobber```
 
 ### Setup files ##
-You can download setup files from https://github.com/officedev/pnp-powershell/releases. These files will up be updated on a monthly basis.
+You can download setup files from the [releases](https://github.com/officedev/pnp-powershell/releases) section of the PnP PowerShell repository. These files will up be updated on a monthly basis. Run the install and restart any open instances of PowerShell to use the cmdlets.
 
-### Using the Windows Management Framework ##
+### Installation script ##
+This is an alternative for installation on machines that have at least PowerShell v3 installed. You can find the version of PowerShell  by opening PowerShell and running ```$PSVersionTable.PSVersion```. The value for ```Major``` should be above 3.
 
-If you main OS is Windows 10, you can run the following commands to install the PowerShell cmdlets:
-
-_SharePoint Online_
-```powershell
-Install-Module SharePointPnPPowerShellOnline -AllowClobber
-```
-
-_SharePoint 2016_
-```powershell
-Install-Module SharePointPnPPowerShell2016 -AllowClobber
-```
-
-_SharePoint 2013_
-```powershell
-Install-Module SharePointPnPPowerShell2013 -AllowClobber
-```
-
-*Notice*: if you installed the latest PowerShellGet from Github, you might receive an error message stating 
->PackageManagement\Install-Package : The version '2.8.x.x' of the module 'SharePointPnPPowerShellOnline' being installed is not catalog signed.
-
-In order to install the cmdlets when you get this error specify the -SkipPublisherCheck switch with the Install-Module cmdlet, e.g. ```Install-Module SharePointPnPPowerShellOnline -SkipPublisherCheck -AllowClobber
-
-Alternatively for installation on machines that have at least PowerShell v3 installed (you can find this out by opening PowerShell and running ```$PSVersionTable.PSVersion```. The value for ```Major``` should be above 3) you can run the below command which will install PowerShell Package Management and then install the PowerShell Modules from the PowerShell Gallery
+To install the cmdlets you can run the below command which will install PowerShell Package Management and then install the PowerShell Modules from the PowerShell Gallery.
 
 ```powershell
 Invoke-Expression (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-SharePointPnPPowerShell.ps1')
 ```
 
-If you wish to see the commands that the above will run please see the files as stored in the below locations:
-* https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-PowerShellPackageMangement.ps1
-* https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-SharePointPnPPowerShellHelperModule.ps1
+## Updating ##
+Every month a new release will be made available of the PnP PowerShell Cmdlets. If you earlier installed the cmdlets using the setup file, simply download the [latest version](https://github.com/SharePoint/PnP-PowerShell/releases/latest) and run the setup. This will update your existing installation.
 
-Once the above has been completed you can then start to use the PowerShell Modules
-
-Once new releases of the module are made available on the PowerShell Gallery you will be able to use the the following command to install the latest updated version
+If you have installed the cmdlets using PowerShellGet with ```Install-Module``` from the PowerShell Gallery then you will be able to use the following command to install the latest updated version:
 
 ```powershell
 Update-Module SharePointPnPPowerShell*
@@ -62,12 +53,7 @@ You can check the installed PnP-PowerShell versions with the following command:
 Get-Module SharePointPnPPowerShell* -ListAvailable | Select-Object Name,Version | Sort-Object Version -Descending
 ```
 
-### HOW TO USE DURING DEVELOPMENT ##
-
-A build script will copy the required files to a folder in your users folder, called:
-*C:\Users\\\<YourUserName\>\Documents\WindowsPowerShell\Modules\SharePointPnPPowerShell\<Platform\>*
-
-## GETTING STARTED #
+## Getting Started #
 
 To use the library you first need to connect to your tenant:
 
