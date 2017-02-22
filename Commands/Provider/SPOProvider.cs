@@ -697,7 +697,11 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     {
                         //Get files and folders
                         var files = folder.Context.LoadQuery(folder.Files.Include(f => f.Name, f => f.ServerRelativeUrl, f => f.TimeLastModified, f => f.Length)).OrderBy(f => f.Name);
-                        var folders = folder.Context.LoadQuery(folder.Folders.Include(f => f.Name, f => f.ItemCount, f => f.TimeLastModified, f=>f.ServerRelativeUrl)).OrderBy(f => f.Name);
+#if !SP2013
+                        var folders = folder.Context.LoadQuery(folder.Folders.Include(f => f.Name, f => f.ItemCount, f => f.TimeLastModified, f => f.ServerRelativeUrl)).OrderBy(f => f.Name);
+#else
+                        var folders = folder.Context.LoadQuery(folder.Folders).OrderBy(f => f.Name);
+#endif
 
                         folder.Context.ExecuteQueryRetry();
 
