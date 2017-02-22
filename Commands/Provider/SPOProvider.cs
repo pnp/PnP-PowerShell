@@ -895,21 +895,22 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 else if (source is Folder && !targetIsFile)
                 {
                     var sourceFolder = source as Folder;
-
                     var rootFolder = (endOfPathFolderCreated || !reCreateSourceFolder) ? targetFolder : targetFolder.CreateFolder(sourceFolder.Name);
-                    var folderAndFiles = GetFolderItems(sourceFolder);
 
-                    foreach (var folder in folderAndFiles.OfType<Folder>())
+                    if (recurse)
                     {
-                        var subFolder = rootFolder.CreateFolder(folder.Name);
-                        if (recurse)
+                        var folderAndFiles = GetFolderItems(sourceFolder);
+
+                        foreach (var folder in folderAndFiles.OfType<Folder>())
                         {
-                            CopyMoveImplementation(folder.ServerRelativeUrl, subFolder.ServerRelativeUrl, true, isCopyOperation, false);
+                            var subFolder = rootFolder.CreateFolder(folder.Name);
+                            CopyMoveImplementation(folder.ServerRelativeUrl, subFolder.ServerRelativeUrl, recurse, isCopyOperation, false);
                         }
-                    }
-                    foreach (var file in folderAndFiles.OfType<File>())
-                    {
-                        CopyMoveImplementation(file.ServerRelativeUrl, rootFolder.ServerRelativeUrl, recurse, isCopyOperation);
+
+                        foreach (var file in folderAndFiles.OfType<File>())
+                        {
+                            CopyMoveImplementation(file.ServerRelativeUrl, rootFolder.ServerRelativeUrl, recurse, isCopyOperation);
+                        }
                     }
 
                     if (!isCopyOperation)
