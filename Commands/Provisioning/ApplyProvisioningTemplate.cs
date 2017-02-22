@@ -71,7 +71,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
         [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter OverwriteSystemPropertyBagValues;
 
-        [Parameter(Mandatory = false, HelpMessage = "Ignore duplicate data row errors when the the data row in the template already exists.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, HelpMessage = "Ignore duplicate data row errors when the data row in the template already exists.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter IgnoreDuplicateDataRowErrors;
 
         [Parameter(Mandatory = false, HelpMessage = "If set content types will be provisioned if the target web is a subweb.")]
