@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Provider.Parameters;
+using SharePointPnP.PowerShell.Commands.Provider.SPOProxy;
 using File = Microsoft.SharePoint.Client.File;
 using PnPResources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
@@ -89,6 +90,12 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
                 });
 
+                //Add proxy aliases
+                if (spoParametes == null || !spoParametes.NoProxyCmdLets)
+                {
+                    SPOProxyImplementation.AddAlias(SessionState);
+
+                }
                 return normalizedDrive;
             }
             return null;
@@ -106,7 +113,13 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var spoDrive = drive as SPODriveInfo;
             if (spoDrive == null) return null;
 
-            spoDrive.Web.Context.Dispose();
+            //Remove proxy aliases
+            if (spoDrive.Provider.Drives.Count < 2)
+            {
+                SPOProxyImplementation.RemoveAlias(SessionState);
+            }
+
+            spoDrive.ClearState();
             return spoDrive;
         }
 
@@ -286,7 +299,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     string name;
                     if (string.IsNullOrEmpty(subFolder.Name))
                     {
-                        var serverRelativeUrl = IsPropertyAvailable(subFolder, "ServerRelativeUrl") ? subFolder.ServerRelativeUrl : subFolder.EnsureProperty(s => s.ServerRelativeUrl);
+                        var serverRelativeUrl = subFolder.EnsureProperty(s => s.ServerRelativeUrl);
                         name = serverRelativeUrl.Split(PathSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Last();
                     }
                     else
@@ -385,61 +398,59 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         {
             WriteVerbose($"SPOProvider::NewItem (Path = ’{path}’, itemTypeName = ’{itemTypeName}’)");
 
-            var itemUrl = GetServerRelativePath(path);
-            var parentUrl = GetParentServerRelativePath(itemUrl);
+            var serverRelativePath = GetServerRelativePath(path);
+            var web = FindWebInPath(serverRelativePath);
+            var webRelativePath = Regex.Replace(serverRelativePath, $@"^{web.EnsureProperty((w => w.ServerRelativeUrl))}", string.Empty, RegexOptions.IgnoreCase);
+            if (string.IsNullOrEmpty(webRelativePath)) webRelativePath = PathSeparator;
+
             if (string.IsNullOrEmpty(itemTypeName)) itemTypeName = "File";
 
-            var parentFolder = GetFileOrFolder(parentUrl) as Folder;
-            if (parentFolder != null)
+            if (itemTypeName.Equals("file", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (itemTypeName.Equals("file", StringComparison.InvariantCultureIgnoreCase))
+                var pathParts = webRelativePath.Split(@"\/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                var parentFolder = web.EnsureFolder(web.RootFolder, string.Join(PathSeparator, pathParts.Take(pathParts.Length - 1)));
+
+                var fileCreationInfo = new FileCreationInformation
                 {
+                    Url = serverRelativePath,
+                    Overwrite = Force
+                };
 
-                    var fileCreationInfo = new FileCreationInformation
-                    {
-                        Url = itemUrl,
-                        Overwrite = Force
-                    };
-
-                    if (newItemValue is string)
-                    {
-                        fileCreationInfo.Content = System.Text.Encoding.UTF8.GetBytes((string)newItemValue);
-                    }
-                    else if (newItemValue is byte[])
-                    {
-                        fileCreationInfo.Content = (byte[])newItemValue;
-                    }
-                    else if (newItemValue is Stream)
-                    {
-                        fileCreationInfo.ContentStream = (Stream)newItemValue;
-                    }
-                    else
-                    {
-                        fileCreationInfo.Content = new byte[0];
-                    }
-
-                    var file = parentFolder.Files.Add(fileCreationInfo);
-                    parentFolder.Context.Load(file);
-                    parentFolder.Context.ExecuteQueryRetry();
-                    SetCachedItem(itemUrl, file);
-
+                if (newItemValue is string)
+                {
+                    fileCreationInfo.Content = System.Text.Encoding.UTF8.GetBytes((string)newItemValue);
                 }
-                else if (itemTypeName.Equals("folder", StringComparison.InvariantCultureIgnoreCase) || itemTypeName.Equals("directory", StringComparison.InvariantCultureIgnoreCase))
+                else if (newItemValue is byte[])
                 {
-                    var folderName = itemUrl.Split(PathSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Last();
-                    if (!parentFolder.FolderExists(folderName))
-                    {
-                        var folder = parentFolder.Folders.Add(itemUrl);
-                        parentFolder.Context.Load(folder);
-                        parentFolder.Context.ExecuteQueryRetry();
-                        SetCachedItem(itemUrl, folder);
-                    }
+                    fileCreationInfo.Content = (byte[])newItemValue;
+                }
+                else if (newItemValue is Stream)
+                {
+                    fileCreationInfo.ContentStream = (Stream)newItemValue;
                 }
                 else
                 {
-                    WriteErrorInternal("Only File or Folder (Directory) supported for Type", path, ErrorCategory.InvalidArgument);
+                    fileCreationInfo.Content = new byte[0];
                 }
 
+                var file = parentFolder.Files.Add(fileCreationInfo);
+                parentFolder.Context.Load(file);
+                parentFolder.Context.ExecuteQueryRetry();
+                SetCachedItem(serverRelativePath, file);
+
+                WriteItemObject(file, path, false);
+
+            }
+            else if (itemTypeName.Equals("folder", StringComparison.InvariantCultureIgnoreCase) || itemTypeName.Equals("directory", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var folder = web.EnsureFolder(web.RootFolder, webRelativePath);
+                SetCachedItem(serverRelativePath, folder);
+
+                WriteItemObject(folder, path, true);
+            }
+            else
+            {
+                WriteErrorInternal("Only File or Folder (Directory) supported for Type", path, ErrorCategory.InvalidArgument);
             }
         }
 
@@ -556,15 +567,12 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             //Find web closes to object
             var web = FindWebInPath(serverRelativePath);
             spoDrive.Web = web;
-            var webUrl = IsPropertyAvailable(web, "ServerRelativeUrl") ? web.ServerRelativeUrl : web.EnsureProperty(w => w.ServerRelativeUrl);
+            var webUrl = web.EnsureProperty(w => w.ServerRelativeUrl);
 
             //If path is current web root return root folder
             if (serverRelativePath.Equals(webUrl, StringComparison.InvariantCultureIgnoreCase))
             {
-                if (!IsPropertyAvailable(web, "RootFolder"))
-                {
-                    web.EnsureProperty(w => w.RootFolder);
-                }
+                web.EnsureProperty(w => w.RootFolder);
                 SetCachedItem(serverRelativePath, web.RootFolder);
                 return web.RootFolder;
             }
@@ -661,7 +669,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             {
                 if (folder != null)
                 {
-                    var serverRelativePath = GetServerRelativePath(IsPropertyAvailable(folder, "ServerRelativeUrl") ? folder.ServerRelativeUrl : folder.EnsureProperty(f => f.ServerRelativeUrl));
+                    var serverRelativePath = GetServerRelativePath(folder.EnsureProperty(f => f.ServerRelativeUrl));
 
                     //Get cached child items
                     var cachedFolderAndFiles = GetCachedChildItems(serverRelativePath);
@@ -671,7 +679,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
                     if (ctx != null)
                     {
-                        var webUrl = GetServerRelativePath(IsPropertyAvailable(ctx.Web, "ServerRelativeUrl") ? ctx.Web.ServerRelativeUrl : ctx.Web.EnsureProperty(w => w.ServerRelativeUrl));
+                        var webUrl = GetServerRelativePath(ctx.Web.EnsureProperty(w => w.ServerRelativeUrl));
 
                         //If root of web get sub-sites
                         if (serverRelativePath.Equals(webUrl, StringComparison.InvariantCultureIgnoreCase))
@@ -764,7 +772,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (spoDrive == null) return null;
 
             var pathParts = serverRelativePath.Split(PathSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            var webUrl = IsPropertyAvailable(spoDrive.Web, "Url") ? spoDrive.Web.Url : spoDrive.Web.EnsureProperty(w => w.Url);
+            var webUrl = spoDrive.Web.EnsureProperty(w => w.Url);
             var webUri = new Uri(webUrl);
             var hostUrl = $"{webUri.Scheme}://{webUri.Host}/";
 
@@ -973,8 +981,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
         private bool IsSameWeb(Web web1, Web web2)
         {
-            var url1 = IsPropertyAvailable(web1, "Id") ? web1.Url : web1.EnsureProperty(w => w.Url);
-            var url2 = IsPropertyAvailable(web2, "Id") ? web2.Url : web2.EnsureProperty(w => w.Url);
+            var url1 = web1.EnsureProperty(w => w.Url);
+            var url2 = web2.EnsureProperty(w => w.Url);
 
             return url1.Equals(url2);
         }
@@ -1031,7 +1039,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             var spoDrive = GetCurrentDrive(serverRelativePath);
             if (spoDrive == null) return null;
 
-            var webPath = IsPropertyAvailable(spoDrive.Web, "ServerRelativeUrl") ? spoDrive.Web.ServerRelativeUrl : spoDrive.Web.EnsureProperty(w => w.ServerRelativeUrl);
+            var webPath = spoDrive.Web.EnsureProperty(w => w.ServerRelativeUrl);
             var result = Regex.Replace(serverRelativePath, $@"^{webPath}", string.Empty);
             if (string.IsNullOrEmpty(result)) result = PathSeparator;
             return result;
