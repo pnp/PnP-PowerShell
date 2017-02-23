@@ -40,6 +40,15 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "The Description of the group to set.")]
         public string Description;
 
+        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of the group's owners.")]
+        public String[] Owners;
+
+        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of the group's members.")]
+        public String[] Members;
+
+        [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected.")]
+        public SwitchParameter IsPrivate;
+
         [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set.")]
         public string GroupLogoPath;
 
@@ -72,8 +81,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     }
                     groupLogoStream = new FileStream(GroupLogoPath, FileMode.Open, FileAccess.Read);
                 }
+
                 UnifiedGroupsUtility.UpdateUnifiedGroup(group.GroupId, AccessToken, displayName: DisplayName,
-                    description: Description, groupLogo: groupLogoStream);
+                    description: Description, owners: Owners, members: Members, groupLogo: groupLogoStream, isPrivate: IsPrivate);
             }
         }
     }
