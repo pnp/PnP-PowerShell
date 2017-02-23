@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Extensions;
 using SharePointPnP.PowerShell.Commands.Provider.Parameters;
 using SharePointPnP.PowerShell.Commands.Provider.SPOProxy;
 using File = Microsoft.SharePoint.Client.File;
@@ -601,6 +602,9 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
         private object ExecuteObjectSearch(string serverRelativePath, Web web)
         {
+            //Workaround for CSOM v15.0 to not get deleted items from object data
+            web.ClearObjectData();
+
             var ctx = web.Context;
             File file;
             Folder folder;

@@ -73,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider.SPOProxy
 
                     //Create destination folder
                     var isDestFolderCreated = !cmdlet.InvokeProvider.Item.Exists(destFolderFullPath);
-                    var folderObj = cmdlet.InvokeProvider.Item.New(new[] { destFolderFullPath }, string.Empty, "Folder", null, cmdlet.Force);
+                    var folderObj = (destDrive.Root != destFolderFullPath) ? cmdlet.InvokeProvider.Item.New(new[] { destFolderFullPath }, string.Empty, "Folder", null, cmdlet.Force) : cmdlet.InvokeProvider.Item.Get(destFolderFullPath);
                     var destFolder = (Folder)folderObj.First().BaseObject;
 
                     foreach (var pathInfo in pathInfos)
