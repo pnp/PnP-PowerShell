@@ -30,8 +30,7 @@ Give your application a name and hit *Create application*.
 In the application configuration screen configure the following:
 * Generate a password and make a note of it together with the application id
 * Add *Mobile application* as the platform target as the application does not have a landing page
-* Add the neccessary Application Permission. In this sample app we have added the right to read and
-write to all Office 365 Groups
+* Add the neccessary Application Permission. In this sample app we have added the right to read and write to all Office 365 Groups, as well as the ability to read users which is needed in PnP when adding owners and members.
 
 Once configured save your changes.
 
