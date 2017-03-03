@@ -61,7 +61,7 @@ If you wish to see the commands that the above will run please see the files as 
 * https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-PowerShellPackageMangement.ps1
 * https://raw.githubusercontent.com/OfficeDev/PnP-PowerShell/master/Samples/Modules.Install/Install-SharePointPnPPowerShellHelperModule.ps1
 
-Once the above has been completed you can then start to use the PowerShell Modules
+Once the above has been completed you can then start to use the PowerShell Modules.
 
 Once new releases of the module are made available on the PowerShell Gallery you will be able to use the the following command to install the latest updated version
 
@@ -90,7 +90,7 @@ To use the library you first need to connect to your tenant:
 Connect-SPOnline –Url https://yoursite.sharepoint.com –Credentials (Get-Credential)
 ```
 
-To view all cmdlets, enter
+To view all cmdlets, enter:
 
 ```powershell
 Get-Command -Module *PnP*
