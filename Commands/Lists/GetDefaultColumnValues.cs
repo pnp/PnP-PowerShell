@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPDefaultColumnValues")]
     [CmdletAlias("Get-SPODefaultColumnValues")]
-    [CmdletHelp("Gets  the default column values for all folders in document library",
+    [CmdletHelp("Gets the default column values for all folders in document library",
         DetailedDescription = "Gets the default column values for a document library, per folder. Supports both text, people and taxonomy fields.",
         Category = CmdletHelpCategory.Lists)]
     public class GetDefaultColumnValues : PnPWebCmdlet
@@ -48,7 +48,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             {
                 WriteWarning("List is not a document library");
             }
-
         }
     }
 }
