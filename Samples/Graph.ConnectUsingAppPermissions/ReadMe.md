@@ -21,7 +21,7 @@ which connects using the v1 endpoint, MSAL allows connection to the Microsoft Gr
 ### Register your application
 To use application permissions against the Microsoft Graph you first have to register your application.
 You do this at [https://apps.dev.microsoft.com](https://apps.dev.microsoft.com). Once logged in click
-*Add an app*
+add a new Converged application, by clicking *Add an app*
 
 ![alt text][Screen1]
 
@@ -29,8 +29,9 @@ Give your application a name and hit *Create application*.
 
 In the application configuration screen configure the following:
 * Generate a password and make a note of it together with the application id
-* Add *Mobile application* as the platform target as the application does not have a landing page
+* Click 'Add Platform' and select *Mobile application* as the platform target as the application does not have a landing page
 * Add the neccessary Application Permission. In this sample app we have added the right to read and write to all Office 365 Groups, as well as the ability to read users which is needed in PnP when adding owners and members.
+* Make sure to uncheck 'Live SDK support'
 
 Once configured save your changes.
 
@@ -48,7 +49,7 @@ before it can be used. Create a consent URL like the following:
 https://login.microsoftonline.com/<tenant>/adminconsent?client_id=<clientid>&state=<something>
 ```
 
-Using the client id from the app registred and consenting to the app from my tenant *techmikael.onmicrosoft.com*,
+Using the client id from the app registered and consenting to the app from my tenant *techmikael.onmicrosoft.com*,
 the URL looks like this:
 
 ```
