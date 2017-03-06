@@ -18,8 +18,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider.SPOProxy
         internal static void AddAlias(SessionState sessionState)
         {
             //Set-Alias -Name Copy-Item -Value Copy-PnPItemProxy -Scope 1
-            sessionState.InvokeCommand.InvokeScript($@"Set-Alias -Name Copy-Item -Value {SPOProxyCopyItem.CmdletVerb}-{SPOProxyCmdletBase.CmdletNoun} -Scope 1", false, PipelineResultTypes.None, null, null);
-            sessionState.InvokeCommand.InvokeScript($@"Set-Alias -Name Move-Item -Value {SPOProxyMoveItem.CmdletVerb}-{SPOProxyCmdletBase.CmdletNoun} -Scope 1", false, PipelineResultTypes.None, null, null);
+            sessionState.InvokeCommand.InvokeScript($@"Set-Alias -Name Copy-Item -Value {SPOProxyCopyItem.CmdletVerb}-{SPOProxyCmdletBase.CmdletNoun} -Scope Global", false, PipelineResultTypes.None, null, null);
+            sessionState.InvokeCommand.InvokeScript($@"Set-Alias -Name Move-Item -Value {SPOProxyMoveItem.CmdletVerb}-{SPOProxyCmdletBase.CmdletNoun} -Scope Global", false, PipelineResultTypes.None, null, null);
         }
 
         internal static void RemoveAlias(SessionState sessionState)
@@ -81,7 +81,6 @@ namespace SharePointPnP.PowerShell.Commands.Provider.SPOProxy
                         if (File.Exists(pathInfo.Path))
                         {
                             var fileInfo = new FileInfo(pathInfo.Path);
-                            //destFolder.UploadFile(destIsFile ? destParts.Last() : fileInfo.Name, fileInfo.FullName, Force);
                             using (var fs = fileInfo.OpenRead())
                             {
                                 var result = cmdlet.InvokeProvider.Item.New(new[] { $@"{destFolderFullPath}\{(destIsFile ? destParts.Last() : fileInfo.Name)}" }, string.Empty, "File", fs, cmdlet.Force);
@@ -187,7 +186,6 @@ namespace SharePointPnP.PowerShell.Commands.Provider.SPOProxy
             if (!isProcessed)
             {
                 cmdlet.WriteObject(cmdlet.InvokeCommand.InvokeScript($@"$args=$args[0];Microsoft.PowerShell.Management\{cmdlet.CmdletType}-Item @args", false, PipelineResultTypes.None, null, new Hashtable(cmdlet.MyInvocation.BoundParameters)));
-                //cmdlet.InvokeProvider.Item.Copy(cmdlet.PsPaths, cmdlet.Destination, cmdlet.Recurse, cmdlet.Container ? CopyContainers.CopyTargetContainer : CopyContainers.CopyChildrenOfTargetContainer, cmdlet.Force, !cmdlet.ShouldExpandWildcards);
             }
         }
 
