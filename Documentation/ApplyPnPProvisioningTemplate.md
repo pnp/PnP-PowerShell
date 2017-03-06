@@ -5,6 +5,7 @@ Applies a provisioning template to a web
 Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
                               [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-IgnoreDuplicateDataRowErrors [<SwitchParameter>]]
                               [-ProvisionContentTypesToSubWebs [<SwitchParameter>]]
                               [-ClearNavigation [<SwitchParameter>]]
                               [-Parameters <Hashtable>]
@@ -20,6 +21,7 @@ Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
 Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
                               [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-IgnoreDuplicateDataRowErrors [<SwitchParameter>]]
                               [-ProvisionContentTypesToSubWebs [<SwitchParameter>]]
                               [-ClearNavigation [<SwitchParameter>]]
                               [-Parameters <Hashtable>]
@@ -35,6 +37,7 @@ Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
 Apply-PnPProvisioningTemplate -Path <String>
                               [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-IgnoreDuplicateDataRowErrors [<SwitchParameter>]]
                               [-ProvisionContentTypesToSubWebs [<SwitchParameter>]]
                               [-ClearNavigation [<SwitchParameter>]]
                               [-Parameters <Hashtable>]
@@ -55,6 +58,7 @@ Parameter|Type|Required|Description
 |ExtensibilityHandlers|ExtensibilityHandler[]|False|Allows you to specify ExtensbilityHandlers to execute while applying a template|
 |GalleryTemplateId|Guid|False||
 |Handlers|Handlers|False|Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.|
+|IgnoreDuplicateDataRowErrors|SwitchParameter|False|Ignore duplicate data row errors when the data row in the template already exists.|
 |InputInstance|ProvisioningTemplate|False|Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.|
 |OverwriteSystemPropertyBagValues|SwitchParameter|False|Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)|
 |Parameters|Hashtable|False|Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.|
