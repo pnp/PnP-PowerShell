@@ -18,7 +18,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Field|FieldPipeBind|True|The internal name, id or a reference to a field|
 |List|ListPipeBind|True|The ID, Name or Url of the list.|
-|Value|String[]|True|A list of values. In case of a text field the values will be concatenated, separated by a semi-colon. In case of a taxonomy field multiple values will added|
+|Value|String[]|True|A list of values. In case of a text field the values will be concatenated, separated by a semi-colon. In case of a taxonomy field multiple values will added. In case of people field multiple values will be added.|
 |Folder|String|False|A library relative folder path, if not specified it will set the default column values on the root folder of the library ('/')|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ##Examples
@@ -40,3 +40,24 @@ Sets a default value for the enterprise keywords field on a library to a term wi
 PS:> Set-PnPDefaultColumnValues -List Documents -Field MyTextField -Value "DefaultValue"
 ```
 Sets a default value for the MyTextField text field on a library to a value of "DefaultValue"
+
+###Example 4
+```powershell
+PS:> Set-PnPDefaultColumnValues -List Documents -Field MyPeopleField -Value "1;#Foo Bar"
+```
+Sets a default value for the MyPeopleField people field on a library to a value of "Foo Bar" using the id from the user information list.
+
+###Example 5
+```powershell
+PS:> $user = New-PnPUser -LoginName foobar@contoso.com
+PS:> Set-PnPDefaultColumnValues -List Documents -Field MyPeopleField -Value "$($user.Id);#$($user.LoginName)"
+```
+Sets a default value for the MyPeopleField people field on a library to a value of "Foo Bar" using the id from the user information list.
+
+###Example 6
+```powershell
+PS:> $user1 = New-PnPUser -LoginName user1@contoso.com
+PS:> $user2 = New-PnPUser -LoginName user2@contoso.com
+PS:> Set-PnPDefaultColumnValues -List Documents -Field MyMultiPeopleField -Value "$($user1.Id);#$($user1.LoginName)","$($user2.Id);#$($user2.LoginName)"
+```
+Sets a default value for the MyMultiPeopleField people field on a library to a value of "User 1" and "User 2" using the id from the user information list.

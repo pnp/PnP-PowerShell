@@ -82,6 +82,8 @@
 ### [Remove-PnPFolder](RemovePnPFolder.md)
 ### [Rename-PnPFolder](RenamePnPFolder.md)
 ### [Get-PnPFolderItem](GetPnPFolderItem.md)
+### [Copy-PnPItemProxy](CopyPnPItemProxy.md)
+### [Move-PnPItemProxy](MovePnPItemProxy.md)
 ## [Information Management](InformationManagement-category.md)
 ### [Get-PnPSiteClosure](GetPnPSiteClosure.md)
 ### [Set-PnPSiteClosure](SetPnPSiteClosure.md)
