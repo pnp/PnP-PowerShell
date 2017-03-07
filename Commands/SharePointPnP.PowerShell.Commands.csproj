@@ -349,6 +349,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="Microsoft.PowerShell.Commands.Management" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -455,9 +456,13 @@
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
+    <Compile Include="Provider\SPOProxy\SPOProxyCmdletBase.cs" />
     <Compile Include="Provider\Parameters\SPOChildItemsParameters.cs" />
     <Compile Include="Provider\Parameters\SPOContentParameters.cs" />
     <Compile Include="Provider\Parameters\SPODriveParameters.cs" />
+    <Compile Include="Provider\SPOProxy\SPOProxyImplementation.cs" />
+    <Compile Include="Provider\SPOProxy\SPOProxyCopyItem.cs" />
+    <Compile Include="Provider\SPOProxy\SPOProxyMoveItem.cs" />
     <Compile Include="Provisioning\AddListFoldersToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\AddDataRowsToProvisioningTemplate.cs" />
     <Compile Include="InformationManagement\ClosureState.cs" />
