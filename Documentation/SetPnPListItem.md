@@ -47,7 +47,7 @@ Multi value lookup (id of lookup values as array 2): -Values @{"MultiLookupField
 
 Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField" = "1,2"}
 
-Yes/No: -Values @{"YesNoField" = "No"}
+Yes/No: -Values @{"YesNoField" = $false}
 
 Person/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{"PersonField" = "user1@domain.com","21"}
 

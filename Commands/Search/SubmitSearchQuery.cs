@@ -179,20 +179,20 @@ namespace SharePointPnP.PowerShell.Commands.Search
             }
 
             keywordQuery.QueryText = query;
-            keywordQuery.TrimDuplicates = TrimDuplicates;
-            keywordQuery.Refiners = Refiners;
-            keywordQuery.Culture = Culture;
-            keywordQuery.QueryTemplate = QueryTemplate;
-            keywordQuery.RankingModelId = RankingModelId;
             keywordQuery.ClientType = ClientType;
-            keywordQuery.HiddenConstraints = HiddenConstraints;
-            keywordQuery.TimeZoneId = TimeZoneId;
-            keywordQuery.EnablePhonetic = EnablePhonetic;
-            keywordQuery.EnableStemming = EnableStemming;
-            keywordQuery.EnableQueryRules = EnableQueryRules;
-            keywordQuery.SourceId = SourceId;
-            keywordQuery.ProcessBestBets = ProcessBestBets;
-            keywordQuery.ProcessPersonalFavorites = ProcessPersonalFavorites;
+            if (MyInvocation.BoundParameters.ContainsKey("TrimDuplicates")) keywordQuery.TrimDuplicates = TrimDuplicates;
+            if (MyInvocation.BoundParameters.ContainsKey("Refiners")) keywordQuery.Refiners = Refiners;
+            if (MyInvocation.BoundParameters.ContainsKey("Culture")) keywordQuery.Culture = Culture;
+            if (MyInvocation.BoundParameters.ContainsKey("QueryTemplate")) keywordQuery.QueryTemplate = QueryTemplate;
+            if (MyInvocation.BoundParameters.ContainsKey("RankingModelId")) keywordQuery.RankingModelId = RankingModelId;
+            if (MyInvocation.BoundParameters.ContainsKey("HiddenConstraints")) keywordQuery.HiddenConstraints = HiddenConstraints;
+            if (MyInvocation.BoundParameters.ContainsKey("TimeZoneId")) keywordQuery.TimeZoneId = TimeZoneId;
+            if (MyInvocation.BoundParameters.ContainsKey("EnablePhonetic")) keywordQuery.EnablePhonetic = EnablePhonetic;
+            if (MyInvocation.BoundParameters.ContainsKey("EnableStemming")) keywordQuery.EnableStemming = EnableStemming;
+            if (MyInvocation.BoundParameters.ContainsKey("EnableQueryRules")) keywordQuery.EnableQueryRules = EnableQueryRules;
+            if (MyInvocation.BoundParameters.ContainsKey("SourceId")) keywordQuery.SourceId = SourceId;
+            if (MyInvocation.BoundParameters.ContainsKey("ProcessBestBets")) keywordQuery.ProcessBestBets = ProcessBestBets;
+            if (MyInvocation.BoundParameters.ContainsKey("ProcessPersonalFavorites")) keywordQuery.ProcessPersonalFavorites = ProcessPersonalFavorites;
 
             if (SortList != null)
             {
