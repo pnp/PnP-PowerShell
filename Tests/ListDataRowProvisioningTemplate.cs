@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Tests
                 {
                     ctx.Web.CreateList(ListTemplateType.GenericList, "PnPTestList", false);
                 }
-                catch(Exception e)
+                catch(Exception)
                 {
 
                 }
@@ -84,7 +84,7 @@ namespace SharePointPnP.PowerShell.Tests
                         ctx.ExecuteQueryRetry();
                     }
                 }
-                catch(Exception ee)
+                catch(Exception)
                 {
 
                 }
