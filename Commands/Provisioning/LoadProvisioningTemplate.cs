@@ -4,12 +4,8 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
@@ -35,26 +31,21 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
-            if (System.IO.Path.IsPathRooted(Path))
+            if (!System.IO.Path.IsPathRooted(Path))
             {
-                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path);
+                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-            WriteObject(LoadProvisioningTemplate
-                .LoadProvisioningTemplateFromFile(Path, 
-                TemplateProviderExtensions));
+            WriteObject(LoadProvisioningTemplateFromFile(Path, TemplateProviderExtensions));
         }
 
         internal static ProvisioningTemplate LoadProvisioningTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions)
         {
             // Prepare the File Connector
-            FileConnectorBase fileConnector;
             string templateFileName = System.IO.Path.GetFileName(templatePath);
 
             // Prepare the template path
             var fileInfo = new FileInfo(templatePath);
-            fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
-
-            ProvisioningTemplate provisioningTemplate;
+            FileConnectorBase fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
 
             // Load the provisioning template file
             Stream stream = fileConnector.GetFileStream(templateFileName);
@@ -71,11 +62,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
             }
 
-            provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
+            ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
             provisioningTemplate.Connector = provider.Connector;
 
             // Return the result
-            return(provisioningTemplate);
+            return provisioningTemplate;
         }
     }
 }

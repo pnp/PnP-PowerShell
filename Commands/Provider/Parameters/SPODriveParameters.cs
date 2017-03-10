@@ -1,7 +1,7 @@
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
-namespace SharePointPnP.PowerShell.Commands.Provider
+namespace SharePointPnP.PowerShell.Commands.Provider.Parameters
 {
     public class SPODriveParameters
     {
@@ -19,5 +19,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
         [Parameter(HelpMessage = "Timeout for caching webs in milliseconds. Default: 600000 (10 minutes).")]
         public int WebCacheTimeout { get; set; }
+
+        [Parameter(HelpMessage = "Don't add aliases (Copy-Item, Move-Item) for proxy cmdlets (Copy-PnPItemProxy, Move-PnPItemProxy.")]
+        public SwitchParameter NoProxyCmdLets { get; set; }
     }
 }

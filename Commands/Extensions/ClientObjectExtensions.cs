@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace SharePointPnP.PowerShell.Commands.Extensions
 {
@@ -50,6 +51,13 @@ namespace SharePointPnP.PowerShell.Commands.Extensions
             var exp = Expression.Lambda<Func<T, object>>(Expression.Convert(body, typeof(object)), parameter);
 
             return exp;
+        }
+
+        internal static void ClearObjectData(this ClientObject clientObject)
+        {
+            var info_ClientObject_ObjectData = typeof(ClientObject).GetProperty("ObjectData", BindingFlags.NonPublic | BindingFlags.Instance);
+            var objectData = (ClientObjectData)info_ClientObject_ObjectData.GetValue(clientObject, new object[0]);
+            objectData.MethodReturnObjects.Clear();
         }
     }
 }

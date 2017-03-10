@@ -89,7 +89,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             SourceUrl = SourceUrl ?? ServerRelativeUrl;
+#pragma warning restore CS0618 // Type or member is obsolete
             var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!SourceUrl.StartsWith("/"))

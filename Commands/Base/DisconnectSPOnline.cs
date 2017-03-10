@@ -22,14 +22,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if (!DisconnectCurrentService())
                 throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
 
-            var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals("SPO", StringComparison.InvariantCultureIgnoreCase));
+            var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
             if (provider != null)
             {
-                var drives = provider.Drives.Where(d => d.Provider.Module.ImplementingAssembly.FullName == Assembly.GetExecutingAssembly().FullName);
+                //ImplementingAssembly was introduced in Windows PowerShell 5.0.
+                var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.ImplementingAssembly.FullName == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
                 foreach (var drive in drives)
                 {
-                    var spoDrive = drive as SPODriveInfo;
-                    spoDrive.ClearState();
                     SessionState.Drive.Remove(drive.Name, true, "Global");
                 }
             }

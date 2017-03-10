@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace SharePointPnP.PowerShell.ModuleFilesGenerator
@@ -21,6 +23,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         {
             GenerateCmdletDocs();
             GenerateTOC();
+            GenerateMSDNTOC();
 
             DirectoryInfo di = new DirectoryInfo($"{_solutionDir}\\Documentation");
             var mdFiles = di.GetFiles("*.md");
@@ -253,5 +256,155 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 }
             }
         }
+
+        private void GenerateMSDNTOC()
+        {
+            var originalTocMd = string.Empty;
+            var newTocMd = string.Empty;
+
+            var msdnDocPath = $"{_solutionDir}\\Documentation\\MSDN";
+            if (!Directory.Exists(msdnDocPath))
+            {
+                Directory.CreateDirectory(msdnDocPath);
+            }
+
+            // Generate the landing page
+            var landingPagePath = $"{msdnDocPath}\\PnP-PowerShell-Overview.{extension}";
+            GenerateMSDNLandingPage(landingPagePath);
+
+            // TOC.md generation
+            var tocPath = $"{msdnDocPath}\\TOC.{extension}";
+            if (System.IO.File.Exists(tocPath))
+            {
+                originalTocMd = System.IO.File.ReadAllText(tocPath);
+            }
+            var docBuilder = new StringBuilder();
+
+
+            docBuilder.AppendFormat("# [SharePoint PnP PowerShell reference](PnP-PowerShell-Overview.md){0}", Environment.NewLine);
+
+            // Get all unique categories
+            var categories = _cmdlets.Where(c => !string.IsNullOrEmpty(c.Category)).Select(c => c.Category).Distinct();
+
+            foreach (var category in categories.OrderBy(c => c))
+            {
+                var categoryMdPage = $"{category.Replace(" ", "")}-category.{extension}";
+                var categoryMdPath = $"{msdnDocPath}\\{categoryMdPage}";
+
+                // Add section reference to TOC
+                docBuilder.AppendFormat("## [{0}]({1}){2}", category, categoryMdPage, Environment.NewLine);
+
+                var categoryCmdlets = _cmdlets.Where(c => c.Category == category).OrderBy(c => c.Noun);
+
+                // Generate category MD
+                GenerateMSDNCategory(category, categoryMdPath, categoryCmdlets);
+
+                // Link cmdlets to TOC
+                foreach (var cmdletInfo in categoryCmdlets)
+                {
+                    var description = cmdletInfo.Description != null ? cmdletInfo.Description.Replace("\r\n", " ") : "";
+                    docBuilder.AppendFormat("### [{0}]({1}{2}.md){3}", cmdletInfo.FullCommand, cmdletInfo.Verb, cmdletInfo.Noun, Environment.NewLine);
+                }
+            }
+
+            newTocMd = docBuilder.ToString();
+            DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
+
+            var diffResults = dmp.diff_main(newTocMd, originalTocMd);
+
+            foreach (var result in diffResults)
+            {
+                if (result.operation != DiffMatchPatch.Operation.EQUAL)
+                {
+                    System.IO.File.WriteAllText(tocPath, docBuilder.ToString());
+                }
+            }
+        }
+
+        private void GenerateMSDNLandingPage(string landingPagePath)
+        {
+            var originalLandingPageMd = string.Empty;
+            var newLandingPageMd = string.Empty;
+
+            if (System.IO.File.Exists(landingPagePath))
+            {
+                originalLandingPageMd = System.IO.File.ReadAllText(landingPagePath);
+            }
+            var docBuilder = new StringBuilder();
+
+            // read base file from disk
+            var assemblyPath = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
+
+            string baseLandingPage = System.IO.File.ReadAllText(Path.Combine(assemblyPath, "landingpage.md"));
+
+            // Get all unique categories
+            var categories = _cmdlets.Where(c => !string.IsNullOrEmpty(c.Category)).Select(c => c.Category).Distinct();
+
+            foreach (var category in categories.OrderBy(c => c))
+            {
+                docBuilder.Append("\n\n");
+                docBuilder.AppendFormat("### {0} {1}", category, Environment.NewLine);
+                docBuilder.AppendFormat("Cmdlet|Description{0}", Environment.NewLine);
+                docBuilder.AppendFormat(":-----|:----------{0}", Environment.NewLine);
+
+                var categoryCmdlets = _cmdlets.Where(c => c.Category == category).OrderBy(c => c.Noun);
+
+                foreach (var cmdletInfo in categoryCmdlets)
+                {
+                    var description = cmdletInfo.Description != null ? cmdletInfo.Description.Replace("\r\n", " ") : "";
+                    docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}{4}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, Environment.NewLine);
+                }
+            }
+
+            string dynamicLandingPage = docBuilder.ToString();
+            newLandingPageMd = baseLandingPage.Replace("---cmdletdata---", dynamicLandingPage);
+
+            DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
+
+            var diffResults = dmp.diff_main(newLandingPageMd, originalLandingPageMd);
+
+            foreach (var result in diffResults)
+            {
+                if (result.operation != DiffMatchPatch.Operation.EQUAL)
+                {
+                    System.IO.File.WriteAllText(landingPagePath, newLandingPageMd);
+                }
+            }
+        }
+
+        private void GenerateMSDNCategory(string category, string categoryMdPath, IOrderedEnumerable<Model.CmdletInfo> cmdlets)
+        {
+            var originalCategoryMd = string.Empty;
+            var newCategoryMd = string.Empty;
+
+            if (System.IO.File.Exists(categoryMdPath))
+            {
+                originalCategoryMd = System.IO.File.ReadAllText(categoryMdPath);
+            }
+            var docBuilder = new StringBuilder();
+            docBuilder.AppendFormat("# {0} {1}", category, Environment.NewLine);
+            docBuilder.AppendFormat("Cmdlet|Description{0}", Environment.NewLine);
+            docBuilder.AppendFormat(":-----|:----------{0}", Environment.NewLine);
+            foreach (var cmdletInfo in cmdlets)
+            {
+                var description = cmdletInfo.Description != null ? cmdletInfo.Description.Replace("\r\n", " ") : "";
+                docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}{4}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, Environment.NewLine);
+            }
+
+            newCategoryMd = docBuilder.ToString();
+            DiffMatchPatch.diff_match_patch dmp = new DiffMatchPatch.diff_match_patch();
+
+            var diffResults = dmp.diff_main(newCategoryMd, originalCategoryMd);
+
+            foreach (var result in diffResults)
+            {
+                if (result.operation != DiffMatchPatch.Operation.EQUAL)
+                {
+                    System.IO.File.WriteAllText(categoryMdPath, docBuilder.ToString());
+                }
+            }
+        }
+
+
     }
 }
