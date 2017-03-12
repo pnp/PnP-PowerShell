@@ -99,6 +99,9 @@ namespace SharePointPnP.PowerShell.Commands.Search
         [Parameter(Mandatory = false, HelpMessage = "Determines whether personal favorites data is processed or not.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool ProcessPersonalFavorites;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specifies whether only relevant results are returned", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter RelevantResults;
+
         protected override void ExecuteCmdlet()
         {
             int startRow = StartRow;
@@ -164,7 +167,29 @@ namespace SharePointPnP.PowerShell.Commands.Search
                 }
                 startRow += rowLimit;
             } while (currentCount == rowLimit && All.IsPresent);
-            WriteObject(finalResults, true);
+            if (!RelevantResults.IsPresent)
+            {
+                WriteObject(finalResults, true);
+            }
+            else
+            {
+                var results = finalResults.FirstOrDefault(t => t.TableType == "RelevantResults")?
+                    .ResultRows.Select(r => ConvertToPSObject(r));
+                WriteObject(results, true);
+            }
+        }
+
+        private object ConvertToPSObject(IDictionary<string, object> r)
+        {
+            PSObject res = new PSObject();
+            if(r != null)
+            {
+                foreach(var kvp in r)
+                {
+                    res.Properties.Add(new PSNoteProperty(kvp.Key, kvp.Value));
+                }
+            }
+            return res;
         }
 
         private KeywordQuery CreateKeywordQuery()
