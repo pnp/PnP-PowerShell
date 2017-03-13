@@ -193,9 +193,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                                     ClientContext.Load(taxonomyItem);
                                                     ClientContext.ExecuteQueryRetry();
                                                 }
-
-
-
+                                                
                                                 terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
                                             }
 
@@ -230,13 +228,27 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                         else
                                         {
                                             Guid termGuid = Guid.Empty;
+
+                                            var taxSession = ClientContext.Site.GetTaxonomySession();
+                                            TaxonomyItem taxonomyItem = null;
                                             if (!Guid.TryParse(value as string, out termGuid))
                                             {
                                                 // Assume it's a TermPath
-                                                var taxonomyItem = ClientContext.Site.GetTaxonomyItemByPath(value as string);
-                                                termGuid = taxonomyItem.Id;
+                                                taxonomyItem = ClientContext.Site.GetTaxonomyItemByPath(value as string);
                                             }
-                                            item[key as string] = termGuid.ToString();
+                                            else
+                                            {
+                                                taxonomyItem = taxSession.GetTerm(termGuid);
+                                                ClientContext.Load(taxonomyItem);
+                                                ClientContext.ExecuteQueryRetry();
+                                            }
+
+                                            TaxonomyField taxField = ClientContext.CastTo<TaxonomyField>(field);
+                                            TaxonomyFieldValue taxValue = new TaxonomyFieldValue();
+                                            taxValue.TermGuid = taxonomyItem.Id.ToString();
+                                            taxValue.Label = taxonomyItem.Name;
+
+                                            taxField.SetFieldValueByValue(item, taxValue);
                                         }
 #if !ONPREMISES
                                         item.SystemUpdate();
