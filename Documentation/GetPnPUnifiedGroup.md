@@ -3,12 +3,14 @@ Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups
 ##Syntax
 ```powershell
 Get-PnPUnifiedGroup [-Identity <UnifiedGroupPipeBind>]
+                    [-ExcludeSiteUrl [<SwitchParameter>]]
 ```
 
 
 ##Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|ExcludeSiteUrl|SwitchParameter|False|The Identity of the Office 365 Group.|
 |Identity|UnifiedGroupPipeBind|False|The Identity of the Office 365 Group.|
 ##Examples
 

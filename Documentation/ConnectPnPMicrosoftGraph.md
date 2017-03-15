@@ -10,6 +10,7 @@ Connect-PnPMicrosoftGraph -Scopes <String[]>
 Connect-PnPMicrosoftGraph -AppId <String>
                           -AppSecret <String>
                           -AADDomain <String>
+                          [-UseADAL [<SwitchParameter>]]
 ```
 
 
@@ -20,6 +21,7 @@ Parameter|Type|Required|Description
 |AppId|String|True|The client id of the app which gives you access to the Microsoft Graph API.|
 |AppSecret|String|True|The app key of the app which gives you access to the Microsoft Graph API.|
 |Scopes|String[]|True|The array of permission scopes for the Microsoft Graph API.|
+|UseADAL|SwitchParameter|False|Use an ADAL instead of MSAL.|
 ##Examples
 
 ###Example 1
@@ -33,3 +35,9 @@ Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsof
 PS:> Connect-PnPMicrosoftGraph -AppId '<id>' -AppSecret '<secrect>' -AADDomain 'contoso.onmicrosoft.com'
 ```
 Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.
+
+###Example 3
+```powershell
+PS:> Connect-PnPMicrosoftGraph -AppId '<id>' -AppSecret '<secrect>' -UseADAL -AADDomain 'contoso.onmicrosoft.com'
+```
+Connects to the Microsoft Graph API using application permissions via an app's declared permission in an ADAL application.
