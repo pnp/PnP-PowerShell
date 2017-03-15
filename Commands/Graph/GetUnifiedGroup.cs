@@ -41,6 +41,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "The Identity of the Office 365 Group.")]
         public UnifiedGroupPipeBind Identity;
 
+        [Parameter(Mandatory = false, HelpMessage = "Exclude fetching the site URL for Office 365 Groups. This speeds up large listings.")]
+        public SwitchParameter ExcludeSiteUrl;
+
         protected override void ExecuteCmdlet()
         {
             UnifiedGroupEntity group = null;
@@ -51,11 +54,11 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 // We have to retrieve a specific group
                 if (Identity.Group != null)
                 {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken);
+                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken, includeSite: !ExcludeSiteUrl.IsPresent);
                 }
                 else if (!String.IsNullOrEmpty(Identity.DisplayName))
                 {
-                    groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, Identity.DisplayName);
+                    groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, Identity.DisplayName, includeSite: !ExcludeSiteUrl.IsPresent);
                 }
                 else if (!String.IsNullOrEmpty(Identity.GroupId))
                 {
@@ -65,7 +68,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             else
             {
                 // Retrieve all the groups
-                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken);
+                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, includeSite: !ExcludeSiteUrl.IsPresent);
             }
 
             if (group != null)
