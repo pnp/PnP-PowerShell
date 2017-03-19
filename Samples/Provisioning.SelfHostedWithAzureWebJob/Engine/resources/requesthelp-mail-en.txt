@@ -1,0 +1,18 @@
+Site request is registered, you will be contacted soon|<p>Dear requestor,
+</p><p>
+You will be contacted about your SharePoint Site request,  {0}.
+</p><p>
+To learn more about SharePoint in Yara we recommend that you visit the following sites:
+<ul>
+<li><a href="https://team.pulse.yara.com/corporate/collaborationcommunicationservices/SitePages/Home.aspx">Communication CoCo Services</a>
+<li><a href="https://team.pulse.yara.com/corporate/training/hub/">SharePoint Training Hub</a>
+<li><a href="https://team.pulse.yara.com/corporate/architecturestandards/sharepointgovernance/SitePages/Home.aspx">SharePoint Governance</a>
+<li><a href="https://team.pulse.yara.com/corporate/spcommunity/">SharePoint Community</a>
+</ul>
+</p><p>
+For all SharePoint requests please contact the Yara Service Desk
+</p><p>
+Thank you.
+</p><p>
+SharePoint Application Management Service 
+</p>

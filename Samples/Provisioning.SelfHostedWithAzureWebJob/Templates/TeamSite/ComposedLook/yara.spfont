@@ -1,0 +1,40 @@
+<s:fontScheme name="Yara" previewSlot1="title" previewSlot2="body" 
+    xmlns:s="http://schemas.microsoft.com/sharepoint/">
+    <s:fontSlots>
+        <s:fontSlot name="title">
+            <s:latin typeface="MaxLight" eotsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxWeb-Light.eot" woffsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxWeb-Light.woff" ttfsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxComp-Light.ttf" svgsrc="" largeimgsrc="" smallimgsrc="" />
+            <s:ea typeface="" />
+            <s:cs typeface="" />
+        </s:fontSlot>
+        <!--<s:fontSlot name="navigation">
+            <s:latin typeface="Verdana" />
+            <s:ea typeface="" />
+            <s:cs typeface="Verdana" />
+        </s:fontSlot>
+        <s:fontSlot name="small-heading">
+            <s:latin typeface="Verdana"/>
+            <s:ea typeface="" />
+            <s:cs typeface="Verdana" />
+        </s:fontSlot>-->
+        <s:fontSlot name="heading">
+            <s:latin typeface="MaxLight" eotsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxWeb-Light.eot" woffsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxWeb-Light.woff" ttfsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxComp-Light.ttf" svgsrc="" largeimgsrc="" smallimgsrc=""/>
+            <s:ea typeface="" />
+            <s:cs typeface="Vedana" />
+        </s:fontSlot>
+        <s:fontSlot name="large-heading">
+            <s:latin typeface="MaxLight" eotsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxWeb-Light.eot" woffsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxWeb-Light.woff" ttfsrc="/sites/yara-cdn/SiteAssets/CDN/fonts/MaxComp-Light.ttf" svgsrc="" largeimgsrc="" smallimgsrc=""/>
+            <s:ea typeface="" />
+            <s:cs typeface="" />
+        </s:fontSlot>
+        <!--<s:fontSlot name="body">
+            <s:latin typeface="Verdana"/>
+            <s:ea typeface="" />
+            <s:cs typeface="Verdana" />
+        </s:fontSlot>
+        <s:fontSlot name="large-body">
+            <s:latin typeface="Verdana" />
+            <s:ea typeface="" />
+            <s:cs typeface="Verdana" />
+        </s:fontSlot>-->
+    </s:fontSlots>
+</s:fontScheme>

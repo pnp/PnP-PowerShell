@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<pnp:Provisioning 
+  xmlns:pnp="http://schemas.dev.office.com/PnP/2016/05/ProvisioningSchema">
+  <pnp:Preferences Generator="OfficeDevPnP.Core, Version=2.11.1701.0, Culture=neutral, PublicKeyToken=null" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-YARA-TEAMSITE">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-YARA-TEAMSITE" Version="1" BaseSiteTemplate="STS#0">
+      <pnp:RegionalSettings AdjustHijriDays="0" AlternateCalendarType="None" CalendarType="Gregorian" Collation="25" FirstDayOfWeek="Monday" FirstWeekOfYear="2" LocaleId="2057" ShowWeeks="false" Time24="true" TimeZone="4" WorkDayEndHour="5:00PM" WorkDays="62" WorkDayStartHour="8:00AM" />
+      <pnp:WebSettings SiteLogo="/sites/yara-CDN/SiteAssets/CDN/img/yara-site-logo.png" />
+      <pnp:ComposedLook Name="Yara Site Branding" ColorFile="{sitecollection}/_catalogs/Theme/15/yara.spcolor" FontFile="{sitecollection}/_catalogs/Theme/15/yara.spfont" BackgroundFile="" Version="0" />
+      <pnp:Navigation>
+        <pnp:CurrentNavigation NavigationType="StructuralLocal">
+          <pnp:StructuralNavigation RemoveExistingNodes="true">
+            <pnp:NavigationNode Title="Home" Url="{site}" />
+            <pnp:NavigationNode Title="Notebook" Url="{site}/SiteAssets/Team%20Site%20Notebook" IsExternal="true" />
+            <pnp:NavigationNode Title="Documents" Url="{site}/Shared Documents/Forms/AllItems.aspx" />
+            <pnp:NavigationNode Title="About Site" Url="{site}/SitePages/About.aspx" />
+          </pnp:StructuralNavigation>
+        </pnp:CurrentNavigation>
+      </pnp:Navigation>
+      <pnp:Files>
+        <pnp:File Folder="_catalogs/Theme/15" Overwrite="true" Src="ComposedLook\yara.spcolor" />
+        <pnp:File Folder="_catalogs/Theme/15" Overwrite="true" Src="ComposedLook\yara.spfont" />
+        <pnp:File Src="SiteAssets\html\aboutpage.txt" Folder="{site}/SiteAssets/html" Overwrite="true" />
+        <pnp:File Src="SitePages\About.aspx" Folder="{site}/SitePages" Overwrite="true">
+          <pnp:WebParts>
+            <pnp:WebPart Title="About" Zone="LeftColumn" Order="0">
+              <pnp:Contents>
+                <WebPart 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                  xmlns="http://schemas.microsoft.com/WebPart/v2">
+                  <Title>About</Title>
+                  <FrameType>None</FrameType>
+                  <ContentLink 
+                    xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">{site}/SiteAssets/html/aboutpage.txt
+                  </ContentLink>
+                  <Content 
+                    xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">
+                  </Content>
+                  <PartStorage 
+                    xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">
+                  </PartStorage>
+                  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
+                  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
+                </WebPart>
+              </pnp:Contents>
+            </pnp:WebPart>
+          </pnp:WebParts>
+        </pnp:File>
+      </pnp:Files>
+      <pnp:Pages>
+        <pnp:Page Url="{site}/SitePages/Home.aspx" Overwrite="true" Layout="Custom">
+          <pnp:WebParts>
+            <pnp:WebPart Title="Get started with your site" Row="1" Column="1">
+              <pnp:Contents>
+                <webParts>
+                  <webPart 
+                    xmlns="http://schemas.microsoft.com/WebPart/v3">
+                    <metaData>
+                      <type name="Microsoft.SharePoint.WebPartPages.GettingStartedWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+                      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+                    </metaData>
+                    <data>
+                      <properties>
+                        <property name="AllowZoneChange" type="bool">True</property>
+                        <property name="HelpUrl" type="string" />
+                        <property name="Hidden" type="bool">False</property>
+                        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+                        <property name="Description" type="string" />
+                        <property name="BaseViewID" type="string">2</property>
+                        <property name="AllowHide" type="bool">True</property>
+                        <property name="AllowMinimize" type="bool">True</property>
+                        <property name="Title" type="string">Get started with your site</property>
+                        <property name="TitleUrl" type="string" />
+                        <property name="ExportMode" type="exportmode">All</property>
+                        <property name="ChromeType" type="chrometype">None</property>
+                        <property name="AllowConnect" type="bool">True</property>
+                        <property name="Width" type="string" />
+                        <property name="Height" type="string" />
+                        <property name="CatalogIconImageUrl" type="string" />
+                        <property name="HelpMode" type="helpmode">Modeless</property>
+                        <property name="AllowEdit" type="bool">True</property>
+                        <property name="TitleIconImageUrl" type="string" />
+                        <property name="Direction" type="direction">NotSet</property>
+                        <property name="AllowClose" type="bool">True</property>
+                        <property name="ChromeState" type="chromestate">Normal</property>
+                      </properties>
+                    </data>
+                  </webPart>
+                </webParts>
+              </pnp:Contents>
+            </pnp:WebPart>
+            <pnp:WebPart Title="Recently modified documents" Row="1" Column="1">
+              <pnp:Contents>
+                <webParts>
+                  <webPart 
+                    xmlns="http://schemas.microsoft.com/WebPart/v3">
+                    <metaData>
+                      <type name="Microsoft.SharePoint.WebPartPages.XsltListViewWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+                      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+                    </metaData>
+                    <data>
+                      <properties>
+                        <property name="ShowWithSampleData" type="bool">False</property>
+                        <property name="Default" type="string" />
+                        <property name="JSLink" type="string" null="true" />
+                        <property name="CacheXslStorage" type="bool">True</property>
+                        <property name="ViewContentTypeId" type="string" />
+                        <property name="XmlDefinitionLink" type="string" />
+                        <property name="ManualRefresh" type="bool">False</property>
+                        <property name="ListUrl" type="string" null="true" />
+                        <property name="ListId" type="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">{listid:Documents}</property>
+                        <property name="TitleUrl" type="string">{site}/Shared Documents</property>
+                        <property name="EnableOriginalValue" type="bool">False</property>
+                        <property name="Direction" type="direction">NotSet</property>
+                        <property name="ServerRender" type="bool">False</property>
+                        <property name="ViewFlags" type="Microsoft.SharePoint.SPViewFlags, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">Html, TabularView, Hidden, Mobile</property>
+                        <property name="ViewName" type="string">Recently modified documents</property>
+                        <property name="AllowConnect" type="bool">True</property>
+                        <property name="ListName" type="string">{{listid:Documents}}</property>
+                        <property name="ListDisplayName" type="string" null="true" />
+                        <property name="AllowZoneChange" type="bool">True</property>
+                        <property name="DisableSaveAsNewViewButton" type="bool">False</property>
+                        <property name="ViewFlag" type="string" />
+                        <property name="DataSourceID" type="string" />
+                        <property name="ExportMode" type="exportmode">All</property>
+                        <property name="AutoRefresh" type="bool">False</property>
+                        <property name="FireInitialRow" type="bool">True</property>
+                        <property name="AllowEdit" type="bool">True</property>
+                        <property name="Description" type="string" />
+                        <property name="HelpMode" type="helpmode">Modeless</property>
+                        <property name="BaseXsltHashKey" type="string" null="true" />
+                        <property name="AllowMinimize" type="bool">True</property>
+                        <property name="CacheXslTimeOut" type="int">86400</property>
+                        <property name="ChromeType" type="chrometype">Default</property>
+                        <property name="Xsl" type="string" null="true" />
+                        <property name="ChromeState" type="chromestate">Normal</property>
+                        <property name="CatalogIconImageUrl" type="string">/_layouts/15/images/itdl.png?rev=44</property>
+                        <property name="SampleData" type="string" null="true" />
+                        <property name="UseSQLDataSourcePaging" type="bool">True</property>
+                        <property name="TitleIconImageUrl" type="string" />
+                        <property name="PageSize" type="int">-1</property>
+                        <property name="ShowTimelineIfAvailable" type="bool">True</property>
+                        <property name="Width" type="string" />
+                        <property name="DataFields" type="string" />
+                        <property name="Hidden" type="bool">False</property>
+                        <property name="Title" type="string">Recently modified documents</property>
+                        <property name="PageType" type="Microsoft.SharePoint.PAGETYPE, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">PAGE_NORMALVIEW</property>
+                        <property name="DataSourcesString" type="string" />
+                        <property name="AllowClose" type="bool">True</property>
+                        <property name="InplaceSearchEnabled" type="bool">True</property>
+                        <property name="WebId" type="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">00000000-0000-0000-0000-000000000000</property>
+                        <property name="Height" type="string" />
+                        <property name="GhostedXslLink" type="string">main.xsl</property>
+                        <property name="DisableViewSelectorMenu" type="bool">False</property>
+                        <property name="DisplayName" type="string" />
+                        <property name="IsClientRender" type="bool">False</property>
+                        <property name="XmlDefinition" type="string">&lt;View Name="{5D64FB2F-4EEA-480A-BE1B-45262DE13BBF}" MobileView="TRUE" Type="HTML" Hidden="TRUE" DisplayName="" Url="{site}/SitePages/Home.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=44" &gt;&lt;Query&gt;&lt;OrderBy&gt;&lt;FieldRef Name="FileLeafRef"/&gt;&lt;/OrderBy&gt;&lt;/Query&gt;&lt;ViewFields&gt;&lt;FieldRef Name="DocIcon"/&gt;&lt;FieldRef Name="LinkFilename"/&gt;&lt;FieldRef Name="Modified"/&gt;&lt;FieldRef Name="Editor"/&gt;&lt;/ViewFields&gt;&lt;RowLimit Paged="TRUE"&gt;30&lt;/RowLimit&gt;&lt;JSLink&gt;clienttemplates.js&lt;/JSLink&gt;&lt;XslLink Default="TRUE"&gt;main.xsl&lt;/XslLink&gt;&lt;Toolbar Type="Standard"/&gt;&lt;/View&gt;</property>
+                        <property name="InitialAsyncDataFetch" type="bool">False</property>
+                        <property name="NoDefaultStyle" type="string" />
+                        <property name="AllowHide" type="bool">True</property>
+                        <property name="ParameterBindings" type="string">  &lt;ParameterBinding Name="dvt_sortdir" Location="Postback;Connection"/&gt;            &lt;ParameterBinding Name="dvt_sortfield" Location="Postback;Connection"/&gt;            &lt;ParameterBinding Name="dvt_startposition" Location="Postback" DefaultValue=""/&gt;            &lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;            &lt;ParameterBinding Name="OpenMenuKeyAccessible" Location="Resource(wss,OpenMenuKeyAccessible)" /&gt;            &lt;ParameterBinding Name="open_menu" Location="Resource(wss,open_menu)" /&gt;            &lt;ParameterBinding Name="select_deselect_all" Location="Resource(wss,select_deselect_all)" /&gt;            &lt;ParameterBinding Name="idPresEnabled" Location="Resource(wss,idPresEnabled)" /&gt;&lt;ParameterBinding Name="NoAnnouncements" Location="Resource(wss,noitemsinview_doclibrary)" /&gt;&lt;ParameterBinding Name="NoAnnouncementsHowTo" Location="Resource(wss,noitemsinview_doclibrary_howto2)" /&gt;</property>
+                        <property name="DataSourceMode" type="Microsoft.SharePoint.WebControls.SPDataSourceMode, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">List</property>
+                        <property name="AutoRefreshInterval" type="int">60</property>
+                        <property name="AsyncRefresh" type="bool">False</property>
+                        <property name="HelpUrl" type="string" />
+                        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+                        <property name="XslLink" type="string" null="true" />
+                        <property name="SelectParameters" type="string" />
+                        <property name="HasClientDataSource" type="bool">False</property>
+                      </properties>
+                    </data>
+                  </webPart>
+                </webParts>
+              </pnp:Contents>
+            </pnp:WebPart>
+          </pnp:WebParts>
+          <pnp:Fields>
+            <pnp:Field FieldName="WikiField">
+              <![CDATA[<div class="ExternalClassEF0EDA28717C47C182DED0289410A1C7"><table id="layoutsTable" style="width&#58;100%;"><tbody><tr style="vertical-align&#58;top;"><td colspan="2"><div class="ms-rte-layoutszone-outer" style="width&#58;100%;"><div class="ms-rte-layoutszone-inner"><div class="ms-rtestate-read ms-rte-wpbox"><div class="ms-rtestate-notify  ms-rtestate-read {webpartid:Get started with your site}" id="div_{webpartid:Get started with your site}"></div><div class="ms-rtestate-read" id="vid_{webpartid:Get started with your site}" style="display&#58;none;"></div></div></div></div></td></tr><tr style="vertical-align&#58;top;"><td style="width&#58;49.95%;"><div class="ms-rte-layoutszone-outer" style="width&#58;100%;"><div class="ms-rte-layoutszone-inner"><div class="ms-rtestate-read ms-rte-wpbox"><div class="ms-rtestate-notify  ms-rtestate-read a922bc15-ad95-4ff0-967a-e2eab69bc55a" id="div_a922bc15-ad95-4ff0-967a-e2eab69bc55a" unselectable="on"></div><div class="ms-rtestate-read" id="vid_a922bc15-ad95-4ff0-967a-e2eab69bc55a" unselectable="on" style="display&#58;none;"></div></div><p></p><div class="ms-rtestate-read ms-rte-wpbox"><div class="ms-rtestate-notify  ms-rtestate-read {webpartid:Recently modified documents}" id="div_{webpartid:Recently modified documents}"></div><div id="vid_{webpartid:Recently modified documents}" style="display&#58;none;"></div></div><p><br></p></div></div></td><td class="ms-wiki-columnSpacing" style="width&#58;49.95%;"><div class="ms-rte-layoutszone-outer" style="width&#58;100%;"><div class="ms-rte-layoutszone-inner"><div class="ms-rtestate-read ms-rte-wpbox"><div class="ms-rtestate-notify  ms-rtestate-read 6012b4a8-3794-4ba8-a241-b1caa1ed4aee" id="div_6012b4a8-3794-4ba8-a241-b1caa1ed4aee" unselectable="on"></div><div class="ms-rtestate-read" id="vid_6012b4a8-3794-4ba8-a241-b1caa1ed4aee" unselectable="on" style="display&#58;none;"></div></div></div>&#160;</div></td></tr></tbody></table><span id="layoutsData" style="display&#58;none;">true,false,2</span></div>]]>
+            </pnp:Field>
+          </pnp:Fields>
+        </pnp:Page>
+      </pnp:Pages>
+      <pnp:Lists 
+        xmlns:pnp="http://schemas.dev.office.com/PnP/2016/05/ProvisioningSchema">
+        <pnp:ListInstance Title="Documents" Description="" DocumentTemplate="{site}/Shared Documents/Forms/template.dotx" TemplateType="101" Url="Shared Documents" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="10" DraftVersionVisibility="0" ContentTypesEnabled="true" EnableAttachments="false">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x010100D6680B47A1D9FC4F8B383FDE800F458701" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x010100D6680B47A1D9FC4F8B383FDE800F458703" />
+            <pnp:ContentTypeBinding ContentTypeID="0x010100D6680B47A1D9FC4F8B383FDE800F458704" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0101" Remove="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views RemoveExistingViews="true">
+            <View Name="{68142F90-47C8-4890-BEE8-2F54AB2D07F9}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="FALSE" Type="HTML" DisplayName="All Documents" Url="/teams/yara-test/TestDoc/Forms/AllItems.aspx" Level="1" BaseViewID="2" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="FileLeafRef" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Editor" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+            <View Name="{1CA1335C-8364-495F-A92F-96550E66E8C7}" DefaultView="FALSE" MobileDefaultView="FALSE" MobileView="TRUE" Type="HTML" Scope="Recursive" DisplayName="Recently modified documents" Url="/teams/yara-test/TestDoc/Forms/Recently modified documents.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=44">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="Modified" Ascending="FALSE" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Editor" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="85ca8205-4466-4134-ad6d-34e276430222" Name="{parameter:GenericFieldsPrefix}Description" />
+            <pnp:FieldRef ID="d667bbbb-75f2-4f97-b373-4a4f958eb34f" Name="{parameter:GenericFieldsPrefix}BaseModule" />
+            <pnp:FieldRef ID="5f56a87f-be15-4a28-8596-ada81c39fbaa" Name="{parameter:GenericFieldsPrefix}SubModules" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+      </pnp:Lists>
+      <pnp:CustomActions>
+        <pnp:SiteCustomActions>
+          <pnp:CustomAction Name="Yara.FavIcon" Location="ScriptLink" ScriptBlock="var favIcon=document.getElementById('favicon');favIcon.setAttribute('href','/sites/yara-cdn/siteassets/cdn/img/favicon.ico');" />
+          <pnp:CustomAction Name="Yara.Teams.Css" Location="ScriptLink" Sequence="1" ScriptBlock="registerCssLink('/sites/yara-cdn/siteassets/cdn/css/yara-team-sites.css?rev=' + new Date().getDay());" />
+          <pnp:CustomAction Name="Webtrends Advanced Analytics" Location="ScriptLink" Sequence="2" ScriptBlock="(function(){var s=document.createElement('script');s.async=true;s.src='/sites/yara-cdn/SiteAssets/CDN/libs/js/webtrends.load.js';var s2=document.getElementsByTagName('script')[0];s2.parentNode.insertBefore(s,s2);})();" />
+        </pnp:SiteCustomActions>
+      </pnp:CustomActions>
+      <pnp:ContentTypes>
+        <pnp:ContentType ID="0x010100D6680B47A1D9FC4F8B383FDE800F458701" Name="Yara Word Document" Group="YARA Content Types" ReadOnly="false" />
+        <pnp:ContentType ID="0x010100D6680B47A1D9FC4F8B383FDE800F458703" Name="Yara PowerPoint Presentation" Group="YARA Content Types" ReadOnly="false" />
+        <pnp:ContentType ID="0x010100D6680B47A1D9FC4F8B383FDE800F458704" Name="Yara Excel Workbook" Description="" Group="YARA Content Types" ReadOnly="false" />
+      </pnp:ContentTypes>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>
