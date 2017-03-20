@@ -120,47 +120,8 @@
   <data name="SiteDirectory_BusinessOwner" xml:space="preserve">
     <value>Business Owner</value>
   </data>
-  <data name="SiteDirectory_Archiving" xml:space="preserve">
-    <value>Archiving</value>
-  </data>
-  <data name="SiteDirectory_Comment" xml:space="preserve">
-    <value>Comment</value>
-  </data>
-  <data name="SiteDirectory_Company" xml:space="preserve">
-    <value>Company</value>
-  </data>
-  <data name="SiteDirectory_ContractFormat" xml:space="preserve">
-    <value>Contract format</value>
-  </data>
-  <data name="SiteDirectory_Contractor" xml:space="preserve">
-    <value>Contractor</value>
-  </data>
-  <data name="SiteDirectory_ContractValue" xml:space="preserve">
-    <value>Contract value</value>
-  </data>
-  <data name="SiteDirectory_ContructionManager" xml:space="preserve">
-    <value>Construction manager</value>
-  </data>
-  <data name="SiteDirectory_Country" xml:space="preserve">
-    <value>Country</value>
-  </data>
-  <data name="SiteDirectory_Hidden" xml:space="preserve">
-    <value>Hidden</value>
-  </data>
   <data name="SiteDirectory_ListTitle" xml:space="preserve">
     <value>Sites</value>
-  </data>
-  <data name="SiteDirectory_MailAddress1" xml:space="preserve">
-    <value>Mail address 1</value>
-  </data>
-  <data name="SiteDirectory_MailAddress2" xml:space="preserve">
-    <value>Mail address 2</value>
-  </data>
-  <data name="SiteDirectory_Organization" xml:space="preserve">
-    <value>Organization</value>
-  </data>
-  <data name="SiteDirectory_ProjectCategory" xml:space="preserve">
-    <value>Project category</value>
   </data>
   <data name="SiteDirectory_Description" xml:space="preserve">
     <value>Description</value>
@@ -168,35 +129,8 @@
   <data name="SiteDirectory_SiteDescription" xml:space="preserve">
     <value>Site description</value>
   </data>
-  <data name="SiteDirectory_ProjectEnd" xml:space="preserve">
-    <value>Project end</value>
-  </data>
-  <data name="SiteDirectory_ProjectManager" xml:space="preserve">
-    <value>Project manager</value>
-  </data>
-  <data name="SiteDirectory_ProjectName" xml:space="preserve">
-    <value>Project name</value>
-  </data>
-  <data name="SiteDirectory_ProjectNumber" xml:space="preserve">
-    <value>Project number</value>
-  </data>
-  <data name="SiteDirectory_ProjectPhase" xml:space="preserve">
-    <value>Project phase</value>
-  </data>
-  <data name="SiteDirectory_ProjectPortalURL" xml:space="preserve">
+  <data name="SiteDirectory_SiteURL" xml:space="preserve">
     <value>Site URL</value>
-  </data>
-  <data name="SiteDirectory_ProjectStart" xml:space="preserve">
-    <value>Project start</value>
-  </data>
-  <data name="SiteDirectory_ProjectStatus" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="SiteDirectory_Region" xml:space="preserve">
-    <value>Region</value>
-  </data>
-  <data name="SiteDirectory_ShortName" xml:space="preserve">
-    <value>Short name</value>
   </data>
   <data name="SiteDirectory_BaseModule" xml:space="preserve">
     <value>Module</value>
@@ -204,59 +138,11 @@
   <data name="SiteDirectory_SubModules" xml:space="preserve">
     <value>Apps</value>
   </data>
-  <data name="SiteDirectory_SyncExternal" xml:space="preserve">
-    <value>External</value>
-  </data>
-  <data name="SiteDirectory_SyncMembers" xml:space="preserve">
-    <value>Members</value>
-  </data>
-  <data name="SiteDirectory_SyncOwners" xml:space="preserve">
-    <value>Owners</value>
-  </data>
   <data name="SiteDirectory_SyncVisitors" xml:space="preserve">
     <value>Visitors</value>
   </data>
-  <data name="SiteDirectory_Tagging" xml:space="preserve">
-    <value>Tagging</value>
-  </data>
   <data name="SiteDirectory_TemplateConfig" xml:space="preserve">
     <value>Template</value>
-  </data>
-  <data name="SiteDirectory_TemplateConfigMulti" xml:space="preserve">
-    <value>Template(s)</value>
-  </data>
-  <data name="SiteDirectory_VisitingAddress" xml:space="preserve">
-    <value>Visiting address</value>
-  </data>
-  <data name="SharedAssetsListTitle" xml:space="preserve">
-    <value>Project tools</value>
-  </data>
-  <data name="ProjectAsset_Description_FieldTitle" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="ProjectAsset_LinkLocation_FieldTitle" xml:space="preserve">
-    <value>Link location</value>
-  </data>
-  <data name="ProjectAsset_Order_FieldTitle" xml:space="preserve">
-    <value>Order</value>
-  </data>
-  <data name="ProjectAsset_SourceImage_FieldTitle" xml:space="preserve">
-    <value>Link image</value>
-  </data>
-  <data name="SecurityConfiguration_ApproverSPGroup" xml:space="preserve">
-    <value>Approval SharePoint group</value>
-  </data>
-  <data name="SecurityConfiguration_ListTitle" xml:space="preserve">
-    <value>Security configuration</value>
-  </data>
-  <data name="SecurityConfiguration_SiteCollectionAdminADGroup" xml:space="preserve">
-    <value>Site collection admin AD group</value>
-  </data>
-  <data name="SiteDirectory_AllItems" xml:space="preserve">
-    <value>All Items</value>
-  </data>
-  <data name="SiteDirectory_ExternalSharing" xml:space="preserve">
-    <value>External sharing</value>
   </data>
   <data name="AppModulesListTitle" xml:space="preserve">
     <value>Apps</value>
@@ -267,28 +153,7 @@
   <data name="TemplatesListTitle" xml:space="preserve">
     <value>Project templates</value>
   </data>
-  <data name="SiteDirectory_NeedForSupport" xml:space="preserve">
-    <value>Need for support</value>
-  </data>
-  <data name="SiteDirectory_NeedForSupportDescription" xml:space="preserve">
-    <value>Check this if you need assistance in filling out the correct information for your site</value>
-  </data>
   <data name="SiteDirectory_ProvisionStatus" xml:space="preserve">
     <value>Provision Status</value>
-  </data>
-  <data name="SiteDirectory_BusinessUnit" xml:space="preserve">
-    <value>Business Unit</value>
-  </data>
-  <data name="SiteDirectory_InformationClassification" xml:space="preserve">
-    <value>Information Classification</value>
-  </data>
-  <data name="SiteDirectory_ShowProjectInformation" xml:space="preserve">
-    <value>Edit site information</value>
-  </data>
-  <data name="SiteDirectory_Compliant" xml:space="preserve">
-    <value>Compliant</value>
-  </data>
-  <data name="SiteDirectory_Comment" xml:space="preserve">
-    <value>Comment</value>
   </data>
 </root>

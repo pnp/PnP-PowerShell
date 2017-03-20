@@ -26,7 +26,7 @@
 				<Aggregations Value="Off" />
 				<JSLink>clienttemplates.js</JSLink>
 			</View>
-			<View Name="{C6D765D5-33E9-4125-9B8C-43529EEE3075}" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="Requested" Url="/sites/yaradir/Lists/Sites/Requested.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
+			<View Name="{C6D765D5-33E9-4125-9B8C-43529EEE3075}" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="Requested" Url="{site}/Lists/Sites/Requested.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=44">
 				<Query>
 					<OrderBy>
 						<FieldRef Name="ID" Ascending="False" />
