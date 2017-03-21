@@ -2,94 +2,16 @@
 <pnp:Provisioning 
   xmlns:pnp="http://schemas.dev.office.com/PnP/2016/05/ProvisioningSchema">
   <pnp:Preferences Generator="OfficeDevPnP.Core, Version=2.11.1701.0, Culture=neutral, PublicKeyToken=null" />
-  <pnp:Templates ID="CONTAINER-TEMPLATE-YARA-TEAMSITE">
-    <pnp:ProvisioningTemplate ID="TEMPLATE-YARA-TEAMSITE" Version="1" BaseSiteTemplate="STS#0">
+  <pnp:Templates ID="CONTAINER-TEMPLATE-PZL-TEAMSITE">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-PZL-TEAMSITE" Version="1" BaseSiteTemplate="STS#0">
       <pnp:RegionalSettings AdjustHijriDays="0" AlternateCalendarType="None" CalendarType="Gregorian" Collation="25" FirstDayOfWeek="Monday" FirstWeekOfYear="2" LocaleId="2057" ShowWeeks="false" Time24="true" TimeZone="4" WorkDayEndHour="5:00PM" WorkDays="62" WorkDayStartHour="8:00AM" />
-      <pnp:WebSettings SiteLogo="/sites/yara-CDN/SiteAssets/CDN/img/yara-site-logo.png" />
-      <pnp:ComposedLook Name="Yara Site Branding" ColorFile="{sitecollection}/_catalogs/Theme/15/yara.spcolor" FontFile="{sitecollection}/_catalogs/Theme/15/yara.spfont" BackgroundFile="" Version="0" />
-      <pnp:Navigation>
-        <pnp:CurrentNavigation NavigationType="StructuralLocal">
-          <pnp:StructuralNavigation RemoveExistingNodes="true">
-            <pnp:NavigationNode Title="Home" Url="{site}" />
-            <pnp:NavigationNode Title="Notebook" Url="{site}/SiteAssets/Team%20Site%20Notebook" IsExternal="true" />
-            <pnp:NavigationNode Title="Documents" Url="{site}/Shared Documents/Forms/AllItems.aspx" />
-            <pnp:NavigationNode Title="About Site" Url="{site}/SitePages/About.aspx" />
-          </pnp:StructuralNavigation>
-        </pnp:CurrentNavigation>
-      </pnp:Navigation>
+      <pnp:WebSettings SiteLogo="{sitecollection}/SiteAssets/sp_logo.png" />
       <pnp:Files>
-        <pnp:File Folder="_catalogs/Theme/15" Overwrite="true" Src="ComposedLook\yara.spcolor" />
-        <pnp:File Folder="_catalogs/Theme/15" Overwrite="true" Src="ComposedLook\yara.spfont" />
-        <pnp:File Src="SiteAssets\html\aboutpage.txt" Folder="{site}/SiteAssets/html" Overwrite="true" />
-        <pnp:File Src="SitePages\About.aspx" Folder="{site}/SitePages" Overwrite="true">
-          <pnp:WebParts>
-            <pnp:WebPart Title="About" Zone="LeftColumn" Order="0">
-              <pnp:Contents>
-                <WebPart 
-                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-                  xmlns="http://schemas.microsoft.com/WebPart/v2">
-                  <Title>About</Title>
-                  <FrameType>None</FrameType>
-                  <ContentLink 
-                    xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">{site}/SiteAssets/html/aboutpage.txt
-                  </ContentLink>
-                  <Content 
-                    xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">
-                  </Content>
-                  <PartStorage 
-                    xmlns="http://schemas.microsoft.com/WebPart/v2/ContentEditor">
-                  </PartStorage>
-                  <TypeName>Microsoft.SharePoint.WebPartPages.ContentEditorWebPart</TypeName>
-                  <Assembly>Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c</Assembly>
-                </WebPart>
-              </pnp:Contents>
-            </pnp:WebPart>
-          </pnp:WebParts>
-        </pnp:File>
+        <pnp:File Folder="{sitecollection}/SiteAssets" Overwrite="true" Src="SiteAssets\sp_logo.png" />
       </pnp:Files>
       <pnp:Pages>
         <pnp:Page Url="{site}/SitePages/Home.aspx" Overwrite="true" Layout="Custom">
           <pnp:WebParts>
-            <pnp:WebPart Title="Get started with your site" Row="1" Column="1">
-              <pnp:Contents>
-                <webParts>
-                  <webPart 
-                    xmlns="http://schemas.microsoft.com/WebPart/v3">
-                    <metaData>
-                      <type name="Microsoft.SharePoint.WebPartPages.GettingStartedWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
-                      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
-                    </metaData>
-                    <data>
-                      <properties>
-                        <property name="AllowZoneChange" type="bool">True</property>
-                        <property name="HelpUrl" type="string" />
-                        <property name="Hidden" type="bool">False</property>
-                        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
-                        <property name="Description" type="string" />
-                        <property name="BaseViewID" type="string">2</property>
-                        <property name="AllowHide" type="bool">True</property>
-                        <property name="AllowMinimize" type="bool">True</property>
-                        <property name="Title" type="string">Get started with your site</property>
-                        <property name="TitleUrl" type="string" />
-                        <property name="ExportMode" type="exportmode">All</property>
-                        <property name="ChromeType" type="chrometype">None</property>
-                        <property name="AllowConnect" type="bool">True</property>
-                        <property name="Width" type="string" />
-                        <property name="Height" type="string" />
-                        <property name="CatalogIconImageUrl" type="string" />
-                        <property name="HelpMode" type="helpmode">Modeless</property>
-                        <property name="AllowEdit" type="bool">True</property>
-                        <property name="TitleIconImageUrl" type="string" />
-                        <property name="Direction" type="direction">NotSet</property>
-                        <property name="AllowClose" type="bool">True</property>
-                        <property name="ChromeState" type="chromestate">Normal</property>
-                      </properties>
-                    </data>
-                  </webPart>
-                </webParts>
-              </pnp:Contents>
-            </pnp:WebPart>
             <pnp:WebPart Title="Recently modified documents" Row="1" Column="1">
               <pnp:Contents>
                 <webParts>
@@ -184,14 +106,7 @@
       </pnp:Pages>
       <pnp:Lists 
         xmlns:pnp="http://schemas.dev.office.com/PnP/2016/05/ProvisioningSchema">
-        <pnp:ListInstance Title="Documents" Description="" DocumentTemplate="{site}/Shared Documents/Forms/template.dotx" TemplateType="101" Url="Shared Documents" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="10" DraftVersionVisibility="0" ContentTypesEnabled="true" EnableAttachments="false">
-          <pnp:ContentTypeBindings>
-            <pnp:ContentTypeBinding ContentTypeID="0x010100D6680B47A1D9FC4F8B383FDE800F458701" Default="true" />
-            <pnp:ContentTypeBinding ContentTypeID="0x010100D6680B47A1D9FC4F8B383FDE800F458703" />
-            <pnp:ContentTypeBinding ContentTypeID="0x010100D6680B47A1D9FC4F8B383FDE800F458704" />
-            <pnp:ContentTypeBinding ContentTypeID="0x0101" Remove="true" />
-            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
-          </pnp:ContentTypeBindings>
+        <pnp:ListInstance Title="Documents" Description="" DocumentTemplate="{site}/Shared Documents/Forms/template.dotx" TemplateType="101" Url="Shared Documents" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="10" DraftVersionVisibility="0" ContentTypesEnabled="false" EnableAttachments="false" OnQuickLaunch="true">
           <pnp:Views RemoveExistingViews="true">
             <View Name="{68142F90-47C8-4890-BEE8-2F54AB2D07F9}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="FALSE" Type="HTML" DisplayName="All Documents" Url="/teams/yara-test/TestDoc/Forms/AllItems.aspx" Level="1" BaseViewID="2" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=44">
               <Query>
@@ -225,25 +140,8 @@
               <JSLink>clienttemplates.js</JSLink>
             </View>
           </pnp:Views>
-          <pnp:FieldRefs>
-            <pnp:FieldRef ID="85ca8205-4466-4134-ad6d-34e276430222" Name="{parameter:GenericFieldsPrefix}Description" />
-            <pnp:FieldRef ID="d667bbbb-75f2-4f97-b373-4a4f958eb34f" Name="{parameter:GenericFieldsPrefix}BaseModule" />
-            <pnp:FieldRef ID="5f56a87f-be15-4a28-8596-ada81c39fbaa" Name="{parameter:GenericFieldsPrefix}SubModules" />
-          </pnp:FieldRefs>
         </pnp:ListInstance>
       </pnp:Lists>
-      <pnp:CustomActions>
-        <pnp:SiteCustomActions>
-          <pnp:CustomAction Name="Yara.FavIcon" Location="ScriptLink" ScriptBlock="var favIcon=document.getElementById('favicon');favIcon.setAttribute('href','/sites/yara-cdn/siteassets/cdn/img/favicon.ico');" />
-          <pnp:CustomAction Name="Yara.Teams.Css" Location="ScriptLink" Sequence="1" ScriptBlock="registerCssLink('/sites/yara-cdn/siteassets/cdn/css/yara-team-sites.css?rev=' + new Date().getDay());" />
-          <pnp:CustomAction Name="Webtrends Advanced Analytics" Location="ScriptLink" Sequence="2" ScriptBlock="(function(){var s=document.createElement('script');s.async=true;s.src='/sites/yara-cdn/SiteAssets/CDN/libs/js/webtrends.load.js';var s2=document.getElementsByTagName('script')[0];s2.parentNode.insertBefore(s,s2);})();" />
-        </pnp:SiteCustomActions>
-      </pnp:CustomActions>
-      <pnp:ContentTypes>
-        <pnp:ContentType ID="0x010100D6680B47A1D9FC4F8B383FDE800F458701" Name="Yara Word Document" Group="YARA Content Types" ReadOnly="false" />
-        <pnp:ContentType ID="0x010100D6680B47A1D9FC4F8B383FDE800F458703" Name="Yara PowerPoint Presentation" Group="YARA Content Types" ReadOnly="false" />
-        <pnp:ContentType ID="0x010100D6680B47A1D9FC4F8B383FDE800F458704" Name="Yara Excel Workbook" Description="" Group="YARA Content Types" ReadOnly="false" />
-      </pnp:ContentTypes>
     </pnp:ProvisioningTemplate>
   </pnp:Templates>
 </pnp:Provisioning>

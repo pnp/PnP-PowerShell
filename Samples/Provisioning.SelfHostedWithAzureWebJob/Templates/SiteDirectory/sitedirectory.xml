@@ -18,7 +18,7 @@
       <pnp:SupportedUILanguages>
         <pnp:SupportedUILanguage LCID="1033" />
       </pnp:SupportedUILanguages>
-      <pnp:WebSettings SiteLogo="/sites/sitedirectory/SiteAssets/sp_logo.png" />
+      <pnp:WebSettings SiteLogo="{sitecollection}/SiteAssets/sp_logo.png" />
       <pnp:Files>
         <pnp:File Folder="{sitecollection}/SiteAssets" Overwrite="true" Src="Assets\sp_logo.png" />
       </pnp:Files>

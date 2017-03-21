@@ -1,2 +1,0 @@
-IRM changed for {0}|
-<p>IRM is now {1} for the site {0}</p>
