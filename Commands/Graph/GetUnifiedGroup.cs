@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        SortOrder = 3)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroup -Identity $groupSiteMailNickName",
-       Remarks = "Retrieves a specific Office 365 Group based on the mail nickname of its Modern SharePoint site",
+       Remarks = "Retrieves a specific Office 365 Group based on the mail nickname",
        SortOrder = 4)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
