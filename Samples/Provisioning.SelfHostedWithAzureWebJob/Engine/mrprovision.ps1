@@ -300,9 +300,8 @@ foreach ($siteItem in $siteDirectoryItems) {
         SetRequestAccessEmail -url $siteUrl -ownersEmail ($ownerEmailAddresses -join ',')
         if ($siteStatus -ne 'Provisioned') {
             SendReadyEmail -url $siteUrl -toEmail $orderedByUser.Email -ccEmails $businessOwnerEmailAddress -title $title
-        }
-
-        UpdateStatus -id $siteItem["ID"] -status 'Provisioned'
+            UpdateStatus -id $siteItem["ID"] -status 'Provisioned'
+        }        
     }
 }
 Disconnect-PnPOnline
