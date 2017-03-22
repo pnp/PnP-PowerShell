@@ -2,7 +2,7 @@ param(
     [switch]$Force
 )
 
-. ./shared.ps1
+. $PSScriptRoot/shared.ps1
 
 $templateConfigurationsList = '/Lists/Templates'
 $baseModulesLibrary = 'BaseModules'

@@ -2,7 +2,7 @@ param(
     [switch]$syncPermissions
 )
 
-. ./shared.ps1
+. $PSScriptRoot/shared.ps1
 
 Write-Output @"
   ___  ___       _____                                                
@@ -29,7 +29,7 @@ foreach ($site in $res.ResultRows) {
 
     Write-Output "Processing $url - $itemId"
     if ($syncPermissions) {        
-        SyncPermissions -url $url -item $siteItem
+        SyncPermissions -siteUrl $url -item $siteItem
     }
 }
 
