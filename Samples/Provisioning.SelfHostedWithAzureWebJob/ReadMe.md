@@ -12,7 +12,7 @@ Applies to
 
 ## Prerequisites ##
 	Office Dev PnP PowerShell Commands
-	Azure Subscription
+	Azure Subscription with an App Service
 
 # GETTING STARTED ##
 
@@ -27,14 +27,14 @@ In your site you should now see the following:
 List/Library | Description
 --- | ---
 Sites | list to order sites
-Site | templates - functional template definitions with reference to modules and apps
+Site templates | templates - functional template definitions with reference to modules and apps
 Modules | library to store larger PnP template files
 Apps |library to store functional scoped PnP template files
 
-* Upload .\Templates\teamsite.pnp to *Modules*, and give it a title
-* Upload .\Templates\pictures.pnp to *Apps*, and give it a title
-* Create an item in *Site templates* and link up *teamsite.pnp* as a module
-  * optionally link up *pictures.pnp* as an app
+* Upload .\Templates\teamsite.pnp to *Modules*, and set *Default Team Site* as the title
+* Upload .\Templates\pictures.pnp to *Apps*, and set *Picture library* as the title
+* Create an item in *Site templates* and link up *Default Team Site* as a module
+  * optionally link up *Picture library* as an app
 * Create an item in *Sites*
   * pick the template you just created
   * optionally pick an app
@@ -97,19 +97,21 @@ AppSecret | &lt;your secret&gt;
 
 4. Remember to toggle Always On for the web job in a production
 
-## Solution ##
-* mrprovision.ps1
-* mrgovernance.ps1
-* Package-WebJobs.ps1	
+## Solution
+.\Engine folder - scripts for provisioning and governance</br>
+.\Engine\bundle - copy of all PnP PowerShell files - update with latest version</br>
+.\Engine\resources - e-mail templates</br>
+.\Templates - site directory .pnp template and sample templates</br>
+Package-WebJobs.ps1 - script to create web job zip files</br>
 
-Author(s)</br>
-Mikael Svenson (Puzzlepart)
-Tarjei Ormestøyl (Puzzlepart)
-Petter Skodvin-Hvammen (Puzzlepart)
+## Author(s)
+Mikael Svenson (Puzzlepart)</br>
+Tarjei Ormestøyl (Puzzlepart)</br>
+Petter Skodvin-Hvammen (Puzzlepart)</br>
 
 ## Version history ##
 Version:	1.0	</br>
-Version	Date:  3/22/2016<br>
+Version	Date:  3/22/2017<br>
 Comments:		Initial release</br>
 
 
