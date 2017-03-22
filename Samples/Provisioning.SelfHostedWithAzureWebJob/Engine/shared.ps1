@@ -23,7 +23,8 @@ $siteDirectorySiteUrl = ([environment]::GetEnvironmentVariable("APPSETTING_SiteD
 $siteDirectoryList = '/Lists/Sites'
 $managedPath = 'teams' # sites/teams
 $columnPrefix = 'PZL_'
-$propBagTemplateInfoStampKey = "_PnP_AppliedTemplateInfo"
+$propBagTemplateInfoStampKey = "_PnP_AppliedTemplateInfo" #pnp packages
+$propBagTemplateNameStampKey = "_PnP_AppliedTemplateName" #conseptual templates
 
 $Global:lastContextUrl = ''
 
@@ -82,8 +83,8 @@ function GetLoginName{
     return $user["Name"]    
 }
 
-function SetRequestAccessEmail([string]$url, [string]$ownersEmail) {
-    Connect -Url $url
+function SetRequestAccessEmail([string]$siteUrl, [string]$ownersEmail) {
+    Connect -Url $siteUrl
     $emails = Get-PnPRequestAccessEmails
     if($emails -ne $ownersEmail) {
         Write-Output "`tSetting site request e-mail to $ownersEmail"    
@@ -93,12 +94,12 @@ function SetRequestAccessEmail([string]$url, [string]$ownersEmail) {
 
 function SyncPermissions{
     Param(
-        [string]$url,
+        [string]$siteUrl,
         [Microsoft.SharePoint.Client.ListItem]$item
     )
 
     Write-Output "`tSyncing owners/members/visitors from site to directory list"
-    Connect -Url $url
+    Connect -Url $siteUrl
     $visitorsGroup = Get-PnPGroup -AssociatedVisitorGroup -ErrorAction SilentlyContinue
     $membersGroup = Get-PnPGroup -AssociatedMemberGroup -ErrorAction SilentlyContinue
     $ownersGroup = Get-PnPGroup -AssociatedOwnerGroup -ErrorAction SilentlyContinue
