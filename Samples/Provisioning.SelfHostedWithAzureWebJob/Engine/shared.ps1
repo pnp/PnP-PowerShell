@@ -17,7 +17,6 @@ if(!$tenantURL){
     $tenantURL = [string]::format("https://{0}.sharepoint.com",$tenant)
 }
 
-
 $primarySiteCollectionAdmin = ([environment]::GetEnvironmentVariable("APPSETTING_PrimarySiteCollectionOwnerEmail"))
 $siteDirectorySiteUrl = ([environment]::GetEnvironmentVariable("APPSETTING_SiteDirectoryUrl"))
 $siteDirectoryList = '/Lists/Sites'
@@ -123,7 +122,7 @@ function SyncPermissions{
     $diffVisitor = Compare-Object -ReferenceObject $visitors -DifferenceObject $existingVisitors -PassThru
 
     if($diffOwner -or $diffMember -or $diffVisitor) {
-        Write-Host "Updating changed owners/members/visitors"
+        Write-Host "`tUpdating changed owners/members/visitors"
         $siteItem = Set-PnPListItem -List $siteDirectoryList -Identity $itemId -Values @{"$($columnPrefix)SiteOwners" = $owners; "$($columnPrefix)SiteMembers" = $members; "$($columnPrefix)SiteVisitors" = $visitors}
     }
 }
