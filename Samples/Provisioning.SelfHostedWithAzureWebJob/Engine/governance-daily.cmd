@@ -1,1 +1,1 @@
-PowerShell.exe -ExecutionPolicy RemoteSigned -NonInteractive -File mrgovernance.ps1 -verifyBusinessOwner -irm -syncPermissions -ensureAboutPage
+PowerShell.exe -ExecutionPolicy RemoteSigned -NonInteractive -File mrgovernance.ps1 -syncPermissions
