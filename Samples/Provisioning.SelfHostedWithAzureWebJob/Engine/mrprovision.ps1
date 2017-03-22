@@ -33,7 +33,7 @@ function EnsureSite {
     Param(
         [string]$siteEntryId,
         [string]$title,
-        [string]$url,
+        [string]$siteUrl,
         [string]$description = "",
         [string]$siteCollectionAdmin,
         [Microsoft.SharePoint.Client.User]$owner,
@@ -45,26 +45,25 @@ function EnsureSite {
 
     #Connect admin url
     Connect -Url $tenantAdminUrl
-
-    $site = Get-PnPTenantSite -Url $url -ErrorAction SilentlyContinue
+    $site = Get-PnPTenantSite -Url $siteUrl -ErrorAction SilentlyContinue
     if ( $? -eq $false) {
-        Write-Output "Site at $url does not exist - let's create it"
-        $site = New-PnPTenantSite -Title $title -Url $url -Owner $siteCollectionAdmin -TimeZone 3 -Description $description -Lcid 1033 -Template "STS#0"  -RemoveDeletedSite:$true -Wait
+        Write-Output "Site at $siteUrl does not exist - let's create it"
+        $site = New-PnPTenantSite -Title $title -Url $siteUrl -Owner $siteCollectionAdmin -TimeZone 3 -Description $description -Lcid 1033 -Template "STS#0" -RemoveDeletedSite:$true -Wait
         if ($? -eq $false) {
             # send e-mail
             $mailHeadBody = GetMailContent -email $owner.Email -mailFile "fail"
             Write-Output "Sending fail mail to $ownerAddresses"
-            Send-PnPMail -To $ownerAddresses -Subject $mailHeadBody[0] -Body ($mailHeadBody[1] -f $url)
+            Send-PnPMail -To $ownerAddresses -Subject $mailHeadBody[0] -Body ($mailHeadBody[1] -f $siteUrl)
             Write-Error "Something happened"
             UpdateStatus -id $siteEntryId -status 'Failed'
             return;
         }
     }
     elseif ($site.Status -ne "Active") {
-        Write-Output "Site at $url already exist"
+        Write-Output "Site at $siteUrl already exist"
         while ($true) {
             # Wait for site to be ready
-            $site = Get-PnPTenantSite -Url $url
+            $site = Get-PnPTenantSite -Url $siteUrl
             if ( $site.Status -eq "Active" ) {
                 break;
             }
@@ -74,8 +73,8 @@ function EnsureSite {
     }
 }
 
-function EnsureSecurityGroups([string]$url, [string]$title, [string[]]$owners, [string[]]$members, [string[]]$visitors, [string]$siteCollectionAdmin) {
-    Connect -Url $url
+function EnsureSecurityGroups([string]$siteUrl, [string]$title, [string[]]$owners, [string[]]$members, [string[]]$visitors, [string]$siteCollectionAdmin) {
+    Connect -Url $siteUrl
 
     $visitorsGroup = Get-PnPGroup -AssociatedVisitorGroup -ErrorAction SilentlyContinue
     if ( $? -eq $false) {
@@ -98,34 +97,43 @@ function EnsureSecurityGroups([string]$url, [string]$title, [string[]]$owners, [
         Set-PnPGroup -Identity $ownersGroup -SetAssociatedGroup Owners
     }
 
-    if ($owners -ne $null) {
-        Write-Output "`tAdding owners: $owners"
-        foreach ($login in $owners) {
-            Add-PnPUserToGroup -Identity $ownersGroup -LoginName $login
+    if ($owners -ne $null) {        
+        $existingOwners = @($ownersGroup.Users | select -ExpandProperty LoginName)
+        foreach ($login in $owners) {            
+            if (-not $existingOwners.Contains($login)) {
+                Write-Output "`tAdding owner: $login"
+                Add-PnPUserToGroup -Identity $ownersGroup -LoginName $login
+            }
         }
     }
 
     if ($members -ne $null) {
-        Write-Output "`tAdding members: $members"
+        $existingMembers = @($membersGroup.Users | select -ExpandProperty LoginName)
         foreach ($login in $members) {
-            Add-PnPUserToGroup -Identity $membersGroup -LoginName $login
+            if (-not $existingOwners.Contains($login)) {
+                Write-Output "`tAdding member: $login"
+                Add-PnPUserToGroup -Identity $membersGroup -LoginName $login
+            }
         }
     }
 
     if ($visitors -ne $null) {
-        Write-Output "`tAdding visitors: $visitors"
+        $existingVisitors = @($visitorsGroup.Users | select -ExpandProperty LoginName)
         foreach ($login in $visitors) {
-            Add-PnPUserToGroup -Identity $visitorsGroup -LoginName $login
+            if (-not $existingOwners.Contains($login)) {
+                Write-Output "`tAdding visitor: $login"
+                Add-PnPUserToGroup -Identity $visitorsGroup -LoginName $login
+            }
         }
     }
 }
 
-function ApplyTemplate([string]$url, [string]$templateUrl, [string]$templateName) {
-    Connect -Url $url
+function ApplyTemplate([string]$siteUrl, [string]$templateUrl, [string]$templateName) {
+    Connect -Url $siteUrl
 
     $appliedTemplates = Get-PnPPropertyBag -Key $propBagTemplateInfoStampKey
     if ((-not $appliedTemplates.Contains("|$templateName|") -or $Force)) {
-        Write-Output "`tApplying template $templateName to $url"
+        Write-Output "`tApplying template $templateName to $siteUrl"
         Apply-PnPProvisioningTemplate -Path $templateUrl
         if ($? -eq $true) {
             $appliedTemplates = "$appliedTemplates|$templateName|"
@@ -133,7 +141,7 @@ function ApplyTemplate([string]$url, [string]$templateUrl, [string]$templateName
         }
     }
     else {
-        Write-Output "`tTemplate $templateName already applied to $url"
+        Write-Output "`tTemplate $templateName already applied to $siteUrl"
     }
 }
 
@@ -150,48 +158,93 @@ function UpdateStatus($id, $status) {
 
 function SendReadyEmail() {
     Param(
-        [string]$url,
+        [string]$siteUrl,
         [string]$toEmail,
         [String[]]$ccEmails,
         [string]$title
     )
-    Connect -Url $url
+    Connect -Url $siteUrl
     if ( -not [string]::IsNullOrWhiteSpace($toEmail) ) {
         $mailHeadBody = GetMailContent -email $toEmail -mailFile "welcome"
 
         Write-Output "Sending ready mail to $toEmail and $ccEmails"
-        Send-PnPMail -To $toEmail -Cc $ccEmails -Subject ($mailHeadBody[0] -f $title) -Body ($mailHeadBody[1] -f $title, $url)
+        Send-PnPMail -To $toEmail -Cc $ccEmails -Subject ($mailHeadBody[0] -f $title) -Body ($mailHeadBody[1] -f $title, $siteUrl)
     }
 }
 
 
-function Apply-TemplateConfigurations($url, $siteItem, $templateConfigurationItems, $baseModuleItems, $subModuleItems) {
-    Connect -Url $url
+function Apply-TemplateConfigurations($siteUrl, $siteItem, $templateConfigurationItems, $baseModuleItems, $subModuleItems) {
+    Connect -Url $siteUrl
+
     $templateConfig = $siteItem["$($columnPrefix)TemplateConfig"]
     $subModules = $siteItem["$($columnPrefix)SubModules"]
+
     if ($templateConfig -ne $null) {
         $chosenTemplateConfig = $templateConfigurationItems |? Id -eq $templateConfig.LookupId
-        if ($chosenTemplateConfig -ne $null) {
-            $chosenBaseTemplate = $chosenTemplateConfig["$($columnPrefix)BaseModule"]
-            $chosenSubModules = $chosenTemplateConfig["$($columnPrefix)SubModules"]
-            if ($chosenBaseTemplate -ne $null) {
-                $pnpTemplate = $baseModuleItems |? Id -eq $chosenBaseTemplate.LookupId
-                $pnpUrl = $tenantUrl + $pnpTemplate["FileRef"]
-                ApplyTemplate -url $url -templateUrl $pnpUrl -templateName $pnpTemplate["FileLeafRef"]
-            }
-            if ($chosenSubModules -ne $null) {                
-                foreach ($module in $chosenSubModules) {
-                    $pnpTemplate = $subModuleItems |? Id -eq $module.LookupId
+
+        $hasTemplate = Get-PnPPropertyBag -Key $propBagTemplateNameStampKey
+        if (-not $hasTemplate) {
+            #Template not applied
+            $allGood = $true
+            if ($chosenTemplateConfig -ne $null) {
+                $chosenBaseTemplate = $chosenTemplateConfig["$($columnPrefix)BaseModule"]
+                $chosenSubModules = $chosenTemplateConfig["$($columnPrefix)SubModules"]
+
+                if ($chosenBaseTemplate -ne $null) {
+                    $pnpTemplate = $baseModuleItems |? Id -eq $chosenBaseTemplate.LookupId
                     $pnpUrl = $tenantUrl + $pnpTemplate["FileRef"]
-                    ApplyTemplate -url $url -templateUrl $pnpUrl -templateName $pnpTemplate["FileLeafRef"]
+                    $templateName = $pnpTemplate["FileLeafRef"]
+                    ApplyTemplate -siteUrl $siteUrl -templateUrl $pnpUrl -templateName $templateName
+                    
+                    $appliedTemplates = Get-PnPPropertyBag -Key $propBagTemplateInfoStampKey
+                    if (-not $appliedTemplates.Contains("|$templateName|")) {
+                        $allGood = $false
+                    }
                 }
+                if ($chosenSubModules -ne $null) {
+                    foreach ($module in $chosenSubModules) {
+                        $pnpTemplate = $subModuleItems |? Id -eq $module.LookupId
+                        $pnpUrl = $tenantUrl + $pnpTemplate["FileRef"]
+                        $templateName = $pnpTemplate["FileLeafRef"]
+                        ApplyTemplate -siteUrl $siteUrl -templateUrl $pnpUrl -templateName $templateName
+                        $appliedTemplates = Get-PnPPropertyBag -Key $propBagTemplateInfoStampKey
+                        if (-not $appliedTemplates.Contains("|$templateName|")) {
+                            $allGood = $false
+                        }
+                    }
+                }
+            }
+            if ($allGood) {
+                Write-Output "`tTemplate $($chosenTemplateConfig["Title"]) applied"
+                Set-PnPPropertyBagValue -Key $propBagTemplateNameStampKey -Value $chosenTemplateConfig["Title"]
             }
         }
     }
+
     foreach ($module in $subModules) {
         $pnpTemplate = $subModuleItems |? Id -eq $module.LookupId
         $pnpUrl = $tenantUrl + $pnpTemplate["FileRef"]
-        ApplyTemplate -url $url -templateUrl $pnpUrl -templateName $pnpTemplate["FileLeafRef"]
+        ApplyTemplate -siteUrl $siteUrl -templateUrl $pnpUrl -templateName $pnpTemplate["FileLeafRef"]
+    }
+
+    # Ensure list is updated with all applied modules
+    Connect -Url $siteUrl
+    $appliedTemplates = (Get-PnPPropertyBag -Key $propBagTemplateInfoStampKey).Split('|') |? {$_} #remove empty lines
+    $ids = $appliedTemplates | % {
+        $name = $_
+        $subModuleItems |? {$_["FileLeafRef"] -eq $name} | select -ExpandProperty Id
+    }
+    Connect -Url "$tenantURL$siteDirectorySiteUrl"
+    Set-PnPListItem -List $siteDirectoryList -Identity $siteItem["ID"] -Values @{"$($columnPrefix)SubModules" = $ids} -ErrorAction SilentlyContinue >$null 2>&1
+    #end
+}
+
+function SyncMetadata($siteUrl, $title, $description) {
+    Connect -Url $siteUrl
+    $web = Get-PnPWeb -Includes Description
+    if ($web.Title -ne $title -or $web.Description -ne $description) {
+        Write-Output "`tSync title/description to $siteUrl"
+        Set-PnPWeb -Title $title -Description $description
     }
 }
 
@@ -283,7 +336,7 @@ foreach ($siteItem in $siteDirectoryItems) {
     Connect -Url "$tenantURL$siteDirectorySiteUrl"
     $urlToSiteDirectory = "$tenantURL$siteDirectorySiteUrl$siteDirectoryList"
 
-    EnsureSite -siteEntryId $siteItem["ID"] -title $title -url $siteUrl -description $description `
+    EnsureSite -siteEntryId $siteItem["ID"] -title $title -siteUrl $siteUrl -description $description `
         -siteCollectionAdmin $primarySiteCollectionAdmin `
         -owner $ownerAccount `
         -ownerAddresses $businessOwnerEmailAddress `
@@ -291,15 +344,17 @@ foreach ($siteItem in $siteDirectoryItems) {
         -visitors $visitors `
         -requestor $orderedByUser
 
-    if ($? -eq $true -and ($editor -ne "SharePoint App" -or $Force)) {        
-        SetSiteUrl -siteItem $siteItem -siteUrl $siteUrl -title $title
-        EnsureSecurityGroups -url $siteUrl -title $title -owners $owners -members $members -visitors $visitors        
+    if ($? -eq $true -and ($editor -ne "SharePoint App" -or $Force)) {
+        EnsureSecurityGroups -siteUrl $siteUrl -title $title -owners $owners -members $members -visitors $visitors
         
-        Apply-TemplateConfigurations -url $siteUrl -siteItem $siteItem -templateConfigurationItems $templateConfigurationItems -baseModuleItems $baseModuleItems -subModuleItems $subModuleItems
+        Apply-TemplateConfigurations -siteUrl $siteUrl -siteItem $siteItem -templateConfigurationItems $templateConfigurationItems -baseModuleItems $baseModuleItems -subModuleItems $subModuleItems
 
-        SetRequestAccessEmail -url $siteUrl -ownersEmail ($ownerEmailAddresses -join ',')
+        SyncMetadata -siteUrl $siteUrl -title $title -description $description   
+
+        SetRequestAccessEmail -siteUrl $siteUrl -ownersEmail ($ownerEmailAddresses -join ',')        
         if ($siteStatus -ne 'Provisioned') {
-            SendReadyEmail -url $siteUrl -toEmail $orderedByUser.Email -ccEmails $businessOwnerEmailAddress -title $title
+            SendReadyEmail -siteUrl $siteUrl -toEmail $orderedByUser.Email -ccEmails $businessOwnerEmailAddress -title $title
+            SetSiteUrl -siteItem $siteItem -siteUrl $siteUrl -title $title
             UpdateStatus -id $siteItem["ID"] -status 'Provisioned'
         }        
     }
