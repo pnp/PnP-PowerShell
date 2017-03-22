@@ -18,18 +18,18 @@ Write-Output @"
 
 Connect -Url "$tenantURL$siteDirectorySiteUrl"
 
-$teamSiteFilter = "$tenantUrl/$managedPath/"
+$query = 'spcontenttype="team site" path:' + "$tenantURL$siteDirectorySiteUrl$siteDirectoryList"
+$res = Submit-PnPSearchQuery -Query $query -All -SelectProperties "PZLSiteURLOWSURLH", "ListItemID"
 
-#TODO get siteitem id
-$res = Submit-PnPSearchQuery -Query 'spcontenttype="team site"' -All -SelectProperties "PZLSiteURLOWSURLH"
-$sites = @($res.ResultRows |% { $_["PZLSiteURLOWSURLH"] } |? {$_})
+foreach ($site in $res.ResultRows) {
+    $url = $site["PZLSiteURLOWSURLH"].split(',')[0]
+    $itemId = $site["ListItemID"]
+    Connect -Url "$tenantURL$siteDirectorySiteUrl"
+    $siteItem = Get-PnPListItem -List $siteDirectoryList -Id $itemId
 
-foreach($site in $sites){
-    $url = $site.split(',')[0]
-    Write-Output "Processing $url"
-
-    if($syncPermissions) {
-        SyncPermissions -url $url
+    Write-Output "Processing $url - $itemId"
+    if ($syncPermissions) {        
+        SyncPermissions -url $url -item $siteItem
     }
 }
 
