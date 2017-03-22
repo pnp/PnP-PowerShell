@@ -4,6 +4,11 @@ This PowerShell sample demonstrates how to use the Office Dev PnP PowerShell in 
 to order and provision Team Sites. The solution is hosted in SharePoint, and site configurations
 are stores as provisioning .pnp files in SharePoint libraries.
 
+The sample solution is set up so that Owners, Members and Visitors are set at item create time, but the fields are hidden for modifiction. This means the site will be master for permissions once created.
+
+You can easily add more logic to the site creation or governance process to perform tasks specified by your own business requirements.
+
+
 Applies to
 
 
@@ -71,6 +76,8 @@ $env:APPSETTING_AppSecret = "<your secret>"
 * Edit .\Engine\shared.ps1 to match your environment if you have renamed column prefix or similar, or if you want to provision sites on the managed path */sites* and not */teams*
 * Run .\Engine\mrprovision.ps1
 * Once done visit the newly created site (link from Site Directory, or via e-mail)
+	* The requestor and site owner will get e-mails when the site is ready
+	* The site owners are set as site request recipients
 * Add some more owners, members or visitors to the site
 * Try out the governance script which syncs users back to the site directory
 * Run .\Engine\mrgovernance.ps -syncPermissions
