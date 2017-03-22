@@ -21,7 +21,6 @@ if(!$tenantURL){
 $primarySiteCollectionAdmin = ([environment]::GetEnvironmentVariable("APPSETTING_PrimarySiteCollectionOwnerEmail"))
 $siteDirectorySiteUrl = ([environment]::GetEnvironmentVariable("APPSETTING_SiteDirectoryUrl"))
 $siteDirectoryList = '/Lists/Sites'
-$siteTrainingList = '/Lists/SiteOwnerTrainingList'
 $managedPath = 'teams' # sites/teams
 $columnPrefix = 'PZL_'
 $propBagTemplateInfoStampKey = "_PnP_AppliedTemplateInfo"
@@ -94,7 +93,8 @@ function SetRequestAccessEmail([string]$url, [string]$ownersEmail) {
 
 function SyncPermissions{
     Param(
-        [string]$url
+        [string]$url,
+        [Microsoft.SharePoint.Client.ListItem]$item
     )
 
     Write-Output "`tSyncing owners/members/visitors from site to directory list"
@@ -107,27 +107,22 @@ function SyncPermissions{
     $members = @($membersGroup.Users | select -ExpandProperty LoginName)
     $owners = @($ownersGroup.Users | select -ExpandProperty LoginName)
 
-    #TODO - get itemid from list
-    $itemId = $null
-    
     Connect -Url "$tenantURL$siteDirectorySiteUrl"
+
     $owners = @($owners -notlike 'SHAREPOINT\system' |% {New-PnPUser -LoginName $_ | select -ExpandProperty ID} | sort) 
     $members = @($members -notlike 'SHAREPOINT\system' |% {New-PnPUser -LoginName $_ | select -ExpandProperty ID} | sort) 
     $visitors = @($visitors -notlike 'SHAREPOINT\system' |% {New-PnPUser -LoginName $_ | select -ExpandProperty ID} | sort) 
-
-    $existingSiteItem = Get-PnPListItem -List $siteDirectoryList -Id $itemId
-    $existingOwners = @($existingSiteItem["$($columnPrefix)SiteOwners"] | select -ExpandProperty LookupId | sort)
-    $existingMembers = @($existingSiteItem["$($columnPrefix)SiteMembers"] | select -ExpandProperty LookupId | sort)
-    $existingVisitors = @($existingSiteItem["$($columnPrefix)SiteVisitors"] | select -ExpandProperty LookupId | sort)
+    
+    $existingOwners = @($item["$($columnPrefix)SiteOwners"] | select -ExpandProperty LookupId | sort)
+    $existingMembers = @($item["$($columnPrefix)SiteMembers"] | select -ExpandProperty LookupId | sort)
+    $existingVisitors = @($item["$($columnPrefix)SiteVisitors"] | select -ExpandProperty LookupId | sort)
 
     $diffOwner = Compare-Object -ReferenceObject $owners -DifferenceObject $existingOwners -PassThru
     $diffMember = Compare-Object -ReferenceObject $members -DifferenceObject $existingMembers -PassThru
     $diffVisitor = Compare-Object -ReferenceObject $visitors -DifferenceObject $existingVisitors -PassThru
 
     if($diffOwner -or $diffMember -or $diffVisitor) {
+        Write-Host "Updating changed owners/members/visitors"
         $siteItem = Set-PnPListItem -List $siteDirectoryList -Identity $itemId -Values @{"$($columnPrefix)SiteOwners" = $owners; "$($columnPrefix)SiteMembers" = $members; "$($columnPrefix)SiteVisitors" = $visitors}
-
-        $urlToSiteDirectory = "$tenantURL$siteDirectorySiteUrl$siteDirectoryList"
-        SyncMetadata -siteItem $siteItem -siteUrl $url -urlToDirectory $urlToSiteDirectory
     }
 }
