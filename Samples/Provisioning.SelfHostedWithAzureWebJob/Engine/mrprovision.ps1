@@ -39,8 +39,7 @@ function EnsureSite {
         [Microsoft.SharePoint.Client.User]$owner,
         [String[]]$ownerAddresses,
         [String[]]$members,
-        [String[]]$visitors,
-        [Microsoft.SharePoint.Client.FieldUserValue]$requestor
+        [String[]]$visitors
     )
 
     #Connect admin url
@@ -341,8 +340,7 @@ foreach ($siteItem in $siteDirectoryItems) {
         -owner $ownerAccount `
         -ownerAddresses $businessOwnerEmailAddress `
         -members $members `
-        -visitors $visitors `
-        -requestor $orderedByUser
+        -visitors $visitors
 
     if ($? -eq $true -and ($editor -ne "SharePoint App" -or $Force)) {
         EnsureSecurityGroups -siteUrl $siteUrl -title $title -owners $owners -members $members -visitors $visitors
