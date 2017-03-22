@@ -21,6 +21,9 @@
 					<FieldRef Name="PZL_SiteURL" />
 					<FieldRef Name="PZL_TemplateConfig" />
 					<FieldRef Name="PZL_SubModules" />
+					<FieldRef Name="PZL_SiteOwners" />
+					<FieldRef Name="PZL_SiteMembers" />
+					<FieldRef Name="PZL_SiteVisitors" />
 				</ViewFields>
 				<RowLimit Paged="TRUE">30</RowLimit>
 				<Aggregations Value="Off" />
