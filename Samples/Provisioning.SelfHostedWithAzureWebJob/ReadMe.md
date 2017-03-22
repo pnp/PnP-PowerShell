@@ -1,4 +1,4 @@
-# Site order and provisioning using PowerShell and Azure Web Jbo
+# Site order and provisioning using PowerShell and Azure Web Job
 
 This PowerShell sample demonstrates how to use the Office Dev PnP PowerShell in an Azure Web Job
 to order and provision Team Sites. The solution is hosted in SharePoint, and site configurations
@@ -12,33 +12,104 @@ Applies to
 
 ## Prerequisites ##
 	Office Dev PnP PowerShell Commands
+	Azure Subscription
 
-## GETTING STARTED ##
+# GETTING STARTED ##
 
-# SharePoint App Registration
+## Set up the site directory
 
-# Install the site directory
+1. Create a new site collection to host the site directory, or use an existing one
+2. Connect-PnPOnline -Url https://&lt;tenant&gt;.sharepoint.com(/sites/sitecollection)
+3. Apply-PnPProvisioningTemplate -Path .\Templates\SiteDirectory\sitedirectory.xml
 
-# Azure Web Job
+In your site you should now see the following:
 
-## Solution artifacts
+List/Library | Description
+--- | ---
+Sites | list to order sites
+Site | templates - functional template definitions with reference to modules and apps
+Modules | library to store larger PnP template files
+Apps |library to store functional scoped PnP template files
 
-# Directory
+* Upload .\Templates\teamsite.pnp to *Modules*, and give it a title
+* Upload .\Templates\pictures.pnp to *Apps*, and give it a title
+* Create an item in *Site templates* and link up *teamsite.pnp* as a module
+  * optionally link up *pictures.pnp* as an app
+* Create an item in *Sites*
+  * pick the template you just created
+  * optionally pick an app
 
-# Templates
+## SharePoint App Registration
 
-# Modules
+* Register a SharePoint app id/secret to be used to provision sites - record id and secret
+  * https://&lt;tenant&gt;.sharepoint.com/_layouts/15/AppRegNew.aspx
+* Add permissions to the registered app
+  * https://&lt;tenant&gt;-admin.sharepoint.com/_layouts/15/AppInv.aspx
+
+        Permission XML
+        --------------
+        <AppPermissionRequests AllowAppOnlyPolicy="true">
+                <AppPermissionRequest Scope="http://sharepoint/content/tenant" Right="FullControl" />
+                <AppPermissionRequest Scope="http://sharepoint/social/tenant" Right="Read" />
+                <AppPermissionRequest Scope="http://sharepoint/taxonomy " Right="Read" />
+        </AppPermissionRequests>
+
+## Test it out
+
+* Set the following environmental variables in PowerShell, 
+
+```powershell
+# E-mail address of a real user to be the primary site collection administrator
+$env:APPSETTING_PrimarySiteCollectionOwnerEmail = "admin@<tenant>.onmicrosoft.com" 
+# URL where you installed the directory
+$env:APPSETTING_SiteDirectoryUrl = "/sites/sitedirectory"
+$env:APPSETTING_TenantURL = "https://<tenant>.sharepoint.com"
+$env:APPSETTING_AppId = "<your id>"
+$env:APPSETTING_AppSecret = "<your secret>"
+```
+
+* Edit .\Engine\shared.ps1 to match your environment if you have renamed column prefix or similar, or if you want to provision sites on the managed path */sites* and not */teams*
+* Run .\Engine\mrprovision.ps1
+* Once done visit the newly created site (link from Site Directory, or via e-mail)
+* Add some more owners, members or visitors to the site
+* Try out the governance script which syncs users back to the site directory
+* Run .\Engine\mrgovernance.ps -syncPermissions
+
+## Package and Deploy Azure web jobs
+
+1. Run .\Package-WebJobs.ps1
+2. Create new Azure web jobs for each row in table below
+
+| Name                        | File Upload            | Type      | Triggers  | Cron Expression |
+--------------------------- | ---------------------- | --------- | --------- | ---------------  |
+| Pzl-O365-Site-Provisioning | provisioning.zip       | Triggered | Scheduled | 0 0/15 * * * *  |
+| Pzl-O365-Site-Gov-Daily    | governance-daily.zip   | Triggered | Scheduled | 0 0 5 * * *     |
+
+3. Add the following app settings to the app service
+![app settings](azure-webjob.png)
+
+Key | Value
+--- | ---
+SiteDirectoryUrl | /sites/sitedirectory
+TenantURL | https://<tenant>.sharepoint.com
+AppId | &lt;your id&gt;
+AppSecret | &lt;your secret&gt;
+
+4. Remember to toggle Always On for the web job in a production
 
 ## Solution ##
-Script	
-DevRampUp-Demo-PnP-PSProvisioning.ps1	
+* mrprovision.ps1
+* mrgovernance.ps1
+* Package-WebJobs.ps1	
 
 Author(s)</br>
 Mikael Svenson (Puzzlepart)
+Tarjei Ormestøyl (Puzzlepart)
+Petter Skodvin-Hvammen (Puzzlepart)
 
 ## Version history ##
 Version:	1.0	</br>
-Version	Date:  1/29/2016<br>
+Version	Date:  3/22/2016<br>
 Comments:		Initial release</br>
 
 
@@ -46,7 +117,7 @@ Comments:		Initial release</br>
 THIS CODE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANT ABILITY, OR NON-INFRINGEMENT.
 ________________________________________
 ## General ##
-- Replace <'Tenant'> tag with actual tenant name
-- Replace <'User'> tag with site's user name
+- Replace &lt;tenant&gt; tag with actual tenant name
+
 
 
