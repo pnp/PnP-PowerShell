@@ -2,7 +2,6 @@ $ProgressPreference = "SilentlyContinue"
 $WarningPreference = "SilentlyContinue"
 
 if (-not (Test-Path $PSScriptRoot\bundle\SharePointPnPPowerShellOnline.psd1)) {
-    Write-Host "a" -ForegroundColor Yellow
     Set-Alias nuget "$PSScriptRoot\nuget.exe"
     nuget install SharePointPnPPowerShellOnline -configFile $PSScriptRoot\nuget.config -OutputDirectory $PSScriptRoot\bundle\
 
@@ -11,13 +10,6 @@ if (-not (Test-Path $PSScriptRoot\bundle\SharePointPnPPowerShellOnline.psd1)) {
     $item | Remove-Item
 }
 
-Add-Type -Path $PSScriptRoot\bundle\Microsoft.SharePoint.Client.Taxonomy.dll -ErrorAction SilentlyContinue
-Add-Type -Path $PSScriptRoot\bundle\Microsoft.SharePoint.Client.DocumentManagement.dll -ErrorAction SilentlyContinue
-Add-Type -Path $PSScriptRoot\bundle\Microsoft.SharePoint.Client.WorkflowServices.dll -ErrorAction SilentlyContinue
-Add-Type -Path $PSScriptRoot\bundle\Microsoft.SharePoint.Client.Search.dll -ErrorAction SilentlyContinue
-
-Add-Type -Path $PSScriptRoot\bundle\Newtonsoft.Json.dll -ErrorAction SilentlyContinue
-Add-Type -Path $PSScriptRoot\bundle\Microsoft.IdentityModel.Extensions.dll -ErrorAction SilentlyContinue
 Import-Module $PSScriptRoot\bundle\SharePointPnPPowerShellOnline.psd1 -ErrorAction SilentlyContinue
 
 Set-PnPTraceLog -Off
@@ -134,7 +126,7 @@ function SyncPermissions {
     $diffVisitor = Compare-Object -ReferenceObject $visitors -DifferenceObject $existingVisitors -PassThru
 
     if ($diffOwner -or $diffMember -or $diffVisitor) {
-        Write-Host "`tUpdating changed owners/members/visitors"
+        Write-Output "`tUpdating changed owners/members/visitors"
         $siteItem = Set-PnPListItem -List $siteDirectoryList -Identity $itemId -Values @{"$($columnPrefix)SiteOwners" = $owners; "$($columnPrefix)SiteMembers" = $members; "$($columnPrefix)SiteVisitors" = $visitors}
     }
 }
