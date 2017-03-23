@@ -12,39 +12,23 @@ if (-not (Test-Path $PSScriptRoot\bundle\SharePointPnPPowerShellOnline.psd1)) {
 
 Import-Module $PSScriptRoot\bundle\SharePointPnPPowerShellOnline.psd1 -ErrorAction SilentlyContinue
 
-Set-PnPTraceLog -Off
-
-$tenantURL = ([environment]::GetEnvironmentVariable("APPSETTING_TenantURL"))
-if (!$tenantURL) {
-    $tenant = ([environment]::GetEnvironmentVariable("APPSETTING_Tenant"))
-    $tenantURL = [string]::format("https://{0}.sharepoint.com", $tenant)
+function CheckEnvironmentalVariables {
+    if (-not [environment]::GetEnvironmentVariable("APPSETTING_TenantURL")) {
+        return $false
+    }
+    if (-not [environment]::GetEnvironmentVariable("APPSETTING_PrimarySiteCollectionOwnerEmail")) {
+        return $false
+    }
+    if (-not [environment]::GetEnvironmentVariable("APPSETTING_AppId")) {
+        return $false
+    }
+    if (-not [environment]::GetEnvironmentVariable("APPSETTING_AppSecret")) {
+        return $false
+    }
+    if (-not [environment]::GetEnvironmentVariable("APPSETTING_SiteDirectoryUrl")) {
+        return $false
+    }
 }
-
-$primarySiteCollectionAdmin = ([environment]::GetEnvironmentVariable("APPSETTING_PrimarySiteCollectionOwnerEmail"))
-$siteDirectorySiteUrl = ([environment]::GetEnvironmentVariable("APPSETTING_SiteDirectoryUrl"))
-$siteDirectoryList = '/Lists/Sites'
-$managedPath = 'teams' # sites/teams
-$columnPrefix = 'PZL_'
-$propBagTemplateInfoStampKey = "_PnP_AppliedTemplateInfo" #pnp packages
-$propBagTemplateNameStampKey = "_PnP_AppliedTemplateName" #conseptual templates
-
-$Global:lastContextUrl = ''
-
-#Azure appsettings variables - remove prefix when adding in azure
-$appId = ([environment]::GetEnvironmentVariable("APPSETTING_AppId"))
-if (!$appId) {
-    $appId = ([environment]::GetEnvironmentVariable("APPSETTING_ClientId"))
-}
-
-$appSecret = ([environment]::GetEnvironmentVariable("APPSETTING_AppSecret"))
-if (!$appSecret) {
-    $appSecret = ([environment]::GetEnvironmentVariable("APPSETTING_ClientSecret"))
-}
-
-$uri = [Uri]$tenantURL
-$tenantUrl = $uri.Scheme + "://" + $uri.Host
-$tenantAdminUrl = $tenantUrl.Replace(".sharepoint", "-admin.sharepoint")
-
 
 function Connect([string]$Url) {    
     if ($Url -eq $Global:lastContextUrl) {
@@ -130,3 +114,40 @@ function SyncPermissions {
         $siteItem = Set-PnPListItem -List $siteDirectoryList -Identity $itemId -Values @{"$($columnPrefix)SiteOwners" = $owners; "$($columnPrefix)SiteMembers" = $members; "$($columnPrefix)SiteVisitors" = $visitors}
     }
 }
+
+Set-PnPTraceLog -Off
+$variablesSet = CheckEnvironmentalVariables
+if ( $variablesSet -eq $false) {
+    exit
+}
+
+$tenantURL = ([environment]::GetEnvironmentVariable("APPSETTING_TenantURL"))
+if (!$tenantURL) {
+    $tenant = ([environment]::GetEnvironmentVariable("APPSETTING_Tenant"))
+    $tenantURL = [string]::format("https://{0}.sharepoint.com", $tenant)
+}
+
+$primarySiteCollectionAdmin = ([environment]::GetEnvironmentVariable("APPSETTING_PrimarySiteCollectionOwnerEmail"))
+$siteDirectorySiteUrl = ([environment]::GetEnvironmentVariable("APPSETTING_SiteDirectoryUrl"))
+$siteDirectoryList = '/Lists/Sites'
+$managedPath = 'teams' # sites/teams
+$columnPrefix = 'PZL_'
+$propBagTemplateInfoStampKey = "_PnP_AppliedTemplateInfo" #pnp packages
+$propBagTemplateNameStampKey = "_PnP_AppliedTemplateName" #conseptual templates
+
+$Global:lastContextUrl = ''
+
+#Azure appsettings variables - remove prefix when adding in azure
+$appId = ([environment]::GetEnvironmentVariable("APPSETTING_AppId"))
+if (!$appId) {
+    $appId = ([environment]::GetEnvironmentVariable("APPSETTING_ClientId"))
+}
+
+$appSecret = ([environment]::GetEnvironmentVariable("APPSETTING_AppSecret"))
+if (!$appSecret) {
+    $appSecret = ([environment]::GetEnvironmentVariable("APPSETTING_ClientSecret"))
+}
+
+$uri = [Uri]$tenantURL
+$tenantUrl = $uri.Scheme + "://" + $uri.Host
+$tenantAdminUrl = $tenantUrl.Replace(".sharepoint", "-admin.sharepoint")

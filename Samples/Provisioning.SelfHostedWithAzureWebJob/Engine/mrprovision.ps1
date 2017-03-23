@@ -288,6 +288,12 @@ Write-Output @"
 
 "@
 
+$variablesSet = CheckEnvironmentalVariables
+if ($variablesSet -eq $false) {    
+    Write-Output "Missing one of the following environmental variables: TenantURL, PrimarySiteCollectionOwnerEmail, SiteDirectoryUrl, AppId, AppSecret"
+    exit
+}
+
 Connect -Url "$tenantURL$siteDirectorySiteUrl"
 $templateConfigurationItems = @(Get-PnPListItem -List $templateConfigurationsList)
 $baseModuleItems = @(Get-PnPListItem -List $baseModulesLibrary)

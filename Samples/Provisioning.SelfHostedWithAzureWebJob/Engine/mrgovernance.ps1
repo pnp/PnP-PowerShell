@@ -16,6 +16,11 @@ Write-Output @"
 
 "@
 
+$variablesSet = CheckEnvironmentalVariables
+if ($variablesSet -eq $false) {    
+    Write-Output "Missing one of the following environmental variables: TenantURL, PrimarySiteCollectionOwnerEmail, SiteDirectoryUrl, AppId, AppSecret"
+    exit
+}
 Connect -Url "$tenantURL$siteDirectorySiteUrl"
 
 $query = 'spcontenttype="team site" path:' + "$tenantURL$siteDirectorySiteUrl$siteDirectoryList"
