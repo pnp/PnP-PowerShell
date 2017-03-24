@@ -101,6 +101,7 @@ SiteDirectoryUrl | /sites/sitedirectory
 TenantURL | https://<tenant>.sharepoint.com
 AppId | &lt;your id&gt;
 AppSecret | &lt;your secret&gt;
+PrimarySiteCollectionOwnerEmail | admin@<tenant>.sharepoint.com
 
 4. Remember to toggle Always On for the web job in a production
 
