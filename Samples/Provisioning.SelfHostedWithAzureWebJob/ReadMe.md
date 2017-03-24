@@ -98,10 +98,10 @@ $env:APPSETTING_AppSecret = "<your secret>"
 Key | Value
 --- | ---
 SiteDirectoryUrl | /sites/sitedirectory
-TenantURL | https://<tenant>.sharepoint.com
+TenantURL | https://&lt;tenant&gt;.sharepoint.com
 AppId | &lt;your id&gt;
 AppSecret | &lt;your secret&gt;
-PrimarySiteCollectionOwnerEmail | admin@<tenant>.sharepoint.com
+PrimarySiteCollectionOwnerEmail | admin@&lt;tenant&gt;.sharepoint.com
 
 4. Remember to toggle Always On for the web job in a production
 
