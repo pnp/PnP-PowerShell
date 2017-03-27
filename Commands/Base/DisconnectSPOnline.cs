@@ -29,8 +29,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.ImplementingAssembly.FullName == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
                 foreach (var drive in drives)
                 {
-                    var spoDrive = drive as SPODriveInfo;
-                    spoDrive.ClearState();
                     SessionState.Drive.Remove(drive.Name, true, "Global");
                 }
             }

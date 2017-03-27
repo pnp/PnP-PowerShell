@@ -106,6 +106,8 @@ Cmdlet|Description
 **[Remove&#8209;PnPFolder](RemovePnPFolder.md)** |Deletes a folder within a parent folder
 **[Rename&#8209;PnPFolder](RenamePnPFolder.md)** |Renames a folder
 **[Get&#8209;PnPFolderItem](GetPnPFolderItem.md)** |List content in folder
+**[Copy&#8209;PnPItemProxy](CopyPnPItemProxy.md)** |Proxy cmdlet for using Copy-Item between SharePoint provider and FileSystem provider
+**[Move&#8209;PnPItemProxy](MovePnPItemProxy.md)** |Proxy cmdlet for using Move-Item between SharePoint provider and FileSystem provider
 ##Information Management
 Cmdlet|Description
 :-----|:----------

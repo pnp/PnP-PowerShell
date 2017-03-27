@@ -344,11 +344,11 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharePointPnP.IdentityModel.Extensions, Version=1.2.0.0, Culture=neutral, PublicKeyToken=3751622786b357c2, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharePointPnP.IdentityModel.Extensions.1.2.0\lib\net45\SharePointPnP.IdentityModel.Extensions.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="SharePointPnP.IdentityModel.Extensions, Version=1.2.2.0, Culture=neutral, PublicKeyToken=3751622786b357c2, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharePointPnP.IdentityModel.Extensions.1.2.2\lib\net45\SharePointPnP.IdentityModel.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="Microsoft.PowerShell.Commands.Management" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -455,10 +455,14 @@
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
+    <Compile Include="Provider\SPOProxy\SPOProxyCmdletBase.cs" />
     <Compile Include="Lists\GetDefaultColumnValues.cs" />
     <Compile Include="Provider\Parameters\SPOChildItemsParameters.cs" />
     <Compile Include="Provider\Parameters\SPOContentParameters.cs" />
     <Compile Include="Provider\Parameters\SPODriveParameters.cs" />
+    <Compile Include="Provider\SPOProxy\SPOProxyImplementation.cs" />
+    <Compile Include="Provider\SPOProxy\SPOProxyCopyItem.cs" />
+    <Compile Include="Provider\SPOProxy\SPOProxyMoveItem.cs" />
     <Compile Include="Provisioning\AddListFoldersToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\AddDataRowsToProvisioningTemplate.cs" />
     <Compile Include="InformationManagement\ClosureState.cs" />

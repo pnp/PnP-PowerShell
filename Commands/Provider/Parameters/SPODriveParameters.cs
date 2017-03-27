@@ -19,5 +19,8 @@ namespace SharePointPnP.PowerShell.Commands.Provider.Parameters
 
         [Parameter(HelpMessage = "Timeout for caching webs in milliseconds. Default: 600000 (10 minutes).")]
         public int WebCacheTimeout { get; set; }
+
+        [Parameter(HelpMessage = "Don't add aliases (Copy-Item, Move-Item) for proxy cmdlets (Copy-PnPItemProxy, Move-PnPItemProxy.")]
+        public SwitchParameter NoProxyCmdLets { get; set; }
     }
 }
