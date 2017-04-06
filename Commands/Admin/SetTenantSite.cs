@@ -24,6 +24,9 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletExample(
       Code = @"PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners 'user@contoso.onmicrosoft.com'",
       Remarks = @"This will set user@contoso.onmicrosoft.com as a site collection owner at 'https://contoso.sharepoint.com/sites/sales'.", SortOrder = 3)]
+    [CmdletExample(
+      Code = @"PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -NoScriptSite:$false",
+      Remarks = @"This will set enable script at the site 'https://contoso.sharepoint.com/sites/sales' if disabled.", SortOrder = 4)]
     public class SetTenantSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specifies the URL of the site", Position = 0, ValueFromPipeline = true)]
@@ -55,7 +58,6 @@ namespace SharePointPnP.PowerShell.Commands
 
         [Parameter(Mandatory = false, HelpMessage = "Sets the lockstate of a site")]
         public SiteLockState LockState;
-
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if a site allows custom script or not. See https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f for more information.")]
         public SwitchParameter NoScriptSite;
