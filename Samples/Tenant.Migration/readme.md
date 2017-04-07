@@ -1,5 +1,5 @@
 # Introduction 
-This project contains a base version of the Provisioning scripts. by updating a config.xml with the details of a SharePoint site PnP template can be exported and applied. 
+This project contains a base version of the Provisioning scripts. By updating a config.xml with the details of a number of SharePoint sites within a tenant, a PnP template can be exported form an existing set of sites and applied to a set of new sites. 
 
 # Getting Started
 This section describes:
