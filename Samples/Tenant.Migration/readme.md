@@ -1,7 +1,7 @@
-#Introduction 
+# Introduction 
 This project contains a base version of the Provisioning scripts. by updating a config.xml with the details of a SharePoint site PnP template can be exported and applied. 
 
-#Getting Started
+# Getting Started
 This section describes:
 
 1. Installation process
@@ -9,7 +9,7 @@ This section describes:
 2. Software dependencies
 3. Latest releases
 
-##Installation Process
+## Installation Process
 
 To install this solution copy the following files and folders to your system. 
 
@@ -22,19 +22,19 @@ To install this solution copy the following files and folders to your system.
 - config.xml
 - CopySolution.ps1
 
-##Configure the solution
+## Configure the solution
 To configure the solution update the config.xml using your editor of preference. for more details see the [config.xml Documentation](Documentation/config.md).
 
-##Software dependencies
+## Software dependencies
 To run the scripts provided you will need:
 
 - PowerShell
 
-##Latest releases
+## Latest releases
 This is the first release.
 
 
-#Build and Test
+# Build and Test
 No build is needed. Simply copy the full folder of this project to a new project to get started on a new project. Changes to scripts in this project should be made initially in the development branch only.
 
 
