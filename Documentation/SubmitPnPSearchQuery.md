@@ -23,6 +23,7 @@ Submit-PnPSearchQuery -Query <String>
                       [-SourceId <Guid>]
                       [-ProcessBestBets <Boolean>]
                       [-ProcessPersonalFavorites <Boolean>]
+                      [-RelevantResults [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
 ```
 
@@ -48,6 +49,7 @@ Submit-PnPSearchQuery -Query <String>
                       [-SourceId <Guid>]
                       [-ProcessBestBets <Boolean>]
                       [-ProcessPersonalFavorites <Boolean>]
+                      [-RelevantResults [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
 ```
 
@@ -74,6 +76,7 @@ Parameter|Type|Required|Description
 |RankingModelId|String|False|The identifier (ID) of the ranking model to use for the query.|
 |RefinementFilters|String[]|False|The set of refinement filters used.|
 |Refiners|String|False|The list of refiners to be returned in a search result.|
+|RelevantResults|SwitchParameter|False|Specifies whether only relevant results are returned|
 |SelectProperties|String[]|False|The list of properties to return in the search results.|
 |SortList|Hashtable|False|The list of properties by which the search results are ordered.|
 |SourceId|Guid|False|Specifies the identifier (ID or name) of the result source to be used to run the query.|
