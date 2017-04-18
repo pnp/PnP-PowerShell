@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Configurations xmlns="https://www.triad.com"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="config.xsd">
+  <Configuration>
+    <Settings>
+      <PnPRelease>2017\MarchFixes\SharePointPnPPowerShellOnline</PnPRelease>
+    </Settings>
+
+    <Environments>
+
+      <Environment Name="Demo" Tenant="https://demotenant.sharepoint.com" Site="" Username="admin@demotenant.onmicrosoft.com" Password="">
+        <Sites>        
+          <Site Name="Intranet Site Collection" Url="">           
+            <Webs>
+              <Web Name="Home Site - Schemes Page" Url="" Template="HomeSchemesPage" Location="HomeSchemesPage" Import="False" Export="True" Handler="PageContent" PageUrl="SitePages/Schemes.aspx" />
+              <Web Name="Home Site - Staff Page" Url="" Template="HomeStaffPage" Location="HomeStaffPage" Import="False" Export="True" Handler="PageContent" PageUrl="SitePages/Staff.aspx" />
+
+              <Web Name="Home Site" Url="" Template="Home" Location="Home" Import="False" Export="True">
+                <Artefacts>
+                  <Artefact Name="DisplayTemplates" Url="/_catalogs/masterpage/Display Templates/Search/Triad" Import="False" Export="True" />
+                  <Artefact Name="SiteAssets" Url="/SiteAssets" Import="False" Export="True" />
+                </Artefacts>
+              </Web>
+
+              <Web Name="Clients Site" Url="clients" Template="Clients" Location="Clients" Import="False" Export="True">
+              </Web>
+              
+
+              <Web Name="Internal Client Site" Url="clients/templa" Template="InternalClient" Location="InternalClient" Import="False" Export="True">
+              </Web>
+            </Webs>
+          </Site>
+
+          <Site Name="External Client Site Collection" Url="/sites/templa">
+            <Webs>
+                <Web Name="External Client Site" Url="" Template="ExternalClient" Location="ExternalClient" Import="False" Export="True">
+                </Web>
+            </Webs>
+          </Site>
+
+          <Site Name="Scheme Site Collection" Url="/teams/templa">
+            <Webs>
+                <Web Name="Scheme Site" Url="" Template="Scheme" Location="Scheme" Import="False" Export="True">
+                </Web>
+            </Webs>
+          </Site>
+        </Sites>
+      </Environment>
+
+      <Environment Name="Dev" Tenant="https://devtenant.sharepoint.com" Site="" Username="admin@devtenant.onmicrosoft.com" Password="">
+        <Sites>
+          <Site Name="Intranet Site Collection" Url="">
+            <Webs>
+              <Web Name="Home Site - OverView Page" Url="" Template="HomeOverview" Location="HomeOverview" Import="False" Export="True" Handler="PageContent" PageUrl="SitePages/Overview.aspx">
+              </Web>
+              <Web Name="Home Site" Url="" Template="Home" Location="Home" Import="False" Export="True">
+                <Lists>
+                  <List Name="My test List" Url ="Lists/My%20Test%20List" Create="false" IncludeData="true" />
+                </Lists>
+              </Web>
+              <!--<Web Name="Teamtest" Url="team" Template="Team" Location="Team" Import="False" Export="True">
+              </Web> -->
+            </Webs>
+          </Site>
+        </Sites>
+      </Environment>
+
+      <Environment Name="Uat" Tenant="https://uattenant.sharepoint.com" Site="" Username="admin@uattenant.onmicrosoft.com" Password="">
+        <Sites>
+          <Site Name="Home Site" Url="">           
+            <Webs>
+            
+              <Web Name="Home Site - Schemes Page" Url="" Template="HomeSchemesPage" Location="HomeSchemesPage" Import="True" Export="False" Handler="PageContent" PageUrl="SitePages/Schemes.aspx" />
+              <Web Name="Home Site - Staff Page" Url="" Template="HomeStaffPage" Location="HomeStaffPage" Import="True" Export="False" Handler="PageContent" PageUrl="SitePages/Staff.aspx" />
+
+                
+              <Web Name="Home" Url="" Template="Home" Location="Home" Import="True" Export="False">
+                <Artefacts>
+                  <Artefact Name="DisplayTemplates" Url="/_catalogs/masterpage/Display Templates/Search/Triad" Import="True" Export="False" />
+                  <Artefact Name="SiteAssets" Url="/SiteAssets" Import="True" Export="False" />
+                </Artefacts>
+                <WorkArounds>
+                  <WorkAround Name="Lookup lists" Timing="Pre-Apply">
+                    <Lists>
+                      <List Name="Supplier Companies" Url="Lists/Companies" Template="GenericList" Create="true" />
+                      <List Name="Supplier Offices" Url="Lists/Offices" Template="GenericList" Create="true" />
+                      <List Name="Interest Contacts" Url="Lists/Interest Contacts" Template="Contacts" Create="true" />
+                      <List Name="Company Status" Url="Lists/Company Status" Template="GenericList" Create="true" />
+                      <List Name="Document Templates" Url="Document Templates" Template="DocumentLibrary" Create="true" />                     
+                    </Lists>
+                  </WorkAround>
+                  <WorkAround Name="Features" Timing="Post-Apply">
+                    <Features>
+                      <Feature Name="MDS" Enable="false" FeatureId="87294C72-F260-42f3-A41B-981A2FFCE37A" />
+                      <Feature Name="PushNotification" Enable="true" FeatureId="41e1d4bf-b1a2-47f7-ab80-d5d6cbba3092" />
+                    </Features>
+                  </WorkAround>
+                </WorkArounds>
+              </Web>
+          
+              <Web Name="Clients Site" Url="clients" Template="Clients" Location="Clients" Import="True" Export="False">
+              </Web>                            
+                
+              <Web Name="Internal Client Site" Url="clients/templa" Template="InternalClient" Location="InternalClient" Import="True" Export="False">
+              <WorkArounds>
+                  <WorkAround Name="Lookup lists" Timing="Pre-Apply">
+                    <Lists>
+                      <List CreateList="True"  Name="My External List" Url="Lists/MyExternalList" Description="" Template="ExternalList">
+                        <DataSource Entity="ExternalEntityName" NameSpace="NameSpaceDataModelsLobStore" LobSystemInstance="LobStore" SpecificReader="ReadSpecificSchemeTypes_POWTasks" />
+                      </List>                                    
+                     </Lists>
+                 
+                  </WorkAround>
+                </WorkArounds>
+              </Web>
+
+          
+            </Webs>
+          </Site>
+          
+         <Site Name="External Client Site Collection" Url="/sites/templa">
+            <Webs>
+                <Web Name="External Client Site" Url="" Template="ExternalClient" Location="ExternalClient" Import="True" Export="False">
+                </Web>
+            </Webs>
+          </Site>
+
+        </Sites>
+      </Environment>
+    </Environments>
+  </Configuration>
+</Configurations>
