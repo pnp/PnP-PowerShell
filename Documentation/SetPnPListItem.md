@@ -6,7 +6,6 @@ Set-PnPListItem -Identity <ListItemPipeBind>
                 -List <ListPipeBind>
                 [-ContentType <ContentTypePipeBind>]
                 [-Values <Hashtable>]
-                [-SystemUpdate [<SwitchParameter>]]
                 [-Web <WebPipeBind>]
 ```
 
@@ -20,7 +19,6 @@ Parameter|Type|Required|Description
 |Identity|ListItemPipeBind|True|The ID of the listitem, or actual ListItem object|
 |List|ListPipeBind|True|The ID, Title or Url of the list.|
 |ContentType|ContentTypePipeBind|False|Specify either the name, ID or an actual content type|
-|SystemUpdate|SwitchParameter|False|Updating item without updating the modified and modified by fields|
 |Values|Hashtable|False|Use the internal names of the fields when specifying field names.
 
 Single line of text: -Values @{"TextField" = "Title New"}
