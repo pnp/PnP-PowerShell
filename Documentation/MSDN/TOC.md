@@ -226,6 +226,7 @@
 ### [Remove-PnPWeb](RemovePnPWeb.md)
 ### [Set-PnPWeb](SetPnPWeb.md)
 ### [Invoke-PnPWebAction](InvokePnPWebAction.md)
+### [Set-PnPWebPermission](SetPnPWebPermission.md)
 ## [Workflows](Workflows-category.md)
 ### [Add-PnPWorkflowDefinition](AddPnPWorkflowDefinition.md)
 ### [Get-PnPWorkflowDefinition](GetPnPWorkflowDefinition.md)

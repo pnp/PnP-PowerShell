@@ -280,6 +280,7 @@ Cmdlet|Description
 **[Remove&#8209;PnPWeb](RemovePnPWeb.md)** |Removes a subweb in the current web
 **[Set&#8209;PnPWeb](SetPnPWeb.md)** |Sets properties on a web
 **[Invoke&#8209;PnPWebAction](InvokePnPWebAction.md)** |Executes operations on web, lists and list items.
+**[Set&#8209;PnPWebPermission](SetPnPWebPermission.md)** |Sets web permissions
 ## Workflows
 Cmdlet|Description
 :-----|:----------
