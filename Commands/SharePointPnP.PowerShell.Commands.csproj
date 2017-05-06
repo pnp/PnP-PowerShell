@@ -455,7 +455,9 @@
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
+    <Compile Include="Lists\SetListItemPermission.cs" />
     <Compile Include="Provider\SPOProxy\SPOProxyCmdletBase.cs" />
+    <Compile Include="Lists\GetDefaultColumnValues.cs" />
     <Compile Include="Provider\Parameters\SPOChildItemsParameters.cs" />
     <Compile Include="Provider\Parameters\SPOContentParameters.cs" />
     <Compile Include="Provider\Parameters\SPODriveParameters.cs" />
@@ -599,6 +601,7 @@
     <Compile Include="Web\AddIndexedProperty.cs" />
     <Compile Include="Files\RemoveFolder.cs" />
     <Compile Include="Web\RemoveWeb.cs" />
+    <Compile Include="Web\SetWebPermission.cs" />
     <Compile Include="Web\SetRequestAccessEmails.cs" />
     <Compile Include="Workflows\AddWorkflowDefinition.cs" />
     <Compile Include="Workflows\ResumeWorkflowInstance.cs" />

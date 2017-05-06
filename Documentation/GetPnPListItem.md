@@ -20,6 +20,8 @@ Get-PnPListItem -List <ListPipeBind>
 ```powershell
 Get-PnPListItem -List <ListPipeBind>
                 [-Query <String>]
+                [-PageSize <Int>]
+                [-ScriptBlock <ScriptBlock>]
                 [-Web <WebPipeBind>]
 ```
 
@@ -87,6 +89,6 @@ Retrieves all list items from the Tasks list in pages of 1000 items. This parame
 
 ### Example 7
 ```powershell
-PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { $args.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }
+PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }
 ```
 Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item.
