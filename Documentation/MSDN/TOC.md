@@ -100,6 +100,7 @@
 ### [Get-PnPListItem](GetPnPListItem.md)
 ### [Remove-PnPListItem](RemovePnPListItem.md)
 ### [Set-PnPListItem](SetPnPListItem.md)
+### [Set-PnPListItemPermission](SetPnPListItemPermission.md)
 ### [Set-PnPListPermission](SetPnPListPermission.md)
 ### [Get-PnPProvisioningTemplateFromGallery](GetPnPProvisioningTemplateFromGallery.md)
 ### [Request-PnPReIndexList](RequestPnPReIndexList.md)

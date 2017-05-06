@@ -3,6 +3,10 @@
 **2017-05-06**
 * Added Set-PnPWebPermissions
 * Updated Get-PnPListItem to execute scriptblocks
+* Added Set-PnPListItemPermissions
+* Added Get-PnPDefaultColumnValues
+* Added Set-PnPListPermissions
+
 
 **2017-01-27**
 * Added Get-PnPTerm
