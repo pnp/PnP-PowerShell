@@ -62,6 +62,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 else
                 {
                     principal = SelectedWeb.EnsureUser(User);
+                    ClientContext.ExecuteQueryRetry();
                 }
                 if (principal != null)
                 {
