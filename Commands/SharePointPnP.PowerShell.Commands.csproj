@@ -456,6 +456,7 @@
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
     <Compile Include="Provider\SPOProxy\SPOProxyCmdletBase.cs" />
+    <Compile Include="Lists\GetDefaultColumnValues.cs" />
     <Compile Include="Provider\Parameters\SPOChildItemsParameters.cs" />
     <Compile Include="Provider\Parameters\SPOContentParameters.cs" />
     <Compile Include="Provider\Parameters\SPODriveParameters.cs" />
