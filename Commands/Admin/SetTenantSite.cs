@@ -23,7 +23,10 @@ namespace SharePointPnP.PowerShell.Commands
       Remarks = @"This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website', set the storage warning level to 8GB and set the storage maximum level to 10GB.", SortOrder = 2)]
     [CmdletExample(
       Code = @"PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners 'user@contoso.onmicrosoft.com'",
-      Remarks = @"This will set user@contoso.onmicrosoft.com as a site collection owner at 'https://contoso.sharepoint.com/sites/sales'.", SortOrder = 3)]   
+      Remarks = @"This will set user@contoso.onmicrosoft.com as a site collection owner at 'https://contoso.sharepoint.com/sites/sales'.", SortOrder = 3)]
+    [CmdletExample(
+      Code = @"PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -NoScriptSite:$false",
+      Remarks = @"This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales' if disabled.", SortOrder = 4)]
     public class SetTenantSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specifies the URL of the site", Position = 0, ValueFromPipeline = true)]
@@ -56,13 +59,25 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Sets the lockstate of a site")]
         public SiteLockState LockState;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specifies if a site allows custom script or not. See https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f for more information.")]
+        public SwitchParameter NoScriptSite;
+
         [Parameter(Mandatory = false, HelpMessage = "Wait for the operation to complete")]
         public SwitchParameter Wait;
         protected override void ExecuteCmdlet()
         {
             Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-            Tenant.SetSiteProperties(Url, title: Title, sharingCapability: Sharing, storageMaximumLevel: StorageMaximumLevel, allowSelfServiceUpgrade: AllowSelfServiceUpgrade, userCodeMaximumLevel: UserCodeMaximumLevel, userCodeWarningLevel: UserCodeWarningLevel, wait: Wait, timeoutFunction: Wait ? timeoutFunction : null );
+            Tenant.SetSiteProperties(Url, title: Title,
+                sharingCapability: Sharing,
+                storageMaximumLevel: StorageMaximumLevel,
+                storageWarningLevel: StorageWarningLevel,
+                allowSelfServiceUpgrade: AllowSelfServiceUpgrade,
+                userCodeMaximumLevel: UserCodeMaximumLevel,
+                userCodeWarningLevel: UserCodeWarningLevel,
+                noScriptSite: NoScriptSite,
+                wait: Wait, timeoutFunction: Wait ? timeoutFunction : null
+                );
 
             if (Owners != null && Owners.Count > 0)
             {
@@ -82,7 +97,7 @@ namespace SharePointPnP.PowerShell.Commands
 
         private bool TimeoutFunction(TenantOperationMessage message)
         {
-            if (message == TenantOperationMessage.SettingSiteProperties ||message == TenantOperationMessage.SettingSiteLockState)
+            if (message == TenantOperationMessage.SettingSiteProperties || message == TenantOperationMessage.SettingSiteLockState)
             {
                 Host.UI.Write(".");
             }
