@@ -70,6 +70,10 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         Code = @"PS:> $template = Get-PnPProvisioningTemplate -OutputInstance",
         Remarks = "Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.",
         SortOrder = 11)]
+    [CmdletExample(
+        Code = "PS:> Get-PnPProvisioningTemplate -Out template.pnp -ContentTypeGroups \"Group A\",\"Group B\"",
+        Remarks = @"Extracts a provisioning template in Office Open XML from the current web, but only processes content types from the to given content type groups.",
+        SortOrder = 12)]
     [CmdletRelatedLink(
         Text = "Encoding",
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
@@ -133,6 +137,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while extracting a template.")]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify from which content type group(s) the content types should be included into the template.")]
+        public string[] ContentTypeGroups;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
         public SwitchParameter Force;
@@ -242,6 +249,10 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
             creationInformation.SkipVersionCheck = SkipVersionCheck;
+            if (ContentTypeGroups != null)
+            {
+                creationInformation.ContentTypeGroupsToInclude = ContentTypeGroups.ToList();
+            }
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
             if (!string.IsNullOrEmpty(ResourceFilePrefix))
