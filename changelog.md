@@ -1,5 +1,9 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2017-05-06**
+* Added Set-PnPWebPermissions
+* Updated Get-PnPListItem to execute scriptblocks
+
 **2017-01-27**
 * Added Get-PnPTerm
 * Added Get-PnPTermSet
