@@ -1,6 +1,7 @@
 # Lists 
 Cmdlet|Description
 :-----|:----------
+**[Get&#8209;PnPDefaultColumnValues](GetPnPDefaultColumnValues.md)** |Gets the default column values for all folders in document library
 **[Set&#8209;PnPDefaultColumnValues](SetPnPDefaultColumnValues.md)** |Sets default column values for a document library
 **[Get&#8209;PnPList](GetPnPList.md)** |Returns a List object
 **[New&#8209;PnPList](NewPnPList.md)** |Creates a new list

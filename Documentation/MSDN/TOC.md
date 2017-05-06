@@ -90,6 +90,7 @@
 ### [Set-PnPSitePolicy](SetPnPSitePolicy.md)
 ### [Get-PnPSitePolicy](GetPnPSitePolicy.md)
 ## [Lists](Lists-category.md)
+### [Get-PnPDefaultColumnValues](GetPnPDefaultColumnValues.md)
 ### [Set-PnPDefaultColumnValues](SetPnPDefaultColumnValues.md)
 ### [Get-PnPList](GetPnPList.md)
 ### [New-PnPList](NewPnPList.md)
