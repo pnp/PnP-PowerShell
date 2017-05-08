@@ -17,6 +17,7 @@ Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
                             [-ExcludeHandlers <Handlers>]
                             [-ExtensibilityHandlers <ExtensibilityHandler[]>]
                             [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                            [-ContentTypeGroups <String[]>]
                             [-Force [<SwitchParameter>]]
                             [-Encoding <Encoding>]
                             [-TemplateDisplayName <String>]
@@ -32,6 +33,7 @@ Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
 ## Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|ContentTypeGroups|String[]|False|Allows you to specify from which content type group(s) the content types should be included into the template.|
 |Encoding|Encoding|False|The encoding type of the XML file, Unicode is default|
 |ExcludeHandlers|Handlers|False|Allows you to run all handlers, excluding the ones specified.|
 |ExtensibilityHandlers|ExtensibilityHandler[]|False|Allows you to specify ExtensbilityHandlers to execute while extracting a template.|
@@ -126,3 +128,9 @@ Extracts a provisioning template in Office Open XML from the current web, and fo
 PS:> $template = Get-PnPProvisioningTemplate -OutputInstance
 ```
 Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.
+
+### Example 12
+```powershell
+PS:> Get-PnPProvisioningTemplate -Out template.pnp -ContentTypeGroups "Group A","Group B"
+```
+Extracts a provisioning template in Office Open XML from the current web, but only processes content types from the to given content type groups.

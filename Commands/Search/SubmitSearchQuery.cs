@@ -15,19 +15,19 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Category = CmdletHelpCategory.Search,
         OutputType = typeof(List<dynamic>))]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSearchQuery -Query ""finance""",
+        Code = @"PS:> Submit-PnPSearchQuery -Query ""finance""",
         Remarks = "Returns the top 500 items with the term finance",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSearchQuery -Query ""Title:Intranet*"" -MaxResults 10",
+        Code = @"PS:> Submit-PnPSearchQuery -Query ""Title:Intranet*"" -MaxResults 10",
         Remarks = "Returns the top 10 items indexed by SharePoint Search of which the title starts with the word Intranet",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSearchQuery -Query ""Title:Intranet*"" -All",
+        Code = @"PS:> Submit-PnPSearchQuery -Query ""Title:Intranet*"" -All",
         Remarks = "Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSearchQuery -Query ""Title:Intranet*"" -Refiners ""contentclass,FileType(filter=6/0/*)""",
+        Code = @"PS:> Submit-PnPSearchQuery -Query ""Title:Intranet*"" -Refiners ""contentclass,FileType(filter=6/0/*)""",
         Remarks = "Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties",
         SortOrder = 4)]
     public class SubmitSearchQuery : PnPWebCmdlet

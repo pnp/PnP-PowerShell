@@ -58,8 +58,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"PersonField\" = \"user1@domain.com\",\"21\"}" +
             "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}" +
             "\n\nManaged Metadata (single value with id of term): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
-            "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}" +
-            "\n\nManaged Metadata (multiple values with ids of terms): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\",\"52d88107-c2a8-4bf0-adfa-04bc2305b593\"}" +
+            "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = (\"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\")}" +
+            "\n\nManaged Metadata (multiple values with ids of terms): -Values @{\"MetadataField\" = (\"fe40a95b-2144-4fa2-b82a-0b3d0299d818\",\"52d88107-c2a8-4bf0-adfa-04bc2305b593\")}" +
             "\n\nHyperlink or Picture: -Values @{\"HyperlinkField\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
 
@@ -193,9 +193,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                                     ClientContext.Load(taxonomyItem);
                                                     ClientContext.ExecuteQueryRetry();
                                                 }
-
-
-
+                                                
                                                 terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
                                             }
 
@@ -230,13 +228,27 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                         else
                                         {
                                             Guid termGuid = Guid.Empty;
+
+                                            var taxSession = ClientContext.Site.GetTaxonomySession();
+                                            TaxonomyItem taxonomyItem = null;
                                             if (!Guid.TryParse(value as string, out termGuid))
                                             {
                                                 // Assume it's a TermPath
-                                                var taxonomyItem = ClientContext.Site.GetTaxonomyItemByPath(value as string);
-                                                termGuid = taxonomyItem.Id;
+                                                taxonomyItem = ClientContext.Site.GetTaxonomyItemByPath(value as string);
                                             }
-                                            item[key as string] = termGuid.ToString();
+                                            else
+                                            {
+                                                taxonomyItem = taxSession.GetTerm(termGuid);
+                                                ClientContext.Load(taxonomyItem);
+                                                ClientContext.ExecuteQueryRetry();
+                                            }
+
+                                            TaxonomyField taxField = ClientContext.CastTo<TaxonomyField>(field);
+                                            TaxonomyFieldValue taxValue = new TaxonomyFieldValue();
+                                            taxValue.TermGuid = taxonomyItem.Id.ToString();
+                                            taxValue.Label = taxonomyItem.Name;
+
+                                            taxField.SetFieldValueByValue(item, taxValue);
                                         }
 #if !ONPREMISES
                                         item.SystemUpdate();
