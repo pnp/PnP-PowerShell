@@ -3,6 +3,7 @@ Returns a field from a list or site
 ## Syntax
 ```powershell
 Get-PnPField [-List <ListPipeBind>]
+             [-Group <String>]
              [-Web <WebPipeBind>]
              [-Includes <String[]>]
              [-Identity <FieldPipeBind>]
@@ -15,6 +16,7 @@ Get-PnPField [-List <ListPipeBind>]
 ## Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|Group|String|False|Filter to the specified group|
 |Identity|FieldPipeBind|False|The field object or name to get|
 |Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
 |List|ListPipeBind|False|The list object or name where to get the field from|

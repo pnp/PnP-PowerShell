@@ -102,7 +102,9 @@ Cmdlet|Description
 **[Add&#8209;PnPFolder](AddPnPFolder.md)** |Creates a folder within a parent folder
 **[Ensure&#8209;PnPFolder](EnsurePnPFolder.md)** |Returns a folder from a given site relative path, and will create it if it does not exist.
 **[Get&#8209;PnPFolder](GetPnPFolder.md)** |Return a folder object
+**[Move&#8209;PnPFolder](MovePnPFolder.md)** |Move a folder to another location in the current web
 **[Remove&#8209;PnPFolder](RemovePnPFolder.md)** |Deletes a folder within a parent folder
+**[Rename&#8209;PnPFolder](RenamePnPFolder.md)** |Renames a folder
 **[Get&#8209;PnPFolderItem](GetPnPFolderItem.md)** |List content in folder
 **[Copy&#8209;PnPItemProxy](CopyPnPItemProxy.md)** |Proxy cmdlet for using Copy-Item between SharePoint provider and FileSystem provider
 **[Move&#8209;PnPItemProxy](MovePnPItemProxy.md)** |Proxy cmdlet for using Move-Item between SharePoint provider and FileSystem provider
@@ -184,8 +186,10 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[Clear&#8209;PnpRecycleBinItem](ClearPnpRecycleBinItem.md)** |Permanently deletes all or a specific recycle bin item
+**[Move&#8209;PnpRecycleBinItem](MovePnpRecycleBinItem.md)** |Moves all items or a specific item in the first stage recycle bin of the current site collection to the second stage recycle bin
 **[Restore&#8209;PnpRecycleBinItem](RestorePnpRecycleBinItem.md)** |Restores the provided recycle bin item to its original location
 **[Get&#8209;PnPRecycleBinItem](GetPnPRecycleBinItem.md)** |Returns the items in the recycle bin from the context
+**[Get&#8209;PnPTenantRecycleBinItem](GetPnPTenantRecycleBinItem.md)** |Returns the items in the tenant scoped recycle bin
 ## Sites
 Cmdlet|Description
 :-----|:----------
@@ -219,8 +223,14 @@ Cmdlet|Description
 Cmdlet|Description
 :-----|:----------
 **[Get&#8209;PnPAccessToken](GetPnPAccessToken.md)** |Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
+**[Clear&#8209;PnPTenantRecycleBinItem](ClearPnPTenantRecycleBinItem.md)** |Permanently deletes a site collection from the tenant scoped recycle bin
+**[Restore&#8209;PnPTenantRecycleBinItem](RestorePnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin
+**[Get&#8209;PnPTenantSite](GetPnPTenantSite.md)** |Office365 only: Uses the tenant API to retrieve site information.
 **[New&#8209;PnPTenantSite](NewPnPTenantSite.md)** |Creates a new site collection for the current tenant
+**[Remove&#8209;PnPTenantSite](RemovePnPTenantSite.md)** |Office365 only: Removes a site collection from the current tenant
+**[Set&#8209;PnPTenantSite](SetPnPTenantSite.md)** |Office365 only: Uses the tenant API to set site information.
 **[Get&#8209;PnPTimeZoneId](GetPnPTimeZoneId.md)** |Returns a time zone ID
+**[Get&#8209;PnPWebTemplates](GetPnPWebTemplates.md)** |Office365 only: Returns the available web templates.
 ## User and group management
 Cmdlet|Description
 :-----|:----------
@@ -233,6 +243,12 @@ Cmdlet|Description
 **[New&#8209;PnPUser](NewPnPUser.md)** |Adds a user to the built-in Site User Info List and returns a user object
 **[Remove&#8209;PnPUserFromGroup](RemovePnPUserFromGroup.md)** |Removes a user from a group
 **[Add&#8209;PnPUserToGroup](AddPnPUserToGroup.md)** |Adds a user to a group
+## User Profiles
+Cmdlet|Description
+:-----|:----------
+**[New&#8209;PnPPersonalSite](NewPnPPersonalSite.md)** |Office365 only: Creates a personal / OneDrive For Business site
+**[Get&#8209;PnPUserProfileProperty](GetPnPUserProfileProperty.md)** |You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.  
+**[Set&#8209;PnPUserProfileProperty](SetPnPUserProfileProperty.md)** |Office365 only: Uses the tenant API to retrieve site information.  You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.  
 ## Utilities
 Cmdlet|Description
 :-----|:----------
@@ -258,6 +274,8 @@ Cmdlet|Description
 **[Remove&#8209;PnPPropertyBagValue](RemovePnPPropertyBagValue.md)** |Removes a value from the property bag
 **[Set&#8209;PnPPropertyBagValue](SetPnPPropertyBagValue.md)** |Sets a property bag value
 **[Request&#8209;PnPReIndexWeb](RequestPnPReIndexWeb.md)** |Marks the web for full indexing during the next incremental crawl
+**[Get&#8209;PnPRequestAccessEmails](GetPnPRequestAccessEmails.md)** |Returns the request access e-mail addresses
+**[Set&#8209;PnPRequestAccessEmails](SetPnPRequestAccessEmails.md)** |Sets Request Access Emails on a web
 **[Get&#8209;PnPSubWebs](GetPnPSubWebs.md)** |Returns the subwebs of the current web
 **[Get&#8209;PnPWeb](GetPnPWeb.md)** |Returns the current web object
 **[New&#8209;PnPWeb](NewPnPWeb.md)** |Creates a new subweb under the current web
