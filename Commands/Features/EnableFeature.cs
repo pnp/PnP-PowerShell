@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPFeature")]
-    [CmdletAlias("Enable-SPOFeature")]
     [CmdletHelp("Enables a feature", Category = CmdletHelpCategory.Features)]
     [CmdletExample(
         Code = "PS:> Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe", 

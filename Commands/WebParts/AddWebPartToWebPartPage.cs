@@ -9,7 +9,6 @@ using File = System.IO.File;
 namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Add, "PnPWebPartToWebPartPage")]
-    [CmdletAlias("Add-SPOWebPartToWebPartPage")]
     [CmdletHelp("Adds a webpart to a web part page in a specified zone",
         Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(

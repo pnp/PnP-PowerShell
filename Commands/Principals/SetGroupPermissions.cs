@@ -8,7 +8,6 @@ using System;
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Set, "PnPGroupPermissions")]
-    [CmdletAlias("Set-SPOGroupPermissions")]
     [CmdletHelp("Adds and/or removes permissions of a specific SharePoint group",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(

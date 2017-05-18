@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPGroup",DefaultParameterSetName="All")]
-    [CmdletAlias("Get-SPOGroup")]
     [CmdletHelp("Returns a specific group or all groups.",
         Category = CmdletHelpCategory.Principals,
         OutputType = typeof(List<Group>),

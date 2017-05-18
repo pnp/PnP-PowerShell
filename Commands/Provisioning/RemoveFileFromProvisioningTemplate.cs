@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Remove", "PnPFileFromProvisioningTemplate")]
-    [CmdletAlias("Remove-SPOFileFromProvisioningTemplate")]
     [CmdletHelp("Removes a file from a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

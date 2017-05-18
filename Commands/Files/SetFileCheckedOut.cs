@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet("Set", "PnPFileCheckedOut")]
-    [CmdletAlias("Set-SPOFileCheckedOut")]
     [CmdletHelp("Checks out a file",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(

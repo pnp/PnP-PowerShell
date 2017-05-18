@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Execute", "PnPQuery")]
-    [CmdletAlias("Execute-SPOQuery")]
     [CmdletHelp("Executes any queued actions / changes on the SharePoint Client Side Object Model Context",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(

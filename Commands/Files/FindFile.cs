@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Find, "PnPFile", DefaultParameterSetName = "Web")]
-    [CmdletAlias("Find-SPOFile")]
     [CmdletHelp("Finds a file in the virtual file system of the web.",
          Category = CmdletHelpCategory.Files,
          OutputType = typeof(File),

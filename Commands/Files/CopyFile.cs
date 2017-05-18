@@ -12,7 +12,6 @@ using File = Microsoft.SharePoint.Client.File;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true, DefaultParameterSetName = "SOURCEURL")]
-    [CmdletAlias("Copy-SPOFile")]
     [CmdletHelp("Copies a file or folder to a different location",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(

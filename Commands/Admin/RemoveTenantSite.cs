@@ -10,7 +10,6 @@ using OfficeDevPnP.Core;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
-    [CmdletAlias("Remove-SPOTenantSite")]
     [CmdletHelp("Office365 only: Removes a site collection from the current tenant",
          Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(

@@ -10,7 +10,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = "AllItems")]
-    [CmdletAlias("Get-SPOListItem")]
     [CmdletHelp("Retrieves list items",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),

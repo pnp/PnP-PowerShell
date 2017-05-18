@@ -7,7 +7,6 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Remove, "PnPNavigationNode", SupportsShouldProcess = true)]
-    [CmdletAlias("Remove-SPONavigationNode")]
     [CmdletHelp("Removes a menu item from either the quicklaunch or top navigation", 
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(Code = @"PS:> Remove-PnPNavigationNode -Title Recent -Location QuickLaunch",

@@ -13,7 +13,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebPartXml")]
-    [CmdletAlias("Get-SPOWebPartXml")]
     [CmdletHelp("Returns the webpart XML of a webpart registered on a site",
         Category = CmdletHelpCategory.WebParts,
         OutputType = typeof(string))]

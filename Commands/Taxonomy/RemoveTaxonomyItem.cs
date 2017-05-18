@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTaxonomyItem", SupportsShouldProcess = true)]
-    [CmdletAlias("Remove-SPOTaxonomyItem")]
     [CmdletHelp(@"Removes a taxonomy item",
          Category = CmdletHelpCategory.Taxonomy)]
     public class RemoveTaxonomyItem : PnPCmdlet

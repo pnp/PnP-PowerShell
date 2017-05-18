@@ -9,7 +9,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPWebAction", SupportsShouldProcess = true)]
-    [CmdletAlias("Invoke-SPOWebAction")]
     [CmdletHelp("Executes operations on web, lists and list items.",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(

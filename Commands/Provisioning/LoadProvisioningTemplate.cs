@@ -10,7 +10,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Load", "PnPProvisioningTemplate")]
-    [CmdletAlias("Load-SPOProvisioningTemplate")]
     [CmdletHelp("Loads a PnP file from the file systems",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

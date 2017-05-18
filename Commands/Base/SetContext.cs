@@ -5,7 +5,6 @@ using Microsoft.SharePoint.Client;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "PnPContext")]
-    [CmdletAlias("Set-SPOContext")]
     [CmdletHelp("Sets the Client Context to use by the cmdlets",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(

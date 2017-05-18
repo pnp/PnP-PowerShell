@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPWeb")]
-    [CmdletAlias("New-SPOWeb")]
     [CmdletHelp("Creates a new subweb under the current web",
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(Web),

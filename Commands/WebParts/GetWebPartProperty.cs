@@ -8,7 +8,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebPartProperty")]
-    [CmdletAlias("Get-SPOWebPartProperty")]
     [CmdletHelp("Returns a web part property", 
         Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(

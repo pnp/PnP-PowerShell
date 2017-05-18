@@ -7,7 +7,6 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Rename, "PnPFile", SupportsShouldProcess = true)]
-    [CmdletAlias("Rename-SPOFile")]
     [CmdletHelp("Renames a file in its current location",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(

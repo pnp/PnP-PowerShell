@@ -7,7 +7,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebTemplates")]
-    [CmdletAlias("Get-SPOWebTemplates")]
     [CmdletHelp(@"Office365 only: Returns the available web templates.", 
         Category = CmdletHelpCategory.TenantAdmin,
         OutputType=typeof(Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection),

@@ -62,11 +62,11 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
 
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.")]
         public CustomActionScope Scope = CustomActionScope.Web;
-#if !ONPREMISIS
+#if !ONPREMISES
         [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Id of the custom action")]
         public GuidPipeBind ClientSideComponentId;
 
-        [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the custom action")]
+        [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the custom action. Specify values as @{\"Property1\" = \"Value1\", \"Property2\" = \"Value2\"}")]
         public System.Collections.Hashtable ClientSideComponentProperties;
 #endif
         protected override void ExecuteCmdlet()

@@ -10,7 +10,6 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "PnPSearchConfiguration")]
-    [CmdletAlias("Get-SPOSearchConfiguration")]
     [CmdletHelp("Returns the search configuration",
         Category = CmdletHelpCategory.Search,
         OutputType = typeof(string),

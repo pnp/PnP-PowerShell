@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.Commands.Extensions;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebPermission", DefaultParameterSetName = "User")]
-    [CmdletAlias("Set-SPOWebPermission")]
     [CmdletHelp("Sets web permissions",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(

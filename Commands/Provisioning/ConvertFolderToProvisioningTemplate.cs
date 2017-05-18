@@ -10,7 +10,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Convert, "PnPFolderToProvisioningTemplate")]
-    [CmdletAlias("Convert-SPOFolderToProvisioningTemplate")]
     [CmdletHelp("Creates a pnp package file of an existing template xml, and includes all files in the current folder",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

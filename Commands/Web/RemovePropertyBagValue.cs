@@ -6,7 +6,6 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPropertyBagValue", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    [CmdletAlias("Remove-SPOPropertyBagValue")]
     [CmdletHelp("Removes a value from the property bag",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(

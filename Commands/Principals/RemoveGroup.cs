@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPGroup", DefaultParameterSetName = "All")]
-    [CmdletAlias("Remove-SPOGroup")]
     [CmdletHelp("Removes a group from a web.",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(

@@ -9,7 +9,6 @@ using File = System.IO.File;
 namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Add, "PnPWebPartToWikiPage")]
-    [CmdletAlias("Add-SPOWebPartToWikiPage")]
     [CmdletHelp("Adds a webpart to a wiki page in a specified table row and column",
         Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(

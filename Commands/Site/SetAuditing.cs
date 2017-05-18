@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPAuditing")]
-    [CmdletAlias("Set-SPOAuditing")]
     [CmdletHelp("Set Auditing setting for a site",
         Category = CmdletHelpCategory.Sites)]
     [CmdletExample(

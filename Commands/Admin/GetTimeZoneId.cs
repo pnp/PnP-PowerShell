@@ -7,7 +7,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPTimeZoneId")]
-    [CmdletAlias("Get-SPOTimeZoneId")]
     [CmdletHelp("Returns a time zone ID",
          Category = CmdletHelpCategory.TenantAdmin,
          OutputType = typeof(IEnumerable<Zone>),

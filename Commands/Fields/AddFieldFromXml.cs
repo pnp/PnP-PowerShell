@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "PnPFieldFromXml")]
-    [CmdletAlias("Add-SPOFieldFromXml")]
     [CmdletHelp("Adds a field to a list or as a site column based upon a CAML/XML field definition",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),

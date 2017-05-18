@@ -10,7 +10,6 @@ using System;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Add, "PnPFile")]
-    [CmdletAlias("Add-SPOFile")]
     [CmdletHelp("Uploads a file to Web",
         Category = CmdletHelpCategory.Files,
         OutputType = typeof(Microsoft.SharePoint.Client.File),

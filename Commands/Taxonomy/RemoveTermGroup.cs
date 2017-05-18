@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTermGroup", SupportsShouldProcess = false)]
-    [CmdletAlias("Remove-SPOTermGroup")]
     [CmdletHelp(@"Removes a taxonomy term group and all its containing termsets",
         Category = CmdletHelpCategory.Taxonomy)]
     public class RemoveTermGroup : PnPCmdlet

@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWorkflowDefinition")]
-    [CmdletAlias("Remove-SPOWorkflowDefinition")]
     [CmdletHelp("Removes a workflow definition",
         Category = CmdletHelpCategory.Workflows)]
 

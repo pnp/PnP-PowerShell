@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "PnPWorkflowDefinition")]
-    [CmdletAlias("Get-SPOWorkflowDefinition")]
     [CmdletHelp("Returns a workflow definition",
         Category = CmdletHelpCategory.Workflows,
         OutputType = typeof(WorkflowDefinition),

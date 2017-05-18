@@ -8,7 +8,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsData.Import, "PnPAppPackage")]
-    [CmdletAlias("Import-SPOAppPackage")]
     [CmdletHelp("Adds a SharePoint Addin to a site",
         DetailedDescription = "This commands requires that you have an addin package to deploy",
         Category = CmdletHelpCategory.Apps,
