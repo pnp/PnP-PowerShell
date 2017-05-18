@@ -29,6 +29,9 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The field object or name to get")]
         public FieldPipeBind Identity = new FieldPipeBind();
 
+        [Parameter(Mandatory = false, HelpMessage = "Filter to the specified group")]
+        public string Group;
+
         protected override void ExecuteCmdlet()
         {
             if (List != null)
@@ -62,8 +65,12 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 }
                 else if (fieldCollection != null)
                 {
-
-                    WriteObject(fieldCollection, true);
+                    if (!string.IsNullOrEmpty(Group))
+                    {
+                        WriteObject(fieldCollection.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)),true);
+                    } else {
+                        WriteObject(fieldCollection, true);
+                    }
                 }
                 else
                 {
@@ -76,7 +83,14 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 {
                     ClientContext.Load(SelectedWeb.Fields, fc => fc.IncludeWithDefaultProperties(RetrievalExpressions));
                     ClientContext.ExecuteQueryRetry();
-                    WriteObject(SelectedWeb.Fields, true);
+                    if (!string.IsNullOrEmpty(Group))
+                    {
+                        WriteObject(SelectedWeb.Fields.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)), true);
+                    }
+                    else
+                    {
+                        WriteObject(SelectedWeb.Fields, true);
+                    }
                 }
                 else
                 {

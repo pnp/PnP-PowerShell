@@ -66,8 +66,8 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Id of the custom action")]
         public GuidPipeBind ClientSideComponentId;
 
-        [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the custom action. Specify values as @{\"Property1\" = \"Value1\", \"Property2\" = \"Value2\"}")]
-        public System.Collections.Hashtable ClientSideComponentProperties;
+        [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the custom action. Specify values as a json string : \"{Property1 : 'Value1', Property2: 'Value2'}\"")]
+        public string ClientSideComponentProperties;
 #endif
         protected override void ExecuteCmdlet()
         {
@@ -101,10 +101,9 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
             {
                 ca.ClientSideComponentId = ClientSideComponentId.Id;
             }
-            if(ClientSideComponentProperties != null)
+            if(!string.IsNullOrEmpty(ClientSideComponentProperties))
             {
-                var properties = JsonConvert.SerializeObject(ClientSideComponentProperties);
-                ca.ClientSideComponentProperties = properties;
+                ca.ClientSideComponentProperties = ClientSideComponentProperties;
             }
 #endif
 

@@ -4,6 +4,8 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System.Collections;
+using Newtonsoft.Json;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
@@ -57,6 +59,16 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
         [Parameter(Mandatory = false, ParameterSetName = "ListXML", HelpMessage = "The group name to where this field belongs to")]
         public string Group;
 
+#if !ONPREMISES
+        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "The Client Side Component Id to set to the field")]
+        [Parameter(Mandatory = false, ParameterSetName = "WebPara", HelpMessage = "The Client Side Component Id to set to the field")]
+        public GuidPipeBind ClientSideComponentId;
+
+        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "The Client Side Component Properties to set to the field")]
+        [Parameter(Mandatory = false, ParameterSetName = "WebPara", HelpMessage = "The Client Side Component Properties to set to the field")]
+        public string ClientSideComponentProperties;
+#endif
+
         [Parameter(Mandatory = false)]
         [Obsolete("Not in use")]
         public AddFieldOptions FieldOptions = AddFieldOptions.DefaultValue;
@@ -95,7 +107,16 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
                         Group = Group,
                         AddToDefaultView = AddToDefaultView
                     };
-
+#if !ONPREMISES
+                    if(ClientSideComponentId != null)
+                    {
+                        fieldCI.ClientSideComponentId = ClientSideComponentId.Id;
+                    }
+                    if(!string.IsNullOrEmpty(ClientSideComponentProperties))
+                    {
+                        fieldCI.ClientSideComponentProperties = ClientSideComponentProperties;
+                    }
+#endif
                     if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
                     {
                         f = list.CreateField<FieldChoice>(fieldCI);
@@ -169,6 +190,17 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
                     Group = Group,
                     AddToDefaultView = AddToDefaultView
                 };
+
+#if !ONPREMISES
+                if (ClientSideComponentId != null)
+                {
+                    fieldCI.ClientSideComponentId = ClientSideComponentId.Id;
+                }
+                if (!string.IsNullOrEmpty(ClientSideComponentProperties))
+                {
+                    fieldCI.ClientSideComponentProperties = ClientSideComponentProperties;
+                }
+#endif
 
                 if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
                 {
