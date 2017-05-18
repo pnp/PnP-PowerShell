@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPJavaScriptBlock")]
-    [CmdletAlias("Add-SPOJavaScriptBlock")]
     [CmdletHelp("Adds a link to a JavaScript snippet/block to a web or site collection",
         DetailedDescription = "Specify a scope as 'Site' to add the custom action to all sites in a site collection.",
         Category = CmdletHelpCategory.Branding)]

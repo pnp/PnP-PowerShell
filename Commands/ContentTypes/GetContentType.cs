@@ -9,7 +9,6 @@ using System;
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Get, "PnPContentType")]
-    [CmdletAlias("Get-SPOContentType")]
     [CmdletHelp("Retrieves a content type",
         Category = CmdletHelpCategory.ContentTypes,
         OutputType = typeof(ContentType),

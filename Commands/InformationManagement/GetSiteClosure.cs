@@ -6,7 +6,6 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
 
     [Cmdlet(VerbsCommon.Get, "PnPSiteClosure")]
-    [CmdletAlias("Get-SPOSiteClosure")]
     [CmdletHelp("Get the site closure status of the site which has a site policy applied", Category = CmdletHelpCategory.InformationManagement)]
     [CmdletExample(
       Code = @"PS:> Get-PnPSiteClosure",

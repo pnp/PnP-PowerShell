@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "PnPWorkflowSubscription")]
-    [CmdletAlias("Get-SPOWorkflowSubscription")]
     [CmdletHelp("Returns a workflow subscriptions from a list",
         Category = CmdletHelpCategory.Workflows,
         OutputType=typeof(WorkflowSubscription),

@@ -8,7 +8,6 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPFeature", SupportsShouldProcess = false)]
-    [CmdletAlias("Disable-SPOFeature")]
     [CmdletHelp("Disables a feature", Category = CmdletHelpCategory.Features)]
     [CmdletExample(
         Code = "PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",

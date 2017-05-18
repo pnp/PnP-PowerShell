@@ -12,7 +12,6 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsCommon.Get, "PnPFeature")]
-    [CmdletAlias("Get-SPOFeature")]
     [CmdletHelp("Returns all activated or a specific activated feature",
         Category = CmdletHelpCategory.Features,
         OutputType = typeof(IEnumerable<Feature>),

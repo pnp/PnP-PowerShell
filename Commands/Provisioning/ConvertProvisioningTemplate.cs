@@ -8,7 +8,6 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Convert, "PnPProvisioningTemplate")]
-    [CmdletAlias("Convert-SPOProvisioningTemplate")]
     [CmdletHelp("Converts a provisioning template to an other schema version",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

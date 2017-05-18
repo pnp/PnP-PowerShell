@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPNavigationNode")]
-    [CmdletAlias("Add-SPONavigationNode")]
     [CmdletHelp("Adds a menu item to either the quicklaunch or top navigation", 
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(

@@ -11,7 +11,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPView")]
-    [CmdletAlias("Get-SPOView")]
     [CmdletHelp("Returns one or all views from a list",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(View),

@@ -5,7 +5,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.New, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletAlias("New-SPOProvisioningTemplate")]
     [CmdletHelp("Creates a new provisioning template object",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

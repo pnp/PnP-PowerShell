@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPMasterPage")]
-    [CmdletAlias("Set-SPOMasterPage")]
     [CmdletHelp("Sets the default master page of the current web.",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(

@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPRequestAccessEmails")]
-    [CmdletAlias("Set-SPORequestAccessEmails")]
     [CmdletHelp("Sets Request Access Emails on a web",
        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(

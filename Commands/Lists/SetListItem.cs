@@ -13,7 +13,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPListItem")]
-    [CmdletAlias("Set-SPOListItem")]
     [CmdletHelp("Updates a list item",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),

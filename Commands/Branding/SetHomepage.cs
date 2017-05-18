@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPHomePage")]
-    [CmdletAlias("Set-SPOHomePage")]
     [CmdletHelp("Sets the home page of the current web.", 
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(

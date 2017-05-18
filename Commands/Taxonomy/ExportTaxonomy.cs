@@ -12,7 +12,6 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Export, "PnPTaxonomy", SupportsShouldProcess = true)]
-    [CmdletAlias("Export-SPOTaxonomy")]
     [CmdletHelp("Exports a taxonomy to either the output or to a file.",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample

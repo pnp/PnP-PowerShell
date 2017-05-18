@@ -16,7 +16,6 @@ using System.Collections;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletAlias("Get-SPOProvisioningTemplate")]
     [CmdletHelp("Generates a provisioning template from a web",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

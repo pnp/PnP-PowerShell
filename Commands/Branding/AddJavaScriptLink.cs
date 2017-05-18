@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPJavaScriptLink")]
-    [CmdletAlias("Add-SPOJavaScriptLink")]
     [CmdletHelp("Adds a link to a JavaScript file to a web or sitecollection",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(Code = "PS:> Add-PnPJavaScriptLink -Name jQuery -Url https://code.jquery.com/jquery.min.js -Sequence 9999 -Scope Site",

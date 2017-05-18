@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWebPart")]
-    [CmdletAlias("Remove-SPOWebPart")]
     [CmdletHelp("Removes a webpart from a page",
         Category = CmdletHelpCategory.WebParts)]
     public class RemoveWebPart : PnPWebCmdlet

@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPSitePolicy")]
-    [CmdletAlias("Set-SPOSitePolicy")]
     [CmdletHelp("Sets a site policy", 
         Category = CmdletHelpCategory.InformationManagement)]
     [CmdletExample(

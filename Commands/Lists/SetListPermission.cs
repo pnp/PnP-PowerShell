@@ -9,7 +9,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     //TODO: Create Test
     [Cmdlet(VerbsCommon.Set, "PnPListPermission")]
-    [CmdletAlias("Set-SPOListPermission")]
     [CmdletHelp("Sets list permissions",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(

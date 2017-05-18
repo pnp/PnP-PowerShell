@@ -6,7 +6,6 @@ using Microsoft.SharePoint.Client;
 namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Remove, "PnPContentTypeFromDocumentSet")]
-    [CmdletAlias("Remove-SPOContentTypeFromDocumentSet")]
     [CmdletHelp("Removes a content type from a document set", 
         Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(

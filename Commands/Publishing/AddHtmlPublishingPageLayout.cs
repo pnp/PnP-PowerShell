@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Add, "PnPHtmlPublishingPageLayout")]
-    [CmdletAlias("Add-SPOHtmlPublishingPageLayout")]
     [CmdletHelp("Adds a HTML based publishing page layout",
        Category = CmdletHelpCategory.Publishing)]
     [CmdletExample(

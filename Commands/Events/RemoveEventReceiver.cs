@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Remove, "PnPEventReceiver", SupportsShouldProcess = true)]
-    [CmdletAlias("Remove-SPOEventReceiver")]
     [CmdletHelp("Removes/unregisters a specific event receiver",
         Category = CmdletHelpCategory.EventReceivers)]
     [CmdletExample(

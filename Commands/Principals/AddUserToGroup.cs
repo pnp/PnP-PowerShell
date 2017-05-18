@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Add, "PnPUserToGroup")]
-    [CmdletAlias("Add-SPOUserToGroup")]
     [CmdletHelp("Adds a user to a group", 
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(

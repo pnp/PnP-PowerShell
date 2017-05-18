@@ -10,7 +10,6 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Remove, "PnPJavaScriptLink", SupportsShouldProcess = true)]
-    [CmdletAlias("Remove-SPOJavaScriptLink")]
     [CmdletHelp("Removes a JavaScript link or block from a web or sitecollection",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(Code = "PS:> Remove-PnPJavaScriptLink -Name jQuery",

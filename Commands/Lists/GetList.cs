@@ -11,7 +11,6 @@ using SharePointPnP.PowerShell.Commands.Base;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPList")]
-    [CmdletAlias("Get-SPOList")]
     [CmdletHelp("Returns a List object",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(List),

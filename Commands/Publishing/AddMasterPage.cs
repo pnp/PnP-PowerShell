@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Add, "PnPMasterPage")]
-    [CmdletAlias("Add-SPOMasterPage")]
     [CmdletHelp("Adds a Masterpage",
         Category = CmdletHelpCategory.Publishing,
         OutputType = typeof(File),

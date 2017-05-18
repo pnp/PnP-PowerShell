@@ -7,7 +7,6 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
 
     [Cmdlet(VerbsCommon.Set, "PnPDefaultContentTypeToList")]
-    [CmdletAlias("Set-SPODefaultContentTypeToList")]
     [CmdletHelp("Sets the default content type for a list", 
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(

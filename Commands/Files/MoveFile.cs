@@ -7,7 +7,6 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Move, "PnPFile", SupportsShouldProcess = true)]
-    [CmdletAlias("Move-SPOFile")]
     [CmdletHelp("Moves a file to a different location",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(

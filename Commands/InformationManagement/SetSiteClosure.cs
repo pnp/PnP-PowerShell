@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteClosure")]
-    [CmdletAlias("Set-SPOSiteClosure")]
     [CmdletHelp("Opens or closes a site which has a site policy applied", Category = CmdletHelpCategory.InformationManagement)]
     [CmdletExample(
       Code = @"PS:> Set-PnPSiteClosure -State Open",

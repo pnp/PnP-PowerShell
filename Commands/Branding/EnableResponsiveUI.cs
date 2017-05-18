@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPResponsiveUI")]
-    [CmdletAlias("Enable-SPOResponsiveUI")]
     [CmdletHelp("Enables the PnP Responsive UI implementation on a classic SharePoint Site", Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
         Code="PS:> Enable-PnPResponsiveUI",

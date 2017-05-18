@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsLifecycle.Request, "PnPReIndexList")]
-    [CmdletAlias("Request-SPOReIndexList")]
     [CmdletHelp("Marks the list for full indexing during the next incremental crawl",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(

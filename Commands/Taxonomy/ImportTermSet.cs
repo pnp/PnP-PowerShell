@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Import, "PnPTermSet", SupportsShouldProcess = false)]
-    [CmdletAlias("Import-SPOTermSet")]
     [CmdletHelp("Imports a taxonomy term set from a file in the standard format.",
         Category = CmdletHelpCategory.Taxonomy,
         DetailedDescription = @"The format of the file is the same as that used by the import function in the web interface. A sample file can be obtained from the web interface.

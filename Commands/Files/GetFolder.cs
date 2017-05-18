@@ -12,7 +12,6 @@ using File = Microsoft.SharePoint.Client.File;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolder")]
-    [CmdletAlias("Get-SPOFolder")]
     [CmdletHelp("Return a folder object", Category = CmdletHelpCategory.Files,
         DetailedDescription = "Retrieves a folder if it exists. Use Ensure-PnPFolder to create the folder if it does not exist.",
         OutputType = typeof(Folder),

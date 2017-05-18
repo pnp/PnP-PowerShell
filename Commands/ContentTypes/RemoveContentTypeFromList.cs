@@ -7,7 +7,6 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
 
     [Cmdlet(VerbsCommon.Remove, "PnPContentTypeFromList")]
-    [CmdletAlias("Remove-SPOContentTypeFromList")]
     [CmdletHelp("Removes a content type from a list", 
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(

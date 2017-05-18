@@ -8,7 +8,6 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPPropertyBagValue")]
-    [CmdletAlias(("Set-SPOPropertyBagValue"))]
     [CmdletHelp("Sets a property bag value",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(

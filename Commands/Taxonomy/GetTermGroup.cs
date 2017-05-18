@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Get, "PnPTermGroup", SupportsShouldProcess = false)]
-    [CmdletAlias("Get-SPOTermGroup")]
     [CmdletHelp(@"Returns a taxonomy term group",
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(TermGroup),

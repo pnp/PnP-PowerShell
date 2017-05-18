@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Remove, "PnPList", SupportsShouldProcess = true)]
-    [CmdletAlias("Remove-SPOList")]
     [CmdletHelp("Deletes a list",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(

@@ -11,7 +11,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebPart")]
-    [CmdletAlias("Get-SPOWebPart")]
     [CmdletHelp("Returns a webpart definition object",
         Category = CmdletHelpCategory.WebParts,
         OutputType=typeof(IEnumerable<WebPartDefinition>),

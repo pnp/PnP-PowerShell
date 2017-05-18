@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Get, "PnPField")]
-    [CmdletAlias("Get-SPOField")]
     [CmdletHelp("Returns a field from a list or site",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),

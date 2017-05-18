@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPGroupPermissions")]
-    [CmdletAlias("Get-SPOGroupPermissions")]
     [CmdletHelp("Returns the permissions for a specific SharePoint group",
         Category = CmdletHelpCategory.Principals,
         OutputType = typeof(RoleDefinitionBindingCollection),

@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Add, "PnPWikiPage")]
-    [CmdletAlias("Add-SPOWikiPage")]
     [CmdletHelp("Adds a wiki page",
         Category = CmdletHelpCategory.Publishing)]
     [CmdletExample(

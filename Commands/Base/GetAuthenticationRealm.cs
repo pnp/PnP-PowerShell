@@ -7,7 +7,6 @@ using Microsoft.SharePoint.Client;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPAuthenticationRealm")]
-    [CmdletAlias("Get-SPOAuthenticationRealm")]
     [CmdletHelp("Gets the authentication realm for the current web", 
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(

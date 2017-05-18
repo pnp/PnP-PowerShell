@@ -16,7 +16,6 @@ using Microsoft.SharePoint.Client.CompliancePolicy;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false)]
-    [CmdletAlias("Connect-SPOnline")]
     [CmdletHelp("Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets",
         DetailedDescription = "If no credentials have been specified, and the CurrentCredentials parameter has not been specified, you will be prompted for credentials.",
         Category = CmdletHelpCategory.Base)]
