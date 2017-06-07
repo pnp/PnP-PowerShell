@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Move, "PnPListItemToRecycleBin", SupportsShouldProcess = true)]
-    [CmdletAlias("Move-SPOListItemToRecycleBin")]
     [CmdletHelp("Moves an item from a list to the Recycle Bin",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
