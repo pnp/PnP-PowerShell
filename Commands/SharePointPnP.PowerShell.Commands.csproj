@@ -611,7 +611,7 @@
     <Compile Include="WebParts\GetWebPartXml.cs" />
     <Compile Include="Files\GetFolderItem.cs" />
     <Compile Include="Web\GetRequestAccessEmails.cs" />
-    <Compile Include="Web\GetUser.cs" />
+    <Compile Include="Principals\GetUser.cs" />
     <Compile Include="Web\InvokeWebAction.cs" />
     <Compile Include="Files\EnsureFolder.cs" />
     <Compile Include="Files\AddFolder.cs" />

@@ -5,11 +5,11 @@ using System.Linq.Expressions;
 using System;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPUser")]
     [CmdletHelp("Returns site users of current web",
-        Category = CmdletHelpCategory.Webs)]
+        Category = CmdletHelpCategory.Principals)]
     public class GetUser : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "User ID or login name")]
