@@ -1,0 +1,12 @@
+<!ELEMENT Configurations (Configuration)>
+<!ELEMENT Configuration (Settings, Environments)>
+<!ELEMENT Settings (Setting)>
+<!ELEMENT Setting (#PCDATA)>
+<!ELEMENT Environments (Environment)>
+<!ELEMENT Environment (Sites)>
+<!ELEMENT Sites (Site)>
+<!ELEMENT Site (Webs)>
+<!ELEMENT Webs (Web)>
+<!ELEMENT Web (#PCDATA)>
+
+

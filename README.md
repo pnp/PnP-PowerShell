@@ -34,7 +34,7 @@ There are 2 ways to install the cmdlets. We recommend, where possible, to instal
 
 ## PowerShell Gallery ##
 
-If you main OS is Windows 10, of if you have [PowerShellGet](https://github.com/powershell/powershellget) installed, you can run the following commands to install the PowerShell cmdlets:
+If you main OS is Windows 10, or if you have [PowerShellGet](https://github.com/powershell/powershellget) installed, you can run the following commands to install the PowerShell cmdlets:
 
 |**SharePoint Version**|**Command to install**|
 |------------------|------------------|
