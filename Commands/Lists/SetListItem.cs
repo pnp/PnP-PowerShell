@@ -7,8 +7,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-
-// IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Set-PnPListItem Cmdlet
+// IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Add-PnPListItem Cmdlet
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
@@ -116,8 +115,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
                     foreach (var key in values.Keys)
                     {
-                        var field =
-                            fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
+                        var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
                         if (field != null)
                         {
                             switch (field.TypeAsString)
@@ -128,6 +126,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                         List<FieldUserValue> userValues = new List<FieldUserValue>();
 
                                         var value = values[key];
+                                        if (value == null) goto default;
                                         if (value.GetType().IsArray)
                                         {
                                             foreach (var arrayItem in (value as IEnumerable))
@@ -173,14 +172,14 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                 case "TaxonomyFieldTypeMulti":
                                     {
                                         var value = Values[key];
-                                        if (value.GetType().IsArray)
+                                        if (value != null && value.GetType().IsArray)
                                         {
                                             var taxSession = ClientContext.Site.GetTaxonomySession();
                                             var terms = new List<KeyValuePair<Guid, string>>();
                                             foreach (var arrayItem in value as object[])
                                             {
-                                                TaxonomyItem taxonomyItem = null;
-                                                Guid termGuid = Guid.Empty;
+                                                TaxonomyItem taxonomyItem;
+                                                Guid termGuid;
                                                 if (!Guid.TryParse(arrayItem as string, out termGuid))
                                                 {
                                                     // Assume it's a TermPath
@@ -192,14 +191,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                                     ClientContext.Load(taxonomyItem);
                                                     ClientContext.ExecuteQueryRetry();
                                                 }
-                                                
                                                 terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
                                             }
 
                                             TaxonomyField taxField = ClientContext.CastTo<TaxonomyField>(field);
 
                                             taxField.EnsureProperty(tf => tf.AllowMultipleValues);
-
                                             if (taxField.AllowMultipleValues)
                                             {
                                                 var termValuesString = String.Empty;
@@ -230,24 +227,33 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
                                             var taxSession = ClientContext.Site.GetTaxonomySession();
                                             TaxonomyItem taxonomyItem = null;
-                                            if (!Guid.TryParse(value as string, out termGuid))
+                                            if (value != null && !Guid.TryParse(value as string, out termGuid))
                                             {
                                                 // Assume it's a TermPath
                                                 taxonomyItem = ClientContext.Site.GetTaxonomyItemByPath(value as string);
                                             }
                                             else
                                             {
-                                                taxonomyItem = taxSession.GetTerm(termGuid);
-                                                ClientContext.Load(taxonomyItem);
-                                                ClientContext.ExecuteQueryRetry();
+                                                if (value != null)
+                                                {
+                                                    taxonomyItem = taxSession.GetTerm(termGuid);
+                                                    ClientContext.Load(taxonomyItem);
+                                                    ClientContext.ExecuteQueryRetry();
+                                                }
                                             }
 
                                             TaxonomyField taxField = ClientContext.CastTo<TaxonomyField>(field);
                                             TaxonomyFieldValue taxValue = new TaxonomyFieldValue();
-                                            taxValue.TermGuid = taxonomyItem.Id.ToString();
-                                            taxValue.Label = taxonomyItem.Name;
-
-                                            taxField.SetFieldValueByValue(item, taxValue);
+                                            if (taxonomyItem != null)
+                                            {
+                                                taxValue.TermGuid = taxonomyItem.Id.ToString();
+                                                taxValue.Label = taxonomyItem.Name;
+                                                taxField.SetFieldValueByValue(item, taxValue);
+                                            }
+                                            else
+                                            {
+                                                taxField.ValidateSetValue(item, null);
+                                            }
                                         }
 #if !ONPREMISES
                                         item.SystemUpdate();
@@ -259,8 +265,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                 case "Lookup":
                                 case "LookupMulti":
                                     {
+                                        var value = values[key];
+                                        if (value == null) goto default;
                                         int[] multiValue;
-                                        if (values[key] is Array)
+                                        if (value is Array)
                                         {
                                             var arr = (object[])values[key];
                                             multiValue = new int[arr.Length];
@@ -330,4 +338,3 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         }
     }
 }
-
