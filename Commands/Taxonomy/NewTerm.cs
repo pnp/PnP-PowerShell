@@ -126,7 +126,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             termStore.CommitAll();
             ClientContext.Load(term);
             ClientContext.ExecuteQueryRetry();
-            WriteObject(termSet);
+            WriteObject(term);
         }
 
     }
