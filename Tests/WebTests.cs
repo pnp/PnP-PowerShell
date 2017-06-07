@@ -107,5 +107,51 @@ namespace SharePointPnP.PowerShell.Tests
 				Assert.IsTrue(roles[0].Member.LoginName == group);
 			}
 		}
-	}
+
+        [TestMethod]
+        public void GetUser()
+        {
+            using (var ctx = TestCommon.CreateClientContext())
+            {
+                ctx.Web.EnsureProperties(w => w.CurrentUser.Id, w => w.CurrentUser.LoginName);
+                var currentUser = ctx.Web.CurrentUser;
+
+                // Execute cmd-let
+                using (var scope = new PSTestScope(true))
+                {
+                    var results = scope.ExecuteCommand("Get-PnPUser");
+                    Assert.IsNotNull(results);
+                    Assert.IsTrue(results.Count > 0);
+                    Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Microsoft.SharePoint.Client.User));
+
+                    results = scope.ExecuteCommand("Get-PnPUser",
+                        new CommandParameter("Identity", currentUser.Id));
+                    Assert.IsNotNull(results);
+                    Assert.IsTrue(results.Count > 0);
+                    var user = results[0].BaseObject as User;
+                    Assert.IsNotNull(user);
+                    Assert.AreEqual(currentUser.Id, user.Id);
+                    Assert.AreEqual(currentUser.LoginName, user.LoginName);
+
+                    results = scope.ExecuteCommand("Get-PnPUser",
+                        new CommandParameter("Identity", currentUser.LoginName));
+                    Assert.IsNotNull(results);
+                    Assert.IsTrue(results.Count > 0);
+                    user = results[0].BaseObject as User;
+                    Assert.IsNotNull(user);
+                    Assert.AreEqual(currentUser.Id, user.Id);
+                    Assert.AreEqual(currentUser.LoginName, user.LoginName);
+
+                    results = scope.ExecuteCommand("Get-PnPUser",
+                        new CommandParameter("Identity", currentUser));
+                    Assert.IsNotNull(results);
+                    Assert.IsTrue(results.Count > 0);
+                    user = results[0].BaseObject as User;
+                    Assert.IsNotNull(user);
+                    Assert.AreEqual(currentUser.Id, user.Id);
+                    Assert.AreEqual(currentUser.LoginName, user.LoginName);
+                }
+            }
+        }
+    }
 }
