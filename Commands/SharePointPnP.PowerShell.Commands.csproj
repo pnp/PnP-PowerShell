@@ -407,6 +407,7 @@
   <ItemGroup>
     <Compile Include="Base\PipeBinds\GenericObjectNameIdPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\UserPipeBind.cs" />
     <Compile Include="Base\PnPWebCmdlet.cs" />
     <Compile Include="Base\PropertyLoadingAttribute.cs" />
     <Compile Include="Base\PipeBinds\ImageRenditionPipeBind.cs" />
@@ -610,6 +611,7 @@
     <Compile Include="WebParts\GetWebPartXml.cs" />
     <Compile Include="Files\GetFolderItem.cs" />
     <Compile Include="Web\GetRequestAccessEmails.cs" />
+    <Compile Include="Web\GetUser.cs" />
     <Compile Include="Web\InvokeWebAction.cs" />
     <Compile Include="Files\EnsureFolder.cs" />
     <Compile Include="Files\AddFolder.cs" />
