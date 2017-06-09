@@ -29,8 +29,8 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Remarks = "Retrieves a specific Office 365 Group based on its DisplayName",
        SortOrder = 3)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupSiteUrl",
-       Remarks = "Retrieves a specific Office 365 Group based on the URL of its Modern SharePoint site",
+       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupSiteMailNickName",
+       Remarks = "Retrieves a specific Office 365 Group based on the mail nickname",
        SortOrder = 4)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
@@ -40,6 +40,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     {
         [Parameter(Mandatory = false, HelpMessage = "The Identity of the Office 365 Group.")]
         public UnifiedGroupPipeBind Identity;
+
+        [Parameter(Mandatory = false, HelpMessage = "Exclude fetching the site URL for Office 365 Groups. This speeds up large listings.")]
+        public SwitchParameter ExcludeSiteUrl;
 
         protected override void ExecuteCmdlet()
         {
@@ -51,21 +54,25 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 // We have to retrieve a specific group
                 if (Identity.Group != null)
                 {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken);
+                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken, includeSite: !ExcludeSiteUrl.IsPresent);
                 }
                 else if (!String.IsNullOrEmpty(Identity.DisplayName))
                 {
-                    groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, Identity.DisplayName);
+                    groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, Identity.DisplayName, includeSite: !ExcludeSiteUrl.IsPresent);
+                    if (groups == null || groups.Count == 0)
+                    {
+                        groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, mailNickname: Identity.DisplayName, includeSite: !ExcludeSiteUrl.IsPresent);
+                    }
                 }
                 else if (!String.IsNullOrEmpty(Identity.GroupId))
                 {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.GroupId, AccessToken);
+                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.GroupId, AccessToken, includeSite: !ExcludeSiteUrl.IsPresent);
                 }
             }
             else
             {
                 // Retrieve all the groups
-                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken);
+                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, includeSite: !ExcludeSiteUrl.IsPresent);
             }
 
             if (group != null)
