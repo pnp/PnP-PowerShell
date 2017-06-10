@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="Configurations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Configuration" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Settings">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Setting">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="PnPRelease" type="xs:string" />                          
+                        </xs:sequence>                        
+                      </xs:complexType>                      
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Environments" >
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Environment">
+                      <xs:complexType>                        
+                        <xs:sequence>                          
+                          <xs:element name="Sites">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Site" >
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Webs">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="Web">
+                                              <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="Pages">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="Page">
+                                                          <xs:complexType>
+                                                            <xs:attribute name="Name" type="xs:string"  use="required" />
+                                                            <xs:attribute name="Url" type="xs:string"  use="required" />
+                                                            <xs:attribute name="Template" type="xs:string"  use="required" />
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="Lists">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="List">
+                                                          <xs:complexType>
+                                                            <xs:attribute name="Name" type="xs:string"  use="required" />
+                                                            <xs:attribute name="Url" type="xs:string"  use="required" />
+                                                            <xs:attribute name="Template" type="xs:string"  use="required" />
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="Artefacts">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="Lists">
+                                                          <xs:complexType>
+                                                            <xs:sequence>
+                                                              <xs:element name="List">
+                                                                <xs:complexType>
+                                                                  <xs:sequence>
+                                                                    <xs:element name="List">
+                                                                      <xs:complexType>
+                                                                        <xs:sequence>
+                                                                          <xs:element name="DataSource">
+                                                                            <xs:complexType>
+                                                                              <xs:sequence>
+                                                                              </xs:sequence>
+                                                                              <xs:attribute name="Entity" type="xs:string"  use="required" />
+                                                                              <xs:attribute name="NameSpace" type="xs:string"  use="required" />
+                                                                              <xs:attribute name="LobSystemInstance" type="xs:string"  use="required" />                                                                              
+                                                                            </xs:complexType>
+                                                                          </xs:element>
+                                                                        </xs:sequence>
+                                                                      </xs:complexType>
+                                                                    </xs:element>
+                                                                  </xs:sequence>
+                                                                  <!-- Listing the lists and libraries where content needs to be exported from -->
+                                                                  <xs:attribute name="Name" type="xs:string"  use="required" />
+                                                                  <xs:attribute name="Url" type="xs:string"  use="required" />                                                                
+                                                                </xs:complexType>
+                                                              </xs:element>
+                                                            </xs:sequence>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                    </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute name="Name" type="xs:string"  use="required" />
+                                          <xs:attribute name="Url" type="xs:string"  use="optional" />
+                                          <xs:attribute name="Template" type="xs:string"  use="required" />
+                                          <xs:attribute name="Location" type="xs:string"  use="required" />
+                                          <xs:attribute name="Handler" type="xs:string"  use="optional" />
+                                          <xs:attribute name="Import" type="xs:string"  use="required" />
+                                          <xs:attribute name="Export" type="xs:string"  use="required" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="Name" type="xs:string"  use="required" />
+                              <xs:attribute name="Url" type="xs:string"  use="optional" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Name" type="xs:string"  use="required" />
+                  <xs:attribute name="Tenant" type="xs:string"  use="required" />
+                  <xs:attribute name="Site" type="xs:string"  use="optional" />
+                  <xs:attribute name="Username" type="xs:string"  use="optional" />
+                  <xs:attribute name="Password" type="xs:string"  use="optional" />
+                </xs:complexType>               
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

@@ -16,7 +16,6 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Export, "PnPTermGroupToXml", SupportsShouldProcess = true)]
-    [CmdletAlias("Export-SPOTermGroupToXml")]
     [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(

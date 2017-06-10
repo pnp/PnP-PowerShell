@@ -15,7 +15,6 @@ using SharePointPnP.PowerShell.Commands.Components;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Apply", "PnPProvisioningTemplate")]
-    [CmdletAlias("Apply-SPOProvisioningTemplate")]
     [CmdletHelp("Applies a provisioning template to a web",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

@@ -3,11 +3,13 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Enums;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
+using Newtonsoft.Json;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPCustomAction")]
-    [CmdletAlias("Add-SPOCustomAction")]
     [CmdletHelp("Adds a custom action to a web", Category = CmdletHelpCategory.Branding)]
     [CmdletExample(Code = @"$cUIExtn = ""<CommandUIExtension><CommandUIDefinitions><CommandUIDefinition Location=""""Ribbon.List.Share.Controls._children""""><Button Id=""""Ribbon.List.Share.GetItemsCountButton"""" Alt=""""Get list items count"""" Sequence=""""11"""" Command=""""Invoke_GetItemsCountButtonRequest"""" LabelText=""""Get Items Count"""" TemplateAlias=""""o1"""" Image32by32=""""_layouts/15/images/placeholder32x32.png"""" Image16by16=""""_layouts/15/images/placeholder16x16.png"""" /></CommandUIDefinition></CommandUIDefinitions><CommandUIHandlers><CommandUIHandler Command=""""Invoke_GetItemsCountButtonRequest"""" CommandAction=""""javascript: alert('Total items in this list: '+ ctx.TotalListItems);"""" EnabledScript=""""javascript: function checkEnable() { return (true);} checkEnable();""""/></CommandUIHandlers></CommandUIExtension>""
 
@@ -60,7 +62,13 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
 
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.")]
         public CustomActionScope Scope = CustomActionScope.Web;
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Id of the custom action")]
+        public GuidPipeBind ClientSideComponentId;
 
+        [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the custom action. Specify values as a json string : \"{Property1 : 'Value1', Property2: 'Value2'}\"")]
+        public string ClientSideComponentProperties;
+#endif
         protected override void ExecuteCmdlet()
         {
             var permissions = new BasePermissions();
@@ -85,8 +93,19 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
                 Sequence = Sequence,
                 Title = Title,
                 Url = Url,
-                Rights = permissions
+                Rights = permissions,
             };
+
+#if !ONPREMISES
+            if(ClientSideComponentId.Id != Guid.Empty)
+            {
+                ca.ClientSideComponentId = ClientSideComponentId.Id;
+            }
+            if(!string.IsNullOrEmpty(ClientSideComponentProperties))
+            {
+                ca.ClientSideComponentProperties = ClientSideComponentProperties;
+            }
+#endif
 
             switch (Scope)
             {

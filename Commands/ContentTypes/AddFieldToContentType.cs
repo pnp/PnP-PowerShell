@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Add, "PnPFieldToContentType")]
-    [CmdletAlias("Add-SPOFieldToContentType")]
     [CmdletHelp("Adds an existing site column to a content type", 
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(

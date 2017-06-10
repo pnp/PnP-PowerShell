@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Add, "PnPEventReceiver")]
-    [CmdletAlias("Add-SPOEventReceiver")]
     [CmdletHelp("Adds a new event receiver",
         Category = CmdletHelpCategory.EventReceivers,
         OutputType=typeof(EventReceiverDefinition),

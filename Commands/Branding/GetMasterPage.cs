@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPMasterPage")]
-    [CmdletAlias("Get-SPOMasterPage")]
     [CmdletHelp("Returns the URLs of the default Master Page and the custom Master Page.", 
         Category = CmdletHelpCategory.Branding)]
     public class GetMasterPage : PnPWebCmdlet

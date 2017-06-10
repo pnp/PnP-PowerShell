@@ -10,7 +10,6 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "PnPCustomAction")]
-    [CmdletAlias("Get-SPOCustomAction")]
     [CmdletHelp("Returns all or a specific custom action(s)",
         Category = CmdletHelpCategory.Branding,
         OutputType = typeof(List<UserCustomAction>),

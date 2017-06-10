@@ -7,7 +7,6 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFolder")]
-    [CmdletAlias("Remove-SPOFolder")]
     [CmdletHelp("Deletes a folder within a parent folder",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(

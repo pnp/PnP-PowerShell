@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Get, "PnPTaxonomySession")]
-    [CmdletAlias("Get-SPOTaxonomySession")]
     [CmdletHelp("Returns a taxonomy session",
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(TaxonomySession),

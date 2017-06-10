@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPMinimalDownloadStrategy")]
-    [CmdletAlias("Set-SPOMinimalDownloadStrategy")]
     [CmdletHelp("Activates or deactivates the minimal downloading strategy.", 
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(

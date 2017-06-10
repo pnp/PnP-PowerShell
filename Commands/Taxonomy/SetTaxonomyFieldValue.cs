@@ -9,7 +9,6 @@ using System.Collections.Generic;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Set, "PnPTaxonomyFieldValue", DefaultParameterSetName = "ITEM")]
-    [CmdletAlias("Set-SPOTaxonomyFieldValue")]
     [CmdletHelp("Sets a taxonomy term value in a listitem field",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(

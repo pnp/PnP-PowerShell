@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "PnPTaxonomyField")]
-    [CmdletAlias("Add-SPOTaxonomyField")]
     [CmdletHelp("Adds a taxonomy field to a list or as a site column.",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),

@@ -223,6 +223,7 @@ Cmdlet|Description
 **[Remove&#8209;PnPListItem](RemovePnPListItem.md)** |Deletes an item from a list
 **[Set&#8209;PnPListItem](SetPnPListItem.md)** |Updates a list item
 **[Set&#8209;PnPListItemPermission](SetPnPListItemPermission.md)** |Sets list item permissions
+**[Move&#8209;PnPListItemToRecycleBin](MovePnPListItemToRecycleBin.md)** |Moves an item from a list to the Recycle Bin
 **[Set&#8209;PnPListPermission](SetPnPListPermission.md)** |Sets list permissions
 **[Get&#8209;PnPProvisioningTemplateFromGallery](GetPnPProvisioningTemplateFromGallery.md)** |Retrieves or searches provisioning templates from the PnP Template Gallery
 **[Request&#8209;PnPReIndexList](RequestPnPReIndexList.md)** |Marks the list for full indexing during the next incremental crawl
@@ -352,6 +353,7 @@ Cmdlet|Description
 **[Set&#8209;PnPGroup](SetPnPGroup.md)** |Updates a group
 **[Get&#8209;PnPGroupPermissions](GetPnPGroupPermissions.md)** |Returns the permissions for a specific SharePoint group
 **[Set&#8209;PnPGroupPermissions](SetPnPGroupPermissions.md)** |Adds and/or removes permissions of a specific SharePoint group
+**[Get&#8209;PnPUser](GetPnPUser.md)** |Returns site users of current web
 **[New&#8209;PnPUser](NewPnPUser.md)** |Adds a user to the built-in Site User Info List and returns a user object
 **[Remove&#8209;PnPUserFromGroup](RemovePnPUserFromGroup.md)** |Removes a user from a group
 **[Add&#8209;PnPUserToGroup](AddPnPUserToGroup.md)** |Adds a user to a group

@@ -15,7 +15,6 @@ using SharePointPnP.PowerShell.Commands.Taxonomy;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Add, "PnPListItem")]
-    [CmdletAlias("Add-SPOListItem")]
     [CmdletHelp("Adds an item to a list",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),

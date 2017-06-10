@@ -8,7 +8,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFieldFromContentType")]
-    [CmdletAlias("Remove-SPOFieldFromContentType")]
     [CmdletHelp("Removes a site column from a content type",
         Category = CmdletHelpCategory.ContentTypes)]
     [CmdletExample(

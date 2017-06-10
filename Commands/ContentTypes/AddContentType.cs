@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Add, "PnPContentType")]
-    [CmdletAlias("Add-SPOContentType")]
     [CmdletHelp("Adds a new content type", 
         Category = CmdletHelpCategory.ContentTypes,
         OutputType = typeof(ContentType),

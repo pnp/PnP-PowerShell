@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Remove, "PnPField", SupportsShouldProcess = true)]
-    [CmdletAlias("Remove-SPOField")]
     [CmdletHelp("Removes a field from a list or a site",
         Category = CmdletHelpCategory.Fields)]
     [CmdletExample(

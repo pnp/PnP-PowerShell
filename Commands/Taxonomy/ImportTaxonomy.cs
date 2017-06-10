@@ -8,7 +8,6 @@ using System.Linq;
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Import, "PnPTaxonomy", SupportsShouldProcess = true)]
-    [CmdletAlias("Import-SPOTaxonomy")]
     [CmdletHelp("Imports a taxonomy from either a string array or a file",
         Category = CmdletHelpCategory.Taxonomy)]
     [CmdletExample(

@@ -8,7 +8,6 @@ using SharePointPnP.PowerShell.Commands.Provider;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
-    [CmdletAlias("Disconnect-SPOnline")]
     [CmdletHelp("Disconnects the context", 
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(

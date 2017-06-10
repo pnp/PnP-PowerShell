@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Add,"PnPContentTypeToDocumentSet")]
-    [CmdletAlias("Add-SPOContentTypeToDocumentSet")]
     [CmdletHelp("Adds a content type to a document set", 
         Category = CmdletHelpCategory.DocumentSets)]
     [CmdletExample(

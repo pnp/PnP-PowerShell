@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Get, "PnPField")]
-    [CmdletAlias("Get-SPOField")]
     [CmdletHelp("Returns a field from a list or site",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
@@ -29,6 +28,9 @@ namespace SharePointPnP.PowerShell.Commands.Fields
 
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The field object or name to get")]
         public FieldPipeBind Identity = new FieldPipeBind();
+
+        [Parameter(Mandatory = false, HelpMessage = "Filter to the specified group")]
+        public string Group;
 
         protected override void ExecuteCmdlet()
         {
@@ -63,8 +65,12 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 }
                 else if (fieldCollection != null)
                 {
-
-                    WriteObject(fieldCollection, true);
+                    if (!string.IsNullOrEmpty(Group))
+                    {
+                        WriteObject(fieldCollection.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)),true);
+                    } else {
+                        WriteObject(fieldCollection, true);
+                    }
                 }
                 else
                 {
@@ -77,7 +83,14 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 {
                     ClientContext.Load(SelectedWeb.Fields, fc => fc.IncludeWithDefaultProperties(RetrievalExpressions));
                     ClientContext.ExecuteQueryRetry();
-                    WriteObject(SelectedWeb.Fields, true);
+                    if (!string.IsNullOrEmpty(Group))
+                    {
+                        WriteObject(SelectedWeb.Fields.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)), true);
+                    }
+                    else
+                    {
+                        WriteObject(SelectedWeb.Fields, true);
+                    }
                 }
                 else
                 {

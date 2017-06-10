@@ -8,7 +8,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAppInstance")]
-    [CmdletAlias("Get-SPOAppInstance")]
     [CmdletHelp("Returns a SharePoint AddIn Instance in the site",
         Category = CmdletHelpCategory.Apps,
         OutputType = typeof(List<AppInstance>),

@@ -16,7 +16,6 @@ using System.Collections;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletAlias("Get-SPOProvisioningTemplate")]
     [CmdletHelp("Generates a provisioning template from a web",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
@@ -255,6 +254,13 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             }
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
+            if(extension == ".pnp")
+            {
+                // if file is of pnp format, persist all files
+                creationInformation.PersistBrandingFiles = true;
+                creationInformation.PersistPublishingFiles = true;
+                creationInformation.PersistMultiLanguageResources = true;
+            }
             if (!string.IsNullOrEmpty(ResourceFilePrefix))
             {
                 creationInformation.ResourceFilePrefix = ResourceFilePrefix;

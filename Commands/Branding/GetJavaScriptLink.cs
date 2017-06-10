@@ -8,7 +8,6 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "PnPJavaScriptLink")]
-    [CmdletAlias("Get-SPOJavaScriptLink")]
     [CmdletHelp("Returns all or a specific custom action(s) with location type ScriptLink", 
         Category = CmdletHelpCategory.Branding,
         OutputType = typeof(UserCustomAction),

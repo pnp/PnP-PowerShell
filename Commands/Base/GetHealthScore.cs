@@ -6,7 +6,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Get", "PnPHealthScore")]
-    [CmdletAlias("Get-SPOHealthScore")]
     [CmdletHelp("Retrieves the current health score value of the server", 
         Category = CmdletHelpCategory.Base,
         OutputType=typeof(int),

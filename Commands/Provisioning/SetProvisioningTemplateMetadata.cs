@@ -12,7 +12,6 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Set, "PnPProvisioningTemplateMetadata")]
-    [CmdletAlias("Set-SPOProvisioningTemplateMetadata")]
     [CmdletHelp("Sets metadata of a provisioning template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

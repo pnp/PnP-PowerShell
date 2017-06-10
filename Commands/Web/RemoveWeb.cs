@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.Commands.Extensions;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWeb")]
-    [CmdletAlias("Remove-SPOWeb")]
     [CmdletHelp("Removes a subweb in the current web",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(

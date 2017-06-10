@@ -17,7 +17,6 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplateFromGallery", DefaultParameterSetName = "Search")]
-    [CmdletAlias("Get-SPOProvisioningTemplateFromGallery")]
     [CmdletHelp("Retrieves or searches provisioning templates from the PnP Template Gallery", Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = @"Get-PnPProvisioningTemplateFromGallery",

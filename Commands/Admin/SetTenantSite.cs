@@ -12,7 +12,6 @@ using OfficeDevPnP.Core.Entities;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenantSite")]
-    [CmdletAlias("Set-SPOTenantSite")]
     [CmdletHelp(@"Office365 only: Uses the tenant API to set site information.",
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(

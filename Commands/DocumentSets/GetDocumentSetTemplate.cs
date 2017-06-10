@@ -10,7 +10,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Get,"PnPDocumentSetTemplate")]
-    [CmdletAlias("Get-SPODocumentSetTemplate")]
     [CmdletHelp("Retrieves a document set template", 
         Category = CmdletHelpCategory.DocumentSets,
         OutputType=typeof(DocumentSetTemplate),

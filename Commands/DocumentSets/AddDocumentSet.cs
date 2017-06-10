@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Add, "PnPDocumentSet")]
-    [CmdletAlias("Add-SPODocumentSet")]
     [CmdletHelp("Creates a new document set in a library.",
       Category = CmdletHelpCategory.DocumentSets,
         OutputType=typeof(string))]

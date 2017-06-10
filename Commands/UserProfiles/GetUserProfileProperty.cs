@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.Commands.Base;
 namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUserProfileProperty")]
-    [CmdletAlias("Get-SPOUserProfileProperty")]
 #if !ONPREMISES
     [CmdletHelp(@"You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet. 
 ", DetailedDescription = "Requires a connection to a SharePoint Tenant Admin site.", 

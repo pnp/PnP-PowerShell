@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Get, "PnPWikiPageContent")]
-    [CmdletAlias("Get-SPOWikiPageContent")]
     [CmdletHelp("Gets the contents/source of a wiki page",
         Category = CmdletHelpCategory.Publishing,
         OutputType = typeof(string))]

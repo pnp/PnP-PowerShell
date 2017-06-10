@@ -60,20 +60,34 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     aliasesToExport.Add(alias);
                 }
             }
-            File.WriteAllText(psm1Path, aliasBuilder.ToString());
+
+            if (aliasesToExport.Any())
+            {
+                File.WriteAllText(psm1Path, aliasBuilder.ToString());
+            }
 
             // Create Module Manifest
             var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShell{spVersion}.psd1";
             var cmdletsToExportString = string.Join(",", _cmdlets.Select(c => "'" + c.FullCommand + "'"));
-            var aliasesToExportString = string.Join(",", aliasesToExport.Select(x => "'" + x + "'"));
+            string aliasesToExportString = null;
+            if (aliasesToExport.Any())
+            {
+                aliasesToExportString = string.Join(",", aliasesToExport.Select(x => "'" + x + "'"));
+            }
             WriteModuleManifest(psd1Path, spVersion, cmdletsToExportString, aliasesToExportString);
         }
 
         private void WriteModuleManifest(string path, string spVersion, string cmdletsToExport, string aliasesToExport)
         {
+            var aliases = "";
+            var nestedModules = "";
+            if (aliasesToExport != null)
+            {
+                aliases = $"{Environment.NewLine}AliasesToExport = {aliasesToExport}";
+                nestedModules = $"{Environment.NewLine}@('SharePointPnPPowerShell{spVersion}Aliases.psm1')";
+            }
             var manifest = $@"@{{
-    RootModule = 'SharePointPnP.PowerShell.{spVersion}.Commands.dll'
-    NestedModules = @('SharePointPnPPowerShell{spVersion}Aliases.psm1')
+    RootModule = 'SharePointPnP.PowerShell.{spVersion}.Commands.dll'{nestedModules}
     ModuleVersion = '{_assemblyVersion}'
     Description = 'SharePoint Patterns and Practices PowerShell Cmdlets for SharePoint {spVersion}'
     GUID = '8f1147be-a8e4-4bd2-a705-841d5334edc0'
@@ -83,8 +97,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
     ProcessorArchitecture = 'None'
     FunctionsToExport = '*'
     CmdletsToExport = {cmdletsToExport}
-    VariablesToExport = '*'
-    AliasesToExport = {aliasesToExport}
+    VariablesToExport = '*'{aliases}
     FormatsToProcess = 'SharePointPnP.PowerShell.{spVersion}.Commands.Format.ps1xml' 
 }}";
             File.WriteAllText(path, manifest, Encoding.UTF8);

@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Add, "PnPView")]
-    [CmdletAlias("Add-SPOView")]
     [CmdletHelp("Adds a view to a list",
         Category = CmdletHelpCategory.Lists,
           OutputType = typeof(View),

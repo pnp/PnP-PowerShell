@@ -7,7 +7,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Add, "PnPWorkflowDefinition")]
-    [CmdletAlias("Add-SPOWorkflowDefinition")]
     [CmdletHelp("Adds a workflow definition",
         Category = CmdletHelpCategory.Workflows,
         OutputType=typeof(Guid),

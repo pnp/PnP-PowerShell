@@ -15,6 +15,8 @@ Add-PnPCustomAction -Name <String>
                     [-Rights <PermissionKind[]>]
                     [-RegistrationType <UserCustomActionRegistrationType>]
                     [-Scope <CustomActionScope>]
+                    [-ClientSideComponentId <GuidPipeBind>]
+                    [-ClientSideComponentProperties <String>]
                     [-Web <WebPipeBind>]
 ```
 
@@ -27,6 +29,8 @@ Parameter|Type|Required|Description
 |Location|String|True|The actual location where this custom action need to be added like 'CommandUI.Ribbon'|
 |Name|String|True|The name of the custom action|
 |Title|String|True|The title of the custom action|
+|ClientSideComponentId|GuidPipeBind|False|The Client Side Component Id of the custom action|
+|ClientSideComponentProperties|String|False|The Client Side Component Properties of the custom action. Specify values as a json string : "{Property1 : 'Value1', Property2: 'Value2'}"|
 |CommandUIExtension|String|False|XML fragment that determines user interface properties of the custom action|
 |ImageUrl|String|False|The URL of the image associated with the custom action|
 |RegistrationId|String|False|The identifier of the object associated with the custom action.|

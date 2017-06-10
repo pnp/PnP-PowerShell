@@ -10,7 +10,6 @@ using File = Microsoft.SharePoint.Client.File;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolderItem")]
-    [CmdletAlias("Get-SPOFolderItem")]
     [CmdletHelp("List content in folder", Category = CmdletHelpCategory.Files)]
     public class GetFolderItem : PnPWebCmdlet
     {

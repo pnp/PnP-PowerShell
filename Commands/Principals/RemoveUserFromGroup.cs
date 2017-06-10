@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUserFromGroup")]
-    [CmdletAlias("Remove-SPOUserFromGroup")]
     [CmdletHelp("Removes a user from a group",
         Category = CmdletHelpCategory.Principals)]
     [CmdletExample(

@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPList")]
-    [CmdletAlias("Set-SPOList")]
     [CmdletHelp("Updates list settings",
          Category = CmdletHelpCategory.Lists)]
     [CmdletExample(

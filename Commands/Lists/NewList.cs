@@ -6,7 +6,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.New, "PnPList")]
-    [CmdletAlias("New-SPOList")]
     [CmdletHelp("Creates a new list",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
