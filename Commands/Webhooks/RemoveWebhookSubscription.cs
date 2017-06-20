@@ -24,9 +24,7 @@ PS:> Remove-PnPWebhookSubscription -List MyList -Identity $subscriptions[0]",
         SortOrder = 2)]
     public class RemoveWebhookSubscription : PnPWebCmdlet
     {
-        public const int DefaultValidityInMonths = 6;
-
-        [Parameter(Mandatory = false, HelpMessage = "The list object or name where the Webhook subscription will be added")]
+        [Parameter(Mandatory = false, HelpMessage = "The list object or name which the Webhook subscription will be removed from")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, HelpMessage = "The identity of the Webhook subscription to remove")]

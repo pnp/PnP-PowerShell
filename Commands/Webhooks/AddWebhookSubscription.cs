@@ -29,7 +29,7 @@ namespace SharePointPnP.PowerShell.Commands.Webhooks
     {
         public const int DefaultValidityInMonths = 6;
 
-        [Parameter(Mandatory = false, HelpMessage = "The list object or name where the Webhook subscription will be added")]
+        [Parameter(Mandatory = false, HelpMessage = "The list object or name where the Webhook subscription will be added to")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, HelpMessage = "The URL of the Webhook endpoint that will be notified of the change")]

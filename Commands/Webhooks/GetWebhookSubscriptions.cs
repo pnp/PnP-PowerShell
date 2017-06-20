@@ -19,9 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Webhooks
         SortOrder = 1)]
     public class GetWebhookSubscriptions : PnPWebCmdlet
     {
-        public const int DefaultValidityInMonths = 6;
-
-        [Parameter(Mandatory = false, HelpMessage = "The list object or name where the Webhook subscription will be added")]
+        [Parameter(Mandatory = false, HelpMessage = "The list object or name to get the Webhook subscriptions from")]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()
