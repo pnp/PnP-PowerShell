@@ -18,7 +18,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Subscription|WebhookSubscriptionPipeBind|True|The identity of the Webhook subscription to update|
 |ExpirationDate|DateTime|False|The date at which the Webhook subscription will expire. (Default: 6 months from today)|
-|List|ListPipeBind|False|The list object or name where the Webhook subscription will be added|
+|List|ListPipeBind|False|The list object or name from which the Webhook subscription will be modified|
 |NotificationUrl|String|False|The URL of the Webhook endpoint that will be notified of the change|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
@@ -31,7 +31,7 @@ Updates an existing Webhook subscription with the specified id on the list MyLis
 
 ### Example 2
 ```powershell
-PS:> Set-PnPWebhookSubscription -List MyList -Subscription ea1533a8-ff03-415b-a7b6-517ee50db8b6 -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate 2017-09-01
+PS:> Set-PnPWebhookSubscription -List MyList -Subscription ea1533a8-ff03-415b-a7b6-517ee50db8b6 -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate "2017-09-01"
 ```
 Updates an existing Webhook subscription with the specified id on the list MyList with a new Notification Url and a new expiration date
 

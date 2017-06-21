@@ -13,7 +13,7 @@ Get-PnPWebhookSubscriptions [-List <ListPipeBind>]
 ## Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|List|ListPipeBind|False|The list object or name where the Webhook subscription will be added|
+|List|ListPipeBind|False|The list object or name to get the Webhook subscriptions from|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 

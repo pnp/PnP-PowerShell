@@ -18,16 +18,18 @@ namespace SharePointPnP.PowerShell.Commands.Webhooks
         Remarks = "Add a Webhook subscription for the specified notification Url on the list MyList",
         SortOrder = 1)]
     [CmdletExample(
-        Code = "PS:> Add-PnPWebhookSubscription -List MyList -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate 2017-09-01",
+        Code = @"PS:> Add-PnPWebhookSubscription -List MyList -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate ""2017-09-01""",
         Remarks = "Add a Webhook subscription for the specified notification Url on the list MyList with an expiration date set on September 1st, 2017",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPWebhookSubscription -List MyList -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate 2017-09-01 -ClientState ""Hello State!""",
+        Code = @"PS:> Add-PnPWebhookSubscription -List MyList -NotificationUrl https://my-func.azurewebsites.net/webhook -ExpirationDate ""2017-09-01"" -ClientState ""Hello State!""",
         Remarks = "Add a Webhook subscription for the specified notification Url on the list MyList with an expiration date set on September 1st, 2017 with a specific client state",
         SortOrder = 3)]
     public class AddWebhookSubscription : PnPWebCmdlet
     {
         public const int DefaultValidityInMonths = 6;
+        public const int ValidityDeltaInDays = -72; // Note: Some expiration dates too close to the limit are rejected
+
 
         [Parameter(Mandatory = false, HelpMessage = "The list object or name where the Webhook subscription will be added to")]
         public ListPipeBind List;
@@ -36,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Webhooks
         public string NotificationUrl;
 
         [Parameter(Mandatory = false, HelpMessage = "The date at which the Webhook subscription will expire. (Default: 6 months from today)")]
-        public DateTime ExpirationDate = DateTime.Today.AddMonths(5).AddDays(-1).ToUniversalTime();
+        public DateTime ExpirationDate = DateTime.Today.ToUniversalTime().AddMonths(DefaultValidityInMonths).AddHours(ValidityDeltaInDays);
 
         [Parameter(Mandatory = false, HelpMessage = "A client state information that will be passed through notifications")]
         public string ClientState = string.Empty;
@@ -48,11 +50,14 @@ namespace SharePointPnP.PowerShell.Commands.Webhooks
             {
                 // Get the list from the currently selected web
                 List list = List.GetList(SelectedWeb);
-                // Ensure we have list Id (TODO Should be changed in the Core extension method)
-                list.EnsureProperty(l => l.Id);
+                if (list != null)
+                {
+                    // Ensure we have list Id (TODO Should be changed in the Core extension method)
+                    list.EnsureProperty(l => l.Id);
 
-                // Write the subscription result object
-                WriteObject(list.AddWebhookSubscription(NotificationUrl, ExpirationDate, ClientState));
+                    // Write the subscription result object
+                    WriteObject(list.AddWebhookSubscription(NotificationUrl, ExpirationDate, ClientState));
+                }  
             }
             else
             {

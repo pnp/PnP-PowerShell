@@ -29,11 +29,14 @@ namespace SharePointPnP.PowerShell.Commands.Webhooks
             {
                 // Get the list from the currently selected web
                 List list = List.GetList(SelectedWeb);
-                // Ensure we have list Id (TODO Should be changed in the Core extension method)
-                list.EnsureProperty(l => l.Id);
+                if (list != null)
+                {
+                    // Ensure we have list Id (TODO Should be changed in the Core extension method)
+                    list.EnsureProperty(l => l.Id);
 
-                // Get all the webhook subscriptions for the specified list
-                WriteObject(list.GetWebhookSubscriptions());
+                    // Get all the webhook subscriptions for the specified list
+                    WriteObject(list.GetWebhookSubscriptions());
+                }
             }
             else
             {

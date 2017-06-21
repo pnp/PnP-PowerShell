@@ -19,33 +19,54 @@ namespace SharePointPnP.PowerShell.Commands.Webhooks
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> $subscriptions = Get-PnPWebhookSubscriptions -List MyList
-PS:> Remove-PnPWebhookSubscription -List MyList -Identity $subscriptions[0]",
+PS:> Remove-PnPWebhookSubscription -Identity $subscriptions[0] -List MyList",
         Remarks = "Removes the first Webhook subscription from the list MyList",
         SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> $subscriptions = Get-PnPWebhookSubscriptions -List MyList
+PS:> $subscriptions[0] | Remove-PnPWebhookSubscription -List MyList",
+        Remarks = "Removes the first Webhook subscription from the list MyList",
+        SortOrder = 3)]
     public class RemoveWebhookSubscription : PnPWebCmdlet
     {
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The identity of the Webhook subscription to remove")]
+        public WebhookSubscriptionPipeBind Identity;
+
         [Parameter(Mandatory = false, HelpMessage = "The list object or name which the Webhook subscription will be removed from")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The identity of the Webhook subscription to remove")]
-        public WebhookSubscriptionPipeBind Identity;
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
-            // NOTE: Currently only supports List Webhooks
-            if (MyInvocation.BoundParameters.ContainsKey("List"))
+            if (Identity != null)
             {
-                // Get the list from the currently selected web
-                List list = List.GetList(SelectedWeb);
-                // Ensure we have list Id (TODO Should be changed in the Core extension method)
-                list.EnsureProperty(l => l.Id);
+                // NOTE: Currently only supports List Webhooks
+                if (MyInvocation.BoundParameters.ContainsKey("List"))
+                {
+                    // Get the list from the currently selected web
+                    List list = List.GetList(SelectedWeb);
+                    if (list != null)
+                    {
+                        // Ensure we have list Id (and Title for the confirm message)
+                        list.EnsureProperties(l => l.Id, l => l.Title);
 
-                // Remove the Webhook subscription for the specified Id
-                list.RemoveWebhookSubscription(Identity.Subscription);
-            }
-            else
-            {
-                throw new PSNotImplementedException("This Cmdlet only supports List Webhooks currently");
+                        // Check the Force switch of ask confirm
+                        if (Force
+                            || ShouldContinue(string.Format(Properties.Resources.RemoveWebhookSubscription0From1_2,
+                                Identity.Id, Properties.Resources.List, List.Title), Properties.Resources.Confirm))
+                        {
+                            // Remove the Webhook subscription for the specified Id
+                            list.RemoveWebhookSubscription(Identity.Subscription);
+                        }
+
+                    }
+                }
+                else
+                {
+                    throw new PSNotImplementedException("This Cmdlet only supports List Webhooks currently");
+                }
             }
         }
 
