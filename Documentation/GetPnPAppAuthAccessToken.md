@@ -1,18 +1,8 @@
 # Get-PnPAppAuthAccessToken
 Returns the access token from the current client context (In App authentication mode only)
-## Syntax
-```powershell
-Get-PnPAppAuthAccessToken [-Web <WebPipeBind>]
-```
-
-
 ## Returns
 >[System.String](https://msdn.microsoft.com/en-us/library/system.string.aspx)
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1
