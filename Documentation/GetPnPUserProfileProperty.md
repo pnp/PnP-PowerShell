@@ -1,17 +1,10 @@
 # Get-PnPUserProfileProperty
-You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet. 
 
 ## Syntax
 ```powershell
 Get-PnPUserProfileProperty -Account <String[]>
 ```
 
-
-## Detailed Description
-Requires a connection to a SharePoint Tenant Admin site.
-
-## Returns
->[Microsoft.SharePoint.Client.UserProfiles.PersonProperties](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.userprofiles.personproperties.aspx)
 
 ## Parameters
 Parameter|Type|Required|Description
