@@ -18,12 +18,12 @@ Parameter|Type|Required|Description
 
 ### Example 1
 ```powershell
-PS:> Remove-PnPList -Title Announcements
+PS:> Remove-PnPList -Identity Announcements
 ```
 Removes the list named 'Announcements'. Asks for confirmation.
 
 ### Example 2
 ```powershell
-PS:> Remove-PnPList -Title Announcements -Force
+PS:> Remove-PnPList -Identity Announcements -Force
 ```
 Removes the list named 'Announcements' without asking for confirmation.
