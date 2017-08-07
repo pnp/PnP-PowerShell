@@ -272,6 +272,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
                         break;
                     }
+                case XMLPnPSchemaVersion.V201705:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05);
+                        break;
+                    }
             }
             return formatter;
         }
