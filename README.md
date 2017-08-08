@@ -13,7 +13,7 @@ This solution contains a library of PowerShell commands that allows you to perfo
 
 ### Prerequisites ###
 In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
-
+ 
 ### Solution ###
 Solution | Author(s)
 ---------|----------
