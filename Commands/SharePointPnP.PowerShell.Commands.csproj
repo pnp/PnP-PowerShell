@@ -416,6 +416,7 @@
     <Compile Include="Base\PnPCmdlet.cs" />
     <Compile Include="Base\PnPAdminCmdlet.cs" />
     <Compile Include="ContentTypes\GetContentTypePublishingHubUrl.cs" />
+    <Compile Include="Diagnostic\MeasureResponseTime.cs" />
     <Compile Include="Files\CopyFile.cs" />
     <Compile Include="Files\MoveFile.cs" />
     <Compile Include="Files\MoveFolder.cs" />
