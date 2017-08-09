@@ -50,5 +50,7 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         RecordsManagement = 26,
         [EnumMember(Value = "Client-Side Pages")]
         ClientSidePages = 27
+        [EnumMember(Value = "Diagnostic utilites")]
+        Diagnostic = 28
     }
 }
