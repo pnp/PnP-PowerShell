@@ -1,12 +1,13 @@
-﻿using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System;
+﻿using System;
 using System.Linq;
 using System.Diagnostics;
 using System.Management.Automation;
 using System.Net;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.SharePoint.Client;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Diagnostic
 {
@@ -18,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         private ProgressRecord progressRecord = new ProgressRecord(0, "Measuring response time", "Sending probe requests");
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
-        public EndpointPipeBind Endpoint;
+        public DiagnosticEndpointPipeBind Endpoint;
 
         [Parameter(Mandatory = false)]
         public int Count = 20;
@@ -30,44 +31,59 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         {
             var uri = GetEndpointUri();
             Stopwatch timer = new Stopwatch();
-            List<long> times = new List<long>();
-
-            for (int i = 0; i < Count; i++)
+            List<long> measurements = new List<long>();
+            int i = 0;
+            try
             {
-                HttpWebRequest probe = HttpWebRequest.CreateHttp(uri);
-                probe.AllowAutoRedirect = false;
-                ClientRuntimeContext.SetupRequestCredential(ClientContext, probe);
-                WriteProgress($"Sending probe request to {uri}", i);
-                timer.Restart();
-                var response = probe.GetResponse() as HttpWebResponse;
-                timer.Stop();
-                times.Add(timer.ElapsedMilliseconds);
-
-                if(response.StatusCode != HttpStatusCode.OK)
+                for (i = 0; i < Count; i++)
                 {
-                    if(response.StatusCode < HttpStatusCode.BadRequest)
+                    HttpWebRequest probe = HttpWebRequest.CreateHttp(uri);
+                    probe.AllowAutoRedirect = false;
+
+                    ClientRuntimeContext.SetupRequestCredential(ClientContext, probe);
+                    WriteProgress($"Sending probe request to {uri}", i);
+
+                    HttpWebResponse response = null;
+                    try
                     {
-                        WriteWarning($"Unexpected status code received {(int)response.StatusCode}");
+                        timer.Restart();
+                        response = probe.GetResponse() as HttpWebResponse;
+                        timer.Stop();
                     }
-                    else
+                    catch(WebException e)
                     {
-                        WriteError(new ErrorRecord(new Exception($"Probe request failed with status code {(int)response.StatusCode}"), "1", ErrorCategory.NotSpecified, null));
+                        timer.Stop();
+                        response = e.Response as HttpWebResponse;
+                        if(response == null)
+                        {
+                            throw;
+                        }
                     }
+
+                    measurements.Add(timer.ElapsedMilliseconds);
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        if (response.StatusCode < HttpStatusCode.BadRequest)
+                        {
+                            WriteWarning($"Unexpected status code received {(int)response.StatusCode}");
+                        }
+                        else
+                        {
+                            WriteWarning($"Probe request failed with status code {(int)response.StatusCode}");
+                        }
+                    }
+                    WriteVerbose($"Reponse received in {timer.ElapsedMilliseconds}ms");
+                    WriteProgress($"Sleeping", i);
+                    Thread.Sleep(Timeout);
                 }
-                WriteVerbose($"Reponse received in {timer.ElapsedMilliseconds}ms");
-                WriteProgress($"Sleeping", i);
-                Thread.Sleep(Timeout);
+                progressRecord.RecordType = ProgressRecordType.Completed;
+                WriteProgress(progressRecord);
+
             }
-
-            progressRecord.RecordType = ProgressRecordType.Completed;
-            WriteProgress(progressRecord);
-
-            WriteObject(new {
-                Average = times.Average(),
-                Max = times.Max(),
-                Min = times.Min(),
-                StandardDeviation = GetStandardDeviation(times)
-            });
+            finally
+            {
+                WriteObject(GetStatistics(measurements));
+            }
         }
 
         private void WriteProgress(string message, int step)
@@ -79,83 +95,53 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             WriteProgress(progressRecord);
         }
 
-        private long GetStandardDeviation(IEnumerable<long> array)
+        private ResponseTimeStatistics GetStatistics(IEnumerable<long> array)
         {
-            double average = array.Average();
-            double sumOfSquaresOfDifferences = array.Select(val => (val - average) * (val - average)).Sum();
-            return (long)Math.Sqrt(sumOfSquaresOfDifferences / array.Count());
+            double average = 0;
+            long max = 0;
+            long min = 0;
+            int count = 0;
+            double truncatedAverage = 0;
+            double standardDeviation = 0;
+
+            if (array != null && array.Count() > 0)
+            {
+                count = array.Count();
+                array = array.OrderBy(a => a);
+                min = array.First();
+                max = array.Last();
+                average = array.Average();
+                double sumOfSquaresOfDifferences = array.Select(val => (val - average)* (val - average)).Sum();
+                standardDeviation =  Math.Sqrt(sumOfSquaresOfDifferences / count);
+
+                if (count > 10)
+                {
+                    var trunc = (int)Math.Round(count * 0.1);
+                    truncatedAverage = array.Skip(trunc).Take(count - 2 * trunc).Average();
+                }
+            }
+            return new ResponseTimeStatistics()
+            {
+                Average = Math.Round(average, 2),
+                Max = max,
+                Min = min,
+                StandardDeviation = Math.Round(standardDeviation, 2),
+                TruncatedAverage = truncatedAverage,
+                Count = count
+            };
         }
 
         private Uri GetEndpointUri()
         {
             if(Endpoint == null)
             {
-                Endpoint = new EndpointPipeBind(ClientContext.Web);
+                Endpoint = new DiagnosticEndpointPipeBind(ClientContext.Web);
             }
             var res = new Uri(Endpoint.ToString(), UriKind.Relative);
             var serverAuthority = new Uri(ClientContext.Url).GetLeftPart(UriPartial.Authority);
             res = new Uri(serverAuthority + res.ToString(), UriKind.Absolute);
 
             return res;
-        }
-    }
-
-    public sealed class EndpointPipeBind
-    {
-        private string _serverRelativeUrl;
-        private Web _web;
-        private File _file;
-        private Folder _folder;
-
-        public EndpointPipeBind()
-        {
-            _serverRelativeUrl = null;
-            _web = null;
-            _file = null;
-            _folder = null;
-        }
-
-        public EndpointPipeBind(string serverRelativeUrl)
-        {
-            _serverRelativeUrl = serverRelativeUrl;
-        }
-
-        public EndpointPipeBind(Web web)
-        {
-            _web = web;
-        }
-
-        public EndpointPipeBind(File file)
-        {
-            _file = file;
-        }
-
-        public EndpointPipeBind(Folder folder)
-        {
-            _folder = folder;
-        }
-
-        public override string ToString()
-        {
-            if (_serverRelativeUrl == null)
-            {
-                if (_web != null)
-                {
-                    _web.EnsureProperty(w => w.RootFolder);
-                    _folder =_web.RootFolder;
-                }
-                if (_folder != null)
-                {
-                    _folder.EnsureProperties(f => f.WelcomePage, f => f.ServerRelativeUrl);
-                    _serverRelativeUrl = System.IO.Path.Combine(_folder.ServerRelativeUrl, _folder.WelcomePage);
-                }
-                if (_file != null)
-                {
-                    _file.EnsureProperty(f => f.ServerRelativeUrl);
-                    _serverRelativeUrl = _file.ServerRelativeUrl;
-                }
-            }
-            return _serverRelativeUrl;
         }
     }
 }
