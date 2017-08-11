@@ -6,7 +6,6 @@ using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Enums;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -79,18 +78,6 @@ namespace SharePointPnP.PowerShell.Commands
                     Tenant.Context.Load(list);
                     Tenant.Context.ExecuteQueryRetry();
                     var siteProperties = list.ToList();
-                    var returnedEntries = list.Count;
-
-                    var startIndex = 0;
-                    while (returnedEntries > 299)
-                    {
-                        startIndex = startIndex + 300;
-                        var nextList = Tenant.GetSiteProperties(startIndex, Detailed);
-                        Tenant.Context.Load(nextList);
-                        Tenant.Context.ExecuteQueryRetry();
-                        siteProperties.AddRange(nextList);
-                        returnedEntries = nextList.Count;
-                    }
 
                     if (Template != null)
                     {
