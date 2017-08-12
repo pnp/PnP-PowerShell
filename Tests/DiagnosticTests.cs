@@ -1,23 +1,19 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.SharePoint.Client;
+﻿using System.Linq;
 using System.Management.Automation.Runspaces;
-using System.Collections;
-using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
     public class DiagnosticTests
-	{
-		[TestMethod]
+    {
+        [TestMethod]
         public void MeasureResponseTime()
         {
             using (var scope = new PSTestScope(true))
             {
-                var result = scope.ExecuteCommand("Measure-PnPResponseTime",
-                    new CommandParameter("Count", "1"));
-				Assert.IsTrue(result.Any());
+                var result = scope.ExecuteCommand("Measure-PnPResponseTime", new CommandParameter("Count", "1"));
+                Assert.IsTrue(result.Any());
                 Assert.IsTrue(result.First().BaseObject.GetType() == typeof(Commands.Diagnostic.ResponseTimeStatistics));
 
                 var statistics = result.First().BaseObject as Commands.Diagnostic.ResponseTimeStatistics;
@@ -28,6 +24,6 @@ namespace SharePointPnP.PowerShell.Tests
                 Assert.AreEqual(0, statistics.StandardDeviation);
                 Assert.AreEqual(0, statistics.TruncatedAverage);
             }
-		}
+        }
     }
 }
