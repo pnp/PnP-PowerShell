@@ -37,14 +37,13 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "By default, the OneDrives are not returned. This switch includes all OneDrives.")]
         public SwitchParameter IncludeOneDriveSites;
 
-
         [Parameter(Mandatory = false, HelpMessage = "When the switch IncludeOneDriveSites is used, this switch ignores the question shown that the command can take a long time to execute")]
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false, HelpMessage = "Limit results to a specific web template name.")]
         public string WebTemplate;
 
-        [Parameter(Mandatory = false, HelpMessage = "When the switch IncludeOneDriveSites is used, this switch ignores the question shown that the command can take a long time to execute")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the script block of the server-side filter to apply. See https://technet.microsoft.com/en-us/library/fp161380.aspx")]
         public string Filter;
 
         protected override void ExecuteCmdlet()
@@ -70,7 +69,7 @@ namespace SharePointPnP.PowerShell.Commands
                         StartIndex = null,
                         IncludeDetail = true,
                         Template = WebTemplate,
-                        Filter = Filter
+                        Filter = Filter,
                     };
 
                     var list = Tenant.GetSitePropertiesFromSharePointByFilters(filter);
