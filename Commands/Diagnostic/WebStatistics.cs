@@ -1,12 +1,4 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.Commands.Extensions;
-using System.Linq.Expressions;
-
-namespace SharePointPnP.PowerShell.Commands.Diagnostic
+﻿namespace SharePointPnP.PowerShell.Commands.Diagnostic
 {
     public class WebStatistics
     {
@@ -23,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 
         public static WebStatistics operator +(WebStatistics s1, WebStatistics s2)
         {
-            return new WebStatistics()
+            return new WebStatistics
             {
                 WebCount = s1.WebCount + s2.WebCount,
                 ListCount = s1.ListCount + s2.ListCount,
@@ -39,4 +31,3 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         }
     }
 }
-

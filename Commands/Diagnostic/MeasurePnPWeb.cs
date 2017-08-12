@@ -1,11 +1,11 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
+﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Extensions;
-using System.Linq.Expressions;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Diagnostic
 {
@@ -18,85 +18,75 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         public WebPipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        public bool Recursive;
+        public SwitchParameter Recursive;
 
-        private Expression<Func<Web, object>>[] retreivalExpressions;
+        private Expression<Func<Web, object>>[] _retreivalExpressions;
 
-        protected override void ExecuteCmdlet()
+        public MeasurePnPWeb()
         {
-            retreivalExpressions = new Expression<Func<Web, object>>[] {
+            _retreivalExpressions = new Expression<Func<Web, object>>[] {
                 w => w.Webs.Include(sw => sw.HasUniqueRoleAssignments),
                 w => w.Lists.Include(l => l.ItemCount, l => l.HasUniqueRoleAssignments),
-                w => w.Folders.Include(f => f.StorageMetrics, f=> f.Files, f => f.ItemCount),
+                w => w.Folders.Include(f => f.StorageMetrics, f => f.Files, f => f.ItemCount),
                 w => w.SiteUsers.Include(u => u.Id),
                 w => w.SiteGroups.Include(g => g.Id)
             };
-            var web = GetWebByIdentity(retreivalExpressions);
+        }
 
+        protected override void ExecuteCmdlet()
+        {
+            var web = GetWebByIdentity(_retreivalExpressions);
             var statistics = GetStatistics(web);
-            WriteObject(new WebStatistics()
-            {
-                WebCount = web.Webs.Count,
-                ListCount = web.Lists.Count,
-                FolderCount = web.Folders.Count,
-                ItemCount = web.Lists.Sum(l => l.ItemCount),
-                ItemCount2 = web.Folders.Sum(l => l.ItemCount),
-                FileCount = web.Folders.Sum(f => f.Files.Count),
-                TotalSize = (int)web.Folders.Sum(f => f.StorageMetrics.TotalSize),
-                SiteUserCount = web.SiteUsers.Count,
-                SiteGroupCount = web.SiteGroups.Count,
-                UniquePermissionCount = web.Lists.Count(l => l.HasUniqueRoleAssignments) + web.Webs.Count(w => w.HasUniqueRoleAssignments)
-            });
+            WriteObject(statistics);
         }
 
         private WebStatistics GetStatistics(Web web)
         {
-            var res = new WebStatistics()
+            var stat = new WebStatistics
             {
                 WebCount = web.Webs.Count,
                 ListCount = web.Lists.Count,
                 FolderCount = web.Folders.Count,
                 ItemCount = web.Lists.Sum(l => l.ItemCount),
-                ItemCount2 = web.Folders.Sum(l => l.ItemCount),
+                ItemCount2 = web.Folders.Sum(f => f.ItemCount),
                 FileCount = web.Folders.Sum(f => f.Files.Count),
                 TotalSize = (int)web.Folders.Sum(f => f.StorageMetrics.TotalSize),
                 SiteUserCount = web.SiteUsers.Count,
                 SiteGroupCount = web.SiteGroups.Count,
                 UniquePermissionCount = web.Lists.Count(l => l.HasUniqueRoleAssignments) + web.Webs.Count(w => w.HasUniqueRoleAssignments)
             };
-            if(Recursive)
+            if (Recursive)
             {
-                foreach(var subweb in web.Webs)
+                foreach (var subweb in web.Webs)
                 {
-                    subweb.EnsureProperties(retreivalExpressions);
-                    var stat = GetStatistics(subweb);
-                    res = res + stat;
+                    subweb.EnsureProperties(_retreivalExpressions);
+                    stat += GetStatistics(subweb);
                 }
             }
-            return res;
+            return stat;
         }
 
-        private Web GetWebByIdentity(Expression<Func<Web, object>>[] exp)
+        private Web GetWebByIdentity(Expression<Func<Web, object>>[] expressions)
         {
-            Web res = null;
+            Web web = null;
             if (Identity == null)
             {
-                ClientContext.Web.EnsureProperties(exp);
-                res = ClientContext.Web;
+                ClientContext.Web.EnsureProperties(expressions);
+                web = ClientContext.Web;
             }
             else if (Identity.Id != Guid.Empty)
             {
-                res = ClientContext.Web.GetWebById(Identity.Id, exp);
+                web = ClientContext.Web.GetWebById(Identity.Id, expressions);
             }
             else if (Identity.Web != null)
             {
-                res = ClientContext.Web.GetWebById(Identity.Web.Id, exp);
+                web = ClientContext.Web.GetWebById(Identity.Web.Id, expressions);
             }
             else if (Identity.Url != null)
             {
-                res = ClientContext.Web.GetWebByUrl(Identity.Url, exp);
+                web = ClientContext.Web.GetWebByUrl(Identity.Url, expressions);
             }
-            return res;
+            return web;
         }
     }
 }
