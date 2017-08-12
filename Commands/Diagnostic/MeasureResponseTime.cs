@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Diagnostics;
-using System.Management.Automation;
 using System.Net;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -12,11 +12,11 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Diagnostic
 {
     [Cmdlet(VerbsDiagnostic.Measure, "PnPResponseTime")]
-    [CmdletHelp("Returns the current site collection from the context.",
-    Category = CmdletHelpCategory.Diagnostic)]
+    [CmdletHelp("Measures response time for the specified endpoint by sending probe requests and gathering stats.",
+        Category = CmdletHelpCategory.Diagnostic)]
     public class MeasureResponseTime : PnPCmdlet
     {
-        private ProgressRecord progressRecord = new ProgressRecord(0, "Measuring response time", "Sending probe requests");
+        private ProgressRecord _progressRecord = new ProgressRecord(0, "Measuring response time", "Sending probe requests");
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public DiagnosticEndpointPipeBind Endpoint;
@@ -32,12 +32,11 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             var uri = GetEndpointUri();
             Stopwatch timer = new Stopwatch();
             List<long> measurements = new List<long>();
-            int i = 0;
             try
             {
-                for (i = 0; i < Count; i++)
+                for (int i = 0; i < Count; i++)
                 {
-                    HttpWebRequest probe = HttpWebRequest.CreateHttp(uri);
+                    var probe = WebRequest.CreateHttp(uri);
                     probe.AllowAutoRedirect = false;
 
                     ClientRuntimeContext.SetupRequestCredential(ClientContext, probe);
@@ -50,11 +49,11 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                         response = probe.GetResponse() as HttpWebResponse;
                         timer.Stop();
                     }
-                    catch(WebException e)
+                    catch (WebException e)
                     {
                         timer.Stop();
                         response = e.Response as HttpWebResponse;
-                        if(response == null)
+                        if (response == null)
                         {
                             throw;
                         }
@@ -76,8 +75,8 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                     WriteProgress($"Sleeping", i);
                     Thread.Sleep(Timeout);
                 }
-                progressRecord.RecordType = ProgressRecordType.Completed;
-                WriteProgress(progressRecord);
+                _progressRecord.RecordType = ProgressRecordType.Completed;
+                WriteProgress(_progressRecord);
 
             }
             finally
@@ -89,10 +88,10 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         private void WriteProgress(string message, int step)
         {
             var percentage = Convert.ToInt32((100 / Convert.ToDouble(Count)) * Convert.ToDouble(step));
-            progressRecord.StatusDescription = message;
-            progressRecord.PercentComplete = percentage;
-            progressRecord.RecordType = ProgressRecordType.Processing;
-            WriteProgress(progressRecord);
+            _progressRecord.StatusDescription = message;
+            _progressRecord.PercentComplete = percentage;
+            _progressRecord.RecordType = ProgressRecordType.Processing;
+            WriteProgress(_progressRecord);
         }
 
         private ResponseTimeStatistics GetStatistics(IEnumerable<long> array)
@@ -111,8 +110,8 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                 min = array.First();
                 max = array.Last();
                 average = array.Average();
-                double sumOfSquaresOfDifferences = array.Select(val => (val - average)* (val - average)).Sum();
-                standardDeviation =  Math.Sqrt(sumOfSquaresOfDifferences / count);
+                double sumOfSquaresOfDifferences = array.Select(val => (val - average) * (val - average)).Sum();
+                standardDeviation = Math.Sqrt(sumOfSquaresOfDifferences / count);
 
                 if (count > 10)
                 {
@@ -120,7 +119,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                     truncatedAverage = array.Skip(trunc).Take(count - 2 * trunc).Average();
                 }
             }
-            return new ResponseTimeStatistics()
+            return new ResponseTimeStatistics
             {
                 Average = Math.Round(average, 2),
                 Max = max,
@@ -133,15 +132,14 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 
         private Uri GetEndpointUri()
         {
-            if(Endpoint == null)
+            if (Endpoint == null)
             {
                 Endpoint = new DiagnosticEndpointPipeBind(ClientContext.Web);
             }
-            var res = new Uri(Endpoint.ToString(), UriKind.Relative);
-            var serverAuthority = new Uri(ClientContext.Url).GetLeftPart(UriPartial.Authority);
-            res = new Uri(serverAuthority + res.ToString(), UriKind.Absolute);
-
-            return res;
+            var uri = new Uri(Endpoint.ToString(), UriKind.Relative);
+            var authority = new Uri(ClientContext.Url).GetLeftPart(UriPartial.Authority);
+            uri = new Uri(authority + uri.ToString(), UriKind.Absolute);
+            return uri;
         }
     }
 }
