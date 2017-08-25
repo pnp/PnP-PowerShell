@@ -405,6 +405,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\PipeBinds\ClientSideComponentPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\GenericPropertiesPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ClientSidePagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericObjectNameIdPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\UserPipeBind.cs" />
@@ -476,6 +479,18 @@
     <Compile Include="Graph\SetUnifiedGroup.cs" />
     <Compile Include="Lists\MoveListItemToRecycleBin.cs" />
     <Compile Include="Lists\SetListItemPermission.cs" />
+    <Compile Include="ModernPages\AddClientSidePageSection.cs" />
+    <Compile Include="ModernPages\EPAgePromoteType.cs" />
+    <Compile Include="ModernPages\ModernPageCmdlet.cs" />
+    <Compile Include="ModernPages\ModernPagesUtilities.cs" />
+    <Compile Include="ModernPages\SetClientSidePage.cs" />
+    <Compile Include="ModernPages\AddClientSideText.cs" />
+    <Compile Include="ModernPages\AddClientSideWebPart.cs" />
+    <Compile Include="ModernPages\GetAvailableClientSideComponents.cs" />
+    <Compile Include="ModernPages\RemoveClientSidePage.cs" />
+    <Compile Include="ModernPages\NewClientSidePage.cs" />
+    <Compile Include="ModernPages\AddClientSidePage.cs" />
+    <Compile Include="ModernPages\GetClientSidePage.cs" />
     <Compile Include="Provider\SPOProxy\SPOProxyCmdletBase.cs" />
     <Compile Include="Lists\GetDefaultColumnValues.cs" />
     <Compile Include="Provider\Parameters\SPOChildItemsParameters.cs" />

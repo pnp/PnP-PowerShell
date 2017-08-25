@@ -333,6 +333,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove Client-Side Page?.
+        /// </summary>
+        internal static string RemoveClientSidePage {
+            get {
+                return ResourceManager.GetString("RemoveClientSidePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove content type?.
         /// </summary>
         internal static string RemoveContentType {

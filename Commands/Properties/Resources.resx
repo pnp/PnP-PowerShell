@@ -283,4 +283,7 @@
   <data name="CreateSiteWithUrl0" xml:space="preserve">
     <value>Create site with url '{0}'?</value>
   </data>
+  <data name="RemoveClientSidePage" xml:space="preserve">
+    <value>Remove Client-Side Page?</value>
+  </data>
 </root>
