@@ -25,8 +25,6 @@ Add-PnPField -DisplayName <String>
              [-AddToDefaultView [<SwitchParameter>]]
              [-Required [<SwitchParameter>]]
              [-Group <String>]
-             [-ClientSideComponentId <GuidPipeBind>]
-             [-ClientSideComponentProperties <String>]
              [-Web <WebPipeBind>]
              [-Choices <String[]>]
 ```
@@ -37,8 +35,6 @@ Add-PnPField -DisplayName <String>
              -InternalName <String>
              -Type <FieldType>
              [-Id <GuidPipeBind>]
-             [-ClientSideComponentId <GuidPipeBind>]
-             [-ClientSideComponentProperties <String>]
              [-Web <WebPipeBind>]
              [-Choices <String[]>]
 ```
@@ -56,8 +52,6 @@ Parameter|Type|Required|Description
 |Type|FieldType|True|The type of the field like Choice, Note, MultiChoice|
 |AddToDefaultView|SwitchParameter|False|Switch Parameter if this field must be added to the default view|
 |Choices|String[]|False|Specify choices, only valid if the field type is Choice|
-|ClientSideComponentId|GuidPipeBind|False|The Client Side Component Id to set to the field|
-|ClientSideComponentProperties|String|False|The Client Side Component Properties to set to the field|
 |Group|String|False|The group name to where this field belongs to|
 |Id|GuidPipeBind|False|The ID of the field, must be unique|
 |List|ListPipeBind|False|The name of the list, its ID or an actual list object where this field needs to be added|
