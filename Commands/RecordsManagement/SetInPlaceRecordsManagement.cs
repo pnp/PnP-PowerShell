@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPInPlaceRecordsManagement")]
     [CmdletHelp("Activates or deactivates in place records management",
-        Category = CmdletHelpCategory.RecordsManagement)]
+        Category = CmdletHelpCategory.RecordsManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Set-PnPInPlaceRecordsManagement -On",
         Remarks = "Activates In Place Records Management",

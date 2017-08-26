@@ -1,5 +1,6 @@
 # Set-PnPListItemAsRecord
 Declares a list item as a record
+*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Set-PnPListItemAsRecord -Identity <ListItemPipeBind>
