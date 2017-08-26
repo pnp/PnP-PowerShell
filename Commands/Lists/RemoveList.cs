@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Remarks = @"Removes the list named 'Announcements' without asking for confirmation.")]
     [CmdletExample(
         Code = "PS:> Remove-PnPList -Title Announcements -Recycle",
-        SortOrder = 2,
+        SortOrder = 3,
         Remarks = @"Removes the list named 'Announcements' and saves to the Recycle Bin")]
     public class RemoveList : PnPWebCmdlet
     {

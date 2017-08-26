@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Remarks = @"Removes the listitem with id ""1"" from the ""Demo List"" list.")]
     [CmdletExample(
         Code = @"PS:> Remove-PnPListItem -List ""Demo List"" -Identity ""1"" -Force -Recycle",
-        SortOrder = 1,
+        SortOrder = 2,
         Remarks = @"Removes the listitem with id ""1"" from the ""Demo List"" list and saves it in the Recycle Bin.")]
     public class RemoveListItem : PnPWebCmdlet
     {
