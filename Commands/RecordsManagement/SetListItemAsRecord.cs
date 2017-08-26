@@ -1,12 +1,9 @@
-﻿using System.Management.Automation;
+﻿#if !ONPREMISES
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System.Linq.Expressions;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
@@ -50,5 +47,5 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
         }
 
     }
-
 }
+#endif
