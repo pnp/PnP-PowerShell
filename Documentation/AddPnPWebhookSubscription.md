@@ -1,5 +1,6 @@
 # Add-PnPWebhookSubscription
 Adds a new Webhook subscription
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Add-PnPWebhookSubscription -NotificationUrl <String>
