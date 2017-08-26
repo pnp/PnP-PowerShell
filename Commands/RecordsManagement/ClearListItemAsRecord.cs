@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Clear, "PnPListItemAsRecord")]
     [CmdletHelp("Undeclares a list item as a record",
-        Category = CmdletHelpCategory.RecordsManagement)]
+        Category = CmdletHelpCategory.RecordsManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Clear-PnPListItemAsRecord -List ""Documents"" -Identity 4",
         Remarks = "Undeclares the document in the documents library with id 4 as a record",

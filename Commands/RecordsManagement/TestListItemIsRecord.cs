@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsDiagnostic.Test, "PnPListItemIsRecord")]
     [CmdletHelp("Checks if a list item is a record",
-        Category = CmdletHelpCategory.RecordsManagement)]
+        Category = CmdletHelpCategory.RecordsManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Test-PnPListItemAsRecord -List ""Documents"" -Identity 4",
         Remarks = "Returns true if the document in the documents library with id 4 is a record",
