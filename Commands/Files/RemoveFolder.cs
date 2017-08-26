@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = @"Removes the folder 'NewFolder' from '_catalogsmasterpage'")]
     [CmdletExample(
         Code = @"PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage -Recycle",
-        SortOrder = 1,
+        SortOrder = 2,
         Remarks = @"Removes the folder 'NewFolder' from '_catalogsmasterpage' and is saved in the Recycle Bin")]
     public class RemoveFolder : PnPWebCmdlet
     {

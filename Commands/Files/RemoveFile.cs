@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = @"Removes the file company.spcolor")]
     [CmdletExample(
         Code = @"PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle",
-        SortOrder = 2,
+        SortOrder = 3,
         Remarks = @"Removes the file company.spcolor and saves it to the Recycle Bin")]
 
     public class RemoveFile : PnPWebCmdlet
