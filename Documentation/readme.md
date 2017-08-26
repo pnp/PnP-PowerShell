@@ -137,25 +137,6 @@ Cmdlet|Description|Platforms
 **[Get&#8209;PnPView](GetPnPView.md)** |Returns one or all views from a list|All
 **[Remove&#8209;PnPView](RemovePnPView.md)** |Deletes a view from a list|All
 ## Microsoft Graph
-Cmdlet|Description
-:-----|:----------
-**[Connect&#8209;PnPMicrosoftGraph](ConnectPnPMicrosoftGraph.md)** |Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API
-**[Get&#8209;PnPUnifiedGroup](GetPnPUnifiedGroup.md)** |Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups
-**[New&#8209;PnPUnifiedGroup](NewPnPUnifiedGroup.md)** |Creates a new Office 365 Group (aka Unified Group)
-**[Remove&#8209;PnPUnifiedGroup](RemovePnPUnifiedGroup.md)** |Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups
-**[Set&#8209;PnPUnifiedGroup](SetPnPUnifiedGroup.md)** |Sets Office 365 Group (aka Unified Group) properties
-## Modern Pages
-Cmdlet|Description
-:-----|:----------
-**[Get&#8209;PnPAvailableClientSideComponents](GetPnPAvailableClientSideComponents.md)** |Gets the available client side components on a particular page
-**[Add&#8209;PnPClientSidePage](AddPnPClientSidePage.md)** |Adds a Client-Side Page
-**[Get&#8209;PnPClientSidePage](GetPnPClientSidePage.md)** |Gets a Client-Side Page
-**[New&#8209;PnPClientSidePage](NewPnPClientSidePage.md)** |Creates a new Client-Side Page object
-**[Remove&#8209;PnPClientSidePage](RemovePnPClientSidePage.md)** |Removes a Client-Side Page
-**[Set&#8209;PnPClientSidePage](SetPnPClientSidePage.md)** |Sets parameters of a Client-Side Page
-**[Add&#8209;PnPClientSidePageSection](AddPnPClientSidePageSection.md)** |Adds a new section to a Client-Side page
-**[Add&#8209;PnPClientSideText](AddPnPClientSideText.md)** |Adds a Client-Side Page
-**[Add&#8209;PnPClientSideWebPart](AddPnPClientSideWebPart.md)** |Adds a Client-Side Component to a page
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
 **[Connect&#8209;PnPMicrosoftGraph](ConnectPnPMicrosoftGraph.md)** |Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API|All
@@ -163,6 +144,18 @@ Cmdlet|Description|Platforms
 **[New&#8209;PnPUnifiedGroup](NewPnPUnifiedGroup.md)** |Creates a new Office 365 Group (aka Unified Group)|All
 **[Remove&#8209;PnPUnifiedGroup](RemovePnPUnifiedGroup.md)** |Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups|All
 **[Set&#8209;PnPUnifiedGroup](SetPnPUnifiedGroup.md)** |Sets Office 365 Group (aka Unified Group) properties|All
+## Modern Pages
+Cmdlet|Description|Platforms
+:-----|:----------|:--------
+**[Get&#8209;PnPAvailableClientSideComponents](GetPnPAvailableClientSideComponents.md)** |Gets the available client side components on a particular page|All
+**[Add&#8209;PnPClientSidePage](AddPnPClientSidePage.md)** |Adds a Client-Side Page|All
+**[Get&#8209;PnPClientSidePage](GetPnPClientSidePage.md)** |Gets a Client-Side Page|All
+**[New&#8209;PnPClientSidePage](NewPnPClientSidePage.md)** |Creates a new Client-Side Page object|All
+**[Remove&#8209;PnPClientSidePage](RemovePnPClientSidePage.md)** |Removes a Client-Side Page|All
+**[Set&#8209;PnPClientSidePage](SetPnPClientSidePage.md)** |Sets parameters of a Client-Side Page|All
+**[Add&#8209;PnPClientSidePageSection](AddPnPClientSidePageSection.md)** |Adds a new section to a Client-Side page|All
+**[Add&#8209;PnPClientSideText](AddPnPClientSideText.md)** |Adds a Client-Side Page|All
+**[Add&#8209;PnPClientSideWebPart](AddPnPClientSideWebPart.md)** |Adds a Client-Side Component to a page|All
 ## Provisioning
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
