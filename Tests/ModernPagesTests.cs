@@ -4,6 +4,7 @@ using System.Management.Automation.Runspaces;
 using Microsoft.SharePoint.Client;
 using System.Linq;
 using OfficeDevPnP.Core.Pages;
+using System.Collections;
 
 namespace SharePointPnP.PowerShell.Tests
 {
@@ -22,6 +23,7 @@ namespace SharePointPnP.PowerShell.Tests
         public const string PageSet2TestName = "PageSet2Test.aspx";
         public const string PageNotExistingTestName = "PageNotExisting.aspx";
         public const string PageAddSectionTestName = "PageAddSection.aspx";
+        public const string PageAddWebPartTestName = "PageAddWebPart.aspx";
 
         private void CleanupPageIfExists(ClientContext ctx, string pageName)
         {
@@ -50,6 +52,7 @@ namespace SharePointPnP.PowerShell.Tests
                 CleanupPageIfExists(ctx, PageSetTestName);
                 CleanupPageIfExists(ctx, PageSet2TestName);
                 CleanupPageIfExists(ctx, PageAddSectionTestName);
+                CleanupPageIfExists(ctx, PageAddWebPartTestName);
             }
         }
 
@@ -87,7 +90,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 var page = results[0].BaseObject as ClientSidePage;
                 string pageName = page.PageListItem["FileLeafRef"] as string;
-                Assert.IsTrue(page != null && pageName == PageTestWithoutExtensionName+".aspx");
+                Assert.IsTrue(page != null && pageName == PageTestWithoutExtensionName + ".aspx");
             }
         }
 
@@ -125,7 +128,7 @@ namespace SharePointPnP.PowerShell.Tests
             }
         }
 
-    
+
         [TestMethod]
         public void GetClientSidePageNotExistingTest()
         {
@@ -142,7 +145,7 @@ namespace SharePointPnP.PowerShell.Tests
                     // An exception should be thrown
                     Assert.IsTrue(true);
                 }
-                
+
             }
         }
 
@@ -181,9 +184,9 @@ namespace SharePointPnP.PowerShell.Tests
                 {
                     ctx.Web.AddClientSidePage(PageRemoveTestName, true);
 
-                   scope.ExecuteCommand("Remove-PnPClientSidePage",
-                        new CommandParameter("Identity", PageRemoveTestName),
-                        new CommandParameter("Force"));
+                    scope.ExecuteCommand("Remove-PnPClientSidePage",
+                         new CommandParameter("Identity", PageRemoveTestName),
+                         new CommandParameter("Force"));
 
 
                     var p = ClientSidePage.Load(ctx, PageRemoveTestName);
@@ -209,6 +212,37 @@ namespace SharePointPnP.PowerShell.Tests
                     var page = ClientSidePage.Load(ctx, PageAddSectionTestName);
 
                     Assert.IsTrue(page.Sections[0].Columns.Count == 3);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void AddClientSideWebPartTest()
+        {
+            using (var scope = new PSTestScope(true))
+            {
+                using (var ctx = TestCommon.CreateClientContext())
+                {
+                    ctx.Web.AddClientSidePage(PageAddWebPartTestName, true);
+
+                    var results = scope.ExecuteCommand("Add-PnPClientSideWebPart",
+                        new CommandParameter("Page", PageAddWebPartTestName),
+                         new CommandParameter("DefaultWebPartType", DefaultClientSideWebParts.Image),
+                          new CommandParameter("WebPartProperties", new Hashtable()
+                          {
+                            {"imageSourceType",  2},
+                            {"siteId", "c827cb03-d059-4956-83d0-cd60e02e3b41" },
+                            {"webId","9fafd7c0-e8c3-4a3c-9e87-4232c481ca26" },
+                            {"listId","78d1b1ac-7590-49e7-b812-55f37c018c4b" },
+                            {"uniqueId","3C27A419-66D0-4C36-BF24-BD6147719052" },
+                            {"imgWidth", 500 },
+                            {"imgHeight", 235 }
+                          }
+                          ));
+
+                    var page = ClientSidePage.Load(ctx, PageAddWebPartTestName);
+             
+                    Assert.AreEqual(page.Controls.Count , 1);
                 }
             }
         }

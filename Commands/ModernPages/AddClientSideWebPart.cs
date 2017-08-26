@@ -37,7 +37,7 @@ namespace SharePointPnP.PowerShell.Commands.ModernPages
         public ClientSideComponentPipeBind Component;
         
         [Parameter(Mandatory = false, HelpMessage = @"The properties of the WebPart")]
-        public GenericPropertiesPipeBind WebPartProperties;
+        public PropertyBagPipeBind WebPartProperties;
 
         [Parameter(Mandatory = false, HelpMessage = "Sets the order of the WebPart control. (Default = 1)")]
         public int Order = 1;
@@ -62,47 +62,45 @@ namespace SharePointPnP.PowerShell.Commands.ModernPages
             if (Component != null && DefaultWebPartType.HasValue)
                 throw new Exception("Inconsistent arguments. cannot use Client Component and Default WebPart type at the same type");
 
-            CanvasControl control = null;
+            ClientSideWebPart webpart = null;
             if (DefaultWebPartType.HasValue)
             {
-                var webPart = clientSidePage.InstantiateDefaultWebPart(DefaultWebPartType.Value);
-                if (WebPartProperties != null)
-                {
-                    if (WebPartProperties.Properties != null)
-                    {
-                        // Set all the WebPart properties
-                        foreach (var propertyKey in WebPartProperties.Properties)
-                            webPart.Properties[propertyKey] = JObject.Parse(WebPartProperties.Properties[propertyKey].ToString());
-                    }
-                    else if (!string.IsNullOrEmpty(WebPartProperties.Json))
-                    {
-                        webPart.PropertiesJson = WebPartProperties.Json;
-                    }
-                }
-                control = webPart;
+                webpart = clientSidePage.InstantiateDefaultWebPart(DefaultWebPartType.Value);
             }
             else
             // If a Component info is specified
             if (Component != null)
             {
-                control = new ClientSideWebPart(Component.GetComponent(clientSidePage));
+                webpart = new ClientSideWebPart(Component.GetComponent(clientSidePage));
+            }
+
+            if (WebPartProperties != null)
+            {
+                if (WebPartProperties.Properties != null)
+                {
+                    webpart.Properties.Merge(WebPartProperties.JsonObject);
+                }
+                else if (!string.IsNullOrEmpty(WebPartProperties.Json))
+                {
+                    webpart.PropertiesJson = WebPartProperties.Json;
+                }
             }
 
             if (Section != null)
             {
                 if (Column != null)
                 {
-                    clientSidePage.AddControl(control,
+                    clientSidePage.AddControl(webpart,
                                 clientSidePage.Sections[Section.Value].Columns[Column.Value], Order);
                 }
                 else
                 {
-                    clientSidePage.AddControl(control, clientSidePage.Sections[Section.Value], Order);
+                    clientSidePage.AddControl(webpart, clientSidePage.Sections[Section.Value], Order);
                 }
             }
             else
             {
-                clientSidePage.AddControl(control, Order);
+                clientSidePage.AddControl(webpart, Order);
             }
 
             clientSidePage.Save();

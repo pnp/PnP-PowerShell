@@ -5,7 +5,7 @@ Adds a Client-Side Component to a page
 Add-PnPClientSideWebPart -Page <ClientSidePagePipeBind>
                          [-DefaultWebPartType <Nullable`1>]
                          [-Component <ClientSideComponentPipeBind>]
-                         [-WebPartProperties <GenericPropertiesPipeBind>]
+                         [-WebPartProperties <PropertyBagPipeBind>]
                          [-Order <Int>]
                          [-Section <Nullable`1>]
                          [-Column <Nullable`1>]
@@ -23,7 +23,7 @@ Parameter|Type|Required|Description
 |Order|Int|False|Sets the order of the WebPart control. (Default = 1)|
 |Section|Nullable`1|False|Sets the section where to insert the WebPart control.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-|WebPartProperties|GenericPropertiesPipeBind|False|The properties of the WebPart|
+|WebPartProperties|PropertyBagPipeBind|False|The properties of the WebPart|
 ## Examples
 
 ### Example 1
