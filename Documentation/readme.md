@@ -198,6 +198,13 @@ Cmdlet|Description|Platforms
 **[Restore&#8209;PnpRecycleBinItem](RestorePnpRecycleBinItem.md)** |Restores the provided recycle bin item to its original location|All
 **[Get&#8209;PnPRecycleBinItem](GetPnPRecycleBinItem.md)** |Returns the items in the recycle bin from the context|All
 **[Get&#8209;PnPTenantRecycleBinItem](GetPnPTenantRecycleBinItem.md)** |Returns the items in the tenant scoped recycle bin|SharePoint Online
+## SharePoint WebHooks
+Cmdlet|Description|Platforms
+:-----|:----------|:--------
+**[Add&#8209;PnPWebhookSubscription](AddPnPWebhookSubscription.md)** |Adds a new Webhook subscription|SharePoint Online
+**[Remove&#8209;PnPWebhookSubscription](RemovePnPWebhookSubscription.md)** |Removes a Webhook subscription from the resource|SharePoint Online
+**[Set&#8209;PnPWebhookSubscription](SetPnPWebhookSubscription.md)** |Removes a Webhook subscription from the resource|SharePoint Online
+**[Get&#8209;PnPWebhookSubscriptions](GetPnPWebhookSubscriptions.md)** |Gets all the Webhook subscriptions of the resource|SharePoint Online
 ## Sites
 Cmdlet|Description|Platforms
 :-----|:----------|:--------

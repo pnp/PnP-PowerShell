@@ -1,5 +1,6 @@
 # Get-PnPWebhookSubscriptions
 Gets all the Webhook subscriptions of the resource
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Get-PnPWebhookSubscriptions [-List <ListPipeBind>]
