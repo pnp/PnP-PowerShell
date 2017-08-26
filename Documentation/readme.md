@@ -176,6 +176,13 @@ Cmdlet|Description
 **[Remove&#8209;PnPWikiPage](RemovePnPWikiPage.md)** |Removes a wiki page
 **[Get&#8209;PnPWikiPageContent](GetPnPWikiPageContent.md)** |Gets the contents/source of a wiki page
 **[Set&#8209;PnPWikiPageContent](SetPnPWikiPageContent.md)** |Sets the contents of a wikipage
+## Records Management
+Cmdlet|Description
+:-----|:----------
+**[Set&#8209;PnPInPlaceRecordsManagement](SetPnPInPlaceRecordsManagement.md)** |Activates or deactivates in place records management
+**[Clear&#8209;PnPListItemAsRecord](ClearPnPListItemAsRecord.md)** |Undeclares a list item as a record
+**[Set&#8209;PnPListItemAsRecord](SetPnPListItemAsRecord.md)** |Declares a list item as a record
+**[Test&#8209;PnPListItemIsRecord](TestPnPListItemIsRecord.md)** |Checks if a list item is a record
 ## Search
 Cmdlet|Description
 :-----|:----------

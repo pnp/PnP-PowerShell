@@ -474,6 +474,10 @@
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
+    <Compile Include="RecordsManagement\SetInPlaceRecordsManagement.cs" />
+    <Compile Include="RecordsManagement\TestListItemIsRecord.cs" />
+    <Compile Include="RecordsManagement\ClearListItemAsRecord.cs" />
+    <Compile Include="RecordsManagement\SetListItemAsRecord.cs" />
     <Compile Include="Lists\MoveListItemToRecycleBin.cs" />
     <Compile Include="Lists\SetListItemPermission.cs" />
     <Compile Include="Provider\SPOProxy\SPOProxyCmdletBase.cs" />
