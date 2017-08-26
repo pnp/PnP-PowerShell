@@ -1,6 +1,6 @@
 # Set-PnPInPlaceRecordsManagement
 Activates or deactivates in place records management
-*Only available for SharePoint Online*
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Set-PnPInPlaceRecordsManagement -On [<SwitchParameter>]

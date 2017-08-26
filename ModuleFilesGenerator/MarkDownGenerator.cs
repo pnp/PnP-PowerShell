@@ -65,15 +65,15 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     // Header
 
                     docBuilder.AppendFormat("# {0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
-
+                 
                     // Body 
 
                     docBuilder.AppendFormat("{0}{1}", cmdletInfo.Description, Environment.NewLine);
-
                     if (cmdletInfo.Platform != "All")
                     {
-                        docBuilder.Append($"*Only available for {cmdletInfo.Platform}*{Environment.NewLine}");
+                        docBuilder.Append($">*Only available for {cmdletInfo.Platform}*{Environment.NewLine}");
                     }
+
                     if (cmdletInfo.Syntaxes.Any())
                     {
                         docBuilder.AppendFormat("## Syntax{0}", Environment.NewLine);

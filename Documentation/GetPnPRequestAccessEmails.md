@@ -1,6 +1,6 @@
 # Get-PnPRequestAccessEmails
 Returns the request access e-mail addresses
-*Only available for SharePoint Online*
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Get-PnPRequestAccessEmails [-Web <WebPipeBind>]

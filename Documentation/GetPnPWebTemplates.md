@@ -1,6 +1,6 @@
 # Get-PnPWebTemplates
 Returns the available web templates.
-*Only available for SharePoint Online*
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Get-PnPWebTemplates [-Lcid <UInt32>]

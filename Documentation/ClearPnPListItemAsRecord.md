@@ -1,6 +1,6 @@
 # Clear-PnPListItemAsRecord
 Undeclares a list item as a record
-*Only available for SharePoint Online*
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Clear-PnPListItemAsRecord -Identity <ListItemPipeBind>
