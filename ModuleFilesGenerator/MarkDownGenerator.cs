@@ -70,7 +70,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                     docBuilder.AppendFormat("{0}{1}", cmdletInfo.Description, Environment.NewLine);
 
-                    if(cmdletInfo.Platform != "All")
+                    if (cmdletInfo.Platform != "All")
                     {
                         docBuilder.Append($"*Only available for {cmdletInfo.Platform}*{Environment.NewLine}");
                     }
@@ -348,15 +348,15 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             {
                 docBuilder.Append("\n\n");
                 docBuilder.AppendFormat("### {0} {1}", category, Environment.NewLine);
-                docBuilder.AppendFormat("Cmdlet|Description{0}", Environment.NewLine);
-                docBuilder.AppendFormat(":-----|:----------{0}", Environment.NewLine);
+                docBuilder.AppendFormat("Cmdlet|Description|Platform{0}", Environment.NewLine);
+                docBuilder.AppendFormat(":-----|:----------|:-------{0}", Environment.NewLine);
 
                 var categoryCmdlets = _cmdlets.Where(c => c.Category == category).OrderBy(c => c.Noun);
 
                 foreach (var cmdletInfo in categoryCmdlets)
                 {
                     var description = cmdletInfo.Description != null ? cmdletInfo.Description.Replace("\r\n", " ") : "";
-                    docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}{4}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, Environment.NewLine);
+                    docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}|{4}{5}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, cmdletInfo.Platform, Environment.NewLine);
                 }
             }
 
@@ -387,12 +387,12 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             }
             var docBuilder = new StringBuilder();
             docBuilder.AppendFormat("# {0} {1}", category, Environment.NewLine);
-            docBuilder.AppendFormat("Cmdlet|Description{0}", Environment.NewLine);
-            docBuilder.AppendFormat(":-----|:----------{0}", Environment.NewLine);
+            docBuilder.AppendFormat("Cmdlet|Description|Platform{0}", Environment.NewLine);
+            docBuilder.AppendFormat(":-----|:----------|:-------{0}", Environment.NewLine);
             foreach (var cmdletInfo in cmdlets)
             {
                 var description = cmdletInfo.Description != null ? cmdletInfo.Description.Replace("\r\n", " ") : "";
-                docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}{4}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, Environment.NewLine);
+                docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}|{4}{5}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, cmdletInfo.Platform, Environment.NewLine);
             }
 
             newCategoryMd = docBuilder.ToString();
