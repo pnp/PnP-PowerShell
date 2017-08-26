@@ -1,4 +1,6 @@
-﻿using OfficeDevPnP.Core.Pages;
+﻿#if !ONPREMISES
+
+using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Properties;
@@ -40,3 +42,4 @@ namespace SharePointPnP.PowerShell.Commands.ModernPages
         }
     }
 }
+#endif

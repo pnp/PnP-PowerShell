@@ -1,4 +1,6 @@
-﻿using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+﻿#if !ONPREMISES
+
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,3 +18,4 @@ namespace SharePointPnP.PowerShell.Commands.ModernPages
 
     }
 }
+#endif
