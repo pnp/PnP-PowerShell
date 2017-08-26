@@ -41,7 +41,9 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         Graph = 23,
         [EnumMember(Value = "SharePoint Recycle Bin")]
         RecycleBin = 24,
+        [EnumMember(Value = "SharePoint WebHooks")]
+        Webhooks = 25,
         [EnumMember(Value = "Records Management")]
-        RecordsManagement = 25
+        RecordsManagement = 26
     }
 }
