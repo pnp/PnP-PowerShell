@@ -464,7 +464,6 @@
     <Compile Include="Base\PnPAzureADConnection.cs" />
     <Compile Include="Base\PnPGraphCmdlet.cs" />
     <Compile Include="Base\SetContext.cs" />
-    <Compile Include="Base\deprecated\SPOAdminCmdlet.deprecated.cs" />
     <Compile Include="Base\SPOnlineConnection.cs" />
     <Compile Include="Base\SPOnlineConnectionHelper.cs" />
     <Compile Include="Base\ConnectOnline.cs" />
@@ -686,7 +685,6 @@
     <Compile Include="WebParts\SetWebPartProperty.cs" />
     <Compile Include="WebParts\RemoveWebPart.cs" />
     <Compile Include="WebParts\GetWebPart.cs" />
-    <Compile Include="Base\deprecated\SPOCmdlet.deprecated.cs" />
     <Compile Include="Apps\ImportAppPackage.cs" />
     <Compile Include="Apps\GetAppInstance.cs" />
     <Compile Include="Files\GetFile.cs" />
@@ -717,7 +715,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Branding\SetMasterPage.cs" />
     <Compile Include="Branding\SetTheme.cs" />
-    <Compile Include="Base\deprecated\SPOWebCmdlet.deprecated.cs" />
     <Compile Include="Web\SetWeb.cs" />
     <Compile Include="Publishing\RemoveWikiPage.cs" />
     <Compile Include="Publishing\AddWikiPage.cs" />
@@ -752,7 +749,9 @@
   <ItemGroup>
     <Resource Include="Resources\pnp.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Base\deprecated\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"$(SolutionDir)\ModuleFilesGenerator\bin\$(ConfigurationName)\SharePointPnP.PowerShell.ModuleFilesGenerator.exe"  "$(TargetPath)" "$(ConfigurationName)" "$(SolutionDir)
