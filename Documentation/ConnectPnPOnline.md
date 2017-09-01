@@ -50,9 +50,27 @@ Connect-PnPOnline -AppId <String>
 
 ```powershell
 Connect-PnPOnline -ClientId <String>
-                  -HighTrustCertificatePath <String>
-                  -HighTrustCertificatePassword <String>
-                  -HighTrustCertificateIssuerId <String>
+                  -RedirectUri <String>
+                  -Url <String>
+                  [-ClearTokenCache [<SwitchParameter>]]
+                  [-AzureEnvironment <AzureEnvironment>]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-TenantAdminUrl <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+```
+
+
+```powershell
+Connect-PnPOnline -ClientId <String>
+                  -Tenant <String>
+                  -CertificatePath <String>
+                  -CertificatePassword <SecureString>
+                  -AzureEnvironment <AzureEnvironment>
                   -Url <String>
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
@@ -73,13 +91,16 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |AppId|String|True|The Application Client ID to use.|
 |AppSecret|String|True|The Application Client Secret to use.|
-|ClientId|String|True|The Client ID of the Add-In Registration in SharePoint|
-|HighTrustCertificateIssuerId|String|True|The IssuerID under which the CER counterpart of the PFX has been registered in SharePoint as a Trusted Security Token issuer to use for the High Trust connection|
-|HighTrustCertificatePassword|String|True|The password of the private key certificate (.pfx) to use for the High Trust connection|
-|HighTrustCertificatePath|String|True|The path to the private key certificate (.pfx) to use for the High Trust connection|
+|CertificatePassword|SecureString|True|Password to the certificate (*.pfx)|
+|CertificatePath|String|True|Path to the certificate (*.pfx)|
+|ClientId|String|True|The Client ID of the Azure AD Application|
+|RedirectUri|String|True|The Redirect URI of the Azure AD Application|
+|Tenant|String|True|The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com|
 |Url|String|True|The Url of the site collection to connect to.|
 |UseWebLogin|SwitchParameter|True|If you want to connect to SharePoint with browser based login|
 |AuthenticationMode|ClientAuthenticationMode|False|Specify to use for instance use forms based authentication (FBA)|
+|AzureEnvironment|AzureEnvironment|False|The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.|
+|ClearTokenCache|SwitchParameter|False|Clears the token cache.|
 |CreateDrive|SwitchParameter|False|If you want to create a PSDrive connected to the URL|
 |Credentials|CredentialPipeBind|False|Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.|
 |CurrentCredentials|SwitchParameter|False|If you want to connect with the current user credentials|

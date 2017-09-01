@@ -3,6 +3,7 @@ Permanently deletes all or a specific recycle bin item
 ## Syntax
 ```powershell
 Clear-PnpRecycleBinItem [-All [<SwitchParameter>]]
+                        [-SecondStageOnly [<SwitchParameter>]]
                         [-Force [<SwitchParameter>]]
 ```
 
@@ -19,6 +20,7 @@ Parameter|Type|Required|Description
 |Identity|RecycleBinItemPipeBind|True|Id of the recycle bin item or the recycle bin item itself to permanently delete|
 |All|SwitchParameter|False|Clears all items|
 |Force|SwitchParameter|False|If provided, no confirmation will be asked to permanently delete the recycle bin item|
+|SecondStageOnly|SwitchParameter|False|If provided, only all the items in the second stage recycle bin will be cleared|
 ## Examples
 
 ### Example 1
