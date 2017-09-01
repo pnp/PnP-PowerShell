@@ -53,6 +53,10 @@ dir",
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -AppId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -AppSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany",
         Remarks = @"This will authenticate you to the German Azure environment using the German Azure endpoints for authentication",
         SortOrder = 8)]
+    [CmdletExample(
+        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -SPOManagementShell",
+        Remarks = @"This will authenticate you using the SharePoint Online Management Shell application",
+        SortOrder = 9)]
     public class ConnectOnline : PSCmdlet
     {
         private const string ParameterSet_MAIN = "Main";
@@ -61,6 +65,9 @@ dir",
 #if !ONPREMISES
         private const string ParameterSet_NATIVEAAD = "NativeAAD";
         private const string ParameterSet_APPONLYAAD = "AppOnlyAAD";
+        private const string ParameterSet_SPOManagement = "SPOManagement";
+        private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
+        private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
 #endif
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         public string Url;
@@ -89,7 +96,7 @@ dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
         public string Realm;
 
-        [Parameter(Mandatory = true, ParameterSetName =  ParameterSet_TOKEN, HelpMessage = "The Application Client ID to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client ID to use.")]
         public string AppId;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client Secret to use.")]
@@ -108,6 +115,9 @@ dir",
         public string DriveName = "SPO";
 
 #if !ONPREMISES
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOManagement, HelpMessage = "Log in using the SharePoint Online Management Shell application")]
+        public SwitchParameter SPOManagementShell;
+
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Client ID of the Azure AD Application")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Client ID of the Azure AD Application")]
         public string ClientId;
@@ -118,16 +128,17 @@ dir",
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com")]
         public string Tenant;
 
-        [Parameter(Mandatory = true, ParameterSetName =  ParameterSet_APPONLYAAD, HelpMessage = "Path to the certificate (*.pfx)")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Path to the certificate (*.pfx)")]
         public string CertificatePath;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Password to the certificate (*.pfx)")]
         public SecureString CertificatePassword;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Clears the token cache.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOManagement, HelpMessage = "Clears the token cache.")]
         public SwitchParameter ClearTokenCache;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage= "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 #endif
@@ -167,18 +178,13 @@ dir",
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
             }
 #if !ONPREMISES
+            else if (ParameterSetName == ParameterSet_SPOManagement)
+            {
+                ConnectNativAAD(SPOManagementClientId, SPOManagementRedirectUri);
+            }
             else if (ParameterSetName == ParameterSet_NATIVEAAD)
             {
-                if (ClearTokenCache)
-                {
-                    string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                    string configFile = Path.Combine(appDataFolder, "SharePointPnP.PowerShell\\tokencache.dat");
-                    if (File.Exists(configFile))
-                    {
-                        File.Delete(configFile);
-                    }
-                }
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADNativeApplicationConnection(new Uri(Url), ClientId, new Uri(RedirectUri), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+                ConnectNativAAD(ClientId, RedirectUri);
             }
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
@@ -213,6 +219,25 @@ dir",
                     SessionState.Drive.New(drive, "Global");
                 }
             }
+        }
+
+        private void ConnectNativAAD(string clientId, string redirectUrl)
+        {
+            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string configFolder = Path.Combine(appDataFolder, "SharePointPnP.PowerShell");
+            Directory.CreateDirectory(configFolder); // Ensure folder exists
+            if (ClearTokenCache)
+            {
+                string configFile = Path.Combine(configFolder, "tokencache.dat");
+
+                if (File.Exists(configFile))
+                {
+                    File.Delete(configFile);
+                }
+            }
+            SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADNativeApplicationConnection(
+                new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
+                RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
         }
 
         private PSCredential GetCredentials()
