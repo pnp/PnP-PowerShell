@@ -480,6 +480,7 @@
     <Compile Include="RecordsManagement\SetListItemAsRecord.cs" />
     <Compile Include="Lists\MoveListItemToRecycleBin.cs" />
     <Compile Include="Lists\SetListItemPermission.cs" />
+    <Compile Include="Lists\SetView.cs" />
     <Compile Include="Provider\SPOProxy\SPOProxyCmdletBase.cs" />
     <Compile Include="Lists\GetDefaultColumnValues.cs" />
     <Compile Include="Provider\Parameters\SPOChildItemsParameters.cs" />
