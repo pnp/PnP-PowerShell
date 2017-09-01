@@ -5,21 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#if !ONPREMISES
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
     public class WebhookSubscriptionPipeBind
     {
-        #region Fields
+#region Fields
         private WebhookSubscription _subscription;
         private Guid _subscriptionId;
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
         public WebhookSubscription Subscription => _subscription;
         public Guid Id => _subscriptionId;
-        #endregion
+#endregion
 
-        #region Ctors
+#region Ctors
         public WebhookSubscriptionPipeBind()
         {
             _subscriptionId = Guid.Empty;
@@ -43,6 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             _subscriptionId = Guid.Parse(subscriptionId);
             _subscription = new WebhookSubscription() { Id = subscriptionId };
         }
-        #endregion
+#endregion
     }
 }
+#endif
