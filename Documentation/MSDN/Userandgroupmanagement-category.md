@@ -9,5 +9,6 @@ Cmdlet|Description|Platform
 **[Set&#8209;PnPGroupPermissions](SetPnPGroupPermissions.md)** |Adds and/or removes permissions of a specific SharePoint group|All
 **[Get&#8209;PnPUser](GetPnPUser.md)** |Returns site users of current web|All
 **[New&#8209;PnPUser](NewPnPUser.md)** |Adds a user to the built-in Site User Info List and returns a user object|All
+**[Remove&#8209;PnPUser](RemovePnPUser.md)** |Removes a specific user from the site collection User Information List|All
 **[Remove&#8209;PnPUserFromGroup](RemovePnPUserFromGroup.md)** |Removes a user from a group|All
 **[Add&#8209;PnPUserToGroup](AddPnPUserToGroup.md)** |Adds a user to a group|All
