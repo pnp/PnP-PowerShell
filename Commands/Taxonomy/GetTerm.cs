@@ -102,7 +102,9 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                 }
                 else
                 {
-                    term = termSet.Terms.GetByName(Identity.StringValue);
+                    var termName = TaxonomyItem.NormalizeName(ClientContext, Identity.StringValue);
+                    ClientContext.ExecuteQueryRetry();
+                    term = termSet.Terms.GetByName(termName.Value);
                 }
                 ClientContext.Load(term, RetrievalExpressions);
                 ClientContext.ExecuteQueryRetry();
