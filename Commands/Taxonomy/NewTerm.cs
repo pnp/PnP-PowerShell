@@ -107,9 +107,8 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             {
                 Id = Guid.NewGuid();
             }
-            var termName = TaxonomyItem.NormalizeName(ClientContext,Name);
-            ClientContext.ExecuteQueryRetry();
-            var term = termSet.CreateTerm(termName.Value, Lcid, Id);
+            var termName = TaxonomyExtensions.NormalizeName(Name);
+            var term = termSet.CreateTerm(termName, Lcid, Id);
             ClientContext.Load(term);
             ClientContext.ExecuteQueryRetry();
             term.SetDescription(Description, Lcid);
