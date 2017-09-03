@@ -847,46 +847,6 @@
       </TableControl>
     </View>
     <View>
-      <Name>UnifiedGroupEntity</Name>
-      <ViewSelectedBy>
-        <TypeName>OfficeDevPnP.Core.Entities.UnifiedGroupEntity</TypeName>
-      </ViewSelectedBy>
-      <TableControl>
-        <TableHeaders>
-          <TableColumnHeader>
-            <Label>DisplayName</Label>
-            <Width>30</Width>
-            <Alignment>left</Alignment>
-          </TableColumnHeader>
-          <TableColumnHeader>
-            <Label>Group Id</Label>
-            <Width>38</Width>
-            <Alignment>left</Alignment>
-          </TableColumnHeader>
-          <TableColumnHeader>
-            <Label>Site URL</Label>
-            <Width>38</Width>
-            <Alignment>left</Alignment>
-          </TableColumnHeader>
-        </TableHeaders>
-        <TableRowEntries>
-          <TableRowEntry>
-            <TableColumnItems>
-              <TableColumnItem>
-                <PropertyName>DisplayName</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>GroupId</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>SiteUrl</PropertyName>
-              </TableColumnItem>
-            </TableColumnItems>
-          </TableRowEntry>
-        </TableRowEntries>
-      </TableControl>
-    </View>
-    <View>
       <Name>RecycleBinItem</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.SharePoint.Client.RecycleBinItem</TypeName>
