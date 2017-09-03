@@ -405,6 +405,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\GetAppAuthAccessToken.cs" />
     <Compile Include="Base\PipeBinds\GenericObjectNameIdPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebhookSubscriptionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
