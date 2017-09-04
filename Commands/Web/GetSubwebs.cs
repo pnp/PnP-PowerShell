@@ -30,29 +30,28 @@ namespace SharePointPnP.PowerShell.Commands
             {
                 WriteObject(SelectedWeb.Webs, true);
             }
-        //    else
-        //    {
-        //        var subwebs = new List<web>();
-        //        subwebs.AddRange(webs);
-        //        foreach (var subweb in webs)
-        //        {
-        //            subwebs.AddRange(GetSubWebsInternal(subweb));
-        //        }
-        //        WriteObject(subwebs, true);
-        //    }
+            else
+            {
+                var subwebs = new List<Web>();
+                subwebs.AddRange(SelectedWeb.Webs);
+                foreach (var subweb in SelectedWeb.Webs)
+                {
+                    subwebs.AddRange(GetSubWebsInternal(subweb));
+                }
+                WriteObject(subwebs, true);
+            }
         }
 
-        //private List<web> GetSubWebsInternal(web subweb)
-        //{
-        //    var subwebs = new List<web>();
-        //    var webs = subweb.Context.LoadQuery(subweb.Webs);
-        //    subweb.Context.ExecuteQueryRetry();
-        //    subwebs.AddRange(webs);
-        //    foreach (var sw in webs)
-        //    {
-        //        subwebs.AddRange(GetSubWebsInternal(sw));
-        //    }
-        //    return subwebs;
-        //}
+        private List<Web> GetSubWebsInternal(Web subweb)
+        {
+            var subwebs = new List<Web>();
+            subweb.Webs.EnsureProperties(RetrievalExpressions);
+            subwebs.AddRange(subweb.Webs);
+            foreach (var sw in subweb.Webs)
+            {
+                subwebs.AddRange(GetSubWebsInternal(sw));
+            }
+            return subwebs;
+        }
     }
 }
