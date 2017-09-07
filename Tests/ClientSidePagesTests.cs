@@ -9,7 +9,7 @@ using System.Collections;
 namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
-    public class ModernPagesTests
+    public class ClientSidePagesTests
     {
 
         public const string PageTestNewDefaultName = "Page 1.aspx";
@@ -55,31 +55,7 @@ namespace SharePointPnP.PowerShell.Tests
                 CleanupPageIfExists(ctx, PageAddWebPartTestName);
             }
         }
-
-        [TestMethod]
-        public void NewClientSidePageTest()
-        {
-            using (var scope = new PSTestScope(true))
-            {
-                var results = scope.ExecuteCommand("New-PnPClientSidePage");
-                var page = results[0].BaseObject as ClientSidePage;
-                Assert.IsNotNull(page);
-            }
-        }
-
-        [TestMethod]
-        public void NewClientSidePageWithNameTest()
-        {
-            using (var scope = new PSTestScope(true))
-            {
-                var results = scope.ExecuteCommand("New-PnPClientSidePage",
-                    new CommandParameter("Name", PageTestNewName));
-
-                var page = results[0].BaseObject as ClientSidePage;
-                Assert.IsNotNull(page);
-            }
-        }
-
+        
         [TestMethod]
         public void AddClientSidePageWithNameWithoutExtensionTest()
         {

@@ -272,7 +272,7 @@
     <Compile Include="AdminTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="ContentTypeTests.cs" />
-    <Compile Include="ModernPagesTests.cs" />
+    <Compile Include="ClientSidePagesTests.cs" />
     <Compile Include="EventReceiverTests.cs" />
     <Compile Include="FeatureTests.cs" />
     <Compile Include="FieldsTests.cs" />
