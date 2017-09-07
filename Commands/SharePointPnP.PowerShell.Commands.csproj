@@ -406,6 +406,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\GetAppAuthAccessToken.cs" />
+    <Compile Include="Base\PipeBinds\ClientSideComponentPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\GenericPropertiesPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ClientSidePagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericObjectNameIdPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebhookSubscriptionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
@@ -482,6 +485,16 @@
     <Compile Include="RecordsManagement\SetListItemAsRecord.cs" />
     <Compile Include="Lists\MoveListItemToRecycleBin.cs" />
     <Compile Include="Lists\SetListItemPermission.cs" />
+    <Compile Include="ClientSidePages\AddClientSidePageSection.cs" />
+    <Compile Include="Enums\ClientSidePagePromoteType.cs" />
+    <Compile Include="ClientSidePages\ClientSidePageUtilities.cs" />
+    <Compile Include="ClientSidePages\SetClientSidePage.cs" />
+    <Compile Include="ClientSidePages\AddClientSideText.cs" />
+    <Compile Include="ClientSidePages\AddClientSideWebPart.cs" />
+    <Compile Include="ClientSidePages\GetAvailableClientSideComponents.cs" />
+    <Compile Include="ClientSidePages\RemoveClientSidePage.cs" />
+    <Compile Include="ClientSidePages\AddClientSidePage.cs" />
+    <Compile Include="ClientSidePages\GetClientSidePage.cs" />
     <Compile Include="Lists\SetView.cs" />
     <Compile Include="Principals\RemoveUser.cs" />
     <Compile Include="Provider\SPOProxy\SPOProxyCmdletBase.cs" />
