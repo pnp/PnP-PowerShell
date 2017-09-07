@@ -64,6 +64,7 @@
 ### [Add-PnPField](AddPnPField.md)
 ### [Get-PnPField](GetPnPField.md)
 ### [Remove-PnPField](RemovePnPField.md)
+### [Set-PnPField](SetPnPField.md)
 ### [Add-PnPFieldFromXml](AddPnPFieldFromXml.md)
 ### [Add-PnPTaxonomyField](AddPnPTaxonomyField.md)
 ### [Set-PnPView](SetPnPView.md)
