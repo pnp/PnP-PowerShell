@@ -1,7 +1,7 @@
 ﻿using Microsoft.SharePoint.Client;
 using Newtonsoft.Json.Linq;
 using OfficeDevPnP.Core.Pages;
-using SharePointPnP.PowerShell.Commands.ModernPages;
+using SharePointPnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Collections;
 using System.Collections.Generic;

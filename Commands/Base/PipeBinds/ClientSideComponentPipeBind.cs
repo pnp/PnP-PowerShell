@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Pages;
-using SharePointPnP.PowerShell.Commands.ModernPages;
+using SharePointPnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

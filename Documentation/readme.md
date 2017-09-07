@@ -47,6 +47,17 @@ Cmdlet|Description|Platforms
 **[Enable&#8209;PnPResponsiveUI](EnablePnPResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Site|All
 **[Get&#8209;PnPTheme](GetPnPTheme.md)** |Returns the current theme/composed look of the current web.|All
 **[Set&#8209;PnPTheme](SetPnPTheme.md)** |Sets the theme of the current web.|All
+## Client-Side Pages
+Cmdlet|Description|Platforms
+:-----|:----------|:--------
+**[Get&#8209;PnPAvailableClientSideComponents](GetPnPAvailableClientSideComponents.md)** |Gets the available client side components on a particular page|SharePoint Online
+**[Add&#8209;PnPClientSidePage](AddPnPClientSidePage.md)** |Adds a Client-Side Page|SharePoint Online
+**[Get&#8209;PnPClientSidePage](GetPnPClientSidePage.md)** |Gets a Client-Side Page|SharePoint Online
+**[Remove&#8209;PnPClientSidePage](RemovePnPClientSidePage.md)** |Removes a Client-Side Page|SharePoint Online
+**[Set&#8209;PnPClientSidePage](SetPnPClientSidePage.md)** |Sets parameters of a Client-Side Page|SharePoint Online
+**[Add&#8209;PnPClientSidePageSection](AddPnPClientSidePageSection.md)** |Adds a new section to a Client-Side page|SharePoint Online
+**[Add&#8209;PnPClientSideText](AddPnPClientSideText.md)** |Adds a Client-Side Page|SharePoint Online
+**[Add&#8209;PnPClientSideWebPart](AddPnPClientSideWebPart.md)** |Adds a Client-Side Component to a page|SharePoint Online
 ## Content Types
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
@@ -147,18 +158,6 @@ Cmdlet|Description|Platforms
 **[New&#8209;PnPUnifiedGroup](NewPnPUnifiedGroup.md)** |Creates a new Office 365 Group (aka Unified Group)|All
 **[Remove&#8209;PnPUnifiedGroup](RemovePnPUnifiedGroup.md)** |Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups|All
 **[Set&#8209;PnPUnifiedGroup](SetPnPUnifiedGroup.md)** |Sets Office 365 Group (aka Unified Group) properties|All
-## Modern Pages
-Cmdlet|Description|Platforms
-:-----|:----------|:--------
-**[Get&#8209;PnPAvailableClientSideComponents](GetPnPAvailableClientSideComponents.md)** |Gets the available client side components on a particular page|All
-**[Add&#8209;PnPClientSidePage](AddPnPClientSidePage.md)** |Adds a Client-Side Page|All
-**[Get&#8209;PnPClientSidePage](GetPnPClientSidePage.md)** |Gets a Client-Side Page|All
-**[New&#8209;PnPClientSidePage](NewPnPClientSidePage.md)** |Creates a new Client-Side Page object|All
-**[Remove&#8209;PnPClientSidePage](RemovePnPClientSidePage.md)** |Removes a Client-Side Page|All
-**[Set&#8209;PnPClientSidePage](SetPnPClientSidePage.md)** |Sets parameters of a Client-Side Page|All
-**[Add&#8209;PnPClientSidePageSection](AddPnPClientSidePageSection.md)** |Adds a new section to a Client-Side page|All
-**[Add&#8209;PnPClientSideText](AddPnPClientSideText.md)** |Adds a Client-Side Page|All
-**[Add&#8209;PnPClientSideWebPart](AddPnPClientSideWebPart.md)** |Adds a Client-Side Component to a page|All
 ## Provisioning
 Cmdlet|Description|Platforms
 :-----|:----------|:--------

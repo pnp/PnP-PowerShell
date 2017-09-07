@@ -1,14 +1,43 @@
 # Add-PnPClientSideWebPart
 Adds a Client-Side Component to a page
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
-Add-PnPClientSideWebPart -Page <ClientSidePagePipeBind>
-                         [-DefaultWebPartType <Nullable`1>]
-                         [-Component <ClientSideComponentPipeBind>]
+Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
+                         -Page <ClientSidePagePipeBind>
                          [-WebPartProperties <PropertyBagPipeBind>]
                          [-Order <Int>]
-                         [-Section <Nullable`1>]
-                         [-Column <Nullable`1>]
+                         [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
+                         -Page <ClientSidePagePipeBind>
+                         [-WebPartProperties <PropertyBagPipeBind>]
+                         [-Order <Int>]
+                         [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
+                         -Section <Int>
+                         -Column <Int>
+                         -Page <ClientSidePagePipeBind>
+                         [-WebPartProperties <PropertyBagPipeBind>]
+                         [-Order <Int>]
+                         [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
+                         -Section <Int>
+                         -Column <Int>
+                         -Page <ClientSidePagePipeBind>
+                         [-WebPartProperties <PropertyBagPipeBind>]
+                         [-Order <Int>]
                          [-Web <WebPipeBind>]
 ```
 
@@ -16,24 +45,30 @@ Add-PnPClientSideWebPart -Page <ClientSidePagePipeBind>
 ## Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Page|ClientSidePagePipeBind|True|The name of the page or the page in-memory instance.|
-|Column|Nullable`1|False|Sets the column where to insert the WebPart control.|
-|Component|ClientSideComponentPipeBind|False|Specifies the component instance or Id to add.|
-|DefaultWebPartType|Nullable`1|False|Defines a default WebPart type to insert. This takes precedence on the Component argument.|
+|Column|Int|True|Sets the column where to insert the WebPart control.|
+|Component|ClientSideComponentPipeBind|True|Specifies the component instance or Id to add.|
+|DefaultWebPartType|DefaultClientSideWebParts|True|Defines a default WebPart type to insert.|
+|Page|ClientSidePagePipeBind|True|The name of the page.|
+|Section|Int|True|Sets the section where to insert the WebPart control.|
 |Order|Int|False|Sets the order of the WebPart control. (Default = 1)|
-|Section|Nullable`1|False|Sets the section where to insert the WebPart control.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 |WebPartProperties|PropertyBagPipeBind|False|The properties of the WebPart|
 ## Examples
 
 ### Example 1
 ```powershell
-PS:> Add-PnPClientSideWebPart -Page 'OurNewPage' -Component 'HelloWorld'
+PS:> Add-PnPClientSideWebPart -Page "OurNewPage" -DefaultWebPartType BingMap
 ```
-Adds a Client-Side component 'HelloWorld' to the page called 'OurNewPage'
+Adds a built-in Client-Side component 'BingMap' to the page called 'OurNewPage'
 
 ### Example 2
 ```powershell
-PS:> Add-PnPClientSideWebPart  -Page 'OurNewPage' -Component 'HelloWorld' -Zone 1 -Section 2
+PS:> Add-PnPClientSideWebPart -Page "OurNewPage" -Component "HelloWorld"
 ```
-Adds a Client-Side component 'HelloWorld' to the page called 'OurNewPage' in zone 1 and section 2
+Adds a Client-Side component 'HelloWorld' to the page called 'OurNewPage'
+
+### Example 3
+```powershell
+PS:> Add-PnPClientSideWebPart  -Page "OurNewPage" -Component "HelloWorld" -Section 1 -Column 2
+```
+Adds a Client-Side component 'HelloWorld' to the page called 'OurNewPage' in section 1 and column 2

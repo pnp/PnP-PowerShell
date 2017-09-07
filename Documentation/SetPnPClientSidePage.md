@@ -1,11 +1,12 @@
 # Set-PnPClientSidePage
 Sets parameters of a Client-Side Page
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Set-PnPClientSidePage -Identity <ClientSidePagePipeBind>
                       [-Name <String>]
                       [-LayoutType <ClientSidePageLayoutType>]
-                      [-PromoteAs <EPagePromoteType>]
+                      [-PromoteAs <ClientSidePagePromoteType>]
                       [-CommentsEnabled <Nullable`1>]
                       [-Publish [<SwitchParameter>]]
                       [-PublishMessage <String>]
@@ -16,11 +17,11 @@ Set-PnPClientSidePage -Identity <ClientSidePagePipeBind>
 ## Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Identity|ClientSidePagePipeBind|True|The name of the page or the page in-memory instance.|
+|Identity|ClientSidePagePipeBind|True|The name/identity of the page|
 |CommentsEnabled|Nullable`1|False|Enables or Disables the comments on the page|
-|LayoutType|ClientSidePageLayoutType|False|Specifies the layout type of the page.|
-|Name|String|False|Spcifies the chosen name of the page.|
-|PromoteAs|EPagePromoteType|False|Allows to promote the page for a specific purpose (HomePage | NewsPage)|
+|LayoutType|ClientSidePageLayoutType|False|Sets the layout type of the page. (Default = Article)|
+|Name|String|False|Sets the name of the page.|
+|PromoteAs|ClientSidePagePromoteType|False|Allows to promote the page for a specific purpose (HomePage | NewsPage)|
 |Publish|SwitchParameter|False|Publishes the page once it is saved.|
 |PublishMessage|String|False|Sets the message for publishing the page.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
@@ -28,12 +29,6 @@ Parameter|Type|Required|Description
 
 ### Example 1
 ```powershell
-PS:> Set-PnPClientSidePage -Identity 'MyPage' -LayoutType Home
+PS:> Set-PnPClientSidePage -Identity "MyPage" -LayoutType Home
 ```
-Updates the properties of the Modern Page (Client-Side) called 'OurNewPage'
-
-### Example 2
-```powershell
-PS:> Add-PnPClientSidePage
-```
-Creates a new Modern Page (Client-Side) in-memory instance that need to be explicitly saved to be persisted in SharePoint
+Updates the properties of the Client-Side page called 'MyPage'

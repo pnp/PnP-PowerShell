@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.ModernPages
+namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
-    public enum EPagePromoteType
+    public enum ClientSidePagePromoteType
     {
         None = 0,
         HomePage = 1,

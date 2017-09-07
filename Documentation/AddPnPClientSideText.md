@@ -1,12 +1,21 @@
 # Add-PnPClientSideText
 Adds a Client-Side Page
+>*Only available for SharePoint Online*
 ## Syntax
 ```powershell
 Add-PnPClientSideText -Text <String>
                       -Page <ClientSidePagePipeBind>
                       [-Order <Int>]
-                      [-Section <Nullable`1>]
-                      [-Column <Nullable`1>]
+                      [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-PnPClientSideText -Text <String>
+                      -Section <Int>
+                      -Column <Int>
+                      -Page <ClientSidePagePipeBind>
+                      [-Order <Int>]
                       [-Web <WebPipeBind>]
 ```
 
@@ -14,16 +23,16 @@ Add-PnPClientSideText -Text <String>
 ## Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
-|Page|ClientSidePagePipeBind|True|The name of the page or the page in-memory instance.|
+|Column|Int|True|Sets the column where to insert the text control.|
+|Page|ClientSidePagePipeBind|True|The name of the page.|
+|Section|Int|True|Sets the section where to insert the text control.|
 |Text|String|True|Specifies the text to display in the text area.|
-|Column|Nullable`1|False|Sets the column where to insert the text control.|
 |Order|Int|False|Sets the order of the text control. (Default = 1)|
-|Section|Nullable`1|False|Sets the section where to insert the text control.|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1
 ```powershell
-PS:> Add-PnPClientSideText -Page 'OurNewPage' -Text 'Hello World!'
+PS:> Add-PnPClientSideText -Page "OurNewPage" -Text "Hello World!"
 ```
-Adds the text 'Hello World!' on the Modern Page 'OurNewPage'
+Adds the text 'Hello World!' to the Client-Side Page 'OurNewPage'

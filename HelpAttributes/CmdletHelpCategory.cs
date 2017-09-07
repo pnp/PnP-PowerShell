@@ -45,7 +45,7 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         Webhooks = 25,
         [EnumMember(Value = "Records Management")]
         RecordsManagement = 26,
-        [EnumMember(Value = "Modern Pages")]
-        ModernPages = 27
+        [EnumMember(Value = "Client-Side Pages")]
+        ClientSidePages = 27
     }
 }

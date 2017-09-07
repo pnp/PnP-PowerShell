@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Pages;
-using SharePointPnP.PowerShell.Commands.ModernPages;
+using SharePointPnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 
         public ClientSidePage Page => _page;
 
-        public string Name => ModernPagesUtilities.EnsurePageName(_name, false);
+        public string Name => ClientSidePageUtilities.EnsureCorrectPageName(_name);
 
         public override string ToString() => Name;
 

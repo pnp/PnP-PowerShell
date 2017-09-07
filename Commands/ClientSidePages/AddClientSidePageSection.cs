@@ -1,32 +1,31 @@
 ﻿#if !ONPREMISES
-
-using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.ModernPages
+namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Add, "PnPClientSidePageSection")]
     [CmdletHelp("Adds a new section to a Client-Side page",
-      Category = CmdletHelpCategory.ModernPages)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPClientSidePageSection -Page 'MyPage' -SectionTemplate OneColumn",
+        Code = @"PS:> Add-PnPClientSidePageSection -Page ""MyPage"" -SectionTemplate OneColumn",
         Remarks = "Adds a new one-column section to the Client-Side page 'MyPage'",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPClientSidePageSection  -Page 'MyPage' -SectionTemplate ThreeColumn -Order 10",
-        Remarks = "Adds a new Three columns section to the page 'MyPage' with an order index of 10",
+        Code = @"PS:> Add-PnPClientSidePageSection -Page ""MyPage"" -SectionTemplate ThreeColumn -Order 10",
+        Remarks = "Adds a new Three columns section to the Client-Side page 'MyPage' with an order index of 10",
+        SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> $page = Add-PnPClientSidePage -Name ""MyPage""
+PS> Add-PnPClientSidePageSection -Page $page -SectionTemplate OneColumn",
+        Remarks = "Adds a new one column section to the Client-Side page 'MyPage'",
         SortOrder = 2)]
     public class AddClientSidePageSection : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page or the page in-memory instance.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page")]
         public ClientSidePagePipeBind Page;
 
         [Parameter(Mandatory = true, HelpMessage = "Specifies the columns template to use for the section.")]
