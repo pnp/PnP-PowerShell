@@ -289,6 +289,9 @@
   <data name="RemoveWebhookSubscription0From1_2" xml:space="preserve">
     <value>Remove Webhook Subscription '{0}' from {1} '{2}' ?</value>
   </data>
+  <data name="RemoveClientSidePage" xml:space="preserve">
+    <value>Remove Client-Side Page?</value>
+  </data>
   <data name="RemoveUser" xml:space="preserve">
     <value>Remove User with Id {0}, LoginName '{1}', Email '{2}' from the User Information List?</value>
   </data>
