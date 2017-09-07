@@ -93,6 +93,10 @@ namespace SharePointPnP.PowerShell.Commands
                     ExecuteCmdlet();
                 }
             }
+            catch(System.Management.Automation.PipelineStoppedException)
+            {
+                //swallow pipeline stopped exception
+            }
             catch (Exception ex)
             {
                 SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
