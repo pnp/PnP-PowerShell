@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Switch parameter if an exception should be thrown if the requested list does not exist (true) or if omitted, nothing will be returned in case the list does not exist")]
-        public SwitchParameter ThowExceptionIfListNotFound;
+        public SwitchParameter ThrowExceptionIfListNotFound;
 
         protected override void ExecuteCmdlet()
         {
@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             {
                 var list = Identity.GetList(SelectedWeb);
 
-                if (ThowExceptionIfListNotFound && list == null)
+                if (ThrowExceptionIfListNotFound && list == null)
                 { 
                     throw new PSArgumentException($"No list found with id, title or url '{Identity}'", "Identity");
                 }
