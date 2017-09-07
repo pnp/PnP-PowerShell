@@ -33,6 +33,21 @@ Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
 
 
 ```powershell
+Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
+                  -Url <String>
+                  [-ClearTokenCache [<SwitchParameter>]]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-TenantAdminUrl <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+```
+
+
+```powershell
 Connect-PnPOnline -AppId <String>
                   -AppSecret <String>
                   -Url <String>
@@ -95,6 +110,7 @@ Parameter|Type|Required|Description
 |CertificatePath|String|True|Path to the certificate (*.pfx)|
 |ClientId|String|True|The Client ID of the Azure AD Application|
 |RedirectUri|String|True|The Redirect URI of the Azure AD Application|
+|SPOManagementShell|SwitchParameter|True|Log in using the SharePoint Online Management Shell application|
 |Tenant|String|True|The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com|
 |Url|String|True|The Url of the site collection to connect to.|
 |UseWebLogin|SwitchParameter|True|If you want to connect to SharePoint with browser based login|
@@ -164,3 +180,9 @@ This will prompt you for credentials and creates a context for the other PowerSh
 PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -AppId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -AppSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany
 ```
 This will authenticate you to the German Azure environment using the German Azure endpoints for authentication
+
+### Example 9
+```powershell
+PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -SPOManagementShell
+```
+This will authenticate you using the SharePoint Online Management Shell application
