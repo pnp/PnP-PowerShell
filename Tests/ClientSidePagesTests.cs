@@ -9,7 +9,7 @@ using System.Collections;
 namespace SharePointPnP.PowerShell.Tests
 {
     [TestClass]
-    public class ModernPagesTests
+    public class ClientSidePagesTests
     {
 
         public const string PageTestNewDefaultName = "Page 1.aspx";
