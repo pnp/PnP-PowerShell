@@ -15,8 +15,16 @@ Add-PnPCustomAction -Name <String>
                     [-Rights <PermissionKind[]>]
                     [-RegistrationType <UserCustomActionRegistrationType>]
                     [-Scope <CustomActionScope>]
-                    [-ClientSideComponentId <GuidPipeBind>]
-                    [-ClientSideComponentProperties <String>]
+                    [-Web <WebPipeBind>]
+```
+
+
+```powershell
+Add-PnPCustomAction -Name <String>
+                    -Title <String>
+                    -Location <String>
+                    -ClientSideComponentId <GuidPipeBind>
+                    -ClientSideComponentProperties <String>
                     [-Web <WebPipeBind>]
 ```
 
@@ -24,13 +32,13 @@ Add-PnPCustomAction -Name <String>
 ## Parameters
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
+|ClientSideComponentId|GuidPipeBind|True|The Client Side Component Id of the custom action|
+|ClientSideComponentProperties|String|True|The Client Side Component Properties of the custom action. Specify values as a json string : "{Property1 : 'Value1', Property2: 'Value2'}"|
 |Description|String|True|The description of the custom action|
 |Group|String|True|The group where this custom action needs to be added like 'SiteActions'|
 |Location|String|True|The actual location where this custom action need to be added like 'CommandUI.Ribbon'|
 |Name|String|True|The name of the custom action|
 |Title|String|True|The title of the custom action|
-|ClientSideComponentId|GuidPipeBind|False|The Client Side Component Id of the custom action|
-|ClientSideComponentProperties|String|False|The Client Side Component Properties of the custom action. Specify values as a json string : "{Property1 : 'Value1', Property2: 'Value2'}"|
 |CommandUIExtension|String|False|XML fragment that determines user interface properties of the custom action|
 |ImageUrl|String|False|The URL of the image associated with the custom action|
 |RegistrationId|String|False|The identifier of the object associated with the custom action.|
