@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         SortOrder = 2)]
     public class AddClientSidePage : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specifies the name of the page.")]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the name of the page.")]
         public string Name = null;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the layout type of the page.")]
