@@ -9,7 +9,6 @@ using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-
     [Cmdlet(VerbsCommon.Get, "PnPTenantSite", SupportsShouldProcess = true)]
     [CmdletHelp(@"Uses the tenant API to retrieve site information.", 
         Category = CmdletHelpCategory.TenantAdmin,
