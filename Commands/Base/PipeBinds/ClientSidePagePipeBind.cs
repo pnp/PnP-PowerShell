@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !ONPREMISES
+using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.Commands.ClientSidePages;
 using System;
@@ -56,3 +57,4 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         }
     }
 }
+#endif

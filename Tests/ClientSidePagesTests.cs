@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !ONPREMISES
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 using Microsoft.SharePoint.Client;
@@ -224,3 +225,4 @@ namespace SharePointPnP.PowerShell.Tests
         }
     }
 }
+#endif

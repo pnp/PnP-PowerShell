@@ -260,6 +260,7 @@ dir",
             }
         }
 
+#if !ONPREMISES
         private void ConnectNativAAD(string clientId, string redirectUrl)
         {
             string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -278,6 +279,7 @@ dir",
                 new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
                 RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
         }
+#endif
 
         private PSCredential GetCredentials()
         {

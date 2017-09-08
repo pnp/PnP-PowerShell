@@ -1,14 +1,6 @@
-﻿using Microsoft.SharePoint.Client;
-using Newtonsoft.Json.Linq;
-using OfficeDevPnP.Core.Pages;
-using SharePointPnP.PowerShell.Commands.ClientSidePages;
-using System;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -39,10 +31,10 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         public Hashtable Properties => _hashtable;
 
         public override string ToString() => Json ?? HashtableToJsonString(_hashtable);
-        
+
         private string HashtableToJsonString(Hashtable hashtable)
         {
-           return HashtableToJsonObject(hashtable).ToString();
+            return HashtableToJsonObject(hashtable).ToString();
         }
 
         private JObject HashtableToJsonObject(Hashtable hashtable)
@@ -55,9 +47,9 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 
                 // To ensure the value is not serialized as PSObject
                 object value = rawValue is PSObject
-                    ? ((PSObject)rawValue).BaseObject
+                    ? ((PSObject) rawValue).BaseObject
                     : rawValue;
-                
+
                 obj[key] = JToken.FromObject(value);
             }
             return obj;
