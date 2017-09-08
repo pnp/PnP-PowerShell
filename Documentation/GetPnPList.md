@@ -2,7 +2,8 @@
 Returns a List object
 ## Syntax
 ```powershell
-Get-PnPList [-Web <WebPipeBind>]
+Get-PnPList [-ThrowExceptionIfListNotFound [<SwitchParameter>]]
+            [-Web <WebPipeBind>]
             [-Includes <String[]>]
             [-Identity <ListPipeBind>]
 ```
@@ -16,6 +17,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|ListPipeBind|False|The ID, name or Url (Lists/MyList) of the list.|
 |Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
+|ThrowExceptionIfListNotFound|SwitchParameter|False|Switch parameter if an exception should be thrown if the requested list does not exist (true) or if omitted, nothing will be returned in case the list does not exist|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 

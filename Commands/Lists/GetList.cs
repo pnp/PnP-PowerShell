@@ -4,9 +4,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq.Expressions;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
@@ -32,6 +29,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, name or Url (Lists/MyList) of the list.")]
         public ListPipeBind Identity;
 
+        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if an exception should be thrown if the requested list does not exist (true) or if omitted, nothing will be returned in case the list does not exist")]
+        public SwitchParameter ThrowExceptionIfListNotFound;
+
         protected override void ExecuteCmdlet()
         {
             DefaultRetrievalExpressions = new Expression<Func<List, object>>[] { l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.RootFolder.ServerRelativeUrl };
@@ -39,10 +39,14 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             if (Identity != null)
             {
                 var list = Identity.GetList(SelectedWeb);
+
+                if (ThrowExceptionIfListNotFound && list == null)
+                { 
+                    throw new PSArgumentException($"No list found with id, title or url '{Identity}'", "Identity");
+                }
                 list?.EnsureProperties(RetrievalExpressions);
 
                 WriteObject(list);
-
             }
             else
             {
@@ -53,5 +57,4 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             }
         }
     }
-
 }

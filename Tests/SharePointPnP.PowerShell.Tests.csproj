@@ -37,7 +37,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug15|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug15\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CLIENTSDKV15</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;ONPREMISES;SP2013</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -45,7 +45,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release15|AnyCPU'">
     <OutputPath>bin\Release15\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;ONPREMISES;SP2013</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,7 +55,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug16|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug16\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;ONPREMISES;SP2016</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -63,7 +63,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release16|AnyCPU'">
     <OutputPath>bin\Release16\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;ONPREMISES;SP2016</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -272,12 +272,14 @@
     <Compile Include="AdminTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="ContentTypeTests.cs" />
+    <Compile Include="ClientSidePagesTests.cs" />
     <Compile Include="EventReceiverTests.cs" />
     <Compile Include="FeatureTests.cs" />
     <Compile Include="FieldsTests.cs" />
     <Compile Include="InvokeWebActionTest.cs" />
     <Compile Include="ListDataRowProvisioningTemplate.cs" />
     <Compile Include="ProvisioningTemplateTests.cs" />
+    <Compile Include="WebhookSubscriptionsTests.cs" />
     <Compile Include="WebTests.cs" />
     <Compile Include="ProvisioningTemplateFromFolderTest.cs" />
     <Compile Include="WebPartsTests.cs" />
