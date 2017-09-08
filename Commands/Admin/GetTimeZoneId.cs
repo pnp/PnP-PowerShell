@@ -19,8 +19,7 @@ namespace SharePointPnP.PowerShell.Commands
     public class GetTimeZoneId : PSCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "A string to search for like 'Stockholm'")]
-        public
-            string Match;
+        public string Match;
 
         protected override void ProcessRecord()
         {
