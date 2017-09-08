@@ -204,7 +204,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         private XElement GetRelatedLinksElement(Model.CmdletInfo cmdletInfo)
         {
             var relatedLinksElement = new XElement(maml + "relatedLinks");
-            cmdletInfo.RelatedLinks.Insert(0, new CmdletRelatedLinkAttribute() { Text = "Office 365 Developer Patterns and Practices", Url = "http://aka.ms/officedevpnp" });
+            cmdletInfo.RelatedLinks.Insert(0, new CmdletRelatedLinkAttribute() { Text = "SharePoint Developer Patterns and Practices", Url = "http://aka.ms/sppnp" });
 
             foreach (var link in cmdletInfo.RelatedLinks)
             {
