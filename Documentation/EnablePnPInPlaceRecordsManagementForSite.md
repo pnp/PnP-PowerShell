@@ -1,6 +1,5 @@
 # Enable-PnPInPlaceRecordsManagementForSite
 Enables in place records management for a site.
->*Only available for SharePoint Online*
 ## Examples
 
 ### Example 1

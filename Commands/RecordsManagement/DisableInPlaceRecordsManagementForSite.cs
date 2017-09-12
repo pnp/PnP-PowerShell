@@ -1,5 +1,4 @@
-﻿#if !ONPREMISES
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -13,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPInPlaceRecordsManagementForSite")]
     [CmdletHelp("Disables in place records management for a site.",
-        Category = CmdletHelpCategory.RecordsManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
+        Category = CmdletHelpCategory.RecordsManagement)]
     [CmdletExample(
         Code = @"PS:> Disable-PnPInPlaceRecordsManagementForSite",
         Remarks = "The in place records management feature will be disabled",
@@ -28,4 +27,3 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
     }
 
 }
-#endif
