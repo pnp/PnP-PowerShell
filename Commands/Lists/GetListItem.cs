@@ -27,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Remarks = "Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists. This parameter is ignored if the Query parameter is specified.",
         SortOrder = 3)]
     [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks -Fields \"Title\",\"GUID\"",
+        Code = "PS:> (Get-PnPListItem -List Tasks -Fields \"Title\",\"GUID\").FieldValues",
         Remarks = "Retrieves all list items, but only includes the values of the Title and GUID fields in the list item object. This parameter is ignored if the Query parameter is specified.",
         SortOrder = 4)]
     [CmdletExample(
