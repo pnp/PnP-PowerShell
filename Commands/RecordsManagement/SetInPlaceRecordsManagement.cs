@@ -12,7 +12,7 @@ using SharePointPnP.PowerShell.Commands.Base;
 namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPInPlaceRecordsManagement")]
-    [CmdletHelp("Activates or deactivates in place records management",
+    [CmdletHelp("Activates or deactivates in the place records management feature.",
         Category = CmdletHelpCategory.RecordsManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Set-PnPInPlaceRecordsManagement -On",
@@ -30,10 +30,10 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
         {
             if (MyInvocation.BoundParameters.ContainsKey("On"))
             {
-                Microsoft.SharePoint.Client.RecordsManagementExtensions.ActivateInPlaceRecordsManagementFeature(ClientContext.Site);
+                ClientContext.Site.ActivateInPlaceRecordsManagementFeature();
             } else
             {
-                Microsoft.SharePoint.Client.RecordsManagementExtensions.DisableInPlaceRecordsManagementFeature(ClientContext.Site);
+                ClientContext.Site.DisableInPlaceRecordsManagementFeature();
             }
         }
 
