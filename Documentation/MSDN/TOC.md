@@ -156,6 +156,8 @@
 ### [Set-PnPWikiPageContent](SetPnPWikiPageContent.md)
 ## [Records Management](RecordsManagement-category.md)
 ### [Set-PnPInPlaceRecordsManagement](SetPnPInPlaceRecordsManagement.md)
+### [Disable-PnPInPlaceRecordsManagementForSite](DisablePnPInPlaceRecordsManagementForSite.md)
+### [Enable-PnPInPlaceRecordsManagementForSite](EnablePnPInPlaceRecordsManagementForSite.md)
 ### [Clear-PnPListItemAsRecord](ClearPnPListItemAsRecord.md)
 ### [Set-PnPListItemAsRecord](SetPnPListItemAsRecord.md)
 ### [Test-PnPListItemIsRecord](TestPnPListItemIsRecord.md)
