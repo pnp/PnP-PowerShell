@@ -1,5 +1,4 @@
-﻿#if !ONPREMISES
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -12,8 +11,8 @@ using SharePointPnP.PowerShell.Commands.Base;
 namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPInPlaceRecordsManagement")]
-    [CmdletHelp("Activates or deactivates in place records management",
-        Category = CmdletHelpCategory.RecordsManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
+    [CmdletHelp("Activates or deactivates in the place records management feature.",
+        Category = CmdletHelpCategory.RecordsManagement)]
     [CmdletExample(
         Code = @"PS:> Set-PnPInPlaceRecordsManagement -On",
         Remarks = "Activates In Place Records Management",
@@ -30,14 +29,13 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
         {
             if (MyInvocation.BoundParameters.ContainsKey("On"))
             {
-                Microsoft.SharePoint.Client.RecordsManagementExtensions.ActivateInPlaceRecordsManagementFeature(ClientContext.Site);
+                ClientContext.Site.ActivateInPlaceRecordsManagementFeature();
             } else
             {
-                Microsoft.SharePoint.Client.RecordsManagementExtensions.DisableInPlaceRecordsManagementFeature(ClientContext.Site);
+                ClientContext.Site.DisableInPlaceRecordsManagementFeature();
             }
         }
 
     }
 
 }
-#endif
