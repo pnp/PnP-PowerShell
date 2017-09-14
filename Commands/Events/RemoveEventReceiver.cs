@@ -10,17 +10,23 @@ namespace SharePointPnP.PowerShell.Commands.Events
     [CmdletHelp("Removes/unregisters a specific event receiver",
                 Category = CmdletHelpCategory.EventReceivers)]
     [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22",
-                   Remarks = @"This will remove an event receiver with id fb689d0e-eb99-4f13-beb3-86692fd39f22 from the current web", 
+                   Remarks = @"This will remove the event receiver with ReceiverId ""fb689d0e-eb99-4f13-beb3-86692fd39f22"" from the current web", 
                    SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -List ProjectList -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22",
-                   Remarks = @"This will remove an event receiver with id fb689d0e-eb99-4f13-beb3-86692fd39f22 from the list with name ""ProjectList""", 
+                   Remarks = @"This will remove the event receiver with ReceiverId ""fb689d0e-eb99-4f13-beb3-86692fd39f22"" from the ""ProjectList"" list", 
                    SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -List ProjectList",
-                   Remarks = @"This will remove all event receivers from the list with name ""ProjectList""",
+    [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -List ProjectList -Identity MyReceiver",
+                   Remarks = @"This will remove the event receiver with ReceiverName ""MyReceiver"" from the ""ProjectList"" list",
                    SortOrder = 3)]
+    [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver -List ProjectList",
+                   Remarks = @"This will remove all event receivers from the ""ProjectList"" list",
+                   SortOrder = 4)]
     [CmdletExample(Code = @"PS:> Remove-PnPEventReceiver",
                    Remarks = @"This will remove all event receivers from the current site",
-                   SortOrder = 4)]
+                   SortOrder = 5)]
+    [CmdletExample(Code = @"PS:> Get-PnPEventReceiver | ? ReceiverUrl -Like ""*azurewebsites.net*"" | Remove-PnPEventReceiver",
+                   Remarks = @"This will remove all event receivers from the current site which are pointing to a service hosted on Azure Websites",
+                   SortOrder = 6)]
     public class RemoveEventReceiver : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Guid of the event receiver on the list")]
@@ -43,10 +49,10 @@ namespace SharePointPnP.PowerShell.Commands.Events
 
                 if (MyInvocation.BoundParameters.ContainsKey("Identity"))
                 {
-                    var eventReceiver = list.GetEventReceiverById(Identity.Id);
+                    var eventReceiver = Identity.GetEventReceiverOnList(list);
                     if (eventReceiver != null)
                     {
-                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId, $"List '{list.Title}'"), Properties.Resources.Confirm))
+                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                         {
                             eventReceiversToDelete.Add(eventReceiver);
                         }
@@ -60,7 +66,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
 
                     foreach (var eventReceiver in eventReceivers)
                     {
-                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId, $"List '{list.Title}'"), Properties.Resources.Confirm))
+                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                         {
                             eventReceiversToDelete.Add(eventReceiver);
                         }
@@ -72,10 +78,10 @@ namespace SharePointPnP.PowerShell.Commands.Events
             {
                 if (MyInvocation.BoundParameters.ContainsKey("Identity"))
                 {
-                    var eventReceiver = SelectedWeb.GetEventReceiverById(Identity.Id);
+                    var eventReceiver = Identity.GetEventReceiverOnWeb(SelectedWeb);
                     if (eventReceiver != null)
                     {
-                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId, "Web"), Properties.Resources.Confirm))
+                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                         {
                             eventReceiversToDelete.Add(eventReceiver);
                         }
@@ -89,7 +95,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
 
                     foreach (var eventReceiver in eventReceivers)
                     {
-                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId, "Web"), Properties.Resources.Confirm))
+                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                         {
                             eventReceiversToDelete.Add(eventReceiver);
                         }

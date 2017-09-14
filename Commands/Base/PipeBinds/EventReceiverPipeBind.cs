@@ -44,5 +44,41 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         {
             return Name ?? Id.ToString();
         }
+
+        internal EventReceiverDefinition GetEventReceiverOnWeb(Web web)
+        {
+            if (_eventReceiverDefinition != null)
+            {
+                return _eventReceiverDefinition;
+            }
+
+            if(_id != Guid.Empty)
+            {
+                return web.GetEventReceiverById(_id);
+            }
+            else if (!string.IsNullOrEmpty(Name))
+            {
+                return web.GetEventReceiverByName(Name);
+            }
+            return null;
+        }
+
+        internal EventReceiverDefinition GetEventReceiverOnList(List list)
+        {
+            if (_eventReceiverDefinition != null)
+            {
+                return _eventReceiverDefinition;
+            }
+
+            if (_id != Guid.Empty)
+            {
+                return list.GetEventReceiverById(_id);
+            }
+            else if (!string.IsNullOrEmpty(Name))
+            {
+                return list.GetEventReceiverByName(Name);
+            }
+            return null;
+        }
     }
 }
