@@ -28,8 +28,8 @@ namespace SharePointPnP.PowerShell.Commands.Events
         [Parameter(Mandatory = false, ParameterSetName = "List", HelpMessage = "The list object from which to get the event receiver object")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The Guid of the event receiver on the list")]
-        public GuidPipeBind Identity;
+        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The Guid of the event receiver on the list")]
+        public EventReceiverPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
