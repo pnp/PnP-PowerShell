@@ -5,7 +5,7 @@ This script creates site collections and/or sub webs from CSV configuration file
 
 ## Provision complex SharePoint site hierarchies
 
-This is a quick example to ilustrate how SharePoint sites hierarchy can be created from csv tamplate. Let's assume that part of our Information Architecture is to provision three site collections, but we have more subsites in the third site collection as follows:
+This is a quick example to shows how SharePoint sites hierarchy can be created from csv template. Let's assume that part of our Information Architecture is to provision three site collections, but we have more sub sites in the third site collection as follows:
 
 ```
 site collection 1
