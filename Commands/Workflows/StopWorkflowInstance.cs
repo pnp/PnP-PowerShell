@@ -10,7 +10,10 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
     [Cmdlet(VerbsLifecycle.Stop, "PnPWorkflowInstance")]
     [CmdletHelp("Stops a workflow instance",
         Category = CmdletHelpCategory.Workflows)]
-
+    [CmdletExample(
+        Code = @"Stop-PnPWorkflowInstance -identity $wfInstance", 
+        Remarks = "Stops the workflow Instance, this can be the Guid of the instance or the instance itself.",
+        SortOrder = 1)]
     public class StopWorkflowInstance : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The instance to stop", Position = 0)]

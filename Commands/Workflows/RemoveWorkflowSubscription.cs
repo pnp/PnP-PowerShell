@@ -9,7 +9,14 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
     [Cmdlet(VerbsCommon.Remove, "PnPWorkflowSubscription")]
     [CmdletHelp("Removes a workflow subscription",
         Category = CmdletHelpCategory.Workflows)]
-
+    [CmdletExample(
+        Code = @"Remove-PnPWorkflowSubscription -identity $wfSub", 
+        Remarks = "Removes the workflowsubscription, retrieved by Get-PnPWorkflowSubscription.",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"Get-PnPWorkflowSubscription -Name MyWorkflow | Remove-PnPWorkflowSubscription", 
+        Remarks = "Get the workflowSubscription MyWorkFlow and remove it.",
+        SortOrder = 2)]
     public class RemoveWorkflowSubscription : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The subscription to remove", Position = 0)]
