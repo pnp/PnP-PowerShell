@@ -61,8 +61,8 @@ namespace SharePointPnP.PowerShell.Commands.Principals
             };
 
             if (Identity == null) {
-                ClientContext.Load(SelectedWeb.SiteUsers, users => users.Include(retrievalExpressions));
-                ClientContext.ExecuteQueryRetry();
+                SelectedWeb.Context.Load(SelectedWeb.SiteUsers, users => users.Include(retrievalExpressions));
+                SelectedWeb.Context.ExecuteQueryRetry();
                 WriteObject(SelectedWeb.SiteUsers, true);
             }
             else
@@ -70,19 +70,19 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                 User user = null;
                 if (Identity.Id > 0)
                 {
-                    user = ClientContext.Web.GetUserById(Identity.Id);
+                    user = SelectedWeb.GetUserById(Identity.Id);
                 }
                 else if (Identity.User != null && Identity.User.Id > 0)
                 {
-                    user = ClientContext.Web.GetUserById(Identity.User.Id);
+                    user = SelectedWeb.GetUserById(Identity.User.Id);
                 }
                 else if (!string.IsNullOrWhiteSpace(Identity.Login))
                 {
-                    user = ClientContext.Web.SiteUsers.GetByLoginName(Identity.Login);
+                    user = SelectedWeb.SiteUsers.GetByLoginName(Identity.Login);
                 }
                 if (user != null) {
-                    ClientContext.Load(user, retrievalExpressions);
-                    ClientContext.ExecuteQueryRetry();
+                    SelectedWeb.Context.Load(user, retrievalExpressions);
+                    SelectedWeb.Context.ExecuteQueryRetry();
                 }
                 WriteObject(user);
             }
