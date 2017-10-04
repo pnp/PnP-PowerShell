@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
       Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -LayoutType Home",
-        Remarks = "Updates the properties of the Client-Side page name 'MyPage'",
+        Remarks = "Updates the properties of the Client-Side page named 'MyPage'",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -CommentsEnabled",
