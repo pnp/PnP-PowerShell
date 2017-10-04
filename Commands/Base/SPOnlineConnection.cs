@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
         {
             var coreAssembly = Assembly.GetExecutingAssembly();
-            userAgent = $"NONISV:SharePointPnP:PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+            userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
             Context = context;
