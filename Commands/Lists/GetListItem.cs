@@ -20,27 +20,27 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 1)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -Id 1",
-        Remarks = "Retrieves the list item with ID 1 from from the Tasks list. This parameter is ignored if the Query parameter is specified.",
+        Remarks = "Retrieves the list item with ID 1 from from the Tasks list",
         SortOrder = 2)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3",
-        Remarks = "Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists. This parameter is ignored if the Query parameter is specified.",
+        Remarks = "Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists",
         SortOrder = 3)]
     [CmdletExample(
         Code = "PS:> (Get-PnPListItem -List Tasks -Fields \"Title\",\"GUID\").FieldValues",
-        Remarks = "Retrieves all list items, but only includes the values of the Title and GUID fields in the list item object. This parameter is ignored if the Query parameter is specified.",
+        Remarks = "Retrieves all list items, but only includes the values of the Title and GUID fields in the list item object",
         SortOrder = 4)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -Query \"<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3</Value></Eq></Where></Query></View>\"",
-        Remarks = "Retrieves all list items based on the CAML query specified.",
+        Remarks = "Retrieves all list items based on the CAML query specified",
         SortOrder = 5)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000",
-        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items. This parameter is ignored if the Query parameter is specified.",
+        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items",
         SortOrder = 6)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }",
-        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item.",
+        Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item",
         SortOrder = 7)]
     public class GetListItem : PnPWebCmdlet
     {
