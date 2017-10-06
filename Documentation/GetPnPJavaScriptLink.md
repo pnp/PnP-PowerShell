@@ -3,6 +3,7 @@ Returns all or a specific custom action(s) with location type ScriptLink
 ## Syntax
 ```powershell
 Get-PnPJavaScriptLink [-Scope <CustomActionScope>]
+                      [-ThrowExceptionIfJavaScriptLinkNotFound [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
                       [-Name <String>]
 ```
@@ -16,6 +17,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Name|String|False|Name of the Javascript link. Omit this parameter to retrieve all script links|
 |Scope|CustomActionScope|False|Scope of the action, either Web, Site or All to return both, defaults to Web|
+|ThrowExceptionIfJavaScriptLinkNotFound|SwitchParameter|False|Switch parameter if an exception should be thrown if the requested JavaScriptLink does not exist (true) or if omitted, nothing will be returned in case the JavaScriptLink does not exist|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
