@@ -64,10 +64,10 @@ PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
 
             var template = ClientContext.Web.GetProvisioningTemplate(templateCi);
 
-            template.Security = null;
-            template.Features = null;
-            template.CustomActions = null;
-            template.ComposedLook = null;
+            //template.Security = null;
+            //template.Features = null;
+            //template.CustomActions = null;
+            //template.ComposedLook = null;
 
             if (MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
@@ -92,7 +92,7 @@ PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
             {
                 var document = XDocument.Parse(fullxml);
 
-                XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05;
+                XNamespace pnp = document.Root.GetNamespaceOfPrefix("pnp");
 
                 var termGroupsElement = document.Root.Descendants(pnp + "TermGroups").FirstOrDefault();
 
