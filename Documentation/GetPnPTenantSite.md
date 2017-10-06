@@ -25,7 +25,7 @@ Parameter|Type|Required|Description
 |IncludeOneDriveSites|SwitchParameter|False|By default, the OneDrives are not returned. This switch includes all OneDrives.|
 |Template|String|False|By default, all sites will be return. Specify a template value alike 'STS#0' here to filter on the template|
 |Url|String|False|The URL of the site|
-|WebTemplate|String|False|Limit results to a specific web template name.|
+|WebTemplate|String|False|Limit results to a specific web template name|
 ## Examples
 
 ### Example 1
@@ -38,7 +38,7 @@ Returns all site collections
 ```powershell
 PS:> Get-PnPTenantSite -Url http://tenant.sharepoint.com/sites/projects
 ```
-Returns information about the project site.
+Returns information about the project site
 
 ### Example 3
 ```powershell
@@ -50,13 +50,13 @@ Returns all sites with the full details of these sites
 ```powershell
 PS:> Get-PnPTenantSite -IncludeOneDriveSites
 ```
-Returns all sites including all OneDrive 4 Business sites
+Returns all sites including all OneDrive for Business sites
 
 ### Example 5
 ```powershell
 PS:> Get-PnPTenantSite -IncludeOneDriveSites -Filter "Url -like '-my.sharepoint.com/personal/'"
 ```
-Returns all OneDrive for Business sites.
+Returns all OneDrive for Business sites
 
 ### Example 6
 ```powershell
@@ -68,4 +68,4 @@ Returns all Communication sites
 ```powershell
 PS:> Get-PnPTenantSite -Filter "Url -like 'sales'" 
 ```
-Returns all sites including 'sales' in the url.
+Returns all sites including 'sales' in the url

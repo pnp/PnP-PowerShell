@@ -34,10 +34,10 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         protected override void ExecuteCmdlet()
         {
             var template = new ProvisioningTemplate();
-            template.Security = null;
-            template.Features = null;
-            template.CustomActions = null;
-            template.ComposedLook = null;
+            //template.Security = null;
+            //template.Features = null;
+            //template.CustomActions = null;
+            //template.ComposedLook = null;
 
             template.Id = "TAXONOMYPROVISIONING";
 

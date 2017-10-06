@@ -4,6 +4,7 @@ Returns all or a specific custom action(s)
 ```powershell
 Get-PnPCustomAction [-Identity <GuidPipeBind>]
                     [-Scope <CustomActionScope>]
+                    [-ThrowExceptionIfCustomActionNotFound [<SwitchParameter>]]
                     [-Web <WebPipeBind>]
                     [-Includes <String[]>]
 ```
@@ -18,6 +19,7 @@ Parameter|Type|Required|Description
 |Identity|GuidPipeBind|False|Identity of the CustomAction to return. Omit to return all CustomActions.|
 |Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
 |Scope|CustomActionScope|False|Scope of the CustomAction, either Web, Site or All to return both|
+|ThrowExceptionIfCustomActionNotFound|SwitchParameter|False|Switch parameter if an exception should be thrown if the requested CustomAction does not exist (true) or if omitted, nothing will be returned in case the CustomAction does not exist|
 |Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
