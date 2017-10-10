@@ -4,14 +4,12 @@
     {
         public int WebCount { get; set; }
         public int ListCount { get; set; }
-        public int ItemCount2 { get; set; }
-        public int FolderCount { get; set; }
         public int FileCount { get; set; }
-        public int TotalSize { get; set; }
+        public int ItemCount { get; internal set; }
+        public long TotalFileSize { get; set; }
         public int SiteUserCount { get; set; }
         public int SiteGroupCount { get; set; }
-        public int UniquePermissionCount { get; set; }
-        public int ItemCount { get; internal set; }
+        public int BrokenPermissionCount { get; set; }
 
         public static WebStatistics operator +(WebStatistics s1, WebStatistics s2)
         {
@@ -19,15 +17,29 @@
             {
                 WebCount = s1.WebCount + s2.WebCount,
                 ListCount = s1.ListCount + s2.ListCount,
-                ItemCount2 = s1.ItemCount2 + s2.ItemCount2,
-                FolderCount = s1.FolderCount + s2.FolderCount,
+                ItemCount = s1.ItemCount + s2.ItemCount,
                 FileCount = s1.FileCount + s2.FileCount,
-                TotalSize = s1.TotalSize + s2.TotalSize,
+                TotalFileSize = s1.TotalFileSize + s2.TotalFileSize,
                 SiteUserCount = s1.SiteUserCount,
                 SiteGroupCount = s1.SiteGroupCount,
-                UniquePermissionCount = s1.WebCount + s2.WebCount,
-                ItemCount = s1.WebCount + s2.WebCount
+                BrokenPermissionCount = s1.BrokenPermissionCount + s2.BrokenPermissionCount,
             };
         }
+
+        public static WebStatistics operator +(WebStatistics s1, FolderStatistics s2)
+        {
+            return new WebStatistics
+            {
+                WebCount = s1.WebCount,
+                ListCount = s1.ListCount,
+                ItemCount = s1.ItemCount,
+                FileCount = s1.FileCount + s2.ItemCount, //folder items = files
+                TotalFileSize = s1.TotalFileSize + s2.TotalFileSize,
+                SiteUserCount = s1.SiteUserCount,
+                SiteGroupCount = s1.SiteGroupCount,
+                BrokenPermissionCount = s1.BrokenPermissionCount + s2.BrokenPermissionCount,
+            };
+        }
+
     }
 }
