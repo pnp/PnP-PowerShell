@@ -17,7 +17,7 @@ Parameter|Type|Required|Description
 |Field|FieldPipeBind|True|Specifies the field that needs to be added to the content type|
 |Hidden|SwitchParameter|False|Specifies whether the field should be hidden or not|
 |Required|SwitchParameter|False|Specifies whether the field is required or not|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

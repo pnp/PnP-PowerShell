@@ -18,7 +18,7 @@ Parameter|Type|Required|Description
 |Identity|ContentTypePipeBind|False|Name or ID of the content type to retrieve|
 |InSiteHierarchy|SwitchParameter|False|Search site hierarchy for content types|
 |List|ListPipeBind|False|List to query|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

@@ -21,7 +21,7 @@ Parameter|Type|Required|Description
 |Fields|String[]|False|The fields to retrieve. If not specified all fields will be loaded in the returned list object.|
 |IncludeSecurity|SwitchParameter|False|A switch to include ObjectSecurity information.|
 |TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while loading the template.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

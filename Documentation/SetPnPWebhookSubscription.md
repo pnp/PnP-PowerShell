@@ -21,7 +21,7 @@ Parameter|Type|Required|Description
 |ExpirationDate|DateTime|False|The date at which the Webhook subscription will expire. (Default: 6 months from today)|
 |List|ListPipeBind|False|The list object or name from which the Webhook subscription will be modified|
 |NotificationUrl|String|False|The URL of the Webhook endpoint that will be notified of the change|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

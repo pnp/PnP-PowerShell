@@ -17,7 +17,7 @@ Parameter|Type|Required|Description
 |AddRole|String[]|False|Name of the permission set to add to this SharePoint group|
 |List|ListPipeBind|False|The list to apply the command to.|
 |RemoveRole|String[]|False|Name of the permission set to remove from this SharePoint group|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

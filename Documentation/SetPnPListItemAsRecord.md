@@ -16,7 +16,7 @@ Parameter|Type|Required|Description
 |Identity|ListItemPipeBind|True|The ID of the listitem, or actual ListItem object|
 |List|ListPipeBind|True|The ID, Title or Url of the list.|
 |DeclarationDate|DateTime|False|The declaration date|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

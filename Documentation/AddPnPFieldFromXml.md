@@ -16,7 +16,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |FieldXml|String|True|CAML snippet containing the field definition. See http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx|
 |List|ListPipeBind|False|The name of the list, its ID or an actual list object where this field needs to be added|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

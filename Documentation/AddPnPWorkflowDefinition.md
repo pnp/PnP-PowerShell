@@ -18,7 +18,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Definition|WorkflowDefinition|True|The workflow definition to add.|
 |DoNotPublish|SwitchParameter|False|Overrides the default behaviour, which is to publish workflow definitions.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

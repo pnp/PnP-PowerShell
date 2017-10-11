@@ -40,7 +40,7 @@ Parameter|Type|Required|Description
 |ShouldProcessWebAction|Func`2|False|Function to be executed on the web that would determine if WebAction should be invoked, There is one input parameter of type Web and the function should return a boolean value|
 |SkipCounting|SwitchParameter|False|Will skip the counting process; by doing this you will not get an estimated time remaining|
 |SubWebs|SwitchParameter|False|Specify if sub webs will be processed|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 |WebAction|Action`1|False|Function to be executed on the web. There is one input parameter of type Web|
 |WebProperties|String[]|False|The properties to load for web.|
 |Webs|Web[]|False|Webs you want to process (for example different site collections), will use Web parameter if not specified|

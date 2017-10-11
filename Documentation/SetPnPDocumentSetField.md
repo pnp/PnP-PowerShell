@@ -21,7 +21,7 @@ Parameter|Type|Required|Description
 |RemoveWelcomePageField|SwitchParameter|False|Removes the field as a Welcome Page Field|
 |SetSharedField|SwitchParameter|False|Set the field as a Shared Field|
 |SetWelcomePageField|SwitchParameter|False|Set the field as a Welcome Page field|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

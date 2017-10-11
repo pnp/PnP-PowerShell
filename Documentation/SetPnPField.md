@@ -20,7 +20,7 @@ Parameter|Type|Required|Description
 |Values|Hashtable|True|Hashtable of properties to update on the field. Use the syntax @{property1="value";property2="value"}.|
 |List|ListPipeBind|False|The list object, name or id where to update the field. If omited the field will be updated on the web.|
 |UpdateExistingLists|SwitchParameter|False|If provided, the field will be updated on existing lists that use it as well. If not provided or set to $false, existing lists using the field will remain unchanged but new lists will get the updated field.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

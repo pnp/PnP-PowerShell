@@ -14,7 +14,7 @@ Get-PnPTheme [-DetectCurrentComposedLook [<SwitchParameter>]]
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |DetectCurrentComposedLook|SwitchParameter|False|Specify this switch to not use the PnP Provisioning engine based composed look information but try to detect the current composed look as is.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

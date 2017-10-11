@@ -20,7 +20,7 @@ Parameter|Type|Required|Description
 |Script|String|True|The javascript block to add to the specified scope|
 |Scope|CustomActionScope|False|The scope of the script to add to. Either Web or Site, defaults to Web. 'All' is not valid for this command.|
 |Sequence|Int|False|A sequence number that defines the order on the page|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

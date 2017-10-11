@@ -15,7 +15,7 @@ Parameter|Type|Required|Description
 |ContentType|ContentTypePipeBind|True|The content type where the field is to be removed from.|
 |Field|FieldPipeBind|True|The field to remove.|
 |DoNotUpdateChildren|SwitchParameter|False|If specified, inherited content types will not be updated.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

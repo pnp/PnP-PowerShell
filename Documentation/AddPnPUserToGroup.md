@@ -25,7 +25,7 @@ Parameter|Type|Required|Description
 |LoginName|String|True|The login name of the user|
 |EmailBody|String|False||
 |SendEmail|SwitchParameter|False||
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

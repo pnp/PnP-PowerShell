@@ -15,7 +15,7 @@ Parameter|Type|Required|Description
 |Identity|GuidPipeBind|True|The id of the feature to disable.|
 |Force|SwitchParameter|False|Forcibly disable the feature.|
 |Scope|FeatureScope|False|Specify the scope of the feature to deactivate, either Web or Site. Defaults to Web.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

@@ -19,7 +19,7 @@ Parameter|Type|Required|Description
 |Identity|WebhookSubscriptionPipeBind|True|The identity of the Webhook subscription to remove|
 |Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
 |List|ListPipeBind|False|The list object or name which the Webhook subscription will be removed from|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

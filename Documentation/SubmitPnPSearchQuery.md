@@ -83,7 +83,7 @@ Parameter|Type|Required|Description
 |StartRow|Int|False|Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.|
 |TimeZoneId|Int|False|The identifier for the search query time zone.|
 |TrimDuplicates|Boolean|False|Specifies whether near duplicate items should be removed from the search results.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

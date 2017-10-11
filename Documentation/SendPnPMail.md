@@ -23,7 +23,7 @@ Parameter|Type|Required|Description
 |From|String|False|If using from address, you also have to provide a password|
 |Password|String|False|If using a password, you also have to provide the associated from address|
 |Server|String|False||
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

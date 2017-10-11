@@ -25,4 +25,4 @@ Parameter|Type|Required|Description
 |AllowAllPageLayouts|SwitchParameter|True|An array of page layout files to set as available page layouts for the site.|
 |InheritPageLayouts|SwitchParameter|True|Set the available page layouts to inherit from the parent site.|
 |PageLayouts|String[]|True|An array of page layout files to set as available page layouts for the site.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|

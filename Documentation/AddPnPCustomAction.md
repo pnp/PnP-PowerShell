@@ -49,7 +49,7 @@ Parameter|Type|Required|Description
 |Scope|CustomActionScope|False|The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.|
 |Sequence|Int|False|Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.|
 |Url|String|False|The URL, URI or ECMAScript (JScript, JavaScript) function associated with the action|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

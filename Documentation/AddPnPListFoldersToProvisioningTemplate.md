@@ -19,7 +19,7 @@ Parameter|Type|Required|Description
 |IncludeSecurity|SwitchParameter|False|A switch to include ObjectSecurity information.|
 |Recursive|SwitchParameter|False|A switch parameter to include all folders in the list, or just top level folders.|
 |TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while loading the template.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

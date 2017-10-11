@@ -26,7 +26,7 @@ Parameter|Type|Required|Description
 |OutputFormat|OutputFormat|False|Output format for of the configuration. Defaults to complete XML|
 |Path|String|False|Local path where the search configuration will be saved|
 |Scope|SearchConfigurationScope|False|Scope to use. Either Web, Site, or Subscription. Defaults to Web|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

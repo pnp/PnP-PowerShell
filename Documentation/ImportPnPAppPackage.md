@@ -23,7 +23,7 @@ Parameter|Type|Required|Description
 |Force|SwitchParameter|False|Will forcibly install the app by activating the addin sideloading feature, installing the addin, and deactivating the sideloading feature|
 |LoadOnly|SwitchParameter|False|Will only upload the addin, but not install it|
 |Locale|Int|False|Will install the addin for the specified locale|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

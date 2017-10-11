@@ -51,7 +51,7 @@ Parameter|Type|Required|Description
 |Page|ClientSidePagePipeBind|True|The name of the page.|
 |Section|Int|True|Sets the section where to insert the WebPart control.|
 |Order|Int|False|Sets the order of the WebPart control. (Default = 1)|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 |WebPartProperties|PropertyBagPipeBind|False|The properties of the WebPart|
 ## Examples
 

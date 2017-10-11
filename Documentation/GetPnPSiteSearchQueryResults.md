@@ -26,7 +26,7 @@ Parameter|Type|Required|Description
 |MaxResults|Int|False|Maximum amount of search results to return. Default and max is 500 search results.|
 |Query|String|False|Search query in Keyword Query Language (KQL) to execute to refine the returned sites. If omitted, all indexed sites will be returned.|
 |StartRow|Int|False|Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

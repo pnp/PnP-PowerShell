@@ -15,7 +15,7 @@ Parameter|Type|Required|Description
 |Identity|GuidPipeBind|True|The identifier of the CustomAction that needs to be removed|
 |Force|SwitchParameter|False|Use the -Force flag to bypass the confirmation question|
 |Scope|CustomActionScope|False|Define if the CustomAction is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

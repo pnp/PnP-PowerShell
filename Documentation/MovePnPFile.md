@@ -27,7 +27,7 @@ Parameter|Type|Required|Description
 |TargetUrl|String|True|Server relative Url where to move the file to. Must include the file name.|
 |Force|SwitchParameter|False|If provided, no confirmation will be requested and the action will be performed|
 |OverwriteIfAlreadyExists|SwitchParameter|False|If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

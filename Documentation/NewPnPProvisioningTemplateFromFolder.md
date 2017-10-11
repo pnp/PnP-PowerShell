@@ -29,7 +29,7 @@ Parameter|Type|Required|Description
 |Properties|Hashtable|False|Additional properties to set for every file entry in the generated template.|
 |Schema|XMLPnPSchemaVersion|False|The schema of the output to use, defaults to the latest schema|
 |TargetFolder|String|False|Target folder to provision to files to. If not specified, the current folder name will be used.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

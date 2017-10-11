@@ -15,7 +15,7 @@ Parameter|Type|Required|Description
 |Identity|GuidPipeBind|True|The Guid of the event receiver on the list|
 |Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
 |List|ListPipeBind|False|The list object from where to get the event receiver object|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

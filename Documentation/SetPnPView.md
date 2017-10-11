@@ -18,7 +18,7 @@ Parameter|Type|Required|Description
 |Identity|ViewPipeBind|True|The Id, Title or instance of the view|
 |Values|Hashtable|True|Hashtable of properties to update on the view. Use the syntax @{property1="value";property2="value"}.|
 |List|ListPipeBind|False|The Id, Title or Url of the list|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

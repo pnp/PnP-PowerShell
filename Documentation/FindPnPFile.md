@@ -30,7 +30,7 @@ Parameter|Type|Required|Description
 |Folder|FolderPipeBind|True|Folder object or relative url of a folder to query|
 |List|ListPipeBind|True|List title, url or an actual List object to query|
 |Match|String|True|Wildcard query|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

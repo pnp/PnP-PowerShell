@@ -42,29 +42,29 @@ Parameter|Type|Required|Description
 |ClearExisting|SwitchParameter|False|Clear all existing permissions|
 |InheritPermissions|SwitchParameter|False|Inherit permissions from the list, removing unique permissions|
 |RemoveRole|String|False|The role that must be removed from the group or user|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1
 ```powershell
-PS:> Set-PnPListPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute'
+PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute'
 ```
-Adds the 'Contribute' permission to the user 'user@contoso.com' for item with id 1 in the list 'Documents'
+Adds the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents'
 
 ### Example 2
 ```powershell
-PS:> Set-PnPListPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -RemoveRole 'Contribute'
+PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -RemoveRole 'Contribute'
 ```
-Removes the 'Contribute' permission to the user 'user@contoso.com' for item with id 1 in the list 'Documents'
+Removes the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents'
 
 ### Example 3
 ```powershell
-PS:> Set-PnPListPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting
+PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting
 ```
-Adds the 'Contribute' permission to the user 'user@contoso.com' for item with id 1 in the list 'Documents' and removes all other permissions
+Adds the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents' and removes all other permissions
 
 ### Example 4
 ```powershell
-PS:> Set-PnPListPermission -List 'Documents' -Identity 1 -InheritPermissions
+PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -InheritPermissions
 ```
-Resets permissions for item with id 1 to inherit permissions from the list 'Documents'
+Resets permissions for listitem with id 1 to inherit permissions from the list 'Documents'

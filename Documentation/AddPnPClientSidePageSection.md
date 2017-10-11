@@ -16,7 +16,7 @@ Parameter|Type|Required|Description
 |Page|ClientSidePagePipeBind|True|The name of the page|
 |SectionTemplate|CanvasSectionTemplate|True|Specifies the columns template to use for the section.|
 |Order|Int|False|Sets the order of the section. (Default = 1)|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1
