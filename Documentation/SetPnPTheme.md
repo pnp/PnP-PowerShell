@@ -22,7 +22,7 @@ Parameter|Type|Required|Description
 |FontSchemeUrl|String|False|Specifies the Font Scheme Url based on the server relative url|
 |ResetSubwebsToInherit|SwitchParameter|False|Resets subwebs to inherit the theme from the rootweb|
 |UpdateRootWebOnly|SwitchParameter|False|Updates only the rootweb, even if subwebs are set to inherit the theme.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

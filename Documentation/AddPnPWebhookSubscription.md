@@ -21,7 +21,7 @@ Parameter|Type|Required|Description
 |ClientState|String|False|A client state information that will be passed through notifications|
 |ExpirationDate|DateTime|False|The date at which the Webhook subscription will expire. (Default: 6 months from today)|
 |List|ListPipeBind|False|The list object or name where the Webhook subscription will be added to|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

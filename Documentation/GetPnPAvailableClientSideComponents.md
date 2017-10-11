@@ -14,7 +14,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Page|ClientSidePagePipeBind|True|The name of the page.|
 |Component|ClientSideComponentPipeBind|False|Specifies the component instance or Id to look for.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

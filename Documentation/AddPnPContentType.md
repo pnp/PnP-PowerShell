@@ -22,7 +22,7 @@ Parameter|Type|Required|Description
 |Description|String|False|Specifies the description of the new content type|
 |Group|String|False|Specifies the group of the new content type|
 |ParentContentType|ContentType|False|Specifies the parent of the new content type|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

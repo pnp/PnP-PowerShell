@@ -13,7 +13,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |Identity|AppPipeBind|True|Appinstance or Id of the addin to remove.|
 |Force|SwitchParameter|False|Do not ask for confirmation.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

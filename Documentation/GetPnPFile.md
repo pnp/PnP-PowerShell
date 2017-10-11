@@ -44,7 +44,7 @@ Parameter|Type|Required|Description
 |Filename|String|False|Name for the local file|
 |Path|String|False|Local path where the file should be saved|
 |ThrowExceptionIfFileNotFound|SwitchParameter|False|If provided in combination with -AsListItem, a Sytem.ArgumentException will be thrown if the file specified in the -Url argument does not exist. Otherwise it will return nothing instead.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

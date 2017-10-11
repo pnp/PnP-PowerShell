@@ -50,7 +50,7 @@ Parameter|Type|Required|Description
 |Required|SwitchParameter|False|Switch Parameter if the field is a required field|
 |TaxonomyItemId|GuidPipeBind|False|The ID of the Taxonomy item|
 |TermPathDelimiter|String|False|The path delimiter to be used, by default this is '|'|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

@@ -14,4 +14,4 @@ Gets the default column values for a document library, per folder. Supports both
 Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |List|ListPipeBind|True|The ID, Name or Url of the list.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|

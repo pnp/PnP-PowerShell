@@ -18,7 +18,7 @@ Parameter|Type|Required|Description
 ---------|----|--------|-----------
 |InheritFromParentSite|SwitchParameter|True|Set the default page layout to be inherited from the parent site.|
 |Title|String|True|Title of the page layout|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

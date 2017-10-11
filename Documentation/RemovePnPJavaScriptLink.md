@@ -15,7 +15,7 @@ Parameter|Type|Required|Description
 |Force|SwitchParameter|False|Use the -Force flag to bypass the confirmation question|
 |Name|String|False|Name of the JavaScriptLink to remove. Omit if you want to remove all JavaScript Links.|
 |Scope|CustomActionScope|False|Define if the JavaScriptLink is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

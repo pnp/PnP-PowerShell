@@ -22,7 +22,7 @@ Parameter|Type|Required|Description
 |PromoteAs|ClientSidePagePromoteType|False|Allows to promote the page for a specific purpose (HomePage | NewsPage)|
 |Publish|SwitchParameter|False|Publishes the page once it is saved. Applicable to libraries set to create major and minor versions.|
 |PublishMessage|String|False|Sets the message for publishing the page.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

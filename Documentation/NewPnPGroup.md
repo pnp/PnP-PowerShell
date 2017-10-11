@@ -28,7 +28,7 @@ Parameter|Type|Required|Description
 |DisallowMembersViewMembership|SwitchParameter|False|A switch parameter that disallows group members to view membership.|
 |Owner|String|False|The owner for the group, which can be a user or another group|
 |RequestToJoinEmail|String|False|The e-mail address to which membership requests are sent|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

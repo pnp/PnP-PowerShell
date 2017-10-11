@@ -19,7 +19,7 @@ Parameter|Type|Required|Description
 |SourceFilePath|String|True|Path to the file which will be uploaded|
 |Title|String|True|Title for the page layout|
 |DestinationFolderHierarchy|String|False|Folder hierarchy where the html page layouts will be deployed|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1

@@ -24,7 +24,7 @@ Parameter|Type|Required|Description
 |DefaultCssFile|String|False|Default CSS file for the MasterPage, this Url is SiteRelative|
 |DestinationFolderHierarchy|String|False|Folder hierarchy where the MasterPage will be deployed|
 |UIVersion|String|False|UIVersion of the Masterpage. Default = 15|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
 ## Examples
 
 ### Example 1
