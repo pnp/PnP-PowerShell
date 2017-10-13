@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !ONPREMISES
+using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.ALM;
 using System;
 
@@ -39,3 +40,4 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
     }
 
 }
+#endif
