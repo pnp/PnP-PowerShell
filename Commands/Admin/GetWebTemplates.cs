@@ -8,6 +8,7 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebTemplates")]
     [CmdletHelp(@"Returns the available web templates.", 
+        DetailedDescription = "Will list all available templates one can use to create a classic site.",
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online,
         OutputType =typeof(Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection),

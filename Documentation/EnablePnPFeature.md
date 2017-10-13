@@ -1,6 +1,10 @@
 # Enable-PnPFeature
+
+## SYNOPSIS
 Enables a feature
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Enable-PnPFeature -Identity <GuidPipeBind>
                   [-Force [<SwitchParameter>]]
@@ -10,30 +14,91 @@ Enable-PnPFeature -Identity <GuidPipeBind>
 ```
 
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Identity|GuidPipeBind|True|The id of the feature to enable.|
-|Force|SwitchParameter|False|Forcibly enable the feature.|
-|Sandboxed|SwitchParameter|False|Specify this parameter if the feature you're trying to activate is part of a sandboxed solution.|
-|Scope|FeatureScope|False|Specify the scope of the feature to activate, either Web or Site. Defaults to Web.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 ```
+
 This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
 ```
+
 This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with force.
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
 ```
+
 This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with the web scope.
+
+## PARAMETERS
+
+### -Force
+Forcibly enable the feature.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Identity
+The id of the feature to enable.
+
+```yaml
+Type: GuidPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+### -Sandboxed
+Specify this parameter if the feature you're trying to activate is part of a sandboxed solution.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Scope
+Specify the scope of the feature to activate, either Web or Site. Defaults to Web.
+
+```yaml
+Type: FeatureScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

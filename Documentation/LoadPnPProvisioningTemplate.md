@@ -1,27 +1,58 @@
 # Load-PnPProvisioningTemplate
+
+## SYNOPSIS
 Loads a PnP file from the file systems
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Load-PnPProvisioningTemplate -Path <String>
                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
 ```
 
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Path|String|True|Filename to read from, optionally including full path.|
-|TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while loading the template.|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Load-PnPProvisioningTemplate -Path template.pnp
 ```
+
 Loads a PnP file from the file systems
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Load-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions
 ```
+
 Loads a PnP file from the file systems using some custom template provider extenions while loading the file.
+
+## PARAMETERS
+
+### -Path
+Filename to read from, optionally including full path.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: False
+```
+
+### -TemplateProviderExtensions
+Allows you to specify ITemplateProviderExtension to execute while loading the template.
+
+```yaml
+Type: ITemplateProviderExtension[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

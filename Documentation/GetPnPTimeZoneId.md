@@ -1,30 +1,54 @@
 # Get-PnPTimeZoneId
+
+## SYNOPSIS
 Returns a time zone ID
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Get-PnPTimeZoneId [-Match <String>]
 ```
 
 
-## Returns
->List<SharePointPnP.PowerShell.Commands.GetTimeZoneId+Zone>
+## DESCRIPTION
+In order to create a new classic site you need to specify the timezone this site will use. Use the cmdlet to retrieve a list of possible values.
 
-Returns a list of matching zones. Use the ID property of the object for use in New-SPOTenantSite
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Match|String|False|A string to search for like 'Stockholm'|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Get-PnPTimeZoneId
 ```
+
 This will return all time zone IDs in use by Office 365.
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Get-PnPTimeZoneId -Match Stockholm
 ```
+
 This will return the time zone IDs for Stockholm
+
+## PARAMETERS
+
+### -Match
+A string to search for like 'Stockholm'
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### List<SharePointPnP.PowerShell.Commands.GetTimeZoneId+Zone>
+
+Returns a list of matching zones. Use the ID property of the object for use in New-SPOTenantSite
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

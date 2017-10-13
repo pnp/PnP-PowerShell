@@ -1,18 +1,18 @@
 # Set-PnPContext
+
+## SYNOPSIS
 Sets the Client Context to use by the cmdlets
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Set-PnPContext -Context <ClientContext>
 ```
 
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Context|ClientContext|True|The ClientContext to set|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Url $siteAurl -Credentials $credentials
 PS:> $ctx = Get-PnPContext
@@ -23,3 +23,22 @@ PS:> Set-PnPContext -Context $ctx # switch back to site A
 PS:> Get-PnPList # returns the lists from site A
 ```
 
+
+
+## PARAMETERS
+
+### -Context
+The ClientContext to set
+
+```yaml
+Type: ClientContext
+Parameter Sets: (All)
+
+Required: True
+Position: 1
+Accept pipeline input: True
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

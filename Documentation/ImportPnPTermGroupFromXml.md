@@ -1,31 +1,64 @@
 # Import-PnPTermGroupFromXml
+
+## SYNOPSIS
 Imports a taxonomy TermGroup from either the input or from an XML file.
-## Syntax
+
+## SYNTAX 
+
+### XML
 ```powershell
 Import-PnPTermGroupFromXml [-Xml <String>]
 ```
 
 
+### File
 ```powershell
 Import-PnPTermGroupFromXml [-Path <String>]
 ```
 
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Path|String|False|The XML File to import the data from|
-|Xml|String|False|The XML to process|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Import-PnPTermGroupFromXml -Xml $xml
 ```
+
 Imports the XML based termgroup information located in the $xml variable
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Import-PnPTermGroupFromXml -Path input.xml
 ```
+
 Imports the XML file specified by the path.
+
+## PARAMETERS
+
+### -Path
+The XML File to import the data from
+
+```yaml
+Type: String
+Parameter Sets: File
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Xml
+The XML to process
+
+```yaml
+Type: String
+Parameter Sets: XML
+
+Required: False
+Position: 0
+Accept pipeline input: True
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

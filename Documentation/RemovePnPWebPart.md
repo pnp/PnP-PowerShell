@@ -1,6 +1,11 @@
 # Remove-PnPWebPart
+
+## SYNOPSIS
 Removes a webpart from a page
-## Syntax
+
+## SYNTAX 
+
+### ID
 ```powershell
 Remove-PnPWebPart -Identity <GuidPipeBind>
                   -ServerRelativePageUrl <String>
@@ -8,6 +13,7 @@ Remove-PnPWebPart -Identity <GuidPipeBind>
 ```
 
 
+### NAME
 ```powershell
 Remove-PnPWebPart -Title <String>
                   -ServerRelativePageUrl <String>
@@ -15,10 +21,58 @@ Remove-PnPWebPart -Title <String>
 ```
 
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Identity|GuidPipeBind|True||
-|ServerRelativePageUrl|String|True||
-|Title|String|True||
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+## PARAMETERS
+
+### -Identity
+
+
+```yaml
+Type: GuidPipeBind
+Parameter Sets: ID
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -ServerRelativePageUrl
+
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: PageUrl
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Title
+
+
+```yaml
+Type: String
+Parameter Sets: NAME
+Aliases: Name
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

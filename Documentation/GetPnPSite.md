@@ -1,15 +1,34 @@
 # Get-PnPSite
+
+## SYNOPSIS
 Returns the current site collection from the context.
-## Syntax
+
+## SYNTAX 
+
+### 
 ```powershell
 Get-PnPSite [-Includes <String[]>]
 ```
 
 
-## Returns
->[Microsoft.SharePoint.Client.Site](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.site.aspx)
+## PARAMETERS
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
+### -Includes
+Specify properties to include when retrieving objects from the server.
+
+```yaml
+Type: String[]
+Parameter Sets: 
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.Site](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.site.aspx)
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

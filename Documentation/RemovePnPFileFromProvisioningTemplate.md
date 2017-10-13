@@ -1,6 +1,10 @@
 # Remove-PnPFileFromProvisioningTemplate
+
+## SYNOPSIS
 Removes a file from a PnP Provisioning Template
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Remove-PnPFileFromProvisioningTemplate -Path <String>
                                        -FilePath <String>
@@ -8,16 +12,53 @@ Remove-PnPFileFromProvisioningTemplate -Path <String>
 ```
 
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|FilePath|String|True|The relative File Path of the file to remove from the in-memory template|
-|Path|String|True|Filename to read the template from, optionally including full path.|
-|TemplateProviderExtensions|ITemplateProviderExtension[]|False|Allows you to specify ITemplateProviderExtension to execute while saving the template.|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Remove-PnPFileFromProvisioningTemplate -Path template.pnp -FilePath filePath
 ```
+
 Removes a file from an in-memory PnP Provisioning Template
+
+## PARAMETERS
+
+### -FilePath
+The relative File Path of the file to remove from the in-memory template
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 1
+Accept pipeline input: False
+```
+
+### -Path
+Filename to read the template from, optionally including full path.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: False
+```
+
+### -TemplateProviderExtensions
+Allows you to specify ITemplateProviderExtension to execute while saving the template.
+
+```yaml
+Type: ITemplateProviderExtension[]
+Parameter Sets: (All)
+
+Required: False
+Position: 2
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

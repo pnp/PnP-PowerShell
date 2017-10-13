@@ -1,6 +1,11 @@
 # Get-PnPTerm
+
+## SYNOPSIS
 Returns a taxonomy term
-## Syntax
+
+## SYNTAX 
+
+### 
 ```powershell
 Get-PnPTerm -TermSet <Id, Title or TaxonomyItem>
             -TermGroup <Id, Title or TermGroup>
@@ -10,33 +15,95 @@ Get-PnPTerm -TermSet <Id, Title or TaxonomyItem>
 ```
 
 
-## Returns
->[Microsoft.SharePoint.Client.Taxonomy.Term](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.term.aspx)
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|TermGroup|Id, Title or TermGroup|True|Name of the termgroup to check.|
-|TermSet|Id, Title or TaxonomyItem|True|Name of the termset to check.|
-|Identity|Id, Name or Object|False|The Id or Name of a Term|
-|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
-|TermStore|Id, Name or Object|False|Term store to check; if not specified the default term store is used.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Get-PnPTerm -TermSet "Departments" -TermGroup "Corporate"
 ```
+
 Returns all term in the termset "Departments" which is in the group "Corporate" from the site collection termstore
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Get-PnPTermSet -Identity "Finance" -TermSet "Departments" -TermGroup "Corporate"
 ```
+
 Returns the term named "Finance" in the termset "Departments" from the termgroup called "Corporate" from the site collection termstore
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermSet "Departments" -TermGroup "Corporate"
 ```
+
 Returns the termset named with the given id, from the "Departments" from termgroup called "Corporate" from the site collection termstore
+
+## PARAMETERS
+
+### -Identity
+The Id or Name of a Term
+
+```yaml
+Type: Id, Name or Object
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Includes
+Specify properties to include when retrieving objects from the server.
+
+```yaml
+Type: String[]
+Parameter Sets: 
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -TermGroup
+Name of the termgroup to check.
+
+```yaml
+Type: Id, Title or TermGroup
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+### -TermSet
+Name of the termset to check.
+
+```yaml
+Type: Id, Title or TaxonomyItem
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+### -TermStore
+Term store to check; if not specified the default term store is used.
+
+```yaml
+Type: Id, Name or Object
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.Taxonomy.Term](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.term.aspx)
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

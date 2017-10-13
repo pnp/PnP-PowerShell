@@ -1,6 +1,10 @@
 # Import-PnPTermSet
+
+## SYNOPSIS
 Imports a taxonomy term set from a file in the standard format.
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Import-PnPTermSet -GroupName <String>
                   -Path <String>
@@ -13,7 +17,7 @@ Import-PnPTermSet -GroupName <String>
 ```
 
 
-## Detailed Description
+## DESCRIPTION
 The format of the file is the same as that used by the import function in the web interface. A sample file can be obtained from the web interface.
 
 This is a CSV file, with the following headings:
@@ -28,33 +32,127 @@ In contrast to the web interface import, this is not a one-off import but runs s
 
 The import file also supports an expanded syntax for the Term Set Name and term names (Level 1 Term, Level 2 Term, etc). These columns support values with the format 'Name | GUID', with the name and GUID separated by a pipe character (note that the pipe character is invalid to use within a taxomony item name). This expanded syntax is not required, but can be used to ensure all terms have fixed IDs.
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|GroupName|String|True|Group to import the term set to; an error is returned if the group does not exist.|
-|Path|String|True|Local path to the file containing the term set to import, in the standard format (as the 'sample import file' available in the Term Store Administration).|
-|Contact|String|False|Contact for the term set; if not specified, the existing setting is retained.|
-|IsOpen|Nullable`1|False|Whether the term set should be marked open; if not specified, then the existing setting is not changed.|
-|Owner|String|False|Owner for the term set; if not specified, the existing setting is retained.|
-|SynchronizeDeletions|SwitchParameter|False|If specified, the import will remove any terms (and children) previously in the term set but not in the import file; default is to leave them.|
-|TermSetId|Guid|False|GUID to use for the term set; if not specified, or the empty GUID, a random GUID is generated and used.|
-|TermStoreName|String|False|Term store to import into; if not specified the default term store is used.|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Import-PnPTermSet -GroupName 'Standard Terms' -Path 'C:\\Temp\\ImportTermSet.csv' -SynchronizeDeletions
 ```
+
 Creates (or updates) the term set specified in the import file, in the group specified, removing any existing terms not in the file.
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Import-PnPTermSet -TermStoreName 'My Term Store' -GroupName 'Standard Terms' -Path 'C:\\Temp\\ImportTermSet.csv' -TermSetId '{15A98DB6-D8E2-43E6-8771-066C1EC2B8D8}' 
 ```
+
 Creates (or updates) the term set specified in the import file, in the term store and group specified, using the specified ID.
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Import-PnPTermSet -GroupName 'Standard Terms' -Path 'C:\\Temp\\ImportTermSet.csv' -IsOpen $true -Contact 'user@example.org' -Owner 'user@example.org'
 ```
+
 Creates (or updates) the term set specified in the import file, setting the IsOpen, Contact, and Owner properties as specified.
+
+## PARAMETERS
+
+### -Contact
+Contact for the term set; if not specified, the existing setting is retained.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -GroupName
+Group to import the term set to; an error is returned if the group does not exist.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -IsOpen
+Whether the term set should be marked open; if not specified, then the existing setting is not changed.
+
+```yaml
+Type: Nullable`1
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Owner
+Owner for the term set; if not specified, the existing setting is retained.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Path
+Local path to the file containing the term set to import, in the standard format (as the 'sample import file' available in the Term Store Administration).
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -SynchronizeDeletions
+If specified, the import will remove any terms (and children) previously in the term set but not in the import file; default is to leave them.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -TermSetId
+GUID to use for the term set; if not specified, or the empty GUID, a random GUID is generated and used.
+
+```yaml
+Type: Guid
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -TermStoreName
+Term store to import into; if not specified the default term store is used.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

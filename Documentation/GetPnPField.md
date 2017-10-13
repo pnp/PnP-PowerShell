@@ -1,6 +1,11 @@
 # Get-PnPField
+
+## SYNOPSIS
 Returns a field from a list or site
-## Syntax
+
+## SYNTAX 
+
+### 
 ```powershell
 Get-PnPField [-List <ListPipeBind>]
              [-Group <String>]
@@ -10,27 +15,88 @@ Get-PnPField [-List <ListPipeBind>]
 ```
 
 
-## Returns
->[Microsoft.SharePoint.Client.Field](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx)
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Group|String|False|Filter to the specified group|
-|Identity|FieldPipeBind|False|The field object or name to get|
-|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
-|List|ListPipeBind|False|The list object or name where to get the field from|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Get-PnPField
 ```
+
 Gets all the fields from the current site
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Get-PnPField -List "Demo list" -Identity "Speakers"
 ```
+
 Gets the speakers field from the list Demo list
+
+## PARAMETERS
+
+### -Group
+Filter to the specified group
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Identity
+The field object or name to get
+
+```yaml
+Type: FieldPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: True
+```
+
+### -Includes
+Specify properties to include when retrieving objects from the server.
+
+```yaml
+Type: String[]
+Parameter Sets: 
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -List
+The list object or name where to get the field from
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: True
+```
+
+### -Web
+The web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.Field](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx)
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

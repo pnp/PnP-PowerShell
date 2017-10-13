@@ -1,17 +1,47 @@
 # Get-PnPWeb
+
+## SYNOPSIS
 Returns the current web object
-## Syntax
+
+## SYNTAX 
+
+### 
 ```powershell
 Get-PnPWeb [-Includes <String[]>]
            [-Identity <WebPipeBind>]
 ```
 
 
-## Returns
->[Microsoft.SharePoint.Client.Web](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
+## PARAMETERS
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Identity|WebPipeBind|False||
-|Includes|String[]|False|Specify properties to include when retrieving objects from the server.|
+### -Identity
+
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: True
+```
+
+### -Includes
+Specify properties to include when retrieving objects from the server.
+
+```yaml
+Type: String[]
+Parameter Sets: 
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.Web](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

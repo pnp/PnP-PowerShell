@@ -1,17 +1,45 @@
 # Get-PnPDefaultColumnValues
+
+## SYNOPSIS
 Gets the default column values for all folders in document library
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Get-PnPDefaultColumnValues -List <ListPipeBind>
                            [-Web <WebPipeBind>]
 ```
 
 
-## Detailed Description
+## DESCRIPTION
 Gets the default column values for a document library, per folder. Supports both text, people and taxonomy fields.
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|List|ListPipeBind|True|The ID, Name or Url of the list.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
+## PARAMETERS
+
+### -List
+The ID, Name or Url of the list.
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

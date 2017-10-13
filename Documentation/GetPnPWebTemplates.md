@@ -1,37 +1,73 @@
 # Get-PnPWebTemplates
+
+## SYNOPSIS
+*Only available for SharePoint Online*
 Returns the available web templates.
->*Only available for SharePoint Online*
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Get-PnPWebTemplates [-Lcid <UInt32>]
                     [-CompatibilityLevel <Int>]
 ```
 
 
-## Returns
->[Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.spotenantwebtemplatecollection.aspx)
+## DESCRIPTION
+Will list all available templates one can use to create a classic site.
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|CompatibilityLevel|Int|False|The version of SharePoint|
-|Lcid|UInt32|False|The language ID. For instance: 1033 for English|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Get-PnPWebTemplates
 ```
 
 
-### Example 2
+
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Get-PnPWebTemplates -LCID 1033
 ```
+
 Returns all webtemplates for the Locale with ID 1033 (English)
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Get-PnPWebTemplates -CompatibilityLevel 15
 ```
+
 Returns all webtemplates for the compatibility level 15
+
+## PARAMETERS
+
+### -CompatibilityLevel
+The version of SharePoint
+
+```yaml
+Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Lcid
+The language ID. For instance: 1033 for English
+
+```yaml
+Type: UInt32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### [Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.spotenantwebtemplatecollection.aspx)
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)[Locale IDs:](http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911)

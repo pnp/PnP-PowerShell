@@ -1,7 +1,12 @@
 # New-PnPSite
+
+## SYNOPSIS
+*Only available for SharePoint Online*
 BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection
->*Only available for SharePoint Online*
-## Syntax
+
+## SYNTAX 
+
+### CommunicationBuiltInDesign
 ```powershell
 New-PnPSite -Type <SiteType>
             -Title <String>
@@ -14,6 +19,7 @@ New-PnPSite -Type <SiteType>
 ```
 
 
+### TeamSite
 ```powershell
 New-PnPSite -Type <SiteType>
             -Title <String>
@@ -24,6 +30,7 @@ New-PnPSite -Type <SiteType>
 ```
 
 
+### CommunicationCustomInDesign
 ```powershell
 New-PnPSite -Type <SiteType>
             -Title <String>
@@ -36,68 +43,200 @@ New-PnPSite -Type <SiteType>
 ```
 
 
-## Detailed Description
+## DESCRIPTION
 The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Team Site are supported. If you want to create a classic site, use New-PnPTenantSite.
 
-## Returns
->System.String
+## EXAMPLES
 
-Returns the url of the newly created site collection
-
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Alias|String|True|Specifies the alias of the new site collection|
-|SiteDesignId|GuidPipeBind|True|Specifies the site design id to use for the new site collection. If specified will override SiteDesign|
-|Title|String|True|Specifies the title of the new site collection|
-|Type|SiteType|True|@Specifies with type of site to create.|
-|Url|String|True|Specifies the full url of the new site collection|
-|AllowFileSharingForGuestUsers|SwitchParameter|False|Specifies if guest users can share files in the new site collection|
-|Classification|String|False|Specifies the classification of the new site collection|
-|Description|String|False|Specifies the description of the new site collection|
-|IsPublic|String|False|Specifies if new site collection is public. Defaults to false.|
-|Lcid|UInt32|False|Specifies the language of the new site collection. Defaults to the current language of the web connected to.|
-|SiteDesign|CommunicationSiteDesign|False|Specifies the site design of the new site collection. Defaults to 'Topic'|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso
 ```
+
 This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -SiteDesign Showcase
 ```
+
 This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. It will use the 'Showcase' design for the site.
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -SiteDesignId ae2349d5-97d6-4440-94d1-6516b72449ac
 ```
+
 This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. It will use the specified custom site design for the site.
 
-### Example 4
+### ------------------EXAMPLE 4------------------
 ```powershell
 PS:> New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Classification "HBI"
 ```
+
 This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. The classification for the site will be set to "HBI"
 
-### Example 5
+### ------------------EXAMPLE 5------------------
 ```powershell
 PS:> New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -AllowFileSharingForGuestUsers
 ```
+
 This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. File sharing for guest users will be enabled.
 
-### Example 6
+### ------------------EXAMPLE 6------------------
 ```powershell
 PS:> New-PnPSite -Type TeamSite -Title Contoso -Alias contoso
 ```
+
 This will create a new Modern Team Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'.
 
-### Example 7
+### ------------------EXAMPLE 7------------------
 ```powershell
 PS:> New-PnPSite -Type TeamSite -Title Contoso -Alias contoso -IsPublic
 ```
+
 This will create a new Modern Team Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the site to public.
+
+## PARAMETERS
+
+### -Alias
+Specifies the alias of the new site collection
+
+```yaml
+Type: String
+Parameter Sets: TeamSite
+
+Required: True
+Position: 0
+Accept pipeline input: False
+```
+
+### -AllowFileSharingForGuestUsers
+Specifies if guest users can share files in the new site collection
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: CommunicationBuiltInDesign
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -Classification
+Specifies the classification of the new site collection
+
+```yaml
+Type: String
+Parameter Sets: CommunicationBuiltInDesign
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -Description
+Specifies the description of the new site collection
+
+```yaml
+Type: String
+Parameter Sets: CommunicationBuiltInDesign
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -IsPublic
+Specifies if new site collection is public. Defaults to false.
+
+```yaml
+Type: String
+Parameter Sets: TeamSite
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -Lcid
+Specifies the language of the new site collection. Defaults to the current language of the web connected to.
+
+```yaml
+Type: UInt32
+Parameter Sets: CommunicationBuiltInDesign
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -SiteDesign
+Specifies the site design of the new site collection. Defaults to 'Topic'
+
+```yaml
+Type: CommunicationSiteDesign
+Parameter Sets: CommunicationBuiltInDesign
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
+### -SiteDesignId
+Specifies the site design id to use for the new site collection. If specified will override SiteDesign
+
+```yaml
+Type: GuidPipeBind
+Parameter Sets: CommunicationCustomInDesign
+
+Required: True
+Position: 0
+Accept pipeline input: False
+```
+
+### -Title
+Specifies the title of the new site collection
+
+```yaml
+Type: String
+Parameter Sets: CommunicationBuiltInDesign
+
+Required: True
+Position: 0
+Accept pipeline input: False
+```
+
+### -Type
+@Specifies with type of site to create.
+
+```yaml
+Type: SiteType
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Url
+Specifies the full url of the new site collection
+
+```yaml
+Type: String
+Parameter Sets: CommunicationBuiltInDesign
+
+Required: True
+Position: 0
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### System.String
+
+Returns the url of the newly created site collection
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
