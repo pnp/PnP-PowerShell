@@ -233,7 +233,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         docBuilder.Append($"# RELATED LINKS{Environment.NewLine}{Environment.NewLine}");
                         foreach (var link in cmdletInfo.RelatedLinks)
                         {
-                            docBuilder.Append($"[{link.Text}:]({link.Url})");
+                            docBuilder.Append($"[{link.Text}]({link.Url})");
                         }
                     }
 
