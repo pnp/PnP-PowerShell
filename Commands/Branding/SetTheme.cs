@@ -12,8 +12,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     [CmdletHelp("Sets the theme of the current web.", DetailedDescription = " Sets the theme of the current web, if any of the attributes is not set, that value will be set to null", Category = CmdletHelpCategory.Branding)]
     [CmdletExample(Code = @"PS:> Set-PnPTheme", Remarks = "Removes the current theme and resets it to the default.", SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor", SortOrder = 2)]
-    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png'", SortOrder = 3)]
-    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png' -ResetSubwebsToInherit", SortOrder = 4, Remarks = @"Sets the theme to the web, and updates all subwebs to inherit the theme from this web.")]
+    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/Team Site/style library/background.png'", SortOrder = 3)]
+    [CmdletExample(Code = @"PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/Team Site/style library/background.png' -ResetSubwebsToInherit", SortOrder = 4, Remarks = @"Sets the theme to the web, and updates all subwebs to inherit the theme from this web.")]
     public class SetTheme : PnPWebCmdlet
     {
         private const string PROPBAGKEY = "_PnP_ProvisioningTemplateComposedLookInfo";

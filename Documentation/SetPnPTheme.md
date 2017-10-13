@@ -1,6 +1,10 @@
 # Set-PnPTheme
+
+## SYNOPSIS
 Sets the theme of the current web.
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Set-PnPTheme [-ColorPaletteUrl <String>]
              [-FontSchemeUrl <String>]
@@ -10,41 +14,113 @@ Set-PnPTheme [-ColorPaletteUrl <String>]
              [-Web <WebPipeBind>]
 ```
 
-
-## Detailed Description
+## DESCRIPTION
  Sets the theme of the current web, if any of the attributes is not set, that value will be set to null
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|BackgroundImageUrl|String|False|Specifies the Background Image Url based on the server relative url|
-|ColorPaletteUrl|String|False|Specifies the Color Palette Url based on the site relative url|
-|FontSchemeUrl|String|False|Specifies the Font Scheme Url based on the server relative url|
-|ResetSubwebsToInherit|SwitchParameter|False|Resets subwebs to inherit the theme from the rootweb|
-|UpdateRootWebOnly|SwitchParameter|False|Updates only the rootweb, even if subwebs are set to inherit the theme.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Set-PnPTheme
 ```
+
 Removes the current theme and resets it to the default.
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor
 ```
 
 
-### Example 3
+
+### ------------------EXAMPLE 3------------------
 ```powershell
-PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png'
+PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/Team Site/style library/background.png'
 ```
 
 
-### Example 4
+
+### ------------------EXAMPLE 4------------------
 ```powershell
-PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png' -ResetSubwebsToInherit
+PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/Team Site/style library/background.png' -ResetSubwebsToInherit
 ```
+
 Sets the theme to the web, and updates all subwebs to inherit the theme from this web.
+
+## PARAMETERS
+
+### -BackgroundImageUrl
+Specifies the Background Image Url based on the server relative url
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -ColorPaletteUrl
+Specifies the Color Palette Url based on the site relative url
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -FontSchemeUrl
+Specifies the Font Scheme Url based on the server relative url
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -ResetSubwebsToInherit
+Resets subwebs to inherit the theme from the rootweb
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -UpdateRootWebOnly
+Updates only the rootweb, even if subwebs are set to inherit the theme.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

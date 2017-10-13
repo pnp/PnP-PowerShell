@@ -64,21 +64,30 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                     // Header
 
-                    docBuilder.AppendFormat("# {0}{1}", cmdletInfo.FullCommand, Environment.NewLine);
-                 
+                    docBuilder.Append($"# {cmdletInfo.FullCommand}{Environment.NewLine}{Environment.NewLine}");
+
                     // Body 
 
-                    docBuilder.AppendFormat("{0}{1}", cmdletInfo.Description, Environment.NewLine);
+
+
                     if (cmdletInfo.Platform != "All")
                     {
-                        docBuilder.Append($">*Only available for {cmdletInfo.Platform}*{Environment.NewLine}");
+                        docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}>Only available for {cmdletInfo.Platform}{Environment.NewLine}");
+                    }
+                    else
+                    {
+                        docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}");
                     }
 
                     if (cmdletInfo.Syntaxes.Any())
                     {
-                        docBuilder.AppendFormat("## Syntax{0}", Environment.NewLine);
+                        docBuilder.Append($"## SYNTAX {Environment.NewLine}{Environment.NewLine}");
                         foreach (var cmdletSyntax in cmdletInfo.Syntaxes.OrderBy(s => s.Parameters.Count(p => p.Required)))
                         {
+                            if (cmdletSyntax.ParameterSetName != "__AllParameterSets")
+                            {
+                                docBuilder.Append($"### {cmdletSyntax.ParameterSetName}{Environment.NewLine}");
+                            }
                             var syntaxText = new StringBuilder();
                             syntaxText.AppendFormat("```powershell\r\n{0} ", cmdletInfo.FullCommand);
                             var cmdletLength = cmdletInfo.FullCommand.Length;
@@ -117,18 +126,67 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                             }
                             // Add All ParameterSet ones
                             docBuilder.Append(syntaxText);
-                            docBuilder.AppendFormat("```\n\n\n");
+                            docBuilder.Append($"```{Environment.NewLine}{Environment.NewLine}");
                         }
                     }
                     if (!string.IsNullOrEmpty(cmdletInfo.DetailedDescription))
                     {
-                        docBuilder.Append("## Detailed Description\n");
-                        docBuilder.AppendFormat("{0}\n\n", cmdletInfo.DetailedDescription);
+                        docBuilder.Append($"## DESCRIPTION{Environment.NewLine}");
+                        docBuilder.Append($"{cmdletInfo.DetailedDescription}{Environment.NewLine}{Environment.NewLine}");
+                    }
+
+                    if (cmdletInfo.Examples.Any())
+                    {
+                        docBuilder.Append($"## EXAMPLES{Environment.NewLine}{Environment.NewLine}");
+                        var examplesCount = 1;
+                        foreach (var example in cmdletInfo.Examples.OrderBy(e => e.SortOrder))
+                        {
+
+                            docBuilder.Append($"### ------------------EXAMPLE {examplesCount}------------------{Environment.NewLine}");
+                            if (!string.IsNullOrEmpty(example.Introduction))
+                            {
+                                docBuilder.Append($"{example.Introduction}{Environment.NewLine}");
+                            }
+                            docBuilder.Append($"```powershell{Environment.NewLine}{example.Code}{Environment.NewLine}```{Environment.NewLine}{Environment.NewLine}");
+                            docBuilder.Append($"{example.Remarks}{Environment.NewLine}{Environment.NewLine}");
+                            examplesCount++;
+                        }
+                    }
+
+                    if (cmdletInfo.Parameters.Any())
+                    {
+                        docBuilder.Append($"## PARAMETERS{Environment.NewLine}{Environment.NewLine}");
+
+                        foreach (var parameter in cmdletInfo.Parameters.OrderBy(x => x.Name).Distinct(new ParameterComparer()))
+                        {
+                            if (parameter.Type.StartsWith("Int"))
+                            {
+                                parameter.Type = "Int";
+                            }
+                            docBuilder.Append($"### -{parameter.Name}{Environment.NewLine}");
+                            docBuilder.Append($"{parameter.Description}{Environment.NewLine}{Environment.NewLine}");
+                            docBuilder.Append($"```yaml{Environment.NewLine}");
+                            docBuilder.Append($"Type: {parameter.Type}{Environment.NewLine}");
+                            if (parameter.ParameterSetName == "__AllParameterSets")
+                            {
+                                parameter.ParameterSetName = "(All)";
+                            }
+                            docBuilder.Append($"Parameter Sets: { parameter.ParameterSetName}{Environment.NewLine}");
+                            if (parameter.Aliases.Any())
+                            {
+                                docBuilder.Append($"Aliases: {string.Join(",", parameter.Aliases)}{Environment.NewLine}");
+                            }
+                            docBuilder.Append(Environment.NewLine);
+                            docBuilder.Append($"Required: {parameter.Required}{Environment.NewLine}");
+                            docBuilder.Append($"Position: {(parameter.Position == int.MinValue ? "Named" : parameter.Position.ToString())}{Environment.NewLine}");
+                            docBuilder.Append($"Accept pipeline input: {parameter.ValueFromPipeline}{Environment.NewLine}");
+                            docBuilder.Append($"```{Environment.NewLine}{Environment.NewLine}");
+                        }
                     }
 
                     if (cmdletInfo.OutputType != null)
                     {
-                        docBuilder.Append("## Returns\n");
+                        docBuilder.Append($"## OUTPUTS{Environment.NewLine}{Environment.NewLine}");
                         var outputType = "";
                         if (cmdletInfo.OutputType != null)
                         {
@@ -157,11 +215,11 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         }
                         if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeLink))
                         {
-                            docBuilder.Append($">[{outputType}]({cmdletInfo.OutputTypeLink})");
+                            docBuilder.Append($"### [{outputType}]({cmdletInfo.OutputTypeLink})");
                         }
                         else
                         {
-                            docBuilder.Append($">{outputType}");
+                            docBuilder.Append($"### {outputType}");
                         }
                         if (!string.IsNullOrEmpty(cmdletInfo.OutputTypeDescription))
                         {
@@ -169,30 +227,14 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         }
                         docBuilder.Append("\n\n");
                     }
-                    if (cmdletInfo.Parameters.Any())
+
+                    if (cmdletInfo.RelatedLinks.Any())
                     {
-                        docBuilder.Append("## Parameters\n");
-                        docBuilder.Append("Parameter|Type|Required|Description\n");
-                        docBuilder.Append("---------|----|--------|-----------\n");
-                        foreach (var par in cmdletInfo.Parameters.OrderBy(x => x.Name).Distinct(new ParameterComparer()).OrderBy(p => !p.Required))
+                        docBuilder.Append($"# RELATED LINKS{Environment.NewLine}{Environment.NewLine}");
+                        foreach (var link in cmdletInfo.RelatedLinks)
                         {
-                            if (par.Type.StartsWith("Int"))
-                            {
-                                par.Type = "Int";
-                            }
-                            docBuilder.AppendFormat("|{0}|{1}|{2}|{3}|\n", par.Name, par.Type, par.Required ? "True" : "False", par.Description);
+                            docBuilder.Append($"[{link.Text}]({link.Url})");
                         }
-                    }
-                    if (cmdletInfo.Examples.Any())
-                        docBuilder.Append("## Examples\n");
-                    var examplesCount = 1;
-                    foreach (var example in cmdletInfo.Examples.OrderBy(e => e.SortOrder))
-                    {
-                        docBuilder.AppendFormat("{0}\n", example.Introduction);
-                        docBuilder.AppendFormat("### Example {0}\n", examplesCount);
-                        docBuilder.AppendFormat("```powershell\n{0}\n```\n", example.Code);
-                        docBuilder.AppendFormat("{0}\n", example.Remarks);
-                        examplesCount++;
                     }
 
                     newMd = docBuilder.ToString();

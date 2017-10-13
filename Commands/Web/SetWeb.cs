@@ -5,7 +5,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPWeb")]
-    [CmdletHelp("Sets properties on a web",
+    [CmdletHelp("Sets properties on a web", DetailedDescription = "Sets properties on a web",
         Category = CmdletHelpCategory.Webs)]
     public class SetWeb : PnPWebCmdlet
     {
@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             var dirty = false;
-            
+
             foreach (var key in MyInvocation.BoundParameters.Keys)
             {
                 switch (key)

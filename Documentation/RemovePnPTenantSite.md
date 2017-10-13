@@ -1,36 +1,82 @@
 # Remove-PnPTenantSite
-Removes a site collection from the current tenant
->*Only available for SharePoint Online*
-## Syntax
+
+## SYNOPSIS
+Removes a site collection
+
+>Only available for SharePoint Online
+## SYNTAX 
+
 ```powershell
 Remove-PnPTenantSite -Url <String>
                      [-SkipRecycleBin [<SwitchParameter>]]
                      [-Force [<SwitchParameter>]]
 ```
 
+## DESCRIPTION
+Removes a site collection which is listed in your tenant administration site.
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Url|String|True|Specifies the full URL of the site collection that needs to be deleted|
-|Force|SwitchParameter|False|Do not ask for confirmation.|
-|SkipRecycleBin|SwitchParameter|False|Do not add to the tenant scoped recycle bin when selected.|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso
 ```
+
 This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin
 ```
+
 This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' with force and it will skip the recycle bin.
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -FromRecycleBin
 ```
+
 This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.
+
+## PARAMETERS
+
+### -Force
+Do not ask for confirmation.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -SkipRecycleBin
+Do not add to the tenant scoped recycle bin when selected.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: SkipTrash
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Url
+Specifies the full URL of the site collection that needs to be deleted
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

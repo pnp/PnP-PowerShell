@@ -1,6 +1,11 @@
 # Remove-PnPEventReceiver
+
+## SYNOPSIS
 Removes/unregisters a specific event receiver
-## Syntax
+
+## SYNTAX 
+
+### List
 ```powershell
 Remove-PnPEventReceiver -Identity <GuidPipeBind>
                         [-List <ListPipeBind>]
@@ -8,24 +13,72 @@ Remove-PnPEventReceiver -Identity <GuidPipeBind>
                         [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Identity|GuidPipeBind|True|The Guid of the event receiver on the list|
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
-|List|ListPipeBind|False|The list object from where to get the event receiver object|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Remove-PnPEventReceiver -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
 ```
+
 This will remove an event receiver with id fb689d0e-eb99-4f13-beb3-86692fd39f22 from the current web
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Remove-PnPEventReceiver -List ProjectList -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
 ```
+
 This will remove an event receiver with id fb689d0e-eb99-4f13-beb3-86692fd39f22 from the list with name "ProjectList"
+
+## PARAMETERS
+
+### -Force
+Specifying the Force parameter will skip the confirmation question.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Identity
+The Guid of the event receiver on the list
+
+```yaml
+Type: GuidPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -List
+The list object from where to get the event receiver object
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: List
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)

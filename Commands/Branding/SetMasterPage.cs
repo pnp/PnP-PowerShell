@@ -27,18 +27,21 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         SortOrder = 4)]
     public class SetMasterPage : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = "SERVER", HelpMessage = "Specifies the Master page URL based on the server relative URL")]
+        private const string ParameterSet_SERVER = "Server Relative";
+        private const string ParameterSet_SITE = "Site Relative";
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SERVER, HelpMessage = "Specifies the Master page URL based on the server relative URL")]
         [Alias("MasterPageUrl")]
         public string MasterPageServerRelativeUrl = null;
 
-        [Parameter(Mandatory = false, ParameterSetName = "SERVER", HelpMessage = "Specifies the custom Master page URL based on the server relative URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SERVER, HelpMessage = "Specifies the custom Master page URL based on the server relative URL")]
         [Alias("CustomMasterPageUrl")]
         public string CustomMasterPageServerRelativeUrl = null;
 
-        [Parameter(Mandatory = false, ParameterSetName = "SITE", HelpMessage = "Specifies the Master page URL based on the site relative URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SITE, HelpMessage = "Specifies the Master page URL based on the site relative URL")]
         public string MasterPageSiteRelativeUrl = null;
 
-        [Parameter(Mandatory = false, ParameterSetName = "SITE", HelpMessage = "Specifies the custom Master page URL based on the site relative URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SITE, HelpMessage = "Specifies the custom Master page URL based on the site relative URL")]
         public string CustomMasterPageSiteRelativeUrl = null;
 
         protected override void ExecuteCmdlet()
@@ -49,7 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 return;
             }
 
-            if (ParameterSetName == "SERVER")
+            if (ParameterSetName == ParameterSet_SERVER)
             {
                 if (!string.IsNullOrEmpty(MasterPageServerRelativeUrl))
                     SelectedWeb.SetMasterPageByUrl(MasterPageServerRelativeUrl);

@@ -41,16 +41,18 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
     public class AddFile : PnPWebCmdlet
     {
+        private const string ParameterSet_ASFILE = "Upload file";
+        private const string ParameterSet_ASSTREAM = "Upload file from stream";
 
-        [Parameter(Mandatory = true, ParameterSetName = "AsFile", HelpMessage = "The local file path.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASFILE, HelpMessage = "The local file path.")]
         public string Path = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The destination folder in the site")]
         public string Folder = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Name for file")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Name for file")]
         public string FileName = string.Empty;
-        [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Stream with the file contents")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Stream with the file contents")]
         public Stream Stream;
 
 
@@ -84,7 +86,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         protected override void ExecuteCmdlet()
         {
 
-            if (ParameterSetName == "AsFile")
+            if (ParameterSetName == ParameterSet_ASFILE)
             {
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
@@ -148,7 +150,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 }
             }
             Microsoft.SharePoint.Client.File file;
-            if (ParameterSetName == "AsFile")
+            if (ParameterSetName == ParameterSet_ASFILE)
             {
 
                 file = folder.UploadFile(FileName, Path, true);

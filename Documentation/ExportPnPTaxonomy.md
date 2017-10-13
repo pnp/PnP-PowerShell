@@ -1,6 +1,11 @@
 # Export-PnPTaxonomy
+
+## SYNOPSIS
 Exports a taxonomy to either the output or to a file.
-## Syntax
+
+## SYNTAX 
+
+### TermSet
 ```powershell
 Export-PnPTaxonomy [-TermSetId <GuidPipeBind>]
                    [-TermStoreName <String>]
@@ -11,33 +16,115 @@ Export-PnPTaxonomy [-TermSetId <GuidPipeBind>]
                    [-Encoding <Encoding>]
 ```
 
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Delimiter|String|False|The path delimiter to be used, by default this is '|'|
-|Encoding|Encoding|False|Defaults to Unicode|
-|Force|SwitchParameter|False|Overwrites the output file if it exists.|
-|IncludeID|SwitchParameter|False|If specified will include the ids of the taxonomy items in the output. Format: <label>;#<guid>|
-|Path|String|False|File to export the data to.|
-|TermSetId|GuidPipeBind|False|If specified, will export the specified termset only|
-|TermStoreName|String|False|Term store to export; if not specified the default term store is used.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Export-PnPTaxonomy
 ```
+
 Exports the full taxonomy to the standard output
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Export-PnPTaxonomy -Path c:\output.txt
 ```
+
 Exports the full taxonomy the file output.txt
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254 
 ```
+
 Exports the term set with the specified id
+
+## PARAMETERS
+
+### -Delimiter
+The path delimiter to be used, by default this is '|'
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Encoding
+Defaults to Unicode
+
+```yaml
+Type: Encoding
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Force
+Overwrites the output file if it exists.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -IncludeID
+If specified will include the ids of the taxonomy items in the output. Format: <label>;#<guid>
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Path
+File to export the data to.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -TermSetId
+If specified, will export the specified termset only
+
+```yaml
+Type: GuidPipeBind
+Parameter Sets: TermSet
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -TermStoreName
+Term store to export; if not specified the default term store is used.
+
+```yaml
+Type: String
+Parameter Sets: TermSet
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
