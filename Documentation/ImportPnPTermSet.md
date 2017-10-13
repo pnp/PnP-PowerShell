@@ -16,7 +16,6 @@ Import-PnPTermSet -GroupName <String>
                   [-TermStoreName <String>]
 ```
 
-
 ## DESCRIPTION
 The format of the file is the same as that used by the import function in the web interface. A sample file can be obtained from the web interface.
 

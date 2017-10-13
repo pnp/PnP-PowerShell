@@ -15,7 +15,6 @@ Set-PnPUnifiedGroup -Identity <UnifiedGroupPipeBind>
                     [-GroupLogoPath <String>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

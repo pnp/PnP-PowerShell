@@ -10,7 +10,6 @@ Get-PnPTheme [-DetectCurrentComposedLook [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

@@ -19,7 +19,6 @@ Set-PnPList -Identity <ListPipeBind>
             [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

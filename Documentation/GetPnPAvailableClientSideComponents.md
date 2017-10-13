@@ -1,9 +1,9 @@
 # Get-PnPAvailableClientSideComponents
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Gets the available client side components on a particular page
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -11,7 +11,6 @@ Get-PnPAvailableClientSideComponents -Page <ClientSidePagePipeBind>
                                      [-Component <ClientSideComponentPipeBind>]
                                      [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

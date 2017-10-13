@@ -1,9 +1,9 @@
 # Add-PnPClientSidePage
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Adds a Client-Side Page
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -15,7 +15,6 @@ Add-PnPClientSidePage -Name <String>
                       [-PublishMessage <String>]
                       [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

@@ -12,7 +12,6 @@ Get-PnPDocumentSetTemplate -Identity <DocumentSetPipeBind>
                            [-Includes <String[]>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

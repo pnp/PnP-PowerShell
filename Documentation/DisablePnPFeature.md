@@ -12,7 +12,6 @@ Disable-PnPFeature -Identity <GuidPipeBind>
                    [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

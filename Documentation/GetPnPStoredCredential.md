@@ -10,7 +10,6 @@ Get-PnPStoredCredential -Name <String>
                         [-Type <CredentialType>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

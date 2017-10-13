@@ -1,9 +1,9 @@
 # Set-PnPListItemAsRecord
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Declares a list item as a record
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -12,7 +12,6 @@ Set-PnPListItemAsRecord -Identity <ListItemPipeBind>
                         [-DeclarationDate <DateTime>]
                         [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

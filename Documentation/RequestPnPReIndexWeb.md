@@ -9,7 +9,6 @@ Marks the web for full indexing during the next incremental crawl
 Request-PnPReIndexWeb [-Web <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Web

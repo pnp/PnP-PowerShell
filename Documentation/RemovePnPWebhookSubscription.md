@@ -1,9 +1,9 @@
 # Remove-PnPWebhookSubscription
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Removes a Webhook subscription from the resource
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -12,7 +12,6 @@ Remove-PnPWebhookSubscription -Identity <WebhookSubscriptionPipeBind>
                               [-Force [<SwitchParameter>]]
                               [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

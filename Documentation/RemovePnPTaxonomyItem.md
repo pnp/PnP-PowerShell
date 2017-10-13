@@ -10,7 +10,6 @@ Remove-PnPTaxonomyItem -TermPath <String>
                        [-Force [<SwitchParameter>]]
 ```
 
-
 ## PARAMETERS
 
 ### -Force

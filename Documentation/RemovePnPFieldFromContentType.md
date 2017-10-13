@@ -12,7 +12,6 @@ Remove-PnPFieldFromContentType -Field <FieldPipeBind>
                                [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

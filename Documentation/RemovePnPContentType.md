@@ -11,7 +11,6 @@ Remove-PnPContentType -Identity <ContentTypePipeBind>
                       [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

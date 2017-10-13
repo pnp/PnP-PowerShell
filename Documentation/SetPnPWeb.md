@@ -15,7 +15,6 @@ Set-PnPWeb [-SiteLogoUrl <String>]
            [-Web <WebPipeBind>]
 ```
 
-
 ## DESCRIPTION
 Sets properties on a web
 

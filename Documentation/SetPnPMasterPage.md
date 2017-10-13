@@ -5,21 +5,19 @@ Sets the default master page of the current web.
 
 ## SYNTAX 
 
-### SERVER
+### Server Relative
 ```powershell
 Set-PnPMasterPage [-MasterPageServerRelativeUrl <String>]
                   [-CustomMasterPageServerRelativeUrl <String>]
                   [-Web <WebPipeBind>]
 ```
 
-
-### SITE
+### Site Relative
 ```powershell
 Set-PnPMasterPage [-MasterPageSiteRelativeUrl <String>]
                   [-CustomMasterPageSiteRelativeUrl <String>]
                   [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 
@@ -58,7 +56,7 @@ Specifies the custom Master page URL based on the server relative URL
 
 ```yaml
 Type: String
-Parameter Sets: SERVER
+Parameter Sets: Server Relative
 Aliases: CustomMasterPageUrl
 
 Required: False
@@ -71,7 +69,7 @@ Specifies the custom Master page URL based on the site relative URL
 
 ```yaml
 Type: String
-Parameter Sets: SITE
+Parameter Sets: Site Relative
 
 Required: False
 Position: Named
@@ -83,7 +81,7 @@ Specifies the Master page URL based on the server relative URL
 
 ```yaml
 Type: String
-Parameter Sets: SERVER
+Parameter Sets: Server Relative
 Aliases: MasterPageUrl
 
 Required: False
@@ -96,7 +94,7 @@ Specifies the Master page URL based on the site relative URL
 
 ```yaml
 Type: String
-Parameter Sets: SITE
+Parameter Sets: Site Relative
 
 Required: False
 Position: Named

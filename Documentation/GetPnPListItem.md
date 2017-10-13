@@ -5,7 +5,7 @@ Retrieves list items
 
 ## SYNTAX 
 
-### ById
+### By Id
 ```powershell
 Get-PnPListItem -List <ListPipeBind>
                 [-Id <Int>]
@@ -13,8 +13,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-Web <WebPipeBind>]
 ```
 
-
-### ByUniqueId
+### By Unique Id
 ```powershell
 Get-PnPListItem -List <ListPipeBind>
                 [-UniqueId <GuidPipeBind>]
@@ -22,8 +21,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-Web <WebPipeBind>]
 ```
 
-
-### ByQuery
+### By Query
 ```powershell
 Get-PnPListItem -List <ListPipeBind>
                 [-Query <String>]
@@ -32,8 +30,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-Web <WebPipeBind>]
 ```
 
-
-### AllItems
+### All Items
 ```powershell
 Get-PnPListItem -List <ListPipeBind>
                 [-Fields <String[]>]
@@ -41,7 +38,6 @@ Get-PnPListItem -List <ListPipeBind>
                 [-ScriptBlock <ScriptBlock>]
                 [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 
@@ -101,7 +97,7 @@ The fields to retrieve. If not specified all fields will be loaded in the return
 
 ```yaml
 Type: String[]
-Parameter Sets: AllItems
+Parameter Sets: All Items
 
 Required: False
 Position: Named
@@ -113,7 +109,7 @@ The ID of the item to retrieve
 
 ```yaml
 Type: Int
-Parameter Sets: ById
+Parameter Sets: By Id
 
 Required: False
 Position: Named
@@ -137,7 +133,7 @@ The number of items to retrieve per page request.
 
 ```yaml
 Type: Int
-Parameter Sets: AllItems
+Parameter Sets: All Items
 
 Required: False
 Position: Named
@@ -149,7 +145,7 @@ The CAML query to execute against the list
 
 ```yaml
 Type: String
-Parameter Sets: ByQuery
+Parameter Sets: By Query
 
 Required: False
 Position: Named
@@ -161,7 +157,7 @@ The script block to run after every page request.
 
 ```yaml
 Type: ScriptBlock
-Parameter Sets: AllItems
+Parameter Sets: All Items
 
 Required: False
 Position: Named
@@ -173,7 +169,7 @@ The unique id (GUID) of the item to retrieve
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: ByUniqueId
+Parameter Sets: By Unique Id
 
 Required: False
 Position: Named

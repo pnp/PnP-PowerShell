@@ -12,7 +12,6 @@ Remove-PnPView -Identity <ViewPipeBind>
                [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

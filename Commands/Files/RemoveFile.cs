@@ -24,10 +24,13 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
     public class RemoveFile : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER", HelpMessage = "Server relative URL to the file")]
+        private const string ParameterSet_SERVER = "Server Relative";
+        private const string ParameterSet_SITE = "Site Relative";
+
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SERVER, HelpMessage = "Server relative URL to the file")]
         public string ServerRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SITE", HelpMessage = "Site relative URL to the file")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SITE, HelpMessage = "Site relative URL to the file")]
         public string SiteRelativeUrl = string.Empty;
 
         [Parameter(Mandatory = false)]
@@ -38,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSetName == "SITE")
+            if (ParameterSetName == ParameterSet_SITE)
             {
                 var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);

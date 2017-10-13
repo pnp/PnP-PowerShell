@@ -14,7 +14,6 @@ Add-PnPHtmlPublishingPageLayout -SourceFilePath <String>
                                 [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

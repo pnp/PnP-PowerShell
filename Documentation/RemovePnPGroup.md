@@ -11,7 +11,6 @@ Remove-PnPGroup [-Force [<SwitchParameter>]]
                 [-Identity <GroupPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

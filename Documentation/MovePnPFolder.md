@@ -11,7 +11,6 @@ Move-PnPFolder -Folder <String>
                [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

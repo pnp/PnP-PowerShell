@@ -11,7 +11,6 @@ Get-PnPPropertyBag [-Folder <String>]
                    [-Key <String>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

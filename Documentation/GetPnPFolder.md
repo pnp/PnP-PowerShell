@@ -12,7 +12,6 @@ Get-PnPFolder -Url <String>
               [-Includes <String[]>]
 ```
 
-
 ## DESCRIPTION
 Retrieves a folder if it exists. Use Ensure-PnPFolder to create the folder if it does not exist.
 

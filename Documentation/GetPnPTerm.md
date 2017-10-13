@@ -14,7 +14,6 @@ Get-PnPTerm -TermSet <Id, Title or TaxonomyItem>
             [-Includes <String[]>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

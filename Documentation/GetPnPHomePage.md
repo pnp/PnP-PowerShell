@@ -9,7 +9,6 @@ Returns the URL to the home page
 Get-PnPHomePage [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

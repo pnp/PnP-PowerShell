@@ -14,7 +14,6 @@ Add-PnPPublishingPageLayout -SourceFilePath <String>
                             [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

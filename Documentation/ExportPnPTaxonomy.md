@@ -16,7 +16,6 @@ Export-PnPTaxonomy [-TermSetId <GuidPipeBind>]
                    [-Encoding <Encoding>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

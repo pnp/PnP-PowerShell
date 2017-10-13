@@ -9,7 +9,6 @@ Get the site closure status of the site which has a site policy applied
 Get-PnPSiteClosure [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

@@ -13,7 +13,6 @@ Get-PnPTermSet -TermGroup <Id, Title or TermGroup>
                [-Includes <String[]>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

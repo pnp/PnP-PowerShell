@@ -15,7 +15,6 @@ Add-PnPMasterPage -SourceFilePath <String>
                   [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

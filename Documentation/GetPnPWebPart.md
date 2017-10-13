@@ -11,7 +11,6 @@ Get-PnPWebPart -ServerRelativePageUrl <String>
                [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

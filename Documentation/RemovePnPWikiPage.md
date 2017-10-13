@@ -11,13 +11,11 @@ Remove-PnPWikiPage -ServerRelativePageUrl <String>
                    [-Web <WebPipeBind>]
 ```
 
-
 ### SITE
 ```powershell
 Remove-PnPWikiPage -SiteRelativePageUrl <String>
                    [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

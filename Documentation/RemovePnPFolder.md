@@ -13,7 +13,6 @@ Remove-PnPFolder -Name <String>
                  [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

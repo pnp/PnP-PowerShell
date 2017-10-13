@@ -21,7 +21,6 @@ Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
                               [-Web <WebPipeBind>]
 ```
 
-
 ### Gallery
 ```powershell
 Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
@@ -38,7 +37,6 @@ Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
                               [-Web <WebPipeBind>]
 ```
 
-
 ### Path
 ```powershell
 Apply-PnPProvisioningTemplate -Path <String>
@@ -54,7 +52,6 @@ Apply-PnPProvisioningTemplate -Path <String>
                               [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                               [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

@@ -12,7 +12,6 @@ Remove-PnPJavaScriptLink [-Force [<SwitchParameter>]]
                          [-Name <String>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

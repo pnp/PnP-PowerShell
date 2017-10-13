@@ -17,7 +17,6 @@ New-PnPTerm -Name <String>
             [-TermStore <Id, Name or Object>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

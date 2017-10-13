@@ -70,9 +70,9 @@ dir",
         private const string ParameterSet_TOKEN = "Token";
         private const string ParameterSet_WEBLOGIN = "WebLogin";
 #if !ONPREMISES
-        private const string ParameterSet_NATIVEAAD = "NativeAAD";
-        private const string ParameterSet_APPONLYAAD = "AppOnlyAAD";
-        private const string ParameterSet_SPOManagement = "SPOManagement";
+        private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
+        private const string ParameterSet_APPONLYAAD = "App-Only with Azure Active Directory";
+        private const string ParameterSet_SPOManagement = "SPO Management Shell Credentials";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
 #endif

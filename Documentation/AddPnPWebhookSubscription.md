@@ -1,9 +1,9 @@
 # Add-PnPWebhookSubscription
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Adds a new Webhook subscription
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -13,7 +13,6 @@ Add-PnPWebhookSubscription -NotificationUrl <String>
                            [-ClientState <String>]
                            [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

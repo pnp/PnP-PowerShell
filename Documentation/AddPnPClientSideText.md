@@ -1,9 +1,9 @@
 # Add-PnPClientSideText
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Adds a Client-Side Page
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ### Default
@@ -14,7 +14,6 @@ Add-PnPClientSideText -Text <String>
                       [-Web <WebPipeBind>]
 ```
 
-
 ### Positioned
 ```powershell
 Add-PnPClientSideText -Text <String>
@@ -24,7 +23,6 @@ Add-PnPClientSideText -Text <String>
                       [-Order <Int>]
                       [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

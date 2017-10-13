@@ -10,7 +10,6 @@ Returns the current site collection from the context.
 Get-PnPSite [-Includes <String[]>]
 ```
 
-
 ## PARAMETERS
 
 ### -Includes

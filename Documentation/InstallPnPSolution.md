@@ -12,7 +12,6 @@ Install-PnPSolution -PackageId <GuidPipeBind>
                     [-MinorVersion <Int>]
 ```
 
-
 ## PARAMETERS
 
 ### -MajorVersion

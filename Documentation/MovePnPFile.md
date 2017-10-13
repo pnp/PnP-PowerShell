@@ -5,7 +5,7 @@ Moves a file to a different location
 
 ## SYNTAX 
 
-### SERVER
+### Server Relative
 ```powershell
 Move-PnPFile -ServerRelativeUrl <String>
              -TargetUrl <String>
@@ -14,8 +14,7 @@ Move-PnPFile -ServerRelativeUrl <String>
              [-Web <WebPipeBind>]
 ```
 
-
-### SITE
+### Site Relative
 ```powershell
 Move-PnPFile -SiteRelativeUrl <String>
              -TargetUrl <String>
@@ -23,7 +22,6 @@ Move-PnPFile -SiteRelativeUrl <String>
              [-Force [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 
@@ -79,7 +77,7 @@ Server relative Url specifying the file to move. Must include the file name.
 
 ```yaml
 Type: String
-Parameter Sets: SERVER
+Parameter Sets: Server Relative
 
 Required: True
 Position: 0
@@ -91,7 +89,7 @@ Site relative Url specifying the file to move. Must include the file name.
 
 ```yaml
 Type: String
-Parameter Sets: SITE
+Parameter Sets: Site Relative
 
 Required: True
 Position: 0

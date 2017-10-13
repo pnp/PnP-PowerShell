@@ -12,14 +12,12 @@ Remove-PnPWebPart -Identity <GuidPipeBind>
                   [-Web <WebPipeBind>]
 ```
 
-
 ### NAME
 ```powershell
 Remove-PnPWebPart -Title <String>
                   -ServerRelativePageUrl <String>
                   [-Web <WebPipeBind>]
 ```
-
 
 ## PARAMETERS
 

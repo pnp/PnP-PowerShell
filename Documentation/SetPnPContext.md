@@ -9,7 +9,6 @@ Sets the Client Context to use by the cmdlets
 Set-PnPContext -Context <ClientContext>
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

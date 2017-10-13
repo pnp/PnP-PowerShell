@@ -10,7 +10,6 @@ Remove-PnPIndexedProperty -Key <String>
                           [-Web <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Key

@@ -13,7 +13,6 @@ Set-PnPWebPermission -Group <GroupPipeBind>
                      [-Web <WebPipeBind>]
 ```
 
-
 ### User
 ```powershell
 Set-PnPWebPermission -User <String>
@@ -21,7 +20,6 @@ Set-PnPWebPermission -User <String>
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
 ```
-
 
 ### GroupByWebIdentity
 ```powershell
@@ -32,7 +30,6 @@ Set-PnPWebPermission -Identity <WebPipeBind>
                      [-Web <WebPipeBind>]
 ```
 
-
 ### UserByWebIdentity
 ```powershell
 Set-PnPWebPermission -Identity <WebPipeBind>
@@ -41,7 +38,6 @@ Set-PnPWebPermission -Identity <WebPipeBind>
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
 ```
-
 
 ### GroupByWebUrl
 ```powershell
@@ -52,7 +48,6 @@ Set-PnPWebPermission -Url <String>
                      [-Web <WebPipeBind>]
 ```
 
-
 ### UserByWebUrl
 ```powershell
 Set-PnPWebPermission -Url <String>
@@ -61,7 +56,6 @@ Set-PnPWebPermission -Url <String>
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

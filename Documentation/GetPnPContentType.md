@@ -12,7 +12,6 @@ Get-PnPContentType [-List <ListPipeBind>]
                    [-Identity <ContentTypePipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

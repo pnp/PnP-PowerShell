@@ -11,13 +11,11 @@ Restore-PnpRecycleBinItem -Identity <RecycleBinItemPipeBind>
                           [-Force [<SwitchParameter>]]
 ```
 
-
 ### All
 ```powershell
 Restore-PnpRecycleBinItem -All [<SwitchParameter>]
                           [-Force [<SwitchParameter>]]
 ```
-
 
 ## EXAMPLES
 

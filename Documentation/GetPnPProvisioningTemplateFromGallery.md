@@ -12,14 +12,12 @@ Get-PnPProvisioningTemplateFromGallery [-Identity <Guid>]
                                        [-Force [<SwitchParameter>]]
 ```
 
-
 ### Search
 ```powershell
 Get-PnPProvisioningTemplateFromGallery [-Search <String>]
                                        [-TargetPlatform <TargetPlatform>]
                                        [-TargetScope <TargetScope>]
 ```
-
 
 ## EXAMPLES
 

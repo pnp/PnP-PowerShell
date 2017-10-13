@@ -9,7 +9,6 @@ Returns the current site collection administrators of the site colleciton in the
 Get-PnPSiteCollectionAdmin [-Web <WebPipeBind>]
 ```
 
-
 ## DESCRIPTION
 This command will return all current site collection administrators of the site collection in the current context
 

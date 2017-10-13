@@ -23,7 +23,6 @@ Connect-PnPOnline -Url <String>
                   [-IgnoreSslErrors [<SwitchParameter>]]
 ```
 
-
 ### WebLogin
 ```powershell
 Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
@@ -39,8 +38,7 @@ Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
                   [-IgnoreSslErrors [<SwitchParameter>]]
 ```
 
-
-### SPOManagement
+### SPO Management Shell Credentials
 ```powershell
 Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
                   -Url <String>
@@ -55,7 +53,6 @@ Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
 ```
-
 
 ### Token
 ```powershell
@@ -74,8 +71,7 @@ Connect-PnPOnline -AppId <String>
                   [-IgnoreSslErrors [<SwitchParameter>]]
 ```
 
-
-### NativeAAD
+### Azure Active Directory
 ```powershell
 Connect-PnPOnline -ClientId <String>
                   -RedirectUri <String>
@@ -93,8 +89,7 @@ Connect-PnPOnline -ClientId <String>
                   [-IgnoreSslErrors [<SwitchParameter>]]
 ```
 
-
-### AppOnlyAAD
+### App-Only with Azure Active Directory
 ```powershell
 Connect-PnPOnline -ClientId <String>
                   -Tenant <String>
@@ -112,7 +107,6 @@ Connect-PnPOnline -ClientId <String>
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
 ```
-
 
 ## DESCRIPTION
 If no credentials have been specified, and the CurrentCredentials parameter has not been specified, you will be prompted for credentials.
@@ -227,7 +221,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 
 ```yaml
 Type: AzureEnvironment
-Parameter Sets: NativeAAD
+Parameter Sets: Azure Active Directory
 
 Required: False
 Position: Named
@@ -239,7 +233,7 @@ Password to the certificate (*.pfx)
 
 ```yaml
 Type: SecureString
-Parameter Sets: AppOnlyAAD
+Parameter Sets: App-Only with Azure Active Directory
 
 Required: True
 Position: Named
@@ -251,7 +245,7 @@ Path to the certificate (*.pfx)
 
 ```yaml
 Type: String
-Parameter Sets: AppOnlyAAD
+Parameter Sets: App-Only with Azure Active Directory
 
 Required: True
 Position: Named
@@ -263,7 +257,7 @@ Clears the token cache.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: NativeAAD
+Parameter Sets: Azure Active Directory
 
 Required: False
 Position: Named
@@ -275,7 +269,7 @@ The Client ID of the Azure AD Application
 
 ```yaml
 Type: String
-Parameter Sets: NativeAAD
+Parameter Sets: Azure Active Directory
 
 Required: True
 Position: Named
@@ -371,7 +365,7 @@ The Redirect URI of the Azure AD Application
 
 ```yaml
 Type: String
-Parameter Sets: NativeAAD
+Parameter Sets: Azure Active Directory
 
 Required: True
 Position: Named
@@ -431,7 +425,7 @@ Log in using the SharePoint Online Management Shell application
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: SPOManagement
+Parameter Sets: SPO Management Shell Credentials
 
 Required: True
 Position: Named
@@ -443,7 +437,7 @@ The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com
 
 ```yaml
 Type: String
-Parameter Sets: AppOnlyAAD
+Parameter Sets: App-Only with Azure Active Directory
 
 Required: True
 Position: Named

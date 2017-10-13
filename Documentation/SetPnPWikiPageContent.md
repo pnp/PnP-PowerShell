@@ -12,14 +12,12 @@ Set-PnPWikiPageContent -Content <String>
                        [-Web <WebPipeBind>]
 ```
 
-
 ### FILE
 ```powershell
 Set-PnPWikiPageContent -Path <String>
                        -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
 ```
-
 
 ## PARAMETERS
 

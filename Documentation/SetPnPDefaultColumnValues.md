@@ -13,7 +13,6 @@ Set-PnPDefaultColumnValues -Field <FieldPipeBind>
                            [-Web <WebPipeBind>]
 ```
 
-
 ## DESCRIPTION
 Sets default column values for a document library, per folder, or for the root folder if the folder parameter has not been specified. Supports both text and taxonomy fields.
 

@@ -32,7 +32,6 @@ Submit-PnPSearchQuery -Query <String>
                       [-Web <WebPipeBind>]
 ```
 
-
 ### All
 ```powershell
 Submit-PnPSearchQuery -Query <String>
@@ -58,7 +57,6 @@ Submit-PnPSearchQuery -Query <String>
                       [-RelevantResults [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

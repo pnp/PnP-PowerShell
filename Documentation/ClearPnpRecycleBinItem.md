@@ -12,13 +12,11 @@ Clear-PnpRecycleBinItem [-All [<SwitchParameter>]]
                         [-Force [<SwitchParameter>]]
 ```
 
-
 ### Identity
 ```powershell
 Clear-PnpRecycleBinItem -Identity <RecycleBinItemPipeBind>
                         [-Force [<SwitchParameter>]]
 ```
-
 
 ## EXAMPLES
 

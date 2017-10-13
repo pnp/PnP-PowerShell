@@ -12,7 +12,6 @@ Get-PnPAppInstance [-Web <WebPipeBind>]
                    [-Identity <AppPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

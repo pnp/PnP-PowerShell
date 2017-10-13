@@ -12,14 +12,12 @@ Set-PnPSearchConfiguration -Configuration <String>
                            [-Web <WebPipeBind>]
 ```
 
-
 ### Path
 ```powershell
 Set-PnPSearchConfiguration -Path <String>
                            [-Scope <SearchConfigurationScope>]
                            [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

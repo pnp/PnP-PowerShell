@@ -9,7 +9,6 @@ Removes one or more users as site collection administrators from the site collec
 Remove-PnPSiteCollectionAdmin -Owners <List`1>
 ```
 
-
 ## DESCRIPTION
 This command allows removing one to many users as site collection administrators from the site collection in the current context. All existing site collection administrators not included in this command will remain site collection administrator.
 

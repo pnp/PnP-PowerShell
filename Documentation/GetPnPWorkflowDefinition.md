@@ -11,7 +11,6 @@ Get-PnPWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
                           [-Name <String>]
 ```
 
-
 ## PARAMETERS
 
 ### -Name

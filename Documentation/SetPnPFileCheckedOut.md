@@ -10,7 +10,6 @@ Set-PnPFileCheckedOut -Url <String>
                       [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

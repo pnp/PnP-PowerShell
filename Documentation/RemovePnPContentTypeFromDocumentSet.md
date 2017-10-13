@@ -11,7 +11,6 @@ Remove-PnPContentTypeFromDocumentSet -ContentType <ContentTypePipeBind>
                                      [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

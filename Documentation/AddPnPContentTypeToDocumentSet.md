@@ -11,7 +11,6 @@ Add-PnPContentTypeToDocumentSet -ContentType <ContentTypePipeBind[]>
                                 [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

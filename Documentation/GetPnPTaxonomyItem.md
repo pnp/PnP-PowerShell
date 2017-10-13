@@ -9,7 +9,6 @@ Returns a taxonomy item
 Get-PnPTaxonomyItem -TermPath <String>
 ```
 
-
 ## PARAMETERS
 
 ### -TermPath

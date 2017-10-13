@@ -14,7 +14,6 @@ Add-PnPWebPartToWebPartPage -Xml <String>
                             [-Web <WebPipeBind>]
 ```
 
-
 ### FILE
 ```powershell
 Add-PnPWebPartToWebPartPage -Path <String>
@@ -23,7 +22,6 @@ Add-PnPWebPartToWebPartPage -Path <String>
                             -ZoneIndex <Int>
                             [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

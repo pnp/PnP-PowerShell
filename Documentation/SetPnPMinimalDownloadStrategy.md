@@ -12,14 +12,12 @@ Set-PnPMinimalDownloadStrategy -On [<SwitchParameter>]
                                [-Web <WebPipeBind>]
 ```
 
-
 ### Off
 ```powershell
 Set-PnPMinimalDownloadStrategy -Off [<SwitchParameter>]
                                [-Force [<SwitchParameter>]]
                                [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

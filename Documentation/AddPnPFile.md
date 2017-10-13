@@ -5,7 +5,7 @@ Uploads a file to Web
 
 ## SYNTAX 
 
-### AsFile
+### Upload file
 ```powershell
 Add-PnPFile -Path <String>
             -Folder <String>
@@ -21,8 +21,7 @@ Add-PnPFile -Path <String>
             [-Web <WebPipeBind>]
 ```
 
-
-### AsStream
+### Upload file from stream
 ```powershell
 Add-PnPFile -FileName <String>
             -Stream <Stream>
@@ -38,7 +37,6 @@ Add-PnPFile -FileName <String>
             [-ContentType <ContentTypePipeBind>]
             [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 
@@ -151,7 +149,7 @@ Name for file
 
 ```yaml
 Type: String
-Parameter Sets: AsStream
+Parameter Sets: Upload file from stream
 
 Required: True
 Position: Named
@@ -175,7 +173,7 @@ The local file path.
 
 ```yaml
 Type: String
-Parameter Sets: AsFile
+Parameter Sets: Upload file
 
 Required: True
 Position: Named
@@ -211,7 +209,7 @@ Stream with the file contents
 
 ```yaml
 Type: Stream
-Parameter Sets: AsStream
+Parameter Sets: Upload file from stream
 
 Required: True
 Position: Named

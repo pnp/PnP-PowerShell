@@ -11,7 +11,6 @@ Add-PnPWorkflowDefinition -Definition <WorkflowDefinition>
                           [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

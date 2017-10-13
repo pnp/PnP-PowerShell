@@ -10,7 +10,6 @@ Get-PnPWikiPageContent -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

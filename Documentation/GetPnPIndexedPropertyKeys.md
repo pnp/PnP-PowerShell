@@ -9,7 +9,6 @@ Returns the keys of the property bag values that have been marked for indexing b
 Get-PnPIndexedPropertyKeys [-Web <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Web

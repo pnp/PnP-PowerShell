@@ -10,7 +10,6 @@ Enable-PnPResponsiveUI [-InfrastructureSiteUrl <String>]
                        [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

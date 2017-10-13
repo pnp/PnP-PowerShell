@@ -9,7 +9,6 @@ Returns a taxonomy session
 Get-PnPTaxonomySession [-Web <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Web

@@ -14,7 +14,6 @@ Rename-PnPFile -ServerRelativeUrl <String>
                [-Web <WebPipeBind>]
 ```
 
-
 ### SITE
 ```powershell
 Rename-PnPFile -SiteRelativeUrl <String>
@@ -23,7 +22,6 @@ Rename-PnPFile -SiteRelativeUrl <String>
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

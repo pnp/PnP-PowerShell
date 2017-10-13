@@ -14,7 +14,6 @@ Set-PnPTheme [-ColorPaletteUrl <String>]
              [-Web <WebPipeBind>]
 ```
 
-
 ## DESCRIPTION
  Sets the theme of the current web, if any of the attributes is not set, that value will be set to null
 
@@ -36,14 +35,14 @@ PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png'
+PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/Team Site/style library/background.png'
 ```
 
 
 
 ### ------------------EXAMPLE 4------------------
 ```powershell
-PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/teamsite/style library/background.png' -ResetSubwebsToInherit
+PS:> Set-PnPTheme -ColorPaletteUrl /_catalogs/theme/15/company.spcolor -BackgroundImageUrl '/sites/Team Site/style library/background.png' -ResetSubwebsToInherit
 ```
 
 Sets the theme to the web, and updates all subwebs to inherit the theme from this web.

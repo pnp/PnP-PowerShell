@@ -12,14 +12,12 @@ Get-PnPEventReceiver [-List <ListPipeBind>]
                      [-Web <WebPipeBind>]
 ```
 
-
 ### 
 ```powershell
 Get-PnPEventReceiver [-Identity <GuidPipeBind>]
                      [-Web <WebPipeBind>]
                      [-Includes <String[]>]
 ```
-
 
 ## EXAMPLES
 

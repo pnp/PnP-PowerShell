@@ -14,7 +14,6 @@ Add-PnPContentType -Name <String>
                    [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

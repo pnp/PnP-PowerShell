@@ -5,7 +5,7 @@ Removes a file.
 
 ## SYNTAX 
 
-### SERVER
+### Server Relative
 ```powershell
 Remove-PnPFile -ServerRelativeUrl <String>
                [-Recycle [<SwitchParameter>]]
@@ -13,15 +13,13 @@ Remove-PnPFile -ServerRelativeUrl <String>
                [-Web <WebPipeBind>]
 ```
 
-
-### SITE
+### Site Relative
 ```powershell
 Remove-PnPFile -SiteRelativeUrl <String>
                [-Recycle [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 
@@ -77,7 +75,7 @@ Server relative URL to the file
 
 ```yaml
 Type: String
-Parameter Sets: SERVER
+Parameter Sets: Server Relative
 
 Required: True
 Position: 0
@@ -89,7 +87,7 @@ Site relative URL to the file
 
 ```yaml
 Type: String
-Parameter Sets: SITE
+Parameter Sets: Site Relative
 
 Required: True
 Position: 0

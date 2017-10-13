@@ -11,13 +11,11 @@ Set-PnPDefaultPageLayout -Title <String>
                          [-Web <WebPipeBind>]
 ```
 
-
 ### INHERIT
 ```powershell
 Set-PnPDefaultPageLayout -InheritFromParentSite [<SwitchParameter>]
                          [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

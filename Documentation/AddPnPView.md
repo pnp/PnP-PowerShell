@@ -18,7 +18,6 @@ Add-PnPView -Title <String>
             [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

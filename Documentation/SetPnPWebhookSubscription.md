@@ -1,9 +1,9 @@
 # Set-PnPWebhookSubscription
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Removes a Webhook subscription from the resource
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -13,7 +13,6 @@ Set-PnPWebhookSubscription -Subscription <WebhookSubscriptionPipeBind>
                            [-ExpirationDate <DateTime>]
                            [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

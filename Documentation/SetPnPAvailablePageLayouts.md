@@ -11,20 +11,17 @@ Set-PnPAvailablePageLayouts -PageLayouts <String[]>
                             [-Web <WebPipeBind>]
 ```
 
-
 ### ALL
 ```powershell
 Set-PnPAvailablePageLayouts -AllowAllPageLayouts [<SwitchParameter>]
                             [-Web <WebPipeBind>]
 ```
 
-
 ### INHERIT
 ```powershell
 Set-PnPAvailablePageLayouts -InheritPageLayouts [<SwitchParameter>]
                             [-Web <WebPipeBind>]
 ```
-
 
 ## PARAMETERS
 

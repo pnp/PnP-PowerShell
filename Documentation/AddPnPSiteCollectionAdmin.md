@@ -9,7 +9,6 @@ Adds one or more users as site collection administrators to the site collection 
 Add-PnPSiteCollectionAdmin -Owners <List`1>
 ```
 
-
 ## DESCRIPTION
 This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove exisitng site collection administrators.
 

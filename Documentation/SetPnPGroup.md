@@ -21,7 +21,6 @@ Set-PnPGroup -Identity <GroupPipeBind>
              [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

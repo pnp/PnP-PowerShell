@@ -19,7 +19,6 @@ New-PnPProvisioningTemplateFromFolder [-Match <String>]
                                       [-Schema <XMLPnPSchemaVersion>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

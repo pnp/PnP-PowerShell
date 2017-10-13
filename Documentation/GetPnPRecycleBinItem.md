@@ -10,24 +10,20 @@ Returns the items in the recycle bin from the context
 Get-PnPRecycleBinItem [-Identity <GuidPipeBind>]
 ```
 
-
 ### FirstStage
 ```powershell
 Get-PnPRecycleBinItem [-FirstStage [<SwitchParameter>]]
 ```
-
 
 ### SecondStage
 ```powershell
 Get-PnPRecycleBinItem [-SecondStage [<SwitchParameter>]]
 ```
 
-
 ### 
 ```powershell
 Get-PnPRecycleBinItem [-Includes <String[]>]
 ```
-
 
 ## EXAMPLES
 

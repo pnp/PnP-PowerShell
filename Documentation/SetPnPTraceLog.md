@@ -15,12 +15,10 @@ Set-PnPTraceLog -On [<SwitchParameter>]
                 [-AutoFlush <Boolean>]
 ```
 
-
 ### Off
 ```powershell
 Set-PnPTraceLog -Off [<SwitchParameter>]
 ```
-
 
 ## EXAMPLES
 

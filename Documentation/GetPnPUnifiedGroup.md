@@ -10,7 +10,6 @@ Get-PnPUnifiedGroup [-Identity <UnifiedGroupPipeBind>]
                     [-ExcludeSiteUrl [<SwitchParameter>]]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

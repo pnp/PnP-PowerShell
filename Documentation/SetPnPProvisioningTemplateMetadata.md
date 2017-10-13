@@ -14,7 +14,6 @@ Set-PnPProvisioningTemplateMetadata -Path <String>
                                     [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

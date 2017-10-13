@@ -11,13 +11,11 @@ Set-PnPInPlaceRecordsManagement -On [<SwitchParameter>]
                                 [-Web <WebPipeBind>]
 ```
 
-
 ### Off
 ```powershell
 Set-PnPInPlaceRecordsManagement -Off [<SwitchParameter>]
                                 [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

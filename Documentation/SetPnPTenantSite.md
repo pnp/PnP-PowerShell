@@ -1,9 +1,9 @@
 # Set-PnPTenantSite
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Set site information.
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -20,7 +20,6 @@ Set-PnPTenantSite -Url <String>
                   [-NoScriptSite [<SwitchParameter>]]
                   [-Wait [<SwitchParameter>]]
 ```
-
 
 ## DESCRIPTION
 Sets site properties for existing sites.

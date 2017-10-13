@@ -10,12 +10,10 @@ Imports a taxonomy TermGroup from either the input or from an XML file.
 Import-PnPTermGroupFromXml [-Xml <String>]
 ```
 
-
 ### File
 ```powershell
 Import-PnPTermGroupFromXml [-Path <String>]
 ```
-
 
 ## EXAMPLES
 

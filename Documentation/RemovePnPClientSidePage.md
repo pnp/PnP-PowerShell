@@ -1,9 +1,9 @@
 # Remove-PnPClientSidePage
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Removes a Client-Side Page
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -11,7 +11,6 @@ Remove-PnPClientSidePage -Identity <ClientSidePagePipeBind>
                          [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

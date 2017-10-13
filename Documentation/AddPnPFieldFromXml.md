@@ -11,7 +11,6 @@ Add-PnPFieldFromXml -FieldXml <String>
                     [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

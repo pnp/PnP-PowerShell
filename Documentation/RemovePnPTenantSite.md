@@ -1,9 +1,9 @@
 # Remove-PnPTenantSite
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Removes a site collection
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -11,7 +11,6 @@ Remove-PnPTenantSite -Url <String>
                      [-SkipRecycleBin [<SwitchParameter>]]
                      [-Force [<SwitchParameter>]]
 ```
-
 
 ## DESCRIPTION
 Removes a site collection which is listed in your tenant administration site.

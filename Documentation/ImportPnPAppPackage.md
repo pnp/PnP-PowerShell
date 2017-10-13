@@ -13,7 +13,6 @@ Import-PnPAppPackage -Path <String>
                      [-Web <WebPipeBind>]
 ```
 
-
 ## DESCRIPTION
 This commands requires that you have an addin package to deploy
 

@@ -5,7 +5,7 @@ Adds a custom action to a web
 
 ## SYNTAX 
 
-### ClientSideComponentId
+### Client Side Component Id
 ```powershell
 Add-PnPCustomAction -Name <String>
                     -Title <String>
@@ -16,7 +16,6 @@ Add-PnPCustomAction -Name <String>
                     [-ClientSideComponentProperties <String>]
                     [-Web <WebPipeBind>]
 ```
-
 
 ### Default
 ```powershell
@@ -36,7 +35,6 @@ Add-PnPCustomAction -Name <String>
                     [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
@@ -55,7 +53,7 @@ The Client Side Component Id of the custom action
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: ClientSideComponentId
+Parameter Sets: Client Side Component Id
 
 Required: True
 Position: Named
@@ -67,7 +65,7 @@ The Client Side Component Properties of the custom action. Specify values as a j
 
 ```yaml
 Type: String
-Parameter Sets: ClientSideComponentId
+Parameter Sets: Client Side Component Id
 
 Required: False
 Position: Named

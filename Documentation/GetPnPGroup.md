@@ -11,13 +11,11 @@ Get-PnPGroup [-Web <WebPipeBind>]
              [-Identity <GroupPipeBind>]
 ```
 
-
 ### Members
 ```powershell
 Get-PnPGroup [-AssociatedMemberGroup [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
-
 
 ### Visitors
 ```powershell
@@ -25,20 +23,17 @@ Get-PnPGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
 
-
 ### Owners
 ```powershell
 Get-PnPGroup [-AssociatedOwnerGroup [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
 
-
 ### 
 ```powershell
 Get-PnPGroup [-Web <WebPipeBind>]
              [-Includes <String[]>]
 ```
-
 
 ## EXAMPLES
 

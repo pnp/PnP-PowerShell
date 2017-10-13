@@ -10,7 +10,6 @@ Get-PnPUser [-Web <WebPipeBind>]
             [-Identity <UserPipeBind>]
 ```
 
-
 ## DESCRIPTION
 This command will return all the users that exist in the current site collection its User Information List
 

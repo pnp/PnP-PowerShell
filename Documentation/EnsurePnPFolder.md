@@ -12,7 +12,6 @@ Ensure-PnPFolder -SiteRelativePath <String>
                  [-Includes <String[]>]
 ```
 
-
 ## DESCRIPTION
 If you do not want the folder to be created, for instance just to test if a folder exists, check Get-PnPFolder
 

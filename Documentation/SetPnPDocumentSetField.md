@@ -15,7 +15,6 @@ Set-PnPDocumentSetField -DocumentSet <DocumentSetPipeBind>
                         [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

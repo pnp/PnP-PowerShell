@@ -12,7 +12,6 @@ Remove-PnPUser -Identity <UserPipeBind>
                [-Web <WebPipeBind>]
 ```
 
-
 ## DESCRIPTION
 This command will allow the removal of a specific user from the User Information List
 

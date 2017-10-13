@@ -10,7 +10,6 @@ Execute-PnPQuery [-RetryCount <Int>]
                  [-RetryWait <Int>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

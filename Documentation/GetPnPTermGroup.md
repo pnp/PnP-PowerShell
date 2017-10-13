@@ -12,7 +12,6 @@ Get-PnPTermGroup [-TermStore <Id, Name or Object>]
                  [-Identity <Id, Title or TaxonomyItem>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

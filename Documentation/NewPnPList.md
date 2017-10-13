@@ -15,7 +15,6 @@ New-PnPList -Title <String>
             [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

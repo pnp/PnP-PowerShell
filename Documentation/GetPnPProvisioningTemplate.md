@@ -34,7 +34,6 @@ Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
                             [-Schema <XMLPnPSchemaVersion>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

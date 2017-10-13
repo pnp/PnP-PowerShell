@@ -13,7 +13,6 @@ Convert-PnPProvisioningTemplate -Path <String>
                                 [-ToSchema <XMLPnPSchemaVersion>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

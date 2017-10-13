@@ -11,7 +11,6 @@ Uninstall-PnPAppInstance -Identity <AppPipeBind>
                          [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

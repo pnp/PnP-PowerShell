@@ -9,7 +9,6 @@ Disables the PnP Responsive UI implementation on a classic SharePoint Site
 Disable-PnPResponsiveUI [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

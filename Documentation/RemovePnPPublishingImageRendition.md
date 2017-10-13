@@ -11,7 +11,6 @@ Remove-PnPPublishingImageRendition -Identity <ImageRenditionPipeBind>
                                    [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

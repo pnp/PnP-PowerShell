@@ -9,7 +9,6 @@ Gets the authentication realm for the current web
 Get-PnPAuthenticationRealm [-Url <String>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

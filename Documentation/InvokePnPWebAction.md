@@ -26,7 +26,6 @@ Invoke-PnPWebAction [-Webs <Web[]>]
                     [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

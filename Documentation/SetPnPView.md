@@ -12,7 +12,6 @@ Set-PnPView -Identity <ViewPipeBind>
             [-List <ListPipeBind>]
 ```
 
-
 ## DESCRIPTION
 Sets one or more properties of an existing view.
 

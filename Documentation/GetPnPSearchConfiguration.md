@@ -12,14 +12,12 @@ Get-PnPSearchConfiguration [-Path <String>]
                            [-Web <WebPipeBind>]
 ```
 
-
 ### OutputFormat
 ```powershell
 Get-PnPSearchConfiguration [-OutputFormat <OutputFormat>]
                            [-Scope <SearchConfigurationScope>]
                            [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

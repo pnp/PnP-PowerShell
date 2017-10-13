@@ -11,7 +11,6 @@ Remove-PnPUserFromGroup -LoginName <String>
                         [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

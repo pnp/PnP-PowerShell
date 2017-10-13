@@ -15,7 +15,6 @@ Add-PnPDataRowsToProvisioningTemplate -List <ListPipeBind>
                                       [-IncludeSecurity [<SwitchParameter>]]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

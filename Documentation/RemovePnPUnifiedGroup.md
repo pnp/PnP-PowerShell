@@ -9,7 +9,6 @@ Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups
 Remove-PnPUnifiedGroup -Identity <UnifiedGroupPipeBind>
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

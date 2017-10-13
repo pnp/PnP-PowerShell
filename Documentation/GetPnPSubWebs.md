@@ -11,7 +11,6 @@ Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
                [-Identity <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Identity

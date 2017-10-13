@@ -15,7 +15,6 @@ Copy-PnPFile -SourceUrl <String>
              [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

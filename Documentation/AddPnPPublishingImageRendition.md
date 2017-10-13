@@ -12,7 +12,6 @@ Add-PnPPublishingImageRendition -Name <String>
                                 [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

@@ -1,9 +1,9 @@
 # Test-PnPListItemIsRecord
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Checks if a list item is a record
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -11,7 +11,6 @@ Test-PnPListItemIsRecord -Identity <ListItemPipeBind>
                          -List <ListPipeBind>
                          [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

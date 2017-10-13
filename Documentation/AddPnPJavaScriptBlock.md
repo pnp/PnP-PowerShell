@@ -13,7 +13,6 @@ Add-PnPJavaScriptBlock -Name <String>
                        [-Web <WebPipeBind>]
 ```
 
-
 ## DESCRIPTION
 Specify a scope as 'Site' to add the custom action to all sites in a site collection.
 

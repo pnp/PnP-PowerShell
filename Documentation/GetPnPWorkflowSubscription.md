@@ -11,7 +11,6 @@ Get-PnPWorkflowSubscription [-Web <WebPipeBind>]
                             [-List <ListPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -List

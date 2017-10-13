@@ -12,7 +12,6 @@ Move-PnPListItemToRecycleBin -Identity <ListItemPipeBind>
                              [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

@@ -12,7 +12,6 @@ Add-PnPDocumentSet -List <ListPipeBind>
                    [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

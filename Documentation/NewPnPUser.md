@@ -10,7 +10,6 @@ New-PnPUser -LoginName <String>
             [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

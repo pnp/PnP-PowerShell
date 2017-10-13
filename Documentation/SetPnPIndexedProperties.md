@@ -10,7 +10,6 @@ Set-PnPIndexedProperties -Keys <List`1>
                          [-Web <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Keys

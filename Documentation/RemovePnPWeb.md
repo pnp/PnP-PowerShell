@@ -12,14 +12,12 @@ Remove-PnPWeb -Url <String>
               [-Web <WebPipeBind>]
 ```
 
-
 ### ByIdentity
 ```powershell
 Remove-PnPWeb -Identity <WebPipeBind>
               [-Force [<SwitchParameter>]]
               [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

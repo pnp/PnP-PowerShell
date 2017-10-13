@@ -13,7 +13,6 @@ Export-PnPTermGroupToXml [-Identity <Id, Title or TermGroup>]
                          [-Force [<SwitchParameter>]]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

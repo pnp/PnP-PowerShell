@@ -1,9 +1,9 @@
 # Set-PnPClientSidePage
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Sets parameters of a Client-Side Page
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -16,7 +16,6 @@ Set-PnPClientSidePage -Identity <ClientSidePagePipeBind>
                       [-PublishMessage <String>]
                       [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

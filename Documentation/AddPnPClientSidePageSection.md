@@ -1,9 +1,9 @@
 # Add-PnPClientSidePageSection
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Adds a new section to a Client-Side page
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -12,7 +12,6 @@ Add-PnPClientSidePageSection -SectionTemplate <CanvasSectionTemplate>
                              [-Order <Int>]
                              [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

@@ -1,15 +1,14 @@
 # New-PnPPersonalSite
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Office365 only: Creates a personal / OneDrive For Business site
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
 New-PnPPersonalSite -Email <String[]>
 ```
-
 
 ## EXAMPLES
 

@@ -5,14 +5,13 @@ Downloads a file.
 
 ## SYNTAX 
 
-### URLASFILEOBJECT
+### Return as file object
 ```powershell
 Get-PnPFile -Url <String>
             [-Web <WebPipeBind>]
 ```
 
-
-### URLASLISTITEM
+### Return as list item
 ```powershell
 Get-PnPFile -Url <String>
             [-AsListItem [<SwitchParameter>]]
@@ -20,16 +19,14 @@ Get-PnPFile -Url <String>
             [-Web <WebPipeBind>]
 ```
 
-
-### URLASSTRING
+### Return as string
 ```powershell
 Get-PnPFile -Url <String>
             [-AsString [<SwitchParameter>]]
             [-Web <WebPipeBind>]
 ```
 
-
-### URLTOPATH
+### Save to local path
 ```powershell
 Get-PnPFile -AsFile [<SwitchParameter>]
             -Url <String>
@@ -37,7 +34,6 @@ Get-PnPFile -AsFile [<SwitchParameter>]
             [-Filename <String>]
             [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 
@@ -90,7 +86,7 @@ Retrieves the file by site relative URL and downloads it to c:\temp\company.spco
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: URLTOPATH
+Parameter Sets: Save to local path
 
 Required: True
 Position: Named
@@ -102,7 +98,7 @@ Returns the file as a listitem showing all its properties
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: URLASLISTITEM
+Parameter Sets: Return as list item
 
 Required: False
 Position: Named
@@ -114,7 +110,7 @@ Retrieve the file contents as a string
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: URLASSTRING
+Parameter Sets: Return as string
 
 Required: False
 Position: Named
@@ -126,7 +122,7 @@ Name for the local file
 
 ```yaml
 Type: String
-Parameter Sets: URLTOPATH
+Parameter Sets: Save to local path
 
 Required: False
 Position: Named
@@ -138,7 +134,7 @@ Local path where the file should be saved
 
 ```yaml
 Type: String
-Parameter Sets: URLTOPATH
+Parameter Sets: Save to local path
 
 Required: False
 Position: Named
@@ -150,7 +146,7 @@ If provided in combination with -AsListItem, a Sytem.ArgumentException will be t
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: URLASLISTITEM
+Parameter Sets: Return as list item
 
 Required: False
 Position: Named
@@ -162,7 +158,7 @@ The URL (server or site relative) to the file
 
 ```yaml
 Type: String
-Parameter Sets: URLASFILEOBJECT
+Parameter Sets: Return as file object
 Aliases: ServerRelativeUrl,SiteRelativeUrl
 
 Required: True

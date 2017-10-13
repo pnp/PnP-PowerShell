@@ -1,16 +1,15 @@
 # Set-PnPRequestAccessEmails
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Sets Request Access Emails on a web
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
 Set-PnPRequestAccessEmails -Emails <String[]>
                            [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

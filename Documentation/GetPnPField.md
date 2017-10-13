@@ -14,7 +14,6 @@ Get-PnPField [-List <ListPipeBind>]
              [-Identity <FieldPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

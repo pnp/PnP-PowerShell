@@ -12,7 +12,6 @@ Add-PnPContentTypeToList -List <ListPipeBind>
                          [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

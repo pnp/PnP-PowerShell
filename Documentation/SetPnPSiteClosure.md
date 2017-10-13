@@ -10,7 +10,6 @@ Set-PnPSiteClosure -State <ClosureState>
                    [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

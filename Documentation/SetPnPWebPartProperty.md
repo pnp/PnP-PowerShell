@@ -13,7 +13,6 @@ Set-PnPWebPartProperty -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Identity

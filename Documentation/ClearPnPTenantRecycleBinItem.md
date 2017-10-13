@@ -11,7 +11,6 @@ Clear-PnPTenantRecycleBinItem -Url <String>
                               [-Force [<SwitchParameter>]]
 ```
 
-
 ## DESCRIPTION
 The Clear-PnPTenantRecycleBinItem cmdlet allows a site collection that has been deleted and still exists in the tenant recycle bin to be permanently deleted from the recycle bin as well.
 

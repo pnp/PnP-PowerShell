@@ -13,7 +13,6 @@ Set-PnPField -Values <Hashtable>
              [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

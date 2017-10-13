@@ -11,7 +11,6 @@ Get-PnPWeb [-Includes <String[]>]
            [-Identity <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Identity

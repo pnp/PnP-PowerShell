@@ -10,7 +10,6 @@ Get-PnPProperty -ClientObject <ClientObject>
                 -Property <String[]>
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

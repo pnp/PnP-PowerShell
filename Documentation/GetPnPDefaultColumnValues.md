@@ -10,7 +10,6 @@ Get-PnPDefaultColumnValues -List <ListPipeBind>
                            [-Web <WebPipeBind>]
 ```
 
-
 ## DESCRIPTION
 Gets the default column values for a document library, per folder. Supports both text, people and taxonomy fields.
 

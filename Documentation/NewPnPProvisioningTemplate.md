@@ -9,7 +9,6 @@ Creates a new provisioning template object
 New-PnPProvisioningTemplate [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

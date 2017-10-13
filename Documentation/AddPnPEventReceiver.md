@@ -16,7 +16,6 @@ Add-PnPEventReceiver -Name <String>
                      [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

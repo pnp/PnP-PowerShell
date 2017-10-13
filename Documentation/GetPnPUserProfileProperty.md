@@ -10,7 +10,6 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
 Get-PnPUserProfileProperty -Account <String[]>
 ```
 
-
 ## DESCRIPTION
 Requires a connection to a SharePoint Tenant Admin site.
 

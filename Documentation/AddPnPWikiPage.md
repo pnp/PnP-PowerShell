@@ -12,14 +12,12 @@ Add-PnPWikiPage -Content <String>
                 [-Web <WebPipeBind>]
 ```
 
-
 ### WithLayout
 ```powershell
 Add-PnPWikiPage -Layout <WikiPageLayout>
                 -ServerRelativePageUrl <String>
                 [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

@@ -9,7 +9,6 @@ Returns a time zone ID
 Get-PnPTimeZoneId [-Match <String>]
 ```
 
-
 ## DESCRIPTION
 In order to create a new classic site you need to specify the timezone this site will use. Use the cmdlet to retrieve a list of possible values.
 

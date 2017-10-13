@@ -13,7 +13,6 @@ Set-PnPPropertyBagValue -Key <String>
                         [-Web <WebPipeBind>]
 ```
 
-
 ### Web
 ```powershell
 Set-PnPPropertyBagValue -Key <String>
@@ -21,7 +20,6 @@ Set-PnPPropertyBagValue -Key <String>
                         -Indexed [<SwitchParameter>]
                         [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

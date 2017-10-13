@@ -9,7 +9,6 @@ Creates the JSON snippet that is required for the manifest JSON file for Azure W
 Get-PnPAzureADManifestKeyCredentials -CertPath <String>
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

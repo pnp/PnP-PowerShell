@@ -9,7 +9,6 @@ Returns the URLs of the default Master Page and the custom Master Page.
 Get-PnPMasterPage [-Web <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Web

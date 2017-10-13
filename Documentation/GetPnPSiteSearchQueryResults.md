@@ -13,14 +13,12 @@ Get-PnPSiteSearchQueryResults [-StartRow <Int>]
                               [-Query <String>]
 ```
 
-
 ### All
 ```powershell
 Get-PnPSiteSearchQueryResults [-All [<SwitchParameter>]]
                               [-Web <WebPipeBind>]
                               [-Query <String>]
 ```
-
 
 ## EXAMPLES
 

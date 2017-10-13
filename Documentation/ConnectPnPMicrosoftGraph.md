@@ -10,14 +10,12 @@ Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and t
 Connect-PnPMicrosoftGraph -Scopes <String[]>
 ```
 
-
 ### AAD
 ```powershell
 Connect-PnPMicrosoftGraph -AppId <String>
                           -AppSecret <String>
                           -AADDomain <String>
 ```
-
 
 ## EXAMPLES
 

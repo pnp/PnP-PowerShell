@@ -11,7 +11,6 @@ Convert-PnPFolderToProvisioningTemplate -Out <String>
                                         [-Folder <String>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

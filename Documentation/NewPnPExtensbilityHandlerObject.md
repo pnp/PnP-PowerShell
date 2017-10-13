@@ -12,7 +12,6 @@ New-PnPExtensbilityHandlerObject -Type <String>
                                  [-Disabled [<SwitchParameter>]]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

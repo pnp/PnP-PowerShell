@@ -20,7 +20,6 @@ Add-PnPTaxonomyField -DisplayName <String>
                      [-Web <WebPipeBind>]
 ```
 
-
 ### Path
 ```powershell
 Add-PnPTaxonomyField -TermSetPath <String>
@@ -36,7 +35,6 @@ Add-PnPTaxonomyField -TermSetPath <String>
                      [-FieldOptions <AddFieldOptions>]
                      [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

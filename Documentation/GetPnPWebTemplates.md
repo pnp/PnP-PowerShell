@@ -1,16 +1,15 @@
 # Get-PnPWebTemplates
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Returns the available web templates.
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
 Get-PnPWebTemplates [-Lcid <UInt32>]
                     [-CompatibilityLevel <Int>]
 ```
-
 
 ## DESCRIPTION
 Will list all available templates one can use to create a classic site.

@@ -5,7 +5,7 @@ Adds a field to a list or as a site column
 
 ## SYNTAX 
 
-### ListXML
+### Add field by XML to list
 ```powershell
 Add-PnPField [-AddToDefaultView [<SwitchParameter>]]
              [-Required [<SwitchParameter>]]
@@ -13,16 +13,14 @@ Add-PnPField [-AddToDefaultView [<SwitchParameter>]]
              [-Web <WebPipeBind>]
 ```
 
-
-### FieldRef
+### Add field reference to list
 ```powershell
 Add-PnPField -List <ListPipeBind>
              -Field <FieldPipeBind>
              [-Web <WebPipeBind>]
 ```
 
-
-### ListPara
+### Add field to list
 ```powershell
 Add-PnPField -DisplayName <String>
              -InternalName <String>
@@ -38,8 +36,7 @@ Add-PnPField -DisplayName <String>
              [-Choices <String[]>]
 ```
 
-
-### WebPara
+### Add field to Web
 ```powershell
 Add-PnPField -DisplayName <String>
              -InternalName <String>
@@ -50,7 +47,6 @@ Add-PnPField -DisplayName <String>
              [-Web <WebPipeBind>]
              [-Choices <String[]>]
 ```
-
 
 ## EXAMPLES
 
@@ -75,7 +71,7 @@ Switch Parameter if this field must be added to the default view
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: False
 Position: Named
@@ -87,7 +83,7 @@ Specify choices, only valid if the field type is Choice
 
 ```yaml
 Type: String[]
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: False
 Position: 0
@@ -99,7 +95,7 @@ The Client Side Component Id to set to the field
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: False
 Position: Named
@@ -111,7 +107,7 @@ The Client Side Component Properties to set to the field
 
 ```yaml
 Type: String
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: False
 Position: Named
@@ -123,7 +119,7 @@ The display name of the field
 
 ```yaml
 Type: String
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: True
 Position: Named
@@ -135,7 +131,7 @@ The name of the field, its ID or an actual field object that needs to be added
 
 ```yaml
 Type: FieldPipeBind
-Parameter Sets: FieldRef
+Parameter Sets: Add field reference to list
 
 Required: True
 Position: Named
@@ -147,7 +143,7 @@ The group name to where this field belongs to
 
 ```yaml
 Type: String
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: False
 Position: Named
@@ -159,7 +155,7 @@ The ID of the field, must be unique
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: False
 Position: Named
@@ -171,7 +167,7 @@ The internal name of the field
 
 ```yaml
 Type: String
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: True
 Position: Named
@@ -183,7 +179,7 @@ The name of the list, its ID or an actual list object where this field needs to 
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: False
 Position: Named
@@ -195,7 +191,7 @@ Switch Parameter if the field is a required field
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: False
 Position: Named
@@ -207,7 +203,7 @@ The type of the field like Choice, Note, MultiChoice
 
 ```yaml
 Type: FieldType
-Parameter Sets: ListPara
+Parameter Sets: Add field to list
 
 Required: True
 Position: Named

@@ -15,7 +15,6 @@ Add-PnPWebPartToWikiPage -Xml <String>
                          [-Web <WebPipeBind>]
 ```
 
-
 ### FILE
 ```powershell
 Add-PnPWebPartToWikiPage -Path <String>
@@ -25,7 +24,6 @@ Add-PnPWebPartToWikiPage -Path <String>
                          [-AddSpace [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

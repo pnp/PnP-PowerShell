@@ -12,7 +12,6 @@ Get-PnPFolderItem [-ItemType <String>]
                   [-FolderSiteRelativeUrl <String>]
 ```
 
-
 ## PARAMETERS
 
 ### -FolderSiteRelativeUrl

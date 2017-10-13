@@ -11,7 +11,6 @@ Find-PnPFile -Match <String>
              [-Web <WebPipeBind>]
 ```
 
-
 ### List
 ```powershell
 Find-PnPFile -List <ListPipeBind>
@@ -19,14 +18,12 @@ Find-PnPFile -List <ListPipeBind>
              [-Web <WebPipeBind>]
 ```
 
-
 ### Folder
 ```powershell
 Find-PnPFile -Folder <FolderPipeBind>
              -Match <String>
              [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

@@ -11,7 +11,6 @@ Get-PnPSitePolicy [-AllAvailable [<SwitchParameter>]]
                   [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

@@ -14,7 +14,6 @@ Import-PnPTaxonomy [-Terms <String[]>]
                    [-SynchronizeDeletions [<SwitchParameter>]]
 ```
 
-
 ### File
 ```powershell
 Import-PnPTaxonomy -Path <String>
@@ -23,7 +22,6 @@ Import-PnPTaxonomy -Path <String>
                    [-Delimiter <String>]
                    [-SynchronizeDeletions [<SwitchParameter>]]
 ```
-
 
 ## EXAMPLES
 

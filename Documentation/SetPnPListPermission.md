@@ -14,7 +14,6 @@ Set-PnPListPermission -Group <GroupPipeBind>
                       [-Web <WebPipeBind>]
 ```
 
-
 ### User
 ```powershell
 Set-PnPListPermission -User <String>
@@ -23,7 +22,6 @@ Set-PnPListPermission -User <String>
                       [-RemoveRole <String>]
                       [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

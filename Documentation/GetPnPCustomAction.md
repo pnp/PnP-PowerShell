@@ -14,7 +14,6 @@ Get-PnPCustomAction [-Identity <GuidPipeBind>]
                     [-Includes <String[]>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

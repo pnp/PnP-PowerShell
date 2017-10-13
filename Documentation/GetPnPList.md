@@ -13,7 +13,6 @@ Get-PnPList [-ThrowExceptionIfListNotFound [<SwitchParameter>]]
             [-Identity <ListPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

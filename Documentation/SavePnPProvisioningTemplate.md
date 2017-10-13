@@ -12,7 +12,6 @@ Save-PnPProvisioningTemplate -InputInstance <ProvisioningTemplate>
                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

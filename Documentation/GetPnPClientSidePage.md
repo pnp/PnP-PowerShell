@@ -1,16 +1,15 @@
 # Get-PnPClientSidePage
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Gets a Client-Side Page
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
 Get-PnPClientSidePage -Identity <ClientSidePagePipeBind>
                       [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

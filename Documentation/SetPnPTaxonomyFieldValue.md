@@ -12,7 +12,6 @@ Set-PnPTaxonomyFieldValue -ListItem <ListItem>
                           [-Terms <Hashtable>]
 ```
 
-
 ### ITEM
 ```powershell
 Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
@@ -21,14 +20,12 @@ Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
                           [-Label <String>]
 ```
 
-
 ### PATH
 ```powershell
 Set-PnPTaxonomyFieldValue -TermPath <String>
                           -ListItem <ListItem>
                           -InternalFieldName <String>
 ```
-
 
 ## EXAMPLES
 

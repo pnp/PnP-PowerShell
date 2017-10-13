@@ -13,7 +13,6 @@ Get-PnPFeature [-Scope <FeatureScope>]
                [-Identity <FeaturePipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

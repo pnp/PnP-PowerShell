@@ -1,12 +1,12 @@
 # Add-PnPClientSideWebPart
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Adds a Client-Side Component to a page
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
-### DefaultBuiltIn
+### Default with built-in webpart
 ```powershell
 Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
                          -Page <ClientSidePagePipeBind>
@@ -15,8 +15,7 @@ Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
                          [-Web <WebPipeBind>]
 ```
 
-
-### Default3rdParty
+### Default with 3rd party webpart
 ```powershell
 Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
                          -Page <ClientSidePagePipeBind>
@@ -25,8 +24,7 @@ Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
                          [-Web <WebPipeBind>]
 ```
 
-
-### PositionedBuiltIn
+### Positioned with built-in webpart
 ```powershell
 Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
                          -Section <Int>
@@ -37,8 +35,7 @@ Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
                          [-Web <WebPipeBind>]
 ```
 
-
-### Positioned3rdParty
+### Positioned with 3rd party webpart
 ```powershell
 Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
                          -Section <Int>
@@ -48,7 +45,6 @@ Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
                          [-Order <Int>]
                          [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 
@@ -80,7 +76,7 @@ Sets the column where to insert the WebPart control.
 
 ```yaml
 Type: Int
-Parameter Sets: PositionedBuiltIn
+Parameter Sets: Positioned with built-in webpart
 
 Required: True
 Position: Named
@@ -92,7 +88,7 @@ Specifies the component instance or Id to add.
 
 ```yaml
 Type: ClientSideComponentPipeBind
-Parameter Sets: Default3rdParty
+Parameter Sets: Default with 3rd party webpart
 
 Required: True
 Position: Named
@@ -104,7 +100,7 @@ Defines a default WebPart type to insert.
 
 ```yaml
 Type: DefaultClientSideWebParts
-Parameter Sets: DefaultBuiltIn
+Parameter Sets: Default with built-in webpart
 
 Required: True
 Position: Named
@@ -116,7 +112,7 @@ Sets the order of the WebPart control. (Default = 1)
 
 ```yaml
 Type: Int
-Parameter Sets: DefaultBuiltIn
+Parameter Sets: Default with built-in webpart
 
 Required: False
 Position: Named
@@ -128,7 +124,7 @@ The name of the page.
 
 ```yaml
 Type: ClientSidePagePipeBind
-Parameter Sets: DefaultBuiltIn
+Parameter Sets: Default with built-in webpart
 
 Required: True
 Position: 0
@@ -140,7 +136,7 @@ Sets the section where to insert the WebPart control.
 
 ```yaml
 Type: Int
-Parameter Sets: PositionedBuiltIn
+Parameter Sets: Positioned with built-in webpart
 
 Required: True
 Position: Named
@@ -164,7 +160,7 @@ The properties of the WebPart
 
 ```yaml
 Type: PropertyBagPipeBind
-Parameter Sets: DefaultBuiltIn
+Parameter Sets: Default with built-in webpart
 
 Required: False
 Position: Named

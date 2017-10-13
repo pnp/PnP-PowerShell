@@ -12,7 +12,6 @@ Set-PnPFileCheckedIn -Url <String>
                      [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

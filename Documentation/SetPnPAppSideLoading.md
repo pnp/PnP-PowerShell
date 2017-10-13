@@ -10,12 +10,10 @@ Enables the App SideLoading Feature on a site
 Set-PnPAppSideLoading -On [<SwitchParameter>]
 ```
 
-
 ### Off
 ```powershell
 Set-PnPAppSideLoading -Off [<SwitchParameter>]
 ```
-
 
 ## PARAMETERS
 

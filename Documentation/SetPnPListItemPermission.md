@@ -13,7 +13,6 @@ Set-PnPListItemPermission -Identity <ListItemPipeBind>
                           [-Web <WebPipeBind>]
 ```
 
-
 ### Group
 ```powershell
 Set-PnPListItemPermission -Group <GroupPipeBind>
@@ -25,7 +24,6 @@ Set-PnPListItemPermission -Group <GroupPipeBind>
                           [-Web <WebPipeBind>]
 ```
 
-
 ### User
 ```powershell
 Set-PnPListItemPermission -User <String>
@@ -36,7 +34,6 @@ Set-PnPListItemPermission -User <String>
                           [-ClearExisting [<SwitchParameter>]]
                           [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

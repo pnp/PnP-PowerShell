@@ -16,7 +16,6 @@ New-PnPUnifiedGroup -DisplayName <String>
                     [-Force [<SwitchParameter>]]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

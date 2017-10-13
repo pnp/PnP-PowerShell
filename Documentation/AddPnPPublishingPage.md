@@ -15,7 +15,6 @@ Add-PnPPublishingPage -PageName <String>
                       [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

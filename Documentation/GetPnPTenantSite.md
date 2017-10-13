@@ -1,9 +1,9 @@
 # Get-PnPTenantSite
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 Retrieve site information.
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
 ```powershell
@@ -15,7 +15,6 @@ Get-PnPTenantSite [-Template <String>]
                   [-Filter <String>]
                   [-Url <String>]
 ```
-
 
 ## DESCRIPTION
 Use this cmdlet to retrieve site information from your tenant administration.

@@ -12,12 +12,10 @@ Set-PnPAuditing [-EnableAll [<SwitchParameter>]]
                 [-TrimAuditLog [<SwitchParameter>]]
 ```
 
-
 ### DisableAll
 ```powershell
 Set-PnPAuditing [-DisableAll [<SwitchParameter>]]
 ```
-
 
 ### Other
 ```powershell
@@ -31,7 +29,6 @@ Set-PnPAuditing [-RetentionTime <Int>]
                 [-SearchContent [<SwitchParameter>]]
                 [-EditUsersPermissions [<SwitchParameter>]]
 ```
-
 
 ## EXAMPLES
 

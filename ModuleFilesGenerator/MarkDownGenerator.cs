@@ -72,7 +72,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                     if (cmdletInfo.Platform != "All")
                     {
-                        docBuilder.Append($"## SYNOPSIS{Environment.NewLine}*Only available for {cmdletInfo.Platform}*{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}");
+                        docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}>Only available for {cmdletInfo.Platform}{Environment.NewLine}");
                     }
                     else
                     {
@@ -126,7 +126,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                             }
                             // Add All ParameterSet ones
                             docBuilder.Append(syntaxText);
-                            docBuilder.AppendFormat("```\n\n\n");
+                            docBuilder.Append($"```{Environment.NewLine}{Environment.NewLine}");
                         }
                     }
                     if (!string.IsNullOrEmpty(cmdletInfo.DetailedDescription))

@@ -20,7 +20,6 @@ New-PnPTermSet -Name <String>
                [-TermStore <Id, Name or Object>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

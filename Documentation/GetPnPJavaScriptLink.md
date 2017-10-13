@@ -12,7 +12,6 @@ Get-PnPJavaScriptLink [-Scope <CustomActionScope>]
                       [-Name <String>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

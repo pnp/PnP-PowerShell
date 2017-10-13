@@ -12,7 +12,6 @@ Add-PnPUserToGroup -LoginName <String>
                    [-Web <WebPipeBind>]
 ```
 
-
 ### External
 ```powershell
 Add-PnPUserToGroup -Identity <GroupPipeBind>
@@ -21,7 +20,6 @@ Add-PnPUserToGroup -Identity <GroupPipeBind>
                    [-EmailBody <String>]
                    [-Web <WebPipeBind>]
 ```
-
 
 ## EXAMPLES
 

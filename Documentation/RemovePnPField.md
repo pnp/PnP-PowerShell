@@ -12,7 +12,6 @@ Remove-PnPField -Identity <FieldPipeBind>
                 [-List <ListPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

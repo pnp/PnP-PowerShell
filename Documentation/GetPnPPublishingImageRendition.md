@@ -10,7 +10,6 @@ Get-PnPPublishingImageRendition [-Web <WebPipeBind>]
                                 [-Identity <ImageRenditionPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

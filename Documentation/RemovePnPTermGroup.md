@@ -11,7 +11,6 @@ Remove-PnPTermGroup -GroupName <String>
                     [-Force [<SwitchParameter>]]
 ```
 
-
 ## PARAMETERS
 
 ### -Force

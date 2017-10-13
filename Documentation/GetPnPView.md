@@ -13,7 +13,6 @@ Get-PnPView -List <ListPipeBind>
             [-Includes <String[]>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

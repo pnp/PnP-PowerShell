@@ -10,7 +10,6 @@ Resume-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
                            [-Web <WebPipeBind>]
 ```
 
-
 ## PARAMETERS
 
 ### -Identity

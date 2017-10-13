@@ -10,7 +10,6 @@ Load-PnPProvisioningTemplate -Path <String>
                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

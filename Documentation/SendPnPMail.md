@@ -16,7 +16,6 @@ Send-PnPMail -To <String[]>
              [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

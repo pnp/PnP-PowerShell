@@ -1,12 +1,12 @@
 # New-PnPSite
 
 ## SYNOPSIS
-*Only available for SharePoint Online*
 BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection
 
+>Only available for SharePoint Online
 ## SYNTAX 
 
-### CommunicationBuiltInDesign
+### Communication Site With Built-in Design
 ```powershell
 New-PnPSite -Type <SiteType>
             -Title <String>
@@ -18,8 +18,7 @@ New-PnPSite -Type <SiteType>
             [-Lcid <UInt32>]
 ```
 
-
-### TeamSite
+### Team Site
 ```powershell
 New-PnPSite -Type <SiteType>
             -Title <String>
@@ -28,7 +27,6 @@ New-PnPSite -Type <SiteType>
             [-Classification <String>]
             [-IsPublic <String>]
 ```
-
 
 ### CommunicationCustomInDesign
 ```powershell
@@ -41,7 +39,6 @@ New-PnPSite -Type <SiteType>
             [-AllowFileSharingForGuestUsers [<SwitchParameter>]]
             [-Lcid <UInt32>]
 ```
-
 
 ## DESCRIPTION
 The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Team Site are supported. If you want to create a classic site, use New-PnPTenantSite.
@@ -104,7 +101,7 @@ Specifies the alias of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: TeamSite
+Parameter Sets: Team Site
 
 Required: True
 Position: 0
@@ -116,7 +113,7 @@ Specifies if guest users can share files in the new site collection
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: CommunicationBuiltInDesign
+Parameter Sets: Communication Site With Built-in Design
 
 Required: False
 Position: 0
@@ -128,7 +125,7 @@ Specifies the classification of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationBuiltInDesign
+Parameter Sets: Communication Site With Built-in Design
 
 Required: False
 Position: 0
@@ -140,7 +137,7 @@ Specifies the description of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationBuiltInDesign
+Parameter Sets: Communication Site With Built-in Design
 
 Required: False
 Position: 0
@@ -152,7 +149,7 @@ Specifies if new site collection is public. Defaults to false.
 
 ```yaml
 Type: String
-Parameter Sets: TeamSite
+Parameter Sets: Team Site
 
 Required: False
 Position: 0
@@ -164,7 +161,7 @@ Specifies the language of the new site collection. Defaults to the current langu
 
 ```yaml
 Type: UInt32
-Parameter Sets: CommunicationBuiltInDesign
+Parameter Sets: Communication Site With Built-in Design
 
 Required: False
 Position: 0
@@ -176,7 +173,7 @@ Specifies the site design of the new site collection. Defaults to 'Topic'
 
 ```yaml
 Type: CommunicationSiteDesign
-Parameter Sets: CommunicationBuiltInDesign
+Parameter Sets: Communication Site With Built-in Design
 
 Required: False
 Position: 0
@@ -200,7 +197,7 @@ Specifies the title of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationBuiltInDesign
+Parameter Sets: Communication Site With Built-in Design
 
 Required: True
 Position: 0
@@ -224,7 +221,7 @@ Specifies the full url of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: CommunicationBuiltInDesign
+Parameter Sets: Communication Site With Built-in Design
 
 Required: True
 Position: 0

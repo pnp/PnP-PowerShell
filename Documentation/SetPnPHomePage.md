@@ -10,7 +10,6 @@ Set-PnPHomePage -RootFolderRelativeUrl <String>
                 [-Web <WebPipeBind>]
 ```
 
-
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
