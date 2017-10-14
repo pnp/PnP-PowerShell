@@ -1,13 +1,16 @@
 # Disable-PnPResponsiveUI
 
 ## SYNOPSIS
-Disables the PnP Responsive UI implementation on a classic SharePoint Site
+Deactive the PnP Response UI add-on
 
 ## SYNTAX 
 
 ```powershell
 Disable-PnPResponsiveUI [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Disables the PnP Responsive UI implementation on a classic SharePoint Site
 
 ## EXAMPLES
 
@@ -34,4 +37,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -4,6 +4,7 @@
 BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection
 
 >Only available for SharePoint Online
+
 ## SYNTAX 
 
 ### Communication Site With Built-in Design
@@ -236,4 +237,4 @@ Returns the url of the newly created site collection
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

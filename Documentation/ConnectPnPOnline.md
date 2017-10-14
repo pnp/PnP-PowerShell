@@ -1,7 +1,7 @@
 # Connect-PnPOnline
 
 ## SYNOPSIS
-Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets
+Connect to a SharePoint site
 
 ## SYNTAX 
 
@@ -494,4 +494,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

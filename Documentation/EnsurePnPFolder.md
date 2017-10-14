@@ -68,4 +68,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)[Get-PnPFolder:](https://github.com/OfficeDev/PnP-PowerShell/blob/master/Documentation/GetPnPFolder.md)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)[Get-PnPFolder](https://github.com/OfficeDev/PnP-PowerShell/blob/master/Documentation/GetPnPFolder.md)

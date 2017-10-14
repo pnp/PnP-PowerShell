@@ -8,7 +8,8 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Add, "PnPClientSideText")]
-    [CmdletHelp("Adds a Client-Side Page",
+    [CmdletHelp("Adds a text element to a client-side page.",
+        "Adds a new text element to a section on a client-side page.",
       Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Add-PnPClientSideText -Page ""MyPage"" -Text ""Hello World!""",

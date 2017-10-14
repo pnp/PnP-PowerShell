@@ -1,7 +1,7 @@
 # Add-PnPTaxonomyField
 
 ## SYNOPSIS
-Adds a taxonomy field to a list or as a site column.
+Add a taxonomy field
 
 ## SYNTAX 
 
@@ -35,6 +35,9 @@ Add-PnPTaxonomyField -TermSetPath <String>
                      [-FieldOptions <AddFieldOptions>]
                      [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Adds a taxonomy/managed metadata field to a list or as a site column.
 
 ## EXAMPLES
 
@@ -209,4 +212,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

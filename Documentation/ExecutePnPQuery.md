@@ -1,7 +1,7 @@
 # Execute-PnPQuery
 
 ## SYNOPSIS
-Executes any queued actions / changes on the SharePoint Client Side Object Model Context
+Execute the current queued actions
 
 ## SYNTAX 
 
@@ -9,6 +9,9 @@ Executes any queued actions / changes on the SharePoint Client Side Object Model
 Execute-PnPQuery [-RetryCount <Int>]
                  [-RetryWait <Int>]
 ```
+
+## DESCRIPTION
+Executes any queued actions / changes on the SharePoint Client Side Object Model Context
 
 ## EXAMPLES
 
@@ -54,4 +57,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

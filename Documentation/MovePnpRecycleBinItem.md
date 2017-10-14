@@ -4,6 +4,7 @@
 Moves all items or a specific item in the first stage recycle bin of the current site collection to the second stage recycle bin
 
 >Only available for SharePoint Online
+
 ## SYNTAX 
 
 ```powershell
@@ -62,4 +63,4 @@ Accept pipeline input: True
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

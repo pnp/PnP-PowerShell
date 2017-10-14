@@ -7,6 +7,7 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
 
 
 >Only available for SharePoint Online
+
 ## SYNTAX 
 
 ### Single
@@ -94,4 +95,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

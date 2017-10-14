@@ -19,6 +19,9 @@ Set-PnPMinimalDownloadStrategy -Off [<SwitchParameter>]
                                [-Web <WebPipeBind>]
 ```
 
+## DESCRIPTION
+Activates or deactivates the minimal download strategy feature of a site
+
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
@@ -87,4 +90,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

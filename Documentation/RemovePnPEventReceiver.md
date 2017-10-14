@@ -1,7 +1,7 @@
 # Remove-PnPEventReceiver
 
 ## SYNOPSIS
-Removes/unregisters a specific event receiver
+Remove an eventreceiver
 
 ## SYNTAX 
 
@@ -12,6 +12,9 @@ Remove-PnPEventReceiver -Identity <GuidPipeBind>
                         [-Force [<SwitchParameter>]]
                         [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Removes/unregisters a specific eventreceiver
 
 ## EXAMPLES
 
@@ -81,4 +84,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

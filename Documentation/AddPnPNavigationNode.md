@@ -1,7 +1,7 @@
 # Add-PnPNavigationNode
 
 ## SYNOPSIS
-Adds a menu item to either the quicklaunch or top navigation
+Adds an item to a navigation element
 
 ## SYNTAX 
 
@@ -14,6 +14,9 @@ Add-PnPNavigationNode -Location <NavigationType>
                       [-External [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Adds a menu item to either the quicklaunch or top navigation
 
 ## EXAMPLES
 
@@ -133,4 +136,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

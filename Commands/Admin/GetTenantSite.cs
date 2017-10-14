@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantSite", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Retrieve site information.", DetailedDescription = "Use this cmdlet to retrieve site information from your tenant administration.",
+    [CmdletHelp(@"Retrieve site information.", "Use this cmdlet to retrieve site information from your tenant administration.",
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online,
         OutputType = typeof(Microsoft.Online.SharePoint.TenantAdministration.SiteProperties),

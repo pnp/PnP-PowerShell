@@ -7,7 +7,8 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWorkflowSubscription")]
-    [CmdletHelp("Removes a workflow subscription",
+    [CmdletHelp("Remove workflow subscription",
+        "Removes a previously registered workflow subscription",
         Category = CmdletHelpCategory.Workflows)]
 
     public class RemoveWorkflowSubscription : PnPWebCmdlet

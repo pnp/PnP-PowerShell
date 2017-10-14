@@ -1,13 +1,16 @@
 # Set-PnPContext
 
 ## SYNOPSIS
-Sets the Client Context to use by the cmdlets
+Set the ClientContext
 
 ## SYNTAX 
 
 ```powershell
 Set-PnPContext -Context <ClientContext>
 ```
+
+## DESCRIPTION
+Sets the Client Context to use by the cmdlets, which allows easy context switching. See examples for details.
 
 ## EXAMPLES
 
@@ -40,4 +43,4 @@ Accept pipeline input: True
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -1,7 +1,7 @@
 # Get-PnPStoredCredential
 
 ## SYNOPSIS
-Returns a stored credential from the Windows Credential Manager
+Get a credential
 
 ## SYNTAX 
 
@@ -9,6 +9,9 @@ Returns a stored credential from the Windows Credential Manager
 Get-PnPStoredCredential -Name <String>
                         [-Type <CredentialType>]
 ```
+
+## DESCRIPTION
+Returns a stored credential from the Windows Credential Manager
 
 ## EXAMPLES
 
@@ -54,4 +57,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

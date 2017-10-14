@@ -1,7 +1,7 @@
 # Get-PnPProperty
 
 ## SYNOPSIS
-Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.
+Returns a previously not loaded property of a ClientObject
 
 ## SYNTAX 
 
@@ -9,6 +9,9 @@ Will populate properties of an object and optionally, if needed, load the value 
 Get-PnPProperty -ClientObject <ClientObject>
                 -Property <String[]>
 ```
+
+## DESCRIPTION
+Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.
 
 ## EXAMPLES
 
@@ -63,4 +66,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

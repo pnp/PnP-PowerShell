@@ -1,13 +1,16 @@
 # Get-PnPAuthenticationRealm
 
 ## SYNOPSIS
-Gets the authentication realm for the current web
+Returns the authentication realm
 
 ## SYNTAX 
 
 ```powershell
 Get-PnPAuthenticationRealm [-Url <String>]
 ```
+
+## DESCRIPTION
+Gets the authentication realm for the current web
 
 ## EXAMPLES
 
@@ -39,6 +42,10 @@ Position: 0
 Accept pipeline input: True
 ```
 
+## OUTPUTS
+
+### System.String
+
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

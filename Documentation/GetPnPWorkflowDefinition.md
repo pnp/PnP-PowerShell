@@ -1,7 +1,7 @@
 # Get-PnPWorkflowDefinition
 
 ## SYNOPSIS
-Returns a workflow definition
+Return a workflow definition
 
 ## SYNTAX 
 
@@ -10,6 +10,9 @@ Get-PnPWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
                           [-Web <WebPipeBind>]
                           [-Name <String>]
 ```
+
+## DESCRIPTION
+Returns a workflow definition
 
 ## PARAMETERS
 
@@ -55,4 +58,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

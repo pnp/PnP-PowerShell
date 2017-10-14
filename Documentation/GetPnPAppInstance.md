@@ -1,7 +1,7 @@
 # Get-PnPAppInstance
 
 ## SYNOPSIS
-Returns a SharePoint AddIn Instance in the site
+Returns a SharePoint AddIn Instance
 
 ## SYNTAX 
 
@@ -11,6 +11,9 @@ Get-PnPAppInstance [-Web <WebPipeBind>]
                    [-Includes <String[]>]
                    [-Identity <AppPipeBind>]
 ```
+
+## DESCRIPTION
+Returns a SharePoint App/Addin that has been installed in the current site
 
 ## EXAMPLES
 
@@ -72,4 +75,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

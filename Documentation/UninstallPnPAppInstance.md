@@ -11,6 +11,9 @@ Uninstall-PnPAppInstance -Identity <AppPipeBind>
                          [-Web <WebPipeBind>]
 ```
 
+## DESCRIPTION
+Removes an add-in/app that has been installed to a site.
+
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
@@ -74,4 +77,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

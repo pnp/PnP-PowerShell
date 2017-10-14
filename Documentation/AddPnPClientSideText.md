@@ -1,9 +1,10 @@
 # Add-PnPClientSideText
 
 ## SYNOPSIS
-Adds a Client-Side Page
+Adds a text element to a client-side page.
 
 >Only available for SharePoint Online
+
 ## SYNTAX 
 
 ### Default
@@ -23,6 +24,9 @@ Add-PnPClientSideText -Text <String>
                       [-Order <Int>]
                       [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Adds a new text element to a section on a client-side page.
 
 ## EXAMPLES
 
@@ -109,4 +113,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

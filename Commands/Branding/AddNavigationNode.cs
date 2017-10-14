@@ -7,7 +7,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPNavigationNode")]
-    [CmdletHelp("Adds a menu item to either the quicklaunch or top navigation", 
+    [CmdletHelp("Adds an item to a navigation element",
+        "Adds a menu item to either the quicklaunch or top navigation",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
         Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso"" -Url ""http://contoso.sharepoint.com/sites/contoso/"" -Location ""QuickLaunch""",
@@ -38,10 +39,10 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
         [Parameter(Mandatory = false, HelpMessage = "Optionally value of a header entry to add the menu item to.")]
         public string Header;
-        
+
         [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection.")]
         public SwitchParameter First;
-        
+
         [Parameter(Mandatory = false, HelpMessage = "Indicates the destination URL is outside of the site collection.")]
         public SwitchParameter External;
 

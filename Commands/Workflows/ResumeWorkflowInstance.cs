@@ -8,7 +8,8 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsLifecycle.Resume, "PnPWorkflowInstance")]
-    [CmdletHelp("Resumes a previously stopped workflow instance",
+    [CmdletHelp("Resume a workflow",
+        "Resumes a previously stopped workflow instance",
         Category = CmdletHelpCategory.Workflows)]
 
     public class ResumeWorkflowInstance : PnPWebCmdlet

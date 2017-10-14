@@ -9,6 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
     [CmdletHelp("Disconnects the context", 
+        "Disconnects the current context and requires you to build up a new connection in order to use the Cmdlets again. Using Connect-PnPOnline to connect to a different site has the same effect.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
         Code = @"PS:> Disconnect-PnPOnline", 

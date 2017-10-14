@@ -1,7 +1,10 @@
 # Get-PnPHealthScore
 
 ## SYNOPSIS
-Retrieves the current health score value of the server
+Retrieves the healthscore
+
+## DESCRIPTION
+Retrieves the current health score value of the server which is a value between 0 and 10. Lower is better.
 
 ## EXAMPLES
 
@@ -27,4 +30,4 @@ Returns a int value representing the current health score value of the server.
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

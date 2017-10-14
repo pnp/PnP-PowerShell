@@ -1,7 +1,7 @@
 # Set-PnPTraceLog
 
 ## SYNOPSIS
-Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.
+Turn log tracing on or off
 
 ## SYNTAX 
 
@@ -19,6 +19,9 @@ Set-PnPTraceLog -On [<SwitchParameter>]
 ```powershell
 Set-PnPTraceLog -Off [<SwitchParameter>]
 ```
+
+## DESCRIPTION
+Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets, uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.
 
 ## EXAMPLES
 
@@ -138,4 +141,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -1,7 +1,7 @@
 # Get-PnPCustomAction
 
 ## SYNOPSIS
-Returns all or a specific custom action(s)
+Return user custom actions
 
 ## SYNTAX 
 
@@ -13,6 +13,9 @@ Get-PnPCustomAction [-Identity <GuidPipeBind>]
                     [-Web <WebPipeBind>]
                     [-Includes <String[]>]
 ```
+
+## DESCRIPTION
+Returns all or a specific user custom action
 
 ## EXAMPLES
 
@@ -105,4 +108,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

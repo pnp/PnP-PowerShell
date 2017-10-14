@@ -1,7 +1,7 @@
 # Add-PnPField
 
 ## SYNOPSIS
-Adds a field to a list or as a site column
+Add a field
 
 ## SYNTAX 
 
@@ -47,6 +47,9 @@ Add-PnPField -DisplayName <String>
              [-Web <WebPipeBind>]
              [-Choices <String[]>]
 ```
+
+## DESCRIPTION
+Adds a field to a list or as a site column
 
 ## EXAMPLES
 
@@ -228,4 +231,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

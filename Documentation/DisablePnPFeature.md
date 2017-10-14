@@ -12,6 +12,9 @@ Disable-PnPFeature -Identity <GuidPipeBind>
                    [-Web <WebPipeBind>]
 ```
 
+## DESCRIPTION
+Deactives a feature that was active on a site
+
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
@@ -87,4 +90,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
