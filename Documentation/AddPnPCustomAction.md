@@ -1,7 +1,7 @@
 # Add-PnPCustomAction
 
 ## SYNOPSIS
-Adds a custom action to a web
+Adds a custom action
 
 ## SYNTAX 
 
@@ -34,6 +34,9 @@ Add-PnPCustomAction -Name <String>
                     [-Scope <CustomActionScope>]
                     [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Adds a user custom action to a web or sitecollection.
 
 ## EXAMPLES
 
@@ -242,4 +245,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)[UserCustomAction:](https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.usercustomaction.aspx)[BasePermissions:](https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.basepermissions.aspx)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)[UserCustomAction](https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.usercustomaction.aspx)[BasePermissions](https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.basepermissions.aspx)

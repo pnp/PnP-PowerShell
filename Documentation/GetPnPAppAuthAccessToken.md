@@ -1,7 +1,10 @@
 # Get-PnPAppAuthAccessToken
 
 ## SYNOPSIS
-Returns the access token from the current client context (In App authentication mode only)
+Returns the access token
+
+## DESCRIPTION
+Returns the access token from the current client context (only works with App-Only authentication)
 
 ## EXAMPLES
 
@@ -18,4 +21,4 @@ This will put the access token from current context in the $accessToken variable
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

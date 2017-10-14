@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenantSite")]
     [CmdletHelp(@"Set site information.",
-        DetailedDescription = "Sets site properties for existing sites.",
+        "Sets site properties for existing sites.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(

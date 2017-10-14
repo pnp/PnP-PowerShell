@@ -10,7 +10,8 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
 
         [Obsolete("Is not used. Use DetailedDescription instead.")]
         public string Details { get; set; }
-
+        public string Description { get; set; }
+        public CmdletSupportedPlatform SupportedPlatform { get; set; }
         public string DetailedDescription { get; set; }
         public string Copyright { get; set; }
         public string Version { get; set; }
@@ -22,12 +23,17 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         public CmdletHelpCategory Category { get; set; }
         public CmdletHelpAttribute(string description, CmdletSupportedPlatform supportedPlatform = CmdletSupportedPlatform.All)
         {
-            _description = description;
+            Description = description;
             SupportedPlatform = supportedPlatform;
         }
 
-        public string Description => _description;
-        public CmdletSupportedPlatform SupportedPlatform { get; set; }
+        public CmdletHelpAttribute(string description, string detailedDescription, CmdletSupportedPlatform supportedPlatform = CmdletSupportedPlatform.All)
+        {
+            Description = description;
+            DetailedDescription = detailedDescription;
+            SupportedPlatform = supportedPlatform;
+        }
+
     }
 
 }

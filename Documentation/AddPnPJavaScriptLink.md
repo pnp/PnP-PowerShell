@@ -13,6 +13,9 @@ Add-PnPJavaScriptLink -Name <String>
                       [-Web <WebPipeBind>]
 ```
 
+## DESCRIPTION
+Creates a custom action that refers to a JavaScript file
+
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
@@ -94,4 +97,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

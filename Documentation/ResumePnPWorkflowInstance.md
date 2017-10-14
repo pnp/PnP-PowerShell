@@ -1,7 +1,7 @@
 # Resume-PnPWorkflowInstance
 
 ## SYNOPSIS
-Resumes a previously stopped workflow instance
+Resume a workflow
 
 ## SYNTAX 
 
@@ -9,6 +9,9 @@ Resumes a previously stopped workflow instance
 Resume-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
                            [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Resumes a previously stopped workflow instance
 
 ## PARAMETERS
 
@@ -38,4 +41,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

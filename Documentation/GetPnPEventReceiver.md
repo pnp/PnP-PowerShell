@@ -1,7 +1,7 @@
 # Get-PnPEventReceiver
 
 ## SYNOPSIS
-Returns all or a specific event receiver
+Return registered eventreceivers
 
 ## SYNTAX 
 
@@ -18,6 +18,9 @@ Get-PnPEventReceiver [-Identity <GuidPipeBind>]
                      [-Web <WebPipeBind>]
                      [-Includes <String[]>]
 ```
+
+## DESCRIPTION
+Returns all registered or a specific eventreceiver
 
 ## EXAMPLES
 
@@ -105,4 +108,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

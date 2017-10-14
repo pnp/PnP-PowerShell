@@ -4,6 +4,7 @@
 Returns the available web templates.
 
 >Only available for SharePoint Online
+
 ## SYNTAX 
 
 ```powershell
@@ -69,4 +70,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)[Locale IDs:](http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)[Locale IDs](http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911)

@@ -9,7 +9,8 @@ using SharePointPnP.PowerShell.Commands.Extensions;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebPermission", DefaultParameterSetName = "User")]
-    [CmdletHelp("Sets web permissions",
+    [CmdletHelp("Set permissions",
+        "Sets web permissions",
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = "PS:> Set-PnPWebPermission -Url projectA -User 'user@contoso.com' -AddRole 'Contribute'",

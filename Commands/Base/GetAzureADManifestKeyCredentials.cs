@@ -6,7 +6,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADManifestKeyCredentials")]
-    [CmdletHelp("Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps", 
+    [CmdletHelp("Return the JSON Manifest snippet for Azure Apps",
+        "Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps", 
         Category = CmdletHelpCategory.Base,
         OutputType=typeof(string),
         OutputTypeDescription = "Outputs a JSON formatted string")]

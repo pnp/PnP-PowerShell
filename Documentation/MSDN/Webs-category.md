@@ -17,4 +17,4 @@ Cmdlet|Description|Platform
 **[Remove&#8209;PnPWeb](RemovePnPWeb.md)** |Removes a subweb in the current web|All
 **[Set&#8209;PnPWeb](SetPnPWeb.md)** |Sets properties on a web|All
 **[Invoke&#8209;PnPWebAction](InvokePnPWebAction.md)** |Executes operations on web, lists and list items.|All
-**[Set&#8209;PnPWebPermission](SetPnPWebPermission.md)** |Sets web permissions|All
+**[Set&#8209;PnPWebPermission](SetPnPWebPermission.md)** |Set permissions|All

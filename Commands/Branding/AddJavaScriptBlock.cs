@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPJavaScriptBlock")]
     [CmdletHelp("Adds a link to a JavaScript snippet/block to a web or site collection",
-        DetailedDescription = "Specify a scope as 'Site' to add the custom action to all sites in a site collection.",
+        "Specify a scope as 'Site' to add the custom action to all sites in a site collection.",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(Code = "PS:> Add-PnPJavaScriptBlock -Name myAction -script '<script>Alert(\"This is my Script block\");</script>' -Sequence 9999 -Scope Site",
                 Remarks = "Add a JavaScript code block  to all pages within the current site collection under the name myAction and at order 9999",
@@ -64,7 +64,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             }
             else
             {
-                ThrowTerminatingError(new ErrorRecord(new Exception("Scope parameter can only be set to Web or Site"),"INCORRECTVALUE",ErrorCategory.InvalidArgument, this));
+                ThrowTerminatingError(new ErrorRecord(new Exception("Scope parameter can only be set to Web or Site"), "INCORRECTVALUE", ErrorCategory.InvalidArgument, this));
             }
         }
     }

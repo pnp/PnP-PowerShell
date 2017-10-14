@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Get", "PnPAccessToken")]
-    [CmdletHelp("Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
+    [CmdletHelp("Returns the current OAuth Access token",
+        "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
        Code = "PS:> Get-PnPAccessToken",

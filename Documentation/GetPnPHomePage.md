@@ -1,13 +1,16 @@
 # Get-PnPHomePage
 
 ## SYNOPSIS
-Returns the URL to the home page
+Return the homepage
 
 ## SYNTAX 
 
 ```powershell
 Get-PnPHomePage [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Returns the URL to the page set as home page
 
 ## EXAMPLES
 
@@ -38,4 +41,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

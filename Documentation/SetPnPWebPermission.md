@@ -1,7 +1,7 @@
 # Set-PnPWebPermission
 
 ## SYNOPSIS
-Sets web permissions
+Set permissions
 
 ## SYNTAX 
 
@@ -56,6 +56,9 @@ Set-PnPWebPermission -Url <String>
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Sets web permissions
 
 ## EXAMPLES
 
@@ -161,4 +164,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

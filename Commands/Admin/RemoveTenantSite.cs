@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
     [CmdletHelp("Removes a site collection",
-        DetailedDescription = "Removes a site collection which is listed in your tenant administration site.",
+        "Removes a site collection which is listed in your tenant administration site.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
          Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(

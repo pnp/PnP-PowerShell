@@ -9,7 +9,8 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "PnPCustomAction")]
-    [CmdletHelp("Returns all or a specific custom action(s)",
+    [CmdletHelp("Return user custom actions",
+        "Returns all or a specific user custom action",
         Category = CmdletHelpCategory.Branding,
         OutputType = typeof(List<UserCustomAction>),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.usercustomaction.aspx")]

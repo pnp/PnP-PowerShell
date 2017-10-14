@@ -1,6 +1,9 @@
 # Get-PnPContext
 
 ## SYNOPSIS
+Returns the current context
+
+## DESCRIPTION
 Returns a Client Side Object Model context
 
 ## EXAMPLES
@@ -18,4 +21,4 @@ This will put the current context in the $ctx variable.
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

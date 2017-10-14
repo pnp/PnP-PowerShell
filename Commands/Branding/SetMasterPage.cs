@@ -7,11 +7,12 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPMasterPage")]
-    [CmdletHelp("Sets the default master page of the current web.",
+    [CmdletHelp("Set the masterpage",
+        "Sets the default master page of the current web.",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
         Code = @"PS:> Set-PnPMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master",
-        Remarks = "Sets the master page based on a server relative URL", 
+        Remarks = "Sets the master page based on a server relative URL",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Set-PnPMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master -CustomMasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master",

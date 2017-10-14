@@ -4,6 +4,7 @@
 Gets the available client side components on a particular page
 
 >Only available for SharePoint Online
+
 ## SYNTAX 
 
 ```powershell
@@ -75,4 +76,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -5,4 +5,4 @@ Proxy cmdlet for using Copy-Item between SharePoint provider and FileSystem prov
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

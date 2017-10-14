@@ -1,9 +1,10 @@
 # Add-PnPClientSideWebPart
 
 ## SYNOPSIS
-Adds a Client-Side Component to a page
+Adds a Client-Side Web Part to a client-side page
 
 >Only available for SharePoint Online
+
 ## SYNTAX 
 
 ### Default with built-in webpart
@@ -45,6 +46,9 @@ Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
                          [-Order <Int>]
                          [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Adds a client-side web part to an existing client-side page.
 
 ## EXAMPLES
 
@@ -169,4 +173,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

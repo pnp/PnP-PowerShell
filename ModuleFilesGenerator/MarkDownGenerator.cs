@@ -72,7 +72,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                     if (cmdletInfo.Platform != "All")
                     {
-                        docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}>Only available for {cmdletInfo.Platform}{Environment.NewLine}");
+                        docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}>Only available for {cmdletInfo.Platform}{Environment.NewLine}{Environment.NewLine}");
                     }
                     else
                     {

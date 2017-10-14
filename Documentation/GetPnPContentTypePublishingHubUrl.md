@@ -17,4 +17,4 @@ This will retrieve the url to the content type hub, connect to it, and then retr
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

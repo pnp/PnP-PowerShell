@@ -1,13 +1,16 @@
 # Get-PnPAzureADManifestKeyCredentials
 
 ## SYNOPSIS
-Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps
+Return the JSON Manifest snippet for Azure Apps
 
 ## SYNTAX 
 
 ```powershell
 Get-PnPAzureADManifestKeyCredentials -CertPath <String>
 ```
+
+## DESCRIPTION
+Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps
 
 ## EXAMPLES
 
@@ -47,4 +50,4 @@ Outputs a JSON formatted string
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

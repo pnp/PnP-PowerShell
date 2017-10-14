@@ -1,7 +1,7 @@
 # Connect-PnPMicrosoftGraph
 
 ## SYNOPSIS
-Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API
+Connect to the Microsoft Graph
 
 ## SYNTAX 
 
@@ -16,6 +16,9 @@ Connect-PnPMicrosoftGraph -AppId <String>
                           -AppSecret <String>
                           -AADDomain <String>
 ```
+
+## DESCRIPTION
+Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API
 
 ## EXAMPLES
 
@@ -85,4 +88,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

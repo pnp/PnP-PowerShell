@@ -1,7 +1,7 @@
 # Tenant Administration 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[Get&#8209;PnPAccessToken](GetPnPAccessToken.md)** |Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API|All
+**[Get&#8209;PnPAccessToken](GetPnPAccessToken.md)** |Returns the current OAuth Access token|All
 **[New&#8209;PnPSite](NewPnPSite.md)** |BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection|SharePoint Online
 **[Clear&#8209;PnPTenantRecycleBinItem](ClearPnPTenantRecycleBinItem.md)** |Permanently deletes a site collection from the tenant scoped recycle bin|All
 **[Restore&#8209;PnPTenantRecycleBinItem](RestorePnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin|SharePoint Online

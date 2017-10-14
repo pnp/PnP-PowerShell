@@ -73,4 +73,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)[Field CAML:](http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)[Field CAML](http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx)

@@ -1,7 +1,7 @@
 # Set-PnPMasterPage
 
 ## SYNOPSIS
-Sets the default master page of the current web.
+Set the masterpage
 
 ## SYNTAX 
 
@@ -18,6 +18,9 @@ Set-PnPMasterPage [-MasterPageSiteRelativeUrl <String>]
                   [-CustomMasterPageSiteRelativeUrl <String>]
                   [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Sets the default master page of the current web.
 
 ## EXAMPLES
 
@@ -115,4 +118,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -1,7 +1,7 @@
 # Remove-PnPWorkflowSubscription
 
 ## SYNOPSIS
-Removes a workflow subscription
+Remove workflow subscription
 
 ## SYNTAX 
 
@@ -9,6 +9,9 @@ Removes a workflow subscription
 Remove-PnPWorkflowSubscription -Identity <WorkflowSubscriptionPipeBind>
                                [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Removes a previously registered workflow subscription
 
 ## PARAMETERS
 
@@ -38,4 +41,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

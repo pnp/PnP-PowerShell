@@ -1,7 +1,7 @@
 # Enable-PnPResponsiveUI
 
 ## SYNOPSIS
-Enables the PnP Responsive UI implementation on a classic SharePoint Site
+Activates the PnP Response UI Add-on
 
 ## SYNTAX 
 
@@ -9,6 +9,9 @@ Enables the PnP Responsive UI implementation on a classic SharePoint Site
 Enable-PnPResponsiveUI [-InfrastructureSiteUrl <String>]
                        [-Web <WebPipeBind>]
 ```
+
+## DESCRIPTION
+Enables the PnP Responsive UI implementation on a classic SharePoint Site
 
 ## EXAMPLES
 
@@ -47,4 +50,4 @@ Accept pipeline input: False
 
 # RELATED LINKS
 
-[SharePoint Developer Patterns and Practices:](http://aka.ms/sppnp)
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

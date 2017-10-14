@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPTimeZoneId")]
     [CmdletHelp("Returns a time zone ID",
-        DetailedDescription = "In order to create a new classic site you need to specify the timezone this site will use. Use the cmdlet to retrieve a list of possible values.",
+        "In order to create a new classic site you need to specify the timezone this site will use. Use the cmdlet to retrieve a list of possible values.",
          Category = CmdletHelpCategory.TenantAdmin,
          OutputType = typeof(IEnumerable<Zone>),
          OutputTypeDescription =
