@@ -1,6 +1,11 @@
 # Set-PnPGroupPermissions
+
+## SYNOPSIS
 Adds and/or removes permissions of a specific SharePoint group
-## Syntax
+
+## SYNTAX 
+
+### ByName
 ```powershell
 Set-PnPGroupPermissions -Identity <GroupPipeBind>
                         [-List <ListPipeBind>]
@@ -9,43 +14,106 @@ Set-PnPGroupPermissions -Identity <GroupPipeBind>
                         [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Identity|GroupPipeBind|True|Get the permissions of a specific group by name|
-|AddRole|String[]|False|Name of the permission set to add to this SharePoint group|
-|List|ListPipeBind|False|The list to apply the command to.|
-|RemoveRole|String[]|False|Name of the permission set to remove from this SharePoint group|
-|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole Contribute
 ```
+
 Adds the 'Contribute' permission to the SharePoint group with the name 'My Site Members'
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole 'Full Control' -AddRole 'Read'
 ```
+
 Removes the 'Full Control' from and adds the 'Contribute' permissions to the SharePoint group with the name 'My Site Members'
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -AddRole @('Contribute', 'Design')
 ```
+
 Adds the 'Contribute' and 'Design' permissions to the SharePoint group with the name 'My Site Members'
 
-### Example 4
+### ------------------EXAMPLE 4------------------
 ```powershell
 PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole @('Contribute', 'Design')
 ```
+
 Removes the 'Contribute' and 'Design' permissions from the SharePoint group with the name 'My Site Members'
 
-### Example 5
+### ------------------EXAMPLE 5------------------
 ```powershell
 PS:> Set-PnPGroupPermissions -Identity 'My Site Members' -List 'MyList' -RemoveRole @('Contribute')
 ```
+
 Removes the 'Contribute' permissions from the list 'MyList' for the group with the name 'My Site Members'
+
+## PARAMETERS
+
+### -AddRole
+Name of the permission set to add to this SharePoint group
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Identity
+Get the permissions of a specific group by name
+
+```yaml
+Type: GroupPipeBind
+Parameter Sets: ByName
+Aliases: Name
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+### -List
+The list to apply the command to.
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -RemoveRole
+Name of the permission set to remove from this SharePoint group
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

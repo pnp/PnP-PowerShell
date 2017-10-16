@@ -1,23 +1,43 @@
 # Add-PnPApp
+
+## SYNOPSIS
 Add/uploads an available app to the app catalog
->*Only available for SharePoint Online*
-## Syntax
+
+>Only available for SharePoint Online
+
+## SYNTAX 
+
 ```powershell
 Add-PnPApp -Path <String>
 ```
 
+## EXAMPLES
 
-## Returns
->OfficeDevPnP.Core.ALM.AppMetadata
-
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Path|String|True|Specifies the Id or an actual app metadata instance|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Add-PnPApp -Path ./myapp.sppkg
 ```
+
 This will upload the specified app package to the app catalog
+
+## PARAMETERS
+
+### -Path
+Specifies the Id or an actual app metadata instance
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+## OUTPUTS
+
+### OfficeDevPnP.Core.ALM.AppMetadata
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

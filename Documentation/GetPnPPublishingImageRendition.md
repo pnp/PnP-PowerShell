@@ -1,36 +1,68 @@
 # Get-PnPPublishingImageRendition
+
+## SYNOPSIS
 Returns all image renditions or if Identity is specified a specific one
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Get-PnPPublishingImageRendition [-Web <WebPipeBind>]
                                 [-Identity <ImageRenditionPipeBind>]
 ```
 
+## EXAMPLES
 
-## Returns
->[Microsoft.SharePoint.Client.Publishing.ImageRendition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.publishing.imagerendition.aspx)
-
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Identity|ImageRenditionPipeBind|False|Id or name of an existing image rendition|
-|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Get-PnPPublishingImageRendition
 ```
+
 Returns all Image Renditions
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Get-PnPPublishingImageRendition -Identity "Test"
 ```
+
 Returns the image rendition named "Test"
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Get-PnPPublishingImageRendition -Identity 2
 ```
+
 Returns the image rendition where its id equals 2
+
+## PARAMETERS
+
+### -Identity
+Id or name of an existing image rendition
+
+```yaml
+Type: ImageRenditionPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: 0
+Accept pipeline input: True
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.Publishing.ImageRendition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.publishing.imagerendition.aspx)
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
