@@ -1,11 +1,6 @@
 # Set-PnPListPermission
-
-## SYNOPSIS
 Sets list permissions
-
-## SYNTAX 
-
-### Group
+## Syntax
 ```powershell
 Set-PnPListPermission -Group <GroupPipeBind>
                       -Identity <ListPipeBind>
@@ -14,7 +9,7 @@ Set-PnPListPermission -Group <GroupPipeBind>
                       [-Web <WebPipeBind>]
 ```
 
-### User
+
 ```powershell
 Set-PnPListPermission -User <String>
                       -Identity <ListPipeBind>
@@ -23,96 +18,26 @@ Set-PnPListPermission -User <String>
                       [-Web <WebPipeBind>]
 ```
 
-## EXAMPLES
 
-### ------------------EXAMPLE 1------------------
+## Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Group|GroupPipeBind|True||
+|Identity|ListPipeBind|True|The ID or Title of the list.|
+|User|String|True||
+|AddRole|String|False|The role that must be assigned to the group or user|
+|RemoveRole|String|False|The role that must be removed from the group or user|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
+## Examples
+
+### Example 1
 ```powershell
 PS:> Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -AddRole 'Contribute'
 ```
-
 Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'
 
-### ------------------EXAMPLE 2------------------
+### Example 2
 ```powershell
 PS:> Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'
 ```
-
 Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'
-
-## PARAMETERS
-
-### -AddRole
-The role that must be assigned to the group or user
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Group
-
-
-```yaml
-Type: GroupPipeBind
-Parameter Sets: Group
-
-Required: True
-Position: Named
-Accept pipeline input: False
-```
-
-### -Identity
-The ID or Title of the list.
-
-```yaml
-Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Accept pipeline input: False
-```
-
-### -RemoveRole
-The role that must be removed from the group or user
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -User
-
-
-```yaml
-Type: String
-Parameter Sets: User
-
-Required: True
-Position: Named
-Accept pipeline input: False
-```
-
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-# RELATED LINKS
-
-[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -407,7 +407,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\NewSite.cs" />
+    <Compile Include="Apps\RemoveApp.cs" />
+    <Compile Include="Apps\AddApp.cs" />
+    <Compile Include="Apps\UnpublishApp.cs" />
+    <Compile Include="Apps\PublishApp.cs" />
+    <Compile Include="Apps\UninstallApp.cs" />
+    <Compile Include="Apps\InstallApp.cs" />
+    <Compile Include="Apps\GetApp.cs" />
     <Compile Include="Base\GetAppAuthAccessToken.cs" />
+    <Compile Include="Base\PipeBinds\AppMetadataPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ClientSideComponentPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericPropertiesPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ClientSidePagePipeBind.cs" />

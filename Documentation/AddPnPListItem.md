@@ -1,10 +1,6 @@
 # Add-PnPListItem
-
-## SYNOPSIS
 Adds an item to a list
-
-## SYNTAX 
-
+## Syntax
 ```powershell
 Add-PnPListItem -List <ListPipeBind>
                 [-ContentType <ContentTypePipeBind>]
@@ -13,76 +9,17 @@ Add-PnPListItem -List <ListPipeBind>
                 [-Web <WebPipeBind>]
 ```
 
-## EXAMPLES
 
-### ------------------EXAMPLE 1------------------
-```powershell
-Add-PnPListItem -List "Demo List" -Values @{"Title" = "Test Title"; "Category"="Test Category"}
-```
+## Returns
+>[Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)
 
-Adds a new list item to the "Demo List", and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
-
-### ------------------EXAMPLE 2------------------
-```powershell
-Add-PnPListItem -List "Demo List" -ContentType "Company" -Values @{"Title" = "Test Title"; "Category"="Test Category"}
-```
-
-Adds a new list item to the "Demo List", sets the content type to "Company" and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
-
-### ------------------EXAMPLE 3------------------
-```powershell
-Add-PnPListItem -List "Demo List" -Values @{"MultiUserField"="user1@domain.com","user2@domain.com"}
-```
-
-Adds a new list item to the "Demo List" and sets the user field called MultiUserField to 2 users. Separate multiple users with a comma.
-
-### ------------------EXAMPLE 4------------------
-```powershell
-Add-PnPListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Folder "projects/europe"
-```
-
-Adds a new list item to the "Demo List". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.
-
-## PARAMETERS
-
-### -ContentType
-Specify either the name, ID or an actual content type.
-
-```yaml
-Type: ContentTypePipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Folder
-The list relative URL of a folder. E.g. "MyFolder" for a folder located in the root of the list, or "MyFolder/SubFolder" for a folder located in the MyFolder folder which is located in the root of the list.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -List
-The ID, Title or Url of the list.
-
-```yaml
-Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Accept pipeline input: True
-```
-
-### -Values
-Use the internal names of the fields when specifying field names.
+## Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|List|ListPipeBind|True|The ID, Title or Url of the list.|
+|ContentType|ContentTypePipeBind|False|Specify either the name, ID or an actual content type.|
+|Folder|String|False|The list relative URL of a folder. E.g. "MyFolder" for a folder located in the root of the list, or "MyFolder/SubFolder" for a folder located in the MyFolder folder which is located in the root of the list.|
+|Values|Hashtable|False|Use the internal names of the fields when specifying field names.
 
 Single line of text: -Values @{"Title" = "Title New"}
 
@@ -120,33 +57,30 @@ Managed Metadata (multiple values with paths to terms): -Values @{"MetadataField
 
 Managed Metadata (multiple values with ids of terms): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593"}
 
-Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnp"}
+Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnp"}|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
+## Examples
 
-```yaml
-Type: Hashtable
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
+### Example 1
+```powershell
+Add-PnPListItem -List "Demo List" -Values @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
+Adds a new list item to the "Demo List", and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
 
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
+### Example 2
+```powershell
+Add-PnPListItem -List "Demo List" -ContentType "Company" -Values @{"Title" = "Test Title"; "Category"="Test Category"}
 ```
+Adds a new list item to the "Demo List", sets the content type to "Company" and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.
 
-## OUTPUTS
+### Example 3
+```powershell
+Add-PnPListItem -List "Demo List" -Values @{"MultiUserField"="user1@domain.com","user2@domain.com"}
+```
+Adds a new list item to the "Demo List" and sets the user field called MultiUserField to 2 users. Separate multiple users with a comma.
 
-### [Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)
-
-# RELATED LINKS
-
-[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
+### Example 4
+```powershell
+Add-PnPListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Folder "projects/europe"
+```
+Adds a new list item to the "Demo List". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.

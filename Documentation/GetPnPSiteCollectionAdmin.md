@@ -1,40 +1,22 @@
 # Get-PnPSiteCollectionAdmin
-
-## SYNOPSIS
 Returns the current site collection administrators of the site colleciton in the current context
-
-## SYNTAX 
-
+## Syntax
 ```powershell
 Get-PnPSiteCollectionAdmin [-Web <WebPipeBind>]
 ```
 
-## DESCRIPTION
+
+## Detailed Description
 This command will return all current site collection administrators of the site collection in the current context
 
-## EXAMPLES
+## Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
+## Examples
 
-### ------------------EXAMPLE 1------------------
+### Example 1
 ```powershell
 PS:> Get-PnPSiteCollectionAdmin
 ```
-
 This will return all the current site collection administrators of the site collection in the current context
-
-## PARAMETERS
-
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-# RELATED LINKS
-
-[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

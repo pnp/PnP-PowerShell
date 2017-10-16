@@ -1,10 +1,6 @@
 # Set-PnPWeb
-
-## SYNOPSIS
 Sets properties on a web
-
-## SYNTAX 
-
+## Syntax
 ```powershell
 Set-PnPWeb [-SiteLogoUrl <String>]
            [-AlternateCssUrl <String>]
@@ -15,95 +11,14 @@ Set-PnPWeb [-SiteLogoUrl <String>]
            [-Web <WebPipeBind>]
 ```
 
-## DESCRIPTION
-Sets properties on a web
 
-## PARAMETERS
-
-### -AlternateCssUrl
-
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -CustomMasterUrl
-
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Description
-
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -MasterUrl
-
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -SiteLogoUrl
-
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Title
-
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-# RELATED LINKS
-
-[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
+## Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|AlternateCssUrl|String|False||
+|CustomMasterUrl|String|False||
+|Description|String|False||
+|MasterUrl|String|False||
+|SiteLogoUrl|String|False||
+|Title|String|False||
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|

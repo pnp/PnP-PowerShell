@@ -1,10 +1,6 @@
 # Disable-PnPFeature
-
-## SYNOPSIS
 Disables a feature
-
-## SYNTAX 
-
+## Syntax
 ```powershell
 Disable-PnPFeature -Identity <GuidPipeBind>
                    [-Force [<SwitchParameter>]]
@@ -12,82 +8,30 @@ Disable-PnPFeature -Identity <GuidPipeBind>
                    [-Web <WebPipeBind>]
 ```
 
-## DESCRIPTION
-Deactives a feature that was active on a site
 
-## EXAMPLES
+## Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|GuidPipeBind|True|The id of the feature to disable.|
+|Force|SwitchParameter|False|Forcibly disable the feature.|
+|Scope|FeatureScope|False|Specify the scope of the feature to deactivate, either Web or Site. Defaults to Web.|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
+## Examples
 
-### ------------------EXAMPLE 1------------------
+### Example 1
 ```powershell
 PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 ```
-
 This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"
 
-### ------------------EXAMPLE 2------------------
+### Example 2
 ```powershell
 PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
 ```
-
 This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with force.
 
-### ------------------EXAMPLE 3------------------
+### Example 3
 ```powershell
 PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
 ```
-
 This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with the web scope.
-
-## PARAMETERS
-
-### -Force
-Forcibly disable the feature.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Identity
-The id of the feature to disable.
-
-```yaml
-Type: GuidPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Accept pipeline input: False
-```
-
-### -Scope
-Specify the scope of the feature to deactivate, either Web or Site. Defaults to Web.
-
-```yaml
-Type: FeatureScope
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-# RELATED LINKS
-
-[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

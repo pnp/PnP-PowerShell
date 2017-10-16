@@ -1,11 +1,6 @@
 # Remove-PnPFile
-
-## SYNOPSIS
 Removes a file.
-
-## SYNTAX 
-
-### Server Relative
+## Syntax
 ```powershell
 Remove-PnPFile -ServerRelativeUrl <String>
                [-Recycle [<SwitchParameter>]]
@@ -13,7 +8,7 @@ Remove-PnPFile -ServerRelativeUrl <String>
                [-Web <WebPipeBind>]
 ```
 
-### Site Relative
+
 ```powershell
 Remove-PnPFile -SiteRelativeUrl <String>
                [-Recycle [<SwitchParameter>]]
@@ -21,91 +16,31 @@ Remove-PnPFile -SiteRelativeUrl <String>
                [-Web <WebPipeBind>]
 ```
 
-## EXAMPLES
 
-### ------------------EXAMPLE 1------------------
+## Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|ServerRelativeUrl|String|True|Server relative URL to the file|
+|SiteRelativeUrl|String|True|Site relative URL to the file|
+|Force|SwitchParameter|False||
+|Recycle|SwitchParameter|False||
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
+## Examples
+
+### Example 1
 ```powershell
 PS:>Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
 ```
-
 Removes the file company.spcolor
 
-### ------------------EXAMPLE 2------------------
+### Example 2
 ```powershell
 PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor
 ```
-
 Removes the file company.spcolor
 
-### ------------------EXAMPLE 3------------------
+### Example 3
 ```powershell
 PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle
 ```
-
 Removes the file company.spcolor and saves it to the Recycle Bin
-
-## PARAMETERS
-
-### -Force
-
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Recycle
-
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -ServerRelativeUrl
-Server relative URL to the file
-
-```yaml
-Type: String
-Parameter Sets: Server Relative
-
-Required: True
-Position: 0
-Accept pipeline input: True
-```
-
-### -SiteRelativeUrl
-Site relative URL to the file
-
-```yaml
-Type: String
-Parameter Sets: Site Relative
-
-Required: True
-Position: 0
-Accept pipeline input: True
-```
-
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-# RELATED LINKS
-
-[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

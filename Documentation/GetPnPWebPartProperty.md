@@ -1,10 +1,6 @@
 # Get-PnPWebPartProperty
-
-## SYNOPSIS
 Returns a web part property
-
-## SYNTAX 
-
+## Syntax
 ```powershell
 Get-PnPWebPartProperty -ServerRelativePageUrl <String>
                        -Identity <GuidPipeBind>
@@ -12,73 +8,24 @@ Get-PnPWebPartProperty -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
 ```
 
-## EXAMPLES
 
-### ------------------EXAMPLE 1------------------
+## Parameters
+Parameter|Type|Required|Description
+---------|----|--------|-----------
+|Identity|GuidPipeBind|True|The id of the webpart|
+|ServerRelativePageUrl|String|True|Full server relative URL of the webpart page, e.g. /sites/mysite/sitepages/home.aspx|
+|Key|String|False|Name of a single property to be returned|
+|Web|WebPipeBind|False|The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.|
+## Examples
+
+### Example 1
 ```powershell
 PS:> Get-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914
 ```
-
 Returns all properties of the webpart.
 
-### ------------------EXAMPLE 2------------------
+### Example 2
 ```powershell
 PS:> Get-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key "Title"
 ```
-
 Returns the title property of the webpart.
-
-## PARAMETERS
-
-### -Identity
-The id of the webpart
-
-```yaml
-Type: GuidPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Accept pipeline input: False
-```
-
-### -Key
-Name of a single property to be returned
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -ServerRelativePageUrl
-Full server relative URL of the webpart page, e.g. /sites/mysite/sitepages/home.aspx
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: PageUrl
-
-Required: True
-Position: Named
-Accept pipeline input: False
-```
-
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-# RELATED LINKS
-
-[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
