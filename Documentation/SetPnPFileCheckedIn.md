@@ -1,6 +1,10 @@
 # Set-PnPFileCheckedIn
+
+## SYNOPSIS
 Checks in a file
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Set-PnPFileCheckedIn -Url <String>
                      [-CheckinType <CheckinType>]
@@ -8,24 +12,72 @@ Set-PnPFileCheckedIn -Url <String>
                      [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Url|String|True|The server relative url of the file to check in|
-|CheckinType|CheckinType|False|The check in type to use. Defaults to Major|
-|Comment|String|False|The check in comment|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:>Set-PnPFileCheckedIn -Url "/Documents/Contract.docx"
 ```
+
 Checks in the file "Contract.docx" in the "Documents" library
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:>Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckinType MinorCheckin -Comment "Smaller changes"
 ```
+
 Checks in the file "Contract.docx" in the "Documents" library as a minor version and adds the check in comment "Smaller changes"
+
+## PARAMETERS
+
+### -CheckinType
+The check in type to use. Defaults to Major
+
+```yaml
+Type: CheckinType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Comment
+The check in comment
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Url
+The server relative url of the file to check in
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

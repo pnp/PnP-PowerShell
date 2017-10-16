@@ -82,7 +82,14 @@ See this [wiki page](https://github.com/OfficeDev/PnP-PowerShell/wiki/How-to-use
 ### Apps 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[Get&#8209;PnPAppInstance](GetPnPAppInstance.md)** |Returns a SharePoint AddIn Instance in the site|All
+**[Add&#8209;PnPApp](AddPnPApp.md)** |Add/uploads an available app to the app catalog|SharePoint Online
+**[Get&#8209;PnPApp](GetPnPApp.md)** |Returns the available apps from the app catalog|SharePoint Online
+**[Install&#8209;PnPApp](InstallPnPApp.md)** |Installs an available app from the app catalog|SharePoint Online
+**[Publish&#8209;PnPApp](PublishPnPApp.md)** |Publishes/Deploys/Trusts an available app in the app catalog|SharePoint Online
+**[Remove&#8209;PnPApp](RemovePnPApp.md)** |Removes an app from the app catalog|SharePoint Online
+**[Uninstall&#8209;PnPApp](UninstallPnPApp.md)** |Uninstalls an available add-in from the site|All
+**[Unpublish&#8209;PnPApp](UnpublishPnPApp.md)** |Unpublishes/retracts an available add-in from the app catalog|SharePoint Online
+**[Get&#8209;PnPAppInstance](GetPnPAppInstance.md)** |Returns a SharePoint AddIn Instance|All
 **[Uninstall&#8209;PnPAppInstance](UninstallPnPAppInstance.md)** |Removes an app from a site|All
 **[Import&#8209;PnPAppPackage](ImportPnPAppPackage.md)** |Adds a SharePoint Addin to a site|All
 
@@ -90,39 +97,39 @@ Cmdlet|Description|Platform
 ### Base Cmdlets 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[Get&#8209;PnPAppAuthAccessToken](GetPnPAppAuthAccessToken.md)** |Returns the access token from the current client context (In App authentication mode only)|All
-**[Get&#8209;PnPAuthenticationRealm](GetPnPAuthenticationRealm.md)** |Gets the authentication realm for the current web|All
-**[Get&#8209;PnPAzureADManifestKeyCredentials](GetPnPAzureADManifestKeyCredentials.md)** |Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps|All
-**[Get&#8209;PnPContext](GetPnPContext.md)** |Returns a Client Side Object Model context|All
-**[Set&#8209;PnPContext](SetPnPContext.md)** |Sets the Client Context to use by the cmdlets|All
-**[Get&#8209;PnPHealthScore](GetPnPHealthScore.md)** |Retrieves the current health score value of the server|All
-**[Connect&#8209;PnPOnline](ConnectPnPOnline.md)** |Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets|All
+**[Get&#8209;PnPAppAuthAccessToken](GetPnPAppAuthAccessToken.md)** |Returns the access token|All
+**[Get&#8209;PnPAuthenticationRealm](GetPnPAuthenticationRealm.md)** |Returns the authentication realm|All
+**[Get&#8209;PnPAzureADManifestKeyCredentials](GetPnPAzureADManifestKeyCredentials.md)** |Return the JSON Manifest snippet for Azure Apps|All
+**[Get&#8209;PnPContext](GetPnPContext.md)** |Returns the current context|All
+**[Set&#8209;PnPContext](SetPnPContext.md)** |Set the ClientContext|All
+**[Get&#8209;PnPHealthScore](GetPnPHealthScore.md)** |Retrieves the healthscore|All
+**[Connect&#8209;PnPOnline](ConnectPnPOnline.md)** |Connect to a SharePoint site|All
 **[Disconnect&#8209;PnPOnline](DisconnectPnPOnline.md)** |Disconnects the context|All
-**[Get&#8209;PnPProperty](GetPnPProperty.md)** |Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.|All
-**[Execute&#8209;PnPQuery](ExecutePnPQuery.md)** |Executes any queued actions / changes on the SharePoint Client Side Object Model Context|All
-**[Get&#8209;PnPStoredCredential](GetPnPStoredCredential.md)** |Returns a stored credential from the Windows Credential Manager|All
-**[Set&#8209;PnPTraceLog](SetPnPTraceLog.md)** |Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off.|All
+**[Get&#8209;PnPProperty](GetPnPProperty.md)** |Returns a previously not loaded property of a ClientObject|All
+**[Execute&#8209;PnPQuery](ExecutePnPQuery.md)** |Execute the current queued actions|All
+**[Get&#8209;PnPStoredCredential](GetPnPStoredCredential.md)** |Get a credential|All
+**[Set&#8209;PnPTraceLog](SetPnPTraceLog.md)** |Turn log tracing on or off|All
 
 
 ### Branding 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[Add&#8209;PnPCustomAction](AddPnPCustomAction.md)** |Adds a custom action to a web|All
-**[Get&#8209;PnPCustomAction](GetPnPCustomAction.md)** |Returns all or a specific custom action(s)|All
+**[Add&#8209;PnPCustomAction](AddPnPCustomAction.md)** |Adds a custom action|All
+**[Get&#8209;PnPCustomAction](GetPnPCustomAction.md)** |Return user custom actions|All
 **[Remove&#8209;PnPCustomAction](RemovePnPCustomAction.md)** |Removes a custom action|All
-**[Get&#8209;PnPHomePage](GetPnPHomePage.md)** |Returns the URL to the home page|All
+**[Get&#8209;PnPHomePage](GetPnPHomePage.md)** |Return the homepage|All
 **[Set&#8209;PnPHomePage](SetPnPHomePage.md)** |Sets the home page of the current web.|All
 **[Add&#8209;PnPJavaScriptBlock](AddPnPJavaScriptBlock.md)** |Adds a link to a JavaScript snippet/block to a web or site collection|All
 **[Add&#8209;PnPJavaScriptLink](AddPnPJavaScriptLink.md)** |Adds a link to a JavaScript file to a web or sitecollection|All
 **[Get&#8209;PnPJavaScriptLink](GetPnPJavaScriptLink.md)** |Returns all or a specific custom action(s) with location type ScriptLink|All
 **[Remove&#8209;PnPJavaScriptLink](RemovePnPJavaScriptLink.md)** |Removes a JavaScript link or block from a web or sitecollection|All
 **[Get&#8209;PnPMasterPage](GetPnPMasterPage.md)** |Returns the URLs of the default Master Page and the custom Master Page.|All
-**[Set&#8209;PnPMasterPage](SetPnPMasterPage.md)** |Sets the default master page of the current web.|All
+**[Set&#8209;PnPMasterPage](SetPnPMasterPage.md)** |Set the masterpage|All
 **[Set&#8209;PnPMinimalDownloadStrategy](SetPnPMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.|All
-**[Add&#8209;PnPNavigationNode](AddPnPNavigationNode.md)** |Adds a menu item to either the quicklaunch or top navigation|All
+**[Add&#8209;PnPNavigationNode](AddPnPNavigationNode.md)** |Adds an item to a navigation element|All
 **[Remove&#8209;PnPNavigationNode](RemovePnPNavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation|All
-**[Disable&#8209;PnPResponsiveUI](DisablePnPResponsiveUI.md)** |Disables the PnP Responsive UI implementation on a classic SharePoint Site|All
-**[Enable&#8209;PnPResponsiveUI](EnablePnPResponsiveUI.md)** |Enables the PnP Responsive UI implementation on a classic SharePoint Site|All
+**[Disable&#8209;PnPResponsiveUI](DisablePnPResponsiveUI.md)** |Deactive the PnP Response UI add-on|All
+**[Enable&#8209;PnPResponsiveUI](EnablePnPResponsiveUI.md)** |Activates the PnP Response UI Add-on|All
 **[Get&#8209;PnPTheme](GetPnPTheme.md)** |Returns the current theme/composed look of the current web.|All
 **[Set&#8209;PnPTheme](SetPnPTheme.md)** |Sets the theme of the current web.|All
 
@@ -136,8 +143,8 @@ Cmdlet|Description|Platform
 **[Remove&#8209;PnPClientSidePage](RemovePnPClientSidePage.md)** |Removes a Client-Side Page|SharePoint Online
 **[Set&#8209;PnPClientSidePage](SetPnPClientSidePage.md)** |Sets parameters of a Client-Side Page|SharePoint Online
 **[Add&#8209;PnPClientSidePageSection](AddPnPClientSidePageSection.md)** |Adds a new section to a Client-Side page|SharePoint Online
-**[Add&#8209;PnPClientSideText](AddPnPClientSideText.md)** |Adds a Client-Side Page|SharePoint Online
-**[Add&#8209;PnPClientSideWebPart](AddPnPClientSideWebPart.md)** |Adds a Client-Side Component to a page|SharePoint Online
+**[Add&#8209;PnPClientSideText](AddPnPClientSideText.md)** |Adds a text element to a client-side page.|SharePoint Online
+**[Add&#8209;PnPClientSideWebPart](AddPnPClientSideWebPart.md)** |Adds a Client-Side Web Part to a client-side page|SharePoint Online
 
 
 ### Content Types 
@@ -168,8 +175,8 @@ Cmdlet|Description|Platform
 Cmdlet|Description|Platform
 :-----|:----------|:-------
 **[Add&#8209;PnPEventReceiver](AddPnPEventReceiver.md)** |Adds a new event receiver|All
-**[Get&#8209;PnPEventReceiver](GetPnPEventReceiver.md)** |Returns all or a specific event receiver|All
-**[Remove&#8209;PnPEventReceiver](RemovePnPEventReceiver.md)** |Removes/unregisters a specific event receiver|All
+**[Get&#8209;PnPEventReceiver](GetPnPEventReceiver.md)** |Return registered eventreceivers|All
+**[Remove&#8209;PnPEventReceiver](RemovePnPEventReceiver.md)** |Remove an eventreceiver|All
 
 
 ### Features 
@@ -184,13 +191,13 @@ Cmdlet|Description|Platform
 ### Fields 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[Add&#8209;PnPField](AddPnPField.md)** |Adds a field to a list or as a site column|All
+**[Add&#8209;PnPField](AddPnPField.md)** |Add a field|All
 **[Get&#8209;PnPField](GetPnPField.md)** |Returns a field from a list or site|All
 **[Remove&#8209;PnPField](RemovePnPField.md)** |Removes a field from a list or a site|All
 **[Set&#8209;PnPField](SetPnPField.md)** |Changes one or more properties of a field in a specific list or for the whole web|All
 **[Add&#8209;PnPFieldFromXml](AddPnPFieldFromXml.md)** |Adds a field to a list or as a site column based upon a CAML/XML field definition|All
-**[Add&#8209;PnPTaxonomyField](AddPnPTaxonomyField.md)** |Adds a taxonomy field to a list or as a site column.|All
-**[Set&#8209;PnPView](SetPnPView.md)** |Changes one or more properties of a specific view|All
+**[Add&#8209;PnPTaxonomyField](AddPnPTaxonomyField.md)** |Add a taxonomy field|All
+**[Set&#8209;PnPView](SetPnPView.md)** |Change view properties|All
 
 
 ### Files and Folders 
@@ -251,7 +258,7 @@ Cmdlet|Description|Platform
 ### Microsoft Graph 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[Connect&#8209;PnPMicrosoftGraph](ConnectPnPMicrosoftGraph.md)** |Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API|All
+**[Connect&#8209;PnPMicrosoftGraph](ConnectPnPMicrosoftGraph.md)** |Connect to the Microsoft Graph|All
 **[Get&#8209;PnPUnifiedGroup](GetPnPUnifiedGroup.md)** |Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups|All
 **[New&#8209;PnPUnifiedGroup](NewPnPUnifiedGroup.md)** |Creates a new Office 365 Group (aka Unified Group)|All
 **[Remove&#8209;PnPUnifiedGroup](RemovePnPUnifiedGroup.md)** |Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups|All
@@ -372,14 +379,14 @@ Cmdlet|Description|Platform
 ### Tenant Administration 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[Get&#8209;PnPAccessToken](GetPnPAccessToken.md)** |Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API|All
+**[Get&#8209;PnPAccessToken](GetPnPAccessToken.md)** |Returns the current OAuth Access token|All
 **[New&#8209;PnPSite](NewPnPSite.md)** |BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection|SharePoint Online
 **[Clear&#8209;PnPTenantRecycleBinItem](ClearPnPTenantRecycleBinItem.md)** |Permanently deletes a site collection from the tenant scoped recycle bin|All
 **[Restore&#8209;PnPTenantRecycleBinItem](RestorePnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin|SharePoint Online
-**[Get&#8209;PnPTenantSite](GetPnPTenantSite.md)** |Uses the tenant API to retrieve site information.|SharePoint Online
+**[Get&#8209;PnPTenantSite](GetPnPTenantSite.md)** |Retrieve site information.|SharePoint Online
 **[New&#8209;PnPTenantSite](NewPnPTenantSite.md)** |Creates a new site collection for the current tenant|All
-**[Remove&#8209;PnPTenantSite](RemovePnPTenantSite.md)** |Removes a site collection from the current tenant|SharePoint Online
-**[Set&#8209;PnPTenantSite](SetPnPTenantSite.md)** |Uses the tenant API to set site information.|SharePoint Online
+**[Remove&#8209;PnPTenantSite](RemovePnPTenantSite.md)** |Removes a site collection|SharePoint Online
+**[Set&#8209;PnPTenantSite](SetPnPTenantSite.md)** |Set site information.|SharePoint Online
 **[Get&#8209;PnPTimeZoneId](GetPnPTimeZoneId.md)** |Returns a time zone ID|All
 **[Get&#8209;PnPWebTemplates](GetPnPWebTemplates.md)** |Returns the available web templates.|SharePoint Online
 
@@ -445,20 +452,20 @@ Cmdlet|Description|Platform
 **[Remove&#8209;PnPWeb](RemovePnPWeb.md)** |Removes a subweb in the current web|All
 **[Set&#8209;PnPWeb](SetPnPWeb.md)** |Sets properties on a web|All
 **[Invoke&#8209;PnPWebAction](InvokePnPWebAction.md)** |Executes operations on web, lists and list items.|All
-**[Set&#8209;PnPWebPermission](SetPnPWebPermission.md)** |Sets web permissions|All
+**[Set&#8209;PnPWebPermission](SetPnPWebPermission.md)** |Set permissions|All
 
 
 ### Workflows 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
 **[Add&#8209;PnPWorkflowDefinition](AddPnPWorkflowDefinition.md)** |Adds a workflow definition|All
-**[Get&#8209;PnPWorkflowDefinition](GetPnPWorkflowDefinition.md)** |Returns a workflow definition|All
+**[Get&#8209;PnPWorkflowDefinition](GetPnPWorkflowDefinition.md)** |Return a workflow definition|All
 **[Remove&#8209;PnPWorkflowDefinition](RemovePnPWorkflowDefinition.md)** |Removes a workflow definition|All
-**[Resume&#8209;PnPWorkflowInstance](ResumePnPWorkflowInstance.md)** |Resumes a previously stopped workflow instance|All
+**[Resume&#8209;PnPWorkflowInstance](ResumePnPWorkflowInstance.md)** |Resume a workflow|All
 **[Stop&#8209;PnPWorkflowInstance](StopPnPWorkflowInstance.md)** |Stops a workflow instance|All
 **[Add&#8209;PnPWorkflowSubscription](AddPnPWorkflowSubscription.md)** |Adds a workflow subscription to a list|All
-**[Get&#8209;PnPWorkflowSubscription](GetPnPWorkflowSubscription.md)** |Returns a workflow subscriptions from a list|All
-**[Remove&#8209;PnPWorkflowSubscription](RemovePnPWorkflowSubscription.md)** |Removes a workflow subscription|All
+**[Get&#8209;PnPWorkflowSubscription](GetPnPWorkflowSubscription.md)** |Return a workflow subscription|All
+**[Remove&#8209;PnPWorkflowSubscription](RemovePnPWorkflowSubscription.md)** |Remove workflow subscription|All
 
 
 ## Additional resources

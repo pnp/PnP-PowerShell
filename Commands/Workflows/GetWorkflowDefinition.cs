@@ -6,7 +6,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "PnPWorkflowDefinition")]
-    [CmdletHelp("Returns a workflow definition",
+    [CmdletHelp("Return a workflow definition",
+        "Returns a workflow definition",
         Category = CmdletHelpCategory.Workflows,
         OutputType = typeof(WorkflowDefinition),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowdefinition.aspx")]

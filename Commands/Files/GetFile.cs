@@ -5,7 +5,7 @@ using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFile", DefaultParameterSetName = "URLASFILEOBJECT")]
+    [Cmdlet(VerbsCommon.Get, "PnPFile", DefaultParameterSetName = "Return as file object")]
     [CmdletHelp("Downloads a file.",
         Category = CmdletHelpCategory.Files,
         OutputType = typeof(File),
@@ -37,10 +37,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
     public class GetFile : PnPWebCmdlet
     {
-        private const string URLTOPATH = "URLTOPATH";
-        private const string URLASSTRING = "URLASSTRING";
-        private const string URLASLISTITEM = "URLASLISTITEM";
-        private const string URLASFILEOBJECT = "URLASFILEOBJECT";
+        private const string URLTOPATH = "Save to local path";
+        private const string URLASSTRING = "Return as string";
+        private const string URLASLISTITEM = "Return as list item";
+        private const string URLASFILEOBJECT = "Return as file object";
 
         [Parameter(Mandatory = true, ParameterSetName = URLASFILEOBJECT, HelpMessage = "The URL (server or site relative) to the file", Position = 0, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = URLASLISTITEM, HelpMessage = "The URL (server or site relative) to the file", Position = 0, ValueFromPipeline = true)]

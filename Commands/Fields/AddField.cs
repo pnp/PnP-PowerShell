@@ -9,8 +9,9 @@ using Newtonsoft.Json;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
-    [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "ListPara")]
-    [CmdletHelp("Adds a field to a list or as a site column",
+    [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "Add field to list")]
+    [CmdletHelp("Add a field",
+        "Adds a field to a list or as a site column",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
@@ -20,52 +21,52 @@ namespace SharePointPnP.PowerShell.Commands.Fields
     [CmdletExample(
      Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
 Remarks = @"This will add a field of type Multiple Choice to the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]),ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "ListPara")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "WebPara")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]),ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "Add field to list")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = "Add field to Web")]
     public class AddField : PnPWebCmdlet, IDynamicParameters
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "ListPara", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "Add field to list", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "Add field reference to list", HelpMessage = "The name of the list, its ID or an actual list object where this field needs to be added")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ParameterSetName = "FieldRef", HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
+        [Parameter(Mandatory = true, ParameterSetName = "Add field reference to list", HelpMessage = "The name of the field, its ID or an actual field object that needs to be added")]
         public FieldPipeBind Field;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The display name of the field")]
-        [Parameter(Mandatory = true, ParameterSetName = "WebPara", HelpMessage = "The display name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "Add field to list", HelpMessage = "The display name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "Add field to Web", HelpMessage = "The display name of the field")]
         public string DisplayName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The internal name of the field")]
-        [Parameter(Mandatory = true, ParameterSetName = "WebPara", HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "Add field to list", HelpMessage = "The internal name of the field")]
+        [Parameter(Mandatory = true, ParameterSetName = "Add field to Web", HelpMessage = "The internal name of the field")]
         public string InternalName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "ListPara", HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
-        [Parameter(Mandatory = true, ParameterSetName = "WebPara", HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
+        [Parameter(Mandatory = true, ParameterSetName = "Add field to list", HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
+        [Parameter(Mandatory = true, ParameterSetName = "Add field to Web", HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
         public FieldType Type;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "The ID of the field, must be unique")]
-        [Parameter(Mandatory = false, ParameterSetName = "WebPara", HelpMessage = "The ID of the field, must be unique")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to list", HelpMessage = "The ID of the field, must be unique")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to Web", HelpMessage = "The ID of the field, must be unique")]
         public GuidPipeBind Id = new GuidPipeBind();
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "Switch Parameter if this field must be added to the default view")]
-        [Parameter(Mandatory = false, ParameterSetName = "ListXML", HelpMessage = "Switch Parameter if this field must be added to the default view")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to list", HelpMessage = "Switch Parameter if this field must be added to the default view")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field by XML to list", HelpMessage = "Switch Parameter if this field must be added to the default view")]
         public SwitchParameter AddToDefaultView;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "Switch Parameter if the field is a required field")]
-        [Parameter(Mandatory = false, ParameterSetName = "ListXML", HelpMessage = "Switch Parameter if the field is a required field")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to list", HelpMessage = "Switch Parameter if the field is a required field")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field by XML to list", HelpMessage = "Switch Parameter if the field is a required field")]
         public SwitchParameter Required;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "The group name to where this field belongs to")]
-        [Parameter(Mandatory = false, ParameterSetName = "ListXML", HelpMessage = "The group name to where this field belongs to")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to list", HelpMessage = "The group name to where this field belongs to")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field by XML to list", HelpMessage = "The group name to where this field belongs to")]
         public string Group;
 
 #if !ONPREMISES
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "The Client Side Component Id to set to the field")]
-        [Parameter(Mandatory = false, ParameterSetName = "WebPara", HelpMessage = "The Client Side Component Id to set to the field")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to list", HelpMessage = "The Client Side Component Id to set to the field")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to Web", HelpMessage = "The Client Side Component Id to set to the field")]
         public GuidPipeBind ClientSideComponentId;
 
-        [Parameter(Mandatory = false, ParameterSetName = "ListPara", HelpMessage = "The Client Side Component Properties to set to the field")]
-        [Parameter(Mandatory = false, ParameterSetName = "WebPara", HelpMessage = "The Client Side Component Properties to set to the field")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to list", HelpMessage = "The Client Side Component Properties to set to the field")]
+        [Parameter(Mandatory = false, ParameterSetName = "Add field to Web", HelpMessage = "The Client Side Component Properties to set to the field")]
         public string ClientSideComponentProperties;
 #endif
 
@@ -97,7 +98,7 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
             {
                 var list = List.GetList(SelectedWeb);
                 Field f;
-                if (ParameterSetName != "FieldRef")
+                if (ParameterSetName != "Add field reference to list")
                 {
                     var fieldCI = new FieldCreationInformation(Type)
                     {

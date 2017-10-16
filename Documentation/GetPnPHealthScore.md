@@ -1,20 +1,33 @@
 # Get-PnPHealthScore
-Retrieves the current health score value of the server
-## Returns
->System.Int32
 
-Returns a int value representing the current health score value of the server.
+## SYNOPSIS
+Retrieves the healthscore
 
-## Examples
+## DESCRIPTION
+Retrieves the current health score value of the server which is a value between 0 and 10. Lower is better.
 
-### Example 1
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Get-PnPHealthScore
 ```
+
 This will retrieve the current health score of the server.
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Get-PnPHealthScore -Url https://contoso.sharepoint.com
 ```
+
 This will retrieve the current health score for the url https://contoso.sharepoint.com.
+
+## OUTPUTS
+
+### System.Int32
+
+Returns a int value representing the current health score value of the server.
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.ModuleFilesGenerator.Model;
 using CmdletInfo = SharePointPnP.PowerShell.ModuleFilesGenerator.Model.CmdletInfo;
+using System.ComponentModel;
 
 namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 {
@@ -256,7 +257,9 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                 if (!obsolete)
                 {
-                    var parameterAttributes = fieldInfo.GetCustomAttributes<ParameterAttribute>(true).ToArray();
+                    var aliases = fieldInfo.GetCustomAttributes<AliasAttribute>(true);
+                    var parameterAttributes = fieldInfo.GetCustomAttributes<ParameterAttribute>(true);
+
                     foreach (var parameterAttribute in parameterAttributes)
                     {
                         var description = parameterAttribute.HelpMessage;
@@ -282,14 +285,27 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                                 typeString = fieldAttribute.Description;
                             }
                         }
-                        parameters.Add(new CmdletParameterInfo()
+
+                        var cmdletParameterInfo = new CmdletParameterInfo()
                         {
                             Description = description,
                             Type = typeString,
                             Name = field.Name,
                             Required = parameterAttribute.Mandatory,
                             Position = parameterAttribute.Position,
-                        });
+                            ValueFromPipeline = parameterAttribute.ValueFromPipeline,
+                            ParameterSetName = parameterAttribute.ParameterSetName,
+                        };
+
+                        if (aliases != null && aliases.Any())
+                        {
+                            foreach (var aliasAttribute in aliases)
+                            {
+                                cmdletParameterInfo.Aliases.AddRange(aliasAttribute.AliasNames);
+                            }
+                        }
+                        parameters.Add(cmdletParameterInfo);
+
                     }
                 }
             }
@@ -316,6 +332,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     Name = additionalParameter.ParameterName,
                     Required = additionalParameter.Mandatory,
                     Position = additionalParameter.Position,
+                    ParameterSetName = additionalParameter.ParameterSetName
                 });
             }
 

@@ -15,9 +15,9 @@ namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPSite")]
     [CmdletHelp("BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection",
+        "The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Team Site are supported. If you want to create a classic site, use New-PnPTenantSite.",
         OutputType = typeof(string),
         OutputTypeDescription = "Returns the url of the newly created site collection",
-        DetailedDescription = @"The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Team Site are supported. If you want to create a classic site, use New-PnPTenantSite.",
         Category = CmdletHelpCategory.TenantAdmin, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso",
@@ -47,25 +47,25 @@ namespace SharePointPnP.PowerShell.Commands
         Code = @"PS:> New-PnPSite -Type TeamSite -Title Contoso -Alias contoso -IsPublic",
         Remarks = @"This will create a new Modern Team Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the site to public.",
         SortOrder = 7)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Title", Mandatory = true, HelpMessage = @"Specifies the title of the new site collection", ParameterSetName = "CommunicationBuiltInDesign")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Title", Mandatory = true, HelpMessage = @"Specifies the title of the new site collection", ParameterSetName = "Communication Site With Built-in Design")]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Title", Mandatory = true, HelpMessage = @"Specifies the title of the new site collection", ParameterSetName = "CommunicationCustomInDesign")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Url", Mandatory = true, HelpMessage = @"Specifies the full url of the new site collection", ParameterSetName = "CommunicationBuiltInDesign")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Url", Mandatory = true, HelpMessage = @"Specifies the full url of the new site collection", ParameterSetName = "Communication Site With Built-in Design")]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Url", Mandatory = true, HelpMessage = @"Specifies the full url of the new site collection", ParameterSetName = "CommunicationCustomInDesign")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = "CommunicationBuiltInDesign")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = "Communication Site With Built-in Design")]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = "CommunicationCustomInDesign")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = "CommunicationBuiltInDesign")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = "Communication Site With Built-in Design")]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = "CommunicationCustomInDesign")]
-    [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "AllowFileSharingForGuestUsers", Mandatory = false, HelpMessage = @"Specifies if guest users can share files in the new site collection", ParameterSetName = "CommunicationBuiltInDesign")]
+    [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "AllowFileSharingForGuestUsers", Mandatory = false, HelpMessage = @"Specifies if guest users can share files in the new site collection", ParameterSetName = "Communication Site With Built-in Design")]
     [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "AllowFileSharingForGuestUsers", Mandatory = false, HelpMessage = @"Specifies if guest users can share files in the new site collection", ParameterSetName = "CommunicationCustomInDesign")]
-    [CmdletAdditionalParameter(ParameterType = typeof(OfficeDevPnP.Core.Sites.CommunicationSiteDesign), ParameterName = "SiteDesign", Mandatory = false, HelpMessage = @"Specifies the site design of the new site collection. Defaults to 'Topic'", ParameterSetName = "CommunicationBuiltInDesign")]
+    [CmdletAdditionalParameter(ParameterType = typeof(OfficeDevPnP.Core.Sites.CommunicationSiteDesign), ParameterName = "SiteDesign", Mandatory = false, HelpMessage = @"Specifies the site design of the new site collection. Defaults to 'Topic'", ParameterSetName = "Communication Site With Built-in Design")]
     [CmdletAdditionalParameter(ParameterType = typeof(GuidPipeBind), ParameterName = "SiteDesignId", Mandatory = true, HelpMessage = @"Specifies the site design id to use for the new site collection. If specified will override SiteDesign", ParameterSetName = "CommunicationCustomInDesign")]
-    [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to.", ParameterSetName = "CommunicationBuiltInDesign")]
+    [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to.", ParameterSetName = "Communication Site With Built-in Design")]
     [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to.", ParameterSetName = "CommunicationCustomInDesign")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Title", Mandatory = true, HelpMessage = @"Specifies the title of the new site collection", ParameterSetName = "TeamSite")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Alias", Mandatory = true, HelpMessage = @"Specifies the alias of the new site collection", ParameterSetName = "TeamSite")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = "TeamSite")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = "TeamSite")]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "IsPublic", Mandatory = false, HelpMessage = @"Specifies if new site collection is public. Defaults to false.", ParameterSetName = "TeamSite")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Title", Mandatory = true, HelpMessage = @"Specifies the title of the new site collection", ParameterSetName = "Team Site")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Alias", Mandatory = true, HelpMessage = @"Specifies the alias of the new site collection", ParameterSetName = "Team Site")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = "Team Site")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = "Team Site")]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "IsPublic", Mandatory = false, HelpMessage = @"Specifies if new site collection is public. Defaults to false.", ParameterSetName = "Team Site")]
     public class NewSite : PnPCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, HelpMessage = "@Specifies with type of site to create.")]
@@ -138,27 +138,27 @@ namespace SharePointPnP.PowerShell.Commands
 
         public class CommunicationSiteParameters
         {
-            [Parameter(Mandatory = true, ParameterSetName = "CommunicationBuiltInDesign")]
+            [Parameter(Mandatory = true, ParameterSetName = "Communication Site With Built-in Design")]
             [Parameter(Mandatory = true, ParameterSetName = "CommunicationCustomInDesign")]
             public string Title;
 
-            [Parameter(Mandatory = true, ParameterSetName = "CommunicationBuiltInDesign")]
+            [Parameter(Mandatory = true, ParameterSetName = "Communication Site With Built-in Design")]
             [Parameter(Mandatory = true, ParameterSetName = "CommunicationCustomInDesign")]
             public string Url;
 
-            [Parameter(Mandatory = false, ParameterSetName = "CommunicationBuiltInDesign")]
+            [Parameter(Mandatory = false, ParameterSetName = "Communication Site With Built-in Design")]
             [Parameter(Mandatory = false, ParameterSetName = "CommunicationCustomInDesign")]
             public string Description;
 
-            [Parameter(Mandatory = false, ParameterSetName = "CommunicationBuiltInDesign")]
+            [Parameter(Mandatory = false, ParameterSetName = "Communication Site With Built-in Design")]
             [Parameter(Mandatory = false, ParameterSetName = "CommunicationCustomInDesign")]
             public string Classification;
 
-            [Parameter(Mandatory = false, ParameterSetName = "CommunicationBuiltInDesign")]
+            [Parameter(Mandatory = false, ParameterSetName = "Communication Site With Built-in Design")]
             [Parameter(Mandatory = false, ParameterSetName = "CommunicationCustomInDesign")]
             public SwitchParameter AllowFileSharingForGuestUsers;
 
-            [Parameter(Mandatory = false, ParameterSetName = "CommunicationBuiltInDesign")]
+            [Parameter(Mandatory = false, ParameterSetName = "Communication Site With Built-in Design")]
             public OfficeDevPnP.Core.Sites.CommunicationSiteDesign SiteDesign = OfficeDevPnP.Core.Sites.CommunicationSiteDesign.Topic;
 
             [Parameter(Mandatory = true, ParameterSetName = "CommunicationCustomInDesign")]
@@ -171,19 +171,19 @@ namespace SharePointPnP.PowerShell.Commands
 
         public class TeamSiteParameters
         {
-            [Parameter(Mandatory = true, ParameterSetName = "TeamSite")]
+            [Parameter(Mandatory = true, ParameterSetName = "Team Site")]
             public string Title;
 
-            [Parameter(Mandatory = true, ParameterSetName = "TeamSite")]
+            [Parameter(Mandatory = true, ParameterSetName = "Team Site")]
             public string Alias;
 
-            [Parameter(Mandatory = false, ParameterSetName = "TeamSite")]
+            [Parameter(Mandatory = false, ParameterSetName = "Team Site")]
             public string Description;
 
-            [Parameter(Mandatory = false, ParameterSetName = "TeamSite")]
+            [Parameter(Mandatory = false, ParameterSetName = "Team Site")]
             public string Classification;
 
-            [Parameter(Mandatory = false, ParameterSetName = "TeamSite")]
+            [Parameter(Mandatory = false, ParameterSetName = "Team Site")]
             public SwitchParameter IsPublic;
         }
     }

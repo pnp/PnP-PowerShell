@@ -1,30 +1,53 @@
 # Get-PnPAzureADManifestKeyCredentials
-Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps
-## Syntax
+
+## SYNOPSIS
+Return the JSON Manifest snippet for Azure Apps
+
+## SYNTAX 
+
 ```powershell
 Get-PnPAzureADManifestKeyCredentials -CertPath <String>
 ```
 
+## DESCRIPTION
+Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps
 
-## Returns
->System.String
+## EXAMPLES
 
-Outputs a JSON formatted string
-
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|CertPath|String|True|Specifies the path to the certificate like .\mycert.cer|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Get-PnPAzureADManifestKeyCredentials -CertPath .\mycert.cer
 ```
+
 Output the JSON snippet which needs to be replaced in the application manifest file
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Get-PnPAzureADManifestKeyCredentials -CertPath .\mycert.cer | Set-Clipboard
 ```
+
 Output the JSON snippet which needs to be replaced in the application manifest file and copies it to the clipboard
+
+## PARAMETERS
+
+### -CertPath
+Specifies the path to the certificate like .\mycert.cer
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### System.String
+
+Outputs a JSON formatted string
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

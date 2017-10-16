@@ -1,6 +1,10 @@
 # Add-PnPView
+
+## SYNOPSIS
 Adds a view to a list
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 Add-PnPView -Title <String>
             -Fields <String[]>
@@ -14,33 +18,148 @@ Add-PnPView -Title <String>
             [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
 
-## Returns
->[Microsoft.SharePoint.Client.View](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx)
-
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Fields|String[]|True|A list of fields to add.|
-|List|ListPipeBind|True|The ID or Url of the list.|
-|Title|String|True|The title of the view.|
-|Paged|SwitchParameter|False|If specified, the view will have paging.|
-|Personal|SwitchParameter|False|If specified, a personal view will be created.|
-|Query|String|False|A valid CAML Query.|
-|RowLimit|UInt32|False|The row limit for the view. Defaults to 30.|
-|SetAsDefault|SwitchParameter|False|If specified, the view will be set as the default view for the list.|
-|ViewType|ViewType|False|The type of view to add.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 Add-PnPView -List "Demo List" -Title "Demo View" -Fields "Title","Address"
 ```
+
 Adds a view named "Demo view" to the "Demo List" list.
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 Add-PnPView -List "Demo List" -Title "Demo View" -Fields "Title","Address" -Paged
 ```
+
 Adds a view named "Demo view" to the "Demo List" list and makes sure there's paging on this view.
+
+## PARAMETERS
+
+### -Fields
+A list of fields to add.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -List
+The ID or Url of the list.
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+### -Paged
+If specified, the view will have paging.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Personal
+If specified, a personal view will be created.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Query
+A valid CAML Query.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -RowLimit
+The row limit for the view. Defaults to 30.
+
+```yaml
+Type: UInt32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -SetAsDefault
+If specified, the view will be set as the default view for the list.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Title
+The title of the view.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -ViewType
+The type of view to add.
+
+```yaml
+Type: ViewType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.View](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx)
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

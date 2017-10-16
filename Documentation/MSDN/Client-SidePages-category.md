@@ -7,5 +7,5 @@ Cmdlet|Description|Platform
 **[Remove&#8209;PnPClientSidePage](RemovePnPClientSidePage.md)** |Removes a Client-Side Page|SharePoint Online
 **[Set&#8209;PnPClientSidePage](SetPnPClientSidePage.md)** |Sets parameters of a Client-Side Page|SharePoint Online
 **[Add&#8209;PnPClientSidePageSection](AddPnPClientSidePageSection.md)** |Adds a new section to a Client-Side page|SharePoint Online
-**[Add&#8209;PnPClientSideText](AddPnPClientSideText.md)** |Adds a Client-Side Page|SharePoint Online
-**[Add&#8209;PnPClientSideWebPart](AddPnPClientSideWebPart.md)** |Adds a Client-Side Component to a page|SharePoint Online
+**[Add&#8209;PnPClientSideText](AddPnPClientSideText.md)** |Adds a text element to a client-side page.|SharePoint Online
+**[Add&#8209;PnPClientSideWebPart](AddPnPClientSideWebPart.md)** |Adds a Client-Side Web Part to a client-side page|SharePoint Online

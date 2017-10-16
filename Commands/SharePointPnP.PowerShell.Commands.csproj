@@ -344,11 +344,11 @@
       <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.22.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.22.302111727\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=2.29.0.1078, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.29.0\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms, Version=2.22.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.22.302111727\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms, Version=2.29.0.1078, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.2.29.0\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
@@ -407,7 +407,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\NewSite.cs" />
+    <Compile Include="Apps\RemoveApp.cs" />
+    <Compile Include="Apps\AddApp.cs" />
+    <Compile Include="Apps\UnpublishApp.cs" />
+    <Compile Include="Apps\PublishApp.cs" />
+    <Compile Include="Apps\UninstallApp.cs" />
+    <Compile Include="Apps\InstallApp.cs" />
+    <Compile Include="Apps\GetApp.cs" />
     <Compile Include="Base\GetAppAuthAccessToken.cs" />
+    <Compile Include="Base\PipeBinds\AppMetadataPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ClientSideComponentPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericPropertiesPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ClientSidePagePipeBind.cs" />

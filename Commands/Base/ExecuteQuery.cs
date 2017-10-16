@@ -5,7 +5,8 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet("Execute", "PnPQuery")]
-    [CmdletHelp("Executes any queued actions / changes on the SharePoint Client Side Object Model Context",
+    [CmdletHelp("Execute the current queued actions", 
+        "Executes any queued actions / changes on the SharePoint Client Side Object Model Context",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
       Code = @"PS:> Execute-PnPQuery -RetryCount 5",
@@ -24,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            ClientContext.ExecuteQueryRetry(RetryCount,RetryWait);
+            ClientContext.ExecuteQueryRetry(RetryCount, RetryWait);
         }
     }
 }

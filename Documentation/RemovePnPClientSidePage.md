@@ -1,30 +1,72 @@
 # Remove-PnPClientSidePage
+
+## SYNOPSIS
 Removes a Client-Side Page
->*Only available for SharePoint Online*
-## Syntax
+
+>Only available for SharePoint Online
+
+## SYNTAX 
+
 ```powershell
 Remove-PnPClientSidePage -Identity <ClientSidePagePipeBind>
                          [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Identity|ClientSidePagePipeBind|True|The name of the page|
-|Force|SwitchParameter|False|Specifying the Force parameter will skip the confirmation question.|
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Remove-PnPClientSidePage -Identity "MyPage"
 ```
+
 Removes the Client-Side page named 'MyPage.aspx'
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Remove-PnPClientSidePage $page
 ```
+
 Removes the specified Client-Side page which is contained in the $page variable.
+
+## PARAMETERS
+
+### -Force
+Specifying the Force parameter will skip the confirmation question.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Identity
+The name of the page
+
+```yaml
+Type: ClientSidePagePipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Accept pipeline input: True
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

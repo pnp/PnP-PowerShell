@@ -61,7 +61,14 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             commandElement.Add(detailsElement);
 
             detailsElement.Add(new XElement(command + "name", $"{cmdletInfo.Verb}-{cmdletInfo.Noun}"));
-            detailsElement.Add(new XElement(maml + "description", new XElement(maml + "para", cmdletInfo.Description)));
+            if (cmdletInfo.Platform != "All")
+            {
+                detailsElement.Add(new XElement(maml + "description", new XElement(maml + "para", $"* Only available for {cmdletInfo.Platform}. {cmdletInfo.Description}")));
+            }
+            else
+            {
+                detailsElement.Add(new XElement(maml + "description", new XElement(maml + "para", cmdletInfo.Description)));
+            }
             detailsElement.Add(new XElement(maml + "copyright", new XElement(maml + "para", cmdletInfo.Copyright)));
             detailsElement.Add(new XElement(command + "verb", cmdletInfo.Verb));
             detailsElement.Add(new XElement(command + "noun", cmdletInfo.Noun));

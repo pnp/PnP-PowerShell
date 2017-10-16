@@ -24,10 +24,13 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
     public class MoveFile : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER", HelpMessage = "Server relative Url specifying the file to move. Must include the file name.")]
+        private const string ParameterSet_SERVER = "Server Relative";
+        private const string ParameterSet_SITE = "Site Relative";
+
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SERVER, HelpMessage = "Server relative Url specifying the file to move. Must include the file name.")]
         public string ServerRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SITE", HelpMessage = "Site relative Url specifying the file to move. Must include the file name.")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SITE, HelpMessage = "Site relative Url specifying the file to move. Must include the file name.")]
         public string SiteRelativeUrl = string.Empty;
 
         [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to move the file to. Must include the file name.")]
@@ -41,7 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSetName == "SITE")
+            if (ParameterSetName == ParameterSet_SITE)
             {
                 var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);

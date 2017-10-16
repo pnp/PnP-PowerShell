@@ -9,7 +9,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = "AllItems")]
+    [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = ParameterSet_ALLITEMS)]
     [CmdletHelp("Retrieves list items",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),
@@ -44,29 +44,33 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 7)]
     public class GetListItem : PnPWebCmdlet
     {
+        private const string ParameterSet_BYID = "By Id";
+        private const string ParameterSet_BYUNIQUEID = "By Unique Id";
+        private const string ParameterSet_BYQUERY = "By Query";
+        private const string ParameterSet_ALLITEMS = "All Items";
         [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve", ParameterSetName = "ById")]
+        [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve", ParameterSetName = ParameterSet_BYID)]
         public int Id = -1;
 
-        [Parameter(Mandatory = false, HelpMessage = "The unique id (GUID) of the item to retrieve", ParameterSetName = "ByUniqueId")]
+        [Parameter(Mandatory = false, HelpMessage = "The unique id (GUID) of the item to retrieve", ParameterSetName = ParameterSet_BYUNIQUEID)]
         public GuidPipeBind UniqueId;
 
-        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list", ParameterSetName = "ByQuery")]
+        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list", ParameterSetName = ParameterSet_BYQUERY)]
         public string Query;
 
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "AllItems")]
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ById")]
-        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = "ByUniqueId")]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_ALLITEMS)]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_BYID)]
+        [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_BYUNIQUEID)]
         public string[] Fields;
 
-        [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = "AllItems")]
-		[Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = "ByQuery")]
+        [Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = ParameterSet_ALLITEMS)]
+		[Parameter(Mandatory = false, HelpMessage = "The number of items to retrieve per page request.", ParameterSetName = ParameterSet_BYQUERY)]
         public int PageSize = -1;
 
-		[Parameter(Mandatory = false, HelpMessage = "The script block to run after every page request.", ParameterSetName = "AllItems")]
-		[Parameter(Mandatory = false, HelpMessage = "The script block to run after every page request.", ParameterSetName = "ByQuery")]
+		[Parameter(Mandatory = false, HelpMessage = "The script block to run after every page request.", ParameterSetName = ParameterSet_ALLITEMS)]
+		[Parameter(Mandatory = false, HelpMessage = "The script block to run after every page request.", ParameterSetName = ParameterSet_BYQUERY)]
 		public ScriptBlock ScriptBlock;
 
 		protected override void ExecuteCmdlet()

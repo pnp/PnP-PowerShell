@@ -1,18 +1,23 @@
 # Set-PnPAuditing
+
+## SYNOPSIS
 Set Auditing setting for a site
-## Syntax
+
+## SYNTAX 
+
+### EnableAll
 ```powershell
 Set-PnPAuditing [-EnableAll [<SwitchParameter>]]
                 [-RetentionTime <Int>]
                 [-TrimAuditLog [<SwitchParameter>]]
 ```
 
-
+### DisableAll
 ```powershell
 Set-PnPAuditing [-DisableAll [<SwitchParameter>]]
 ```
 
-
+### Other
 ```powershell
 Set-PnPAuditing [-RetentionTime <Int>]
                 [-TrimAuditLog [<SwitchParameter>]]
@@ -25,54 +30,182 @@ Set-PnPAuditing [-RetentionTime <Int>]
                 [-EditUsersPermissions [<SwitchParameter>]]
 ```
 
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|CheckOutCheckInItems|SwitchParameter|False||
-|DeleteRestoreItems|SwitchParameter|False||
-|DisableAll|SwitchParameter|False||
-|EditContentTypesColumns|SwitchParameter|False||
-|EditItems|SwitchParameter|False||
-|EditUsersPermissions|SwitchParameter|False||
-|EnableAll|SwitchParameter|False||
-|MoveCopyItems|SwitchParameter|False||
-|RetentionTime|Int|False||
-|SearchContent|SwitchParameter|False||
-|TrimAuditLog|SwitchParameter|False||
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Set-PnPAuditing -EnableAll
 ```
+
 Enables all auditing settings for the current site
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Set-PnPAuditing -DisableAll
 ```
+
 Disables all auditing settings for the current site
                     This also disables the automatic trimming of the audit log
 
-### Example 3
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Set-PnPAuditing -RetentionTime 7
 ```
+
 Sets the audit log trimming to 7 days, this also enables the automatic trimming of the audit log
 
-### Example 4
+### ------------------EXAMPLE 4------------------
 ```powershell
 PS:> Set-PnPAuditing -TrimAuditLog
 ```
+
 Enables the automatic trimming of the audit log
 
-### Example 5
+### ------------------EXAMPLE 5------------------
 ```powershell
 PS:> Set-PnPAuditing -RetentionTime 7 -CheckOutCheckInItems -MoveCopyItems -SearchContent
 ```
+
 Sets the audit log trimming to 7 days, this also enables the automatic trimming of the audit log.
                     Do auditing for:
                     - Checking out or checking in items
                     - Moving or copying items to another location in the site
                     - Searching site content
+
+## PARAMETERS
+
+### -CheckOutCheckInItems
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -DeleteRestoreItems
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -DisableAll
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: DisableAll
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EditContentTypesColumns
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EditItems
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EditUsersPermissions
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EnableAll
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: EnableAll
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -MoveCopyItems
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -RetentionTime
+
+
+```yaml
+Type: Int
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -SearchContent
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -TrimAuditLog
+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -1,27 +1,60 @@
 # Execute-PnPQuery
-Executes any queued actions / changes on the SharePoint Client Side Object Model Context
-## Syntax
+
+## SYNOPSIS
+Execute the current queued actions
+
+## SYNTAX 
+
 ```powershell
 Execute-PnPQuery [-RetryCount <Int>]
                  [-RetryWait <Int>]
 ```
 
+## DESCRIPTION
+Executes any queued actions / changes on the SharePoint Client Side Object Model Context
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|RetryCount|Int|False|Number of times to retry in case of throttling. Defaults to 10.|
-|RetryWait|Int|False|Delay in seconds. Defaults to 1.|
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Execute-PnPQuery -RetryCount 5
 ```
+
 This will execute any queued actions / changes on the SharePoint Client Side Object Model Context and will retry 5 times in case of throttling.
 
-### Example 2
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Execute-PnPQuery -RetryWait 10
 ```
+
 This will execute any queued actions / changes on the SharePoint Client Side Object Model Context and delay the execution for 10 seconds before it retries the execution.
+
+## PARAMETERS
+
+### -RetryCount
+Number of times to retry in case of throttling. Defaults to 10.
+
+```yaml
+Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -RetryWait
+Delay in seconds. Defaults to 1.
+
+```yaml
+Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

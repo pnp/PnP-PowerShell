@@ -1,12 +1,24 @@
 # Get-PnPContext
+
+## SYNOPSIS
+Returns the current context
+
+## DESCRIPTION
 Returns a Client Side Object Model context
-## Returns
->[Microsoft.SharePoint.Client.ClientContext](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientcontext.aspx)
 
-## Examples
+## EXAMPLES
 
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> $ctx = Get-PnPContext
 ```
+
 This will put the current context in the $ctx variable.
+
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.ClientContext](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientcontext.aspx)
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

@@ -17,7 +17,8 @@ using Microsoft.SharePoint.Client.CompliancePolicy;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false)]
-    [CmdletHelp("Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets",
+    [CmdletHelp("Connect to a SharePoint site",
+        "Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets",
         DetailedDescription = "If no credentials have been specified, and the CurrentCredentials parameter has not been specified, you will be prompted for credentials.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
@@ -70,9 +71,9 @@ dir",
         private const string ParameterSet_TOKEN = "Token";
         private const string ParameterSet_WEBLOGIN = "WebLogin";
 #if !ONPREMISES
-        private const string ParameterSet_NATIVEAAD = "NativeAAD";
-        private const string ParameterSet_APPONLYAAD = "AppOnlyAAD";
-        private const string ParameterSet_SPOManagement = "SPOManagement";
+        private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
+        private const string ParameterSet_APPONLYAAD = "App-Only with Azure Active Directory";
+        private const string ParameterSet_SPOManagement = "SPO Management Shell Credentials";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
 #endif

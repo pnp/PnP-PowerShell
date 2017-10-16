@@ -7,7 +7,8 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPProperty")]
-    [CmdletHelp("Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.",
+    [CmdletHelp("Returns a previously not loaded property of a ClientObject", 
+        "Will populate properties of an object and optionally, if needed, load the value from the server. If one property is specified its value will be returned to the output.",
         Category = CmdletHelpCategory.Base,
         OutputType = typeof(ClientObject),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientobject.aspx")]

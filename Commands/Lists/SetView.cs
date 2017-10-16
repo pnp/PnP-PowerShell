@@ -8,7 +8,8 @@ using System.Collections;
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Set, "PnPView")]
-    [CmdletHelp("Changes one or more properties of a specific view",
+    [CmdletHelp("Change view properties",
+        DetailedDescription = "Sets one or more properties of an existing view.",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.view.aspx")]

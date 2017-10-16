@@ -1,19 +1,37 @@
 # New-PnPProvisioningTemplate
+
+## SYNOPSIS
 Creates a new provisioning template object
-## Syntax
+
+## SYNTAX 
+
 ```powershell
 New-PnPProvisioningTemplate [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
 
-## Parameters
-Parameter|Type|Required|Description
----------|----|--------|-----------
-|Web|WebPipeBind|False|The web to apply the command to. Omit this parameter to use the current web.|
-## Examples
-
-### Example 1
+### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> $template = New-PnPProvisioningTemplate
 ```
+
 Creates a new instance of a provisioning template object.
+
+## PARAMETERS
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+# RELATED LINKS
+
+[SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
