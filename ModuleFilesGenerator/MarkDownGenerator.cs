@@ -307,7 +307,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 foreach (var cmdletInfo in _cmdlets.Where(c => c.Category == category).OrderBy(c => c.Noun))
                 {
                     var description = cmdletInfo.Description != null ? cmdletInfo.Description.Replace("\r\n", " ") : "";
-                    docBuilder.AppendFormat("**[{0}]({1}{2}.md)** |{3}|{4}{5}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, cmdletInfo.Platform, Environment.NewLine);
+                    docBuilder.AppendFormat("**[{0}]({1}-{2}.md)** |{3}|{4}{5}", cmdletInfo.FullCommand.Replace("-", "&#8209;"), cmdletInfo.Verb, cmdletInfo.Noun, description, cmdletInfo.Platform, Environment.NewLine);
                 }
             }
 
@@ -371,7 +371,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 foreach (var cmdletInfo in categoryCmdlets)
                 {
                     var description = cmdletInfo.Description != null ? cmdletInfo.Description.Replace("\r\n", " ") : "";
-                    docBuilder.AppendFormat("### [{0}]({1}{2}.md){3}", cmdletInfo.FullCommand, cmdletInfo.Verb, cmdletInfo.Noun, Environment.NewLine);
+                    docBuilder.AppendFormat("### [{0}]({1}-{2}.md){3}", cmdletInfo.FullCommand, cmdletInfo.Verb, cmdletInfo.Noun, Environment.NewLine);
                 }
             }
 
