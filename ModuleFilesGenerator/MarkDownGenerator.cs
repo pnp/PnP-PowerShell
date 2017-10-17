@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -22,6 +23,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         internal void Generate()
         {
             GenerateCmdletDocs();
+            GenerateMappingJson();
             GenerateTOC();
             GenerateMSDNTOC();
 
@@ -33,7 +35,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             {
                 if (mdFile.Name.ToLowerInvariant() != $"readme.{extension}")
                 {
-                    var index = _cmdlets.FindIndex(t => $"{t.Verb}{t.Noun}.{extension}" == mdFile.Name);
+                    var index = _cmdlets.FindIndex(t => $"{t.Verb}-{t.Noun}.{extension}" == mdFile.Name);
                     if (index == -1)
                     {
                         mdFile.Delete();
@@ -53,7 +55,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                 if (!string.IsNullOrEmpty(cmdletInfo.Verb) && !string.IsNullOrEmpty(cmdletInfo.Noun))
                 {
-                    string mdFilePath = $"{_solutionDir}\\Documentation\\{cmdletInfo.Verb}{cmdletInfo.Noun}.{extension}";
+                    string mdFilePath = $"{_solutionDir}\\Documentation\\{cmdletInfo.Verb}-{cmdletInfo.Noun}.{extension}";
 
                     if (System.IO.File.Exists(mdFilePath))
                     {
@@ -253,6 +255,26 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     }
                 }
             }
+        }
+
+        private void GenerateMappingJson()
+        {
+            var groups = new Dictionary<string, string>();
+            foreach (var cmdletInfo in _cmdlets)
+            {
+                groups.Add($"{cmdletInfo.FullCommand}", cmdletInfo.Category);
+            }
+
+            var json = JsonConvert.SerializeObject(groups);
+
+            var mappingFolder = $"{_solutionDir}\\Documentation\\Mapping";
+            if (!System.IO.Directory.Exists(mappingFolder))
+            {
+                System.IO.Directory.CreateDirectory(mappingFolder);
+            }
+
+            var mappingPath = $"{_solutionDir}\\Documentation\\Mapping\\groupMatting.json";
+            System.IO.File.WriteAllText(mappingPath, json);
         }
 
         private void GenerateTOC()
