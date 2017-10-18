@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Get-PnPRequestAccessEmails
 
 ## SYNOPSIS
 Returns the request access e-mail addresses
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

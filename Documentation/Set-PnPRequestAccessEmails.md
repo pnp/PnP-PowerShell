@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Set-PnPRequestAccessEmails
 
 ## SYNOPSIS
 Sets Request Access Emails on a web
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

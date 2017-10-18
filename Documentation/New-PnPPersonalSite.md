@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # New-PnPPersonalSite
 
 ## SYNOPSIS
 Office365 only: Creates a personal / OneDrive For Business site
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

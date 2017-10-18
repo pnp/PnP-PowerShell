@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Remove-PnPClientSidePage
 
 ## SYNOPSIS
 Removes a Client-Side Page
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

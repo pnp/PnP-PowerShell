@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Get-PnPApp
 
 ## SYNOPSIS
 Returns the available apps from the app catalog
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Add-PnPClientSidePageSection
 
 ## SYNOPSIS
 Adds a new section to a Client-Side page
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

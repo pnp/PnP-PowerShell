@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Restore-PnPTenantRecycleBinItem
 
 ## SYNOPSIS
 Restores a site collection from the tenant scoped recycle bin
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

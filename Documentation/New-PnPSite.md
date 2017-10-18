@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # New-PnPSite
 
 ## SYNOPSIS
 BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Add-PnPClientSideWebPart
 
 ## SYNOPSIS
 Adds a Client-Side Web Part to a client-side page
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 
