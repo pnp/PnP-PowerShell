@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Add-PnPWebhookSubscription
 
 ## SYNOPSIS
 Adds a new Webhook subscription
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

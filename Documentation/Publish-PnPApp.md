@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Publish-PnPApp
 
 ## SYNOPSIS
 Publishes/Deploys/Trusts an available app in the app catalog
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Set-PnPListItemAsRecord
 
 ## SYNOPSIS
 Declares a list item as a record
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

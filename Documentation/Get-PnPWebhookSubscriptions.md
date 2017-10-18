@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Get-PnPWebhookSubscriptions
 
 ## SYNOPSIS
 Gets all the Webhook subscriptions of the resource
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

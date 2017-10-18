@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Set-PnPWebhookSubscription
 
 ## SYNOPSIS
 Removes a Webhook subscription from the resource
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

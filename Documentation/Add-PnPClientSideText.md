@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Add-PnPClientSideText
 
 ## SYNOPSIS
 Adds a text element to a client-side page.
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Set-PnPClientSidePage
 
 ## SYNOPSIS
 Sets parameters of a Client-Side Page
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

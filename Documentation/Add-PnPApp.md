@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Add-PnPApp
 
 ## SYNOPSIS
 Add/uploads an available app to the app catalog
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

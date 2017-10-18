@@ -65,21 +65,25 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     var docBuilder = new StringBuilder();
 
                     // Header
+                    var platform = "SharePoint Server 2013, SharePoint Server 2016, SharePoint Online";
+                    if (cmdletInfo.Platform != "All")
+                    {
+                        platform = cmdletInfo.Platform;
+                    }
+                    docBuilder.Append($@"---{Environment.NewLine}external help file:{Environment.NewLine}applicable: {platform}{Environment.NewLine}schema: 2.0.0{Environment.NewLine}---{Environment.NewLine}");
 
                     docBuilder.Append($"# {cmdletInfo.FullCommand}{Environment.NewLine}{Environment.NewLine}");
 
                     // Body 
 
-
-
-                    if (cmdletInfo.Platform != "All")
-                    {
-                        docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}>Only available for {cmdletInfo.Platform}{Environment.NewLine}{Environment.NewLine}");
-                    }
-                    else
-                    {
-                        docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}");
-                    }
+                    //if (cmdletInfo.Platform != "All")
+                    //{
+                    //    docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}>Only available for {cmdletInfo.Platform}{Environment.NewLine}{Environment.NewLine}");
+                    //}
+                    //else
+                    //{
+                    docBuilder.Append($"## SYNOPSIS{Environment.NewLine}{cmdletInfo.Description}{Environment.NewLine}{Environment.NewLine}");
+                    //}
 
                     if (cmdletInfo.Syntaxes.Any())
                     {
@@ -273,7 +277,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 System.IO.Directory.CreateDirectory(mappingFolder);
             }
 
-            var mappingPath = $"{_solutionDir}\\Documentation\\Mapping\\groupMatting.json";
+            var mappingPath = $"{_solutionDir}\\Documentation\\Mapping\\groupMapping.json";
             System.IO.File.WriteAllText(mappingPath, json);
         }
 

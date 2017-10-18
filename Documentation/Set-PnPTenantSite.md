@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Set-PnPTenantSite
 
 ## SYNOPSIS
 Set site information.
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

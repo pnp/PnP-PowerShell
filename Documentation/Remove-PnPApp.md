@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Remove-PnPApp
 
 ## SYNOPSIS
 Removes an app from the app catalog
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

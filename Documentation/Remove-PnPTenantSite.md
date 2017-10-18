@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Remove-PnPTenantSite
 
 ## SYNOPSIS
 Removes a site collection
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 

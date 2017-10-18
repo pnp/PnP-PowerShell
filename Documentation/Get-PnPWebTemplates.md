@@ -1,9 +1,12 @@
+---
+external help file:
+applicable: SharePoint Online
+schema: 2.0.0
+---
 # Get-PnPWebTemplates
 
 ## SYNOPSIS
 Returns the available web templates.
-
->Only available for SharePoint Online
 
 ## SYNTAX 
 
