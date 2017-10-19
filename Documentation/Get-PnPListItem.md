@@ -58,42 +58,42 @@ Retrieves all list items from the Tasks list
 PS:> Get-PnPListItem -List Tasks -Id 1
 ```
 
-Retrieves the list item with ID 1 from from the Tasks list. This parameter is ignored if the Query parameter is specified.
+Retrieves the list item with ID 1 from from the Tasks list
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3
 ```
 
-Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists. This parameter is ignored if the Query parameter is specified.
+Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists
 
 ### ------------------EXAMPLE 4------------------
 ```powershell
-PS:> Get-PnPListItem -List Tasks -Fields "Title","GUID"
+PS:> (Get-PnPListItem -List Tasks -Fields "Title","GUID").FieldValues
 ```
 
-Retrieves all list items, but only includes the values of the Title and GUID fields in the list item object. This parameter is ignored if the Query parameter is specified.
+Retrieves all list items, but only includes the values of the Title and GUID fields in the list item object
 
 ### ------------------EXAMPLE 5------------------
 ```powershell
 PS:> Get-PnPListItem -List Tasks -Query "<View><Query><Where><Eq><FieldRef Name='GUID'/><Value Type='Guid'>bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3</Value></Eq></Where></Query></View>"
 ```
 
-Retrieves all list items based on the CAML query specified.
+Retrieves all list items based on the CAML query specified
 
 ### ------------------EXAMPLE 6------------------
 ```powershell
 PS:> Get-PnPListItem -List Tasks -PageSize 1000
 ```
 
-Retrieves all list items from the Tasks list in pages of 1000 items. This parameter is ignored if the Query parameter is specified.
+Retrieves all list items from the Tasks list in pages of 1000 items
 
 ### ------------------EXAMPLE 7------------------
 ```powershell
 PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }
 ```
 
-Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item.
+Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item
 
 ## PARAMETERS
 

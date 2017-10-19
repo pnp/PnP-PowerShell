@@ -89,6 +89,7 @@ Cmdlet|Description|Platform
 **[Remove&#8209;PnPApp](Remove-PnPApp.md)** |Removes an app from the app catalog|SharePoint Online
 **[Uninstall&#8209;PnPApp](Uninstall-PnPApp.md)** |Uninstalls an available add-in from the site|All
 **[Unpublish&#8209;PnPApp](Unpublish-PnPApp.md)** |Unpublishes/retracts an available add-in from the app catalog|SharePoint Online
+**[Update&#8209;PnPApp](Update-PnPApp.md)** |Updates an available app from the app catalog|SharePoint Online
 **[Get&#8209;PnPAppInstance](Get-PnPAppInstance.md)** |Returns a SharePoint AddIn Instance|All
 **[Uninstall&#8209;PnPAppInstance](Uninstall-PnPAppInstance.md)** |Removes an app from a site|All
 **[Import&#8209;PnPAppPackage](Import-PnPAppPackage.md)** |Adds a SharePoint Addin to a site|All
