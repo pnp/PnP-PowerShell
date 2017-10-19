@@ -228,6 +228,7 @@
 ### [New-PnPGroup](New-PnPGroup.md)
 ### [Remove-PnPGroup](Remove-PnPGroup.md)
 ### [Set-PnPGroup](Set-PnPGroup.md)
+### [Get-PnPGroupMembers](Get-PnPGroupMembers.md)
 ### [Get-PnPGroupPermissions](Get-PnPGroupPermissions.md)
 ### [Set-PnPGroupPermissions](Set-PnPGroupPermissions.md)
 ### [Get-PnPUser](Get-PnPUser.md)

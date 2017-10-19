@@ -398,6 +398,7 @@ Cmdlet|Description|Platform
 **[New&#8209;PnPGroup](NewPnPGroup.md)** |Adds group to the Site Groups List and returns a group object|All
 **[Remove&#8209;PnPGroup](RemovePnPGroup.md)** |Removes a group from a web.|All
 **[Set&#8209;PnPGroup](SetPnPGroup.md)** |Updates a group|All
+**[Get&#8209;PnPGroupMembers](GetPnPGroupMembers.md)** |Retrieves all members of a group|All
 **[Get&#8209;PnPGroupPermissions](GetPnPGroupPermissions.md)** |Returns the permissions for a specific SharePoint group|All
 **[Set&#8209;PnPGroupPermissions](SetPnPGroupPermissions.md)** |Adds and/or removes permissions of a specific SharePoint group|All
 **[Get&#8209;PnPUser](GetPnPUser.md)** |Returns site users of current web|All
