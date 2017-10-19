@@ -7,6 +7,7 @@
 ### [Remove-PnPApp](Remove-PnPApp.md)
 ### [Uninstall-PnPApp](Uninstall-PnPApp.md)
 ### [Unpublish-PnPApp](Unpublish-PnPApp.md)
+### [Update-PnPApp](Update-PnPApp.md)
 ### [Get-PnPAppInstance](Get-PnPAppInstance.md)
 ### [Uninstall-PnPAppInstance](Uninstall-PnPAppInstance.md)
 ### [Import-PnPAppPackage](Import-PnPAppPackage.md)
