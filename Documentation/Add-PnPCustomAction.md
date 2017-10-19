@@ -18,6 +18,7 @@ Add-PnPCustomAction -Name <String>
                     -ClientSideComponentId <GuidPipeBind>
                     [-RegistrationId <String>]
                     [-RegistrationType <UserCustomActionRegistrationType>]
+                    [-Scope <CustomActionScope>]
                     [-ClientSideComponentProperties <String>]
                     [-Web <WebPipeBind>]
 ```
