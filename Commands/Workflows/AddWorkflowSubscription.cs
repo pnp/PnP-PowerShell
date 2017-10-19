@@ -15,11 +15,11 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         SortOrder = 1)]
     [CmdletExample(
         Code = @"$list | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf", 
-        Remarks = "Adds an Workflow with the name ""SendMessageWf"" to the list $list.",
+        Remarks = @"Adds an Workflow with the name ""SendMessageWf"" to the list $list.",
         SortOrder = 2)]
     [CmdletExample(
         Code = @"Get-PnPList -Identity ""MyCustomList"" | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf", 
-        Remarks = "Adds an Workflow with the name ""SendMessageWf"" to the list ""MyCustomList"".",
+        Remarks = @"Adds an Workflow with the name ""SendMessageWf"" to the list ""MyCustomList"".",
         SortOrder = 3)]
     public class AddWorkflowSubscription : PnPWebCmdlet
     {

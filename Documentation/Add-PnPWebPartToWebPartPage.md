@@ -96,7 +96,7 @@ Accept pipeline input: False
 ```
 
 ### -ZoneId
-
+The Zone Id where the webpart must be placed
 
 ```yaml
 Type: String
@@ -108,7 +108,7 @@ Accept pipeline input: False
 ```
 
 ### -ZoneIndex
-
+The Zone Index where the webpart must be placed
 
 ```yaml
 Type: Int

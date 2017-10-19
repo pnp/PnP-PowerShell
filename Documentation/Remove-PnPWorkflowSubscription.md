@@ -18,6 +18,22 @@ Remove-PnPWorkflowSubscription -Identity <WorkflowSubscriptionPipeBind>
 ## DESCRIPTION
 Removes a previously registered workflow subscription
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+Remove-PnPWorkflowSubscription -identity $wfSub
+```
+
+Removes the workflowsubscription, retrieved by Get-PnPWorkflowSubscription.
+
+### ------------------EXAMPLE 2------------------
+```powershell
+Get-PnPWorkflowSubscription -Name MyWorkflow | Remove-PnPWorkflowSubscription
+```
+
+Get the workflowSubscription MyWorkFlow and remove it.
+
 ## PARAMETERS
 
 ### -Identity

@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
         Code = @"PS:> Remove-PnPIndexedProperty -key ""MyIndexProperty""", 
-        Remarks = "Removes the Indexed property ""MyIndexProperty"" from the current web", 
+        Remarks = @"Removes the Indexed property ""MyIndexProperty"" from the current web", 
         SortOrder = 1)]
     public class RemovedIndexedProperty : PnPWebCmdlet
     {

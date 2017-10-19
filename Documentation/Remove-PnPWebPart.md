@@ -24,10 +24,26 @@ Remove-PnPWebPart -Title <String>
                   [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Remove-PnPWebPartToWikiPage -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82
+```
+
+This will remove the webpart as defined by the XML in the listview.webpart file to the specified page in the first row and the first column of the HTML table present on the page
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Remove-PnPWebPartToWikiPage -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -Name MyWebpart
+```
+
+This will remove the webpart as defined by the XML in the listview.webpart file to the specified page in the first row and the first column of the HTML table present on the page
+
 ## PARAMETERS
 
 ### -Identity
-
+The Guid of the webpart
 
 ```yaml
 Type: GuidPipeBind
@@ -39,7 +55,7 @@ Accept pipeline input: False
 ```
 
 ### -ServerRelativePageUrl
-
+Full server relative url of the webpart page, e.g. /sites/demo/sitepages/home.aspx
 
 ```yaml
 Type: String
@@ -52,7 +68,7 @@ Accept pipeline input: False
 ```
 
 ### -Title
-
+The name of the webpart
 
 ```yaml
 Type: String

@@ -15,6 +15,22 @@ Remove-PnPWorkflowDefinition -Identity <WorkflowDefinitionPipeBind>
                              [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+Remove-PnPWorkflowDefinition -Identity $wfDef
+```
+
+Removes the workflow, retrieved by Get-PnPWorkflowDefinition, from the site.
+
+### ------------------EXAMPLE 2------------------
+```powershell
+Get-PnPWorkflowDefinition -Name MyWorkflow | Remove-PnPWorkflowDefinition
+```
+
+Get the workflow MyWorkFlow and remove from the site.
+
 ## PARAMETERS
 
 ### -Identity

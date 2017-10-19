@@ -16,10 +16,26 @@ Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
                [-Identity <WebPipeBind>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Get-PnPSubWebs
+```
+
+This will return all sub webs for the current web
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Get-PnPSubWebs -recurse
+```
+
+This will return all sub webs for the current web and its sub webs
+
 ## PARAMETERS
 
 ### -Identity
-
+The guid of the web or web object
 
 ```yaml
 Type: WebPipeBind
@@ -31,7 +47,7 @@ Accept pipeline input: True
 ```
 
 ### -Recurse
-
+include subweb of the subwebs
 
 ```yaml
 Type: SwitchParameter

@@ -17,6 +17,15 @@ Uninstall-PnPSolution -PackageId <GuidPipeBind>
                       [-MinorVersion <Int>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Uninstall-PnPSolution -PackageId c2f5b025-7c42-4d3a-b579-41da3b8e7254 -SourceFilePath mypackage.wsp
+```
+
+Removes the package to the current site
+
 ## PARAMETERS
 
 ### -MajorVersion

@@ -18,6 +18,15 @@ Resume-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
 ## DESCRIPTION
 Resumes a previously stopped workflow instance
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+Resume-PnPWorkflowInstance -identity $wfInstance
+```
+
+Resumes the workflow instance, this can be the Guid of the instance or the instance itself.
+
 ## PARAMETERS
 
 ### -Identity

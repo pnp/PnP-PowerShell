@@ -31,6 +31,13 @@ PS:> Set-PnPInPlaceRecordsManagement -On
 
 Activates In Place Records Management
 
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Set-PnPInPlaceRecordsManagement -Off
+```
+
+Deactivates In Place Records Management
+
 ## PARAMETERS
 
 ### -Off

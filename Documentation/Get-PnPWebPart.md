@@ -35,7 +35,7 @@ Returns a specific webpart defined on the given page.
 ## PARAMETERS
 
 ### -Identity
-
+The identity of the webpart, this can be the webpart guid or an webpart object
 
 ```yaml
 Type: WebPartPipeBind

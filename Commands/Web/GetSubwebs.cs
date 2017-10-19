@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Get-PnPSubWebs -recurse",
-        Remarks = "This will return all sub webs for the current web and it sub webs",
+        Remarks = "This will return all sub webs for the current web and its sub webs",
         SortOrder = 2)]
     public class GetSubWebs : PnPWebCmdlet
     {

@@ -15,6 +15,15 @@ Stop-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
                          [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+Stop-PnPWorkflowInstance -identity $wfInstance
+```
+
+Stops the workflow Instance, this can be the Guid of the instance or the instance itself.
+
 ## PARAMETERS
 
 ### -Identity
