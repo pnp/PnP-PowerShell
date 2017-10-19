@@ -11,6 +11,10 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Category = CmdletHelpCategory.Sites,
         OutputType = typeof(Microsoft.SharePoint.Client.Site),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.site.aspx")]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPSite",
+        Remarks = "Gets the current site",
+        SortOrder = 1)]
     public class GetSite : PnPRetrievalsCmdlet<Microsoft.SharePoint.Client.Site>
     {
         protected override void ExecuteCmdlet()

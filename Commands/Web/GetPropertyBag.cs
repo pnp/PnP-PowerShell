@@ -27,9 +27,9 @@ namespace SharePointPnP.PowerShell.Commands
        Remarks = "This will return the value of the key vti_mykey from the folder MyFolder which is located in the root of the current web",
        SortOrder = 4)]
     [CmdletExample(
-     Code = @"PS:> Get-PnPPropertyBag -Folder / -Key vti_mykey",
-     Remarks = "This will return the value of the key vti_mykey from the root folder of the current web",
-     SortOrder = 5)]
+        Code = @"PS:> Get-PnPPropertyBag -Folder / -Key vti_mykey",
+        Remarks = "This will return the value of the key vti_mykey from the root folder of the current web",
+        SortOrder = 5)]
     public class GetPropertyBag : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "Key that should be looked up")]

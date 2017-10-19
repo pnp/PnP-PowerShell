@@ -11,14 +11,14 @@ namespace SharePointPnP.PowerShell.Commands.Site
         DetailedDescription = "This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove exisitng site collection administrators.",
         Category = CmdletHelpCategory.Sites)]
     [CmdletExample(
-      Code = @"PS:> Add-PnPSiteCollectionAdmin -Owners ""user@contoso.onmicrosoft.com""",
-      Remarks = @"This will add user@contoso.onmicrosoft.com as an additional site collection owner to the site collection in the current context", SortOrder = 1)]
+        Code = @"PS:> Add-PnPSiteCollectionAdmin -Owners ""user@contoso.onmicrosoft.com""",
+        Remarks = @"This will add user@contoso.onmicrosoft.com as an additional site collection owner to the site collection in the current context", SortOrder = 1)]
     [CmdletExample(
-      Code = @"PS:> Add-PnPSiteCollectionAdmin -Owners @(""user1@contoso.onmicrosoft.com"", ""user2@contoso.onmicrosoft.com"")",
-      Remarks = @"This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners to the site collection in the current context", SortOrder = 2)]
+        Code = @"PS:> Add-PnPSiteCollectionAdmin -Owners @(""user1@contoso.onmicrosoft.com"", ""user2@contoso.onmicrosoft.com"")",
+        Remarks = @"This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners to the site collection in the current context", SortOrder = 2)]
     [CmdletExample(
-      Code = @"PS:> Get-PnPUser | ? Title -Like ""*Doe"" | Add-PnPSiteCollectionAdmin",
-      Remarks = @"This will add all users with their title ending with ""Doe"" as additional site collection owners to the site collection in the current context", SortOrder = 3)]
+        Code = @"PS:> Get-PnPUser | ? Title -Like ""*Doe"" | Add-PnPSiteCollectionAdmin",
+        Remarks = @"This will add all users with their title ending with ""Doe"" as additional site collection owners to the site collection in the current context", SortOrder = 3)]
     public class AddSiteCollectionAdmin : PnPCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to add as site collection adminstrators. They will be added as additional site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.")]
