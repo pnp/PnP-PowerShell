@@ -6,7 +6,7 @@ schema: 2.0.0
 # Set-PnPWebhookSubscription
 
 ## SYNOPSIS
-Removes a Webhook subscription from the resource
+Updates a Webhook subscription
 
 ## SYNTAX 
 
