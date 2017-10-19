@@ -23,6 +23,29 @@ Add-PnPWorkflowSubscription -Name <String>
                             [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf -list $list
+```
+
+Adds an Workflow with the name 'SendMessageWf' to the list $list.
+
+### ------------------EXAMPLE 2------------------
+```powershell
+$list | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
+```
+
+Adds an Workflow with the name "SendMessageWf" to the list $list.
+
+### ------------------EXAMPLE 3------------------
+```powershell
+Get-PnPList -Identity "MyCustomList" | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
+```
+
+Adds an Workflow with the name "SendMessageWf" to the list "MyCustomList".
+
 ## PARAMETERS
 
 ### -AssociationValues
@@ -50,7 +73,7 @@ Accept pipeline input: False
 ```
 
 ### -HistoryListName
-
+The name of the History list
 
 ```yaml
 Type: String
@@ -86,7 +109,7 @@ Accept pipeline input: False
 ```
 
 ### -StartManually
-
+Switch if the workflow should be started manually, default value is 'true'
 
 ```yaml
 Type: SwitchParameter
@@ -98,7 +121,7 @@ Accept pipeline input: False
 ```
 
 ### -StartOnChanged
-
+Should the workflow run when an item is changed
 
 ```yaml
 Type: SwitchParameter
@@ -110,7 +133,7 @@ Accept pipeline input: False
 ```
 
 ### -StartOnCreated
-
+Should the workflow run when an new item is created
 
 ```yaml
 Type: SwitchParameter
@@ -122,7 +145,7 @@ Accept pipeline input: False
 ```
 
 ### -TaskListName
-
+The name of the task list
 
 ```yaml
 Type: String

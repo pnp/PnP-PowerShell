@@ -16,10 +16,19 @@ Get-PnPWeb [-Includes <String[]>]
            [-Identity <WebPipeBind>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Get-PnPWeb
+```
+
+This will return the current web
+
 ## PARAMETERS
 
 ### -Identity
-
+The guid of the web or web object
 
 ```yaml
 Type: WebPipeBind

@@ -20,6 +20,22 @@ Set-PnPAppSideLoading -On [<SwitchParameter>]
 Set-PnPAppSideLoading -Off [<SwitchParameter>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Set-PnPAppSideLoading -On
+```
+
+This will turn on App side loading
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Set-PnPAppSideLoading -Off
+```
+
+This will turn off App side loading
+
 ## PARAMETERS
 
 ### -Off

@@ -19,6 +19,29 @@ Get-PnPWorkflowSubscription [-Web <WebPipeBind>]
 ## DESCRIPTION
 Returns a workflow subscriptions from a list
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+Get-PnPWorkflowSubscription -Name MyWorkflow
+```
+
+Gets an Workflow subscription with the name "MyWorkflow".
+
+### ------------------EXAMPLE 2------------------
+```powershell
+Get-PnPWorkflowSubscription -Name MyWorkflow -list $list
+```
+
+Gets an Workflow subscription with the name "MyWorkflow" from the list $list.
+
+### ------------------EXAMPLE 3------------------
+```powershell
+Get-PnPList -identity "MyList" | Get-PnPWorkflowSubscription -Name MyWorkflow
+```
+
+Gets an Workflow subscription with the name "MyWorkflow" from the list "MyList".
+
 ## PARAMETERS
 
 ### -List

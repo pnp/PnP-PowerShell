@@ -15,6 +15,15 @@ Remove-PnPIndexedProperty -Key <String>
                           [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Remove-PnPIndexedProperty -key "MyIndexProperty"
+```
+
+Removes the Indexed property "MyIndexProperty" from the current web
+
 ## PARAMETERS
 
 ### -Key

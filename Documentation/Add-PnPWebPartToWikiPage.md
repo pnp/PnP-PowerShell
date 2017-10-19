@@ -49,7 +49,7 @@ This will add the webpart as defined by the XML in the $webpart variable to the 
 ## PARAMETERS
 
 ### -AddSpace
-
+Must there be a extra space between the webpart
 
 ```yaml
 Type: SwitchParameter
@@ -61,7 +61,7 @@ Accept pipeline input: False
 ```
 
 ### -Column
-
+Column number where the webpart must be placed
 
 ```yaml
 Type: Int
@@ -73,7 +73,7 @@ Accept pipeline input: False
 ```
 
 ### -Path
-
+A path to a webpart file on a the file system.
 
 ```yaml
 Type: String
@@ -85,7 +85,7 @@ Accept pipeline input: False
 ```
 
 ### -Row
-
+Row number where the webpart must be placed
 
 ```yaml
 Type: Int
@@ -122,7 +122,7 @@ Accept pipeline input: False
 ```
 
 ### -Xml
-
+A string containing the XML for the webpart.
 
 ```yaml
 Type: String

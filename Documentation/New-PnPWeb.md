@@ -69,7 +69,7 @@ Accept pipeline input: False
 ```
 
 ### -Locale
-
+The language id of the new web. default = 1033 for English
 
 ```yaml
 Type: Int

@@ -19,6 +19,22 @@ Get-PnPWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
 ## DESCRIPTION
 Returns a workflow definition
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+Get-PnPWorkflowDefinition -Name MyWorkflow
+```
+
+Gets an Workflow with the name "MyWorkflow".
+
+### ------------------EXAMPLE 2------------------
+```powershell
+Get-PnPWorkflowDefinition -Name MyWorkflow -PublishedOnly $false
+```
+
+Gets an Workflow with the name "MyWorkflow" that is published.
+
 ## PARAMETERS
 
 ### -Name
@@ -34,7 +50,7 @@ Accept pipeline input: False
 ```
 
 ### -PublishedOnly
-
+Return only the published workflows
 
 ```yaml
 Type: SwitchParameter

@@ -15,6 +15,15 @@ Returns the current site collection from the context.
 Get-PnPSite [-Includes <String[]>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Get-PnPSite
+```
+
+Gets the current site
+
 ## PARAMETERS
 
 ### -Includes

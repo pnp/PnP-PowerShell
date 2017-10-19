@@ -18,10 +18,19 @@ Set-PnPWebPartProperty -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Get-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key "Title" -Value "New Title" 
+```
+
+Sets the title property of the webpart.
+
 ## PARAMETERS
 
 ### -Identity
-
+The Guid of the webpart
 
 ```yaml
 Type: GuidPipeBind
@@ -33,7 +42,7 @@ Accept pipeline input: False
 ```
 
 ### -Key
-
+Name of a single property to be set
 
 ```yaml
 Type: String
@@ -45,7 +54,7 @@ Accept pipeline input: False
 ```
 
 ### -ServerRelativePageUrl
-
+Full server relative url of the webpart page, e.g. /sites/demo/sitepages/home.aspx
 
 ```yaml
 Type: String
@@ -58,7 +67,7 @@ Accept pipeline input: False
 ```
 
 ### -Value
-
+Value of the property to be set
 
 ```yaml
 Type: PSObject

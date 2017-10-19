@@ -39,7 +39,7 @@ Exports the full taxonomy the file output.txt
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254 
+PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254
 ```
 
 Exports the term set with the specified id

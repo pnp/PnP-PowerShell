@@ -13,11 +13,11 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowdefinition.aspx")]
     [CmdletExample(
         Code = @"Get-PnPWorkflowDefinition -Name MyWorkflow", 
-        Remarks = "Gets an Workflow with the name ""MyWorkflow"".",
+        Remarks = @"Gets an Workflow with the name ""MyWorkflow"".",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"Get-PnPWorkflowDefinition -Name MyWorkflow -PublishedOnly $false", 
-        Remarks = "Gets an Workflow with the name ""MyWorkflow"" that is published.",
+        Remarks = @"Gets an Workflow with the name ""MyWorkflow"" that is published.",
         SortOrder = 2)]
     public class GetWorkflowDefinition : PnPWebCmdlet
     {
