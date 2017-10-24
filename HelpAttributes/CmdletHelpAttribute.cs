@@ -6,8 +6,6 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
                        AllowMultiple = false)]
     public sealed class CmdletHelpAttribute : Attribute
     {
-        private readonly string _description;
-
         [Obsolete("Is not used. Use DetailedDescription instead.")]
         public string Details { get; set; }
         public string Description { get; set; }

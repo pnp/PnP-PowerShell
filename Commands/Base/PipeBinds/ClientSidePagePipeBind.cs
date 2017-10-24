@@ -53,7 +53,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                 {
                     return ClientSidePage.Load(ctx, Name);
                 }
-                catch (ArgumentException ex)
+                catch (ArgumentException)
                 {
                     return null;
                 }
