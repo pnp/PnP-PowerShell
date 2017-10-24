@@ -9,7 +9,14 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
     [Cmdlet(VerbsCommon.Remove, "PnPWorkflowDefinition")]
     [CmdletHelp("Removes a workflow definition",
         Category = CmdletHelpCategory.Workflows)]
-
+    [CmdletExample(
+        Code = @"Remove-PnPWorkflowDefinition -Identity $wfDef", 
+        Remarks = "Removes the workflow, retrieved by Get-PnPWorkflowDefinition, from the site.",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"Get-PnPWorkflowDefinition -Name MyWorkflow | Remove-PnPWorkflowDefinition", 
+        Remarks = "Get the workflow MyWorkFlow and remove from the site.",
+        SortOrder = 2)]
     public class RemoveWorkflowDefinition : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The definition to remove", Position = 0)]

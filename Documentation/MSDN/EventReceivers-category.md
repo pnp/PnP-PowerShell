@@ -1,6 +1,6 @@
 # Event Receivers 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[Add&#8209;PnPEventReceiver](AddPnPEventReceiver.md)** |Adds a new event receiver|All
-**[Get&#8209;PnPEventReceiver](GetPnPEventReceiver.md)** |Return registered eventreceivers|All
-**[Remove&#8209;PnPEventReceiver](RemovePnPEventReceiver.md)** |Remove an eventreceiver|All
+**[Add&#8209;PnPEventReceiver](Add-PnPEventReceiver.md)** |Adds a new event receiver|All
+**[Get&#8209;PnPEventReceiver](Get-PnPEventReceiver.md)** |Return registered eventreceivers|All
+**[Remove&#8209;PnPEventReceiver](Remove-PnPEventReceiver.md)** |Remove an eventreceiver|All

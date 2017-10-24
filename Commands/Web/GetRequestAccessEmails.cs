@@ -12,9 +12,9 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(List<string>))]
     [CmdletExample(
-       Code = @"PS:> Get-PnPRequestAccessEmails",
-       Remarks = "This will return all the request access e-mail addresses for the current web",
-       SortOrder = 1)]
+        Code = @"PS:> Get-PnPRequestAccessEmails",
+        Remarks = "This will return all the request access e-mail addresses for the current web",
+        SortOrder = 1)]
     public class GetRequestAccessEmails : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()

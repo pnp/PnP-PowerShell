@@ -29,10 +29,10 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
         [Parameter(Mandatory = true, ParameterSetName = "FILE", HelpMessage = "A path to a webpart file on a the file system.")]
         public string Path = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The Zone Id where the webpart must be placed")]
         public string ZoneId;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The Zone Index where the webpart must be placed")]
         public int ZoneIndex;
 
         protected override void ExecuteCmdlet()

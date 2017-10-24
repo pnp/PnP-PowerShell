@@ -12,12 +12,20 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(List<web>),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPSubWebs",
+        Remarks = "This will return all sub webs for the current web",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPSubWebs -recurse",
+        Remarks = "This will return all sub webs for the current web and its sub webs",
+        SortOrder = 2)]
     public class GetSubWebs : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The guid of the web or web object")]
         public WebPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "include subweb of the subwebs")]
         public SwitchParameter Recurse;
 
         protected override void ExecuteCmdlet()

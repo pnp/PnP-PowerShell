@@ -407,6 +407,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\NewSite.cs" />
+    <Compile Include="Apps\UpdateApp.cs" />
     <Compile Include="Apps\RemoveApp.cs" />
     <Compile Include="Apps\AddApp.cs" />
     <Compile Include="Apps\UnpublishApp.cs" />
@@ -490,6 +491,7 @@
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
     <Compile Include="Graph\SetUnifiedGroup.cs" />
+    <Compile Include="Principals\GetGroupMembers.cs" />
     <Compile Include="RecordsManagement\DisableInPlaceRecordsManagementForSite.cs" />
     <Compile Include="RecordsManagement\EnableInPlaceRecordsManagementForSite.cs" />
     <Compile Include="RecordsManagement\SetInPlaceRecordsManagement.cs" />

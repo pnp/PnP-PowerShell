@@ -9,6 +9,18 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
     [Cmdlet(VerbsCommon.Add, "PnPWorkflowSubscription")]
     [CmdletHelp("Adds a workflow subscription to a list",
         Category = CmdletHelpCategory.Workflows)]
+    [CmdletExample(
+        Code = @"Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf -list $list", 
+        Remarks = "Adds an Workflow with the name 'SendMessageWf' to the list $list.",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"$list | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf", 
+        Remarks = @"Adds an Workflow with the name ""SendMessageWf"" to the list $list.",
+        SortOrder = 2)]
+    [CmdletExample(
+        Code = @"Get-PnPList -Identity ""MyCustomList"" | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf", 
+        Remarks = @"Adds an Workflow with the name ""SendMessageWf"" to the list ""MyCustomList"".",
+        SortOrder = 3)]
     public class AddWorkflowSubscription : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The name of the subscription")]
@@ -20,19 +32,19 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         [Parameter(Mandatory = true, HelpMessage = "The list to add the workflow to")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Switch if the workflow should be started manually, default value is 'true'")]
         public SwitchParameter StartManually = true;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Should the workflow run when an new item is created")]
         public SwitchParameter StartOnCreated;
         
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Should the workflow run when an item is changed")]
         public SwitchParameter StartOnChanged;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the History list")]
         public string HistoryListName;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the task list")]
         public string TaskListName;
 
         [Parameter(Mandatory = false)]
