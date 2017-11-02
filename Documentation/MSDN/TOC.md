@@ -216,6 +216,7 @@
 ## [Tenant Administration](TenantAdministration-category.md)
 ### [Get-PnPAccessToken](Get-PnPAccessToken.md)
 ### [New-PnPSite](New-PnPSite.md)
+### [Enable-PnPSiteClassification](Enable-PnPSiteClassification.md)
 ### [Clear-PnPTenantRecycleBinItem](Clear-PnPTenantRecycleBinItem.md)
 ### [Restore-PnPTenantRecycleBinItem](Restore-PnPTenantRecycleBinItem.md)
 ### [Get-PnPTenantSite](Get-PnPTenantSite.md)

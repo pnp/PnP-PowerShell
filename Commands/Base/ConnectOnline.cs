@@ -10,6 +10,7 @@ using OfficeDevPnP.Core;
 using SharePointPnP.PowerShell.Commands.Provider;
 using File = System.IO.File;
 using System.Net;
+using Microsoft.Identity.Client;
 #if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
 #endif
@@ -73,14 +74,26 @@ dir",
 #if !ONPREMISES
         private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
         private const string ParameterSet_APPONLYAAD = "App-Only with Azure Active Directory";
-        private const string ParameterSet_SPOManagement = "SPO Management Shell Credentials";
+        private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
+        private const string ParameterSet_GRAPHWITHSCOPE = "Microsoft Graph using Scopes";
+        private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
+        private const string MSALPnPPowerShellClientId = "bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71";
+        private const string GraphRedirectUri = "urn:ietf:wg:oauth:2.0:oob";
+        private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
+        private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
+
 #endif
 #if ONPREMISES
         private const string ParameterSet_HIGHTRUST = "HighTrust";
 #endif
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.")]
@@ -92,25 +105,47 @@ dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect to your on-premises SharePoint farm using ADFS")]
         public SwitchParameter UseAdfs;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
         public int MinimalHealthScore = -1;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
         public int RetryCount = 10;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
         public int RetryWait = 1;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The request timeout. Default is 180000")]
         public int RequestTimeout = 1800000;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
         public string Realm;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client ID to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The client id of the app which gives you access to the Microsoft Graph API.")]
         public string AppId;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client Secret to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The app key of the app which gives you access to the Microsoft Graph API.")]
         public string AppSecret;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to connect to SharePoint with browser based login")]
@@ -119,14 +154,24 @@ dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Specify to use for instance use forms based authentication (FBA)")]
         public ClientAuthenticationMode AuthenticationMode = ClientAuthenticationMode.Default;
 
-        [Parameter(Mandatory = false, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "If you want to create a PSDrive connected to the URL")]
         public SwitchParameter CreateDrive;
 
-        [Parameter(Mandatory = false, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
         public string DriveName = "SPO";
 
 #if !ONPREMISES
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOManagement, HelpMessage = "Log in using the SharePoint Online Management Shell application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Log in using the SharePoint Online Management Shell application")]
         public SwitchParameter SPOManagementShell;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Client ID of the Azure AD Application")]
@@ -151,20 +196,47 @@ dir",
         public SecureString CertificatePassword;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Clears the token cache.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOManagement, HelpMessage = "Clears the token cache.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Clears the token cache.")]
         public SwitchParameter ClearTokenCache;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
+
+        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHSCOPE, HelpMessage = "Connect to the Microsoft Graph")]
+        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "Connect to the Microsoft Graph")]
+        //public SwitchParameter UseGraph;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHSCOPE, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
+        public string[] Scopes;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
+        public string AADDomain;
+
 #endif
-        [Parameter(Mandatory = false, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
         public string TenantAdminUrl;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
         public SwitchParameter SkipTenantAdminCheck;
 
-        [Parameter(Mandatory = false, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         public SwitchParameter IgnoreSslErrors;
 
 #if ONPREMISES
@@ -212,7 +284,7 @@ dir",
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
             }
 #if !ONPREMISES
-            else if (ParameterSetName == ParameterSet_SPOManagement)
+            else if (ParameterSetName == ParameterSet_SPOMANAGEMENT)
             {
                 ConnectNativAAD(SPOManagementClientId, SPOManagementRedirectUri);
             }
@@ -223,6 +295,10 @@ dir",
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
                 SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+            }
+            else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
+            {
+                ConnectGraphScopes();
             }
 #endif
 #if ONPREMISES
@@ -280,7 +356,25 @@ dir",
                 new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
                 RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
         }
+
+        private void ConnectGraphScopes()
+        {
+            var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
+            var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
+            SPOnlineConnection.AuthenticationResult = authenticationResult;
+        }
+
+        private void ConnectGraphAAD()
+        {
+            var appCredentials = new ClientCredential(AppSecret);
+            var authority = new Uri(GraphAADLogin, AADDomain).AbsoluteUri;
+            var clientApplication = new ConfidentialClientApplication(authority, AppId, RedirectUri, appCredentials, null);
+            var authenticationResult = clientApplication.AcquireTokenForClient(GraphDefaultScope, null).GetAwaiter().GetResult();
+            SPOnlineConnection.AuthenticationResult = authenticationResult;
+        }
 #endif
+
+
 
         private PSCredential GetCredentials()
         {

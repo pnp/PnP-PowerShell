@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands
             {
                 throw new InvalidOperationException(Resources.NoConnection);
             }
-            if (ClientContext == null)
+            if (SPOnlineConnection.CurrentConnection == null && ClientContext == null)
             {
                 throw new InvalidOperationException(Resources.NoConnection);
             }

@@ -16,16 +16,21 @@ Connect-PnPOnline -Url <String>
                   [-Credentials <CredentialPipeBind>]
                   [-CurrentCredentials [<SwitchParameter>]]
                   [-UseAdfs [<SwitchParameter>]]
-                  [-AuthenticationMode <ClientAuthenticationMode>]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
                   [-RequestTimeout <Int>]
+                  [-AuthenticationMode <ClientAuthenticationMode>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
+```
+
+### Microsoft Graph using Scopes
+```powershell
+Connect-PnPOnline -Scopes <String[]>
 ```
 
 ### WebLogin
@@ -47,13 +52,13 @@ Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
 ```powershell
 Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
                   -Url <String>
-                  [-ClearTokenCache [<SwitchParameter>]]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
                   [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
+                  [-ClearTokenCache [<SwitchParameter>]]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
@@ -64,11 +69,11 @@ Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
 Connect-PnPOnline -AppId <String>
                   -AppSecret <String>
                   -Url <String>
-                  [-Realm <String>]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
                   [-RequestTimeout <Int>]
+                  [-Realm <String>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
                   [-TenantAdminUrl <String>]
@@ -81,17 +86,24 @@ Connect-PnPOnline -AppId <String>
 Connect-PnPOnline -ClientId <String>
                   -RedirectUri <String>
                   -Url <String>
-                  [-ClearTokenCache [<SwitchParameter>]]
-                  [-AzureEnvironment <AzureEnvironment>]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
                   [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
+                  [-ClearTokenCache [<SwitchParameter>]]
+                  [-AzureEnvironment <AzureEnvironment>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
+```
+
+### Microsoft Graph using Azure Active Directory
+```powershell
+Connect-PnPOnline -AppId <String>
+                  -AppSecret <String>
+                  -AADDomain <String>
 ```
 
 ### App-Only with Azure Active Directory
@@ -184,6 +196,18 @@ PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -SPOManagementShell
 This will authenticate you using the SharePoint Online Management Shell application
 
 ## PARAMETERS
+
+### -AADDomain
+The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.
+
+```yaml
+Type: String
+Parameter Sets: Microsoft Graph using Azure Active Directory
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
 
 ### -AppId
 The Application Client ID to use.
@@ -286,7 +310,7 @@ If you want to create a PSDrive connected to the URL
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
 Position: Named
@@ -322,7 +346,7 @@ Name of the PSDrive to create (default: SPO)
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
 Position: Named
@@ -334,7 +358,7 @@ Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm usi
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
 Position: Named
@@ -346,7 +370,7 @@ Specifies a minimal server healthscore before any requests are executed.
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
 Position: Named
@@ -382,7 +406,7 @@ The request timeout. Default is 180000
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
 Position: Named
@@ -394,7 +418,7 @@ Defines how often a retry should be executed if the server healthscore is not su
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
 Position: Named
@@ -406,9 +430,21 @@ Defines how many seconds to wait before each retry. Default is 1 second.
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Scopes
+The array of permission scopes for the Microsoft Graph API.
+
+```yaml
+Type: String[]
+Parameter Sets: Microsoft Graph using Scopes
+
+Required: True
 Position: Named
 Accept pipeline input: False
 ```
@@ -418,7 +454,7 @@ Should we skip the check if this site is the Tenant admin site. Default is false
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
 Position: Named
@@ -454,7 +490,7 @@ The url to the Tenant Admin site. If not specified, the cmdlets will assume to c
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: False
 Position: Named
@@ -466,7 +502,7 @@ The Url of the site collection to connect to.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Main
 
 Required: True
 Position: 0

@@ -407,6 +407,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\NewSite.cs" />
+    <Compile Include="Graph\EnableSiteClassification.cs" />
     <Compile Include="Apps\UpdateApp.cs" />
     <Compile Include="Apps\RemoveApp.cs" />
     <Compile Include="Apps\AddApp.cs" />
