@@ -12,7 +12,7 @@ This PowerShell sample demonstrates how to use PnP PowerShell & ImportExcel Cmdl
 ## Getting Started
 
 1. Edit 'ModernPagesConfig.xlsx' Excel Configuration file
-- Update the TargetSiteUrl entry on the 'Site' worksheet to reflect the target tenant and site collection name e.g. https://mytenant.sharepoint.com/sites/group1
+- Update the TargetSiteUrl entry on the 'Site' worksheet to reflect the target tenant and site name e.g. https://mytenant.sharepoint.com/sites/group1
 - Edit configuration values in the 'ModernPages' and 'ModernListLibraryWebParts' excel worksheets OR for initial testing leave as-is.
 2. Edit $configFilePath variable in the ProvisionModernPagesAndWebParts.ps1 script with the path to your local Excel configuration file
 
