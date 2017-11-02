@@ -123,10 +123,10 @@ function Add-PnPModernListWebPart() {
       }
    }
 }
-
 #Import 'Site' worksheet from the excel configuration spreadsheet
+
 try {
-   Write-Verbose "Importing site worksheet from the excel configuration file: $configFilePath"
+   Write-Verbose "Importing site worksheet from the excel configuration file: [$configFilePath]"
    $xlSiteSheet = Import-Excel -Path $configFilePath -WorkSheetname Site #Opens the excel file and imports the Site worksheet
 }
 catch {
@@ -159,19 +159,21 @@ catch {
 
 Write-Verbose "Begin adding ModernPages to the site."
 
-
 #Import each worksheet row and add modern site pages and relevant sections to the site
 ForEach ($row in $xlPagesSheet) {
    $page = $row.'PageName'; #saves value from the worksheet 'PageName' column to a variable
    $layout = $row.'LayoutType'; #saves value from the worksheet 'LayoutType' column to a variable
    $sections = $row.'Sections'; #saves value from the worksheet 'Sections' column to a variable
 
-   #ADD TRY/CATCH HERE
-
    #Add new modern site page
-   Write-Verbose "Adding the $page page with $layout layout."
-   Add-PnPClientSidePage -Name $page -LayoutType $layout
-    
+   try {
+      Write-Verbose "Adding the $page page with $layout layout."
+      Add-PnPClientSidePage -Name $page -LayoutType $layout
+   }
+   catch {
+      Write-Warning "Unable to add [$page] page."
+   }
+   
    #Add sections to the new page (in the order specified in the worksheet)
    if ($sections) {
 
@@ -202,24 +204,25 @@ catch {
 
 Write-Verbose "Begin adding Modern List / Library web parts to pages:"
 
-ForEach ($row in $xlWebPartsSheet) #iterates through the worksheet rows {
-$page = $row.'PageName'; #saves value in page name column to a variable 
-$section = $row.'Section'; #saves value in Section column to a variable
-$column = $row.'Column'; #saves values in sections column to a variable
-#$order = $row.'Order';#saves value in Order column to a variable - have commented this out as order parameter for Add-PnPClientSideWebPart command doesn't seem to work currently
-$wpType = $row.'WebPartType'; #saves value in WebPartType column to a variable
-$listLibraryName = $row.'ListOrLibraryName'; #saves value in ListOrLibraryName column to a variable
-$viewName = $row.'ViewName'; #saves value in ViewName column to a variable
-$wpTitle = $row.'WebPartTitle'; #saves value in WebPartTitle column to a variable
-$wpHeight = $row.'WebPartHeight'; #saves value in WebPartHeight column to a variable
+#iterate through the worksheet rows and add web parts to the pages
+ForEach ($row in $xlWebPartsSheet) {
+   $page = $row.'PageName'; #saves value in page name column to a variable 
+   $section = $row.'Section'; #saves value in Section column to a variable
+   $column = $row.'Column'; #saves values in sections column to a variable
+   #$order = $row.'Order';#saves value in Order column to a variable - have commented this out as order parameter for Add-PnPClientSideWebPart command doesn't seem to work currently
+   $wpType = $row.'WebPartType'; #saves value in WebPartType column to a variable
+   $listLibraryName = $row.'ListOrLibraryName'; #saves value in ListOrLibraryName column to a variable
+   $viewName = $row.'ViewName'; #saves value in ViewName column to a variable
+   $wpTitle = $row.'WebPartTitle'; #saves value in WebPartTitle column to a variable
+   $wpHeight = $row.'WebPartHeight'; #saves value in WebPartHeight column to a variable
 
-Write-Verbose "Adding web part to the '$page' page with title [$wpTitle]"
-Write-Verbose "web part will be added with '$viewName' view for the '$listLibraryName' $wpType"
-Write-Verbose "web part will be added to column $column in section $section height is set to $wpHeight" #order is: $order
+   Write-Verbose "Adding web part to the '$page' page with title [$wpTitle]"
+   Write-Verbose "web part will be added with '$viewName' view for the '$listLibraryName' $wpType"
+   Write-Verbose "web part will be added to column $column in section $section height is set to $wpHeight" #order is: $order
     
-Add-PnPModernListWebPart -PageName $page -WebPartType $wpType -ListName $listLibraryName -ViewName $viewName -WebPartHeight $wpHeight -WebPartTitle $wpTitle -Section $section -Column $column #-Order $order
-
+   Add-PnPModernListWebPart -PageName $page -WebPartType $wpType -ListName $listLibraryName -ViewName $viewName -WebPartHeight $wpHeight -WebPartTitle $wpTitle -Section $section -Column $column #-Order $order
 }
+
 <#This allows you to rollback the Verbose preference value to the original, assuming it was changed for troubleshooting
 $VerbosePreference = $oldverbose
 
