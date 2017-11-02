@@ -42,6 +42,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
+            WriteWarning($"This cmdlet has been deprecrated. Use Connect-PnPOnline with the same parameters instead.");
             AuthenticationResult authenticationResult;
             if (Scopes != null)
             {
@@ -58,7 +59,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
 
             // Get back the Access Token and the Refresh Token
-            PnPAzureADConnection.AuthenticationResult = authenticationResult;
+            SPOnlineConnection.AuthenticationResult = authenticationResult;
         }
     }
 }
