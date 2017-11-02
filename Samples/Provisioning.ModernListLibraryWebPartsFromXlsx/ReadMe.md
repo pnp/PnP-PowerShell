@@ -1,4 +1,4 @@
-# Sample that provisions modern pages and sections with modern list or library web parts using an Excel template
+# This sample provisions modern pages and sections with modern list or library web parts using an Excel template
 
 ## Summary
 
