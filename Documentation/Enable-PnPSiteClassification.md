@@ -12,7 +12,7 @@ Enables Site Classifications for the tenant. Requires a connection to the Micros
 
 ```powershell
 Enable-PnPSiteClassification -Classifications <List`1>
-                             [-DefaultClassification <String>]
+                             -DefaultClassification <String>
                              [-UsageGuidelinesUrl <String>]
 ```
 
@@ -21,20 +21,12 @@ Enable-PnPSiteClassification -Classifications <List`1>
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret"
-```
-
-Enables Site Classifications for your tenant and provides three classification values
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
 PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -DefaultClassification "LBI"
 ```
 
 Enables Site Classifications for your tenant and provides three classification values. The default value will be set to "LBI"
 
-### ------------------EXAMPLE 3------------------
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
 PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -UsageGuidelinesUrl http://aka.ms/sppnp
@@ -63,7 +55,7 @@ Accept pipeline input: False
 Type: String
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

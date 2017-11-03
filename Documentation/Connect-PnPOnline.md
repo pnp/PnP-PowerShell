@@ -23,6 +23,7 @@ Connect-PnPOnline -Url <String>
                   [-AuthenticationMode <ClientAuthenticationMode>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
+                  [-Scopes <String[]>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
@@ -43,6 +44,7 @@ Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
                   [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
+                  [-Scopes <String[]>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
@@ -59,6 +61,7 @@ Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
                   [-ClearTokenCache [<SwitchParameter>]]
+                  [-Scopes <String[]>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
@@ -76,6 +79,7 @@ Connect-PnPOnline -AppId <String>
                   [-Realm <String>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
+                  [-Scopes <String[]>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
@@ -94,6 +98,7 @@ Connect-PnPOnline -ClientId <String>
                   [-DriveName <String>]
                   [-ClearTokenCache [<SwitchParameter>]]
                   [-AzureEnvironment <AzureEnvironment>]
+                  [-Scopes <String[]>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
@@ -120,6 +125,7 @@ Connect-PnPOnline -ClientId <String>
                   [-RequestTimeout <Int>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
+                  [-Scopes <String[]>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
@@ -442,9 +448,9 @@ The array of permission scopes for the Microsoft Graph API.
 
 ```yaml
 Type: String[]
-Parameter Sets: Microsoft Graph using Scopes
+Parameter Sets: Main
 
-Required: True
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

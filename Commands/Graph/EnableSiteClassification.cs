@@ -15,26 +15,21 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret""",
-        Remarks = @"Enables Site Classifications for your tenant and provides three classification values",
-        SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
 PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"" -DefaultClassification ""LBI""",
         Remarks = @"Enables Site Classifications for your tenant and provides three classification values. The default value will be set to ""LBI""",
-        SortOrder = 2)]
+        SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
 PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"" -UsageGuidelinesUrl http://aka.ms/sppnp",
         Remarks = @"Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.",
-        SortOrder = 3)]
+        SortOrder = 2)]
     public class EnableSiteClassification : PnPGraphCmdlet
     {
 
         [Parameter(Mandatory = true)]
         public List<string> Classifications;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true)]
         public string DefaultClassification;
 
         [Parameter(Mandatory = false)]
