@@ -131,10 +131,5 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                 WriteObject(user);
             }
         }
-
-        private object List<T>()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
