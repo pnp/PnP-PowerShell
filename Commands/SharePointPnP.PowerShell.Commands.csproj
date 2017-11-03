@@ -440,6 +440,12 @@
     <Compile Include="Files\RenameFile.cs" />
     <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
     <Compile Include="Files\RenameFolder.cs" />
+    <Compile Include="Graph\UpdateSiteClassification.cs" />
+    <Compile Include="Graph\RemoveSiteClassification.cs" />
+    <Compile Include="Graph\DisableSiteClassification.cs" />
+    <Compile Include="Graph\AddSiteClassification.cs" />
+    <Compile Include="Graph\GetSiteClassification.cs" />
+    <Compile Include="Graph\EnableSiteClassification.cs" />
     <Compile Include="Graph\GetUnifiedGroup.cs" />
     <Compile Include="Admin\GetWebTemplates.cs" />
     <Compile Include="Admin\GetTimeZoneId.cs" />
@@ -454,7 +460,7 @@
     <Compile Include="Base\GetAuthenticationRealm.cs" />
     <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\GetAzureADManifestKeyCredentials.cs" />
-    <Compile Include="Base\ConnectPnPMicrosoftGraph.cs" />
+    <Compile Include="Base\deprecated\ConnectPnPMicrosoftGraph.cs" />
     <Compile Include="Base\PipeBinds\DocumentSetPipeBind.cs" />
     <Compile Include="Base\PipeBinds\FeaturePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ListItemPipeBind.cs" />
@@ -784,9 +790,7 @@
   <ItemGroup>
     <Resource Include="Resources\pnp.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Base\deprecated\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"$(SolutionDir)\ModuleFilesGenerator\bin\$(ConfigurationName)\SharePointPnP.PowerShell.ModuleFilesGenerator.exe"  "$(TargetPath)" "$(ConfigurationName)" "$(SolutionDir)

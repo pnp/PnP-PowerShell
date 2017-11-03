@@ -7,6 +7,7 @@ using ClientCredential = Microsoft.Identity.Client.ClientCredential;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
+    [Obsolete("This cmdlet has been deprecated and will be removed in the April 2018 release")]
     [Cmdlet("Connect", "PnPMicrosoftGraph", DefaultParameterSetName = ParameterSet_SCOPE)]
     [CmdletHelp("Connect to the Microsoft Graph",
         "Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API",
@@ -42,7 +43,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            WriteWarning($"This cmdlet has been deprecrated. Use Connect-PnPOnline with the same parameters instead.");
             AuthenticationResult authenticationResult;
             if (Scopes != null)
             {

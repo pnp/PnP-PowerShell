@@ -3,17 +3,16 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Enable-PnPSiteClassification
+# Remove-PnPSiteClassification
 
 ## SYNOPSIS
-Enables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.
+Removes one or more existing site classification values from the list of available values. Requires a connection to the Microsoft Graph
 
 ## SYNTAX 
 
 ```powershell
-Enable-PnPSiteClassification -Classifications <List`1>
-                             -DefaultClassification <String>
-                             [-UsageGuidelinesUrl <String>]
+Remove-PnPSiteClassification -Classifications <List`1>
+                             [-Confirm [<SwitchParameter>]]
 ```
 
 ## EXAMPLES
@@ -21,18 +20,26 @@ Enable-PnPSiteClassification -Classifications <List`1>
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
+PS:> Remove-PnPSiteClassification -Classifications "HBI"
+```
+
+Removes the "HBI" site classification from the list of available values.
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
 PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -DefaultClassification "LBI"
 ```
 
 Enables Site Classifications for your tenant and provides three classification values. The default value will be set to "LBI"
 
-### ------------------EXAMPLE 2------------------
+### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
 PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -UsageGuidelinesUrl http://aka.ms/sppnp
 ```
 
-Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.
+Enables Site Classifications for your tenant and provides three classification values. The first value will be set as the default and the usage guideliness will be set to the specified URL.
 
 ## PARAMETERS
 
@@ -48,23 +55,11 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -DefaultClassification
-
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Accept pipeline input: False
-```
-
-### -UsageGuidelinesUrl
-
+### -Confirm
+Specifying the Confirm parameter will allow the confirmation question to be skipped
 
 ```yaml
-Type: String
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
