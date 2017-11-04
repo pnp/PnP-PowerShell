@@ -11,7 +11,8 @@ Returns the available apps from the app catalog
 ## SYNTAX 
 
 ```powershell
-Get-PnPApp [-Identity <GuidPipeBind>]
+Get-PnPApp [-Connection <SPOnlineConnection>]
+           [-Identity <GuidPipeBind>]
 ```
 
 ## EXAMPLES
@@ -31,6 +32,18 @@ PS:> Get-PnPAvailableApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f
 This will the specific app metadata from the app catalog.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Specifies the Id of an app which is available in the app catalog

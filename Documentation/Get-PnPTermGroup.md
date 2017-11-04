@@ -13,6 +13,7 @@ Returns a taxonomy term group
 ### 
 ```powershell
 Get-PnPTermGroup [-TermStore <Id, Name or Object>]
+                 [-Connection <SPOnlineConnection>]
                  [-Includes <String[]>]
                  [-Identity <Id, Title or TaxonomyItem>]
 ```
@@ -41,6 +42,18 @@ PS:> Get-PnPTermGroup -Identity ab2af486-e097-4b4a-9444-527b251f1f8d
 Returns the termgroup with the given ID from the site collection termstore
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Name of the taxonomy term group to retrieve.

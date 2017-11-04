@@ -18,6 +18,7 @@ New-PnPProvisioningTemplateFromFolder [-Match <String>]
                                       [-Force [<SwitchParameter>]]
                                       [-Encoding <Encoding>]
                                       [-Web <WebPipeBind>]
+                                      [-Connection <SPOnlineConnection>]
                                       [-Out <String>]
                                       [-Folder <String>]
                                       [-TargetFolder <String>]
@@ -89,6 +90,18 @@ If specified, the output will only contain the <pnp:Files> element. This allows 
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

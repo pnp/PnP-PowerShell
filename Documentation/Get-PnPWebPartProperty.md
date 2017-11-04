@@ -15,6 +15,7 @@ Get-PnPWebPartProperty -ServerRelativePageUrl <String>
                        -Identity <GuidPipeBind>
                        [-Key <String>]
                        [-Web <WebPipeBind>]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -34,6 +35,18 @@ PS:> Get-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.as
 Returns the title property of the webpart.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The id of the webpart

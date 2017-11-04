@@ -13,6 +13,7 @@ Returns the current theme/composed look of the current web.
 ```powershell
 Get-PnPTheme [-DetectCurrentComposedLook [<SwitchParameter>]]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -32,6 +33,18 @@ PS:> Get-PnPTheme -DetectCurrentComposedLook
 Returns the current composed look of the current web, and will try to detect the currently applied composed look based upon the actual site. Without this switch the cmdlet will first check for the presence of a property bag variable called _PnP_ProvisioningTemplateComposedLookInfo that contains composed look information when applied through the provisioning engine or the Set-PnPTheme cmdlet.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -DetectCurrentComposedLook
 Specify this switch to not use the PnP Provisioning engine based composed look information but try to detect the current composed look as is.

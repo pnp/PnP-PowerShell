@@ -416,6 +416,7 @@
     <Compile Include="Apps\InstallApp.cs" />
     <Compile Include="Apps\GetApp.cs" />
     <Compile Include="Base\GetAppAuthAccessToken.cs" />
+    <Compile Include="Base\GetConnection.cs" />
     <Compile Include="Base\PipeBinds\AppMetadataPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ClientSideComponentPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericPropertiesPipeBind.cs" />

@@ -12,6 +12,7 @@ Removes one or more users as site collection administrators from the site collec
 
 ```powershell
 Remove-PnPSiteCollectionAdmin -Owners <List`1>
+                              [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +49,18 @@ PS:> Get-PnPSiteCollectionAdmin | Remove-PnPSiteCollectionAdmin
 This will remove all existing site collection administrators from the site collection in the current context
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Owners
 Specifies owner(s) to remove as site collection adminstrators. Can be both users and groups.

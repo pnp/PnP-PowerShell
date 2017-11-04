@@ -15,6 +15,7 @@ Sets the search configuration
 Set-PnPSearchConfiguration -Configuration <String>
                            [-Scope <SearchConfigurationScope>]
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ### Path
@@ -22,6 +23,7 @@ Set-PnPSearchConfiguration -Configuration <String>
 Set-PnPSearchConfiguration -Path <String>
                            [-Scope <SearchConfigurationScope>]
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -64,6 +66,18 @@ Type: String
 Parameter Sets: Config
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

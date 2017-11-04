@@ -13,6 +13,7 @@ Retrieves all members of a group
 ```powershell
 Get-PnPGroupMembers -Identity <GroupPipeBind>
                     [-Web <WebPipeBind>]
+                    [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -42,6 +43,18 @@ PS:> Get-PnPGroup | ? Title -Like 'Marketing*' | Get-PnPGroupMembers
 Returns all the users that are a member of any of the groups of which their name starts with the word 'Marketing' in the current sitecollection
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 A group object, an ID or a name of a group

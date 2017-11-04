@@ -19,6 +19,7 @@ Send-PnPMail -To <String[]>
              [-Password <String>]
              [-Cc <String[]>]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -63,6 +64,18 @@ List of recipients on CC
 
 ```yaml
 Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

@@ -16,6 +16,7 @@ Remove-PnPEventReceiver -Identity <GuidPipeBind>
                         [-List <ListPipeBind>]
                         [-Force [<SwitchParameter>]]
                         [-Web <WebPipeBind>]
+                        [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -38,6 +39,18 @@ PS:> Remove-PnPEventReceiver -List ProjectList -Identity fb689d0e-eb99-4f13-beb3
 This will remove an event receiver with id fb689d0e-eb99-4f13-beb3-86692fd39f22 from the list with name "ProjectList"
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

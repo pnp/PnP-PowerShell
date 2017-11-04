@@ -13,6 +13,7 @@ Remove workflow subscription
 ```powershell
 Remove-PnPWorkflowSubscription -Identity <WorkflowSubscriptionPipeBind>
                                [-Web <WebPipeBind>]
+                               [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -35,6 +36,18 @@ Get-PnPWorkflowSubscription -Name MyWorkflow | Remove-PnPWorkflowSubscription
 Get the workflowSubscription MyWorkFlow and remove it.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The subscription to remove

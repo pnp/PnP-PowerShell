@@ -13,6 +13,7 @@ Moves all items or a specific item in the first stage recycle bin of the current
 ```powershell
 Move-PnpRecycleBinItem [-Identity <RecycleBinItemPipeBind>]
                        [-Force [<SwitchParameter>]]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -39,6 +40,18 @@ PS:> Move-PnpRecycleBinItem -Force
 Moves all the items in the first stage recycle bin of the current context to the second stage recycle bin without asking for confirmation first
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 If provided, no confirmation will be asked to move the first stage recycle bin items to the second stage

@@ -16,6 +16,7 @@ Add-PnPJavaScriptBlock -Name <String>
                        [-Sequence <Int>]
                        [-Scope <CustomActionScope>]
                        [-Web <WebPipeBind>]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -38,6 +39,18 @@ PS:> Add-PnPJavaScriptBlock -Name myAction -script '<script>Alert("This is my Sc
 Add a JavaScript code block  to all pages within the current web under the name myAction
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Name
 The name of the script block. Can be used to identify the script with other cmdlets or coded solutions

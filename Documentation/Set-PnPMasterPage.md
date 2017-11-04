@@ -15,6 +15,7 @@ Set the masterpage
 Set-PnPMasterPage [-MasterPageServerRelativeUrl <String>]
                   [-CustomMasterPageServerRelativeUrl <String>]
                   [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ### Site Relative
@@ -22,6 +23,7 @@ Set-PnPMasterPage [-MasterPageServerRelativeUrl <String>]
 Set-PnPMasterPage [-MasterPageSiteRelativeUrl <String>]
                   [-CustomMasterPageSiteRelativeUrl <String>]
                   [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -58,6 +60,18 @@ PS:> Set-PnPMasterPage -MasterPageSiteRelativeUrl _catalogs/masterpage/oslo.mast
 Sets the master page and custom master page based on a site relative URL
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -CustomMasterPageServerRelativeUrl
 Specifies the custom Master page URL based on the server relative URL

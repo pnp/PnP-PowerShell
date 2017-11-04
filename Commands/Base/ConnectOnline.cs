@@ -83,11 +83,18 @@ dir",
         private const string GraphRedirectUri = "urn:ietf:wg:oauth:2.0:oob";
         private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
         private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
-
 #endif
 #if ONPREMISES
         private const string ParameterSet_HIGHTRUST = "HighTrust";
 #endif
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        public SwitchParameter ReturnConnection;
+
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
@@ -268,14 +275,14 @@ dir",
             {
                 creds = Credentials.Credential;
             }
-
+            SPOnlineConnection connection = null;
             if (ParameterSetName == ParameterSet_TOKEN)
             {
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
             }
             else if (UseWebLogin)
             {
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                connection = SPOnlineConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
             }
             else if (UseAdfs)
             {
@@ -287,20 +294,20 @@ dir",
                     }
                 }
 
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                connection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
             }
 #if !ONPREMISES
             else if (ParameterSetName == ParameterSet_SPOMANAGEMENT)
             {
-                ConnectNativAAD(SPOManagementClientId, SPOManagementRedirectUri);
+                connection = ConnectNativAAD(SPOManagementClientId, SPOManagementRedirectUri);
             }
             else if (ParameterSetName == ParameterSet_NATIVEAAD)
             {
-                ConnectNativAAD(ClientId, RedirectUri);
+                connection = ConnectNativAAD(ClientId, RedirectUri);
             }
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+                connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
             }
             else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
             {
@@ -310,7 +317,7 @@ dir",
 #if ONPREMISES
             else if (ParameterSetName == ParameterSet_HIGHTRUST)
             {
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url, ClientId, HighTrustCertificatePath, HighTrustCertificatePassword, HighTrustCertificateIssuerId, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url, ClientId, HighTrustCertificatePath, HighTrustCertificatePassword, HighTrustCertificateIssuerId, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
             }
 #endif
             else
@@ -323,7 +330,7 @@ dir",
                         creds = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
                     }
                 }
-                SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AuthenticationMode);
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AuthenticationMode);
             }
 
             if(MyInvocation.BoundParameters.ContainsKey("Scopes") && ParameterSetName != ParameterSet_GRAPHWITHSCOPE)
@@ -331,7 +338,7 @@ dir",
                 ConnectGraphScopes();
             }
             WriteVerbose($"PnP PowerShell Cmdlets ({System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
-
+            SPOnlineConnection.CurrentConnection = connection;
             if (CreateDrive && SPOnlineConnection.CurrentConnection.Context != null)
             {
                 var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
@@ -346,10 +353,14 @@ dir",
                     SessionState.Drive.New(drive, "Global");
                 }
             }
+            if (ReturnConnection)
+            {
+                WriteObject(connection);
+            }
         }
 
 #if !ONPREMISES
-        private void ConnectNativAAD(string clientId, string redirectUrl)
+        private SPOnlineConnection ConnectNativAAD(string clientId, string redirectUrl)
         {
             string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string configFolder = Path.Combine(appDataFolder, "SharePointPnP.PowerShell");
@@ -363,7 +374,7 @@ dir",
                     File.Delete(configFile);
                 }
             }
-            SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InitiateAzureADNativeApplicationConnection(
+            return SPOnlineConnectionHelper.InitiateAzureADNativeApplicationConnection(
                 new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
                 RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
         }

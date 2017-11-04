@@ -13,6 +13,7 @@ Connect to a SharePoint site
 ### Main
 ```powershell
 Connect-PnPOnline -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
                   [-Credentials <CredentialPipeBind>]
                   [-CurrentCredentials [<SwitchParameter>]]
                   [-UseAdfs [<SwitchParameter>]]
@@ -38,6 +39,7 @@ Connect-PnPOnline -Scopes <String[]>
 ```powershell
 Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
                   -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
@@ -54,6 +56,7 @@ Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
 ```powershell
 Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
                   -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
@@ -72,6 +75,7 @@ Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
 Connect-PnPOnline -AppId <String>
                   -AppSecret <String>
                   -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
@@ -90,6 +94,7 @@ Connect-PnPOnline -AppId <String>
 Connect-PnPOnline -ClientId <String>
                   -RedirectUri <String>
                   -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
@@ -119,6 +124,7 @@ Connect-PnPOnline -ClientId <String>
                   -CertificatePassword <SecureString>
                   -AzureEnvironment <AzureEnvironment>
                   -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
                   [-MinimalHealthScore <Int>]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
@@ -441,6 +447,18 @@ Parameter Sets: Main
 Required: False
 Position: Named
 Accept pipeline input: False
+```
+
+### -ReturnConnection
+Returns the connection for use with the -Connection parameter on cmdlets.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Main
+
+Required: False
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Scopes

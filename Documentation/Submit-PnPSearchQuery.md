@@ -35,6 +35,7 @@ Submit-PnPSearchQuery -Query <String>
                       [-ProcessPersonalFavorites <Boolean>]
                       [-RelevantResults [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ### All
@@ -61,6 +62,7 @@ Submit-PnPSearchQuery -Query <String>
                       [-ProcessPersonalFavorites <Boolean>]
                       [-RelevantResults [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -112,6 +114,18 @@ Specifies the name of the client which issued the query.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

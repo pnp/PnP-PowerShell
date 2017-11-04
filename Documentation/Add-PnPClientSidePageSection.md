@@ -15,6 +15,7 @@ Add-PnPClientSidePageSection -SectionTemplate <CanvasSectionTemplate>
                              -Page <ClientSidePagePipeBind>
                              [-Order <Int>]
                              [-Web <WebPipeBind>]
+                             [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -42,6 +43,18 @@ PS> Add-PnPClientSidePageSection -Page $page -SectionTemplate OneColumn
 Adds a new one column section to the Client-Side page 'MyPage'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Order
 Sets the order of the section. (Default = 1)

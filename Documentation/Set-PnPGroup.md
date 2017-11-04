@@ -24,6 +24,7 @@ Set-PnPGroup -Identity <GroupPipeBind>
              [-OnlyAllowMembersViewMembership <Boolean>]
              [-RequestToJoinEmail <String>]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -85,6 +86,18 @@ A switch parameter that specifies whether users are automatically added or remov
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

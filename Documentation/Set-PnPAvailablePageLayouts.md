@@ -14,18 +14,21 @@ Sets the available page layouts for the current site
 ```powershell
 Set-PnPAvailablePageLayouts -PageLayouts <String[]>
                             [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
 ```
 
 ### ALL
 ```powershell
 Set-PnPAvailablePageLayouts -AllowAllPageLayouts [<SwitchParameter>]
                             [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
 ```
 
 ### INHERIT
 ```powershell
 Set-PnPAvailablePageLayouts -InheritPageLayouts [<SwitchParameter>]
                             [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
 ```
 
 ## PARAMETERS
@@ -38,6 +41,18 @@ Type: SwitchParameter
 Parameter Sets: ALL
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

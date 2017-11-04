@@ -16,6 +16,7 @@ Set-PnPListItemPermission -Identity <ListItemPipeBind>
                           -List <ListPipeBind>
                           [-InheritPermissions [<SwitchParameter>]]
                           [-Web <WebPipeBind>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ### Group
@@ -27,6 +28,7 @@ Set-PnPListItemPermission -Group <GroupPipeBind>
                           [-RemoveRole <String>]
                           [-ClearExisting [<SwitchParameter>]]
                           [-Web <WebPipeBind>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ### User
@@ -38,6 +40,7 @@ Set-PnPListItemPermission -User <String>
                           [-RemoveRole <String>]
                           [-ClearExisting [<SwitchParameter>]]
                           [-Web <WebPipeBind>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -90,6 +93,18 @@ Clear all existing permissions
 ```yaml
 Type: SwitchParameter
 Parameter Sets: User
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

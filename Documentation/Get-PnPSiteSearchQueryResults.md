@@ -15,6 +15,7 @@ Executes a search query to retrieve indexed site collections
 Get-PnPSiteSearchQueryResults [-StartRow <Int>]
                               [-MaxResults <Int>]
                               [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
                               [-Query <String>]
 ```
 
@@ -22,6 +23,7 @@ Get-PnPSiteSearchQueryResults [-StartRow <Int>]
 ```powershell
 Get-PnPSiteSearchQueryResults [-All [<SwitchParameter>]]
                               [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
                               [-Query <String>]
 ```
 
@@ -77,6 +79,18 @@ Automatically page results until the end to get more than 500 sites. Use with ca
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

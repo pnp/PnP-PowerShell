@@ -14,6 +14,7 @@ Adds a content type to a document set
 Add-PnPContentTypeToDocumentSet -ContentType <ContentTypePipeBind[]>
                                 -DocumentSet <DocumentSetPipeBind>
                                 [-Web <WebPipeBind>]
+                                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -42,6 +43,18 @@ PS:> Add-PnPContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F0
 This will add the content type called 'Test CT' to the document set called ''Test Document Set'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentType
 The content type object, name or id to add. Either specify name, an id, or a content type object.

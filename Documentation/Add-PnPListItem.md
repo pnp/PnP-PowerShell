@@ -16,6 +16,7 @@ Add-PnPListItem -List <ListPipeBind>
                 [-Values <Hashtable>]
                 [-Folder <String>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -49,6 +50,18 @@ Add-PnPListItem -List "Demo List" -Values @{"Title"="Sales Report"} -Folder "pro
 Adds a new list item to the "Demo List". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentType
 Specify either the name, ID or an actual content type.

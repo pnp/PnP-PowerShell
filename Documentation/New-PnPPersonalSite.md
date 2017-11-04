@@ -12,6 +12,7 @@ Office365 only: Creates a personal / OneDrive For Business site
 
 ```powershell
 New-PnPPersonalSite -Email <String[]>
+                    [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,6 +26,18 @@ PS:> $users = ('katiej@contoso.onmicrosoft.com','garth@contoso.onmicrosoft.com')
 Creates a personal / OneDrive For Business site for the 2 users in the variable $users
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Email
 The UserPrincipalName (UPN) of the users

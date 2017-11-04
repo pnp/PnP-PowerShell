@@ -15,6 +15,7 @@ Add-PnPPublishingImageRendition -Name <String>
                                 -Width <Int>
                                 -Height <Int>
                                 [-Web <WebPipeBind>]
+                                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,6 +28,18 @@ PS:> Add-PnPPublishingImageRendition -Name "MyImageRendition" -Width 800 -Height
 
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Height
 The height of the Image Rendition.

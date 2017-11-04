@@ -13,6 +13,7 @@ Opens or closes a site which has a site policy applied
 ```powershell
 Set-PnPSiteClosure -State <ClosureState>
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -32,6 +33,18 @@ PS:> Set-PnPSiteClosure -State Closed
 This closes a site which is open and has a site policy applied.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -State
 The state of the site

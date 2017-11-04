@@ -16,6 +16,7 @@ Add-PnPJavaScriptLink -Name <String>
                       [-Sequence <Int>]
                       [-Scope <CustomActionScope>]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -38,6 +39,18 @@ PS:> Add-PnPJavaScriptLink -Name jQuery -Url https://code.jquery.com/jquery.min.
 Injects a reference to the latest v1 series jQuery library to all pages within the current web under the name jQuery
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Name
 Name under which to register the JavaScriptLink

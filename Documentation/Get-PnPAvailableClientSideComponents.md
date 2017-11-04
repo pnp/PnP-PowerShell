@@ -14,6 +14,7 @@ Gets the available client side components on a particular page
 Get-PnPAvailableClientSideComponents -Page <ClientSidePagePipeBind>
                                      [-Component <ClientSideComponentPipeBind>]
                                      [-Web <WebPipeBind>]
+                                     [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -46,6 +47,18 @@ Specifies the component instance or Id to look for.
 
 ```yaml
 Type: ClientSideComponentPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

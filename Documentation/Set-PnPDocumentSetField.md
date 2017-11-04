@@ -18,6 +18,7 @@ Set-PnPDocumentSetField -DocumentSet <DocumentSetPipeBind>
                         [-RemoveSharedField [<SwitchParameter>]]
                         [-RemoveWelcomePageField [<SwitchParameter>]]
                         [-Web <WebPipeBind>]
+                        [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -37,6 +38,18 @@ PS:> Set-PnPDocumentSetField -Field "Test Field" -DocumentSet "Test Document Set
 This will remove the field, available in one of the available content types, as a Shared Field and as a Welcome Page Field.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -DocumentSet
 The document set in which to set the field. Either specify a name, a document set template object, an id, or a content type object

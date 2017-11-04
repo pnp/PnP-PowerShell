@@ -15,6 +15,7 @@ Add-PnPContentTypeToList -List <ListPipeBind>
                          -ContentType <ContentTypePipeBind>
                          [-DefaultContentType [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,6 +28,18 @@ PS:> Add-PnPContentTypeToList -List "Documents" -ContentType "Project Document" 
 This will add an existing content type to a list and sets it as the default content type
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentType
 Specifies the content type that needs to be added to the list

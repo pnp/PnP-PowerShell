@@ -14,6 +14,7 @@ Removes a content type from a web
 Remove-PnPContentType -Identity <ContentTypePipeBind>
                       [-Force [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -33,6 +34,18 @@ PS:> Remove-PnPContentType -Identity "Project Document" -Force
 This will remove a content type called "Project Document" from the current web with force
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

@@ -15,6 +15,7 @@ Set-PnPListItemAsRecord -Identity <ListItemPipeBind>
                         -List <ListPipeBind>
                         [-DeclarationDate <DateTime>]
                         [-Web <WebPipeBind>]
+                        [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -34,6 +35,18 @@ PS:> Set-PnPListItemAsRecord -List "Documents" -Identity 4 -DeclarationDate $dat
 Declares the document in the documents library with id as a record
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -DeclarationDate
 The declaration date

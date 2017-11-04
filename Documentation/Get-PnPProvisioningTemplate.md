@@ -35,6 +35,7 @@ Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
                             [-OutputInstance [<SwitchParameter>]]
                             [-ExcludeContentTypesFromSyndication [<SwitchParameter>]]
                             [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
                             [-Out <String>]
                             [-Schema <XMLPnPSchemaVersion>]
 ```
@@ -138,6 +139,18 @@ PS:> Get-PnPProvisioningTemplate -Out template.pnp -ExcludeContentTypesFromSyndi
 Extracts a provisioning template in Office Open XML from the current web, excluding content types provisioned through content type syndication (content type hub), in order to prevent provisioning errors if the target also provision the content type using syndication.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentTypeGroups
 Allows you to specify from which content type group(s) the content types should be included into the template.

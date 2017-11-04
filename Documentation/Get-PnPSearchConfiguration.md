@@ -15,6 +15,7 @@ Returns the search configuration
 Get-PnPSearchConfiguration [-Path <String>]
                            [-Scope <SearchConfigurationScope>]
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ### OutputFormat
@@ -22,6 +23,7 @@ Get-PnPSearchConfiguration [-Path <String>]
 Get-PnPSearchConfiguration [-OutputFormat <OutputFormat>]
                            [-Scope <SearchConfigurationScope>]
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -62,6 +64,18 @@ PS:> Get-PnPSearchConfiguration -Scope Site -OutputFormat ManagedPropertyMapping
 Returns all custom managed properties and crawled property mapping at the current site collection
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -OutputFormat
 Output format for of the configuration. Defaults to complete XML

@@ -13,6 +13,7 @@ Gets the contents/source of a wiki page
 ```powershell
 Get-PnPWikiPageContent -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,6 +26,18 @@ PS:> Get-PnPWikiPageContent -PageUrl '/sites/demo1/pages/wikipage.aspx'
 Gets the content of the page '/sites/demo1/pages/wikipage.aspx'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ServerRelativePageUrl
 The server relative URL for the wiki page

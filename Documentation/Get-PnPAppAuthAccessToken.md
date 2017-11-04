@@ -8,6 +8,12 @@ schema: 2.0.0
 ## SYNOPSIS
 Returns the access token
 
+## SYNTAX 
+
+```powershell
+Get-PnPAppAuthAccessToken [-Connection <SPOnlineConnection>]
+```
+
 ## DESCRIPTION
 Returns the access token from the current client context (only works with App-Only authentication)
 
@@ -19,6 +25,20 @@ PS:> $accessToken = Get-PnPAppAuthAccessToken
 ```
 
 This will put the access token from current context in the $accessToken variable. Will only work in App authentication flow (App+user or App-Only)
+
+## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ## OUTPUTS
 

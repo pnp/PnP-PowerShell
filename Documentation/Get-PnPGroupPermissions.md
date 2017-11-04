@@ -14,6 +14,7 @@ Returns the permissions for a specific SharePoint group
 ```powershell
 Get-PnPGroupPermissions -Identity <GroupPipeBind>
                         [-Web <WebPipeBind>]
+                        [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -26,6 +27,18 @@ PS:> Get-PnPGroupPermissions -Identity 'My Site Members'
 Returns the permissions for the SharePoint group with the name 'My Site Members'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Get the permissions of a specific group by name

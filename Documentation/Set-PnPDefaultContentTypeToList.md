@@ -14,6 +14,7 @@ Sets the default content type for a list
 Set-PnPDefaultContentTypeToList -List <ListPipeBind>
                                 -ContentType <ContentTypePipeBind>
                                 [-Web <WebPipeBind>]
+                                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -26,6 +27,18 @@ PS:> Set-PnPDefaultContentTypeToList -List "Project Documents" -ContentType "Pro
 This will set the Project content type (which has already been added to a list) as the default content type
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentType
 The content type object that needs to be added to the list

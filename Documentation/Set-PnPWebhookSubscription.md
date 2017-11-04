@@ -16,6 +16,7 @@ Set-PnPWebhookSubscription -Subscription <WebhookSubscriptionPipeBind>
                            [-NotificationUrl <String>]
                            [-ExpirationDate <DateTime>]
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -46,6 +47,18 @@ Updates the Webhook subscription from the list MyList with a modified subscripti
 Note: The date will be converted to Universal Time
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ExpirationDate
 The date at which the Webhook subscription will expire. (Default: 6 months from today)

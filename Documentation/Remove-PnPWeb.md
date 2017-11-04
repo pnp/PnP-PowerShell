@@ -15,6 +15,7 @@ Removes a subweb in the current web
 Remove-PnPWeb -Url <String>
               [-Force [<SwitchParameter>]]
               [-Web <WebPipeBind>]
+              [-Connection <SPOnlineConnection>]
 ```
 
 ### ByIdentity
@@ -22,6 +23,7 @@ Remove-PnPWeb -Url <String>
 Remove-PnPWeb -Identity <WebPipeBind>
               [-Force [<SwitchParameter>]]
               [-Web <WebPipeBind>]
+              [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -48,6 +50,18 @@ PS:> Get-PnPSubWebs | Remove-PnPWeb -Force
 Remove all subwebs and do not ask for confirmation
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Do not ask for confirmation to delete the subweb

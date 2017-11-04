@@ -13,6 +13,7 @@ Removes a workflow definition
 ```powershell
 Remove-PnPWorkflowDefinition -Identity <WorkflowDefinitionPipeBind>
                              [-Web <WebPipeBind>]
+                             [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -32,6 +33,18 @@ Get-PnPWorkflowDefinition -Name MyWorkflow | Remove-PnPWorkflowDefinition
 Get the workflow MyWorkFlow and remove from the site.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The definition to remove

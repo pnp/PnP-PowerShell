@@ -18,6 +18,7 @@ Add-PnPNavigationNode -Location <NavigationType>
                       [-First [<SwitchParameter>]]
                       [-External [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -54,6 +55,18 @@ PS:> Add-PnPNavigationNode -Title "Contoso Pharmaceuticals" -Url "http://contoso
 Adds a navigation node to the quicklaunch. The navigation node will have the title "Contoso Pharmaceuticals" and will link to the external url "http://contoso.sharepoint.com/sites/contosopharma/"
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -External
 Indicates the destination URL is outside of the site collection.

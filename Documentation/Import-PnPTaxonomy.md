@@ -17,6 +17,7 @@ Import-PnPTaxonomy [-Terms <String[]>]
                    [-TermStoreName <String>]
                    [-Delimiter <String>]
                    [-SynchronizeDeletions [<SwitchParameter>]]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ### File
@@ -26,6 +27,7 @@ Import-PnPTaxonomy -Path <String>
                    [-TermStoreName <String>]
                    [-Delimiter <String>]
                    [-SynchronizeDeletions [<SwitchParameter>]]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -45,6 +47,18 @@ PS:> Import-PnPTaxonomy -Terms 'Company|Locations|Stockholm|Central','Company|Lo
 Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm' and two subterms: 'Central', and 'North'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Delimiter
 The path delimiter to be used, by default this is '|'

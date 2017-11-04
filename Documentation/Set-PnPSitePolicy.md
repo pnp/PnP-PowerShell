@@ -13,6 +13,7 @@ Sets a site policy
 ```powershell
 Set-PnPSitePolicy -Name <String>
                   [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,6 +26,18 @@ PS:> Set-PnPSitePolicy -Name "Contoso HBI"
 This applies a site policy with the name "Contoso HBI" to the current site. The policy needs to be available in the site.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Name
 The name of the site policy to apply

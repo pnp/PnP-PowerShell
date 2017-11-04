@@ -12,6 +12,7 @@ Return a workflow subscription
 
 ```powershell
 Get-PnPWorkflowSubscription [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
                             [-Name <String>]
                             [-List <ListPipeBind>]
 ```
@@ -43,6 +44,18 @@ Get-PnPList -identity "MyList" | Get-PnPWorkflowSubscription -Name MyWorkflow
 Gets an Workflow subscription with the name "MyWorkflow" from the list "MyList".
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -List
 A list to search the association for

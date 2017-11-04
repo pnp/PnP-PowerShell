@@ -15,6 +15,7 @@ Returns a field from a list or site
 Get-PnPField [-List <ListPipeBind>]
              [-Group <String>]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
              [-Includes <String[]>]
              [-Identity <FieldPipeBind>]
 ```
@@ -36,6 +37,18 @@ PS:> Get-PnPField -List "Demo list" -Identity "Speakers"
 Gets the speakers field from the list Demo list
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Group
 Filter to the specified group

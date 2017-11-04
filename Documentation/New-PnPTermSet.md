@@ -23,6 +23,7 @@ New-PnPTermSet -Name <String>
                [-StakeHolders <String[]>]
                [-CustomProperties <Hashtable>]
                [-TermStore <Id, Name or Object>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -35,6 +36,18 @@ PS:> New-PnPTermSet -Name "Department" -TermGroup "Corporate"
 Creates a new termset named "Department" in the group named "Corporate"
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Contact
 An e-mail address for term suggestion and feedback. If left blank the suggestion feature will be disabled.

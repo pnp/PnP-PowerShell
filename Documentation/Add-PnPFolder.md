@@ -14,6 +14,7 @@ Creates a folder within a parent folder
 Add-PnPFolder -Name <String>
               -Folder <String>
               [-Web <WebPipeBind>]
+              [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -26,6 +27,18 @@ PS:> Add-PnPFolder -Name NewFolder -Folder _catalogs/masterpage
 This will create the folder NewFolder in the masterpage catalog
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Folder
 The parent folder in the site

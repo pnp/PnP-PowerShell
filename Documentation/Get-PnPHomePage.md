@@ -12,6 +12,7 @@ Return the homepage
 
 ```powershell
 Get-PnPHomePage [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -27,6 +28,18 @@ PS:> Get-PnPHomePage
 Will return the URL of the home page of the web.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Web
 The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.

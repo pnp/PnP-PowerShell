@@ -15,6 +15,7 @@ Add-PnPDocumentSet -List <ListPipeBind>
                    -Name <String>
                    -ContentType <ContentTypePipeBind>
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,6 +28,18 @@ PS:> Add-PnPDocumentSet -List "Documents" -ContentType "Test Document Set" -Name
 This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentType
 The name of the content type, its ID or an actual content object referencing to the document set.

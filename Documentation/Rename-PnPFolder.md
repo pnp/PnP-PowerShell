@@ -14,6 +14,7 @@ Renames a folder
 Rename-PnPFolder -Folder <String>
                  -TargetFolderName <String>
                  [-Web <WebPipeBind>]
+                 [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -26,6 +27,18 @@ PS:> Rename-PnPFolder -Folder Documents/Reports -TargetFolderName 'Archived Repo
 This will rename the folder Reports in the Documents library to 'Archived Reports'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Folder
 The folder to rename

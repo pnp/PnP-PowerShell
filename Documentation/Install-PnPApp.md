@@ -12,6 +12,7 @@ Installs an available app from the app catalog
 
 ```powershell
 Install-PnPApp -Identity <AppMetadataPipeBind>
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -31,6 +32,18 @@ PS:> Get-PnPAvailableApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe | Instal
 This will install the given app into the site.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Specifies the Id or an actual app metadata instance

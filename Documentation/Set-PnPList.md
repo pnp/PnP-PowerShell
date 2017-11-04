@@ -22,6 +22,7 @@ Set-PnPList -Identity <ListPipeBind>
             [-MajorVersions <UInt32>]
             [-MinorVersions <UInt32>]
             [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -73,6 +74,18 @@ If used the unique permissions are cleared from child objects and they can inher
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

@@ -13,11 +13,13 @@ Enables the App SideLoading Feature on a site
 ### On
 ```powershell
 Set-PnPAppSideLoading -On [<SwitchParameter>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ### Off
 ```powershell
 Set-PnPAppSideLoading -Off [<SwitchParameter>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -37,6 +39,18 @@ PS:> Set-PnPAppSideLoading -Off
 This will turn off App side loading
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Off
 

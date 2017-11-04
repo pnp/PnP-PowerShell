@@ -14,6 +14,7 @@ Move a folder to another location in the current web
 Move-PnPFolder -Folder <String>
                -TargetFolder <String>
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -33,6 +34,18 @@ PS:> Move-PnPFolder -Folder 'Shared Documents/Reports/2016/Templates' -TargetFol
 This will move the folder Templates to the new location in 'Shared Documents/Reports'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Folder
 The folder to move

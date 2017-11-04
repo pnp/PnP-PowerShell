@@ -14,6 +14,7 @@ Removes a Client-Side Page
 Remove-PnPClientSidePage -Identity <ClientSidePagePipeBind>
                          [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -33,6 +34,18 @@ PS:> Remove-PnPClientSidePage $page
 Removes the specified Client-Side page which is contained in the $page variable.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

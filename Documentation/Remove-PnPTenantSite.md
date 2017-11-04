@@ -14,6 +14,7 @@ Removes a site collection
 Remove-PnPTenantSite -Url <String>
                      [-SkipRecycleBin [<SwitchParameter>]]
                      [-Force [<SwitchParameter>]]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +44,18 @@ PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -From
 This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Do not ask for confirmation.

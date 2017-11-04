@@ -14,12 +14,14 @@ Restores the provided recycle bin item to its original location
 ```powershell
 Restore-PnpRecycleBinItem -Identity <RecycleBinItemPipeBind>
                           [-Force [<SwitchParameter>]]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ### All
 ```powershell
 Restore-PnpRecycleBinItem -All [<SwitchParameter>]
                           [-Force [<SwitchParameter>]]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -50,6 +52,18 @@ Parameter Sets: All
 Required: True
 Position: Named
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Force

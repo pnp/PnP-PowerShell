@@ -16,6 +16,7 @@ Get-PnPCustomAction [-Identity <GuidPipeBind>]
                     [-Scope <CustomActionScope>]
                     [-ThrowExceptionIfCustomActionNotFound [<SwitchParameter>]]
                     [-Web <WebPipeBind>]
+                    [-Connection <SPOnlineConnection>]
                     [-Includes <String[]>]
 ```
 
@@ -46,6 +47,18 @@ PS:> Get-PnPCustomAction -Scope web
 Returns all custom actions for the current web object.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Identity of the CustomAction to return. Omit to return all CustomActions.

@@ -15,6 +15,7 @@ Remove-PnPList -Identity <ListPipeBind>
                [-Recycle [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -41,6 +42,18 @@ PS:> Remove-PnPList -Title Announcements -Recycle
 Removes the list named 'Announcements' and saves to the Recycle Bin
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

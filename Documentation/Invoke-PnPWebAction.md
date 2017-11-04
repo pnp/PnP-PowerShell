@@ -29,6 +29,7 @@ Invoke-PnPWebAction [-Webs <Web[]>]
                     [-DisableStatisticsOutput [<SwitchParameter>]]
                     [-SkipCounting [<SwitchParameter>]]
                     [-Web <WebPipeBind>]
+                    [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -48,6 +49,18 @@ PS:> Invoke-PnPWebAction -ShouldProcessListAction ${function:ShouldProcessList} 
 This will call the function ShouldProcessList, if it returns true the function ListAction will then be called. This will occur on all lists located on the current web
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -DisableStatisticsOutput
 Will not output statistics after the operation

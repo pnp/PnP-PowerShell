@@ -13,6 +13,7 @@ Returns a SharePoint AddIn Instance
 ### 
 ```powershell
 Get-PnPAppInstance [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
                    [-Includes <String[]>]
                    [-Identity <AppPipeBind>]
 ```
@@ -37,6 +38,18 @@ PS:> Get-PnPAppInstance -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 This will return an addin instance with the specified id.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Specifies the Id of the App Instance

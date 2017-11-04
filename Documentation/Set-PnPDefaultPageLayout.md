@@ -14,12 +14,14 @@ Sets a specific page layout to be the default page layout for a publishing site
 ```powershell
 Set-PnPDefaultPageLayout -Title <String>
                          [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ### INHERIT
 ```powershell
 Set-PnPDefaultPageLayout -InheritFromParentSite [<SwitchParameter>]
                          [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -46,6 +48,18 @@ PS:> Set-PnPDefaultPageLayout -InheritFromParentSite
 Sets the default page layout to be inherited from the parent site
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -InheritFromParentSite
 Set the default page layout to be inherited from the parent site.

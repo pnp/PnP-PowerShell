@@ -13,6 +13,7 @@ Removes a group from a web.
 ```powershell
 Remove-PnPGroup [-Force [<SwitchParameter>]]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
                 [-Identity <GroupPipeBind>]
 ```
 
@@ -26,6 +27,18 @@ PS:> Remove-PnPGroup -Identity "My Users"
 Removes the group "My Users"
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

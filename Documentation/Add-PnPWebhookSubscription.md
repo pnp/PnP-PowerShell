@@ -16,6 +16,7 @@ Add-PnPWebhookSubscription -NotificationUrl <String>
                            [-ExpirationDate <DateTime>]
                            [-ClientState <String>]
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -48,6 +49,18 @@ A client state information that will be passed through notifications
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

@@ -14,6 +14,7 @@ Retrieves all or a specific site policy
 Get-PnPSitePolicy [-AllAvailable [<SwitchParameter>]]
                   [-Name <String>]
                   [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -46,6 +47,18 @@ Retrieve all available site policies
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

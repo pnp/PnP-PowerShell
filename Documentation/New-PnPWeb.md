@@ -19,6 +19,7 @@ New-PnPWeb -Title <String>
            [-BreakInheritance [<SwitchParameter>]]
            [-InheritNavigation [<SwitchParameter>]]
            [-Web <WebPipeBind>]
+           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -37,6 +38,18 @@ By default the subweb will inherit its security from its parent, specify this sw
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

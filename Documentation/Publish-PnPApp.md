@@ -13,6 +13,7 @@ Publishes/Deploys/Trusts an available app in the app catalog
 ```powershell
 Publish-PnPApp -Identity <AppMetadataPipeBind>
                [-SkipFeatureDeployment [<SwitchParameter>]]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,6 +26,18 @@ PS:> Publish-PnPApp
 This will deploy/trust an app into the app catalog. Notice that the app needs to be available in the app catalog
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Specifies the Id of the app

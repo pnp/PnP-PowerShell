@@ -21,6 +21,7 @@ Add-PnPCustomAction -Name <String>
                     [-Scope <CustomActionScope>]
                     [-ClientSideComponentProperties <String>]
                     [-Web <WebPipeBind>]
+                    [-Connection <SPOnlineConnection>]
 ```
 
 ### Default
@@ -39,6 +40,7 @@ Add-PnPCustomAction -Name <String>
                     [-RegistrationType <UserCustomActionRegistrationType>]
                     [-Scope <CustomActionScope>]
                     [-Web <WebPipeBind>]
+                    [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -87,6 +89,18 @@ XML fragment that determines user interface properties of the custom action
 ```yaml
 Type: String
 Parameter Sets: Default
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

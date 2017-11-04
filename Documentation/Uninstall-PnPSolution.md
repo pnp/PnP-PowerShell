@@ -15,6 +15,7 @@ Uninstall-PnPSolution -PackageId <GuidPipeBind>
                       -PackageName <String>
                       [-MajorVersion <Int>]
                       [-MinorVersion <Int>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,6 +28,18 @@ PS:> Uninstall-PnPSolution -PackageId c2f5b025-7c42-4d3a-b579-41da3b8e7254 -Sour
 Removes the package to the current site
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -MajorVersion
 Optional major version of the solution, defaults to 1

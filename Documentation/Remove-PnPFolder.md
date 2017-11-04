@@ -16,6 +16,7 @@ Remove-PnPFolder -Name <String>
                  [-Recycle [<SwitchParameter>]]
                  [-Force [<SwitchParameter>]]
                  [-Web <WebPipeBind>]
+                 [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -35,6 +36,18 @@ PS:> Remove-PnPFolder -Name NewFolder -Folder _catalogs/masterpage -Recycle
 Removes the folder 'NewFolder' from '_catalogsmasterpage' and is saved in the Recycle Bin
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Folder
 The parent folder in the site

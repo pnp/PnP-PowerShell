@@ -23,6 +23,7 @@ Set-PnPTenantSite -Url <String>
                   [-LockState <SiteLockState>]
                   [-NoScriptSite [<SwitchParameter>]]
                   [-Wait [<SwitchParameter>]]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -72,6 +73,18 @@ Specifies if the site administrator can upgrade the site collection
 
 ```yaml
 Type: Nullable`1
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

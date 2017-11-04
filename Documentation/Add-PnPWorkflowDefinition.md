@@ -14,6 +14,7 @@ Adds a workflow definition
 Add-PnPWorkflowDefinition -Definition <WorkflowDefinition>
                           [-DoNotPublish [<SwitchParameter>]]
                           [-Web <WebPipeBind>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -26,6 +27,18 @@ Add-PnPWorkflowDefinition -Definition $wfdef
 Adds an existing workflow definition, retrieved by Get-PnPWorkflowDefinition, to a site.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Definition
 The workflow definition to add.

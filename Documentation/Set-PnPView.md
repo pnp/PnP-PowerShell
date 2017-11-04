@@ -14,6 +14,7 @@ Change view properties
 Set-PnPView -Identity <ViewPipeBind>
             -Values <Hashtable>
             [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
             [-List <ListPipeBind>]
 ```
 
@@ -37,6 +38,18 @@ PS:> Get-PnPList -Identity "Tasks" | Get-PnPView | Set-PnPView -Values @{JSLink=
 Updates all views on list "Tasks" to use hierarchytaskslist.js and customrendering.js for the JSLink
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The Id, Title or instance of the view

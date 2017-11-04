@@ -16,6 +16,7 @@ Export-PnPTermGroupToXml [-Identity <Id, Title or TermGroup>]
                          [-FullTemplate [<SwitchParameter>]]
                          [-Encoding <Encoding>]
                          [-Force [<SwitchParameter>]]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -50,6 +51,18 @@ PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml
 Retrieves a termgroup and subsequently exports that term group to a the file named 'output.xml'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Encoding
 Defaults to Unicode

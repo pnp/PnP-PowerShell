@@ -14,6 +14,7 @@ Return a folder object
 ```powershell
 Get-PnPFolder -Url <String>
               [-Web <WebPipeBind>]
+              [-Connection <SPOnlineConnection>]
               [-Includes <String[]>]
 ```
 
@@ -37,6 +38,18 @@ PS:> Get-PnPFolder -RelativeUrl "/sites/demo/Shared Documents"
 Returns the folder called 'Shared Documents' which is located in the root of the current web
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Includes
 Specify properties to include when retrieving objects from the server.

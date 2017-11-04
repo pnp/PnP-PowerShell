@@ -13,6 +13,7 @@ Returns a specific group or all groups.
 ### ByName
 ```powershell
 Get-PnPGroup [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
              [-Identity <GroupPipeBind>]
 ```
 
@@ -20,23 +21,27 @@ Get-PnPGroup [-Web <WebPipeBind>]
 ```powershell
 Get-PnPGroup [-AssociatedMemberGroup [<SwitchParameter>]]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ### Visitors
 ```powershell
 Get-PnPGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ### Owners
 ```powershell
 Get-PnPGroup [-AssociatedOwnerGroup [<SwitchParameter>]]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ### 
 ```powershell
 Get-PnPGroup [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
              [-Includes <String[]>]
 ```
 
@@ -95,6 +100,18 @@ Retrieve the associated visitor group
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Visitors
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

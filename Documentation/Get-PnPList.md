@@ -14,6 +14,7 @@ Returns a List object
 ```powershell
 Get-PnPList [-ThrowExceptionIfListNotFound [<SwitchParameter>]]
             [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
             [-Includes <String[]>]
             [-Identity <ListPipeBind>]
 ```
@@ -42,6 +43,18 @@ PS:> Get-PnPList -Identity Lists/Announcements
 Returns a list with the given url.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The ID, name or Url (Lists/MyList) of the list.

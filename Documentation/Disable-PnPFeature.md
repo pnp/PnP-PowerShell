@@ -15,6 +15,7 @@ Disable-PnPFeature -Identity <GuidPipeBind>
                    [-Force [<SwitchParameter>]]
                    [-Scope <FeatureScope>]
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +45,18 @@ PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope We
 This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with the web scope.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Forcibly disable the feature.

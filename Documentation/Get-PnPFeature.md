@@ -14,6 +14,7 @@ Returns all activated or a specific activated feature
 ```powershell
 Get-PnPFeature [-Scope <FeatureScope>]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
                [-Includes <String[]>]
                [-Identity <FeaturePipeBind>]
 ```
@@ -49,6 +50,18 @@ PS:> Get-PnPFeature -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22 -Scope Site
 This will return a specific activated site scoped feature
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The feature ID or name to query for, Querying by name is not supported in version 15 of the Client Side Object Model
