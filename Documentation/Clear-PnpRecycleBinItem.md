@@ -62,18 +62,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 If provided, no confirmation will be asked to permanently delete the recycle bin item
 
@@ -104,6 +92,18 @@ If provided, only all the items in the second stage recycle bin will be cleared
 ```yaml
 Type: SwitchParameter
 Parameter Sets: All
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

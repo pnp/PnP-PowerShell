@@ -36,18 +36,6 @@ Declares the document in the documents library with id as a record
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -DeclarationDate
 The declaration date
 
@@ -82,6 +70,18 @@ Parameter Sets: (All)
 Required: True
 Position: 0
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Web

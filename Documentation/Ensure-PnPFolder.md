@@ -14,8 +14,8 @@ Returns a folder from a given site relative path, and will create it if it does 
 ```powershell
 Ensure-PnPFolder -SiteRelativePath <String>
                  [-Web <WebPipeBind>]
-                 [-Connection <SPOnlineConnection>]
                  [-Includes <String[]>]
+                 [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -31,18 +31,6 @@ PS:> Ensure-PnPFolder -SiteRelativePath "demofolder/subfolder"
 Creates a folder called subfolder in a folder called demofolder located in the root folder of the site. If the folder hierarchy does not exist, it will be created.
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Includes
 Specify properties to include when retrieving objects from the server.
@@ -73,6 +61,18 @@ The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

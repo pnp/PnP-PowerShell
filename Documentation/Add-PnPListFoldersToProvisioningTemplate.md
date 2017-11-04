@@ -13,11 +13,11 @@ Adds folders to a list in a PnP Provisioning Template
 ```powershell
 Add-PnPListFoldersToProvisioningTemplate -Path <String>
                                          -List <ListPipeBind>
-                                         [-Web <WebPipeBind>]
-                                         [-Connection <SPOnlineConnection>]
                                          [-Recursive [<SwitchParameter>]]
                                          [-IncludeSecurity [<SwitchParameter>]]
                                          [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                                         [-Web <WebPipeBind>]
+                                         [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -44,18 +44,6 @@ PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestL
 Adds all folders from a list with unique permissions to an in-memory PnP Provisioning Template
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -IncludeSecurity
 A switch to include ObjectSecurity information.
@@ -114,6 +102,18 @@ Parameter Sets: (All)
 
 Required: False
 Position: 6
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

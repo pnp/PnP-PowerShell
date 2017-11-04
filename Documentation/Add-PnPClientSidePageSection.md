@@ -44,18 +44,6 @@ Adds a new one column section to the Client-Side page 'MyPage'
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Order
 Sets the order of the section. (Default = 1)
 
@@ -88,6 +76,18 @@ Type: CanvasSectionTemplate
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

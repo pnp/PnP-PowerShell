@@ -44,18 +44,6 @@ Returns all the users that are a member of any of the groups of which their name
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Identity
 A group object, an ID or a name of a group
 
@@ -66,6 +54,18 @@ Parameter Sets: (All)
 Required: True
 Position: Named
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Web

@@ -51,18 +51,6 @@ Remove all subwebs and do not ask for confirmation
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 Do not ask for confirmation to delete the subweb
 
@@ -95,6 +83,18 @@ Type: String
 Parameter Sets: ByUrl
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

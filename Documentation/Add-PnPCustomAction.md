@@ -95,18 +95,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Description
 The description of the custom action
 
@@ -245,6 +233,18 @@ The URL, URI or ECMAScript (JScript, JavaScript) function associated with the ac
 ```yaml
 Type: String
 Parameter Sets: Default
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

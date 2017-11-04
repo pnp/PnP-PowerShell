@@ -37,18 +37,6 @@ This will execute any queued actions / changes on the SharePoint Client Side Obj
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -RetryCount
 Number of times to retry in case of throttling. Defaults to 10.
 
@@ -66,6 +54,18 @@ Delay in seconds. Defaults to 1.
 
 ```yaml
 Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

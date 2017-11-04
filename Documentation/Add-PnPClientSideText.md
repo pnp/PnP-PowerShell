@@ -56,18 +56,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Order
 Sets the order of the text control. (Default = 1)
 
@@ -112,6 +100,18 @@ Type: String
 Parameter Sets: Default
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

@@ -44,18 +44,6 @@ This will add the content type called 'Test CT' to the document set called ''Tes
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -ContentType
 The content type object, name or id to add. Either specify name, an id, or a content type object.
 
@@ -76,6 +64,18 @@ Type: DocumentSetPipeBind
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

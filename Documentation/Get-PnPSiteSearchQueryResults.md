@@ -14,17 +14,17 @@ Executes a search query to retrieve indexed site collections
 ```powershell
 Get-PnPSiteSearchQueryResults [-StartRow <Int>]
                               [-MaxResults <Int>]
+                              [-Query <String>]
                               [-Web <WebPipeBind>]
                               [-Connection <SPOnlineConnection>]
-                              [-Query <String>]
 ```
 
 ### All
 ```powershell
 Get-PnPSiteSearchQueryResults [-All [<SwitchParameter>]]
+                              [-Query <String>]
                               [-Web <WebPipeBind>]
                               [-Connection <SPOnlineConnection>]
-                              [-Query <String>]
 ```
 
 ## EXAMPLES
@@ -85,18 +85,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -MaxResults
 Maximum amount of search results to return. Default and max is 500 search results.
 
@@ -127,6 +115,18 @@ Search result item to start returning the results from. Useful for paging. Leave
 ```yaml
 Type: Int
 Parameter Sets: Limit
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

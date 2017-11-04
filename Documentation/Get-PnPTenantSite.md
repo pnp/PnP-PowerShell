@@ -17,8 +17,8 @@ Get-PnPTenantSite [-Template <String>]
                   [-Force [<SwitchParameter>]]
                   [-WebTemplate <String>]
                   [-Filter <String>]
-                  [-Connection <SPOnlineConnection>]
                   [-Url <String>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -76,18 +76,6 @@ PS:> Get-PnPTenantSite -Filter "Url -like 'sales'"
 Returns all sites including 'sales' in the url
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Detailed
 By default, not all returned attributes are populated. This switch populates all attributes. It can take several seconds to run. Without this, some attributes will show default values that may not be correct.
@@ -167,6 +155,18 @@ Limit results to a specific web template name
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

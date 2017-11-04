@@ -79,18 +79,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -FontSchemeUrl
 Specifies the Font Scheme Url based on the server relative url
 
@@ -120,6 +108,18 @@ Updates only the rootweb, even if subwebs are set to inherit the theme.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

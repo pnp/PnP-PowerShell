@@ -28,18 +28,6 @@ PS:> Remove-PnPPublishingImageRendition -Name "MyImageRendition" -Width 800 -Hei
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 If provided, no confirmation will be asked to remove the Image Rendition.
 
@@ -62,6 +50,18 @@ Parameter Sets: (All)
 Required: True
 Position: 0
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Web

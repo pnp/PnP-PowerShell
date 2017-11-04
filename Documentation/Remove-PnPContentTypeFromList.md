@@ -28,18 +28,6 @@ This will remove a content type called "Project Document" from the "Documents" l
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -ContentType
 The name of a content type, its ID or an actual content type object that needs to be removed from the specified list.
 
@@ -60,6 +48,18 @@ Type: ListPipeBind
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

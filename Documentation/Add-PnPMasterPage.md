@@ -32,18 +32,6 @@ Adds a MasterPage from the local file "page.master" to the folder "SubFolder" in
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -DefaultCssFile
 Default CSS file for the MasterPage, this Url is SiteRelative
 
@@ -109,6 +97,18 @@ UIVersion of the Masterpage. Default = 15
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

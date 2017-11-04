@@ -34,11 +34,11 @@ Returns the current composed look of the current web, and will try to detect the
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
+### -DetectCurrentComposedLook
+Specify this switch to not use the PnP Provisioning engine based composed look information but try to detect the current composed look as is.
 
 ```yaml
-Type: SPOnlineConnection
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -46,11 +46,11 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -DetectCurrentComposedLook
-Specify this switch to not use the PnP Provisioning engine based composed look information but try to detect the current composed look as is.
+### -Connection
+Connection to be used by cmdlet
 
 ```yaml
-Type: SwitchParameter
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

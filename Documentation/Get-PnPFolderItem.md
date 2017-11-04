@@ -13,24 +13,12 @@ List content in folder
 ```powershell
 Get-PnPFolderItem [-ItemType <String>]
                   [-ItemName <String>]
+                  [-FolderSiteRelativeUrl <String>]
                   [-Web <WebPipeBind>]
                   [-Connection <SPOnlineConnection>]
-                  [-FolderSiteRelativeUrl <String>]
 ```
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -FolderSiteRelativeUrl
 
@@ -61,6 +49,18 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

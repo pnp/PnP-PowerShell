@@ -55,18 +55,6 @@ Renames a file named company.docx located in the document library called Documen
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 If provided, no confirmation will be requested and the action will be performed
 
@@ -124,6 +112,18 @@ Parameter Sets: (All)
 
 Required: True
 Position: 1
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

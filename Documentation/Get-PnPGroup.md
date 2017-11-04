@@ -13,8 +13,8 @@ Returns a specific group or all groups.
 ### ByName
 ```powershell
 Get-PnPGroup [-Web <WebPipeBind>]
-             [-Connection <SPOnlineConnection>]
              [-Identity <GroupPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ### Members
@@ -41,8 +41,8 @@ Get-PnPGroup [-AssociatedOwnerGroup [<SwitchParameter>]]
 ### 
 ```powershell
 Get-PnPGroup [-Web <WebPipeBind>]
-             [-Connection <SPOnlineConnection>]
              [-Includes <String[]>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -106,18 +106,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Identity
 Get a specific group by name
 
@@ -148,6 +136,18 @@ The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

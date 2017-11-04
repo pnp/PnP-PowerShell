@@ -30,18 +30,6 @@ Resumes the workflow instance, this can be the Guid of the instance or the insta
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Identity
 The instance to resume
 
@@ -51,6 +39,18 @@ Parameter Sets: (All)
 
 Required: True
 Position: 0
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

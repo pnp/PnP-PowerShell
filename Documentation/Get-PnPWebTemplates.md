@@ -56,11 +56,11 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Connection
-Connection to be used by cmdlet
+### -Lcid
+The language ID. For instance: 1033 for English
 
 ```yaml
-Type: SPOnlineConnection
+Type: UInt32
 Parameter Sets: (All)
 
 Required: False
@@ -68,11 +68,11 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Lcid
-The language ID. For instance: 1033 for English
+### -Connection
+Connection to be used by cmdlet
 
 ```yaml
-Type: UInt32
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

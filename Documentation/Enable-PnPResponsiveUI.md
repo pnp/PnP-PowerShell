@@ -30,11 +30,11 @@ Will upload a CSS file, a JavaScript file and adds a custom action to the root w
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
+### -InfrastructureSiteUrl
+A full URL pointing to an infrastructure site. If specified, it will add a custom action pointing to the responsive UI JS code in that site.
 
 ```yaml
-Type: SPOnlineConnection
+Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -42,11 +42,11 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -InfrastructureSiteUrl
-A full URL pointing to an infrastructure site. If specified, it will add a custom action pointing to the responsive UI JS code in that site.
+### -Connection
+Connection to be used by cmdlet
 
 ```yaml
-Type: String
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

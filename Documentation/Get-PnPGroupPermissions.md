@@ -28,18 +28,6 @@ Returns the permissions for the SharePoint group with the name 'My Site Members'
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Identity
 Get the permissions of a specific group by name
 
@@ -51,6 +39,18 @@ Aliases: Name
 Required: True
 Position: 0
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Web

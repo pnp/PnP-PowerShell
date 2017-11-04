@@ -46,18 +46,6 @@ This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 Forcibly disable the feature.
 
@@ -87,6 +75,18 @@ Specify the scope of the feature to deactivate, either Web or Site. Defaults to 
 
 ```yaml
 Type: FeatureScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

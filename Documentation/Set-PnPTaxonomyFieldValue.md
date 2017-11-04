@@ -60,18 +60,6 @@ Sets the field called 'Department' with multiple terms by ID and label. You can 
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -InternalFieldName
 The internal name of the field
 
@@ -138,6 +126,18 @@ Allows you to specify terms with key value pairs that can be referred to in the 
 ```yaml
 Type: Hashtable
 Parameter Sets: ITEMS
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

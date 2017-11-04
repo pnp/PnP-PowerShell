@@ -47,18 +47,6 @@ Exports the term set with the specified id
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Delimiter
 The path delimiter to be used, by default this is '|'
 
@@ -137,6 +125,18 @@ Term store to export; if not specified the default term store is used.
 ```yaml
 Type: String
 Parameter Sets: TermSet
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

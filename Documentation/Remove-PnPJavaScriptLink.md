@@ -13,9 +13,9 @@ Removes a JavaScript link or block from a web or sitecollection
 ```powershell
 Remove-PnPJavaScriptLink [-Force [<SwitchParameter>]]
                          [-Scope <CustomActionScope>]
+                         [-Name <String>]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
-                         [-Name <String>]
 ```
 
 ## EXAMPLES
@@ -50,18 +50,6 @@ Removes all the injected JavaScript files with from the current site collection 
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 Use the -Force flag to bypass the confirmation question
 
@@ -92,6 +80,18 @@ Define if the JavaScriptLink is to be found at the web or site collection scope.
 
 ```yaml
 Type: CustomActionScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

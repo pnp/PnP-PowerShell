@@ -28,18 +28,6 @@ Adds an existing workflow definition, retrieved by Get-PnPWorkflowDefinition, to
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Definition
 The workflow definition to add.
 
@@ -57,6 +45,18 @@ Overrides the default behaviour, which is to publish workflow definitions.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

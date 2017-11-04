@@ -28,18 +28,6 @@ Returns the webpart XML for a given webpart on a page.
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Identity
 Id or title of the webpart. Use Get-PnPWebPart to retrieve all webpart Ids
 
@@ -61,6 +49,18 @@ Parameter Sets: (All)
 Aliases: PageUrl
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

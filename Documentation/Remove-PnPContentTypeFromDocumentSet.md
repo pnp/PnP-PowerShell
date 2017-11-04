@@ -35,18 +35,6 @@ This will remove the content type with ID '0x0101001F1CEFF1D4126E4CAD10F00B6137E
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -ContentType
 The content type to remove. Either specify name, an id, or a content type object.
 
@@ -67,6 +55,18 @@ Type: DocumentSetPipeBind
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

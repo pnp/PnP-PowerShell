@@ -65,18 +65,6 @@ Returns all custom managed properties and crawled property mapping at the curren
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -OutputFormat
 Output format for of the configuration. Defaults to complete XML
 
@@ -106,6 +94,18 @@ Scope to use. Either Web, Site, or Subscription. Defaults to Web
 
 ```yaml
 Type: SearchConfigurationScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

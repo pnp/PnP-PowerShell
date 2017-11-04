@@ -12,9 +12,9 @@ Return a workflow definition
 
 ```powershell
 Get-PnPWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
+                          [-Name <String>]
                           [-Web <WebPipeBind>]
                           [-Connection <SPOnlineConnection>]
-                          [-Name <String>]
 ```
 
 ## DESCRIPTION
@@ -38,18 +38,6 @@ Gets an Workflow with the name "MyWorkflow" that is published.
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Name
 The name of the workflow
 
@@ -67,6 +55,18 @@ Return only the published workflows
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

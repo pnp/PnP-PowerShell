@@ -13,9 +13,9 @@ Removes a field from a list or a site
 ```powershell
 Remove-PnPField -Identity <FieldPipeBind>
                 [-Force [<SwitchParameter>]]
+                [-List <ListPipeBind>]
                 [-Web <WebPipeBind>]
                 [-Connection <SPOnlineConnection>]
-                [-List <ListPipeBind>]
 ```
 
 ## EXAMPLES
@@ -35,18 +35,6 @@ PS:> Remove-PnPField -List "Demo list" -Identity "Speakers"
 Removes the speakers field from the list Demo list
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.
@@ -82,6 +70,18 @@ Parameter Sets: (All)
 Required: False
 Position: 1
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Web

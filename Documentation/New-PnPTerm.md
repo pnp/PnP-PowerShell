@@ -34,18 +34,6 @@ Creates a new taxonomy term named "Finance" in the termset Departments which is 
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -CustomProperties
 Custom Properties
 
@@ -149,6 +137,18 @@ Term store to check; if not specified the default term store is used.
 Type: Id, Name or Object
 Parameter Sets: (All)
 Aliases: TermStoreName
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

@@ -15,12 +15,12 @@ BETA: This cmdlet is using early release APIs. Notice that functionality and par
 New-PnPSite -Type <SiteType>
             -Title <String>
             -Url <String>
-            [-Connection <SPOnlineConnection>]
             [-Description <String>]
             [-Classification <String>]
             [-AllowFileSharingForGuestUsers [<SwitchParameter>]]
             [-SiteDesign <CommunicationSiteDesign>]
             [-Lcid <UInt32>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ### Team Site
@@ -28,10 +28,10 @@ New-PnPSite -Type <SiteType>
 New-PnPSite -Type <SiteType>
             -Title <String>
             -Alias <String>
-            [-Connection <SPOnlineConnection>]
             [-Description <String>]
             [-Classification <String>]
             [-IsPublic <String>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ### CommunicationCustomInDesign
@@ -40,11 +40,11 @@ New-PnPSite -Type <SiteType>
             -Title <String>
             -Url <String>
             -SiteDesignId <GuidPipeBind>
-            [-Connection <SPOnlineConnection>]
             [-Description <String>]
             [-Classification <String>]
             [-AllowFileSharingForGuestUsers [<SwitchParameter>]]
             [-Lcid <UInt32>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -136,18 +136,6 @@ Parameter Sets: Communication Site With Built-in Design
 
 Required: False
 Position: 0
-Accept pipeline input: False
-```
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
 Accept pipeline input: False
 ```
 
@@ -244,6 +232,18 @@ Parameter Sets: Communication Site With Built-in Design
 
 Required: True
 Position: 0
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

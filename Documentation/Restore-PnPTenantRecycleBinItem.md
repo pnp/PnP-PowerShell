@@ -38,18 +38,6 @@ This will restore the deleted site collection with the url 'https://tenant.share
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 If provided, no confirmation will be asked to restore the site collection from the tenant recycle bin
 
@@ -79,6 +67,18 @@ If provided, the PowerShell execution will halt until the site restore process h
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

@@ -45,18 +45,6 @@ Removes the first Webhook subscription from the list MyList
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 Specifying the Force parameter will skip the confirmation question.
 
@@ -86,6 +74,18 @@ The list object or name which the Webhook subscription will be removed from
 
 ```yaml
 Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

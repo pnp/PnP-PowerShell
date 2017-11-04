@@ -27,18 +27,6 @@ Sets the home page to the home.aspx file which resides in the SitePages library
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -RootFolderRelativeUrl
 The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'
 
@@ -50,6 +38,18 @@ Aliases: Path
 Required: True
 Position: 0
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Web

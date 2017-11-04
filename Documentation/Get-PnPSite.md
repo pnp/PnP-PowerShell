@@ -12,8 +12,8 @@ Returns the current site collection from the context.
 
 ### 
 ```powershell
-Get-PnPSite [-Connection <SPOnlineConnection>]
-            [-Includes <String[]>]
+Get-PnPSite [-Includes <String[]>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,18 +27,6 @@ Gets the current site
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Includes
 Specify properties to include when retrieving objects from the server.
 
@@ -48,6 +36,18 @@ Parameter Sets:
 
 Required: False
 Position: 0
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

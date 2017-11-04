@@ -13,9 +13,9 @@ Retrieves a content type
 ```powershell
 Get-PnPContentType [-List <ListPipeBind>]
                    [-InSiteHierarchy [<SwitchParameter>]]
+                   [-Identity <ContentTypePipeBind>]
                    [-Web <WebPipeBind>]
                    [-Connection <SPOnlineConnection>]
-                   [-Identity <ContentTypePipeBind>]
 ```
 
 ## EXAMPLES
@@ -49,18 +49,6 @@ PS:> Get-PnPContentType -List "Documents"
 This will get a listing of all available content types within the list "Documents"
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Identity
 Name or ID of the content type to retrieve
@@ -96,6 +84,18 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Web

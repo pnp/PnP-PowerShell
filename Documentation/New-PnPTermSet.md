@@ -37,18 +37,6 @@ Creates a new termset named "Department" in the group named "Corporate"
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Contact
 An e-mail address for term suggestion and feedback. If left blank the suggestion feature will be disabled.
 
@@ -188,6 +176,18 @@ Term store to check; if not specified the default term store is used.
 Type: Id, Name or Object
 Parameter Sets: (All)
 Aliases: TermStoreName
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

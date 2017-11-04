@@ -12,9 +12,9 @@ Returns the property bag values.
 
 ```powershell
 Get-PnPPropertyBag [-Folder <String>]
+                   [-Key <String>]
                    [-Web <WebPipeBind>]
                    [-Connection <SPOnlineConnection>]
-                   [-Key <String>]
 ```
 
 ## EXAMPLES
@@ -56,18 +56,6 @@ This will return the value of the key vti_mykey from the root folder of the curr
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Folder
 Site relative url of the folder. See examples for use.
 
@@ -90,6 +78,18 @@ Parameter Sets: (All)
 Required: False
 Position: 0
 Accept pipeline input: True
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Web

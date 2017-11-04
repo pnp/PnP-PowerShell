@@ -11,10 +11,10 @@ Returns site users of current web
 ## SYNTAX 
 
 ```powershell
-Get-PnPUser [-Web <WebPipeBind>]
-            [-Connection <SPOnlineConnection>]
-            [-Identity <UserPipeBind>]
+Get-PnPUser [-Identity <UserPipeBind>]
             [-WithRightsAssigned [<SwitchParameter>]]
+            [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -66,18 +66,6 @@ Returns only those users from the User Information List of the current site coll
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Identity
 User ID or login name
 
@@ -90,18 +78,6 @@ Position: 0
 Accept pipeline input: True
 ```
 
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -WithRightsAssigned
 If provided, only users that currently have any kinds of access rights assigned to the current site collection will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.
 
@@ -111,6 +87,30 @@ Parameter Sets: (All)
 
 Required: False
 Position: 1
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

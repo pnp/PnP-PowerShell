@@ -61,18 +61,6 @@ Sets the master page and custom master page based on a site relative URL
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -CustomMasterPageServerRelativeUrl
 Specifies the custom Master page URL based on the server relative URL
 
@@ -117,6 +105,18 @@ Specifies the Master page URL based on the site relative URL
 ```yaml
 Type: String
 Parameter Sets: Site Relative
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

@@ -40,18 +40,6 @@ This will remove an event receiver with id fb689d0e-eb99-4f13-beb3-86692fd39f22 
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 Specifying the Force parameter will skip the confirmation question.
 
@@ -82,6 +70,18 @@ The list object from where to get the event receiver object
 ```yaml
 Type: ListPipeBind
 Parameter Sets: List
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named
