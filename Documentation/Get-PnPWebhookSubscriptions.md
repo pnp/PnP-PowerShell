@@ -13,6 +13,7 @@ Gets all the Webhook subscriptions of the resource
 ```powershell
 Get-PnPWebhookSubscriptions [-List <ListPipeBind>]
                             [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,6 +26,18 @@ PS:> Get-PnPWebhookSubscriptions -List MyList
 Gets all Webhook subscriptions of the list MyList
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -List
 The list object or name to get the Webhook subscriptions from

@@ -14,6 +14,7 @@ Undeclares a list item as a record
 Clear-PnPListItemAsRecord -Identity <ListItemPipeBind>
                           -List <ListPipeBind>
                           [-Web <WebPipeBind>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -26,6 +27,18 @@ PS:> Clear-PnPListItemAsRecord -List "Documents" -Identity 4
 Undeclares the document in the documents library with id 4 as a record
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The ID of the listitem, or actual ListItem object

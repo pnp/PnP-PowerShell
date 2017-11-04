@@ -13,6 +13,7 @@ Removes a key from propertybag to be indexed by search. The key and it's value r
 ```powershell
 Remove-PnPIndexedProperty -Key <String>
                           [-Web <WebPipeBind>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,6 +26,18 @@ PS:> Remove-PnPIndexedProperty -key "MyIndexProperty"
 Removes the Indexed property "MyIndexProperty" from the current web
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Key
 Key of the property bag value to be removed from indexing

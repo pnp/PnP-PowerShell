@@ -14,12 +14,14 @@ Removes a wiki page
 ```powershell
 Remove-PnPWikiPage -ServerRelativePageUrl <String>
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ### SITE
 ```powershell
 Remove-PnPWikiPage -SiteRelativePageUrl <String>
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -32,6 +34,18 @@ PS:> Remove-PnPWikiPage -PageUrl '/pages/wikipage.aspx'
 Removes the page '/pages/wikipage.aspx'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ServerRelativePageUrl
 

@@ -18,6 +18,7 @@ New-PnPList -Title <String>
             [-EnableContentTypes [<SwitchParameter>]]
             [-OnQuickLaunch [<SwitchParameter>]]
             [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -37,6 +38,18 @@ PS:> New-PnPList -Title "Demo List" -Url "DemoList" -Template Announcements
 Create a list with a title that is different from the url
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -EnableContentTypes
 Switch parameter if content types should be enabled on this list

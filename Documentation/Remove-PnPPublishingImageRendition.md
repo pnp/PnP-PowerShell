@@ -14,6 +14,7 @@ Removes an existing image rendition
 Remove-PnPPublishingImageRendition -Identity <ImageRenditionPipeBind>
                                    [-Force [<SwitchParameter>]]
                                    [-Web <WebPipeBind>]
+                                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -26,6 +27,18 @@ PS:> Remove-PnPPublishingImageRendition -Name "MyImageRendition" -Width 800 -Hei
 
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 If provided, no confirmation will be asked to remove the Image Rendition.

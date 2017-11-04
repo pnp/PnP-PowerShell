@@ -13,6 +13,7 @@ Gets a Client-Side Page
 ```powershell
 Get-PnPClientSidePage -Identity <ClientSidePagePipeBind>
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -32,6 +33,18 @@ PS:> Get-PnPClientSidePage "MyPage"
 Gets the Modern Page (Client-Side) named 'MyPage.aspx' in the current SharePoint site
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The name of the page

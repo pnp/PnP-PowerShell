@@ -19,6 +19,7 @@ Export-PnPTaxonomy [-TermSetId <GuidPipeBind>]
                    [-Force [<SwitchParameter>]]
                    [-Delimiter <String>]
                    [-Encoding <Encoding>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -45,6 +46,18 @@ PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41f
 Exports the term set with the specified id
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Delimiter
 The path delimiter to be used, by default this is '|'

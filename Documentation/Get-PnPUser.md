@@ -12,7 +12,9 @@ Returns site users of current web
 
 ```powershell
 Get-PnPUser [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
             [-Identity <UserPipeBind>]
+            [-WithRightsAssigned [<SwitchParameter>]]
 ```
 
 ## DESCRIPTION
@@ -25,7 +27,7 @@ This command will return all the users that exist in the current site collection
 PS:> Get-PnPUser
 ```
 
-Returns all users from the User Information List of the current site collection
+Returns all users from the User Information List of the current site collection regardless if they currently have rights to access the current site
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
@@ -48,7 +50,33 @@ PS:> Get-PnPUser | ? Email -eq "user@tenant.onmicrosoft.com"
 
 Returns the user with e-mail address user@tenant.onmicrosoft.com from the User Information List of the current site collection
 
+### ------------------EXAMPLE 5------------------
+```powershell
+PS:> Get-PnPUser -WithRightsAssigned
+```
+
+Returns only those users from the User Information List of the current site collection who currently have any kind of access rights given either directly to the user or Active Directory Group or given to the user or Active Directory Group via membership of a SharePoint Group to the current site
+
+### ------------------EXAMPLE 6------------------
+```powershell
+PS:> Get-PnPUser -WithRightsAssigned -Web subsite1
+```
+
+Returns only those users from the User Information List of the current site collection who currently have any kind of access rights given either directly to the user or Active Directory Group or given to the user or Active Directory Group via membership of a SharePoint Group to subsite 'subsite1'
+
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 User ID or login name
@@ -71,6 +99,18 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
+Accept pipeline input: False
+```
+
+### -WithRightsAssigned
+If provided, only users that currently have any kinds of access rights assigned to the current site collection will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: 1
 Accept pipeline input: False
 ```
 

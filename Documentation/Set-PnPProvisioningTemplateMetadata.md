@@ -17,6 +17,7 @@ Set-PnPProvisioningTemplateMetadata -Path <String>
                                     [-TemplateProperties <Hashtable>]
                                     [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                                     [-Web <WebPipeBind>]
+                                    [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -64,6 +65,18 @@ PS:> Set-PnPProvisioningTemplateMetadata -Path template.pnp -TemplateProperties 
 Sets the property 'Property1' to the value 'Test Value 1' of a provisioning template in Office Open XML format.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Path
 Path to the xml or pnp file containing the provisioning template.

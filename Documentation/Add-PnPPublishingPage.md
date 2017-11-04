@@ -18,6 +18,7 @@ Add-PnPPublishingPage -PageName <String>
                       [-FolderPath <String>]
                       [-Publish [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -37,6 +38,18 @@ PS:> Add-PnPPublishingPage -PageName 'OurNewPage' -Title 'Our new page' -PageTem
 Creates a new page based on the pagelayout 'ArticleLeft' with a site relative folder path
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -FolderPath
 The site relative folder path of the page to be added

@@ -24,6 +24,7 @@ Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
                               [-ExtensibilityHandlers <ExtensibilityHandler[]>]
                               [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                               [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
 ```
 
 ### Gallery
@@ -40,6 +41,7 @@ Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
                               [-ExtensibilityHandlers <ExtensibilityHandler[]>]
                               [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                               [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
 ```
 
 ### Path
@@ -56,6 +58,7 @@ Apply-PnPProvisioningTemplate -Path <String>
                               [-ExtensibilityHandlers <ExtensibilityHandler[]>]
                               [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                               [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -128,6 +131,18 @@ Override the RemoveExistingNodes attribute in the Navigation elements of the tem
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

@@ -23,6 +23,7 @@ Add-PnPTaxonomyField -DisplayName <String>
                      [-Required [<SwitchParameter>]]
                      [-FieldOptions <AddFieldOptions>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ### Path
@@ -39,6 +40,7 @@ Add-PnPTaxonomyField -TermSetPath <String>
                      [-Required [<SwitchParameter>]]
                      [-FieldOptions <AddFieldOptions>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -60,6 +62,18 @@ Switch Parameter if this field must be added to the default view
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

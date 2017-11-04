@@ -14,6 +14,7 @@ Returns a webpart definition object
 Get-PnPWebPart -ServerRelativePageUrl <String>
                [-Identity <WebPartPipeBind>]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -33,6 +34,18 @@ PS:> Get-PnPWebPart -ServerRelativePageUrl "/sites/demo/sitepages/home.aspx" -Id
 Returns a specific webpart defined on the given page.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The identity of the webpart, this can be the webpart guid or an webpart object

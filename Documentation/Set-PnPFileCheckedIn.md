@@ -15,6 +15,7 @@ Set-PnPFileCheckedIn -Url <String>
                      [-CheckinType <CheckinType>]
                      [-Comment <String>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -52,6 +53,18 @@ The check in comment
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

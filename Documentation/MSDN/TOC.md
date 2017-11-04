@@ -15,6 +15,7 @@
 ### [Get-PnPAppAuthAccessToken](Get-PnPAppAuthAccessToken.md)
 ### [Get-PnPAuthenticationRealm](Get-PnPAuthenticationRealm.md)
 ### [Get-PnPAzureADManifestKeyCredentials](Get-PnPAzureADManifestKeyCredentials.md)
+### [Get-PnPConnection](Get-PnPConnection.md)
 ### [Get-PnPContext](Get-PnPContext.md)
 ### [Set-PnPContext](Set-PnPContext.md)
 ### [Get-PnPHealthScore](Get-PnPHealthScore.md)

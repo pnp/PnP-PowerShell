@@ -19,6 +19,7 @@ Set-PnPClientSidePage -Identity <ClientSidePagePipeBind>
                       [-Publish [<SwitchParameter>]]
                       [-PublishMessage <String>]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -51,6 +52,18 @@ Enables or Disables the comments on the page
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

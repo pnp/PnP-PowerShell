@@ -15,6 +15,7 @@ Activates or deactivates the minimal downloading strategy.
 Set-PnPMinimalDownloadStrategy -On [<SwitchParameter>]
                                [-Force [<SwitchParameter>]]
                                [-Web <WebPipeBind>]
+                               [-Connection <SPOnlineConnection>]
 ```
 
 ### Off
@@ -22,6 +23,7 @@ Set-PnPMinimalDownloadStrategy -On [<SwitchParameter>]
 Set-PnPMinimalDownloadStrategy -Off [<SwitchParameter>]
                                [-Force [<SwitchParameter>]]
                                [-Web <WebPipeBind>]
+                               [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +46,18 @@ PS:> Set-PnPMinimalDownloadStrategy -On
 Will activate minimal download strategy (MDS) for the current web.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

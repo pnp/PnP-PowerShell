@@ -16,6 +16,7 @@ Get-PnPTerm -TermSet <Id, Title or TaxonomyItem>
             -TermGroup <Id, Title or TermGroup>
             [-Identity <Id, Name or Object>]
             [-TermStore <Id, Name or Object>]
+            [-Connection <SPOnlineConnection>]
             [-Includes <String[]>]
 ```
 
@@ -43,6 +44,18 @@ PS:> Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermSet "Dep
 Returns the termset named with the given id, from the "Departments" from termgroup called "Corporate" from the site collection termstore
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The Id or Name of a Term

@@ -13,6 +13,7 @@ Returns the available web templates.
 ```powershell
 Get-PnPWebTemplates [-Lcid <UInt32>]
                     [-CompatibilityLevel <Int>]
+                    [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +49,18 @@ The version of SharePoint
 
 ```yaml
 Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

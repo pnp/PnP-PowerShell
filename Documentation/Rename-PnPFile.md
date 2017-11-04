@@ -17,6 +17,7 @@ Rename-PnPFile -ServerRelativeUrl <String>
                [-OverwriteIfAlreadyExists [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ### SITE
@@ -26,6 +27,7 @@ Rename-PnPFile -SiteRelativeUrl <String>
                [-OverwriteIfAlreadyExists [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -52,6 +54,18 @@ PS:>Rename-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -Tar
 Renames a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to mycompany.aspx. If a file named mycompany.aspx already exists, it will still perform the rename and replace the original mycompany.aspx file.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 If provided, no confirmation will be requested and the action will be performed

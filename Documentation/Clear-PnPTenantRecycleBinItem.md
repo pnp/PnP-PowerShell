@@ -14,6 +14,7 @@ Permanently deletes a site collection from the tenant scoped recycle bin
 Clear-PnPTenantRecycleBinItem -Url <String>
                               [-Wait [<SwitchParameter>]]
                               [-Force [<SwitchParameter>]]
+                              [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -36,6 +37,18 @@ PS:> Clear-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/cont
 This will permanently delete site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the tenant recycle bin and will wait with executing further PowerShell commands until the operation has completed
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 If provided, no confirmation will be asked to permanently delete the site collection from the tenant recycle bin

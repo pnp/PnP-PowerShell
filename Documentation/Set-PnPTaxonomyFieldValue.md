@@ -15,6 +15,7 @@ Sets a taxonomy term value in a listitem field
 Set-PnPTaxonomyFieldValue -ListItem <ListItem>
                           -InternalFieldName <String>
                           [-Terms <Hashtable>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ### ITEM
@@ -23,6 +24,7 @@ Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
                           -ListItem <ListItem>
                           -InternalFieldName <String>
                           [-Label <String>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ### PATH
@@ -30,6 +32,7 @@ Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
 Set-PnPTaxonomyFieldValue -TermPath <String>
                           -ListItem <ListItem>
                           -InternalFieldName <String>
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -56,6 +59,18 @@ PS:> Set-PnPTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -
 Sets the field called 'Department' with multiple terms by ID and label. You can refer to those terms with the {ID:label} token.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -InternalFieldName
 The internal name of the field

@@ -13,6 +13,7 @@ Marks the list for full indexing during the next incremental crawl
 ```powershell
 Request-PnPReIndexList -Identity <ListPipeBind>
                        [-Web <WebPipeBind>]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,6 +26,18 @@ PS:> Request-PnPReIndexList -Identity "Demo List"
 
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The ID, Title or Url of the list.

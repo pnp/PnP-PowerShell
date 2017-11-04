@@ -13,6 +13,7 @@ Resume a workflow
 ```powershell
 Resume-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -28,6 +29,18 @@ Resume-PnPWorkflowInstance -identity $wfInstance
 Resumes the workflow instance, this can be the Guid of the instance or the instance itself.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The instance to resume

@@ -24,6 +24,7 @@ Add-PnPFile -Path <String>
             [-Values <Hashtable>]
             [-ContentType <ContentTypePipeBind>]
             [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ### Upload file from stream
@@ -41,6 +42,7 @@ Add-PnPFile -FileName <String>
             [-Values <Hashtable>]
             [-ContentType <ContentTypePipeBind>]
             [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -130,6 +132,18 @@ If versioning is enabled, this will check out the file first if it exists, uploa
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

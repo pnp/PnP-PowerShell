@@ -13,6 +13,7 @@ Adds a user to the built-in Site User Info List and returns a user object
 ```powershell
 New-PnPUser -LoginName <String>
             [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,6 +26,18 @@ PS:> New-PnPUser -LoginName user@company.com
 Adds a new user with the login user@company.com to the current site
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -LoginName
 The users login name (user@company.com)

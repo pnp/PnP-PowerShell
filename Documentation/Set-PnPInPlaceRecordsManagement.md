@@ -14,12 +14,14 @@ Activates or deactivates in the place records management feature.
 ```powershell
 Set-PnPInPlaceRecordsManagement -On [<SwitchParameter>]
                                 [-Web <WebPipeBind>]
+                                [-Connection <SPOnlineConnection>]
 ```
 
 ### Off
 ```powershell
 Set-PnPInPlaceRecordsManagement -Off [<SwitchParameter>]
                                 [-Web <WebPipeBind>]
+                                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -39,6 +41,18 @@ PS:> Set-PnPInPlaceRecordsManagement -Off
 Deactivates In Place Records Management
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Off
 Turn records management off

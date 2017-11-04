@@ -16,6 +16,7 @@ Remove-PnPListItem -Identity <ListItemPipeBind>
                    [-Recycle [<SwitchParameter>]]
                    [-Force [<SwitchParameter>]]
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -35,6 +36,18 @@ PS:> Remove-PnPListItem -List "Demo List" -Identity "1" -Force -Recycle
 Removes the listitem with id "1" from the "Demo List" list and saves it in the Recycle Bin.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

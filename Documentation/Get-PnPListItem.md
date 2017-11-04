@@ -16,6 +16,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-Id <Int>]
                 [-Fields <String[]>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### By Unique Id
@@ -24,6 +25,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-UniqueId <GuidPipeBind>]
                 [-Fields <String[]>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### By Query
@@ -33,6 +35,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-PageSize <Int>]
                 [-ScriptBlock <ScriptBlock>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### All Items
@@ -42,6 +45,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-PageSize <Int>]
                 [-ScriptBlock <ScriptBlock>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -96,6 +100,18 @@ PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $it
 Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Fields
 The fields to retrieve. If not specified all fields will be loaded in the returned list object.

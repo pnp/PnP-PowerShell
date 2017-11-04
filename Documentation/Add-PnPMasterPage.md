@@ -18,6 +18,7 @@ Add-PnPMasterPage -SourceFilePath <String>
                   [-UIVersion <String>]
                   [-DefaultCssFile <String>]
                   [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -30,6 +31,18 @@ PS:> Add-PnPMasterPage -SourceFilePath "page.master" -Title "MasterPage" -Descri
 Adds a MasterPage from the local file "page.master" to the folder "SubFolder" in the Masterpage gallery.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -DefaultCssFile
 Default CSS file for the MasterPage, this Url is SiteRelative

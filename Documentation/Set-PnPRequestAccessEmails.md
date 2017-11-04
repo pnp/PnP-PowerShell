@@ -13,6 +13,7 @@ Sets Request Access Emails on a web
 ```powershell
 Set-PnPRequestAccessEmails -Emails <String[]>
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -32,6 +33,18 @@ PS:> Set-PnPRequestAccessEmails -Emails @( someone@example.com; someoneelse@exam
 This will update multiple request access e-mail addresses
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Emails
 Email address(es) to set the RequestAccessEmails to

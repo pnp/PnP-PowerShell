@@ -15,6 +15,7 @@ Removes a webpart from a page
 Remove-PnPWebPart -Identity <GuidPipeBind>
                   -ServerRelativePageUrl <String>
                   [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ### NAME
@@ -22,6 +23,7 @@ Remove-PnPWebPart -Identity <GuidPipeBind>
 Remove-PnPWebPart -Title <String>
                   -ServerRelativePageUrl <String>
                   [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -41,6 +43,18 @@ PS:> Remove-PnPWebPartToWikiPage -ServerRelativePageUrl "/sites/demo/sitepages/h
 This will remove the webpart as defined by the XML in the listview.webpart file to the specified page in the first row and the first column of the HTML table present on the page
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The Guid of the webpart

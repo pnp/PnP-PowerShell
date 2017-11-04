@@ -12,6 +12,7 @@ Returns all image renditions or if Identity is specified a specific one
 
 ```powershell
 Get-PnPPublishingImageRendition [-Web <WebPipeBind>]
+                                [-Connection <SPOnlineConnection>]
                                 [-Identity <ImageRenditionPipeBind>]
 ```
 
@@ -39,6 +40,18 @@ PS:> Get-PnPPublishingImageRendition -Identity 2
 Returns the image rendition where its id equals 2
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Id or name of an existing image rendition

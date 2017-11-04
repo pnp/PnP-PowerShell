@@ -16,6 +16,7 @@ Remove-PnPFile -ServerRelativeUrl <String>
                [-Recycle [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ### Site Relative
@@ -24,6 +25,7 @@ Remove-PnPFile -SiteRelativeUrl <String>
                [-Recycle [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -50,6 +52,18 @@ PS:>Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle
 Removes the file company.spcolor and saves it to the Recycle Bin
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 

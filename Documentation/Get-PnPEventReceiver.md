@@ -15,12 +15,14 @@ Return registered eventreceivers
 Get-PnPEventReceiver [-List <ListPipeBind>]
                      [-Identity <GuidPipeBind>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ### 
 ```powershell
 Get-PnPEventReceiver [-Identity <GuidPipeBind>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
                      [-Includes <String[]>]
 ```
 
@@ -58,6 +60,18 @@ PS:> Get-PnPEventReceiver -List "ProjectList" -Identity fb689d0e-eb99-4f13-beb3-
 This will return a specific registered event receiver in the list with the name ProjectList
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The Guid of the event receiver on the list

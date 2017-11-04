@@ -15,6 +15,7 @@ Adds a wiki page
 Add-PnPWikiPage -Content <String>
                 -ServerRelativePageUrl <String>
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### WithLayout
@@ -22,6 +23,7 @@ Add-PnPWikiPage -Content <String>
 Add-PnPWikiPage -Layout <WikiPageLayout>
                 -ServerRelativePageUrl <String>
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -34,6 +36,18 @@ PS:> Add-PnPWikiPage -PageUrl '/sites/demo1/pages/wikipage.aspx' -Content 'New W
 Creates a new wiki page '/sites/demo1/pages/wikipage.aspx' and sets the content to 'New WikiPage'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Content
 

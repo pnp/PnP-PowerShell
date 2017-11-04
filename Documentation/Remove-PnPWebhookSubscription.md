@@ -15,6 +15,7 @@ Remove-PnPWebhookSubscription -Identity <WebhookSubscriptionPipeBind>
                               [-List <ListPipeBind>]
                               [-Force [<SwitchParameter>]]
                               [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -43,6 +44,18 @@ PS:> $subscriptions[0] | Remove-PnPWebhookSubscription -List MyList
 Removes the first Webhook subscription from the list MyList
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

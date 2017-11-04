@@ -13,9 +13,22 @@ Marks the value of the propertybag key specified to be indexed by search.
 ```powershell
 Add-PnPIndexedProperty -Key <String>
                        [-Web <WebPipeBind>]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Key
 Key of the property bag value to be indexed

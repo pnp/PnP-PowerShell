@@ -12,9 +12,22 @@ Returns a taxonomy item
 
 ```powershell
 Get-PnPTaxonomyItem -TermPath <String>
+                    [-Connection <SPOnlineConnection>]
 ```
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -TermPath
 The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL

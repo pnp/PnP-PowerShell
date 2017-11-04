@@ -14,6 +14,7 @@ Removes a content type from a document set
 Remove-PnPContentTypeFromDocumentSet -ContentType <ContentTypePipeBind>
                                      -DocumentSet <DocumentSetPipeBind>
                                      [-Web <WebPipeBind>]
+                                     [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -33,6 +34,18 @@ PS:> Remove-PnPContentTypeFromDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CA
 This will remove the content type with ID '0x0101001F1CEFF1D4126E4CAD10F00B6137E969' from the document set with ID '0x0120D520005DB65D094035A241BAC9AF083F825F3B'
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentType
 The content type to remove. Either specify name, an id, or a content type object.

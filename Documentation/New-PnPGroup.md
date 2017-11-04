@@ -20,6 +20,7 @@ New-PnPGroup -Title <String>
              [-DisallowMembersViewMembership [<SwitchParameter>]]
              [-RequestToJoinEmail <String>]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -62,6 +63,18 @@ A switch parameter that specifies whether users are automatically added or remov
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

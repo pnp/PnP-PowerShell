@@ -15,6 +15,7 @@ Sets the contents of a wikipage
 Set-PnPWikiPageContent -Content <String>
                        -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ### FILE
@@ -22,9 +23,22 @@ Set-PnPWikiPageContent -Content <String>
 Set-PnPWikiPageContent -Path <String>
                        -ServerRelativePageUrl <String>
                        [-Web <WebPipeBind>]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Content
 

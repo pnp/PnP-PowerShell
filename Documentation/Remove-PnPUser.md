@@ -15,6 +15,7 @@ Remove-PnPUser -Identity <UserPipeBind>
                [-Force [<SwitchParameter>]]
                [-Confirm [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -57,6 +58,18 @@ Specifying the Confirm parameter will allow the confirmation question to be skip
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

@@ -21,6 +21,7 @@ Add-PnPView -Title <String>
             [-SetAsDefault [<SwitchParameter>]]
             [-Paged [<SwitchParameter>]]
             [-Web <WebPipeBind>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -40,6 +41,18 @@ Add-PnPView -List "Demo List" -Title "Demo View" -Fields "Title","Address" -Page
 Adds a view named "Demo view" to the "Demo List" list and makes sure there's paging on this view.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Fields
 A list of fields to add.

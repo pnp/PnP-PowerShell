@@ -13,12 +13,25 @@ Gets the default column values for all folders in document library
 ```powershell
 Get-PnPDefaultColumnValues -List <ListPipeBind>
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
 Gets the default column values for a document library, per folder. Supports both text, people and taxonomy fields.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -List
 The ID, Name or Url of the list.

@@ -17,6 +17,7 @@ Add-PnPWebPartToWebPartPage -Xml <String>
                             -ZoneId <String>
                             -ZoneIndex <Int>
                             [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
 ```
 
 ### FILE
@@ -26,6 +27,7 @@ Add-PnPWebPartToWebPartPage -Path <String>
                             -ZoneId <String>
                             -ZoneIndex <Int>
                             [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -45,6 +47,18 @@ PS:> Add-PnPWebPartToWebPartPage -ServerRelativePageUrl "/sites/demo/sitepages/h
 This will add the webpart as defined by the XML in the $webpart variable to the specified page in the specified zone and with the order index of 1
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Path
 A path to a webpart file on a the file system.

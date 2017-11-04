@@ -19,6 +19,7 @@ Import-PnPTermSet -GroupName <String>
                   [-Contact <String>]
                   [-Owner <String>]
                   [-TermStoreName <String>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -60,6 +61,18 @@ PS:> Import-PnPTermSet -GroupName 'Standard Terms' -Path 'C:\\Temp\\ImportTermSe
 Creates (or updates) the term set specified in the import file, setting the IsOpen, Contact, and Owner properties as specified.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Contact
 Contact for the term set; if not specified, the existing setting is retained.

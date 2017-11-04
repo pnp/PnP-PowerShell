@@ -15,6 +15,7 @@ Remove-PnPFieldFromContentType -Field <FieldPipeBind>
                                -ContentType <ContentTypePipeBind>
                                [-DoNotUpdateChildren [<SwitchParameter>]]
                                [-Web <WebPipeBind>]
+                               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -34,6 +35,18 @@ PS:> Remove-PnPFieldFromContentType -Field "Project_Name" -ContentType "Project 
 This will remove the site column with an internal name of "Project_Name" from a content type called "Project Document". It will not update content types that inherit from the "Project Document" content type.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentType
 The content type where the field is to be removed from.

@@ -25,6 +25,7 @@ New-PnPTenantSite -Title <String>
                   [-RemoveDeletedSite [<SwitchParameter>]]
                   [-Wait [<SwitchParameter>]]
                   [-Force [<SwitchParameter>]]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -48,6 +49,18 @@ PS:> New-PnPTenantSite -Title Contoso -Url /sites/contososite -Owner user@exampl
 This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contososite' of which the base part will be picked up from your current connection, the timezone 'UTC+01:00', the owner 'user@example.org' and the template used will be STS#0, a TeamSite
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Description
 Specifies the description of the new site collection

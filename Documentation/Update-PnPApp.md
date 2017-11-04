@@ -12,6 +12,7 @@ Updates an available app from the app catalog
 
 ```powershell
 Update-PnPApp -Identity <AppMetadataPipeBind>
+              [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -24,6 +25,18 @@ PS:> Update-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 This will update an already installed app if a new version is available.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 Specifies the Id or an actual app metadata instance

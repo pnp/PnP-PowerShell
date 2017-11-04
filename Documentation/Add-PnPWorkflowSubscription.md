@@ -21,6 +21,7 @@ Add-PnPWorkflowSubscription -Name <String>
                             [-StartOnChanged [<SwitchParameter>]]
                             [-AssociationValues <Dictionary`2>]
                             [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -53,6 +54,18 @@ Adds an Workflow with the name "SendMessageWf" to the list "MyCustomList".
 
 ```yaml
 Type: Dictionary`2
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

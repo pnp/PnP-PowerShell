@@ -16,6 +16,7 @@ Set-PnPField -Values <Hashtable>
              [-List <ListPipeBind>]
              [-UpdateExistingLists [<SwitchParameter>]]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -42,6 +43,18 @@ PS:> Set-PnPField -List "Tasks" -Identity "AssignedTo" -Values @{JSLink="customr
 Updates the AssignedTo field on the Tasks list to use customrendering.js for the JSLink
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The field object, internal field name (case sensitive) or field id to update

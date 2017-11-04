@@ -17,6 +17,7 @@ Set-PnPListPermission -Group <GroupPipeBind>
                       [-AddRole <String>]
                       [-RemoveRole <String>]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ### User
@@ -26,6 +27,7 @@ Set-PnPListPermission -User <String>
                       [-AddRole <String>]
                       [-RemoveRole <String>]
                       [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -51,6 +53,18 @@ The role that must be assigned to the group or user
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

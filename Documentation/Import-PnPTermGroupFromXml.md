@@ -12,12 +12,14 @@ Imports a taxonomy TermGroup from either the input or from an XML file.
 
 ### XML
 ```powershell
-Import-PnPTermGroupFromXml [-Xml <String>]
+Import-PnPTermGroupFromXml [-Connection <SPOnlineConnection>]
+                           [-Xml <String>]
 ```
 
 ### File
 ```powershell
 Import-PnPTermGroupFromXml [-Path <String>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -37,6 +39,18 @@ PS:> Import-PnPTermGroupFromXml -Path input.xml
 Imports the XML file specified by the path.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Path
 The XML File to import the data from

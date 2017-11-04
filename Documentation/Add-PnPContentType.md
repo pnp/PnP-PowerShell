@@ -17,6 +17,7 @@ Add-PnPContentType -Name <String>
                    [-Group <String>]
                    [-ParentContentType <ContentType>]
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -29,6 +30,18 @@ PS:> Add-PnPContentType -Name "Project Document" -Description "Use for Contoso p
 This will add a new content type based on the parent content type stored in the $ct variable.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentTypeId
 If specified, in the format of 0x0100233af432334r434343f32f3, will create a content type with the specific ID

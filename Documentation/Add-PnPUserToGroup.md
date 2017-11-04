@@ -15,6 +15,7 @@ Adds a user to a group
 Add-PnPUserToGroup -LoginName <String>
                    -Identity <GroupPipeBind>
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ### External
@@ -24,6 +25,7 @@ Add-PnPUserToGroup -Identity <GroupPipeBind>
                    [-SendEmail [<SwitchParameter>]]
                    [-EmailBody <String>]
                    [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -43,6 +45,18 @@ PS:> Add-PnPUserToGroup -LoginName user@company.com -Identity 5
 Add the specified user to the group with Id 5
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -EmailAddress
 The email address of the user

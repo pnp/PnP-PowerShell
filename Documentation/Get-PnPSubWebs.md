@@ -13,6 +13,7 @@ Returns the subwebs of the current web
 ```powershell
 Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
                [-Identity <WebPipeBind>]
 ```
 
@@ -33,6 +34,18 @@ PS:> Get-PnPSubWebs -recurse
 This will return all sub webs for the current web and its sub webs
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The guid of the web or web object

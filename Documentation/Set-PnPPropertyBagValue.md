@@ -16,6 +16,7 @@ Set-PnPPropertyBagValue -Key <String>
                         -Value <String>
                         [-Folder <String>]
                         [-Web <WebPipeBind>]
+                        [-Connection <SPOnlineConnection>]
 ```
 
 ### Web
@@ -24,6 +25,7 @@ Set-PnPPropertyBagValue -Key <String>
                         -Value <String>
                         -Indexed [<SwitchParameter>]
                         [-Web <WebPipeBind>]
+                        [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -50,6 +52,18 @@ PS:> Set-PnPPropertyBagValue -Key MyKey -Value MyValue -Folder /MyFolder
 This sets or adds a value to the folder MyFolder which is located in the root folder of the current web
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Folder
 Site relative url of the folder. See examples for use.

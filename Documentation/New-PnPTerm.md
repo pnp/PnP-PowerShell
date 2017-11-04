@@ -20,6 +20,7 @@ New-PnPTerm -Name <String>
             [-CustomProperties <Hashtable>]
             [-LocalCustomProperties <Hashtable>]
             [-TermStore <Id, Name or Object>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -32,6 +33,18 @@ PS:> New-PnPTerm -TermSet "Departments" -TermGroup "Corporate" -Name "Finance"
 Creates a new taxonomy term named "Finance" in the termset Departments which is located in the "Corporate" termgroup
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -CustomProperties
 Custom Properties

@@ -15,6 +15,7 @@ Remove-PnPView -Identity <ViewPipeBind>
                -List <ListPipeBind>
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,6 +28,18 @@ PS:> Remove-PnPView -List "Demo List" -Identity "All Items"
 Removes the view with title "All Items" from the "Demo List" list.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.

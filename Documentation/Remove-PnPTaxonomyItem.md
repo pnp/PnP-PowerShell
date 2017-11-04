@@ -13,9 +13,22 @@ Removes a taxonomy item
 ```powershell
 Remove-PnPTaxonomyItem -TermPath <String>
                        [-Force [<SwitchParameter>]]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 

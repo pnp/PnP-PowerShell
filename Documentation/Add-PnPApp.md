@@ -12,6 +12,7 @@ Add/uploads an available app to the app catalog
 
 ```powershell
 Add-PnPApp -Path <String>
+           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -24,6 +25,18 @@ PS:> Add-PnPApp -Path ./myapp.sppkg
 This will upload the specified app package to the app catalog
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Path
 Specifies the Id or an actual app metadata instance

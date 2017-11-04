@@ -16,6 +16,7 @@ Set-PnPWebPermission -Group <GroupPipeBind>
                      [-AddRole <String[]>]
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ### User
@@ -24,6 +25,7 @@ Set-PnPWebPermission -User <String>
                      [-AddRole <String[]>]
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ### GroupByWebIdentity
@@ -33,6 +35,7 @@ Set-PnPWebPermission -Identity <WebPipeBind>
                      [-AddRole <String[]>]
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ### UserByWebIdentity
@@ -42,6 +45,7 @@ Set-PnPWebPermission -Identity <WebPipeBind>
                      [-AddRole <String[]>]
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ### GroupByWebUrl
@@ -51,6 +55,7 @@ Set-PnPWebPermission -Url <String>
                      [-AddRole <String[]>]
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ### UserByWebUrl
@@ -60,6 +65,7 @@ Set-PnPWebPermission -Url <String>
                      [-AddRole <String[]>]
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -88,6 +94,18 @@ The role that must be assigned to the group or user
 
 ```yaml
 Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

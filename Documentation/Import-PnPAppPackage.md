@@ -16,6 +16,7 @@ Import-PnPAppPackage -Path <String>
                      [-LoadOnly [<SwitchParameter>]]
                      [-Locale <Int>]
                      [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -40,6 +41,18 @@ This load first activate the addin sideloading feature, upload and install the a
     
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Will forcibly install the app by activating the addin sideloading feature, installing the addin, and deactivating the sideloading feature

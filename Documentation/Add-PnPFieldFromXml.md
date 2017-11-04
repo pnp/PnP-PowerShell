@@ -14,6 +14,7 @@ Adds a field to a list or as a site column based upon a CAML/XML field definitio
 Add-PnPFieldFromXml -FieldXml <String>
                     [-List <ListPipeBind>]
                     [-Web <WebPipeBind>]
+                    [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -35,6 +36,18 @@ PS:> Add-PnPFieldFromXml -List "Demo List" -FieldXml $xml
 Adds a field with the specified field CAML code to the list "Demo List".
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -FieldXml
 CAML snippet containing the field definition. See http://msdn.microsoft.com/en-us/library/office/ms437580(v=office.15).aspx

@@ -12,6 +12,7 @@ Get the site closure status of the site which has a site policy applied
 
 ```powershell
 Get-PnPSiteClosure [-Web <WebPipeBind>]
+                   [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -24,6 +25,18 @@ PS:> Get-PnPSiteClosure
 Get the site closure status of the site.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Web
 The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.

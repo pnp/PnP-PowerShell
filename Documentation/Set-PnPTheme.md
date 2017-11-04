@@ -17,6 +17,7 @@ Set-PnPTheme [-ColorPaletteUrl <String>]
              [-ResetSubwebsToInherit [<SwitchParameter>]]
              [-UpdateRootWebOnly [<SwitchParameter>]]
              [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -71,6 +72,18 @@ Specifies the Color Palette Url based on the site relative url
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

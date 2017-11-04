@@ -15,6 +15,7 @@ New-PnPTermGroup -Name <String>
                  [-Id <Guid>]
                  [-Description <String>]
                  [-TermStore <Id, Name or Object>]
+                 [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,6 +28,18 @@ PS:> New-PnPTermGroup -GroupName "Countries"
 Creates a new taxonomy term group named "Countries"
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Description
 Description to use for the term group.

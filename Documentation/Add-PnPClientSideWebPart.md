@@ -17,6 +17,7 @@ Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
                          [-WebPartProperties <PropertyBagPipeBind>]
                          [-Order <Int>]
                          [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ### Default with 3rd party webpart
@@ -26,6 +27,7 @@ Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
                          [-WebPartProperties <PropertyBagPipeBind>]
                          [-Order <Int>]
                          [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ### Positioned with built-in webpart
@@ -37,6 +39,7 @@ Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
                          [-WebPartProperties <PropertyBagPipeBind>]
                          [-Order <Int>]
                          [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ### Positioned with 3rd party webpart
@@ -48,6 +51,7 @@ Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
                          [-WebPartProperties <PropertyBagPipeBind>]
                          [-Order <Int>]
                          [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -98,6 +102,18 @@ Type: ClientSideComponentPipeBind
 Parameter Sets: Default with 3rd party webpart
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

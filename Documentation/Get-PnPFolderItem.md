@@ -14,10 +14,23 @@ List content in folder
 Get-PnPFolderItem [-ItemType <String>]
                   [-ItemName <String>]
                   [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
                   [-FolderSiteRelativeUrl <String>]
 ```
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -FolderSiteRelativeUrl
 

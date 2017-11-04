@@ -15,11 +15,13 @@ Set Auditing setting for a site
 Set-PnPAuditing [-EnableAll [<SwitchParameter>]]
                 [-RetentionTime <Int>]
                 [-TrimAuditLog [<SwitchParameter>]]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### DisableAll
 ```powershell
 Set-PnPAuditing [-DisableAll [<SwitchParameter>]]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### Other
@@ -33,6 +35,7 @@ Set-PnPAuditing [-RetentionTime <Int>]
                 [-EditContentTypesColumns [<SwitchParameter>]]
                 [-SearchContent [<SwitchParameter>]]
                 [-EditUsersPermissions [<SwitchParameter>]]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -85,6 +88,18 @@ Sets the audit log trimming to 7 days, this also enables the automatic trimming 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Other
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

@@ -16,6 +16,7 @@ Add-PnPFieldToContentType -Field <FieldPipeBind>
                           [-Required [<SwitchParameter>]]
                           [-Hidden [<SwitchParameter>]]
                           [-Web <WebPipeBind>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -28,6 +29,18 @@ PS:> Add-PnPFieldToContentType -Field "Project_Name" -ContentType "Project Docum
 This will add an existing site column with an internal name of "Project_Name" to a content type called "Project Document"
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -ContentType
 Specifies which content type a field needs to be added to

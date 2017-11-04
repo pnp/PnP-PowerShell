@@ -16,6 +16,7 @@ Set-PnPDefaultColumnValues -Field <FieldPipeBind>
                            -List <ListPipeBind>
                            [-Folder <String>]
                            [-Web <WebPipeBind>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -69,6 +70,18 @@ PS:> Set-PnPDefaultColumnValues -List Documents -Field MyMultiPeopleField -Value
 Sets a default value for the MyMultiPeopleField people field on a library to a value of "User 1" and "User 2" using the id from the user information list.
 
 ## PARAMETERS
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Field
 The internal name, id or a reference to a field
