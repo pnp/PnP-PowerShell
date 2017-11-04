@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Disable-PnPSiteClassification
+# Disable-PnPSiteClassifications
 
 ## SYNOPSIS
 Disables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.
@@ -13,7 +13,7 @@ Disables Site Classifications for the tenant. Requires a connection to the Micro
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Disable-PnPSiteClassification
+PS:> Disable-PnPSiteClassifications
 ```
 
 Disables Site Classifications for your tenant.

@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Add-PnPSiteClassification
+# Add-PnPSiteClassifications
 
 ## SYNOPSIS
 Adds one ore more site classification values to the list of possible values. Requires a connection to the Microsoft Graph.
@@ -11,7 +11,7 @@ Adds one ore more site classification values to the list of possible values. Req
 ## SYNTAX 
 
 ```powershell
-Add-PnPSiteClassification -Classifications <List`1>
+Add-PnPSiteClassifications -Classifications <List`1>
 ```
 
 ## EXAMPLES
@@ -19,7 +19,7 @@ Add-PnPSiteClassification -Classifications <List`1>
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Add-PnPSiteClassification -Classifications "Top Secret"
+PS:> Add-PnPSiteClassifications -Classifications "Top Secret"
 ```
 
 Adds the "Top Secret" classification to the already existing classification values.
@@ -27,7 +27,7 @@ Adds the "Top Secret" classification to the already existing classification valu
 ### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Add-PnPSiteClassification -Classifications "Top Secret","For Your Eyes Only"
+PS:> Add-PnPSiteClassifications -Classifications "Top Secret","HBI"
 ```
 
 Adds the "Top Secret" and the "For Your Eyes Only" classification to the already existing classification values.

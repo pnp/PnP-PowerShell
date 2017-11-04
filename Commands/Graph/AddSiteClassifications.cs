@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "PnPSiteClassification")]
+    [Cmdlet(VerbsCommon.Add, "PnPSiteClassifications")]
     [CmdletHelp("Adds one ore more site classification values to the list of possible values. Requires a connection to the Microsoft Graph.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Add-PnPSiteClassification -Classifications ""Top Secret""",
+PS:> Add-PnPSiteClassifications -Classifications ""Top Secret""",
         Remarks = @"Adds the ""Top Secret"" classification to the already existing classification values.",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Add-PnPSiteClassification -Classifications ""Top Secret"",""For Your Eyes Only""",
+PS:> Add-PnPSiteClassifications -Classifications ""Top Secret"",""HBI""",
         Remarks = @"Adds the ""Top Secret"" and the ""For Your Eyes Only"" classification to the already existing classification values.",
         SortOrder = 2)]
-    public class AddSiteClassification : PnPGraphCmdlet
+    public class AddSiteClassifications : PnPGraphCmdlet
     {
 
         [Parameter(Mandatory = true)]
@@ -33,7 +33,7 @@ PS:> Add-PnPSiteClassification -Classifications ""Top Secret"",""For Your Eyes O
         {
             try
             {
-                var settings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationUtility.GetSiteClassificationSettings(AccessToken);
+                var settings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
                 foreach (var classification in Classifications)
                 {
                     if (!settings.Classifications.Contains(classification))
@@ -41,7 +41,7 @@ PS:> Add-PnPSiteClassification -Classifications ""Top Secret"",""For Your Eyes O
                         settings.Classifications.Add(classification);
                     }
                 }
-                OfficeDevPnP.Core.Framework.Graph.SiteClassificationUtility.UpdateSiteClassificationSettings(AccessToken, settings);
+                OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, settings);
             }
             catch (ApplicationException ex)
             {

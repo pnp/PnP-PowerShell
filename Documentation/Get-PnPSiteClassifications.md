@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPSiteClassification
+# Get-PnPSiteClassifications
 
 ## SYNOPSIS
 Returns the defined Site Classifications for the tenant. Requires a connection to the Microsoft Graph.
@@ -13,7 +13,7 @@ Returns the defined Site Classifications for the tenant. Requires a connection t
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Get-PnPSiteClassification
+PS:> Get-PnPSiteClassifications
 ```
 
 Returns the currently set site classifications for the tenant.

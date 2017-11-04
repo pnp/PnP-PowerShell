@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassification")]
+    [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassifications")]
     [CmdletHelp("Disables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Disable-PnPSiteClassification",
+PS:> Disable-PnPSiteClassifications",
        Remarks = @"Disables Site Classifications for your tenant.",
        SortOrder = 1)]
-    public class DisableSiteClassification : PnPGraphCmdlet
+    public class DisableSiteClassifications : PnPGraphCmdlet
     {
 
         protected override void ExecuteCmdlet()
         {
             try
             {
-                OfficeDevPnP.Core.Framework.Graph.SiteClassificationUtility.DisableSiteClassifications(AccessToken);
+                OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.DisableSiteClassifications(AccessToken);
             }
             catch (ApplicationException ex)
             {

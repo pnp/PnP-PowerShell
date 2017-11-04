@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Update-PnPSiteClassification
+# Update-PnPSiteClassifications
 
 ## SYNOPSIS
 Updates Site Classifications for the tenant. Requires a connection to the Microsoft Graph.
@@ -12,14 +12,14 @@ Updates Site Classifications for the tenant. Requires a connection to the Micros
 
 ### Specific
 ```powershell
-Update-PnPSiteClassification [-Classifications <List`1>]
-                             [-DefaultClassification <String>]
-                             [-UsageGuidelinesUrl <String>]
+Update-PnPSiteClassifications [-Classifications <List`1>]
+                              [-DefaultClassification <String>]
+                              [-UsageGuidelinesUrl <String>]
 ```
 
 ### Settings
 ```powershell
-Update-PnPSiteClassification -Settings <SiteClassificationSettings>
+Update-PnPSiteClassifications -Settings <SiteClassificationsSettings>
 ```
 
 ## EXAMPLES
@@ -27,7 +27,7 @@ Update-PnPSiteClassification -Settings <SiteClassificationSettings>
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Update-PnPSiteClassification -Classifications "HBI","Top Secret"
+PS:> Update-PnPSiteClassifications -Classifications "HBI","Top Secret"
 ```
 
 Replaces the existing values of the site classification settings
@@ -35,7 +35,7 @@ Replaces the existing values of the site classification settings
 ### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Update-PnPSiteClassification -DefaultClassification "LBI"
+PS:> Update-PnPSiteClassifications -DefaultClassification "LBI"
 ```
 
 Sets the default classification value to "LBI". This value needs to be present in the list of classification values.
@@ -43,7 +43,7 @@ Sets the default classification value to "LBI". This value needs to be present i
 ### ------------------EXAMPLE 3------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp
+PS:> Update-PnPSiteClassifications -UsageGuidelinesUrl http://aka.ms/sppnp
 ```
 
 sets the usage guideliness URL to the specified URL.
@@ -78,7 +78,7 @@ Accept pipeline input: False
 A settings object retrieved by Get-PnPSiteClassification
 
 ```yaml
-Type: SiteClassificationSettings
+Type: SiteClassificationsSettings
 Parameter Sets: Settings
 
 Required: True

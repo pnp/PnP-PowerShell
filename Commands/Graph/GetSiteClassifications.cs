@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteClassification")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteClassifications")]
     [CmdletHelp("Returns the defined Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Get-PnPSiteClassification",
+PS:> Get-PnPSiteClassifications",
        Remarks = @"Returns the currently set site classifications for the tenant.",
        SortOrder = 1)]
-    public class GetSiteClassification : PnPGraphCmdlet
+    public class GetSiteClassifications : PnPGraphCmdlet
     {
         protected override void ExecuteCmdlet()
         {
             try
             {
-                WriteObject(OfficeDevPnP.Core.Framework.Graph.SiteClassificationUtility.GetSiteClassificationSettings(AccessToken), true);
+                WriteObject(OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken), true);
             }
             catch (ApplicationException ex)
             {

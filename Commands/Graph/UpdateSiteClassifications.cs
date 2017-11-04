@@ -10,32 +10,32 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsData.Update, "PnPSiteClassification")]
+    [Cmdlet(VerbsData.Update, "PnPSiteClassifications")]
     [CmdletHelp("Updates Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassification -Classifications ""HBI"",""Top Secret""",
+PS:> Update-PnPSiteClassifications -Classifications ""HBI"",""Top Secret""",
         Remarks = @"Replaces the existing values of the site classification settings",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassification -DefaultClassification ""LBI""",
+PS:> Update-PnPSiteClassifications -DefaultClassification ""LBI""",
         Remarks = @"Sets the default classification value to ""LBI"". This value needs to be present in the list of classification values.",
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp",
+PS:> Update-PnPSiteClassifications -UsageGuidelinesUrl http://aka.ms/sppnp",
         Remarks = @"sets the usage guideliness URL to the specified URL.",
         SortOrder = 3)]
-    public class UpdateSiteClassification : PnPGraphCmdlet
+    public class UpdateSiteClassifications : PnPGraphCmdlet
     {
         const string ParameterSet_SETTINGS = "Settings";
         const string ParameterSet_SPECIFIC = "Specific";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SETTINGS, HelpMessage ="A settings object retrieved by Get-PnPSiteClassification")]
-        public SiteClassificationSettings Settings;
+        public SiteClassificationsSettings Settings;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = @"A list of classifications, separated by commas. E.g. ""HBI"",""LBI"",""Top Secret""")]
         public List<string> Classifications;
@@ -51,7 +51,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp",
             try
             {
                 var changed = false;
-                var settings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationUtility.GetSiteClassificationSettings(AccessToken);
+                var settings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
                 if (MyInvocation.BoundParameters.ContainsKey("Classifications"))
                 {
                     if (settings.Classifications != Classifications)
@@ -83,7 +83,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp",
                 {
                     if (settings.Classifications.Contains(settings.DefaultClassification))
                     {
-                        OfficeDevPnP.Core.Framework.Graph.SiteClassificationUtility.UpdateSiteClassificationSettings(AccessToken, settings);
+                        OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, settings);
                     } else
                     {
                         WriteError(new ErrorRecord(new InvalidOperationException("You are trying to set the default classification to a value that is not available in the list of possible values."), "SITECLASSIFICATION_DEFAULTVALUE_INVALID", ErrorCategory.InvalidArgument, null));

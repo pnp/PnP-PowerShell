@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Remove-PnPSiteClassification
+# Remove-PnPSiteClassifications
 
 ## SYNOPSIS
 Removes one or more existing site classification values from the list of available values. Requires a connection to the Microsoft Graph
@@ -11,8 +11,8 @@ Removes one or more existing site classification values from the list of availab
 ## SYNTAX 
 
 ```powershell
-Remove-PnPSiteClassification -Classifications <List`1>
-                             [-Confirm [<SwitchParameter>]]
+Remove-PnPSiteClassifications -Classifications <List`1>
+                              [-Confirm [<SwitchParameter>]]
 ```
 
 ## EXAMPLES
@@ -20,7 +20,7 @@ Remove-PnPSiteClassification -Classifications <List`1>
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Remove-PnPSiteClassification -Classifications "HBI"
+PS:> Remove-PnPSiteClassifications -Classifications "HBI"
 ```
 
 Removes the "HBI" site classification from the list of available values.
@@ -28,18 +28,10 @@ Removes the "HBI" site classification from the list of available values.
 ### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -DefaultClassification "LBI"
+PS:> Remove-PnPSiteClassifications -Classifications "HBI", "Top Secret"
 ```
 
-Enables Site Classifications for your tenant and provides three classification values. The default value will be set to "LBI"
-
-### ------------------EXAMPLE 3------------------
-```powershell
-PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -UsageGuidelinesUrl http://aka.ms/sppnp
-```
-
-Enables Site Classifications for your tenant and provides three classification values. The first value will be set as the default and the usage guideliness will be set to the specified URL.
+Removes the "HBI" site classification from the list of available values.
 
 ## PARAMETERS
 

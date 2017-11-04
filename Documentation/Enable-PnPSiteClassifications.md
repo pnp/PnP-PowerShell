@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Enable-PnPSiteClassification
+# Enable-PnPSiteClassifications
 
 ## SYNOPSIS
 Enables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.
@@ -11,9 +11,9 @@ Enables Site Classifications for the tenant. Requires a connection to the Micros
 ## SYNTAX 
 
 ```powershell
-Enable-PnPSiteClassification -Classifications <List`1>
-                             -DefaultClassification <String>
-                             [-UsageGuidelinesUrl <String>]
+Enable-PnPSiteClassifications -Classifications <List`1>
+                              -DefaultClassification <String>
+                              [-UsageGuidelinesUrl <String>]
 ```
 
 ## EXAMPLES
@@ -21,7 +21,7 @@ Enable-PnPSiteClassification -Classifications <List`1>
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -DefaultClassification "LBI"
+PS:> Enable-PnPSiteClassifications -Classifications "HBI","LBI","Top Secret" -DefaultClassification "LBI"
 ```
 
 Enables Site Classifications for your tenant and provides three classification values. The default value will be set to "LBI"
@@ -29,7 +29,7 @@ Enables Site Classifications for your tenant and provides three classification v
 ### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -UsageGuidelinesUrl http://aka.ms/sppnp
+PS:> Enable-PnPSiteClassifications -Classifications "HBI","LBI","Top Secret" -UsageGuidelinesUrl http://aka.ms/sppnp
 ```
 
 Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.
