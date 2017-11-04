@@ -10,7 +10,10 @@ namespace SharePointPnP.PowerShell.Commands
 {
     public class PnPCmdlet : PSCmdlet
     {
-        public ClientContext ClientContext => SPOnlineConnection.CurrentConnection.Context;
+        public ClientContext ClientContext => Connection?.Context ?? SPOnlineConnection.CurrentConnection.Context;
+
+        [Parameter(Mandatory = false, HelpMessage = "Connection to be used by cmdlet")]
+        public SPOnlineConnection Connection = null;
 
         protected override void BeginProcessing()
         {
@@ -20,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands
             {
                 WriteWarning($"PnP Cmdlets starting with the SPO Prefix will be deprecated in the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
             }
-            if (SPOnlineConnection.CurrentConnection == null)
+            if (SPOnlineConnection.CurrentConnection == null && Connection == null)
             {
                 throw new InvalidOperationException(Resources.NoConnection);
             }
