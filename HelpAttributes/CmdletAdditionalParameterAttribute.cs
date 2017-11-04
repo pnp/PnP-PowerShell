@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.CmdletHelpAttributes
 {
+    /// <summary>
+    /// Specify this cmdlet on the cmdlet class in order to forcibly add parameters to the documentation.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class,
                      AllowMultiple = true)]
     public sealed class CmdletAdditionalParameter : Attribute
