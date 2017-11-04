@@ -18,7 +18,7 @@ Get-PnPTaxonomySession [-Web <WebPipeBind>]
 ## PARAMETERS
 
 ### -Connection
-Connection to be used by cmdlet
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
