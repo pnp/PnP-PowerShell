@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPSiteClassifications")]
+    [Cmdlet(VerbsCommon.Remove, "PnPSiteClassification")]
     [CmdletHelp("Removes one or more existing site classification values from the list of available values. Requires a connection to the Microsoft Graph",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Remove-PnPSiteClassifications -Classifications ""HBI""",
+PS:> Remove-PnPSiteClassification -Classifications ""HBI""",
         Remarks = @"Removes the ""HBI"" site classification from the list of available values.",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Remove-PnPSiteClassifications -Classifications ""HBI"", ""Top Secret""",
+PS:> Remove-PnPSiteClassification -Classifications ""HBI"", ""Top Secret""",
         Remarks = @"Removes the ""HBI"" site classification from the list of available values.",
         SortOrder = 2)]
-    public class RemoveSiteClassifications : PnPGraphCmdlet
+    public class RemoveSiteClassification : PnPGraphCmdlet
     {
 
         [Parameter(Mandatory = true)]

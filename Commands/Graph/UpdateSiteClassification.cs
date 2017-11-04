@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsData.Update, "PnPSiteClassifications")]
+    [Cmdlet(VerbsData.Update, "PnPSiteClassification")]
     [CmdletHelp("Updates Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassifications -Classifications ""HBI"",""Top Secret""",
+PS:> Update-PnPSiteClassification -Classifications ""HBI"",""Top Secret""",
         Remarks = @"Replaces the existing values of the site classification settings",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassifications -DefaultClassification ""LBI""",
+PS:> Update-PnPSiteClassification -DefaultClassification ""LBI""",
         Remarks = @"Sets the default classification value to ""LBI"". This value needs to be present in the list of classification values.",
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassifications -UsageGuidelinesUrl http://aka.ms/sppnp",
+PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp",
         Remarks = @"sets the usage guideliness URL to the specified URL.",
         SortOrder = 3)]
-    public class UpdateSiteClassifications : PnPGraphCmdlet
+    public class UpdateSiteClassification : PnPGraphCmdlet
     {
         const string ParameterSet_SETTINGS = "Settings";
         const string ParameterSet_SPECIFIC = "Specific";
