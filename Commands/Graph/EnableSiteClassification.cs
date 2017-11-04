@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsLifecycle.Enable, "PnPSiteClassifications")]
+    [Cmdlet(VerbsLifecycle.Enable, "PnPSiteClassification")]
     [CmdletHelp("Enables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
         Category = CmdletHelpCategory.Graph, 
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Enable-PnPSiteClassifications -Classifications ""HBI"",""LBI"",""Top Secret"" -DefaultClassification ""LBI""",
+PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"" -DefaultClassification ""LBI""",
         Remarks = @"Enables Site Classifications for your tenant and provides three classification values. The default value will be set to ""LBI""",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Enable-PnPSiteClassifications -Classifications ""HBI"",""LBI"",""Top Secret"" -UsageGuidelinesUrl http://aka.ms/sppnp",
+PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"" -UsageGuidelinesUrl http://aka.ms/sppnp",
         Remarks = @"Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.",
         SortOrder = 2)]
-    public class EnableSiteClassifications : PnPGraphCmdlet
+    public class EnableSiteClassification : PnPGraphCmdlet
     {
 
         [Parameter(Mandatory = true)]

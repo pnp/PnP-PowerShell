@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassifications")]
+    [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassification")]
     [CmdletHelp("Disables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Disable-PnPSiteClassifications",
+PS:> Disable-PnPSiteClassification",
        Remarks = @"Disables Site Classifications for your tenant.",
        SortOrder = 1)]
-    public class DisableSiteClassifications : PnPGraphCmdlet
+    public class DisableSiteClassification : PnPGraphCmdlet
     {
 
         protected override void ExecuteCmdlet()
