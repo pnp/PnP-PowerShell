@@ -50,18 +50,6 @@ This will call the function ShouldProcessList, if it returns true the function L
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -DisableStatisticsOutput
 Will not output statistics after the operation
 
@@ -230,18 +218,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -WebAction
 Function to be executed on the web. There is one input parameter of type Web
 
@@ -271,6 +247,30 @@ Webs you want to process (for example different site collections), will use Web 
 
 ```yaml
 Type: Web[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
 Parameter Sets: (All)
 
 Required: False

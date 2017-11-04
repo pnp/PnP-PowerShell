@@ -15,8 +15,8 @@ Returns one or all views from a list
 Get-PnPView -List <ListPipeBind>
             [-Identity <ViewPipeBind>]
             [-Web <WebPipeBind>]
-            [-Connection <SPOnlineConnection>]
             [-Includes <String[]>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -43,18 +43,6 @@ Get-PnPView -List "Demo List" -Identity "5275148a-6c6c-43d8-999a-d2186989a661"
 Returns the view with the specified ID from the specified list
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Identity
 The ID or name of the view
@@ -97,6 +85,18 @@ The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

@@ -43,18 +43,6 @@ Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' wit
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Force
 Use the -Force flag to bypass the confirmation question
 
@@ -84,6 +72,18 @@ Define if the CustomAction is to be found at the web or site collection scope. S
 
 ```yaml
 Type: CustomActionScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

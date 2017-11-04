@@ -46,18 +46,6 @@ Add the specified user to the group with Id 5
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -EmailAddress
 The email address of the user
 
@@ -112,6 +100,18 @@ Accept pipeline input: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: External
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

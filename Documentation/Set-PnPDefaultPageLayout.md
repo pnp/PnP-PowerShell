@@ -49,18 +49,6 @@ Sets the default page layout to be inherited from the parent site
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -InheritFromParentSite
 Set the default page layout to be inherited from the parent site.
 
@@ -81,6 +69,18 @@ Type: String
 Parameter Sets: TITLE
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

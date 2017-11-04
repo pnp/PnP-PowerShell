@@ -45,18 +45,6 @@ Sets fields value in the list item which has been retrieved by for instance Get-
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -ContentType
 Specify either the name, ID or an actual content type
 
@@ -148,6 +136,18 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
 
 ```yaml
 Type: Hashtable
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

@@ -12,9 +12,9 @@ Returns the current web object
 
 ### 
 ```powershell
-Get-PnPWeb [-Connection <SPOnlineConnection>]
-           [-Includes <String[]>]
+Get-PnPWeb [-Includes <String[]>]
            [-Identity <WebPipeBind>]
+           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,18 +27,6 @@ PS:> Get-PnPWeb
 This will return the current web
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Identity
 The guid of the web or web object
@@ -61,6 +49,18 @@ Parameter Sets:
 
 Required: False
 Position: 0
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

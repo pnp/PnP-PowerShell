@@ -42,18 +42,6 @@ Adds a view named "Demo view" to the "Demo List" list and makes sure there's pag
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Fields
 A list of fields to add.
 
@@ -155,6 +143,18 @@ The type of view to add.
 
 ```yaml
 Type: ViewType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

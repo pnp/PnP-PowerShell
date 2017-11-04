@@ -48,18 +48,6 @@ Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm' an
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Delimiter
 The path delimiter to be used, by default this is '|'
 
@@ -125,6 +113,18 @@ Term store to import to; if not specified the default term store is used.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

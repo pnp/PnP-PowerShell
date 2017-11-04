@@ -27,11 +27,11 @@ Gets all Webhook subscriptions of the list MyList
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
+### -List
+The list object or name to get the Webhook subscriptions from
 
 ```yaml
-Type: SPOnlineConnection
+Type: ListPipeBind
 Parameter Sets: (All)
 
 Required: False
@@ -39,11 +39,11 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -List
-The list object or name to get the Webhook subscriptions from
+### -Connection
+Connection to be used by cmdlet
 
 ```yaml
-Type: ListPipeBind
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

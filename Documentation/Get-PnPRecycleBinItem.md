@@ -30,8 +30,8 @@ Get-PnPRecycleBinItem [-SecondStage [<SwitchParameter>]]
 
 ### 
 ```powershell
-Get-PnPRecycleBinItem [-Connection <SPOnlineConnection>]
-                      [-Includes <String[]>]
+Get-PnPRecycleBinItem [-Includes <String[]>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -65,18 +65,6 @@ PS:> Get-PnPRecycleBinItem -SecondStage
 Returns all items in only the second stage recycle bin in the current site collection
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -FirstStage
 Return all items in the first stage recycle bin
@@ -120,6 +108,18 @@ Return all items in the second stage recycle bin
 ```yaml
 Type: SwitchParameter
 Parameter Sets: SecondStage
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

@@ -62,18 +62,6 @@ Creates (or updates) the term set specified in the import file, setting the IsOp
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Contact
 Contact for the term set; if not specified, the existing setting is retained.
 
@@ -163,6 +151,18 @@ Term store to import into; if not specified the default term store is used.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

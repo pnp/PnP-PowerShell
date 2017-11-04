@@ -39,18 +39,6 @@ This will remove the field, available in one of the available content types, as 
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -DocumentSet
 The document set in which to set the field. Either specify a name, a document set template object, an id, or a content type object
 
@@ -116,6 +104,18 @@ Set the field as a Welcome Page field
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

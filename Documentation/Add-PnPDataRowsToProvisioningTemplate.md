@@ -15,10 +15,10 @@ Add-PnPDataRowsToProvisioningTemplate -List <ListPipeBind>
                                       -Query <String>
                                       -Path <String>
                                       [-Fields <String[]>]
-                                      [-Web <WebPipeBind>]
-                                      [-Connection <SPOnlineConnection>]
                                       [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                                       [-IncludeSecurity [<SwitchParameter>]]
+                                      [-Web <WebPipeBind>]
+                                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -38,18 +38,6 @@ PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList
 Adds datarows to a list in an in-memory PnP Provisioning Template
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Fields
 The fields to retrieve. If not specified all fields will be loaded in the returned list object.
@@ -120,6 +108,18 @@ Parameter Sets: (All)
 
 Required: False
 Position: 4
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

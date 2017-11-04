@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -12,7 +13,8 @@ namespace SharePointPnP.PowerShell.Commands
     {
         public ClientContext ClientContext => Connection?.Context ?? SPOnlineConnection.CurrentConnection.Context;
 
-        [Parameter(Mandatory = false, HelpMessage = "Connection to be used by cmdlet")]
+        [Parameter(Mandatory = false, HelpMessage = "Connection to be used by cmdlet")] // do not remove '#!#99'
+        [PnPParameter(Order = 99)]
         public SPOnlineConnection Connection = null;
 
         protected override void BeginProcessing()
@@ -96,7 +98,7 @@ namespace SharePointPnP.PowerShell.Commands
                     ExecuteCmdlet();
                 }
             }
-            catch(System.Management.Automation.PipelineStoppedException)
+            catch (System.Management.Automation.PipelineStoppedException)
             {
                 //swallow pipeline stopped exception
             }

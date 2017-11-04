@@ -101,18 +101,6 @@ Retrieves all list items from the Tasks list in pages of 1000 items and breaks p
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Fields
 The fields to retrieve. If not specified all fields will be loaded in the returned list object.
 
@@ -191,6 +179,18 @@ The unique id (GUID) of the item to retrieve
 ```yaml
 Type: GuidPipeBind
 Parameter Sets: By Unique Id
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

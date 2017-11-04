@@ -18,18 +18,6 @@ Add-PnPIndexedProperty -Key <String>
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Key
 Key of the property bag value to be indexed
 
@@ -39,6 +27,18 @@ Parameter Sets: (All)
 
 Required: True
 Position: 0
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 

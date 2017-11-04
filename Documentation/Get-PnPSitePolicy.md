@@ -54,11 +54,11 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Connection
-Connection to be used by cmdlet
+### -Name
+Retrieves a site policy with a specific name
 
 ```yaml
-Type: SPOnlineConnection
+Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -66,11 +66,11 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Name
-Retrieves a site policy with a specific name
+### -Connection
+Connection to be used by cmdlet
 
 ```yaml
-Type: String
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

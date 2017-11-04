@@ -17,5 +17,6 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
 
         public int Position { get; set; }
         public string ParameterSetName { get; set; }
+        public int Order { get; set; }
     }
 }

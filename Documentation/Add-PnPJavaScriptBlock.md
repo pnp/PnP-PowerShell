@@ -40,18 +40,6 @@ Add a JavaScript code block  to all pages within the current web under the name 
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Name
 The name of the script block. Can be used to identify the script with other cmdlets or coded solutions
 
@@ -94,6 +82,18 @@ A sequence number that defines the order on the page
 
 ```yaml
 Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

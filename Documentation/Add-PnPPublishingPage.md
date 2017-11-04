@@ -39,18 +39,6 @@ Creates a new page based on the pagelayout 'ArticleLeft' with a site relative fo
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -FolderPath
 The site relative folder path of the page to be added
 
@@ -107,6 +95,18 @@ The title of the page
 ```yaml
 Type: String
 Parameter Sets: WithTitle
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

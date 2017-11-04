@@ -22,8 +22,8 @@ Get-PnPEventReceiver [-List <ListPipeBind>]
 ```powershell
 Get-PnPEventReceiver [-Identity <GuidPipeBind>]
                      [-Web <WebPipeBind>]
-                     [-Connection <SPOnlineConnection>]
                      [-Includes <String[]>]
+                     [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -60,18 +60,6 @@ PS:> Get-PnPEventReceiver -List "ProjectList" -Identity fb689d0e-eb99-4f13-beb3-
 This will return a specific registered event receiver in the list with the name ProjectList
 
 ## PARAMETERS
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Identity
 The Guid of the event receiver on the list
@@ -114,6 +102,18 @@ The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False

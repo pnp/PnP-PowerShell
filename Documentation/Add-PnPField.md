@@ -39,9 +39,9 @@ Add-PnPField -DisplayName <String>
              [-Group <String>]
              [-ClientSideComponentId <GuidPipeBind>]
              [-ClientSideComponentProperties <String>]
+             [-Choices <String[]>]
              [-Web <WebPipeBind>]
              [-Connection <SPOnlineConnection>]
-             [-Choices <String[]>]
 ```
 
 ### Add field to Web
@@ -52,9 +52,9 @@ Add-PnPField -DisplayName <String>
              [-Id <GuidPipeBind>]
              [-ClientSideComponentId <GuidPipeBind>]
              [-ClientSideComponentProperties <String>]
+             [-Choices <String[]>]
              [-Web <WebPipeBind>]
              [-Connection <SPOnlineConnection>]
-             [-Choices <String[]>]
 ```
 
 ## DESCRIPTION
@@ -120,18 +120,6 @@ The Client Side Component Properties to set to the field
 ```yaml
 Type: String
 Parameter Sets: Add field to list
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -230,6 +218,18 @@ Type: FieldType
 Parameter Sets: Add field to list
 
 Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```

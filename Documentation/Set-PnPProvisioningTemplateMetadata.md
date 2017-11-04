@@ -66,18 +66,6 @@ Sets the property 'Property1' to the value 'Test Value 1' of a provisioning temp
 
 ## PARAMETERS
 
-### -Connection
-Connection to be used by cmdlet
-
-```yaml
-Type: SPOnlineConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Path
 Path to the xml or pnp file containing the provisioning template.
 
@@ -131,6 +119,18 @@ Allows you to specify ITemplateProviderExtension to execute while extracting a t
 
 ```yaml
 Type: ITemplateProviderExtension[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Connection
+Connection to be used by cmdlet
+
+```yaml
+Type: SPOnlineConnection
 Parameter Sets: (All)
 
 Required: False
