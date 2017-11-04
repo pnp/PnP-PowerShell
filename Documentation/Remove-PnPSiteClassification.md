@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Remove-PnPSiteClassifications
+# Remove-PnPSiteClassification
 
 ## SYNOPSIS
 Removes one or more existing site classification values from the list of available values. Requires a connection to the Microsoft Graph
@@ -11,8 +11,8 @@ Removes one or more existing site classification values from the list of availab
 ## SYNTAX 
 
 ```powershell
-Remove-PnPSiteClassifications -Classifications <List`1>
-                              [-Confirm [<SwitchParameter>]]
+Remove-PnPSiteClassification -Classifications <List`1>
+                             [-Confirm [<SwitchParameter>]]
 ```
 
 ## EXAMPLES
@@ -20,7 +20,7 @@ Remove-PnPSiteClassifications -Classifications <List`1>
 ### ------------------EXAMPLE 1------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Remove-PnPSiteClassifications -Classifications "HBI"
+PS:> Remove-PnPSiteClassification -Classifications "HBI"
 ```
 
 Removes the "HBI" site classification from the list of available values.
@@ -28,7 +28,7 @@ Removes the "HBI" site classification from the list of available values.
 ### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes "Directory.ReadWrite.All"
-PS:> Remove-PnPSiteClassifications -Classifications "HBI", "Top Secret"
+PS:> Remove-PnPSiteClassification -Classifications "HBI", "Top Secret"
 ```
 
 Removes the "HBI" site classification from the list of available values.
