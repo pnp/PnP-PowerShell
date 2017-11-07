@@ -81,6 +81,6 @@ Accept pipeline input: False
 
 ### [Microsoft.SharePoint.Client.Publishing.ImageRendition](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.publishing.imagerendition.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

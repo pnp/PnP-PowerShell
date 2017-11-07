@@ -155,6 +155,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

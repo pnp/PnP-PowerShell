@@ -108,6 +108,6 @@ Accept pipeline input: False
 
 ### SharePointPnP.PowerShell.Commands.PropertyBagValue
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

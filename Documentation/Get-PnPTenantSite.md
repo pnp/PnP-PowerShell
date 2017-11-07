@@ -178,6 +178,6 @@ Accept pipeline input: False
 
 ### [Microsoft.Online.SharePoint.TenantAdministration.SiteProperties](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.siteproperties.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

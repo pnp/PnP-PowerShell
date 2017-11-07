@@ -54,6 +54,6 @@ Accept pipeline input: False
 
 ### OfficeDevPnP.Core.ALM.AppMetadata
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

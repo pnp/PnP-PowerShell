@@ -18,6 +18,6 @@ PS:> Disable-PnPSiteClassification
 
 Disables Site Classifications for your tenant.
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

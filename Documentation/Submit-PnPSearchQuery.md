@@ -401,6 +401,6 @@ Accept pipeline input: False
 
 ### List<System.Object>
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

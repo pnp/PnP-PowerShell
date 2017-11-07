@@ -131,6 +131,6 @@ Accept pipeline input: False
 
 Does not return a string when the -Path parameter has been specified.
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

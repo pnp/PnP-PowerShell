@@ -65,6 +65,6 @@ Accept pipeline input: False
 
 ### [Microsoft.SharePoint.Client.UserProfiles.PersonProperties](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.userprofiles.personproperties.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

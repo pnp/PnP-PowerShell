@@ -44,6 +44,6 @@ Accept pipeline input: False
 
 ### [Microsoft.Online.SharePoint.TenantAdministration.DeletedSiteProperties](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.deletedsiteproperties.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

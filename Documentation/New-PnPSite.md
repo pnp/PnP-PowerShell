@@ -253,6 +253,6 @@ Accept pipeline input: False
 
 Returns the url of the newly created site collection
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

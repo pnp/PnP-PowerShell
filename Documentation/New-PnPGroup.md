@@ -158,6 +158,6 @@ Accept pipeline input: False
 
 ### [Microsoft.SharePoint.Client.Group](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

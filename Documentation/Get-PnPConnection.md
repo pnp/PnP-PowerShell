@@ -20,6 +20,6 @@ PS:> $ctx = Get-PnPConnection
 
 This will put the current connection for use with the -Connection parameter on other cmdlets.
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

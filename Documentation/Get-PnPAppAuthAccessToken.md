@@ -44,6 +44,6 @@ Accept pipeline input: False
 
 ### [System.String](https://msdn.microsoft.com/en-us/library/system.string.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

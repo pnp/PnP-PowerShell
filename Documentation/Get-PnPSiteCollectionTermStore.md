@@ -41,6 +41,6 @@ Accept pipeline input: False
 
 ### [Microsoft.SharePoint.Client.Taxonomy.TermStore](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.termstore.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

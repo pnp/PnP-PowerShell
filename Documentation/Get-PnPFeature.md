@@ -115,6 +115,6 @@ Accept pipeline input: False
 
 ### [List<Microsoft.SharePoint.Client.Feature>](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.feature.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

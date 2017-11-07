@@ -74,6 +74,6 @@ Accept pipeline input: False
 
 ### OfficeDevPnP.Core.Entities.ThemeEntity
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

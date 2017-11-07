@@ -84,6 +84,6 @@ Accept pipeline input: False
 
 ### [Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection](https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.spotenantwebtemplatecollection.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)[Locale IDs](http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911)
