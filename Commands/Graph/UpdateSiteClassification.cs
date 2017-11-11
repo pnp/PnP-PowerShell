@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Graph.Model;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Graph.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System;
@@ -34,7 +35,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp",
         const string ParameterSet_SETTINGS = "Settings";
         const string ParameterSet_SPECIFIC = "Specific";
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SETTINGS, HelpMessage ="A settings object retrieved by Get-PnPSiteClassification")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SETTINGS, HelpMessage = "A settings object retrieved by Get-PnPSiteClassification")]
         public SiteClassificationsSettings Settings;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFIC, HelpMessage = @"A list of classifications, separated by commas. E.g. ""HBI"",""LBI"",""Top Secret""")]
@@ -84,7 +85,8 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp",
                     if (settings.Classifications.Contains(settings.DefaultClassification))
                     {
                         OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.UpdateSiteClassificationsSettings(AccessToken, settings);
-                    } else
+                    }
+                    else
                     {
                         WriteError(new ErrorRecord(new InvalidOperationException("You are trying to set the default classification to a value that is not available in the list of possible values."), "SITECLASSIFICATION_DEFAULTVALUE_INVALID", ErrorCategory.InvalidArgument, null));
                     }
@@ -104,3 +106,4 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp",
         }
     }
 }
+#endif
