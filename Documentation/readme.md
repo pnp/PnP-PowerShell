@@ -242,6 +242,7 @@ Cmdlet|Description|Platforms
 **[Set&#8209;PnPAppSideLoading](Set-PnPAppSideLoading.md)** |Enables the App SideLoading Feature on a site|All
 **[Get&#8209;PnPAuditing](Get-PnPAuditing.md)** |Get the Auditing setting of a site|All
 **[Set&#8209;PnPAuditing](Set-PnPAuditing.md)** |Set Auditing setting for a site|All
+**[Add&#8209;PnPOffice365GroupToSite](Add-PnPOffice365GroupToSite.md)** |Groupifies a classic team site by creating a group for it and connecting the site with the newly created group|SharePoint Online
 **[Get&#8209;PnPSite](Get-PnPSite.md)** |Returns the current site collection from the context.|All
 **[Add&#8209;PnPSiteCollectionAdmin](Add-PnPSiteCollectionAdmin.md)** |Adds one or more users as site collection administrators to the site collection in the current context|All
 **[Get&#8209;PnPSiteCollectionAdmin](Get-PnPSiteCollectionAdmin.md)** |Returns the current site collection administrators of the site colleciton in the current context|All
