@@ -46,6 +46,6 @@ Position: 1
 Accept pipeline input: True
 ```
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

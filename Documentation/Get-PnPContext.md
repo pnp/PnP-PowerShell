@@ -24,6 +24,6 @@ This will put the current context in the $ctx variable.
 
 ### [Microsoft.SharePoint.Client.ClientContext](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.clientcontext.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

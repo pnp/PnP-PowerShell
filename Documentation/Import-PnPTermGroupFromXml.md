@@ -13,11 +13,13 @@ Imports a taxonomy TermGroup from either the input or from an XML file.
 ### XML
 ```powershell
 Import-PnPTermGroupFromXml [-Xml <String>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ### File
 ```powershell
 Import-PnPTermGroupFromXml [-Path <String>]
+                           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -62,6 +64,18 @@ Position: 0
 Accept pipeline input: True
 ```
 
-# RELATED LINKS
+### -Connection
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
