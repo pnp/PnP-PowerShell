@@ -1,9 +1,7 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Sites;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Site
 {
@@ -47,3 +45,4 @@ namespace SharePointPnP.PowerShell.Commands.Site
         }
     }
 }
+#endif
