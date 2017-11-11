@@ -1,4 +1,5 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
@@ -39,3 +40,4 @@ PS:> Get-PnPSiteClassification",
         }
     }
 }
+#endif
