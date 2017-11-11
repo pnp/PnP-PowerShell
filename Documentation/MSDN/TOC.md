@@ -196,6 +196,7 @@
 ### [Set-PnPAppSideLoading](Set-PnPAppSideLoading.md)
 ### [Get-PnPAuditing](Get-PnPAuditing.md)
 ### [Set-PnPAuditing](Set-PnPAuditing.md)
+### [Add-PnPOffice365GroupToSite](Add-PnPOffice365GroupToSite.md)
 ### [Get-PnPSite](Get-PnPSite.md)
 ### [Add-PnPSiteCollectionAdmin](Add-PnPSiteCollectionAdmin.md)
 ### [Get-PnPSiteCollectionAdmin](Get-PnPSiteCollectionAdmin.md)
