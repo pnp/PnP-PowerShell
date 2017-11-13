@@ -16,6 +16,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-Id <Int>]
                 [-Fields <String[]>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### By Unique Id
@@ -24,6 +25,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-UniqueId <GuidPipeBind>]
                 [-Fields <String[]>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### By Query
@@ -33,6 +35,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-PageSize <Int>]
                 [-ScriptBlock <ScriptBlock>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ### All Items
@@ -42,6 +45,7 @@ Get-PnPListItem -List <ListPipeBind>
                 [-PageSize <Int>]
                 [-ScriptBlock <ScriptBlock>]
                 [-Web <WebPipeBind>]
+                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -181,6 +185,18 @@ Position: Named
 Accept pipeline input: False
 ```
 
+### -Connection
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ### -Web
 The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
@@ -197,6 +213,6 @@ Accept pipeline input: False
 
 ### [Microsoft.SharePoint.Client.ListItem](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

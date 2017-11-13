@@ -53,6 +53,6 @@ Accept pipeline input: False
 
 Returns a list of matching zones. Use the ID property of the object for use in New-SPOTenantSite
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

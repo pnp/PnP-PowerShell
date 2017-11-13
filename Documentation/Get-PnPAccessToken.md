@@ -20,6 +20,6 @@ PS:> Get-PnPAccessToken
 
 Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

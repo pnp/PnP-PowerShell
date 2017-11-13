@@ -33,6 +33,6 @@ This will retrieve the current health score for the url https://contoso.sharepoi
 
 Returns a int value representing the current health score value of the server.
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

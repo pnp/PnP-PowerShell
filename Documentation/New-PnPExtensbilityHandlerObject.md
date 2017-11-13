@@ -82,6 +82,6 @@ Accept pipeline input: False
 
 ### OfficeDevPnP.Core.Framework.Provisioning.Model.ExtensibilityHandler
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
