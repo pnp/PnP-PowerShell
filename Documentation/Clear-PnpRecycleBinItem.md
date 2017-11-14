@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Server 2013, SharePoint Server 2016, SharePoint Online
 schema: 2.0.0
 ---
-# Clear-PnpRecycleBinItem
+# Clear-PnPRecycleBinItem
 
 ## SYNOPSIS
 Permanently deletes all or a specific recycle bin item
@@ -12,7 +12,7 @@ Permanently deletes all or a specific recycle bin item
 
 ### All
 ```powershell
-Clear-PnpRecycleBinItem [-All [<SwitchParameter>]]
+Clear-PnPRecycleBinItem [-All [<SwitchParameter>]]
                         [-SecondStageOnly [<SwitchParameter>]]
                         [-Force [<SwitchParameter>]]
                         [-Connection <SPOnlineConnection>]
@@ -20,7 +20,7 @@ Clear-PnpRecycleBinItem [-All [<SwitchParameter>]]
 
 ### Identity
 ```powershell
-Clear-PnpRecycleBinItem -Identity <RecycleBinItemPipeBind>
+Clear-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind>
                         [-Force [<SwitchParameter>]]
                         [-Connection <SPOnlineConnection>]
 ```
