@@ -6,7 +6,7 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsCommon.Clear, "PnpRecycleBinItem", DefaultParameterSetName = "All")]
+    [Cmdlet(VerbsCommon.Clear, "PnPRecycleBinItem", DefaultParameterSetName = "All")]
     [CmdletHelp("Permanently deletes all or a specific recycle bin item",
         Category = CmdletHelpCategory.RecycleBin)]
     [CmdletExample(
