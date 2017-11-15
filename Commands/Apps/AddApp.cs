@@ -9,11 +9,26 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletHelp("Add/uploads an available app to the app catalog",
         Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online,
         OutputType = typeof(AppMetadata))]
-    [CmdletExample(Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg", Remarks = @"This will upload the specified app package to the app catalog", SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg", 
+        Remarks = @"This will upload the specified app package to the app catalog", SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Publish",
+        Remarks = @"This will upload the specified app package to the app catalog and deploy/trust it at the same time.", SortOrder = 2)]
     public class AddApp : PnPCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
+        private const string ParameterSet_ADD = "Add only";
+        private const string ParameterSet_PUBLISH = "Add and Publish";
+
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADD, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PUBLISH, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
         public string Path;
+
+        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName =ParameterSet_PUBLISH, HelpMessage = "This will deploy/trust an app into the app catalog.")]
+        public SwitchParameter Publish;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH)]
+        public SwitchParameter SkipFeatureDeployment;
 
         protected override void ExecuteCmdlet()
         {
@@ -21,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-
+          
             var fileInfo = new System.IO.FileInfo(Path);
 
             var bytes = System.IO.File.ReadAllBytes(Path);
@@ -30,7 +45,20 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
             var result = manager.Add(bytes, fileInfo.Name);
 
-            WriteObject(result);
+            try
+            {
+
+                if (Publish)
+                {
+                    manager.Deploy(result, SkipFeatureDeployment);
+                }
+                WriteObject(result);
+            } catch
+            {
+                // Exception occurred rolling back
+                manager.Remove(result);
+                throw;
+            }
         }
     }
 }
