@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
             }
             else
             {
-                WriteObject(apps);
+                WriteObject(apps,true);
             }
         }
     }
