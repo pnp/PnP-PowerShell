@@ -198,6 +198,7 @@
 ### [Set-PnPAuditing](Set-PnPAuditing.md)
 ### [Add-PnPOffice365GroupToSite](Add-PnPOffice365GroupToSite.md)
 ### [Get-PnPSite](Get-PnPSite.md)
+### [Set-PnPSite](Set-PnPSite.md)
 ### [Add-PnPSiteCollectionAdmin](Add-PnPSiteCollectionAdmin.md)
 ### [Get-PnPSiteCollectionAdmin](Get-PnPSiteCollectionAdmin.md)
 ### [Remove-PnPSiteCollectionAdmin](Remove-PnPSiteCollectionAdmin.md)
