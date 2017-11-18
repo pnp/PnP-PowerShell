@@ -19,13 +19,19 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         private ProgressRecord _progressRecord = new ProgressRecord(0, "Measuring response time", "Sending probe requests");
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
-        public DiagnosticEndpointPipeBind Endpoint;
+        public DiagnosticEndpointPipeBind Url;
 
-        [Parameter(Mandatory = false)]
-        public int Count = 20;
+        [Parameter(Mandatory = false, HelpMessage = "Number of probe requests")]
+        public uint Count = 20;
 
-        [Parameter(Mandatory = false)]
-        public int Timeout = 500;
+        [Parameter(Mandatory = false, HelpMessage = "Number of warm up requests")]
+        public uint WarmUp = 1;
+
+        [Parameter(Mandatory = false, HelpMessage = "Idle timeout between requests")]
+        public uint Timeout = 500;
+
+        [Parameter(Mandatory = false, HelpMessage = "Number of buckets in histogram")]
+        public uint Histogram = 5;
 
         protected override void ExecuteCmdlet()
         {
@@ -34,46 +40,56 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             List<long> measurements = new List<long>();
             try
             {
-                for (int i = 0; i < Count; i++)
+                for (int i = -(int)WarmUp; i < Count; i++)
                 {
+                    bool isWarmUp = i < 0;
                     var probe = WebRequest.CreateHttp(uri);
                     probe.AllowAutoRedirect = false;
 
                     ClientRuntimeContext.SetupRequestCredential(ClientContext, probe);
-                    WriteProgress($"Sending probe request to {uri}", i);
+                    WriteProgress(isWarmUp ? $"Warming up: {WarmUp + i + 1}/{WarmUp}": $"Sending: {uri}", i);
 
                     HttpWebResponse response = null;
                     try
                     {
-                        timer.Restart();
-                        response = probe.GetResponse() as HttpWebResponse;
-                        timer.Stop();
-                    }
-                    catch (WebException e)
-                    {
-                        timer.Stop();
-                        response = e.Response as HttpWebResponse;
-                        if (response == null)
+                        try
                         {
-                            throw;
+                            timer.Restart();
+                            response = probe.GetResponse() as HttpWebResponse;
+                            timer.Stop();
                         }
-                    }
+                        catch (WebException e)
+                        {
+                            timer.Stop();
+                            response = e.Response as HttpWebResponse;
+                            if (response == null)
+                            {
+                                throw;
+                            }
+                        }
+                        if (!isWarmUp)
+                        {
+                            measurements.Add(timer.ElapsedMilliseconds);
+                        }
 
-                    measurements.Add(timer.ElapsedMilliseconds);
-                    if (response.StatusCode != HttpStatusCode.OK)
-                    {
-                        if (response.StatusCode < HttpStatusCode.BadRequest)
+                        if (response.StatusCode != HttpStatusCode.OK)
                         {
-                            WriteWarning($"Unexpected status code received {(int)response.StatusCode}");
-                        }
-                        else
-                        {
-                            WriteWarning($"Probe request failed with status code {(int)response.StatusCode}");
+                            WriteWarning($"Reply from {uri}: {(int)response.StatusCode}");
                         }
                     }
-                    WriteVerbose($"Reponse received in {timer.ElapsedMilliseconds}ms");
-                    WriteProgress($"Sleeping", i);
-                    Thread.Sleep(Timeout);
+                    finally
+                    {
+                        if(response != null)
+                        {
+                            response.Dispose();
+                        }
+                    }
+                    if (!isWarmUp)
+                    {
+                        WriteVerbose($"Reply from {uri}: {timer.ElapsedMilliseconds}ms");
+                    }
+                    WriteProgress($"Sleeping: {Timeout}ms", i);
+                    Thread.Sleep((int)Timeout);
                 }
                 _progressRecord.RecordType = ProgressRecordType.Completed;
                 WriteProgress(_progressRecord);
@@ -87,7 +103,8 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 
         private void WriteProgress(string message, int step)
         {
-            var percentage = Convert.ToInt32((100 / Convert.ToDouble(Count)) * Convert.ToDouble(step));
+            var total = Count + WarmUp;
+            var percentage = total != 0 ? Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step)) : 100;
             _progressRecord.StatusDescription = message;
             _progressRecord.PercentComplete = percentage;
             _progressRecord.RecordType = ProgressRecordType.Processing;
@@ -102,6 +119,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             int count = 0;
             double truncatedAverage = 0;
             double standardDeviation = 0;
+            Dictionary<long, int> histogram = new Dictionary<long, int>();
 
             if (array != null && array.Count() > 0)
             {
@@ -118,6 +136,19 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                     var trunc = (int)Math.Round(count * 0.1);
                     truncatedAverage = array.Skip(trunc).Take(count - 2 * trunc).Average();
                 }
+
+                if(Histogram > 0)
+                {
+                    var bucketSize = max/(double)Histogram;
+                    //build histogram
+                    for (int i = 0; i < Histogram; i++)
+                    {
+                        var bucketMin = bucketSize * i;
+                        var bucketMax = bucketSize * (i + 1);
+                        histogram[(long)bucketMax] = array.Where(a => 
+                        a >= bucketMin && (a <= bucketMax || (i == Histogram - 1))).Count();
+                    }
+                }
             }
             return new ResponseTimeStatistics
             {
@@ -126,17 +157,18 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                 Min = min,
                 StandardDeviation = Math.Round(standardDeviation, 2),
                 TruncatedAverage = truncatedAverage,
-                Count = count
+                Count = count,
+                Histogram = Histogram > 0 ? histogram : null
             };
         }
 
         private Uri GetEndpointUri()
         {
-            if (Endpoint == null)
+            if (Url == null)
             {
-                Endpoint = new DiagnosticEndpointPipeBind(ClientContext.Web);
+                Url = new DiagnosticEndpointPipeBind(ClientContext.Web);
             }
-            var uri = new Uri(Endpoint.ToString(), UriKind.Relative);
+            var uri = new Uri(Url.ToString(), UriKind.Relative);
             var authority = new Uri(ClientContext.Url).GetLeftPart(UriPartial.Authority);
             uri = new Uri(authority + uri.ToString(), UriKind.Absolute);
             return uri;
