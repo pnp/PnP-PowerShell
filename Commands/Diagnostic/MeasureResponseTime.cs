@@ -139,8 +139,8 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 
                 if(Histogram > 0)
                 {
-                    var bucketSize = max/(double)Histogram;
                     //build histogram
+                    var bucketSize = max/(double)Histogram;
                     for (int i = 0; i < Histogram; i++)
                     {
                         var bucketMin = bucketSize * i;

@@ -34,13 +34,6 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             };
             list.EnsureProperties(retrievalExpressions);
 
-            var statistics = new ListStatistics
-            {
-                ItemCount = list.ItemCount,
-                FolderCount = 1,
-                ItemVersionCount = 0,
-                TotalFileSize = 0
-            };
             if (BrokenPermissions)
             {
                 List<string> permissions = GetBrokenPermissions(list.RootFolder, list);
@@ -53,6 +46,13 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             }
             else
             {
+                var statistics = new ListStatistics
+                {
+                    ItemCount = list.ItemCount,
+                    FolderCount = 1,
+                    ItemVersionCount = 0,
+                    TotalFileSize = 0
+                };
                 statistics += GetFolderStatistics(list.RootFolder, list);
                 WriteObject(statistics);
             }
@@ -101,13 +101,15 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                 f => f.ListItemAllFields,
                 f => f.ItemCount,
                 f => f.Files.Include(fl => fl.Length),
+                f => f.Files.Include(fl => fl.Versions),
                 f => f.Folders.Include(fl => fl.Name));
 
             var stat = new FolderStatistics
             {
                 ItemCount = folder.ItemCount,
-                TotalFileSize = folder.Files.Sum(fl => fl.Length),
-                FolderCount = folder.Folders.Count
+                TotalFileSize = folder.Files.Sum(fl => fl.Length + fl.Versions.Sum(v => v.Length)),
+                FolderCount = folder.Folders.Count,
+                ItemVersionCount = folder.Files.Sum(fl => fl.Versions.Count),
             };
 
             if(!folder.ListItemAllFields.ServerObjectIsNull())
@@ -123,9 +125,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             if (ItemLevel && (stat.ItemCount > 0))
             {
                 var items = GetItemsInFolder(folder, list);
-                stat.BrokenPermissionCount = items.Count(i => i.HasUniqueRoleAssignments);
-                stat.TotalFileSize += items.Sum(i => !i.File.ServerObjectIsNull() ? i.File.Length : 0);
-                stat.ItemVersionCount = items.Sum(i => !i.File.ServerObjectIsNull() ? i.File.Versions.Count : 0);
+                stat.BrokenPermissionCount += items.Count(i => i.HasUniqueRoleAssignments);
             }
 
             foreach (var subfolder in folder.Folders)
@@ -143,7 +143,13 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 
             query.ViewXml = "<View><Query><Where><Eq><FieldRef Name='FSObjType' /><Value Type='int'>0</Value></Eq></Where></Query></View>";
             var items = list.GetItems(query);
-            ClientContext.Load(items, it => it.Include(i => i.Id, i => i.Folder.ServerRelativeUrl, i => i.File, i => i.HasUniqueRoleAssignments));
+            ClientContext.Load(items, 
+                it => it.Include(
+                    i => i.Id, 
+                    i => i.File.Length,
+                    i => i.File.Versions,
+                    i => i.File,
+                    i => i.HasUniqueRoleAssignments));
             ClientContext.ExecuteQueryRetry();
             return items;
         }

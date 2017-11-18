@@ -33,11 +33,11 @@
                 WebCount = s1.WebCount,
                 ListCount = s1.ListCount,
                 ItemCount = s1.ItemCount,
-                FileCount = s1.FileCount + s2.ItemCount, //folder items = files
-                TotalFileSize = s1.TotalFileSize + s2.TotalFileSize,
+                FileCount = s2 != null ? s1.FileCount + s2.ItemCount : s1.FileCount, //folder items = files
+                TotalFileSize = s2 != null ? s1.TotalFileSize + s2.TotalFileSize : s1.TotalFileSize,
                 SiteUserCount = s1.SiteUserCount,
                 SiteGroupCount = s1.SiteGroupCount,
-                BrokenPermissionCount = s1.BrokenPermissionCount + s2.BrokenPermissionCount,
+                BrokenPermissionCount = s2 != null ? s1.BrokenPermissionCount + s2.BrokenPermissionCount : s1.BrokenPermissionCount,
             };
         }
 

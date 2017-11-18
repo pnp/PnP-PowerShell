@@ -55,20 +55,28 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 
         private FolderStatistics GetFolderStatistics(Folder folder)
         {
-            folder.EnsureProperties(
-                f => f.Name,
-                f => f.Files.Include(fl => fl.Length, fl => fl.Versions.Include(v=> v.Length)),
-                f => f.Folders.Include(fl => fl.Name));
-            var stat = new FolderStatistics
+            FolderStatistics stat = null;
+            try
             {
-                ItemCount = folder.Files.Count,
-                TotalFileSize = folder.Files.Sum(fl => fl.Length + ((fl.Versions != null) ? fl.Versions.Sum(v => v.Length) : 0))
-            };
-
-            foreach (var subfolder in folder.Folders)
-            {
-                stat += GetFolderStatistics(subfolder);
+                folder.EnsureProperties(
+                    f => f.Name,
+                    f => f.Files.Include(fl => fl.Length, fl => fl.Versions.Include(v => v.Length)),
+                    f => f.Folders.Include(fl => fl.Name));
+                stat = new FolderStatistics
+                {
+                    ItemCount = folder.Files.Count,
+                    TotalFileSize = folder.Files.Sum(fl => fl.Length + ((fl.Versions != null) ? fl.Versions.Sum(v => v.Length) : 0))
+                };
+                foreach (var subfolder in folder.Folders)
+                {
+                    stat += GetFolderStatistics(subfolder);
+                }
             }
+            catch (Exception e)
+            {
+                WriteWarning($"Cannot inspect folder: {e.Message}");
+            }
+
             return stat;
         }
 
