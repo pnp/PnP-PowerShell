@@ -63,7 +63,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         public Hashtable Values;
 
 #if !ONPREMISES
-        [Parameter(Mandatory = false, HelpMessage = "Updating item without updating the modified and modified by fields")]
+        [Parameter(Mandatory = false, HelpMessage = "Update the item without creating a new version.")]
         public SwitchParameter SystemUpdate;
 #endif
 

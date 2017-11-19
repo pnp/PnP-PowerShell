@@ -82,7 +82,7 @@ Accept pipeline input: True
 ```
 
 ### -SystemUpdate
-Updating item without updating the modified and modified by fields
+Update the item without creating a new version.
 
 ```yaml
 Type: SwitchParameter
