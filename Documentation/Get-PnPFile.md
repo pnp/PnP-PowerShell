@@ -40,6 +40,7 @@ Get-PnPFile -AsFile [<SwitchParameter>]
             -Url <String>
             [-Path <String>]
             [-Filename <String>]
+            [-Force [<SwitchParameter>]]
             [-Web <WebPipeBind>]
             [-Connection <SPOnlineConnection>]
 ```
@@ -131,6 +132,18 @@ Name for the local file
 
 ```yaml
 Type: String
+Parameter Sets: Save to local path
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Force
+Overwrites the file if it exists.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: Save to local path
 
 Required: False

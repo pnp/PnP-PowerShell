@@ -67,6 +67,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = URLASSTRING, HelpMessage = "Retrieve the file contents as a string")]
         public SwitchParameter AsString;
 
+        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH, HelpMessage = "Overwrites the file if it exists.")]
+        public SwitchParameter Force;
+
         protected override void ExecuteCmdlet()
         {
             var serverRelativeUrl = string.Empty;
@@ -98,7 +101,14 @@ namespace SharePointPnP.PowerShell.Commands.Files
             switch (ParameterSetName)
             {
                 case URLTOPATH:
-                    SelectedWeb.SaveFileToLocal(serverRelativeUrl, Path, Filename);
+                    SelectedWeb.SaveFileToLocal(serverRelativeUrl, Path, Filename, (filetosave) =>
+                    {
+                        if (!Force)
+                        {
+                            WriteWarning($"File '{filetosave}' exists already. use the -Force parameter to overwrite the file.");
+                        }
+                        return Force;
+                    });
                     break;
                 case URLASFILEOBJECT:
                     file = SelectedWeb.GetFileByServerRelativeUrl(serverRelativeUrl);
