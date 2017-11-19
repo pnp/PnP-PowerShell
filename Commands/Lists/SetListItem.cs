@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Utilities;
 // IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Add-PnPListItem Cmdlet
 
 namespace SharePointPnP.PowerShell.Commands.Lists
@@ -62,7 +63,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         public Hashtable Values;
 
 #if !ONPREMISES
-        [Parameter(Mandatory = false, HelpMessage = "Updating item without updating the modified and modified by fields")]
+        [Parameter(Mandatory = false, HelpMessage = "Update the item without creating a new version.")]
         public SwitchParameter SystemUpdate;
 #endif
 
@@ -106,232 +107,27 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 }
                 if (Values != null)
                 {
-                    var fields =
-                        ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, f => f.Title,
-                            f => f.TypeAsString));
-                    ClientContext.ExecuteQueryRetry();
-
-                    Hashtable values = Values ?? new Hashtable();
-
-                    foreach (var key in values.Keys)
-                    {
-                        var field = fields.FirstOrDefault(f => f.InternalName == key as string || f.Title == key as string);
-                        if (field != null)
-                        {
-                            switch (field.TypeAsString)
-                            {
-                                case "User":
-                                case "UserMulti":
-                                    {
-                                        List<FieldUserValue> userValues = new List<FieldUserValue>();
-
-                                        var value = values[key];
-                                        if (value == null) goto default;
-                                        if (value.GetType().IsArray)
-                                        {
-                                            foreach (var arrayItem in (value as IEnumerable))
-                                            {
-                                                int userId;
-                                                if (!int.TryParse(arrayItem.ToString(), out userId))
-                                                {
-                                                    var user = SelectedWeb.EnsureUser(arrayItem as string);
-                                                    ClientContext.Load(user);
-                                                    ClientContext.ExecuteQueryRetry();
-                                                    userValues.Add(new FieldUserValue() { LookupId = user.Id });
-                                                }
-                                                else
-                                                {
-                                                    userValues.Add(new FieldUserValue() { LookupId = userId });
-                                                }
-                                            }
-                                            item[key as string] = userValues.ToArray();
-                                        }
-                                        else
-                                        {
-                                            int userId;
-                                            if (!int.TryParse(value as string, out userId))
-                                            {
-                                                var user = SelectedWeb.EnsureUser(value as string);
-                                                ClientContext.Load(user);
-                                                ClientContext.ExecuteQueryRetry();
-                                                item[key as string] = new FieldUserValue() { LookupId = user.Id };
-                                            }
-                                            else
-                                            {
-                                                item[key as string] = new FieldUserValue() { LookupId = userId };
-                                            }
-                                        }
 #if !ONPREMISES
-                                        item.SystemUpdate();
+                    item = ListItemHelper.UpdateListItem(item, Values, SystemUpdate, (warning) =>
+                      {
+                          WriteWarning(warning);
+                      },
+                      (terminatingErrorMessage,terminatingErrorCode) =>
+                      {
+                          ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
+                      }
+                      );
 #else
-                                        item.Update();
+                    item = ListItemHelper.UpdateListItem(item, Values, false, (warning) =>
+                      {
+                          WriteWarning(warning);
+                      },
+                      (terminatingErrorMessage,terminatingErrorCode) =>
+                      {
+                          ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
+                      }
+                      );
 #endif
-                                        break;
-                                    }
-                                case "TaxonomyFieldType":
-                                case "TaxonomyFieldTypeMulti":
-                                    {
-                                        var value = Values[key];
-                                        if (value != null && value.GetType().IsArray)
-                                        {
-                                            var taxSession = ClientContext.Site.GetTaxonomySession();
-                                            var terms = new List<KeyValuePair<Guid, string>>();
-                                            foreach (var arrayItem in value as object[])
-                                            {
-                                                TaxonomyItem taxonomyItem;
-                                                Guid termGuid;
-                                                if (!Guid.TryParse(arrayItem as string, out termGuid))
-                                                {
-                                                    // Assume it's a TermPath
-                                                    taxonomyItem = ClientContext.Site.GetTaxonomyItemByPath(arrayItem as string);
-                                                }
-                                                else
-                                                {
-                                                    taxonomyItem = taxSession.GetTerm(termGuid);
-                                                    ClientContext.Load(taxonomyItem);
-                                                    ClientContext.ExecuteQueryRetry();
-                                                }
-                                                terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
-                                            }
-
-                                            TaxonomyField taxField = ClientContext.CastTo<TaxonomyField>(field);
-
-                                            taxField.EnsureProperty(tf => tf.AllowMultipleValues);
-                                            if (taxField.AllowMultipleValues)
-                                            {
-                                                var termValuesString = String.Empty;
-                                                foreach (var term in terms)
-                                                {
-                                                    termValuesString += "-1;#" + term.Value + "|" + term.Key.ToString("D") + ";#";
-                                                }
-
-                                                termValuesString = termValuesString.Substring(0, termValuesString.Length - 2);
-
-                                                var newTaxFieldValue = new TaxonomyFieldValueCollection(ClientContext, termValuesString, taxField);
-                                                taxField.SetFieldValueByValueCollection(item, newTaxFieldValue);
-#if !ONPREMISES
-                                                item.SystemUpdate();
-#else
-                                                item.Update();
-#endif
-                                                ClientContext.ExecuteQueryRetry();
-                                            }
-                                            else
-                                            {
-                                                WriteWarning($@"You are trying to set multiple values in a single value field. Skipping values for field ""{field.InternalName}""");
-                                            }
-                                        }
-                                        else
-                                        {
-                                            Guid termGuid = Guid.Empty;
-
-                                            var taxSession = ClientContext.Site.GetTaxonomySession();
-                                            TaxonomyItem taxonomyItem = null;
-                                            if (value != null && !Guid.TryParse(value as string, out termGuid))
-                                            {
-                                                // Assume it's a TermPath
-                                                taxonomyItem = ClientContext.Site.GetTaxonomyItemByPath(value as string);
-                                            }
-                                            else
-                                            {
-                                                if (value != null)
-                                                {
-                                                    taxonomyItem = taxSession.GetTerm(termGuid);
-                                                    ClientContext.Load(taxonomyItem);
-                                                    ClientContext.ExecuteQueryRetry();
-                                                }
-                                            }
-
-                                            TaxonomyField taxField = ClientContext.CastTo<TaxonomyField>(field);
-                                            TaxonomyFieldValue taxValue = new TaxonomyFieldValue();
-                                            if (taxonomyItem != null)
-                                            {
-                                                taxValue.TermGuid = taxonomyItem.Id.ToString();
-                                                taxValue.Label = taxonomyItem.Name;
-                                                taxField.SetFieldValueByValue(item, taxValue);
-                                            }
-                                            else
-                                            {
-                                                taxField.ValidateSetValue(item, null);
-                                            }
-                                        }
-#if !ONPREMISES
-                                        item.SystemUpdate();
-#else
-                                        item.Update();
-#endif
-                                        break;
-                                    }
-                                case "Lookup":
-                                case "LookupMulti":
-                                    {
-                                        var value = values[key];
-                                        if (value == null) goto default;
-                                        int[] multiValue;
-                                        if (value is Array)
-                                        {
-                                            var arr = (object[])values[key];
-                                            multiValue = new int[arr.Length];
-                                            for (int i = 0; i < arr.Length; i++)
-                                            {
-                                                multiValue[i] = int.Parse(arr[i].ToString());
-                                            }
-                                        }
-                                        else
-                                        {
-                                            string valStr = values[key].ToString();
-                                            multiValue = valStr.Split(',', ';').Select(int.Parse).ToArray();
-                                        }
-
-                                        var newVals = multiValue.Select(id => new FieldLookupValue { LookupId = id }).ToArray();
-
-                                        FieldLookup lookupField = ClientContext.CastTo<FieldLookup>(field);
-                                        lookupField.EnsureProperty(lf => lf.AllowMultipleValues);
-                                        if (!lookupField.AllowMultipleValues && newVals.Length > 1)
-                                        {
-                                            throw new Exception("Field " + field.InternalName + " does not support multiple values");
-                                        }
-
-                                        item[key as string] = newVals;
-#if !ONPREMISES
-                                        item.SystemUpdate();
-#else
-                                        item.Update();
-#endif
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        item[key as string] = values[key];
-#if !ONPREMISES
-                                        item.SystemUpdate();
-#else
-                                        item.Update();
-#endif
-                                        break;
-                                    }
-                            }
-                        }
-                        else
-                        {
-                            throw new Exception("Field not present in list");
-                        }
-                    }
-
-#if !ONPREMISES
-                    if (SystemUpdate)
-                    {
-                        item.SystemUpdate();
-                    }
-                    else
-                    {
-                        item.Update();
-                    }
-#else
-                    item.Update();
-#endif
-                    ClientContext.Load(item);
-                    ClientContext.ExecuteQueryRetry();
                 }
                 WriteObject(item);
             }
