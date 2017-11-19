@@ -1,5 +1,7 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2017-11-19**
+* Added confirmation prompt to Get-PnPFile to ask if local file should be overwritten. Use -Force to overwrite this
 **2017-05-06**
 * Added Set-PnPWebPermissions
 * Updated Get-PnPListItem to execute scriptblocks
