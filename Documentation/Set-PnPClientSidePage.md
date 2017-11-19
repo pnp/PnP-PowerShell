@@ -40,7 +40,7 @@ Enables the comments on the Client-Side page named 'MyPage'
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-PS:> Set-PnPClientSidePage -Identity "MyPage" -CommentsEnabled $false
+PS:> Set-PnPClientSidePage -Identity "MyPage" -CommentsEnabled:$false
 ```
 
 Disables the comments on the Client-Side page named 'MyPage'
