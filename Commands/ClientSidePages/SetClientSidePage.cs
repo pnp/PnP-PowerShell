@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         Remarks = "Enables the comments on the Client-Side page named 'MyPage'",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -CommentsEnabled $false",
+        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -CommentsEnabled:$false",
         Remarks = "Disables the comments on the Client-Side page named 'MyPage'",
         SortOrder = 3)]
     public class SetClientSidePage : PnPWebCmdlet
