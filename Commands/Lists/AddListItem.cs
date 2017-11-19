@@ -171,11 +171,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                                 item[key as string] = new FieldUserValue() { LookupId = userId };
                                             }
                                         }
-#if !ONPREMISES
-                                        item.SystemUpdate();
-#else
                                         item.Update();
-#endif
                                         break;
                                     }
                                 case "TaxonomyFieldType":
@@ -223,11 +219,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
                                                 var newTaxFieldValue = new TaxonomyFieldValueCollection(ClientContext, termValuesString, taxField);
                                                 taxField.SetFieldValueByValueCollection(item, newTaxFieldValue);
-#if !ONPREMISES
-                                                item.SystemUpdate();
-#else
                                                 item.Update();
-#endif
                                                 ClientContext.ExecuteQueryRetry();
                                             }
                                             else
@@ -246,11 +238,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                             }
                                             item[key as string] = termGuid.ToString();
                                         }
-#if !ONPREMISES
-                                        item.SystemUpdate();
-#else
                                         item.Update();
-#endif
                                         break;
                                     }
                                 case "Lookup":
@@ -282,21 +270,13 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                                         }
 
                                         item[key as string] = newVals;
-#if !ONPREMISES
-                                        item.SystemUpdate();
-#else
                                         item.Update();
-#endif
                                         break;
                                     }
                                 default:
                                     {
                                         item[key as string] = values[key];
-#if !ONPREMISES
-                                        item.SystemUpdate();
-#else
                                         item.Update();
-#endif
                                         break;
                                     }
                             }
