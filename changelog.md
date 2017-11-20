@@ -1,5 +1,8 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2017-11-20**
+* Added Set-PnPStorageEntity, Get-PnPStorageEntity and Remove-PnPStorageEntity cmdlets to manage storage entities / farm properties
+
 **2017-11-19**
 * Fixed issues with Set-PnPListItem -Values, Add-PnPListItem -Values and Add-PnPFile -Values, updated documentation for these cmdlets
 * Added confirmation prompt to Get-PnPFile to ask if local file should be overwritten. Use -Force to overwrite this
