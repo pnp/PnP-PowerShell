@@ -1,6 +1,7 @@
 # SharePointPnP.PowerShell Changelog #
 
 **2017-11-20**
+* Added Measure-PnPWeb, Measure-PnPList and Measure-PnPResponseTime cmdlets
 * Added Set-PnPStorageEntity, Get-PnPStorageEntity and Remove-PnPStorageEntity cmdlets to manage storage entities / farm properties
 
 **2017-11-19**
