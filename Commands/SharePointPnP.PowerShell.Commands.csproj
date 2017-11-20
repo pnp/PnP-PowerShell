@@ -424,6 +424,7 @@
     <Compile Include="Base\PipeBinds\ClientSideComponentPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericPropertiesPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ClientSidePagePipeBind.cs" />
+    <Compile Include="Base\PipeBinds\DiagnosticEndpointPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericObjectNameIdPipeBind.cs" />
     <Compile Include="Base\PipeBinds\EventReceiverPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebhookSubscriptionPipeBind.cs" />
@@ -437,6 +438,13 @@
     <Compile Include="Base\PnPCmdlet.cs" />
     <Compile Include="Base\PnPAdminCmdlet.cs" />
     <Compile Include="ContentTypes\GetContentTypePublishingHubUrl.cs" />
+    <Compile Include="Diagnostic\MeasurePnPList.cs" />
+    <Compile Include="Diagnostic\ListStatistics.cs" />
+    <Compile Include="Diagnostic\FolderStatistics.cs" />
+    <Compile Include="Diagnostic\WebStatistics.cs" />
+    <Compile Include="Diagnostic\MeasurePnPWeb.cs" />
+    <Compile Include="Diagnostic\MeasureResponseTime.cs" />
+    <Compile Include="Diagnostic\ResponseTimeStatistics.cs" />
     <Compile Include="Enums\SiteType.cs" />
     <Compile Include="Fields\SetField.cs" />
     <Compile Include="Files\CopyFile.cs" />
