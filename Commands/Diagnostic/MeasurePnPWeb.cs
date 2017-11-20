@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         Category = CmdletHelpCategory.Diagnostic)]
     public class MeasurePnPWeb : PnPCmdlet
     {
-        private Expression<Func<Web, object>>[] _retreivalExpressions;
+        private Expression<Func<Web, object>>[] _retrievalExpressions;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public WebPipeBind Identity;
@@ -27,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 
         public MeasurePnPWeb()
         {
-            _retreivalExpressions = new Expression<Func<Web, object>>[] {
+            _retrievalExpressions = new Expression<Func<Web, object>>[] {
                 w => w.Url,
                 w => w.Webs.Include(sw => sw.HasUniqueRoleAssignments),
                 w => w.Lists.Include(l => l.Title, l => l.ItemCount, l => l.HasUniqueRoleAssignments, l => l.Hidden),
@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 
         protected override void ExecuteCmdlet()
         {
-            var web = GetWebByIdentity(_retreivalExpressions);
+            var web = GetWebByIdentity(_retrievalExpressions);
             var statistics = GetStatistics(web);
             WriteObject(statistics);
         }
@@ -115,7 +115,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             {
                 foreach (var subweb in web.Webs)
                 {
-                    subweb.EnsureProperties(_retreivalExpressions);
+                    subweb.EnsureProperties(_retrievalExpressions);
                     stat += GetStatistics(subweb);
                 }
             }
