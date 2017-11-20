@@ -406,6 +406,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\RemoveStorageEntity.cs" />
+    <Compile Include="Admin\SetStorageEntity.cs" />
+    <Compile Include="Admin\GetStorageEntity.cs" />
     <Compile Include="Admin\NewSite.cs" />
     <Compile Include="Apps\UpdateApp.cs" />
     <Compile Include="Apps\RemoveApp.cs" />
