@@ -79,6 +79,12 @@ Cmdlet|Description|Platforms
 **[Set&#8209;PnPDefaultContentTypeToList](Set-PnPDefaultContentTypeToList.md)** |Sets the default content type for a list|All
 **[Remove&#8209;PnPFieldFromContentType](Remove-PnPFieldFromContentType.md)** |Removes a site column from a content type|All
 **[Add&#8209;PnPFieldToContentType](Add-PnPFieldToContentType.md)** |Adds an existing site column to a content type|All
+## Diagnostic utilites
+Cmdlet|Description|Platforms
+:-----|:----------|:--------
+**[Measure&#8209;PnPList](Measure-PnPList.md)** |Returns statistics on the list object|All
+**[Measure&#8209;PnPResponseTime](Measure-PnPResponseTime.md)** |Measures response time for the specified endpoint by sending probe requests and gathering stats.|All
+**[Measure&#8209;PnPWeb](Measure-PnPWeb.md)** |Returns statistics on the web object|All
 ## Document Sets
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
