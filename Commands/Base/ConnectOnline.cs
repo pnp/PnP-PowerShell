@@ -105,6 +105,9 @@ dir",
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
 #endif
+#if ONPREMISES
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_HIGHTRUST, HelpMessage = "The path to the private key certificate (.pfx) to use for the High Trust connection")]
+#endif
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.")]
