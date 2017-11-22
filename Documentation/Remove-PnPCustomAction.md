@@ -29,14 +29,14 @@ Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -scope web
+PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web
 ```
 
 Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' from the current web.
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -force
+PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -Force
 ```
 
 Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' without asking for confirmation.
