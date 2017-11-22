@@ -50,7 +50,11 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
                 if (Publish)
                 {
-                    manager.Deploy(result, SkipFeatureDeployment);
+                    if(manager.Deploy(result, SkipFeatureDeployment))
+                    {
+                        result = manager.GetAvailable(result.Id);
+                    }
+
                 }
                 WriteObject(result);
             } catch

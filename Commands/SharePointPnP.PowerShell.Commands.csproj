@@ -426,6 +426,7 @@
     <Compile Include="Base\PipeBinds\ClientSidePagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\DiagnosticEndpointPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericObjectNameIdPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\UserCustomActionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\EventReceiverPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebhookSubscriptionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
