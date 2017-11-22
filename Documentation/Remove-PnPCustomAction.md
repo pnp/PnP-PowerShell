@@ -11,9 +11,9 @@ Removes a custom action
 ## SYNTAX 
 
 ```powershell
-Remove-PnPCustomAction -Identity <GuidPipeBind>
-                       [-Scope <CustomActionScope>]
+Remove-PnPCustomAction [-Scope <CustomActionScope>]
                        [-Force [<SwitchParameter>]]
+                       [-Identity <UserCustomActionPipeBind>]
                        [-Web <WebPipeBind>]
                        [-Connection <SPOnlineConnection>]
 ```
@@ -41,6 +41,13 @@ PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2 -forc
 
 Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' without asking for confirmation.
 
+### ------------------EXAMPLE 4------------------
+```powershell
+PS:> Get-PnPCustomAction -Scope All | ? Location -eq ScriptLink | Remove-PnPCustomAction
+```
+
+Removes all custom actions that are ScriptLinks
+
 ## PARAMETERS
 
 ### -Force
@@ -56,13 +63,13 @@ Accept pipeline input: False
 ```
 
 ### -Identity
-The identifier of the CustomAction that needs to be removed
+The id or name of the CustomAction that needs to be removed or a CustomAction instance itself
 
 ```yaml
-Type: GuidPipeBind
+Type: UserCustomActionPipeBind
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: 0
 Accept pipeline input: True
 ```
