@@ -29,7 +29,7 @@ This will add the content type called 'Test CT' to the document set called ''Tes
 ### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> $docset = Get-PnPDocumentSetTemplate -Identity "Test Document Set"
-PS:> $ct = Get-SPOContentType -Identity "Test CT"
+PS:> $ct = Get-PnPContentType -Identity "Test CT"
 PS:> Add-PnPContentTypeToDocumentSet -ContentType $ct -DocumentSet $docset
 ```
 
