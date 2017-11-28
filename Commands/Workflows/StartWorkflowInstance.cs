@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         Category = CmdletHelpCategory.Workflows)]
     [CmdletExample(
         Code = @"Start-PnPWorkflowInstance -Name 'WorkflowName' ", 
-        Remarks = "Stops the workflow Instance, this can be the Guid of the instance or the instance itself.",
+        Remarks = "Stops the workflow instance",
         SortOrder = 1)]
     public class StartWorkflowInstance : PnPWebCmdlet
     {
@@ -23,13 +23,32 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         public WorkflowSubscriptionPipeBind Subscription;
 
         [Parameter(Mandatory = true, HelpMessage = "The list item to start the workflow against", Position = 1)]
-        public int ListItemID;
+        public ListItemPipeBind ListItemIdentity;
 
     
 
         protected override void ExecuteCmdlet()
         {
-
+            int ListItemID;
+            if (ListItemIdentity != null)
+            {
+                if (ListItemIdentity.Id != uint.MinValue)
+                {
+                    ListItemID = (int)ListItemIdentity.Id;
+                }
+                else if (ListItemIdentity.Item != null)
+                {
+                    ListItemID = ListItemIdentity.Item.Id;
+                }
+                else
+                {
+                    throw new PSArgumentException("No Valid ListItem found in supplied ListItemPipeBind");
+                }
+            }
+            else
+            {
+                throw new PSArgumentException("ListItemIdentity required");
+            }
             WorkflowServicesManager workflowServicesManager = new WorkflowServicesManager(ClientContext, SelectedWeb);
             WorkflowInstanceService instanceService = workflowServicesManager.GetWorkflowInstanceService();
 
