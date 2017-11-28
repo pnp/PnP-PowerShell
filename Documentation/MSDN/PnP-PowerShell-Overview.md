@@ -399,6 +399,14 @@ Cmdlet|Description|Platform
 :-----|:----------|:-------
 **[Get&#8209;PnPAccessToken](Get-PnPAccessToken.md)** |Returns the current OAuth Access token|All
 **[New&#8209;PnPSite](New-PnPSite.md)** |BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection|SharePoint Online
+**[Add&#8209;PnPSiteDesign](Add-PnPSiteDesign.md)** |Creates a new Site Design on the current tenant.|SharePoint Online
+**[Get&#8209;PnPSiteDesign](Get-PnPSiteDesign.md)** |Retrieve Site Designs that have been registered on the current tenant.|SharePoint Online
+**[Remove&#8209;PnPSiteDesign](Remove-PnPSiteDesign.md)** |Removes a Site Design|SharePoint Online
+**[Get&#8209;PnPSiteDesignRights](Get-PnPSiteDesignRights.md)** |Returns the principles with design rights on a specific Site Design|SharePoint Online
+**[Set&#8209;PnPSiteDesignRights](Set-PnPSiteDesignRights.md)** |Grants the specified principles rights to the site design.|SharePoint Online
+**[Add&#8209;PnPSiteScript](Add-PnPSiteScript.md)** |Creates a new Site Script on the current tenant.|SharePoint Online
+**[Get&#8209;PnPSiteScript](Get-PnPSiteScript.md)** |Retrieve Site Scripts that have been registered on the current tenant.|SharePoint Online
+**[Remove&#8209;PnPSiteScript](Remove-PnPSiteScript.md)** |Removes a Site Script|SharePoint Online
 **[Get&#8209;PnPStorageEntity](Get-PnPStorageEntity.md)** |Retrieve Storage Entities / Farm Properties.|SharePoint Online
 **[Remove&#8209;PnPStorageEntity](Remove-PnPStorageEntity.md)** |Remove Storage Entities / Farm Properties.|SharePoint Online
 **[Set&#8209;PnPStorageEntity](Set-PnPStorageEntity.md)** |Set Storage Entities / Farm Properties.|SharePoint Online
