@@ -378,7 +378,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove event receiver?.
+        ///   Looks up a localized string similar to Remove event receiver named &apos;{0}&apos; with id &apos;{1}&apos;?.
         /// </summary>
         internal static string RemoveEventReceiver {
             get {
@@ -464,6 +464,24 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string RemoveSiteCollection0 {
             get {
                 return ResourceManager.GetString("RemoveSiteCollection0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove site design?.
+        /// </summary>
+        internal static string RemoveSiteDesign {
+            get {
+                return ResourceManager.GetString("RemoveSiteDesign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove site script?.
+        /// </summary>
+        internal static string RemoveSiteScript {
+            get {
+                return ResourceManager.GetString("RemoveSiteScript", resourceCulture);
             }
         }
         

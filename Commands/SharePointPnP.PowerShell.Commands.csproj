@@ -407,6 +407,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\RemoveStorageEntity.cs" />
+    <Compile Include="SiteDesigns\AddSiteScript.cs" />
+    <Compile Include="SiteDesigns\AddSiteDesign.cs" />
+    <Compile Include="SiteDesigns\SetSiteDesignRights.cs" />
+    <Compile Include="SiteDesigns\GetSiteDesignRights.cs" />
+    <Compile Include="SiteDesigns\RemoveSiteScript.cs" />
+    <Compile Include="SiteDesigns\RemoveSiteDesign.cs" />
+    <Compile Include="SiteDesigns\GetSiteScript.cs" />
+    <Compile Include="SiteDesigns\GetSiteDesign.cs" />
     <Compile Include="Admin\SetStorageEntity.cs" />
     <Compile Include="Admin\GetStorageEntity.cs" />
     <Compile Include="Admin\NewSite.cs" />
@@ -703,6 +711,7 @@
     </None>
     <None Include="ModuleFiles\SharePointPnP.PowerShell.Online.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <None Include="Samples\Connections.ps1" />
