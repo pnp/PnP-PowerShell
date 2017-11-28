@@ -14,14 +14,15 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         Category = CmdletHelpCategory.Workflows)]
     [CmdletExample(
         Code = @"Stop-PnPWorkflowInstance -identity $wfInstance", 
-        Remarks = "Stops the workflow Instance, this can be the Guid of the instance or the instance itself.",
+        Remarks = "Stops the workflow Instance",
         SortOrder = 1)]
     public class StopWorkflowInstance : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The instance to stop", Position = 0)]
         public WorkflowInstancePipeBind Identity;
-
-        [Parameter(Mandatory = false, HelpMessage = "Force.  Use TerminateWorkflow instead of Cancel Workflow")]
+    
+        //Cancel vs Terminate: https://support.office.com/en-us/article/Cancel-a-workflow-in-progress-096b7d2d-9b8d-48f1-a002-e98bb86bdc7f
+        [Parameter(Mandatory = false, HelpMessage = "Forcefully terminate the workflow instead of cancelling. Works on errored and non-responsive workflows. Deletes all created tasks. Does not notify participants.")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
