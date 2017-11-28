@@ -13,6 +13,7 @@ Add/uploads an available app to the app catalog
 ### Add only
 ```powershell
 Add-PnPApp -Path <String>
+           [-Overwrite [<SwitchParameter>]]
            [-Connection <SPOnlineConnection>]
 ```
 
@@ -21,6 +22,7 @@ Add-PnPApp -Path <String>
 Add-PnPApp -Publish [<SwitchParameter>]
            -Path <String>
            [-SkipFeatureDeployment [<SwitchParameter>]]
+           [-Overwrite [<SwitchParameter>]]
            [-Connection <SPOnlineConnection>]
 ```
 
@@ -42,6 +44,18 @@ This will upload the specified app package to the app catalog and deploy/trust i
 
 ## PARAMETERS
 
+### -Overwrite
+Overwrites the existing app package if it already exists
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ### -Path
 Specifies the Id or an actual app metadata instance
 
@@ -55,7 +69,7 @@ Accept pipeline input: True
 ```
 
 ### -Publish
-This will deploy/trust an app into the app catalog.
+This will deploy/trust an app into the app catalog
 
 ```yaml
 Type: SwitchParameter

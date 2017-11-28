@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online,
         OutputType = typeof(AppMetadata))]
     [CmdletExample(
-        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg", 
+        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg",
         Remarks = @"This will upload the specified app package to the app catalog", SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Publish",
@@ -24,11 +24,14 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PUBLISH, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
         public string Path;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName =ParameterSet_PUBLISH, HelpMessage = "This will deploy/trust an app into the app catalog.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH, HelpMessage = "This will deploy/trust an app into the app catalog")]
         public SwitchParameter Publish;
 
         [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH)]
         public SwitchParameter SkipFeatureDeployment;
+
+        [Parameter(Mandatory = false, HelpMessage = "Overwrites the existing app package if it already exists")]
+        public SwitchParameter Overwrite;
 
         protected override void ExecuteCmdlet()
         {
@@ -36,28 +39,29 @@ namespace SharePointPnP.PowerShell.Commands.Apps
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-          
+
             var fileInfo = new System.IO.FileInfo(Path);
 
             var bytes = System.IO.File.ReadAllBytes(Path);
 
             var manager = new AppManager(ClientContext);
 
-            var result = manager.Add(bytes, fileInfo.Name);
+            var result = manager.Add(bytes, fileInfo.Name, Overwrite);
 
             try
             {
 
                 if (Publish)
                 {
-                    if(manager.Deploy(result, SkipFeatureDeployment))
+                    if (manager.Deploy(result, SkipFeatureDeployment))
                     {
                         result = manager.GetAvailable(result.Id);
                     }
 
                 }
                 WriteObject(result);
-            } catch
+            }
+            catch
             {
                 // Exception occurred rolling back
                 manager.Remove(result);
