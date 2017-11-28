@@ -28,7 +28,7 @@ Removes the specified site script
 ## PARAMETERS
 
 ### -Force
-If specified you will not be asked to confirm removing the specified Site Design
+If specified you will not be asked to confirm removing the specified Site Script
 
 ```yaml
 Type: SwitchParameter
@@ -40,7 +40,7 @@ Accept pipeline input: False
 ```
 
 ### -Identity
-The ID of the site script to remove
+The ID of the Site Script to remove
 
 ```yaml
 Type: GuidPipeBind

@@ -19,14 +19,14 @@ Get-PnPApp [-Identity <GuidPipeBind>]
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPAvailableApp
+PS:> Get-PnPApp
 ```
 
 This will return all available app metadata from the tenant app catalog. It will list the installed version in the current site.
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPAvailableApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f
+PS:> Get-PnPApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f
 ```
 
 This will the specific app metadata from the app catalog.

@@ -233,10 +233,6 @@ dir",
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHSCOPE, HelpMessage = "Connect to the Microsoft Graph")]
-        //[Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "Connect to the Microsoft Graph")]
-        //public SwitchParameter UseGraph;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
@@ -341,6 +337,10 @@ dir",
             else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
             {
                 ConnectGraphScopes();
+            }
+            else if (ParameterSetName == ParameterSet_GRAPHWITHAAD)
+            {
+                ConnectGraphAAD();
             }
 #endif
 #if ONPREMISES
