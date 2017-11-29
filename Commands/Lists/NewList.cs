@@ -46,6 +46,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         protected override void ExecuteCmdlet()
         {
             var list = SelectedWeb.CreateList(Template, Title, EnableVersioning, true, Url, EnableContentTypes, Hidden);
+            if (Hidden)
+            {
+                SelectedWeb.DeleteNavigationNode(Title, "Recent", OfficeDevPnP.Core.Enums.NavigationType.QuickLaunch);
+            }
             if (OnQuickLaunch)
             {
                 list.OnQuickLaunch = true;
