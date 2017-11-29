@@ -21,6 +21,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, HelpMessage = "The Title of the list")]
         public string Title;
 
+        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if list should be hidden from the UI")]
+        public SwitchParameter Hidden;
+
         [Parameter(Mandatory = true, HelpMessage = "The type of list to create.")]
         public ListTemplateType Template;
 
@@ -42,7 +45,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = SelectedWeb.CreateList(Template, Title, EnableVersioning, true, Url, EnableContentTypes);
+            var list = SelectedWeb.CreateList(Template, Title, EnableVersioning, true, Url, EnableContentTypes, Hidden);
             if (OnQuickLaunch)
             {
                 list.OnQuickLaunch = true;
