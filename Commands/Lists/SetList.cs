@@ -51,6 +51,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "The title of the list")]
         public string Title = string.Empty;
 
+        [Parameter(Mandatory = false, HelpMessage = "Hide the list from the UI. Set to $true to hide, $false to show.")]
+        public bool Hidden;
+
         [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning. Set to $true to enable, $false to disable.")]
         public bool EnableVersioning;
 
@@ -79,6 +82,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (!string.IsNullOrEmpty(Title))
                 {
                     list.Title = Title;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("Hidden") && Hidden != list.Hidden)
+                {
+                    list.Hidden = Hidden;
                     isDirty = true;
                 }
 
