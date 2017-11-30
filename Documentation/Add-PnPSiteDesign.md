@@ -13,11 +13,11 @@ Creates a new Site Design on the current tenant.
 ```powershell
 Add-PnPSiteDesign -Title <String>
                   -SiteScriptIds <GuidPipeBind[]>
+                  -WebTemplate <SiteWebTemplate>
                   [-Description <String>]
                   [-IsDefault [<SwitchParameter>]]
                   [-PreviewImageAltText <String>]
                   [-PreviewImageUrl <String>]
-                  [-WebTemplate <String>]
                   [-Connection <SPOnlineConnection>]
 ```
 
@@ -25,10 +25,10 @@ Add-PnPSiteDesign -Title <String>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Add-PnPSiteDesign
+PS:> Add-PnPSiteDesign -Title "My Company Design" -SiteScriptIds "e84dcb46-3ab9-4456-a136-66fc6ae3d3c5","6def687f-0e08-4f1e-999c-791f3af9a600" -Description "My description" -WebTemplate TeamSite
 ```
 
-Adds a new Site Design
+Adds a new Site Design, with the specified title and description. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. The WebTemplate parameter specifies that this design applies to Team Sites.
 
 ## PARAMETERS
 
@@ -105,13 +105,13 @@ Accept pipeline input: False
 ```
 
 ### -WebTemplate
-Specifies the webtemplate
+Specifies the type of site to which this design applies
 
 ```yaml
-Type: String
+Type: SiteWebTemplate
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

@@ -21,10 +21,10 @@ Add-PnPSiteScript -Title <String>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Add-PnPSiteScript
+PS:> Add-PnPSiteScript -Title "My Site Script" -Description "A more detailed description" -Content $script
 ```
 
-Adds a new Site Script
+Adds a new Site Script, where $script variable contains the script.
 
 ## PARAMETERS
 

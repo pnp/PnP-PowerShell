@@ -4,6 +4,8 @@ using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Enums;
+using System;
 using System.Linq;
 using System.Management.Automation;
 
@@ -14,8 +16,8 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPSiteDesign",
-        Remarks = "Adds a new Site Design",
+        Code = @"PS:> Add-PnPSiteDesign -Title ""My Company Design"" -SiteScriptIds ""e84dcb46-3ab9-4456-a136-66fc6ae3d3c5"",""6def687f-0e08-4f1e-999c-791f3af9a600"" -Description ""My description"" -WebTemplate TeamSite",
+        Remarks = "Adds a new Site Design, with the specified title and description. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. The WebTemplate parameter specifies that this design applies to Team Sites.",
         SortOrder = 1)]
     public class AddSiteDesign : PnPAdminCmdlet
     {
@@ -37,8 +39,8 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Sets the url to the preview image")]
         public string PreviewImageUrl;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the webtemplate")]
-        public string WebTemplate;
+        [Parameter(Mandatory = true, HelpMessage = "Specifies the type of site to which this design applies")]
+        public SiteWebTemplate WebTemplate;
 
 
         protected override void ExecuteCmdlet()
@@ -51,7 +53,7 @@ namespace SharePointPnP.PowerShell.Commands
                 IsDefault = IsDefault,
                 PreviewImageAltText = PreviewImageAltText,
                 PreviewImageUrl = PreviewImageUrl,
-                WebTemplate = WebTemplate
+                WebTemplate = ((int)WebTemplate).ToString()
             };
 
             Tenant.CreateSiteDesign(siteDesignInfo);
