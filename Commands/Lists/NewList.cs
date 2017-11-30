@@ -16,19 +16,23 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = @"PS:> New-PnPList -Title ""Demo List"" -Url ""DemoList"" -Template Announcements",
         SortOrder = 2,
         Remarks = "Create a list with a title that is different from the url")]
+    [CmdletExample(
+        Code = "PS:> New-PnPList -Title HiddenList -Template GenericList -Hidden",
+        SortOrder = 3,
+        Remarks = "Create a new custom list and hides it from the SharePoint UI.")]
     public class NewList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The Title of the list")]
         public string Title;
-
-        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if list should be hidden from the UI")]
-        public SwitchParameter Hidden;
 
         [Parameter(Mandatory = true, HelpMessage = "The type of list to create.")]
         public ListTemplateType Template;
 
         [Parameter(Mandatory = false, HelpMessage = "If set, will override the url of the list.")]
         public string Url = null;
+
+        [Parameter(Mandatory = false, HelpMessage = "Switch parameter if list should be hidden from the SharePoint UI")]
+        public SwitchParameter Hidden;
 
         [Parameter(Mandatory = false, HelpMessage = "Switch parameter if versioning should be enabled")]
         public SwitchParameter EnableVersioning;
