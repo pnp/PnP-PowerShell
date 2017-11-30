@@ -407,6 +407,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\RemoveStorageEntity.cs" />
+    <Compile Include="Enums\SiteWebTemplate.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
     <Compile Include="SiteDesigns\AddSiteDesign.cs" />
     <Compile Include="SiteDesigns\SetSiteDesignRights.cs" />
