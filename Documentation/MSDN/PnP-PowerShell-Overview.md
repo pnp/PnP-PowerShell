@@ -140,6 +140,7 @@ Cmdlet|Description|Platform
 Cmdlet|Description|Platform
 :-----|:----------|:-------
 **[Get&#8209;PnPAvailableClientSideComponents](Get-PnPAvailableClientSideComponents.md)** |Gets the available client side components on a particular page|SharePoint Online
+**[Move&#8209;PnPClientSideComponent](Move-PnPClientSideComponent.md)** |Moves a Client-Side Component to a different section/column|SharePoint Online
 **[Add&#8209;PnPClientSidePage](Add-PnPClientSidePage.md)** |Adds a Client-Side Page|SharePoint Online
 **[Get&#8209;PnPClientSidePage](Get-PnPClientSidePage.md)** |Gets a Client-Side Page|SharePoint Online
 **[Remove&#8209;PnPClientSidePage](Remove-PnPClientSidePage.md)** |Removes a Client-Side Page|SharePoint Online
@@ -454,6 +455,11 @@ Cmdlet|Description|Platform
 ### Web Parts 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
+**[Get&#8209;PnPClientSideComponent](Get-PnPClientSideComponent.md)** |Retrieve one or more Client-Side components from a page|SharePoint Online
+**[Remove&#8209;PnPClientSideComponent](Remove-PnPClientSideComponent.md)** |Removes a Client-Side component from a page|SharePoint Online
+**[Set&#8209;PnPClientSideText](Set-PnPClientSideText.md)** |Set Client-Side Text Component properties|SharePoint Online
+**[Get&#8209;PnPClientSideWebPart](Get-PnPClientSideWebPart.md)** |Retrieve one or more Client-Side Web Parts from a page|SharePoint 2016
+**[Set&#8209;PnPClientSideWebPart](Set-PnPClientSideWebPart.md)** |Set Client-Side Web Part properties|SharePoint Online
 **[Get&#8209;PnPWebPart](Get-PnPWebPart.md)** |Returns a webpart definition object|All
 **[Remove&#8209;PnPWebPart](Remove-PnPWebPart.md)** |Removes a webpart from a page|All
 **[Get&#8209;PnPWebPartProperty](Get-PnPWebPartProperty.md)** |Returns a web part property|All

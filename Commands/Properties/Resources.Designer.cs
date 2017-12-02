@@ -351,6 +351,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove component with instance id &apos;{0}&apos;?.
+        /// </summary>
+        internal static string RemoveComponentWithInstanceId0 {
+            get {
+                return ResourceManager.GetString("RemoveComponentWithInstanceId0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove content type?.
         /// </summary>
         internal static string RemoveContentType {
@@ -554,6 +563,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string RemoveWebhookSubscription0From1_2 {
             get {
                 return ResourceManager.GetString("RemoveWebhookSubscription0From1_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Web Part with title &apos;{0}&apos;?.
+        /// </summary>
+        internal static string RemoveWebPartWithTitle0 {
+            get {
+                return ResourceManager.GetString("RemoveWebPartWithTitle0", resourceCulture);
             }
         }
         

@@ -49,6 +49,12 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         /// The cmdlet category. This is required parameter in order to add the parameter to the correct subcategory of cmdlets.
         /// </summary>
         public CmdletHelpCategory Category { get; set; }
+
+        public CmdletHelpAttribute(string description)
+        {
+            Description = description;
+            SupportedPlatform = CmdletSupportedPlatform.All;
+        }
         public CmdletHelpAttribute(string description, CmdletSupportedPlatform supportedPlatform = CmdletSupportedPlatform.All)
         {
             Description = description;

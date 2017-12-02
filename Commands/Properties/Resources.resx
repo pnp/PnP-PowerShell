@@ -304,4 +304,10 @@
   <data name="RemoveSiteScript" xml:space="preserve">
     <value>Remove site script?</value>
   </data>
+  <data name="RemoveWebPartWithTitle0" xml:space="preserve">
+    <value>Remove Web Part with title '{0}'?</value>
+  </data>
+  <data name="RemoveComponentWithInstanceId0" xml:space="preserve">
+    <value>Remove component with instance id '{0}'?</value>
+  </data>
 </root>
