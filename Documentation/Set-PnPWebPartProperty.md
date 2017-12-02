@@ -23,7 +23,7 @@ Set-PnPWebPartProperty -ServerRelativePageUrl <String>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key "Title" -Value "New Title" 
+PS:> Set-PnPWebPartProperty -ServerRelativePageUrl /sites/demo/sitepages/home.aspx -Identity ccd2c98a-c9ae-483b-ae72-19992d583914 -Key "Title" -Value "New Title" 
 ```
 
 Sets the title property of the webpart.

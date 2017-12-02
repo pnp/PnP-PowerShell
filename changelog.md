@@ -1,5 +1,9 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2017-12-02**
+* Added additional authentication option with Connect-PnPOnline allowing you use an existing Access Token for authentication
+* Added Get-PnPClientSideComponent, Move-PnPClientSideComponent, Remove-PnPClientSideComponent, Set-PnPClientSideText, Set-PnPClientSideWebPart
+
 **2017-11-20**
 * Added Measure-PnPWeb, Measure-PnPList and Measure-PnPResponseTime cmdlets
 * Added Set-PnPStorageEntity, Get-PnPStorageEntity and Remove-PnPStorageEntity cmdlets to manage storage entities / farm properties

@@ -407,6 +407,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\RemoveStorageEntity.cs" />
+    <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
+    <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
+    <Compile Include="ClientSidePages\RemoveClientSideComponent.cs" />
+    <Compile Include="ClientSidePages\MoveClientSideComponent.cs" />
+    <Compile Include="ClientSidePages\SetClientSideText.cs" />
+    <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
+    <Compile Include="WebParts\GetClientSideWebPart.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
     <Compile Include="SiteDesigns\AddSiteDesign.cs" />
@@ -534,7 +541,7 @@
     <Compile Include="ClientSidePages\ClientSidePageUtilities.cs" />
     <Compile Include="ClientSidePages\SetClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
-    <Compile Include="ClientSidePages\AddClientSideWebPart.cs" />
+    <Compile Include="WebParts\AddClientSideWebPart.cs" />
     <Compile Include="ClientSidePages\GetAvailableClientSideComponents.cs" />
     <Compile Include="ClientSidePages\RemoveClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSidePage.cs" />

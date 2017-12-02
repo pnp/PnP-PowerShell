@@ -70,6 +70,20 @@ Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
                   [-IgnoreSslErrors [<SwitchParameter>]]
 ```
 
+### Access Token
+```powershell
+Connect-PnPOnline -AccessToken <String>
+                  -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+```
+
 ### Token
 ```powershell
 Connect-PnPOnline -AppId <String>
@@ -207,6 +221,13 @@ PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -SPOManagementShell
 
 This will authenticate you using the SharePoint Online Management Shell application
 
+### ------------------EXAMPLE 10------------------
+```powershell
+PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $myaccesstoken
+```
+
+This will authenticate you using the provided access token
+
 ## PARAMETERS
 
 ### -AADDomain
@@ -215,6 +236,18 @@ The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosof
 ```yaml
 Type: String
 Parameter Sets: Microsoft Graph using Azure Active Directory
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -AccessToken
+Connect with an existing Access Token
+
+```yaml
+Type: String
+Parameter Sets: Access Token
 
 Required: True
 Position: Named
