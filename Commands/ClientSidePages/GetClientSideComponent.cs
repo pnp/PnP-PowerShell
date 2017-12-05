@@ -1,7 +1,9 @@
 ﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
@@ -37,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 WriteObject(clientSidePage.Controls, true);
             } else
             {
-                WriteObject(clientSidePage.Controls.Where(c => c.InstanceId == InstanceId.Id), true);
+                WriteObject(clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId.Id));
             }
 
         }

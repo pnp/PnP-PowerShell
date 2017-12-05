@@ -1439,43 +1439,6 @@
       </TableControl>
     </View>
     <View>
-      <Name>ClientSideWebPart</Name>
-      <ViewSelectedBy>
-        <TypeName>OfficeDevPnP.Core.Pages.ClientSideWebPart</TypeName>
-      </ViewSelectedBy>
-      <TableControl>
-        <TableHeaders>
-          <TableColumnHeader>
-            <Label>InstanceId</Label>
-            <Alignment>left</Alignment>
-          </TableColumnHeader>
-          <TableColumnHeader>
-            <Label>Title</Label>
-            <Alignment>left</Alignment>
-          </TableColumnHeader>
-          <TableColumnHeader>
-            <Label>PropertiesJson</Label>
-            <Alignment>left</Alignment>
-          </TableColumnHeader>
-        </TableHeaders>
-        <TableRowEntries>
-          <TableRowEntry>
-            <TableColumnItems>
-              <TableColumnItem>
-                <PropertyName>InstanceId</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>Title</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>PropertiesJson</PropertyName>
-              </TableColumnItem>
-            </TableColumnItems>
-          </TableRowEntry>
-        </TableRowEntries>
-      </TableControl>
-    </View>
-    <View>
       <Name>CanvasControl</Name>
       <ViewSelectedBy>
         <TypeName>OfficeDevPnP.Core.Pages.CanvasControl</TypeName>
@@ -1502,6 +1465,14 @@
             <Label>Column</Label>
             <Alignment>left</Alignment>
           </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Position</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+         <TableColumnHeader>
+            <Label>PropertiesJson</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -1520,6 +1491,12 @@
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>$_.Section.Columns.IndexOf($_.Column) + 1</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Order</PropertyName>
+              </TableColumnItem>
+             <TableColumnItem>
+                <PropertyName>PropertiesJson</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

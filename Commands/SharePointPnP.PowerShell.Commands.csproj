@@ -413,7 +413,6 @@
     <Compile Include="ClientSidePages\MoveClientSideComponent.cs" />
     <Compile Include="ClientSidePages\SetClientSideText.cs" />
     <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
-    <Compile Include="WebParts\GetClientSideWebPart.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
     <Compile Include="SiteDesigns\AddSiteDesign.cs" />
