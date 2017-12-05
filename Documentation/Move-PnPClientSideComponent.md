@@ -15,7 +15,7 @@ Moves a Client-Side Component to a different section/column
 Move-PnPClientSideComponent -Section <Int>
                             -InstanceId <GuidPipeBind>
                             -Page <ClientSidePagePipeBind>
-                            [-Order <Int>]
+                            [-Position <Int>]
                             [-Web <WebPipeBind>]
                             [-Connection <SPOnlineConnection>]
 ```
@@ -25,14 +25,14 @@ Move-PnPClientSideComponent -Section <Int>
 Move-PnPClientSideComponent -Column <Int>
                             -InstanceId <GuidPipeBind>
                             -Page <ClientSidePagePipeBind>
-                            [-Order <Int>]
+                            [-Position <Int>]
                             [-Web <WebPipeBind>]
                             [-Connection <SPOnlineConnection>]
 ```
 
-### Move with a column
+### Move within a column
 ```powershell
-Move-PnPClientSideComponent -Order <Int>
+Move-PnPClientSideComponent -Position <Int>
                             -InstanceId <GuidPipeBind>
                             -Page <ClientSidePagePipeBind>
                             [-Web <WebPipeBind>]
@@ -45,7 +45,7 @@ Move-PnPClientSideComponent -Section <Int>
                             -Column <Int>
                             -InstanceId <GuidPipeBind>
                             -Page <ClientSidePagePipeBind>
-                            [-Order <Int>]
+                            [-Position <Int>]
                             [-Web <WebPipeBind>]
                             [-Connection <SPOnlineConnection>]
 ```
@@ -78,10 +78,10 @@ Moves the specified component to the first section of the page into the second c
 
 ### ------------------EXAMPLE 4------------------
 ```powershell
-PS:> Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2 -Order 2
+PS:> Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2 -Position 2
 ```
 
-Moves the specified component to the first section of the page into the second column and sets the order value of the component to 2. Notice that is related to the other components. If you want to ensure a certain location of a component you will have to update all the order properties of the other components.
+Moves the specified component to the first section of the page into the second column and sets the column to position 2 in the list of webparts.
 
 ## PARAMETERS
 
@@ -109,18 +109,6 @@ Position: Named
 Accept pipeline input: True
 ```
 
-### -Order
-Change to order of the webpart in the column
-
-```yaml
-Type: Int
-Parameter Sets: Move to other column
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -Page
 The name of the page
 
@@ -131,6 +119,18 @@ Parameter Sets: (All)
 Required: True
 Position: 0
 Accept pipeline input: True
+```
+
+### -Position
+Change to order of the webpart in the column
+
+```yaml
+Type: Int
+Parameter Sets: Move to other column
+
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Section
@@ -158,7 +158,7 @@ Accept pipeline input: False
 ```
 
 ### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind

@@ -272,7 +272,6 @@
 ### [Get-PnPClientSideComponent](Get-PnPClientSideComponent.md)
 ### [Remove-PnPClientSideComponent](Remove-PnPClientSideComponent.md)
 ### [Set-PnPClientSideText](Set-PnPClientSideText.md)
-### [Get-PnPClientSideWebPart](Get-PnPClientSideWebPart.md)
 ### [Set-PnPClientSideWebPart](Set-PnPClientSideWebPart.md)
 ### [Get-PnPWebPart](Get-PnPWebPart.md)
 ### [Remove-PnPWebPart](Remove-PnPWebPart.md)

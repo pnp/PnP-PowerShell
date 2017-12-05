@@ -22,14 +22,14 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         Code = @"PS:> Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2",
         Remarks = @"Moves the specified component to the first section of the page into the second column.", SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2 -Order 2",
-        Remarks = @"Moves the specified component to the first section of the page into the second column and sets the order value of the component to 2. Notice that is related to the other components. If you want to ensure a certain location of a component you will have to update all the order properties of the other components.", SortOrder = 4)]
+        Code = @"PS:> Move-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Section 1 -Column 2 -Position 2",
+        Remarks = @"Moves the specified component to the first section of the page into the second column and sets the column to position 2 in the list of webparts.", SortOrder = 4)]
     public class MoveClientSideWebPart : PnPWebCmdlet
     {
         const string ParameterSet_SECTION = "Move to other section";
         const string ParameterSet_COLUMN = "Move to other column";
         const string ParameterSet_SECTIONCOLUMN = "Move to other section and column";
-        const string ParameterSet_ORDER = "Move with a column";
+        const string ParameterSet_POSITION = "Move within a column";
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page")]
         public ClientSidePagePipeBind Page;
@@ -48,8 +48,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_COLUMN, HelpMessage = "Change to order of the webpart in the column")]
         [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_SECTION, HelpMessage = "Change to order of the webpart in the column")]
         [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_SECTIONCOLUMN, HelpMessage = "Change to order of the webpart in the column")]
-        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName = ParameterSet_ORDER, HelpMessage = "Change to order of the webpart in the column")]
-        public int Order;
+        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName = ParameterSet_POSITION, HelpMessage = "Change to order of the webpart in the column")]
+        public int Position;
 
         protected override void ExecuteCmdlet()
         {
@@ -70,9 +70,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var column = control.Section.Columns[Column - 1];
                             if (column != control.Column)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey("Order"))
+                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
                                 {
-                                    control.Move(column, Order - 1);
+                                    control.MovePosition(column, Position);
                                 }
                                 else
                                 {
@@ -87,9 +87,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var section = clientSidePage.Sections[Section - 1];
                             if (section != control.Section)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey("Order"))
+                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
                                 {
-                                    control.Move(section, Order - 1);
+                                    control.MovePosition(section, Position);
                                 }
                                 else
                                 {
@@ -110,9 +110,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var column = section.Columns[Column - 1];
                             if (column != control.Column)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey("Order"))
+                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
                                 {
-                                    control.Move(column, Order - 1);
+                                    control.MovePosition(column, Position);
                                 }
                                 else
                                 {
@@ -122,9 +122,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             }
                             break;
                         }
-                    case ParameterSet_ORDER:
+                    case ParameterSet_POSITION:
                         {
-                            control.Move(control.Column, Order - 1);
+                            control.MovePosition(control.Column, Position);
                             updated = true;
                             break;
                         }

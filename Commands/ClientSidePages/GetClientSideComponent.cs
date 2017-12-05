@@ -1,7 +1,9 @@
 ﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
@@ -34,10 +36,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
             if(!MyInvocation.BoundParameters.ContainsKey("InstanceId"))
             {
-                WriteObject(clientSidePage.Controls, true);
+                WriteObject(Convert.ChangeType(clientSidePage.Controls, typeof(List<CanvasControl>)), true);
             } else
             {
-                WriteObject(clientSidePage.Controls.Where(c => c.InstanceId == InstanceId.Id), true);
+                WriteObject(clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId.Id));
             }
 
         }
