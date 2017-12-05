@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands
     {
         private Web _selectedWeb;
 
-        [Parameter(Mandatory = false, HelpMessage = "The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.")]
+        [Parameter(Mandatory = false, HelpMessage = "This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.")]
         [PnPParameter(Order = 99)]
         public WebPipeBind Web = new WebPipeBind();
 
