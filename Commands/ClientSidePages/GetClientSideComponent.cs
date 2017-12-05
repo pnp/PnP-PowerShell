@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
             if(!MyInvocation.BoundParameters.ContainsKey("InstanceId"))
             {
-                WriteObject(Convert.ChangeType(clientSidePage.Controls, typeof(List<CanvasControl>)), true);
+                WriteObject(clientSidePage.Controls, true);
             } else
             {
                 WriteObject(clientSidePage.Controls.FirstOrDefault(c => c.InstanceId == InstanceId.Id));
