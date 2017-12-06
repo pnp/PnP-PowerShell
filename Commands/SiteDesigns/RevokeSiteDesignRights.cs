@@ -26,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline =true, HelpMessage = "The site design to use.")]
         public TenantSiteDesignPipeBind Identity;
 
-        [Parameter(Mandatory = true, HelpMessage = "The principals to revoke.")]
+        [Parameter(Mandatory = true, HelpMessage = "One or more principals to revoke.")]
         public string[] Principals;
 
         protected override void ExecuteCmdlet()
