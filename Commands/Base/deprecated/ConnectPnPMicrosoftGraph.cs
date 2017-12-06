@@ -7,7 +7,7 @@ using ClientCredential = Microsoft.Identity.Client.ClientCredential;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Obsolete("This cmdlet has been deprecated and will be removed in the April 2018 release")]
+    [Obsolete("This cmdlet be removed in the April 2018 release. Use Connect-PnPOnline instead with the same parameters.")]
     [Cmdlet("Connect", "PnPMicrosoftGraph", DefaultParameterSetName = ParameterSet_SCOPE)]
     [CmdletHelp("Connect to the Microsoft Graph",
         "Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API",
@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Connect-PnPMicrosoftGraph -AppId '<id>' -AppSecret '<secrect>' -AADDomain 'contoso.onmicrosoft.com'",
+       Code = "PS:> Connect-PnPMicrosoftGraph -AppId '<id>' -AppSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'",
        Remarks = "Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.",
        SortOrder = 2)]
     public class ConnectPnPMicrosoftGraph : PSCmdlet
