@@ -47,7 +47,7 @@ Accept pipeline input: True
 ```
 
 ### -Principals
-The principals to revoke.
+One or more principals to revoke.
 
 ```yaml
 Type: String[]

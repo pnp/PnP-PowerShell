@@ -48,7 +48,7 @@ Accept pipeline input: True
 ```
 
 ### -Principals
-The principals to grant rights to.
+One or more principals to grant rights to.
 
 ```yaml
 Type: String[]

@@ -26,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline =true, HelpMessage = "The site design to use.")]
         public TenantSiteDesignPipeBind Identity;
 
-        [Parameter(Mandatory = true, HelpMessage = "The principals to grant rights to.")]
+        [Parameter(Mandatory = true, HelpMessage = "One or more principals to grant rights to.")]
         public string[] Principals;
 
         [Parameter(Mandatory = false, HelpMessage = "The rights to set. Defaults to 'View'")]
