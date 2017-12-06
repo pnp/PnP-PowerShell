@@ -408,6 +408,8 @@
   <ItemGroup>
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
     <Compile Include="ClientSidePages\RemoveClientSideComponent.cs" />
     <Compile Include="ClientSidePages\MoveClientSideComponent.cs" />
@@ -416,7 +418,8 @@
     <Compile Include="Enums\SiteWebTemplate.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
     <Compile Include="SiteDesigns\AddSiteDesign.cs" />
-    <Compile Include="SiteDesigns\SetSiteDesignRights.cs" />
+    <Compile Include="SiteDesigns\RevokeSiteDesignRights.cs" />
+    <Compile Include="SiteDesigns\GrantSiteDesignRights.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignRights.cs" />
     <Compile Include="SiteDesigns\RemoveSiteScript.cs" />
     <Compile Include="SiteDesigns\RemoveSiteDesign.cs" />

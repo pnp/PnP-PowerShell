@@ -34,8 +34,10 @@ namespace SharePointPnP.PowerShell.Commands
                 Description = Description,
                 Content = Content
             };
-            Tenant.CreateSiteScript(siteScriptCreationInfo);
+            var script = Tenant.CreateSiteScript(siteScriptCreationInfo);
+            ClientContext.Load(script);
             ClientContext.ExecuteQueryRetry();
+            WriteObject(script);
         }
     }
 }         
