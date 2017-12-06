@@ -285,8 +285,9 @@ Cmdlet|Description|Platforms
 **[Add&#8209;PnPSiteDesign](Add-PnPSiteDesign.md)** |Creates a new Site Design on the current tenant.|SharePoint Online
 **[Get&#8209;PnPSiteDesign](Get-PnPSiteDesign.md)** |Retrieve Site Designs that have been registered on the current tenant.|SharePoint Online
 **[Remove&#8209;PnPSiteDesign](Remove-PnPSiteDesign.md)** |Removes a Site Design|SharePoint Online
-**[Get&#8209;PnPSiteDesignRights](Get-PnPSiteDesignRights.md)** |Returns the principles with design rights on a specific Site Design|SharePoint Online
-**[Set&#8209;PnPSiteDesignRights](Set-PnPSiteDesignRights.md)** |Grants the specified principles rights to the site design.|SharePoint Online
+**[Get&#8209;PnPSiteDesignRights](Get-PnPSiteDesignRights.md)** |Returns the principals with design rights on a specific Site Design|SharePoint Online
+**[Grant&#8209;PnPSiteDesignRights](Grant-PnPSiteDesignRights.md)** |Grants the specified principals rights to use the site design.|SharePoint Online
+**[Revoke&#8209;PnPSiteDesignRights](Revoke-PnPSiteDesignRights.md)** |Revokes the specified principals rights to use the site design.|SharePoint Online
 **[Add&#8209;PnPSiteScript](Add-PnPSiteScript.md)** |Creates a new Site Script on the current tenant.|SharePoint Online
 **[Get&#8209;PnPSiteScript](Get-PnPSiteScript.md)** |Retrieve Site Scripts that have been registered on the current tenant.|SharePoint Online
 **[Remove&#8209;PnPSiteScript](Remove-PnPSiteScript.md)** |Removes a Site Script|SharePoint Online
