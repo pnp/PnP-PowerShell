@@ -11,7 +11,7 @@ Removes a Site Design
 ## SYNTAX 
 
 ```powershell
-Remove-PnPSiteDesign -Identity <GuidPipeBind>
+Remove-PnPSiteDesign -Identity <TenantSiteDesignPipeBind>
                      [-Force [<SwitchParameter>]]
                      [-Connection <SPOnlineConnection>]
 ```
@@ -43,7 +43,7 @@ Accept pipeline input: False
 The ID of the site design to remove
 
 ```yaml
-Type: GuidPipeBind
+Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
 
 Required: True

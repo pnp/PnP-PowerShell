@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands
     public class RemoveSiteDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "The ID of the site design to remove")]
-        public GuidPipeBind Identity;
+        public TenantSiteDesignPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "If specified you will not be asked to confirm removing the specified Site Design")]
         public SwitchParameter Force;

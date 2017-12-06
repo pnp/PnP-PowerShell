@@ -11,7 +11,7 @@ Removes a Site Script
 ## SYNTAX 
 
 ```powershell
-Remove-PnPSiteScript -Identity <GuidPipeBind>
+Remove-PnPSiteScript -Identity <TenantSiteScriptPipeBind>
                      [-Force [<SwitchParameter>]]
                      [-Connection <SPOnlineConnection>]
 ```
@@ -43,7 +43,7 @@ Accept pipeline input: False
 The ID of the Site Script to remove
 
 ```yaml
-Type: GuidPipeBind
+Type: TenantSiteScriptPipeBind
 Parameter Sets: (All)
 
 Required: True

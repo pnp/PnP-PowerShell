@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands
     public class GetSiteDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "If specified will retrieve the specified site design")]
-        public GuidPipeBind Identity;
+        public TenantSiteDesignPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands
             ClientContext.ExecuteQueryRetry();
             if (MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
-                var design = designs.Where(t => t.Id == Identity.Id);
+                var design = designs.FirstOrDefault(t => t.Id == Identity.Id);
                 WriteObject(design);
             }
             else

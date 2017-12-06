@@ -3,28 +3,35 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Set-PnPSiteDesignRights
+# Grant-PnPSiteDesignRights
 
 ## SYNOPSIS
-Grants the specified principles rights to the site design.
+Grants the specified principals rights to use the site design.
 
 ## SYNTAX 
 
 ```powershell
-Set-PnPSiteDesignRights [-Principles <String[]>]
-                        [-Rights <TenantSiteDesignPrincipalRights>]
-                        [-Identity <GuidPipeBind>]
-                        [-Connection <SPOnlineConnection>]
+Grant-PnPSiteDesignRights -Principals <String[]>
+                          -Identity <TenantSiteDesignPipeBind>
+                          [-Rights <TenantSiteDesignPrincipalRights>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Set-PnPSiteDesignRights -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -Principles "myuser@mydomain.com","myotheruser@mydomain.com"
+PS:> Grant-PnPSiteDesignRights -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
 ```
 
-Grants the specified principles View rights on the site design specified
+Grants the specified principals View rights on the site design specified
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Get-PnPSiteDesign -Title "MySiteDesign" -SiteScriptIds 438548fd-60dd-42cf-b843-2db506c8e259 -WebTemplate TeamSite | Grant-PnPSiteDesignRights -Principals "myuser@mydomain.com","myotheruser@mydomain.com"
+```
+
+Grants the specified principals View rights on the site design specified
 
 ## PARAMETERS
 
@@ -32,22 +39,22 @@ Grants the specified principles View rights on the site design specified
 The site design to use.
 
 ```yaml
-Type: GuidPipeBind
+Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
 Accept pipeline input: True
 ```
 
-### -Principles
-The principles to grant rights to.
+### -Principals
+The principals to grant rights to.
 
 ```yaml
 Type: String[]
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

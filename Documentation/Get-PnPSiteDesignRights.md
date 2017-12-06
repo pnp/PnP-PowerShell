@@ -6,12 +6,12 @@ schema: 2.0.0
 # Get-PnPSiteDesignRights
 
 ## SYNOPSIS
-Returns the principles with design rights on a specific Site Design
+Returns the principals with design rights on a specific Site Design
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPSiteDesignRights -Identity <GuidPipeBind>
+Get-PnPSiteDesignRights -Identity <TenantSiteDesignPipeBind>
                         [-Connection <SPOnlineConnection>]
 ```
 
@@ -22,7 +22,7 @@ Get-PnPSiteDesignRights -Identity <GuidPipeBind>
 PS:> Get-PnPSiteDesignRights -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
 ```
 
-Returns the principles with rights on a specific site design
+Returns the principals with rights on a specific site design
 
 ## PARAMETERS
 
@@ -30,7 +30,7 @@ Returns the principles with rights on a specific site design
 The ID of the Site Design to receive the rights for
 
 ```yaml
-Type: GuidPipeBind
+Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
 
 Required: True

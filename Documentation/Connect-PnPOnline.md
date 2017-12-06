@@ -228,6 +228,20 @@ PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $myacces
 
 This will authenticate you using the provided access token
 
+### ------------------EXAMPLE 11------------------
+```powershell
+PS:> Connect-PnPOnline -Scopes $arrayOfScopes
+```
+
+Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes
+
+### ------------------EXAMPLE 12------------------
+```powershell
+PS:> Connect-PnPOnline -AppId '<id>' -AppSecret '<secrect>' -AADDomain 'contoso.onmicrosoft.com'
+```
+
+Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.
+
 ## PARAMETERS
 
 ### -AADDomain

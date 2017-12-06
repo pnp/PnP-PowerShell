@@ -56,8 +56,10 @@ namespace SharePointPnP.PowerShell.Commands
                 WebTemplate = ((int)WebTemplate).ToString()
             };
 
-            Tenant.CreateSiteDesign(siteDesignInfo);
+            var design = Tenant.CreateSiteDesign(siteDesignInfo);
+            ClientContext.Load(design);
             ClientContext.ExecuteQueryRetry();
+            WriteObject(design);
         }
     }
 }         

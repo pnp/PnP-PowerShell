@@ -11,7 +11,7 @@ Retrieve Site Designs that have been registered on the current tenant.
 ## SYNTAX 
 
 ```powershell
-Get-PnPSiteDesign [-Identity <GuidPipeBind>]
+Get-PnPSiteDesign [-Identity <TenantSiteDesignPipeBind>]
                   [-Connection <SPOnlineConnection>]
 ```
 
@@ -37,7 +37,7 @@ Returns a specific registered site designs
 If specified will retrieve the specified site design
 
 ```yaml
-Type: GuidPipeBind
+Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
 
 Required: False

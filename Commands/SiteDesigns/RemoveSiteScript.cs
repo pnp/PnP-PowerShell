@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands
     public class RemoveSiteScript : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "The ID of the Site Script to remove")]
-        public GuidPipeBind Identity;
+        public TenantSiteScriptPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "If specified you will not be asked to confirm removing the specified Site Script")]
         public SwitchParameter Force;

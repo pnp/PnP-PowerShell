@@ -10,17 +10,17 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteDesignRights", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Returns the principles with design rights on a specific Site Design",
+    [CmdletHelp(@"Returns the principals with design rights on a specific Site Design",
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Get-PnPSiteDesignRights -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd",
-        Remarks = "Returns the principles with rights on a specific site design",
+        Remarks = "Returns the principals with rights on a specific site design",
         SortOrder = 1)]
     public class GetSiteDesignRights : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline =true, HelpMessage = "The ID of the Site Design to receive the rights for")]
-        public GuidPipeBind Identity;
+        public TenantSiteDesignPipeBind Identity;
         
         protected override void ExecuteCmdlet()
         {

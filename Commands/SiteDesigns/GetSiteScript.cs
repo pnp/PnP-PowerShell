@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
@@ -24,15 +25,31 @@ namespace SharePointPnP.PowerShell.Commands
     public class GetSiteScript : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "If specified will retrieve the specified site script")]
-        public GuidPipeBind Identity;
+        public TenantSiteScriptPipeBind Identity;
+
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "If specified will retrieve the site scripts for this design")]
+        public TenantSiteDesignPipeBind SiteDesign;
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(Identity)))
             {
                 var script = Tenant.GetSiteScript(ClientContext, Identity.Id);
                 script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version);
                 WriteObject(script);
+            }
+            else if (MyInvocation.BoundParameters.ContainsKey(nameof(SiteDesign)))
+            {
+                var scripts = new List<TenantSiteScript>();
+                var design = Tenant.GetSiteDesign(ClientContext, SiteDesign.Id);
+                design.EnsureProperty(d => d.SiteScriptIds);
+                foreach (var scriptId in design.SiteScriptIds)
+                {
+                    var script = Tenant.GetSiteScript(ClientContext, scriptId);
+                    script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version);
+                    scripts.Add(script);
+                }
+                WriteObject(scripts, true);
             }
             else
             {
