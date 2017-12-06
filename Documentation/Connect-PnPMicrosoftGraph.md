@@ -36,7 +36,7 @@ Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsof
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Connect-PnPMicrosoftGraph -AppId '<id>' -AppSecret '<secrect>' -AADDomain 'contoso.onmicrosoft.com'
+PS:> Connect-PnPMicrosoftGraph -AppId '<id>' -AppSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'
 ```
 
 Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.
