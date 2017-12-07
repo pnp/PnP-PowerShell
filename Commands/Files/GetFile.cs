@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "Retrieves the file and downloads it to the current folder",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor",
+        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile",
         Remarks = "Retrieves the file and downloads it to c:\\temp\\company.spcolor",
         SortOrder = 2)]
     [CmdletExample(
@@ -31,7 +31,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "Retrieves the file and returns it as a ListItem object",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor",
+        Code = @"PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile",
         Remarks = "Retrieves the file by site relative URL and downloads it to c:\\temp\\company.spcolor",
         SortOrder = 6)]
 
