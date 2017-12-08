@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Pages;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,3 +48,4 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         }
     }
 }
+#endif

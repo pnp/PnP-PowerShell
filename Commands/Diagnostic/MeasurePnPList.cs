@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !SP2013
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
@@ -12,7 +13,8 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 {
     [Cmdlet(VerbsDiagnostic.Measure, "PnPList")]
     [CmdletHelp("Returns statistics on the list object",
-        Category = CmdletHelpCategory.Diagnostic)]
+        Category = CmdletHelpCategory.Diagnostic,
+        SupportedPlatform = CmdletSupportedPlatform.Online|CmdletSupportedPlatform.SP2016)]
     public class MeasurePnPList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -164,3 +166,4 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         }
     }
 }
+#endif

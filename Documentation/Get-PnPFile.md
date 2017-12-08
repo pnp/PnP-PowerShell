@@ -56,7 +56,7 @@ Retrieves the file and downloads it to the current folder
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor
+PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile
 ```
 
 Retrieves the file and downloads it to c:\temp\company.spcolor
@@ -84,7 +84,7 @@ Retrieves the file and returns it as a ListItem object
 
 ### ------------------EXAMPLE 6------------------
 ```powershell
-PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor
+PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile
 ```
 
 Retrieves the file by site relative URL and downloads it to c:\temp\company.spcolor

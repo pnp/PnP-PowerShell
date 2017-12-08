@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !SP2013
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
@@ -11,7 +12,8 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 {
     [Cmdlet(VerbsDiagnostic.Measure, "PnPWeb")]
     [CmdletHelp("Returns statistics on the web object",
-        Category = CmdletHelpCategory.Diagnostic)]
+        Category = CmdletHelpCategory.Diagnostic,
+         SupportedPlatform = CmdletSupportedPlatform.Online|CmdletSupportedPlatform.SP2016)]
     public class MeasurePnPWeb : PnPCmdlet
     {
         private Expression<Func<Web, object>>[] _retrievalExpressions;
@@ -150,3 +152,4 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         }
     }
 }
+#endif
