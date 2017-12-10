@@ -416,6 +416,7 @@
     <Compile Include="ClientSidePages\SetClientSideText.cs" />
     <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
+    <Compile Include="Diagnostic\MeasureResponseTimeMode.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
     <Compile Include="SiteDesigns\AddSiteDesign.cs" />
     <Compile Include="SiteDesigns\RevokeSiteDesignRights.cs" />
