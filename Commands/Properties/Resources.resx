@@ -298,4 +298,16 @@
   <data name="RemoveDefaultClassification0" xml:space="preserve">
     <value>The classification '{0}' you are trying remove is currently set as the default classification. Do you want to remove this classification? It will also remove this as  the default classification</value>
   </data>
+  <data name="RemoveSiteDesign" xml:space="preserve">
+    <value>Remove site design?</value>
+  </data>
+  <data name="RemoveSiteScript" xml:space="preserve">
+    <value>Remove site script?</value>
+  </data>
+  <data name="RemoveWebPartWithTitle0" xml:space="preserve">
+    <value>Remove Web Part with title '{0}'?</value>
+  </data>
+  <data name="RemoveComponentWithInstanceId0" xml:space="preserve">
+    <value>Remove component with instance id '{0}'?</value>
+  </data>
 </root>

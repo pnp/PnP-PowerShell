@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
+using System.Web;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -57,12 +58,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public void RestoreCachedContext(string url)
         {
-            Context = ContextCache.FirstOrDefault(c => c.Url == url);
+            Context = ContextCache.FirstOrDefault(c => HttpUtility.UrlEncode(c.Url) == HttpUtility.UrlEncode(url));
         }
 
         internal void CacheContext()
         {
-            var c = ContextCache.FirstOrDefault(cc => cc.Url == Context.Url);
+            var c = ContextCache.FirstOrDefault(cc => HttpUtility.UrlEncode(cc.Url) == HttpUtility.UrlEncode(Context.Url));
             if (c == null)
             {
                 ContextCache.Add(Context);
@@ -71,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public ClientContext CloneContext(string url)
         {
-            var context = ContextCache.FirstOrDefault(c => c.Url == url);
+            var context = ContextCache.FirstOrDefault(c => HttpUtility.UrlEncode(c.Url) == HttpUtility.UrlEncode(url));
             if (context == null)
             {
                 context = Context.Clone(url);
@@ -83,7 +84,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static ClientContext GetCachedContext(string url)
         {
-            return ContextCache.FirstOrDefault(c => c.Url == url);
+            return ContextCache.FirstOrDefault(c => HttpUtility.UrlEncode(c.Url) == HttpUtility.UrlEncode(url));
         }
 
         internal static void ClearContextCache()

@@ -6,7 +6,7 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsData.Restore, "PnpRecycleBinItem")]
+    [Cmdlet(VerbsData.Restore, "PnPRecycleBinItem")]
     [CmdletHelp("Restores the provided recycle bin item to its original location",
         Category = CmdletHelpCategory.RecycleBin)]
     [CmdletExample(

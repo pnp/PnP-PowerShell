@@ -10,21 +10,7 @@ Set Auditing setting for a site
 
 ## SYNTAX 
 
-### EnableAll
-```powershell
-Set-PnPAuditing [-EnableAll [<SwitchParameter>]]
-                [-RetentionTime <Int>]
-                [-TrimAuditLog [<SwitchParameter>]]
-                [-Connection <SPOnlineConnection>]
-```
-
-### DisableAll
-```powershell
-Set-PnPAuditing [-DisableAll [<SwitchParameter>]]
-                [-Connection <SPOnlineConnection>]
-```
-
-### Other
+### Specific flags
 ```powershell
 Set-PnPAuditing [-RetentionTime <Int>]
                 [-TrimAuditLog [<SwitchParameter>]]
@@ -35,6 +21,20 @@ Set-PnPAuditing [-RetentionTime <Int>]
                 [-EditContentTypesColumns [<SwitchParameter>]]
                 [-SearchContent [<SwitchParameter>]]
                 [-EditUsersPermissions [<SwitchParameter>]]
+                [-Connection <SPOnlineConnection>]
+```
+
+### Enable all
+```powershell
+Set-PnPAuditing -EnableAll [<SwitchParameter>]
+                [-RetentionTime <Int>]
+                [-TrimAuditLog [<SwitchParameter>]]
+                [-Connection <SPOnlineConnection>]
+```
+
+### Disable All
+```powershell
+Set-PnPAuditing -DisableAll [<SwitchParameter>]
                 [-Connection <SPOnlineConnection>]
 ```
 
@@ -53,7 +53,6 @@ PS:> Set-PnPAuditing -DisableAll
 ```
 
 Disables all auditing settings for the current site
-                    This also disables the automatic trimming of the audit log
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
@@ -75,19 +74,20 @@ PS:> Set-PnPAuditing -RetentionTime 7 -CheckOutCheckInItems -MoveCopyItems -Sear
 ```
 
 Sets the audit log trimming to 7 days, this also enables the automatic trimming of the audit log.
-                    Do auditing for:
-                    - Checking out or checking in items
-                    - Moving or copying items to another location in the site
-                    - Searching site content
+
+Do auditing for:
+- Checking out or checking in items
+- Moving or copying items to another location in the site
+- Searching site content
 
 ## PARAMETERS
 
 ### -CheckOutCheckInItems
-
+Audit checking out or checking in items
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named
@@ -95,11 +95,11 @@ Accept pipeline input: False
 ```
 
 ### -DeleteRestoreItems
-
+Audit deleting or restoring items
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named
@@ -107,23 +107,23 @@ Accept pipeline input: False
 ```
 
 ### -DisableAll
-
+Disable all audit flags
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: DisableAll
+Parameter Sets: Disable All
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```
 
 ### -EditContentTypesColumns
-
+Audit editing content types and columns
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named
@@ -131,11 +131,11 @@ Accept pipeline input: False
 ```
 
 ### -EditItems
-
+Audit editing items
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named
@@ -143,11 +143,11 @@ Accept pipeline input: False
 ```
 
 ### -EditUsersPermissions
-
+Audit editing users and permissions
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named
@@ -155,23 +155,23 @@ Accept pipeline input: False
 ```
 
 ### -EnableAll
-
+Enable all audit flags
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: EnableAll
+Parameter Sets: Enable all
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```
 
 ### -MoveCopyItems
-
+Audit moving or copying items to another location in the site.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named
@@ -179,11 +179,11 @@ Accept pipeline input: False
 ```
 
 ### -RetentionTime
-
+Set the retention time
 
 ```yaml
 Type: Int
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named
@@ -191,11 +191,11 @@ Accept pipeline input: False
 ```
 
 ### -SearchContent
-
+Audit searching site content
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named
@@ -203,11 +203,11 @@ Accept pipeline input: False
 ```
 
 ### -TrimAuditLog
-
+Trim the audit log
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Other
+Parameter Sets: Specific flags
 
 Required: False
 Position: Named

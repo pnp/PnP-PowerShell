@@ -9,11 +9,29 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletHelp("Add/uploads an available app to the app catalog",
         Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online,
         OutputType = typeof(AppMetadata))]
-    [CmdletExample(Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg", Remarks = @"This will upload the specified app package to the app catalog", SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg",
+        Remarks = @"This will upload the specified app package to the app catalog", SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Publish",
+        Remarks = @"This will upload the specified app package to the app catalog and deploy/trust it at the same time.", SortOrder = 2)]
     public class AddApp : PnPCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
+        private const string ParameterSet_ADD = "Add only";
+        private const string ParameterSet_PUBLISH = "Add and Publish";
+
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ADD, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PUBLISH, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
         public string Path;
+
+        [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH, HelpMessage = "This will deploy/trust an app into the app catalog")]
+        public SwitchParameter Publish;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH)]
+        public SwitchParameter SkipFeatureDeployment;
+
+        [Parameter(Mandatory = false, HelpMessage = "Overwrites the existing app package if it already exists")]
+        public SwitchParameter Overwrite;
 
         protected override void ExecuteCmdlet()
         {
@@ -28,9 +46,27 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
             var manager = new AppManager(ClientContext);
 
-            var result = manager.Add(bytes, fileInfo.Name);
+            var result = manager.Add(bytes, fileInfo.Name, Overwrite);
 
-            WriteObject(result);
+            try
+            {
+
+                if (Publish)
+                {
+                    if (manager.Deploy(result, SkipFeatureDeployment))
+                    {
+                        result = manager.GetAvailable(result.Id);
+                    }
+
+                }
+                WriteObject(result);
+            }
+            catch
+            {
+                // Exception occurred rolling back
+                manager.Remove(result);
+                throw;
+            }
         }
     }
 }

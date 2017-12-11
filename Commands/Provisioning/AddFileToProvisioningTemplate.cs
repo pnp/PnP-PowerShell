@@ -18,12 +18,21 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
-       Remarks = "Adds a file to an in-memory PnP Provisioning Template",
+       Remarks = "Adds a file to a PnP Provisioning Template",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
-       Remarks = "Adds a file to an in-memory PnP Provisioning Template with a custom container for the file",
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder",
+       Remarks = "Adds a file reference to a PnP Provisioning XML Template",
        SortOrder = 2)]
+    [CmdletExample(
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source ""./myfile.png"" -Folder ""folderinsite"" -FileLevel Published -FileOverwrite:$false",
+       Remarks = "Adds a file to a PnP Provisioning Template, specifies the level as Published and defines to not overwrite the file if it exists in the site.",
+       SortOrder = 3)]
+    [CmdletExample(
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
+       Remarks = "Adds a file to a PnP Provisioning Template with a custom container for the file",
+       SortOrder = 4)]
+
     public class AddFileToProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML provisioning template to read from, optionally including full path.")]
@@ -38,6 +47,12 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false, Position = 3, HelpMessage = "The target Container for the file to add to the in-memory template, optional argument.")]
         public string Container;
 
+        [Parameter(Mandatory = false, Position = 4, HelpMessage = "The level of the files to add. Defaults to Published")]
+        public FileLevel FileLevel = FileLevel.Published;
+
+        [Parameter(Mandatory = false, Position = 5, HelpMessage = "Set to overwrite in site, Defaults to true")]
+        public SwitchParameter FileOverwrite = true;
+
         [Parameter(Mandatory = false, Position = 4, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template.")]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
@@ -46,6 +61,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+            }
+            if(!System.IO.Path.IsPathRooted(Source))
+            {
+                Source = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Source);
             }
             // Load the template
             var template = LoadProvisioningTemplate
@@ -77,7 +96,8 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 {
                     Src = source,
                     Folder = Folder,
-                    Overwrite = true,
+                    Level = FileLevel,
+                    Overwrite = FileOverwrite,
                 });
 
                 // Determine the output file name and path
@@ -89,7 +109,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 var extension = new FileInfo(Path).Extension.ToLowerInvariant();
                 if (extension == ".pnp")
                 {
-                    XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(outPath, fileSystemConnector));
+                    var provider = new XMLOpenXMLTemplateProvider(template.Connector as OpenXMLConnector);
                     var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                     provider.SaveAs(template, templateFileName, formatter, TemplateProviderExtensions);

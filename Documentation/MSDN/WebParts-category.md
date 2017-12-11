@@ -1,6 +1,10 @@
 # Web Parts 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
+**[Get&#8209;PnPClientSideComponent](Get-PnPClientSideComponent.md)** |Retrieve one or more Client-Side components from a page|SharePoint Online
+**[Remove&#8209;PnPClientSideComponent](Remove-PnPClientSideComponent.md)** |Removes a Client-Side component from a page|SharePoint Online
+**[Set&#8209;PnPClientSideText](Set-PnPClientSideText.md)** |Set Client-Side Text Component properties|SharePoint Online
+**[Set&#8209;PnPClientSideWebPart](Set-PnPClientSideWebPart.md)** |Set Client-Side Web Part properties|SharePoint Online
 **[Get&#8209;PnPWebPart](Get-PnPWebPart.md)** |Returns a webpart definition object|All
 **[Remove&#8209;PnPWebPart](Remove-PnPWebPart.md)** |Removes a webpart from a page|All
 **[Get&#8209;PnPWebPartProperty](Get-PnPWebPartProperty.md)** |Returns a web part property|All

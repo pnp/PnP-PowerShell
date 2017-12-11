@@ -15,7 +15,9 @@ Add-PnPFileToProvisioningTemplate -Path <String>
                                   -Source <String>
                                   -Folder <String>
                                   [-Container <String>]
+                                  [-FileLevel <FileLevel>]
                                   [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                                  [-FileOverwrite [<SwitchParameter>]]
 ```
 
 ## EXAMPLES
@@ -25,14 +27,28 @@ Add-PnPFileToProvisioningTemplate -Path <String>
 PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder
 ```
 
-Adds a file to an in-memory PnP Provisioning Template
+Adds a file to a PnP Provisioning Template
 
 ### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Add-PnPFileToProvisioningTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder
+```
+
+Adds a file reference to a PnP Provisioning XML Template
+
+### ------------------EXAMPLE 3------------------
+```powershell
+PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source "./myfile.png" -Folder "folderinsite" -FileLevel Published -FileOverwrite:$false
+```
+
+Adds a file to a PnP Provisioning Template, specifies the level as Published and defines to not overwrite the file if it exists in the site.
+
+### ------------------EXAMPLE 4------------------
 ```powershell
 PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container
 ```
 
-Adds a file to an in-memory PnP Provisioning Template with a custom container for the file
+Adds a file to a PnP Provisioning Template with a custom container for the file
 
 ## PARAMETERS
 
@@ -45,6 +61,30 @@ Parameter Sets: (All)
 
 Required: False
 Position: 3
+Accept pipeline input: False
+```
+
+### -FileLevel
+The level of the files to add. Defaults to Published
+
+```yaml
+Type: FileLevel
+Parameter Sets: (All)
+
+Required: False
+Position: 4
+Accept pipeline input: False
+```
+
+### -FileOverwrite
+Set to overwrite in site, Defaults to true
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: 5
 Accept pipeline input: False
 ```
 

@@ -6,6 +6,10 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using Microsoft.SharePoint.Client.Taxonomy;
+using SharePointPnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
@@ -77,7 +81,26 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false)]
         public SwitchParameter UseWebDav;
 
-        [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names")]
+        [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names." +
+                                                     "\n\nSingle line of text: -Values @{\"Title\" = \"Title New\"}" +
+                                                     "\n\nMultiple lines of text: -Values @{\"MultiText\" = \"New text\\n\\nMore text\"}" +
+                                                     "\n\nRich text: -Values @{\"MultiText\" = \"<strong>New</strong> text\"}" +
+             "\n\nChoice: -Values @{\"Choice\" = \"Value 1\"}" +
+             "\n\nNumber: -Values @{\"Number\" = \"10\"}" +
+             "\n\nCurrency: -Values @{\"Number\" = \"10\"}" +
+             "\n\nCurrency: -Values @{\"Currency\" = \"10\"}" +
+             "\n\nDate and Time: -Values @{\"DateAndTime\" = \"03/10/2015 14:16\"}" +
+             "\n\nLookup (id of lookup value): -Values @{\"Lookup\" = \"2\"}" +
+             "\n\nMulti value lookup (id of lookup values as array 1): -Values @{\"MultiLookupField\" = \"1\",\"2\"}" +
+             "\n\nMulti value lookup (id of lookup values as array 2): -Values @{\"MultiLookupField\" = 1,2}" +
+             "\n\nMulti value lookup (id of lookup values as string): -Values @{\"MultiLookupField\" = \"1,2\"}" +
+             "\n\nYes/No: -Values @{\"YesNo\" = $false}" +
+             "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"Person\" = \"user1@domain.com\",\"21\"}" +
+             "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}" +
+             "\n\nManaged Metadata (single value with id of term): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
+             "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}" +
+             "\n\nManaged Metadata (multiple values with ids of terms): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\",\"52d88107-c2a8-4bf0-adfa-04bc2305b593\"}" +
+             "\n\nHyperlink or Picture: -Values @{\"Hyperlink\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
 
         [Parameter(Mandatory = false, HelpMessage = "Use to assign a ContentType to the file.")]
@@ -164,14 +187,15 @@ namespace SharePointPnP.PowerShell.Commands.Files
             {
                 var item = file.ListItemAllFields;
 
-                foreach (var key in Values.Keys)
-                {
-                    item[key as string] = Values[key];
-                }
-
-                item.Update();
-
-                ClientContext.ExecuteQueryRetry();
+                ListItemHelper.UpdateListItem(item, Values, false,
+                    (warning) =>
+                    {
+                        WriteWarning(warning);
+                    },
+                    (terminatingErrorMessage, terminatingErrorCode) =>
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
+                    });
             }
             if (ContentType != null)
             {
