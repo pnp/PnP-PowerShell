@@ -12,6 +12,7 @@ Add/uploads an available app to the app catalog
 
 ```powershell
 Add-PnPApp -Path <String>
+           [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -37,10 +38,22 @@ Position: 0
 Accept pipeline input: True
 ```
 
+### -Connection
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ## OUTPUTS
 
 ### OfficeDevPnP.Core.ALM.AppMetadata
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

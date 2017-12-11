@@ -15,6 +15,7 @@ Sets a taxonomy term value in a listitem field
 Set-PnPTaxonomyFieldValue -ListItem <ListItem>
                           -InternalFieldName <String>
                           [-Terms <Hashtable>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ### ITEM
@@ -23,6 +24,7 @@ Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
                           -ListItem <ListItem>
                           -InternalFieldName <String>
                           [-Label <String>]
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ### PATH
@@ -30,6 +32,7 @@ Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
 Set-PnPTaxonomyFieldValue -TermPath <String>
                           -ListItem <ListItem>
                           -InternalFieldName <String>
+                          [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -129,6 +132,18 @@ Position: Named
 Accept pipeline input: False
 ```
 
-# RELATED LINKS
+### -Connection
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

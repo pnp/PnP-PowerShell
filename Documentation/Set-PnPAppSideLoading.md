@@ -13,11 +13,13 @@ Enables the App SideLoading Feature on a site
 ### On
 ```powershell
 Set-PnPAppSideLoading -On [<SwitchParameter>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ### Off
 ```powershell
 Set-PnPAppSideLoading -Off [<SwitchParameter>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -62,6 +64,18 @@ Position: Named
 Accept pipeline input: False
 ```
 
-# RELATED LINKS
+### -Connection
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

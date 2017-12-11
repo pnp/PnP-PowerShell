@@ -53,6 +53,6 @@ Accept pipeline input: False
 
 Outputs a JSON formatted string
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

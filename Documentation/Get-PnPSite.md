@@ -13,6 +13,7 @@ Returns the current site collection from the context.
 ### 
 ```powershell
 Get-PnPSite [-Includes <String[]>]
+            [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -38,10 +39,22 @@ Position: 0
 Accept pipeline input: False
 ```
 
+### -Connection
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: SPOnlineConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ## OUTPUTS
 
 ### [Microsoft.SharePoint.Client.Site](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.site.aspx)
 
-# RELATED LINKS
+## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)
