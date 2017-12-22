@@ -55,7 +55,7 @@ if($credentials -eq $null -or $csvConfig -eq $null)
     exit 1
 }
 
-# Iterates over the csv confuguration template rows and creates site collections or sub sites.
+# Iterates over the csv configuration template rows and creates site collections or sub sites.
 foreach ($item in $csvConfig) 
 {
     $tenantUrl = $item.RootUrl -replace ".sharepoint.com.+", ".sharepoint.com"
