@@ -119,12 +119,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     isDirty = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("Hidden") && Hidden != hidden)
-                {
-                    list.Hidden = Hidden;
-                    isDirty = true;
-                }
-
                 if (isDirty)
                 {
                     list.Update();
