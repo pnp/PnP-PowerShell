@@ -475,6 +475,8 @@
     <Compile Include="Files\RenameFile.cs" />
     <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
     <Compile Include="Files\RenameFolder.cs" />
+    <Compile Include="Graph\GetUnifiedGroupOwners.cs" />
+    <Compile Include="Graph\GetUnifiedGroupMembers.cs" />
     <Compile Include="Graph\UpdateSiteClassification.cs" />
     <Compile Include="Graph\RemoveSiteClassification.cs" />
     <Compile Include="Graph\DisableSiteClassification.cs" />
