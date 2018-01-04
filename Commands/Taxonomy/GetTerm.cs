@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
@@ -19,13 +19,17 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
          Remarks = @"Returns all term in the termset ""Departments"" which is in the group ""Corporate"" from the site collection termstore",
          SortOrder = 0)]
     [CmdletExample(
-         Code = @"PS:> Get-PnPTermSet -Identity ""Finance"" -TermSet ""Departments"" -TermGroup ""Corporate""",
+         Code = @"PS:> Get-PnPTerm -Identity ""Finance"" -TermSet ""Departments"" -TermGroup ""Corporate""",
          Remarks = @"Returns the term named ""Finance"" in the termset ""Departments"" from the termgroup called ""Corporate"" from the site collection termstore",
          SortOrder = 1)]
     [CmdletExample(
-         Code = @"PS:> Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermSet ""Departments"" -TermGroup ""Corporate""",
-         Remarks = @"Returns the termset named with the given id, from the ""Departments"" from termgroup called ""Corporate"" from the site collection termstore",
+         Code = @"PS:> Get-PnPTerm -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermSet ""Departments"" -TermGroup ""Corporate""",
+         Remarks = @"Returns the term named with the given id, from the ""Departments"" termset in a term group called ""Corporate"" from the site collection termstore",
          SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPTerm -Identity ""Small Finance"" -TermSet ""Departments"" -TermGroup ""Corporate"" -Recursive",
+        Remarks = @"Returns the term named ""Small Finance"", from the ""Departments"" termset in a term group called ""Corporate"" from the site collection termstore even if it's a subterm below ""Finance""",
+        SortOrder = 2)]
     public class GetTerm : PnPRetrievalsCmdlet<Term>
     {
         [Parameter(Mandatory = false, HelpMessage = "The Id or Name of a Term")]
@@ -39,6 +43,9 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
 
         [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
+
+        [Parameter(Mandatory = false, HelpMessage = "Find the first term recursivly matching the label in a term hierarchy.")]
+        public SwitchParameter Recursive;
 
         protected override void ExecuteCmdlet()
         {
@@ -95,7 +102,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             }
             if (Identity != null)
             {
-                Term term;
+                Term term = null;
                 if (Identity.IdValue != Guid.Empty)
                 {
                     term = termSet.Terms.GetById(Identity.IdValue);
@@ -103,7 +110,27 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                 else
                 {
                     var termName = TaxonomyExtensions.NormalizeName(Identity.StringValue);
-                    term = termSet.Terms.GetByName(termName);
+                    if (!Recursive)
+                    {
+                        term = termSet.Terms.GetByName(termName);
+                    }
+                    else
+                    {
+                        var lmi = new LabelMatchInformation(ClientContext)
+                        {
+                            TrimUnavailable = true,
+                            TermLabel = termName
+                        };
+
+                        var termMatches = termSet.GetTerms(lmi);
+                        ClientContext.Load(termMatches);
+                        ClientContext.ExecuteQueryRetry();
+
+                        if (termMatches.AreItemsAvailable)
+                        {
+                            term = termMatches.FirstOrDefault();
+                        }
+                    }
                 }
                 ClientContext.Load(term, RetrievalExpressions);
                 ClientContext.ExecuteQueryRetry();
@@ -115,7 +142,6 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                 var terms = ClientContext.LoadQuery(query);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(terms, true);
-
             }
         }
     }
