@@ -146,6 +146,8 @@
 ### [New-PnPUnifiedGroup](New-PnPUnifiedGroup.md)
 ### [Remove-PnPUnifiedGroup](Remove-PnPUnifiedGroup.md)
 ### [Set-PnPUnifiedGroup](Set-PnPUnifiedGroup.md)
+### [Get-PnPUnifiedGroupMembers](Get-PnPUnifiedGroupMembers.md)
+### [Get-PnPUnifiedGroupOwners](Get-PnPUnifiedGroupOwners.md)
 ## [Provisioning](Provisioning-category.md)
 ### [Add-PnPDataRowsToProvisioningTemplate](Add-PnPDataRowsToProvisioningTemplate.md)
 ### [Remove-PnPFileFromProvisioningTemplate](Remove-PnPFileFromProvisioningTemplate.md)

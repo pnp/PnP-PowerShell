@@ -16,6 +16,7 @@ Get-PnPTerm -TermSet <Id, Title or TaxonomyItem>
             -TermGroup <Id, Title or TermGroup>
             [-Identity <Id, Name or Object>]
             [-TermStore <Id, Name or Object>]
+            [-Recursive [<SwitchParameter>]]
             [-Includes <String[]>]
             [-Connection <SPOnlineConnection>]
 ```
@@ -31,17 +32,24 @@ Returns all term in the termset "Departments" which is in the group "Corporate" 
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPTermSet -Identity "Finance" -TermSet "Departments" -TermGroup "Corporate"
+PS:> Get-PnPTerm -Identity "Finance" -TermSet "Departments" -TermGroup "Corporate"
 ```
 
 Returns the term named "Finance" in the termset "Departments" from the termgroup called "Corporate" from the site collection termstore
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-PS:> Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermSet "Departments" -TermGroup "Corporate"
+PS:> Get-PnPTerm -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermSet "Departments" -TermGroup "Corporate"
 ```
 
-Returns the termset named with the given id, from the "Departments" from termgroup called "Corporate" from the site collection termstore
+Returns the term named with the given id, from the "Departments" termset in a term group called "Corporate" from the site collection termstore
+
+### ------------------EXAMPLE 4------------------
+```powershell
+PS:> Get-PnPTerm -Identity "Small Finance" -TermSet "Departments" -TermGroup "Corporate" -Recursive
+```
+
+Returns the term named "Small Finance", from the "Departments" termset in a term group called "Corporate" from the site collection termstore even if it's a subterm below "Finance"
 
 ## PARAMETERS
 
@@ -66,6 +74,18 @@ Parameter Sets:
 
 Required: False
 Position: 0
+Accept pipeline input: False
+```
+
+### -Recursive
+Find the first term recursivly matching the label in a term hierarchy.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 
