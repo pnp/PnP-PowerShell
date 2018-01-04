@@ -24,6 +24,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
          Code = @"Set-PnPList -Identity ""Demo Library"" -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5",
          Remarks = "Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.",
          SortOrder = 4)]
+    [CmdletExample(
+         Code = @"Set-PnPList -Identity ""Demo List"" -Hidden $true",
+         Remarks = "Hides the list from the SharePoint web interface",
+         SortOrder = 5)]
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The ID, Title or Url of the list.")]
@@ -63,6 +67,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Maximum minor versions to keep")]
         public uint MinorVersions = 10;
 
+        [Parameter(Mandatory = false, HelpMessage = "Make this list hidden or visible in the SharePoint web interface. Set to $true to make it hidden, $false to make it visible.")]
+        public bool Hidden = false;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(SelectedWeb);
@@ -88,10 +95,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     isDirty = true;
                 }
 
-                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions);
+                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden);
 
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
+                var hidden = list.Hidden;
 
                 if (MyInvocation.BoundParameters.ContainsKey("EnableVersioning") && EnableVersioning != enableVersioning)
                 {
@@ -102,6 +110,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (MyInvocation.BoundParameters.ContainsKey("EnableMinorVersions") && EnableMinorVersions != enableMinorVersions)
                 {
                     list.EnableMinorVersions = EnableMinorVersions;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("Hidden") && Hidden != hidden)
+                {
+                    list.Hidden = Hidden;
                     isDirty = true;
                 }
 
