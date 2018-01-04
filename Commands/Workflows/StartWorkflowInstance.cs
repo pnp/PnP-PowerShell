@@ -14,40 +14,42 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
     [CmdletHelp("Starts a workflow instance on a list item",
         Category = CmdletHelpCategory.Workflows)]
     [CmdletExample(
-        Code = @"Start-PnPWorkflowInstance -Name 'WorkflowName' ", 
-        Remarks = "Stops the workflow instance",
+        Code = @"PS:> Start-PnPWorkflowInstance -Name 'WorkflowName' -ListItem $item ", 
+        Remarks = "Starts a workflow instance on the specified list item",
         SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Start-PnPWorkflowInstance -Name 'WorkflowName' -ListItem 2 ",
+        Remarks = "Starts a workflow instance on the specified list item",
+        SortOrder = 2)]
     public class StartWorkflowInstance : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The workflow subscription to start", Position = 0)]
         public WorkflowSubscriptionPipeBind Subscription;
 
         [Parameter(Mandatory = true, HelpMessage = "The list item to start the workflow against", Position = 1)]
-        public ListItemPipeBind ListItemIdentity;
-
-    
+        public ListItemPipeBind ListItem;
 
         protected override void ExecuteCmdlet()
         {
             int ListItemID;
-            if (ListItemIdentity != null)
+            if (ListItem != null)
             {
-                if (ListItemIdentity.Id != uint.MinValue)
+                if (ListItem.Id != uint.MinValue)
                 {
-                    ListItemID = (int)ListItemIdentity.Id;
+                    ListItemID = (int)ListItem.Id;
                 }
-                else if (ListItemIdentity.Item != null)
+                else if (ListItem.Item != null)
                 {
-                    ListItemID = ListItemIdentity.Item.Id;
+                    ListItemID = ListItem.Item.Id;
                 }
                 else
                 {
-                    throw new PSArgumentException("No Valid ListItem found in supplied ListItemPipeBind");
+                    throw new PSArgumentException("No valid list item specified.");
                 }
             }
             else
             {
-                throw new PSArgumentException("ListItemIdentity required");
+                throw new PSArgumentException("List Item is required");
             }
             WorkflowServicesManager workflowServicesManager = new WorkflowServicesManager(ClientContext, SelectedWeb);
             WorkflowInstanceService instanceService = workflowServicesManager.GetWorkflowInstanceService();

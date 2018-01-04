@@ -21,7 +21,7 @@ Add-PnPWorkflowDefinition -Definition <WorkflowDefinition>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Add-PnPWorkflowDefinition -Definition $wfdef
+PS:> Add-PnPWorkflowDefinition -Definition $wfdef
 ```
 
 Adds an existing workflow definition, retrieved by Get-PnPWorkflowDefinition, to a site.

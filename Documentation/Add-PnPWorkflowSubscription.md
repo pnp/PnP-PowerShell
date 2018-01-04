@@ -28,21 +28,21 @@ Add-PnPWorkflowSubscription -Name <String>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf -list $list
+PS:> Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf -list $list
 ```
 
 Adds an Workflow with the name 'SendMessageWf' to the list $list.
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-$list | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
+PS:> $list | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
 ```
 
 Adds an Workflow with the name "SendMessageWf" to the list $list.
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-Get-PnPList -Identity "MyCustomList" | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
+PS:> Get-PnPList -Identity "MyCustomList" | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
 ```
 
 Adds an Workflow with the name "SendMessageWf" to the list "MyCustomList".

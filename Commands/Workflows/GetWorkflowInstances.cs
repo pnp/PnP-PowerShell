@@ -13,63 +13,59 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         "Gets all workflow instances",
         Category = CmdletHelpCategory.Workflows)]
     [CmdletExample(
-        Code = @"Get-PnPWorkflowInstance -Item $SPListItem",
-        Remarks = "Retrieves workflow instances running against the provided item",
+        Code = @"PS:> Get-PnPWorkflowInstance -List ""My Library"" -ListItem $ListItem",
+        Remarks = @"Retrieves workflow instances running against the provided item on list ""My Library""",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"Get-PnPWorkflowInstance -Item $SPListItem",
-        Remarks = "Retrieves workflow instances running against the provided item",
+        Code = @"PS:> Get-PnPWorkflowInstance -List ""My Library"" -ListItem 2",
+        Remarks = @"Retrieves workflow instances running against the provided item with 2 in the list ""My Library""",
         SortOrder = 2)]
 
     public class GetWorkflowInstance : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The List for which workflow instances should be retrieved", Position = 0)]
-        public ListPipeBind ListIdentity;
+        public ListPipeBind List;
 
         [Parameter(Mandatory = true, HelpMessage = "The List Item for which workflow instances should be retrieved", Position = 1) ]
-        public ListItemPipeBind ListItemIdentity;
+        public ListItemPipeBind ListItem;
 
         protected override void ExecuteCmdlet()
         {
             List list = null;
             ListItem listitem = null;
 
-            if (ListIdentity != null)
+            if (List != null)
             {
-                list = ListIdentity.GetList(SelectedWeb);
+                list = List.GetList(SelectedWeb);
                 if (list == null)
                 {
-                    throw new PSArgumentException($"No list found with id, title or url '{ListIdentity}'", "Identity");
+                    throw new PSArgumentException($"No list found with id, title or url '{List}'", "Identity");
                 }
             }
             else
             {
-                throw new PSArgumentException("ListIdentity required");
+                throw new PSArgumentException("List required");
             }
 
-            if (ListItemIdentity != null)
+            if (ListItem != null)
             {
-                listitem = ListItemIdentity.GetListItem(list);
+                listitem = ListItem.GetListItem(list);
                 if (listitem == null)
                 {
-                    throw new PSArgumentException($"No list item found with id, or title '{ListItemIdentity}'", "Identity");
+                    throw new PSArgumentException($"No list item found with id, or title '{ListItem}'", "Identity");
                 }
             }
             else
             {
-                throw new PSArgumentException("ListItemIdentity required");
+                throw new PSArgumentException("List Item required");
             }
 
             var workflowServicesManager = new Microsoft.SharePoint.Client.WorkflowServices.WorkflowServicesManager(ClientContext, SelectedWeb);
             var workflowInstanceService = workflowServicesManager.GetWorkflowInstanceService();
-            var Workflows = workflowInstanceService.EnumerateInstancesForListItem(list.Id, listitem.Id);
-            ClientContext.Load(Workflows);
+            var workflows = workflowInstanceService.EnumerateInstancesForListItem(list.Id, listitem.Id);
+            ClientContext.Load(workflows);
             ClientContext.ExecuteQueryRetry();
-            foreach(WorkflowInstance wf in Workflows)
-            {
-                WriteObject(new WorkflowInstancePipeBind(wf)); 
-            }
-            
+            WriteObject(workflows, true);
         }
     }
 

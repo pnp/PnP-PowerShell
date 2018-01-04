@@ -23,7 +23,7 @@ Resumes a previously stopped workflow instance
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Resume-PnPWorkflowInstance -identity $wfInstance
+PS:> Resume-PnPWorkflowInstance -identity $wfInstance
 ```
 
 Resumes the workflow instance, this can be the Guid of the instance or the instance itself.

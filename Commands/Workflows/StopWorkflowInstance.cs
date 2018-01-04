@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
     [CmdletHelp("Stops a workflow instance",
         Category = CmdletHelpCategory.Workflows)]
     [CmdletExample(
-        Code = @"Stop-PnPWorkflowInstance -identity $wfInstance", 
+        Code = @"PS:> Stop-PnPWorkflowInstance -identity $wfInstance", 
         Remarks = "Stops the workflow Instance",
         SortOrder = 1)]
     public class StopWorkflowInstance : PnPWebCmdlet
@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
             if (Identity.Instance != null)
             {
                 WriteVerbose("Instance object set");
-                WriteVerbose("Cancelling workflow  ID: " + Identity.Instance.Id);
+                WriteVerbose("Cancelling workflow with ID: " + Identity.Instance.Id);
                 if(Force)
                 {
                     instanceService.TerminateWorkflow(Identity.Instance);
@@ -48,11 +48,11 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
             }
             else if (Identity.Id != Guid.Empty)
             {
-                WriteVerbose("Instance object not set.  Looking up site workflows by GUID: " + Identity.Id);
+                WriteVerbose("Instance object not set. Looking up site workflows by GUID: " + Identity.Id);
                 var allinstances = SelectedWeb.GetWorkflowInstances();
                 foreach (var instance in allinstances.Where(instance => instance.Id == Identity.Id))
                 {
-                    WriteVerbose("Cancelling workflow  ID: " + Identity.Instance.Id);
+                    WriteVerbose("Cancelling workflow with ID: " + Identity.Instance.Id);
                     if (Force)
                     {
                         instanceService.TerminateWorkflow(instance);

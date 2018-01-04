@@ -12,6 +12,7 @@ Stops a workflow instance
 
 ```powershell
 Stop-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
+                         [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
 ```
@@ -20,12 +21,24 @@ Stop-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Stop-PnPWorkflowInstance -identity $wfInstance
+PS:> Stop-PnPWorkflowInstance -identity $wfInstance
 ```
 
-Stops the workflow Instance, this can be the Guid of the instance or the instance itself.
+Stops the workflow Instance
 
 ## PARAMETERS
+
+### -Force
+Forcefully terminate the workflow instead of cancelling. Works on errored and non-responsive workflows. Deletes all created tasks. Does not notify participants.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The instance to stop
