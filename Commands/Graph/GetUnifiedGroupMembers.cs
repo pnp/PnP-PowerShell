@@ -18,17 +18,13 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroupMembers",
-       Remarks = "Retrieves all the members of an Office 365 Group",
-       SortOrder = 1)]
-    [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroupMembers -Identity $groupId",
        Remarks = "Retrieves all the members of a specific Office 365 Group based on its ID",
-       SortOrder = 2)]
+       SortOrder = 1)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroupMembers -Identity $group",
        Remarks = "Retrieves all the members of a specific Office 365 Group based on the group's object instance",
-       SortOrder = 3)]
+       SortOrder = 2)]
     public class GetUnifiedGroupMembers : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The Identity of the Office 365 Group.")]
