@@ -9,7 +9,7 @@ using OfficeDevPnP.Core;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = false)]
     [CmdletHelp("Removes a site collection",
         "Removes a site collection which is listed in your tenant administration site.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
@@ -46,7 +46,8 @@ namespace SharePointPnP.PowerShell.Commands
         [Obsolete("Use Clear-PnPTenantRecycleBinItem instead.")]
         public SwitchParameter FromRecycleBin;
 
-        [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation.")] public SwitchParameter Force;
+        [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation.")]
+        public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
@@ -56,7 +57,16 @@ namespace SharePointPnP.PowerShell.Commands
                 Url = $"{uri.ToString().TrimEnd('/')}/{Url.TrimStart('/')}";
             }
 
-            if (Force || ShouldContinue(string.Format(Resources.RemoveSiteCollection0, Url), Resources.Confirm))
+            bool dodelete = true;
+            // Check if not deleting the root web
+            var siteUri = new Uri(Url);
+            if ($"{siteUri.Scheme}://{siteUri.Host}".Equals(Url, StringComparison.OrdinalIgnoreCase) && !Force)
+            {
+                dodelete = false;
+                dodelete = ShouldContinue("You are trying to delete the root site collection. Be aware that you need to contact Office 365 Support in order to create a new root site collection. Also notice that some CSOM and REST operations require the root site collection to be present. Removing this site can affect all your remote processing code, even when accessing non-root site collections.", Resources.Confirm);
+            }
+
+            if (dodelete && (Force || ShouldContinue(string.Format(Resources.RemoveSiteCollection0, Url), Resources.Confirm)))
             {
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
@@ -64,14 +74,12 @@ namespace SharePointPnP.PowerShell.Commands
                 if (!FromRecycleBin)
 #pragma warning restore 618
                 {
-
                     Tenant.DeleteSiteCollection(Url, !MyInvocation.BoundParameters.ContainsKey("SkipRecycleBin"), timeoutFunction);
                 }
                 else
                 {
                     Tenant.DeleteSiteCollectionFromRecycleBin(Url, true, timeoutFunction);
                 }
-
             }
         }
 
