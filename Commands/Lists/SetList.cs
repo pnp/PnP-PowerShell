@@ -13,20 +13,20 @@ namespace SharePointPnP.PowerShell.Commands.Lists
          Remarks = "Switches the Enable Content Type switch on the list",
          SortOrder = 1)]
     [CmdletExample(
+         Code = @"Set-PnPList -Identity ""Demo List"" -Hidden $true",
+         Remarks = "Hides the list from the SharePoint UI.",
+         SortOrder = 2)]
+    [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo List"" -EnableVersioning $true",
          Remarks = "Turns on major versions on a list",
-         SortOrder = 2)]
+         SortOrder = 3)]
     [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo List"" -EnableVersioning $true -MajorVersions 20",
          Remarks = "Turns on major versions on a list and sets the maximum number of Major Versions to keep to 20.",
-         SortOrder = 3)]
+         SortOrder = 4)]
     [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo Library"" -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5",
          Remarks = "Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.",
-         SortOrder = 4)]
-    [CmdletExample(
-         Code = @"Set-PnPList -Identity ""Demo List"" -Hidden $true",
-         Remarks = "Hides the list from the SharePoint web interface",
          SortOrder = 5)]
     public class SetList : PnPWebCmdlet
     {
@@ -55,6 +55,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "The title of the list")]
         public string Title = string.Empty;
 
+        [Parameter(Mandatory = false, HelpMessage = "Hide the list from the SharePoint UI. Set to $true to hide, $false to show.")]
+        public bool Hidden;
+
         [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning. Set to $true to enable, $false to disable.")]
         public bool EnableVersioning;
 
@@ -66,9 +69,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false, HelpMessage = "Maximum minor versions to keep")]
         public uint MinorVersions = 10;
-
-        [Parameter(Mandatory = false, HelpMessage = "Make this list hidden or visible in the SharePoint web interface. Set to $true to make it hidden, $false to make it visible.")]
-        public bool Hidden = false;
 
         protected override void ExecuteCmdlet()
         {
@@ -86,6 +86,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (!string.IsNullOrEmpty(Title))
                 {
                     list.Title = Title;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("Hidden") && Hidden != list.Hidden)
+                {
+                    list.Hidden = Hidden;
                     isDirty = true;
                 }
 
@@ -110,12 +116,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (MyInvocation.BoundParameters.ContainsKey("EnableMinorVersions") && EnableMinorVersions != enableMinorVersions)
                 {
                     list.EnableMinorVersions = EnableMinorVersions;
-                    isDirty = true;
-                }
-
-                if (MyInvocation.BoundParameters.ContainsKey("Hidden") && Hidden != hidden)
-                {
-                    list.Hidden = Hidden;
                     isDirty = true;
                 }
 

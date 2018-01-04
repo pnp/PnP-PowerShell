@@ -17,6 +17,7 @@ Set-PnPList -Identity <ListPipeBind>
             [-CopyRoleAssignments [<SwitchParameter>]]
             [-ClearSubscopes [<SwitchParameter>]]
             [-Title <String>]
+            [-Hidden <Boolean>]
             [-EnableVersioning <Boolean>]
             [-EnableMinorVersions <Boolean>]
             [-MajorVersions <UInt32>]
@@ -36,19 +37,26 @@ Switches the Enable Content Type switch on the list
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
+Set-PnPList -Identity "Demo List" -Hidden $true
+```
+
+Hides the list from the SharePoint UI.
+
+### ------------------EXAMPLE 3------------------
+```powershell
 Set-PnPList -Identity "Demo List" -EnableVersioning $true
 ```
 
 Turns on major versions on a list
 
-### ------------------EXAMPLE 3------------------
+### ------------------EXAMPLE 4------------------
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableVersioning $true -MajorVersions 20
 ```
 
 Turns on major versions on a list and sets the maximum number of Major Versions to keep to 20.
 
-### ------------------EXAMPLE 4------------------
+### ------------------EXAMPLE 5------------------
 ```powershell
 Set-PnPList -Identity "Demo Library" -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5
 ```
@@ -119,6 +127,18 @@ Accept pipeline input: False
 
 ### -EnableVersioning
 Enable or disable versioning. Set to $true to enable, $false to disable.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Hidden
+Hide the list from the SharePoint UI. Set to $true to hide, $false to show.
 
 ```yaml
 Type: Boolean

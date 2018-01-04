@@ -230,6 +230,27 @@ namespace SharePointPnP.PowerShell.Tests
         }
 
         [TestMethod]
+        public void NewListHiddenTest()
+        {
+            using (var scope = new PSTestScope(true))
+            {
+                scope.ExecuteCommand("New-PnPList",
+                    new CommandParameter("Title", "PnPTestListHidden1"),
+                    new CommandParameter("Template", ListTemplateType.GenericList),
+                    new CommandParameter("Hidden"));
+            }
+
+            using (var ctx = TestCommon.CreateClientContext())
+            {
+                var list = ctx.Web.GetListByTitle("PnPTestListHidden1");
+                Assert.IsTrue(list.Hidden);
+
+                list.DeleteObject();
+                ctx.ExecuteQueryRetry();
+            }
+        }
+
+        [TestMethod]
         public void RemoveListTest()
         {
             using (var ctx = TestCommon.CreateClientContext())
@@ -291,6 +312,29 @@ namespace SharePointPnP.PowerShell.Tests
 
                 var list = ctx.Web.GetListByTitle("NewPnPTestList3");
                 Assert.IsNotNull(list);
+
+                list.DeleteObject();
+                ctx.ExecuteQueryRetry();
+            }
+        }
+
+        [TestMethod]
+        public void SetListHiddenTest()
+        {
+            using (var ctx = TestCommon.CreateClientContext())
+            {
+                ctx.Web.CreateList(ListTemplateType.GenericList, "PnPTestListHidden2", false);
+
+                using (var scope = new PSTestScope(true))
+                {
+                    scope.ExecuteCommand("Set-PnPList",
+                        new CommandParameter("Identity", "PnPTestListHidden2"),
+                        new CommandParameter("Hidden", true)
+                        );
+                }
+
+                var list = ctx.Web.GetListByTitle("PnPTestListHidden2");
+                Assert.IsTrue(list.Hidden);
 
                 list.DeleteObject();
                 ctx.ExecuteQueryRetry();
