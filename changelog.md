@@ -1,5 +1,8 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2018-01-05**
+* Added Get-PnPTenantAppCatalogUrl, Start-PnPWorkflowInstance, Get-PnPWorkflowInstance
+
 **2017-12-06**
 * Added cmdlets for Site Designs: Add-PnPSiteDesign, Add-PnPSiteScript, Get-PnPSiteDesign, Get-PnPSiteScript, Get-PnPSiteDesignRights, Grant-PnPSiteDesignRights, Remove-PnPSiteDesign, Remove-PnPSiteScript, Revoke-PnPSiteDesignRights
 

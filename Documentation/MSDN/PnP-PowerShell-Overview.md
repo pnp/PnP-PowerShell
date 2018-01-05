@@ -414,6 +414,7 @@ Cmdlet|Description|Platform
 **[Get&#8209;PnPStorageEntity](Get-PnPStorageEntity.md)** |Retrieve Storage Entities / Farm Properties.|SharePoint Online
 **[Remove&#8209;PnPStorageEntity](Remove-PnPStorageEntity.md)** |Remove Storage Entities / Farm Properties.|SharePoint Online
 **[Set&#8209;PnPStorageEntity](Set-PnPStorageEntity.md)** |Set Storage Entities / Farm Properties.|SharePoint Online
+**[Get&#8209;PnPTenantAppCatalogUrl](Get-PnPTenantAppCatalogUrl.md)** |Retrieves the url of the tenant scoped app catalog.|SharePoint Online
 **[Clear&#8209;PnPTenantRecycleBinItem](Clear-PnPTenantRecycleBinItem.md)** |Permanently deletes a site collection from the tenant scoped recycle bin|All
 **[Restore&#8209;PnPTenantRecycleBinItem](Restore-PnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin|SharePoint Online
 **[Get&#8209;PnPTenantSite](Get-PnPTenantSite.md)** |Retrieve site information.|SharePoint Online

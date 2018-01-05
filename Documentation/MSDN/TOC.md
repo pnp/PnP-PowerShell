@@ -244,6 +244,7 @@
 ### [Get-PnPStorageEntity](Get-PnPStorageEntity.md)
 ### [Remove-PnPStorageEntity](Remove-PnPStorageEntity.md)
 ### [Set-PnPStorageEntity](Set-PnPStorageEntity.md)
+### [Get-PnPTenantAppCatalogUrl](Get-PnPTenantAppCatalogUrl.md)
 ### [Clear-PnPTenantRecycleBinItem](Clear-PnPTenantRecycleBinItem.md)
 ### [Restore-PnPTenantRecycleBinItem](Restore-PnPTenantRecycleBinItem.md)
 ### [Get-PnPTenantSite](Get-PnPTenantSite.md)
