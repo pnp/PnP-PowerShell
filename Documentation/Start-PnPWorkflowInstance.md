@@ -3,42 +3,52 @@ external help file:
 applicable: SharePoint Server 2013, SharePoint Server 2016, SharePoint Online
 schema: 2.0.0
 ---
-# Remove-PnPWorkflowSubscription
+# Start-PnPWorkflowInstance
 
 ## SYNOPSIS
-Remove workflow subscription
+Starts a workflow instance on a list item
 
 ## SYNTAX 
 
 ```powershell
-Remove-PnPWorkflowSubscription -Identity <WorkflowSubscriptionPipeBind>
-                               [-Web <WebPipeBind>]
-                               [-Connection <SPOnlineConnection>]
+Start-PnPWorkflowInstance -Subscription <WorkflowSubscriptionPipeBind>
+                          -ListItem <ListItemPipeBind>
+                          [-Web <WebPipeBind>]
+                          [-Connection <SPOnlineConnection>]
 ```
-
-## DESCRIPTION
-Removes a previously registered workflow subscription
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Remove-PnPWorkflowSubscription -identity $wfSub
+PS:> Start-PnPWorkflowInstance -Name 'WorkflowName' -ListItem $item 
 ```
 
-Removes the workflowsubscription, retrieved by Get-PnPWorkflowSubscription.
+Starts a workflow instance on the specified list item
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPWorkflowSubscription -Name MyWorkflow | Remove-PnPWorkflowSubscription
+PS:> Start-PnPWorkflowInstance -Name 'WorkflowName' -ListItem 2 
 ```
 
-Get the workflowSubscription MyWorkFlow and remove it.
+Starts a workflow instance on the specified list item
 
 ## PARAMETERS
 
-### -Identity
-The subscription to remove
+### -ListItem
+The list item to start the workflow against
+
+```yaml
+Type: ListItemPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 1
+Accept pipeline input: False
+```
+
+### -Subscription
+The workflow subscription to start
 
 ```yaml
 Type: WorkflowSubscriptionPipeBind

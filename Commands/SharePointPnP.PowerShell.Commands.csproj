@@ -715,7 +715,9 @@
     <Compile Include="Web\SetWebPermission.cs" />
     <Compile Include="Web\SetRequestAccessEmails.cs" />
     <Compile Include="Workflows\AddWorkflowDefinition.cs" />
+    <Compile Include="Workflows\GetWorkflowInstances.cs" />
     <Compile Include="Workflows\ResumeWorkflowInstance.cs" />
+    <Compile Include="Workflows\StartWorkflowInstance.cs" />
     <Compile Include="Workflows\StopWorkflowInstance.cs" />
     <Compile Include="Workflows\RemoveWorkflowDefinition.cs" />
     <Compile Include="Workflows\RemoveWorkflowSubscription.cs" />

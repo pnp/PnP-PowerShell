@@ -3,49 +3,62 @@ external help file:
 applicable: SharePoint Server 2013, SharePoint Server 2016, SharePoint Online
 schema: 2.0.0
 ---
-# Remove-PnPWorkflowSubscription
+# Get-PnPWorkflowInstance
 
 ## SYNOPSIS
-Remove workflow subscription
+Get workflow instances
 
 ## SYNTAX 
 
 ```powershell
-Remove-PnPWorkflowSubscription -Identity <WorkflowSubscriptionPipeBind>
-                               [-Web <WebPipeBind>]
-                               [-Connection <SPOnlineConnection>]
+Get-PnPWorkflowInstance -List <ListPipeBind>
+                        -ListItem <ListItemPipeBind>
+                        [-Web <WebPipeBind>]
+                        [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
-Removes a previously registered workflow subscription
+Gets all workflow instances
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Remove-PnPWorkflowSubscription -identity $wfSub
+PS:> Get-PnPWorkflowInstance -List "My Library" -ListItem $ListItem
 ```
 
-Removes the workflowsubscription, retrieved by Get-PnPWorkflowSubscription.
+Retrieves workflow instances running against the provided item on list "My Library"
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPWorkflowSubscription -Name MyWorkflow | Remove-PnPWorkflowSubscription
+PS:> Get-PnPWorkflowInstance -List "My Library" -ListItem 2
 ```
 
-Get the workflowSubscription MyWorkFlow and remove it.
+Retrieves workflow instances running against the provided item with 2 in the list "My Library"
 
 ## PARAMETERS
 
-### -Identity
-The subscription to remove
+### -List
+The List for which workflow instances should be retrieved
 
 ```yaml
-Type: WorkflowSubscriptionPipeBind
+Type: ListPipeBind
 Parameter Sets: (All)
 
 Required: True
 Position: 0
+Accept pipeline input: False
+```
+
+### -ListItem
+The List Item for which workflow instances should be retrieved
+
+```yaml
+Type: ListItemPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 1
 Accept pipeline input: False
 ```
 
