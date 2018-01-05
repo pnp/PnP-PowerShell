@@ -14,15 +14,15 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowsubscription.aspx"
         )]
     [CmdletExample(
-        Code = @"Get-PnPWorkflowSubscription -Name MyWorkflow", 
+        Code = @"PS:> Get-PnPWorkflowSubscription -Name MyWorkflow", 
         Remarks = @"Gets an Workflow subscription with the name ""MyWorkflow"".",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"Get-PnPWorkflowSubscription -Name MyWorkflow -list $list", 
+        Code = @"PS:> Get-PnPWorkflowSubscription -Name MyWorkflow -list $list", 
         Remarks = @"Gets an Workflow subscription with the name ""MyWorkflow"" from the list $list.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"Get-PnPList -identity ""MyList"" | Get-PnPWorkflowSubscription -Name MyWorkflow", 
+        Code = @"PS:> Get-PnPList -identity ""MyList"" | Get-PnPWorkflowSubscription -Name MyWorkflow", 
         Remarks = @"Gets an Workflow subscription with the name ""MyWorkflow"" from the list ""MyList"".",
         SortOrder = 3)]
     public class GetWorkflowSubscription : PnPWebCmdlet

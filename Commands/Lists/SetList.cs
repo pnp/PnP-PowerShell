@@ -13,17 +13,21 @@ namespace SharePointPnP.PowerShell.Commands.Lists
          Remarks = "Switches the Enable Content Type switch on the list",
          SortOrder = 1)]
     [CmdletExample(
+         Code = @"Set-PnPList -Identity ""Demo List"" -Hidden $true",
+         Remarks = "Hides the list from the SharePoint UI.",
+         SortOrder = 2)]
+    [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo List"" -EnableVersioning $true",
          Remarks = "Turns on major versions on a list",
-         SortOrder = 2)]
+         SortOrder = 3)]
     [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo List"" -EnableVersioning $true -MajorVersions 20",
          Remarks = "Turns on major versions on a list and sets the maximum number of Major Versions to keep to 20.",
-         SortOrder = 3)]
+         SortOrder = 4)]
     [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo Library"" -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5",
          Remarks = "Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.",
-         SortOrder = 4)]
+         SortOrder = 5)]
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The ID, Title or Url of the list.")]
@@ -50,6 +54,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false, HelpMessage = "The title of the list")]
         public string Title = string.Empty;
+
+        [Parameter(Mandatory = false, HelpMessage = "Hide the list from the SharePoint UI. Set to $true to hide, $false to show.")]
+        public bool Hidden;
 
         [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning. Set to $true to enable, $false to disable.")]
         public bool EnableVersioning;
@@ -82,16 +89,23 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     isDirty = true;
                 }
 
+                if (MyInvocation.BoundParameters.ContainsKey("Hidden") && Hidden != list.Hidden)
+                {
+                    list.Hidden = Hidden;
+                    isDirty = true;
+                }
+
                 if (MyInvocation.BoundParameters.ContainsKey("EnableContentTypes") && list.ContentTypesEnabled != EnableContentTypes)
                 {
                     list.ContentTypesEnabled = EnableContentTypes;
                     isDirty = true;
                 }
 
-                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions);
+                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden);
 
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
+                var hidden = list.Hidden;
 
                 if (MyInvocation.BoundParameters.ContainsKey("EnableVersioning") && EnableVersioning != enableVersioning)
                 {

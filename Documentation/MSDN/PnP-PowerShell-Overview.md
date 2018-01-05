@@ -280,6 +280,8 @@ Cmdlet|Description|Platform
 **[New&#8209;PnPUnifiedGroup](New-PnPUnifiedGroup.md)** |Creates a new Office 365 Group (aka Unified Group)|SharePoint Online
 **[Remove&#8209;PnPUnifiedGroup](Remove-PnPUnifiedGroup.md)** |Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups|SharePoint Online
 **[Set&#8209;PnPUnifiedGroup](Set-PnPUnifiedGroup.md)** |Sets Office 365 Group (aka Unified Group) properties|SharePoint Online
+**[Get&#8209;PnPUnifiedGroupMembers](Get-PnPUnifiedGroupMembers.md)** |Gets members of a paricular Office 365 Group (aka Unified Group)|SharePoint Online
+**[Get&#8209;PnPUnifiedGroupOwners](Get-PnPUnifiedGroupOwners.md)** |Gets owners of a paricular Office 365 Group (aka Unified Group)|SharePoint Online
 
 
 ### Provisioning 
@@ -412,6 +414,7 @@ Cmdlet|Description|Platform
 **[Get&#8209;PnPStorageEntity](Get-PnPStorageEntity.md)** |Retrieve Storage Entities / Farm Properties.|SharePoint Online
 **[Remove&#8209;PnPStorageEntity](Remove-PnPStorageEntity.md)** |Remove Storage Entities / Farm Properties.|SharePoint Online
 **[Set&#8209;PnPStorageEntity](Set-PnPStorageEntity.md)** |Set Storage Entities / Farm Properties.|SharePoint Online
+**[Get&#8209;PnPTenantAppCatalogUrl](Get-PnPTenantAppCatalogUrl.md)** |Retrieves the url of the tenant scoped app catalog.|SharePoint Online
 **[Clear&#8209;PnPTenantRecycleBinItem](Clear-PnPTenantRecycleBinItem.md)** |Permanently deletes a site collection from the tenant scoped recycle bin|All
 **[Restore&#8209;PnPTenantRecycleBinItem](Restore-PnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin|SharePoint Online
 **[Get&#8209;PnPTenantSite](Get-PnPTenantSite.md)** |Retrieve site information.|SharePoint Online
@@ -497,7 +500,9 @@ Cmdlet|Description|Platform
 **[Add&#8209;PnPWorkflowDefinition](Add-PnPWorkflowDefinition.md)** |Adds a workflow definition|All
 **[Get&#8209;PnPWorkflowDefinition](Get-PnPWorkflowDefinition.md)** |Return a workflow definition|All
 **[Remove&#8209;PnPWorkflowDefinition](Remove-PnPWorkflowDefinition.md)** |Removes a workflow definition|All
+**[Get&#8209;PnPWorkflowInstance](Get-PnPWorkflowInstance.md)** |Get workflow instances|All
 **[Resume&#8209;PnPWorkflowInstance](Resume-PnPWorkflowInstance.md)** |Resume a workflow|All
+**[Start&#8209;PnPWorkflowInstance](Start-PnPWorkflowInstance.md)** |Starts a workflow instance on a list item|All
 **[Stop&#8209;PnPWorkflowInstance](Stop-PnPWorkflowInstance.md)** |Stops a workflow instance|All
 **[Add&#8209;PnPWorkflowSubscription](Add-PnPWorkflowSubscription.md)** |Adds a workflow subscription to a list|All
 **[Get&#8209;PnPWorkflowSubscription](Get-PnPWorkflowSubscription.md)** |Return a workflow subscription|All

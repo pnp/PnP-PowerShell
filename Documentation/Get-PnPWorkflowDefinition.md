@@ -24,14 +24,14 @@ Returns a workflow definition
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Get-PnPWorkflowDefinition -Name MyWorkflow
+PS:> Get-PnPWorkflowDefinition -Name MyWorkflow
 ```
 
 Gets an Workflow with the name "MyWorkflow".
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-Get-PnPWorkflowDefinition -Name MyWorkflow -PublishedOnly $false
+PS:> Get-PnPWorkflowDefinition -Name MyWorkflow -PublishedOnly $false
 ```
 
 Gets an Workflow with the name "MyWorkflow" that is published.

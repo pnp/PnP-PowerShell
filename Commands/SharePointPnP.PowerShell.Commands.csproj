@@ -409,6 +409,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\GetTenantAppCatalogUrl.cs" />
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
@@ -475,6 +476,8 @@
     <Compile Include="Files\RenameFile.cs" />
     <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
     <Compile Include="Files\RenameFolder.cs" />
+    <Compile Include="Graph\GetUnifiedGroupOwners.cs" />
+    <Compile Include="Graph\GetUnifiedGroupMembers.cs" />
     <Compile Include="Graph\UpdateSiteClassification.cs" />
     <Compile Include="Graph\RemoveSiteClassification.cs" />
     <Compile Include="Graph\DisableSiteClassification.cs" />
@@ -712,7 +715,9 @@
     <Compile Include="Web\SetWebPermission.cs" />
     <Compile Include="Web\SetRequestAccessEmails.cs" />
     <Compile Include="Workflows\AddWorkflowDefinition.cs" />
+    <Compile Include="Workflows\GetWorkflowInstances.cs" />
     <Compile Include="Workflows\ResumeWorkflowInstance.cs" />
+    <Compile Include="Workflows\StartWorkflowInstance.cs" />
     <Compile Include="Workflows\StopWorkflowInstance.cs" />
     <Compile Include="Workflows\RemoveWorkflowDefinition.cs" />
     <Compile Include="Workflows\RemoveWorkflowSubscription.cs" />
