@@ -459,6 +459,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove all Navigation Nodes in {0}?.
+        /// </summary>
+        internal static string RemoveNavigationNodeInLocation {
+            get {
+                return ResourceManager.GetString("RemoveNavigationNodeInLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove propertybag value.
         /// </summary>
         internal static string RemovePropertyBagValue {

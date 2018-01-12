@@ -10,10 +10,20 @@ Removes a menu item from either the quicklaunch or top navigation
 
 ## SYNTAX 
 
+### By Title and Location
 ```powershell
-Remove-PnPNavigationNode -Location <NavigationType>
-                         -Title <String>
+Remove-PnPNavigationNode -Title <String>
+                         -Location <NavigationType>
                          [-Header <String>]
+                         [-Force [<SwitchParameter>]]
+                         [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
+```
+
+### By Location
+```powershell
+Remove-PnPNavigationNode -All [<SwitchParameter>]
+                         -Location <NavigationType>
                          [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
@@ -35,7 +45,26 @@ PS:> Remove-PnPNavigationNode -Title Home -Location TopNavigationBar -Force
 
 Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web.
 
+### ------------------EXAMPLE 3------------------
+```powershell
+PS:> Remove-PnPNavigationNode -Location QuickLaunch -All
+```
+
+Will all the navigation nodes from the quick launch bar in the current web.
+
 ## PARAMETERS
+
+### -All
+Specifying the All parameter will remove all the nodes from specifed Location.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: By Location
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.
@@ -54,7 +83,7 @@ The header where the node is located
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: By Title and Location
 
 Required: False
 Position: Named
@@ -62,7 +91,7 @@ Accept pipeline input: False
 ```
 
 ### -Location
-The location from where to remove the node (QuickLaunch, TopNavigationBar
+The location of the node(s) to remove (QuickLaunch, SearchNav, TopNavigationBar)
 
 ```yaml
 Type: NavigationType
@@ -78,7 +107,7 @@ The title of the node that needs to be removed
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: By Title and Location
 
 Required: True
 Position: Named
