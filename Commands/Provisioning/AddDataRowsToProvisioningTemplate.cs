@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
+using System.Text.RegularExpressions;
 using SPSite = Microsoft.SharePoint.Client.Site;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
@@ -85,9 +86,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
             if (TokenizeUrls.IsPresent)
             {
-                ClientContext.Load(ClientContext.Web, w => w.ServerRelativeUrl, w => w.Id);
-                ClientContext.Load(ClientContext.Site, s => s.ServerRelativeUrl, s => s.Id);
-                ClientContext.Load(ClientContext.Web.Lists, lists => lists.Include(l => l.RootFolder.ServerRelativeUrl));
+                ClientContext.Load(ClientContext.Web, w => w.Url, w => w.ServerRelativeUrl, w => w.Id);
+                ClientContext.Load(ClientContext.Site, s => s.Url, s => s.ServerRelativeUrl, s => s.Id);
+                ClientContext.Load(ClientContext.Web.Lists, lists => lists.Include(l=>l.Title, l => l.RootFolder.ServerRelativeUrl));
             }
 
             CamlQuery query = new CamlQuery();
@@ -148,34 +149,33 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                         }
                         if (Fields != null)
                         {
-                            foreach (var field in Fields)
+                            foreach (var fieldName in Fields)
                             {
-                                Microsoft.SharePoint.Client.Field dataField = fieldCollection.FirstOrDefault(f => f.InternalName == field);
+                                Microsoft.SharePoint.Client.Field dataField = fieldCollection.FirstOrDefault(f => f.InternalName == fieldName);
 
                                 if (dataField != null)
                                 {
-                                    var defaultFieldValue = listItem[field] as string;
+                                    var defaultFieldValue = GetFieldValueAsText(ClientContext.Web, listItem, dataField);
                                     if (TokenizeUrls.IsPresent)
                                     {
                                         defaultFieldValue = Tokenize(defaultFieldValue, ClientContext.Web, ClientContext.Site, ClientContext.Web.Lists);
                                     }
 
-                                    row.Values.Add(field, defaultFieldValue);
+                                    row.Values.Add(fieldName, defaultFieldValue);
                                 }
                             }
                         }
                         else
                         {
                             //All fields are added except readonly fields and unsupported field type
-                            var fieldsToExport = fieldCollection.AsQueryable()
-                                .Where(f => !f.ReadOnlyField) // Exlude read only fields
-                                .Where(f => !_unsupportedFieldTypes.Contains(f.FieldTypeKind));
+                            var fieldsToExport = fieldCollection.AsEnumerable()
+                                .Where(f => !f.ReadOnlyField && !_unsupportedFieldTypes.Contains(f.FieldTypeKind));
                             foreach (var field in fieldsToExport)
                             {
                                 var fldKey = (from f in listItem.FieldValues.Keys where f == field.InternalName select f).FirstOrDefault();
                                 if (!string.IsNullOrEmpty(fldKey))
                                 {
-                                    var fieldValue = listItem[field.InternalName] as string;
+                                    var fieldValue = GetFieldValueAsText(ClientContext.Web, listItem, field);
                                     if (TokenizeUrls.IsPresent)
                                     {
                                         fieldValue = Tokenize(fieldValue, ClientContext.Web, ClientContext.Site, ClientContext.Web.Lists);
@@ -213,18 +213,81 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             }
         }
 
+        private string GetFieldValueAsText(Web web, ListItem listItem, Microsoft.SharePoint.Client.Field field)
+        {
+            var rawValue = listItem[field.InternalName];
+            if (rawValue == null) return null;
+
+            switch (field.FieldTypeKind)
+            {
+                case FieldType.Geolocation:
+                    var geoValue = (FieldGeolocationValue)rawValue;
+                    return $"{geoValue.Altitude},{geoValue.Latitude},{geoValue.Longitude},{geoValue.Measure}";
+                case FieldType.URL:
+                    var urlValue = (FieldUrlValue)rawValue;
+                    return $"{urlValue.Url},{urlValue.Description}";
+                case FieldType.Lookup:
+                    var strVal = rawValue as string;
+                    if(strVal != null)
+                    {
+                        return strVal;
+                    }
+                    var singleLookupValue = rawValue as FieldLookupValue;
+                    if (singleLookupValue != null)
+                    {
+                        return singleLookupValue.LookupId.ToString();
+                    }
+                    var multipleLookupValue = rawValue as FieldLookupValue[];
+                    if (multipleLookupValue != null)
+                    {
+                        return string.Join(",", multipleLookupValue.Select(lv => lv.LookupId));
+                    }
+                    throw new Exception("Invalid data in field");
+                case FieldType.User:
+                    var singleUserValue = rawValue as FieldUserValue;
+                    if (singleUserValue != null)
+                    {
+                        return GetLoginName(web, singleUserValue.LookupId);
+                    }
+                    var multipleUserValue = rawValue as FieldUserValue[];
+                    if (multipleUserValue != null)
+                    {
+                        return string.Join(",", multipleUserValue.Select(lv => GetLoginName(web,lv.LookupId)));
+                    }
+                    throw new Exception("Invalid data in field");
+                default:
+                    return Convert.ToString(rawValue);
+            }
+        }
+
+        private Dictionary<Guid, Dictionary<int, string>> _webUserCache = new Dictionary<Guid, Dictionary<int, string>>();
+        private string GetLoginName(Web web, int userId)
+        {
+            if (!_webUserCache.ContainsKey(web.Id)) _webUserCache.Add(web.Id, new Dictionary<int, string>());
+            if (!_webUserCache[web.Id].ContainsKey(userId))
+            {
+                var user = web.GetUserById(userId);
+                web.Context.Load(user, u => u.LoginName);
+                web.Context.ExecuteQuery();
+                _webUserCache[web.Id].Add(userId, user.LoginName);
+            }
+            return _webUserCache[web.Id][userId];
+        }
+
         private static string Tokenize(string input, Web web, SPSite site, IEnumerable<List> lists)
         {
             if (string.IsNullOrEmpty(input)) return input;
             foreach (var list in lists)
             {
-                input = input.ReplaceCaseInsensitive(list.RootFolder.ServerRelativeUrl, "{listurl:" + list.RootFolder.ServerRelativeUrl + "}");
+                input = input.ReplaceCaseInsensitive(web.Url.TrimEnd('/') + "/" + list.GetWebRelativeUrl(), "{listurl:" + Regex.Escape(list.Title) + "}");
+                input = input.ReplaceCaseInsensitive(list.RootFolder.ServerRelativeUrl, "{listurl:" + Regex.Escape(list.Title)+ "}");
             }
             input = input.ReplaceCaseInsensitive(web.Url, "{site}");
             input = input.ReplaceCaseInsensitive(web.ServerRelativeUrl, "{site}");
             input = input.ReplaceCaseInsensitive(web.Id.ToString(), "{siteid}");
             input = input.ReplaceCaseInsensitive(site.ServerRelativeUrl, "{sitecollection}");
             input = input.ReplaceCaseInsensitive(site.Id.ToString(), "{sitecollectionid}");
+            input = input.ReplaceCaseInsensitive(site.Url, "{sitecollection}");
 
             return input;
         }
