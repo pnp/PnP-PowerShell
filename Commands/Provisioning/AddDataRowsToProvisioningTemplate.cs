@@ -5,18 +5,18 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
-using System.Threading.Tasks;
+using SPSite = Microsoft.SharePoint.Client.Site;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Add", "PnPDataRowsToProvisioningTemplate")]
-    
     [CmdletHelp("Adds datarows to a list inside a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
@@ -44,15 +44,20 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false, Position = 5, HelpMessage = "A switch to include ObjectSecurity information.")]
         public SwitchParameter IncludeSecurity;
 
-        [Parameter(Mandatory = false, Position = 4, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template." )]
+        [Parameter(Mandatory = false, Position = 4, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while loading the template.")]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
+        [Parameter(Mandatory = false, HelpMessage = "If set, this switch will try to tokenize the values with web and site related tokens")]
+        public SwitchParameter TokenizeUrls;
 
+        private readonly static FieldType[] _unsupportedFieldTypes =
+        {
+            FieldType.Attachments,
+            FieldType.Computed
+        };
 
         protected override void ExecuteCmdlet()
         {
-
-
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
@@ -78,6 +83,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             ClientContext.Load(spList, l => l.RootFolder, l => l.HasUniqueRoleAssignments);
             ClientContext.ExecuteQueryRetry();
 
+            if (TokenizeUrls.IsPresent)
+            {
+                ClientContext.Load(ClientContext.Web, w => w.ServerRelativeUrl, w => w.Id);
+                ClientContext.Load(ClientContext.Site, s => s.ServerRelativeUrl, s => s.Id);
+                ClientContext.Load(ClientContext.Web.Lists, lists => lists.Include(l => l.RootFolder.ServerRelativeUrl));
+            }
+
             CamlQuery query = new CamlQuery();
 
             var viewFieldsStringBuilder = new StringBuilder();
@@ -98,7 +110,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             ClientContext.ExecuteQueryRetry();
 
             Microsoft.SharePoint.Client.FieldCollection fieldCollection = spList.Fields;
-            ClientContext.Load(fieldCollection, fs => fs.Include(f => f.InternalName, f => f.FieldTypeKind));
+            ClientContext.Load(fieldCollection, fs => fs.Include(f => f.InternalName, f => f.FieldTypeKind, f => f.ReadOnlyField));
             ClientContext.ExecuteQueryRetry();
 
             var rows = new DataRowCollection(template);
@@ -107,7 +119,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 //Make sure we don't pull Folders.. Of course this won't work
                 if (listItem.ServerObjectIsNull == false)
                 {
-
                     ClientContext.Load(listItem);
                     ClientContext.ExecuteQueryRetry();
                     if (!(listItem.FileSystemObjectType == FileSystemObjectType.Folder))
@@ -144,22 +155,31 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                                 if (dataField != null)
                                 {
                                     var defaultFieldValue = listItem[field] as string;
+                                    if (TokenizeUrls.IsPresent)
+                                    {
+                                        defaultFieldValue = Tokenize(defaultFieldValue, ClientContext.Web, ClientContext.Site, ClientContext.Web.Lists);
+                                    }
+
                                     row.Values.Add(field, defaultFieldValue);
-
                                 }
-
-
                             }
                         }
                         else
                         {
-                            //All fields are added
-                            foreach (var field in fieldCollection)
+                            //All fields are added except readonly fields and unsupported field type
+                            var fieldsToExport = fieldCollection.AsQueryable()
+                                .Where(f => !f.ReadOnlyField) // Exlude read only fields
+                                .Where(f => !_unsupportedFieldTypes.Contains(f.FieldTypeKind));
+                            foreach (var field in fieldsToExport)
                             {
                                 var fldKey = (from f in listItem.FieldValues.Keys where f == field.InternalName select f).FirstOrDefault();
                                 if (!string.IsNullOrEmpty(fldKey))
                                 {
                                     var fieldValue = listItem[field.InternalName] as string;
+                                    if (TokenizeUrls.IsPresent)
+                                    {
+                                        fieldValue = Tokenize(fieldValue, ClientContext.Web, ClientContext.Site, ClientContext.Web.Lists);
+                                    }
                                     row.Values.Add(field.InternalName, fieldValue);
                                 }
                             }
@@ -191,6 +211,22 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(Path, "");
                 provider.SaveAs(template, Path, formatter, TemplateProviderExtensions);
             }
+        }
+
+        private static string Tokenize(string input, Web web, SPSite site, IEnumerable<List> lists)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+            foreach (var list in lists)
+            {
+                input = input.ReplaceCaseInsensitive(list.RootFolder.ServerRelativeUrl, "{listurl:" + list.RootFolder.ServerRelativeUrl + "}");
+            }
+            input = input.ReplaceCaseInsensitive(web.Url, "{site}");
+            input = input.ReplaceCaseInsensitive(web.ServerRelativeUrl, "{site}");
+            input = input.ReplaceCaseInsensitive(web.Id.ToString(), "{siteid}");
+            input = input.ReplaceCaseInsensitive(site.ServerRelativeUrl, "{sitecollection}");
+            input = input.ReplaceCaseInsensitive(site.Id.ToString(), "{sitecollectionid}");
+
+            return input;
         }
     }
 }
