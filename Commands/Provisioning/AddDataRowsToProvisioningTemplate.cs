@@ -277,11 +277,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         private static string Tokenize(string input, Web web, SPSite site, IEnumerable<List> lists)
         {
             if (string.IsNullOrEmpty(input)) return input;
-            foreach (var list in lists)
-            {
-                input = input.ReplaceCaseInsensitive(web.Url.TrimEnd('/') + "/" + list.GetWebRelativeUrl(), "{listurl:" + Regex.Escape(list.Title) + "}");
-                input = input.ReplaceCaseInsensitive(list.RootFolder.ServerRelativeUrl, "{listurl:" + Regex.Escape(list.Title)+ "}");
-            }
+            //foreach (var list in lists)
+            //{
+            //    input = input.ReplaceCaseInsensitive(web.Url.TrimEnd('/') + "/" + list.GetWebRelativeUrl(), "{listurl:" + Regex.Escape(list.Title) + "}");
+            //    input = input.ReplaceCaseInsensitive(list.RootFolder.ServerRelativeUrl, "{listurl:" + Regex.Escape(list.Title)+ "}");
+            //}
             input = input.ReplaceCaseInsensitive(web.Url, "{site}");
             input = input.ReplaceCaseInsensitive(web.ServerRelativeUrl, "{site}");
             input = input.ReplaceCaseInsensitive(web.Id.ToString(), "{siteid}");
