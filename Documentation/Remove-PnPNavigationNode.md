@@ -50,7 +50,7 @@ Will remove the home navigation node from the top navigation bar without prompti
 PS:> Remove-PnPNavigationNode -Location QuickLaunch -All
 ```
 
-Will all the navigation nodes from the quick launch bar in the current web.
+Will remove all the navigation nodes from the quick launch bar in the current web.
 
 ## PARAMETERS
 
