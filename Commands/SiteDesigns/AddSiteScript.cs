@@ -17,10 +17,10 @@ namespace SharePointPnP.PowerShell.Commands
         SortOrder = 1)]
     public class AddSiteScript : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The title of the site design")]
+        [Parameter(Mandatory = true, HelpMessage = "The title of the site script")]
         public string Title;
 
-        [Parameter(Mandatory = false, HelpMessage = "The description of the site design")]
+        [Parameter(Mandatory = false, HelpMessage = "The description of the site script")]
         public string Description;     
 
         [Parameter(Mandatory = true, HelpMessage = "A JSON string containing the site script")]
