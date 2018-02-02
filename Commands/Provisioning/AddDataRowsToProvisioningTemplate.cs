@@ -158,7 +158,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                                     var defaultFieldValue = GetFieldValueAsText(ClientContext.Web, listItem, dataField);
                                     if (TokenizeUrls.IsPresent)
                                     {
-                                        defaultFieldValue = Tokenize(defaultFieldValue, ClientContext.Web, ClientContext.Site, ClientContext.Web.Lists);
+                                        defaultFieldValue = Tokenize(defaultFieldValue, ClientContext.Web, ClientContext.Site);
                                     }
 
                                     row.Values.Add(fieldName, defaultFieldValue);
@@ -178,7 +178,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                                     var fieldValue = GetFieldValueAsText(ClientContext.Web, listItem, field);
                                     if (TokenizeUrls.IsPresent)
                                     {
-                                        fieldValue = Tokenize(fieldValue, ClientContext.Web, ClientContext.Site, ClientContext.Web.Lists);
+                                        fieldValue = Tokenize(fieldValue, ClientContext.Web, ClientContext.Site);
                                     }
                                     row.Values.Add(field.InternalName, fieldValue);
                                 }
@@ -274,7 +274,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             return _webUserCache[web.Id][userId];
         }
 
-        private static string Tokenize(string input, Web web, SPSite site, IEnumerable<List> lists)
+        private static string Tokenize(string input, Web web, SPSite site)
         {
             if (string.IsNullOrEmpty(input)) return input;
             //foreach (var list in lists)
