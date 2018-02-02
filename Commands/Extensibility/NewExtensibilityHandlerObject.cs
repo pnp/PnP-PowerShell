@@ -4,13 +4,13 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Extensibility
 {
-    [Cmdlet(VerbsCommon.New, "PnPExtensbilityHandlerObject")]
+    [Cmdlet(VerbsCommon.New, "PnPExtensibilityHandlerObject")]
     [CmdletHelp("Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet", 
         Category = CmdletHelpCategory.Features,
         OutputType=typeof(ExtensibilityHandler))]
     [CmdletExample(
         Code = @"
-PS:> $handler = New-PnPExtensbilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler
+PS:> $handler = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler
 PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler",
         Remarks = @"This will create a new ExtensibilityHandler object that is run during extraction of the template", 
         SortOrder = 1)]

@@ -420,6 +420,7 @@
     <Compile Include="ClientSidePages\SetClientSideText.cs" />
     <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
+    <Compile Include="SiteDesigns\SetSiteDesign.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
     <Compile Include="SiteDesigns\AddSiteDesign.cs" />
     <Compile Include="SiteDesigns\RevokeSiteDesignRights.cs" />
@@ -549,6 +550,7 @@
     <Compile Include="ClientSidePages\ClientSidePageUtilities.cs" />
     <Compile Include="ClientSidePages\SetClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
+    <Compile Include="SiteDesigns\SetSiteScript.cs" />
     <Compile Include="WebParts\AddClientSideWebPart.cs" />
     <Compile Include="ClientSidePages\GetAvailableClientSideComponents.cs" />
     <Compile Include="ClientSidePages\RemoveClientSidePage.cs" />
