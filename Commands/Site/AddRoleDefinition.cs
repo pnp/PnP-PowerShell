@@ -55,6 +55,14 @@ namespace SharePointPnP.PowerShell.Commands.Site
                         }
                         var spBasePerm = clonePerm.BasePermissions;
                     }
+					
+					// Include and Exclude Flags
+					foreach (string flag in Include.Split(",")) {
+						spBasePerm.Set(flag)
+					}
+					foreach (string flag in Exclude.Split(",")) {
+						spBasePerm.Clear(flag)
+					}
 
                     // Create Role Definition
                     spRoleDef.Name = RoleName;
