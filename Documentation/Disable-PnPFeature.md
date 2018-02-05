@@ -47,7 +47,7 @@ This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"
 ## PARAMETERS
 
 ### -Force
-Forcibly disable the feature.
+Specifies whether to continue if an error occurs when deactivating the feature.
 
 ```yaml
 Type: SwitchParameter
