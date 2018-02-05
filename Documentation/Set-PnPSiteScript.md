@@ -31,7 +31,7 @@ Updates an existing Site Script and changes the title.
 ### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> $script = Get-PnPSiteScript -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f 
-PS:> Set-PnPSiteScript -Identity = $script -Title "My Site Script"
+PS:> Set-PnPSiteScript -Identity $script -Title "My Site Script"
 ```
 
 Updates an existing Site Script and changes the title.
