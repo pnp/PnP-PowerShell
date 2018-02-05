@@ -45,7 +45,7 @@ This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" 
 ## PARAMETERS
 
 ### -Force
-Forcibly enable the feature.
+Specifies whether to overwrite an existing feature with the same feature identifier. This parameter is ignored if there are no errors.
 
 ```yaml
 Type: SwitchParameter
