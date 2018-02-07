@@ -39,6 +39,7 @@
 ### [Set-PnPMasterPage](Set-PnPMasterPage.md)
 ### [Set-PnPMinimalDownloadStrategy](Set-PnPMinimalDownloadStrategy.md)
 ### [Add-PnPNavigationNode](Add-PnPNavigationNode.md)
+### [Get-PnPNavigationNode](Get-PnPNavigationNode.md)
 ### [Remove-PnPNavigationNode](Remove-PnPNavigationNode.md)
 ### [Disable-PnPResponsiveUI](Disable-PnPResponsiveUI.md)
 ### [Enable-PnPResponsiveUI](Enable-PnPResponsiveUI.md)

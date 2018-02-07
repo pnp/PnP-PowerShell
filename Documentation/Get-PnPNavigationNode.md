@@ -3,76 +3,82 @@ external help file:
 applicable: SharePoint Server 2013, SharePoint Server 2016, SharePoint Online
 schema: 2.0.0
 ---
-# Remove-PnPNavigationNode
+# Get-PnPNavigationNode
 
 ## SYNOPSIS
-Removes a menu item from either the quicklaunch or top navigation
+Returns all or a specific navigation node
 
 ## SYNTAX 
 
-### Remove a node by ID
+### All nodes by location
 ```powershell
-Remove-PnPNavigationNode -Identity <NavigationNodePipeBind>
-                         [-Force [<SwitchParameter>]]
-                         [-Web <WebPipeBind>]
-                         [-Connection <SPOnlineConnection>]
+Get-PnPNavigationNode [-Location <NavigationType>]
+                      [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
+```
+
+### A single node by ID
+```powershell
+Get-PnPNavigationNode [-Id <Int>]
+                      [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Remove-PnPNavigationNode -Identity 1032
+PS:> Get-PnPNavigationNode
 ```
 
-Removes the navigation node with the specified id
+Returns all navigation nodes in the quicklaunch navigation
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> $nodes = Get-PnPNavigationNode -QuickLaunch
-PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force
+PS:> Get-PnPNavigationNode -QuickLaunch
 ```
 
-Retrieves all navigation nodes from the Quick Launch navigation, then removes the first node in the list and it will not ask for a confirmation
+Returns all navigation nodes in the quicklaunch navigation
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-PS:> Remove-PnPNavigationNode -Title Recent -Location QuickLaunch
+PS:> Get-PnPNavigationNode -TopNavigationBar
 ```
 
-Will remove the recent navigation node from the quick launch in the current web.
+Returns all navigation nodes in the top navigation bar
 
 ### ------------------EXAMPLE 4------------------
 ```powershell
-PS:> Remove-PnPNavigationNode -Title Home -Location TopNavigationBar -Force
+PS:> $node = Get-PnPNavigationNode -Id 2030
+PS> $children = $node.Children
 ```
 
-Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web.
+Returns the selected navigation node and retrieves any children
 
 ## PARAMETERS
 
-### -Force
-Specifying the Force parameter will skip the confirmation question.
+### -Id
+The Id of the node to retrieve
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
+Type: Int
+Parameter Sets: A single node by ID
 
 Required: False
 Position: Named
 Accept pipeline input: False
 ```
 
-### -Identity
-The Id or node object to delete
+### -Location
+The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch
 
 ```yaml
-Type: NavigationNodePipeBind
-Parameter Sets: Remove a node by ID
+Type: NavigationType
+Parameter Sets: All nodes by location
 
-Required: True
-Position: 0
-Accept pipeline input: True
+Required: False
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Connection

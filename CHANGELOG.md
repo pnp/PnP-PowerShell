@@ -1,10 +1,28 @@
-# SharePointPnP.PowerShell Changelog #
+# SharePointPnP.PowerShell Changelog
+All notable changes to this project will be documented in this file.
 
-**2018-02-02**
-* Added Set-PnPSiteDesign and Set-PnPSiteScript cmdlets
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-**2018-01-05**
-* Added Get-PnPTenantAppCatalogUrl, Start-PnPWorkflowInstance, Get-PnPWorkflowInstance
+## [Unreleased]
+### Added
+- Added Get-PnPNavigationNode cmdlet
+
+### Changed
+- Changed changelog format
+- Updated Remove-PnPNavigationNode cmdlet to support removal by Id
+
+### Deprecated
+- Deprecated Remove-PnPNavigationNode -Title -Header parameters. Use Identity instead.
+
+## [2.23.1802.0] - 2018-02-05
+### Added
+- Added Set-PnPSiteDesign and Set-PnPSiteScript cmdlets
+
+## [2.22.1801.0]
+### Added
+- Added Get-PnPTenantAppCatalogUrl
+- Start-PnPWorkflowInstance
+- Get-PnPWorkflowInstance
 
 **2017-12-06**
 * Added cmdlets for Site Designs: Add-PnPSiteDesign, Add-PnPSiteScript, Get-PnPSiteDesign, Get-PnPSiteScript, Get-PnPSiteDesignRights, Grant-PnPSiteDesignRights, Remove-PnPSiteDesign, Remove-PnPSiteScript, Revoke-PnPSiteDesignRights
