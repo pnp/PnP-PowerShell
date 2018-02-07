@@ -129,6 +129,7 @@ Cmdlet|Description|Platform
 **[Set&#8209;PnPMasterPage](../../sharepoint-ps/sharepoint-pnp/Set-PnPMasterPage.md)** |Set the masterpage|All
 **[Set&#8209;PnPMinimalDownloadStrategy](../../sharepoint-ps/sharepoint-pnp/Set-PnPMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.|All
 **[Add&#8209;PnPNavigationNode](../../sharepoint-ps/sharepoint-pnp/Add-PnPNavigationNode.md)** |Adds an item to a navigation element|All
+**[Get&#8209;PnPNavigationNode](../../sharepoint-ps/sharepoint-pnp/Get-PnPNavigationNode.md)** |Returns all or a specific navigation node|All
 **[Remove&#8209;PnPNavigationNode](../../sharepoint-ps/sharepoint-pnp/Remove-PnPNavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation|All
 **[Disable&#8209;PnPResponsiveUI](../../sharepoint-ps/sharepoint-pnp/Disable-PnPResponsiveUI.md)** |Deactive the PnP Response UI add-on|All
 **[Enable&#8209;PnPResponsiveUI](../../sharepoint-ps/sharepoint-pnp/Enable-PnPResponsiveUI.md)** |Activates the PnP Response UI Add-on|All
