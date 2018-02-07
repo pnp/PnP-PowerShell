@@ -8,7 +8,7 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsCommon.Move, "PnpRecycleBinItem")]
+    [Cmdlet(VerbsCommon.Move, "PnPRecycleBinItem")]
     [CmdletHelp("Moves all items or a specific item in the first stage recycle bin of the current site collection to the second stage recycle bin",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.RecycleBin)]

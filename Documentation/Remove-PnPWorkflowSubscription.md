@@ -23,14 +23,14 @@ Removes a previously registered workflow subscription
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Remove-PnPWorkflowSubscription -identity $wfSub
+PS:> Remove-PnPWorkflowSubscription -identity $wfSub
 ```
 
 Removes the workflowsubscription, retrieved by Get-PnPWorkflowSubscription.
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-Get-PnPWorkflowSubscription -Name MyWorkflow | Remove-PnPWorkflowSubscription
+PS:> Get-PnPWorkflowSubscription -Name MyWorkflow | Remove-PnPWorkflowSubscription
 ```
 
 Get the workflowSubscription MyWorkFlow and remove it.
@@ -62,7 +62,7 @@ Accept pipeline input: False
 ```
 
 ### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind

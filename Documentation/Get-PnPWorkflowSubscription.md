@@ -24,21 +24,21 @@ Returns a workflow subscriptions from a list
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Get-PnPWorkflowSubscription -Name MyWorkflow
+PS:> Get-PnPWorkflowSubscription -Name MyWorkflow
 ```
 
 Gets an Workflow subscription with the name "MyWorkflow".
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-Get-PnPWorkflowSubscription -Name MyWorkflow -list $list
+PS:> Get-PnPWorkflowSubscription -Name MyWorkflow -list $list
 ```
 
 Gets an Workflow subscription with the name "MyWorkflow" from the list $list.
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-Get-PnPList -identity "MyList" | Get-PnPWorkflowSubscription -Name MyWorkflow
+PS:> Get-PnPList -identity "MyList" | Get-PnPWorkflowSubscription -Name MyWorkflow
 ```
 
 Gets an Workflow subscription with the name "MyWorkflow" from the list "MyList".
@@ -82,7 +82,7 @@ Accept pipeline input: False
 ```
 
 ### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind

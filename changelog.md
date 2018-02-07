@@ -1,5 +1,26 @@
 # SharePointPnP.PowerShell Changelog #
 
+**2018-02-02**
+* Added Set-PnPSiteDesign and Set-PnPSiteScript cmdlets
+
+**2018-01-05**
+* Added Get-PnPTenantAppCatalogUrl, Start-PnPWorkflowInstance, Get-PnPWorkflowInstance
+
+**2017-12-06**
+* Added cmdlets for Site Designs: Add-PnPSiteDesign, Add-PnPSiteScript, Get-PnPSiteDesign, Get-PnPSiteScript, Get-PnPSiteDesignRights, Grant-PnPSiteDesignRights, Remove-PnPSiteDesign, Remove-PnPSiteScript, Revoke-PnPSiteDesignRights
+
+**2017-12-02**
+* Added additional authentication option with Connect-PnPOnline allowing you use an existing Access Token for authentication
+* Added Get-PnPClientSideComponent, Move-PnPClientSideComponent, Remove-PnPClientSideComponent, Set-PnPClientSideText, Set-PnPClientSideWebPart
+
+**2017-11-20**
+* Added Measure-PnPWeb, Measure-PnPList and Measure-PnPResponseTime cmdlets
+* Added Set-PnPStorageEntity, Get-PnPStorageEntity and Remove-PnPStorageEntity cmdlets to manage storage entities / farm properties
+
+**2017-11-19**
+* Fixed issues with Set-PnPListItem -Values, Add-PnPListItem -Values and Add-PnPFile -Values, updated documentation for these cmdlets
+* Added confirmation prompt to Get-PnPFile to ask if local file should be overwritten. Use -Force to overwrite this
+
 **2017-05-06**
 * Added Set-PnPWebPermissions
 * Updated Get-PnPListItem to execute scriptblocks

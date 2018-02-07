@@ -40,6 +40,7 @@ Get-PnPFile -AsFile [<SwitchParameter>]
             -Url <String>
             [-Path <String>]
             [-Filename <String>]
+            [-Force [<SwitchParameter>]]
             [-Web <WebPipeBind>]
             [-Connection <SPOnlineConnection>]
 ```
@@ -55,7 +56,7 @@ Retrieves the file and downloads it to the current folder
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor
+PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile
 ```
 
 Retrieves the file and downloads it to c:\temp\company.spcolor
@@ -83,7 +84,7 @@ Retrieves the file and returns it as a ListItem object
 
 ### ------------------EXAMPLE 6------------------
 ```powershell
-PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor
+PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile
 ```
 
 Retrieves the file by site relative URL and downloads it to c:\temp\company.spcolor
@@ -131,6 +132,18 @@ Name for the local file
 
 ```yaml
 Type: String
+Parameter Sets: Save to local path
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Force
+Overwrites the file if it exists.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: Save to local path
 
 Required: False
@@ -188,7 +201,7 @@ Accept pipeline input: False
 ```
 
 ### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind

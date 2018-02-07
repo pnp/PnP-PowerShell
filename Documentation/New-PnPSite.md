@@ -10,7 +10,7 @@ BETA: This cmdlet is using early release APIs. Notice that functionality and par
 
 ## SYNTAX 
 
-### Communication Site With Built-in Design
+### Communication Site with Built-In Site Design
 ```powershell
 New-PnPSite -Type <SiteType>
             -Title <String>
@@ -34,7 +34,7 @@ New-PnPSite -Type <SiteType>
             [-Connection <SPOnlineConnection>]
 ```
 
-### CommunicationCustomInDesign
+### Communication Site with Custom Design
 ```powershell
 New-PnPSite -Type <SiteType>
             -Title <String>
@@ -120,7 +120,7 @@ Specifies if guest users can share files in the new site collection
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Communication Site With Built-in Design
+Parameter Sets: Communication Site with Built-In Site Design
 
 Required: False
 Position: 0
@@ -132,7 +132,7 @@ Specifies the classification of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: Communication Site With Built-in Design
+Parameter Sets: Communication Site with Built-In Site Design
 
 Required: False
 Position: 0
@@ -144,7 +144,7 @@ Specifies the description of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: Communication Site With Built-in Design
+Parameter Sets: Communication Site with Built-In Site Design
 
 Required: False
 Position: 0
@@ -168,7 +168,7 @@ Specifies the language of the new site collection. Defaults to the current langu
 
 ```yaml
 Type: UInt32
-Parameter Sets: Communication Site With Built-in Design
+Parameter Sets: Communication Site with Built-In Site Design
 
 Required: False
 Position: 0
@@ -180,7 +180,7 @@ Specifies the site design of the new site collection. Defaults to 'Topic'
 
 ```yaml
 Type: CommunicationSiteDesign
-Parameter Sets: Communication Site With Built-in Design
+Parameter Sets: Communication Site with Built-In Site Design
 
 Required: False
 Position: 0
@@ -192,7 +192,7 @@ Specifies the site design id to use for the new site collection. If specified wi
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: CommunicationCustomInDesign
+Parameter Sets: Communication Site with Custom Design
 
 Required: True
 Position: 0
@@ -204,7 +204,7 @@ Specifies the title of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: Communication Site With Built-in Design
+Parameter Sets: Communication Site with Built-In Site Design
 
 Required: True
 Position: 0
@@ -228,7 +228,7 @@ Specifies the full url of the new site collection
 
 ```yaml
 Type: String
-Parameter Sets: Communication Site With Built-in Design
+Parameter Sets: Communication Site with Built-In Site Design
 
 Required: True
 Position: 0

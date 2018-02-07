@@ -360,8 +360,8 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharePointPnP.IdentityModel.Extensions, Version=1.2.2.0, Culture=neutral, PublicKeyToken=3751622786b357c2, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharePointPnP.IdentityModel.Extensions.1.2.2\lib\net45\SharePointPnP.IdentityModel.Extensions.dll</HintPath>
+    <Reference Include="SharePointPnP.IdentityModel.Extensions, Version=1.2.3.0, Culture=neutral, PublicKeyToken=5e633289e95c321a, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharePointPnP.IdentityModel.Extensions.1.2.3\lib\net45\SharePointPnP.IdentityModel.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.PowerShell.Commands.Management" />
@@ -373,6 +373,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IdentityModel.Selectors" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.0\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Management.Automation.dll.10.0.10586.0\lib\net40\System.Management.Automation.dll</HintPath>
       <Private>True</Private>
@@ -406,6 +409,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\GetTenantAppCatalogUrl.cs" />
+    <Compile Include="Admin\RemoveStorageEntity.cs" />
+    <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
+    <Compile Include="ClientSidePages\RemoveClientSideComponent.cs" />
+    <Compile Include="ClientSidePages\MoveClientSideComponent.cs" />
+    <Compile Include="ClientSidePages\SetClientSideText.cs" />
+    <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
+    <Compile Include="Enums\SiteWebTemplate.cs" />
+    <Compile Include="SiteDesigns\SetSiteDesign.cs" />
+    <Compile Include="SiteDesigns\AddSiteScript.cs" />
+    <Compile Include="SiteDesigns\AddSiteDesign.cs" />
+    <Compile Include="SiteDesigns\RevokeSiteDesignRights.cs" />
+    <Compile Include="SiteDesigns\GrantSiteDesignRights.cs" />
+    <Compile Include="SiteDesigns\GetSiteDesignRights.cs" />
+    <Compile Include="SiteDesigns\RemoveSiteScript.cs" />
+    <Compile Include="SiteDesigns\RemoveSiteDesign.cs" />
+    <Compile Include="SiteDesigns\GetSiteScript.cs" />
+    <Compile Include="SiteDesigns\GetSiteDesign.cs" />
+    <Compile Include="Admin\SetStorageEntity.cs" />
+    <Compile Include="Admin\GetStorageEntity.cs" />
     <Compile Include="Admin\NewSite.cs" />
     <Compile Include="Apps\UpdateApp.cs" />
     <Compile Include="Apps\RemoveApp.cs" />
@@ -421,7 +447,9 @@
     <Compile Include="Base\PipeBinds\ClientSideComponentPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericPropertiesPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ClientSidePagePipeBind.cs" />
+    <Compile Include="Base\PipeBinds\DiagnosticEndpointPipeBind.cs" />
     <Compile Include="Base\PipeBinds\GenericObjectNameIdPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\UserCustomActionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\EventReceiverPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebhookSubscriptionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WebPartPipeBind.cs" />
@@ -434,6 +462,13 @@
     <Compile Include="Base\PnPCmdlet.cs" />
     <Compile Include="Base\PnPAdminCmdlet.cs" />
     <Compile Include="ContentTypes\GetContentTypePublishingHubUrl.cs" />
+    <Compile Include="Diagnostic\MeasurePnPList.cs" />
+    <Compile Include="Diagnostic\ListStatistics.cs" />
+    <Compile Include="Diagnostic\FolderStatistics.cs" />
+    <Compile Include="Diagnostic\WebStatistics.cs" />
+    <Compile Include="Diagnostic\MeasurePnPWeb.cs" />
+    <Compile Include="Diagnostic\MeasureResponseTime.cs" />
+    <Compile Include="Diagnostic\ResponseTimeStatistics.cs" />
     <Compile Include="Enums\SiteType.cs" />
     <Compile Include="Fields\SetField.cs" />
     <Compile Include="Files\CopyFile.cs" />
@@ -442,6 +477,8 @@
     <Compile Include="Files\RenameFile.cs" />
     <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
     <Compile Include="Files\RenameFolder.cs" />
+    <Compile Include="Graph\GetUnifiedGroupOwners.cs" />
+    <Compile Include="Graph\GetUnifiedGroupMembers.cs" />
     <Compile Include="Graph\UpdateSiteClassification.cs" />
     <Compile Include="Graph\RemoveSiteClassification.cs" />
     <Compile Include="Graph\DisableSiteClassification.cs" />
@@ -513,7 +550,8 @@
     <Compile Include="ClientSidePages\ClientSidePageUtilities.cs" />
     <Compile Include="ClientSidePages\SetClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
-    <Compile Include="ClientSidePages\AddClientSideWebPart.cs" />
+    <Compile Include="SiteDesigns\SetSiteScript.cs" />
+    <Compile Include="WebParts\AddClientSideWebPart.cs" />
     <Compile Include="ClientSidePages\GetAvailableClientSideComponents.cs" />
     <Compile Include="ClientSidePages\RemoveClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSidePage.cs" />
@@ -635,6 +673,7 @@
     <Compile Include="Site\AddSiteCollectionAdmin.cs" />
     <Compile Include="Site\GetAuditing.cs" />
     <Compile Include="RecycleBin\GetRecycleBinItem.cs" />
+    <Compile Include="Site\SetPnPSite.cs" />
     <Compile Include="Site\GetSiteCollectionAdmin.cs" />
     <Compile Include="Site\RemoveSiteCollectionAdmin.cs" />
     <Compile Include="Site\SetAuditing.cs" />
@@ -653,6 +692,7 @@
     <Compile Include="UserProfiles\SetUserProfileProperty.cs" />
     <Compile Include="Utilities\DynamicLinq.cs" />
     <Compile Include="Utilities\HttpHelper.cs" />
+    <Compile Include="Utilities\ListItemHelper.cs" />
     <Compile Include="Webhooks\RemoveWebhookSubscription.cs" />
     <Compile Include="Webhooks\SetWebhookSubscription.cs" />
     <Compile Include="Webhooks\GetWebhookSubscriptions.cs" />
@@ -677,7 +717,9 @@
     <Compile Include="Web\SetWebPermission.cs" />
     <Compile Include="Web\SetRequestAccessEmails.cs" />
     <Compile Include="Workflows\AddWorkflowDefinition.cs" />
+    <Compile Include="Workflows\GetWorkflowInstances.cs" />
     <Compile Include="Workflows\ResumeWorkflowInstance.cs" />
+    <Compile Include="Workflows\StartWorkflowInstance.cs" />
     <Compile Include="Workflows\StopWorkflowInstance.cs" />
     <Compile Include="Workflows\RemoveWorkflowDefinition.cs" />
     <Compile Include="Workflows\RemoveWorkflowSubscription.cs" />
@@ -689,6 +731,7 @@
     </None>
     <None Include="ModuleFiles\SharePointPnP.PowerShell.Online.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <None Include="Samples\Connections.ps1" />

@@ -23,7 +23,7 @@ Resumes a previously stopped workflow instance
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Resume-PnPWorkflowInstance -identity $wfInstance
+PS:> Resume-PnPWorkflowInstance -identity $wfInstance
 ```
 
 Resumes the workflow instance, this can be the Guid of the instance or the instance itself.
@@ -55,7 +55,7 @@ Accept pipeline input: False
 ```
 
 ### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind

@@ -206,7 +206,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             if (!AsIncludeFile) return xml;
             XElement xElement = XElement.Parse(xml);
             // Get the Files Element
-            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
+            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05;
 
             var filesElement = xElement.Descendants(pnp + "Files").FirstOrDefault();
             if (filesElement != null)

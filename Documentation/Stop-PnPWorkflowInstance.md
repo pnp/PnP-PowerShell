@@ -12,6 +12,7 @@ Stops a workflow instance
 
 ```powershell
 Stop-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
+                         [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
 ```
@@ -20,12 +21,24 @@ Stop-PnPWorkflowInstance -Identity <WorkflowInstancePipeBind>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Stop-PnPWorkflowInstance -identity $wfInstance
+PS:> Stop-PnPWorkflowInstance -identity $wfInstance
 ```
 
-Stops the workflow Instance, this can be the Guid of the instance or the instance itself.
+Stops the workflow Instance
 
 ## PARAMETERS
+
+### -Force
+Forcefully terminate the workflow instead of cancelling. Works on errored and non-responsive workflows. Deletes all created tasks. Does not notify participants.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Identity
 The instance to stop
@@ -52,7 +65,7 @@ Accept pipeline input: False
 ```
 
 ### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind

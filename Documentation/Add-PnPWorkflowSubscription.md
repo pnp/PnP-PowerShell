@@ -28,21 +28,21 @@ Add-PnPWorkflowSubscription -Name <String>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf -list $list
+PS:> Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf -list $list
 ```
 
 Adds an Workflow with the name 'SendMessageWf' to the list $list.
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-$list | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
+PS:> $list | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
 ```
 
 Adds an Workflow with the name "SendMessageWf" to the list $list.
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-Get-PnPList -Identity "MyCustomList" | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
+PS:> Get-PnPList -Identity "MyCustomList" | Add-PnPWorkflowSubscription -Name MyWorkflow -DefinitionName SendMessageWf
 ```
 
 Adds an Workflow with the name "SendMessageWf" to the list "MyCustomList".
@@ -170,7 +170,7 @@ Accept pipeline input: False
 ```
 
 ### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind

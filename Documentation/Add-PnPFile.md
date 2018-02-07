@@ -236,7 +236,45 @@ Accept pipeline input: False
 ```
 
 ### -Values
-Use the internal names of the fields when specifying field names
+Use the internal names of the fields when specifying field names.
+
+Single line of text: -Values @{"Title" = "Title New"}
+
+Multiple lines of text: -Values @{"MultiText" = "New text\n\nMore text"}
+
+Rich text: -Values @{"MultiText" = "<strong>New</strong> text"}
+
+Choice: -Values @{"Choice" = "Value 1"}
+
+Number: -Values @{"Number" = "10"}
+
+Currency: -Values @{"Number" = "10"}
+
+Currency: -Values @{"Currency" = "10"}
+
+Date and Time: -Values @{"DateAndTime" = "03/10/2015 14:16"}
+
+Lookup (id of lookup value): -Values @{"Lookup" = "2"}
+
+Multi value lookup (id of lookup values as array 1): -Values @{"MultiLookupField" = "1","2"}
+
+Multi value lookup (id of lookup values as array 2): -Values @{"MultiLookupField" = 1,2}
+
+Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField" = "1,2"}
+
+Yes/No: -Values @{"YesNo" = $false}
+
+Person/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{"Person" = "user1@domain.com","21"}
+
+Managed Metadata (single value with path to term): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"}
+
+Managed Metadata (single value with id of term): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818"} with Id of term
+
+Managed Metadata (multiple values with paths to terms): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE","CORPORATE|DEPARTMENTS|HR"}
+
+Managed Metadata (multiple values with ids of terms): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593"}
+
+Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnp"}
 
 ```yaml
 Type: Hashtable
@@ -260,7 +298,7 @@ Accept pipeline input: False
 ```
 
 ### -Web
-The GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind

@@ -12,8 +12,8 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletHelp("Returns the available apps from the app catalog",
         Category = CmdletHelpCategory.Apps,
         OutputType = typeof(List<AppMetadata>), SupportedPlatform = CmdletSupportedPlatform.Online)]
-    [CmdletExample(Code = @"PS:> Get-PnPAvailableApp", Remarks = @"This will return all available app metadata from the tenant app catalog. It will list the installed version in the current site.", SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Get-PnPAvailableApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f", Remarks = @"This will the specific app metadata from the app catalog.", SortOrder = 2)]
+    [CmdletExample(Code = @"PS:> Get-PnPApp", Remarks = @"This will return all available app metadata from the tenant app catalog. It will list the installed version in the current site.", SortOrder = 1)]
+    [CmdletExample(Code = @"PS:> Get-PnPApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f", Remarks = @"This will the specific app metadata from the app catalog.", SortOrder = 2)]
     public class GetApp : PnPCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Id of an app which is available in the app catalog")]
@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
             }
             else
             {
-                WriteObject(apps);
+                WriteObject(apps,true);
             }
         }
     }

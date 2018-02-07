@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Server 2013, SharePoint Server 2016, SharePoint Online
 schema: 2.0.0
 ---
-# Restore-PnpRecycleBinItem
+# Restore-PnPRecycleBinItem
 
 ## SYNOPSIS
 Restores the provided recycle bin item to its original location
@@ -12,14 +12,14 @@ Restores the provided recycle bin item to its original location
 
 ### Identity
 ```powershell
-Restore-PnpRecycleBinItem -Identity <RecycleBinItemPipeBind>
+Restore-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind>
                           [-Force [<SwitchParameter>]]
                           [-Connection <SPOnlineConnection>]
 ```
 
 ### All
 ```powershell
-Restore-PnpRecycleBinItem -All [<SwitchParameter>]
+Restore-PnPRecycleBinItem -All [<SwitchParameter>]
                           [-Force [<SwitchParameter>]]
                           [-Connection <SPOnlineConnection>]
 ```

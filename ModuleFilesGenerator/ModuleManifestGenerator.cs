@@ -99,6 +99,12 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
     CmdletsToExport = {cmdletsToExport}
     VariablesToExport = '*'{aliases}
     FormatsToProcess = 'SharePointPnP.PowerShell.{spVersion}.Commands.Format.ps1xml' 
+    PrivateData = @{{
+        PSData = @{{
+            ProjectUri = 'https://aka.ms/sppnp'
+            IconUri = 'https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/master/Commands/Resources/pnp.ico'
+        }}
+    }}
 }}";
             File.WriteAllText(path, manifest, Encoding.UTF8);
         }

@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> $docset = Get-PnPDocumentSetTemplate -Identity ""Test Document Set""
-PS:> $ct = Get-SPOContentType -Identity ""Test CT""
+PS:> $ct = Get-PnPContentType -Identity ""Test CT""
 PS:> Add-PnPContentTypeToDocumentSet -ContentType $ct -DocumentSet $docset",
         Remarks = "This will add the content type called 'Test CT' to the document set called ''Test Document Set'",
         SortOrder = 2)]

@@ -60,6 +60,7 @@ Cmdlet|Description|Platforms
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
 **[Get&#8209;PnPAvailableClientSideComponents](Get-PnPAvailableClientSideComponents.md)** |Gets the available client side components on a particular page|SharePoint Online
+**[Move&#8209;PnPClientSideComponent](Move-PnPClientSideComponent.md)** |Moves a Client-Side Component to a different section/column|SharePoint Online
 **[Add&#8209;PnPClientSidePage](Add-PnPClientSidePage.md)** |Adds a Client-Side Page|SharePoint Online
 **[Get&#8209;PnPClientSidePage](Get-PnPClientSidePage.md)** |Gets a Client-Side Page|SharePoint Online
 **[Remove&#8209;PnPClientSidePage](Remove-PnPClientSidePage.md)** |Removes a Client-Side Page|SharePoint Online
@@ -79,6 +80,12 @@ Cmdlet|Description|Platforms
 **[Set&#8209;PnPDefaultContentTypeToList](Set-PnPDefaultContentTypeToList.md)** |Sets the default content type for a list|All
 **[Remove&#8209;PnPFieldFromContentType](Remove-PnPFieldFromContentType.md)** |Removes a site column from a content type|All
 **[Add&#8209;PnPFieldToContentType](Add-PnPFieldToContentType.md)** |Adds an existing site column to a content type|All
+## Diagnostic utilites
+Cmdlet|Description|Platforms
+:-----|:----------|:--------
+**[Measure&#8209;PnPList](Measure-PnPList.md)** |Returns statistics on the list object|SharePoint Online, SharePoint 2016
+**[Measure&#8209;PnPResponseTime](Measure-PnPResponseTime.md)** |Measures response time for the specified endpoint by sending probe requests and gathering stats.|All
+**[Measure&#8209;PnPWeb](Measure-PnPWeb.md)** |Returns statistics on the web object|SharePoint Online, SharePoint 2016
 ## Document Sets
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
@@ -173,6 +180,8 @@ Cmdlet|Description|Platforms
 **[New&#8209;PnPUnifiedGroup](New-PnPUnifiedGroup.md)** |Creates a new Office 365 Group (aka Unified Group)|SharePoint Online
 **[Remove&#8209;PnPUnifiedGroup](Remove-PnPUnifiedGroup.md)** |Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups|SharePoint Online
 **[Set&#8209;PnPUnifiedGroup](Set-PnPUnifiedGroup.md)** |Sets Office 365 Group (aka Unified Group) properties|SharePoint Online
+**[Get&#8209;PnPUnifiedGroupMembers](Get-PnPUnifiedGroupMembers.md)** |Gets members of a paricular Office 365 Group (aka Unified Group)|SharePoint Online
+**[Get&#8209;PnPUnifiedGroupOwners](Get-PnPUnifiedGroupOwners.md)** |Gets owners of a paricular Office 365 Group (aka Unified Group)|SharePoint Online
 ## Provisioning
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
@@ -224,10 +233,10 @@ Cmdlet|Description|Platforms
 ## SharePoint Recycle Bin
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
-**[Clear&#8209;PnpRecycleBinItem](Clear-PnpRecycleBinItem.md)** |Permanently deletes all or a specific recycle bin item|All
-**[Move&#8209;PnpRecycleBinItem](Move-PnpRecycleBinItem.md)** |Moves all items or a specific item in the first stage recycle bin of the current site collection to the second stage recycle bin|SharePoint Online
-**[Restore&#8209;PnpRecycleBinItem](Restore-PnpRecycleBinItem.md)** |Restores the provided recycle bin item to its original location|All
+**[Clear&#8209;PnPRecycleBinItem](Clear-PnPRecycleBinItem.md)** |Permanently deletes all or a specific recycle bin item|All
 **[Get&#8209;PnPRecycleBinItem](Get-PnPRecycleBinItem.md)** |Returns the items in the recycle bin from the context|All
+**[Move&#8209;PnPRecycleBinItem](Move-PnPRecycleBinItem.md)** |Moves all items or a specific item in the first stage recycle bin of the current site collection to the second stage recycle bin|SharePoint Online
+**[Restore&#8209;PnPRecycleBinItem](Restore-PnPRecycleBinItem.md)** |Restores the provided recycle bin item to its original location|All
 **[Get&#8209;PnPTenantRecycleBinItem](Get-PnPTenantRecycleBinItem.md)** |Returns the items in the tenant scoped recycle bin|SharePoint Online
 ## SharePoint WebHooks
 Cmdlet|Description|Platforms
@@ -244,6 +253,7 @@ Cmdlet|Description|Platforms
 **[Set&#8209;PnPAuditing](Set-PnPAuditing.md)** |Set Auditing setting for a site|All
 **[Add&#8209;PnPOffice365GroupToSite](Add-PnPOffice365GroupToSite.md)** |Groupifies a classic team site by creating a group for it and connecting the site with the newly created group|SharePoint Online
 **[Get&#8209;PnPSite](Get-PnPSite.md)** |Returns the current site collection from the context.|All
+**[Set&#8209;PnPSite](Set-PnPSite.md)** |Sets Site Collection properties.|SharePoint Online
 **[Add&#8209;PnPSiteCollectionAdmin](Add-PnPSiteCollectionAdmin.md)** |Adds one or more users as site collection administrators to the site collection in the current context|All
 **[Get&#8209;PnPSiteCollectionAdmin](Get-PnPSiteCollectionAdmin.md)** |Returns the current site collection administrators of the site colleciton in the current context|All
 **[Remove&#8209;PnPSiteCollectionAdmin](Remove-PnPSiteCollectionAdmin.md)** |Removes one or more users as site collection administrators from the site collection in the current context|All
@@ -274,6 +284,21 @@ Cmdlet|Description|Platforms
 :-----|:----------|:--------
 **[Get&#8209;PnPAccessToken](Get-PnPAccessToken.md)** |Returns the current OAuth Access token|All
 **[New&#8209;PnPSite](New-PnPSite.md)** |BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection|SharePoint Online
+**[Add&#8209;PnPSiteDesign](Add-PnPSiteDesign.md)** |Creates a new Site Design on the current tenant.|SharePoint Online
+**[Get&#8209;PnPSiteDesign](Get-PnPSiteDesign.md)** |Retrieve Site Designs that have been registered on the current tenant.|SharePoint Online
+**[Remove&#8209;PnPSiteDesign](Remove-PnPSiteDesign.md)** |Removes a Site Design|SharePoint Online
+**[Set&#8209;PnPSiteDesign](Set-PnPSiteDesign.md)** |Updates a Site Design on the current tenant.|SharePoint Online
+**[Get&#8209;PnPSiteDesignRights](Get-PnPSiteDesignRights.md)** |Returns the principals with design rights on a specific Site Design|SharePoint Online
+**[Grant&#8209;PnPSiteDesignRights](Grant-PnPSiteDesignRights.md)** |Grants the specified principals rights to use the site design.|SharePoint Online
+**[Revoke&#8209;PnPSiteDesignRights](Revoke-PnPSiteDesignRights.md)** |Revokes the specified principals rights to use the site design.|SharePoint Online
+**[Add&#8209;PnPSiteScript](Add-PnPSiteScript.md)** |Creates a new Site Script on the current tenant.|SharePoint Online
+**[Get&#8209;PnPSiteScript](Get-PnPSiteScript.md)** |Retrieve Site Scripts that have been registered on the current tenant.|SharePoint Online
+**[Remove&#8209;PnPSiteScript](Remove-PnPSiteScript.md)** |Removes a Site Script|SharePoint Online
+**[Set&#8209;PnPSiteScript](Set-PnPSiteScript.md)** |Updates an existing Site Script on the current tenant.|SharePoint Online
+**[Get&#8209;PnPStorageEntity](Get-PnPStorageEntity.md)** |Retrieve Storage Entities / Farm Properties.|SharePoint Online
+**[Remove&#8209;PnPStorageEntity](Remove-PnPStorageEntity.md)** |Remove Storage Entities / Farm Properties.|SharePoint Online
+**[Set&#8209;PnPStorageEntity](Set-PnPStorageEntity.md)** |Set Storage Entities / Farm Properties.|SharePoint Online
+**[Get&#8209;PnPTenantAppCatalogUrl](Get-PnPTenantAppCatalogUrl.md)** |Retrieves the url of the tenant scoped app catalog.|SharePoint Online
 **[Clear&#8209;PnPTenantRecycleBinItem](Clear-PnPTenantRecycleBinItem.md)** |Permanently deletes a site collection from the tenant scoped recycle bin|All
 **[Restore&#8209;PnPTenantRecycleBinItem](Restore-PnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin|SharePoint Online
 **[Get&#8209;PnPTenantSite](Get-PnPTenantSite.md)** |Retrieve site information.|SharePoint Online
@@ -310,6 +335,10 @@ Cmdlet|Description|Platforms
 ## Web Parts
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
+**[Get&#8209;PnPClientSideComponent](Get-PnPClientSideComponent.md)** |Retrieve one or more Client-Side components from a page|SharePoint Online
+**[Remove&#8209;PnPClientSideComponent](Remove-PnPClientSideComponent.md)** |Removes a Client-Side component from a page|SharePoint Online
+**[Set&#8209;PnPClientSideText](Set-PnPClientSideText.md)** |Set Client-Side Text Component properties|SharePoint Online
+**[Set&#8209;PnPClientSideWebPart](Set-PnPClientSideWebPart.md)** |Set Client-Side Web Part properties|SharePoint Online
 **[Get&#8209;PnPWebPart](Get-PnPWebPart.md)** |Returns a webpart definition object|All
 **[Remove&#8209;PnPWebPart](Remove-PnPWebPart.md)** |Removes a webpart from a page|All
 **[Get&#8209;PnPWebPartProperty](Get-PnPWebPartProperty.md)** |Returns a web part property|All
@@ -343,7 +372,9 @@ Cmdlet|Description|Platforms
 **[Add&#8209;PnPWorkflowDefinition](Add-PnPWorkflowDefinition.md)** |Adds a workflow definition|All
 **[Get&#8209;PnPWorkflowDefinition](Get-PnPWorkflowDefinition.md)** |Return a workflow definition|All
 **[Remove&#8209;PnPWorkflowDefinition](Remove-PnPWorkflowDefinition.md)** |Removes a workflow definition|All
+**[Get&#8209;PnPWorkflowInstance](Get-PnPWorkflowInstance.md)** |Get workflow instances|All
 **[Resume&#8209;PnPWorkflowInstance](Resume-PnPWorkflowInstance.md)** |Resume a workflow|All
+**[Start&#8209;PnPWorkflowInstance](Start-PnPWorkflowInstance.md)** |Starts a workflow instance on a list item|All
 **[Stop&#8209;PnPWorkflowInstance](Stop-PnPWorkflowInstance.md)** |Stops a workflow instance|All
 **[Add&#8209;PnPWorkflowSubscription](Add-PnPWorkflowSubscription.md)** |Adds a workflow subscription to a list|All
 **[Get&#8209;PnPWorkflowSubscription](Get-PnPWorkflowSubscription.md)** |Return a workflow subscription|All
