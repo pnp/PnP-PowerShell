@@ -412,14 +412,17 @@
     <Compile Include="Admin\GetTenantAppCatalogUrl.cs" />
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\NavigationNodePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="Branding\GetNavigationNode.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
     <Compile Include="ClientSidePages\RemoveClientSideComponent.cs" />
     <Compile Include="ClientSidePages\MoveClientSideComponent.cs" />
     <Compile Include="ClientSidePages\SetClientSideText.cs" />
     <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
+    <Compile Include="SiteDesigns\SetSiteDesign.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
     <Compile Include="SiteDesigns\AddSiteDesign.cs" />
     <Compile Include="SiteDesigns\RevokeSiteDesignRights.cs" />
@@ -550,6 +553,7 @@
     <Compile Include="ClientSidePages\SetClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="SiteDesigns\SetSiteScript.cs" />
     <Compile Include="WebParts\AddClientSideWebPart.cs" />
     <Compile Include="ClientSidePages\GetAvailableClientSideComponents.cs" />
     <Compile Include="ClientSidePages\RemoveClientSidePage.cs" />

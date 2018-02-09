@@ -3,79 +3,78 @@ external help file:
 applicable: SharePoint Server 2013, SharePoint Server 2016, SharePoint Online
 schema: 2.0.0
 ---
-# Disable-PnPFeature
+# Get-PnPNavigationNode
 
 ## SYNOPSIS
-Disables a feature
+Returns all or a specific navigation node
 
 ## SYNTAX 
 
+### All nodes by location
 ```powershell
-Disable-PnPFeature -Identity <GuidPipeBind>
-                   [-Force [<SwitchParameter>]]
-                   [-Scope <FeatureScope>]
-                   [-Web <WebPipeBind>]
-                   [-Connection <SPOnlineConnection>]
+Get-PnPNavigationNode [-Location <NavigationType>]
+                      [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
 ```
 
-## DESCRIPTION
-Deactives a feature that was active on a site
+### A single node by ID
+```powershell
+Get-PnPNavigationNode [-Id <Int>]
+                      [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
+```
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
+PS:> Get-PnPNavigationNode
 ```
 
-This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"
+Returns all navigation nodes in the quicklaunch navigation
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
+PS:> Get-PnPNavigationNode -QuickLaunch
 ```
 
-This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with force.
+Returns all navigation nodes in the quicklaunch navigation
 
 ### ------------------EXAMPLE 3------------------
 ```powershell
-PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
+PS:> Get-PnPNavigationNode -TopNavigationBar
 ```
 
-This will disable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with the web scope.
+Returns all navigation nodes in the top navigation bar
+
+### ------------------EXAMPLE 4------------------
+```powershell
+PS:> $node = Get-PnPNavigationNode -Id 2030
+PS> $children = $node.Children
+```
+
+Returns the selected navigation node and retrieves any children
 
 ## PARAMETERS
 
-### -Force
-Specifies whether to continue if an error occurs when deactivating the feature.
+### -Id
+The Id of the node to retrieve
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
+Type: Int
+Parameter Sets: A single node by ID
 
 Required: False
 Position: Named
 Accept pipeline input: False
 ```
 
-### -Identity
-The id of the feature to disable.
+### -Location
+The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch
 
 ```yaml
-Type: GuidPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Accept pipeline input: False
-```
-
-### -Scope
-Specify the scope of the feature to deactivate, either Web or Site. Defaults to Web.
-
-```yaml
-Type: FeatureScope
-Parameter Sets: (All)
+Type: NavigationType
+Parameter Sets: All nodes by location
 
 Required: False
 Position: Named

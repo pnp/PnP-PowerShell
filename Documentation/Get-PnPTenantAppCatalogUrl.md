@@ -11,8 +11,7 @@ Retrieves the url of the tenant scoped app catalog.
 ## SYNTAX 
 
 ```powershell
-Get-PnPTenantAppCatalogUrl [-Key <String>]
-                           [-Connection <SPOnlineConnection>]
+Get-PnPTenantAppCatalogUrl [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -25,18 +24,6 @@ PS:> Get-PnPTenantAppCatalogUrl
 Returns the url of the tenant scoped app catalog site collection
 
 ## PARAMETERS
-
-### -Key
-The key of the value to retrieve.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -Connection
 Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.

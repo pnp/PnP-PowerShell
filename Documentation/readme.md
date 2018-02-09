@@ -51,6 +51,7 @@ Cmdlet|Description|Platforms
 **[Set&#8209;PnPMasterPage](Set-PnPMasterPage.md)** |Set the masterpage|All
 **[Set&#8209;PnPMinimalDownloadStrategy](Set-PnPMinimalDownloadStrategy.md)** |Activates or deactivates the minimal downloading strategy.|All
 **[Add&#8209;PnPNavigationNode](Add-PnPNavigationNode.md)** |Adds an item to a navigation element|All
+**[Get&#8209;PnPNavigationNode](Get-PnPNavigationNode.md)** |Returns all or a specific navigation node|All
 **[Remove&#8209;PnPNavigationNode](Remove-PnPNavigationNode.md)** |Removes a menu item from either the quicklaunch or top navigation|All
 **[Disable&#8209;PnPResponsiveUI](Disable-PnPResponsiveUI.md)** |Deactive the PnP Response UI add-on|All
 **[Enable&#8209;PnPResponsiveUI](Enable-PnPResponsiveUI.md)** |Activates the PnP Response UI Add-on|All
@@ -287,12 +288,14 @@ Cmdlet|Description|Platforms
 **[Add&#8209;PnPSiteDesign](Add-PnPSiteDesign.md)** |Creates a new Site Design on the current tenant.|SharePoint Online
 **[Get&#8209;PnPSiteDesign](Get-PnPSiteDesign.md)** |Retrieve Site Designs that have been registered on the current tenant.|SharePoint Online
 **[Remove&#8209;PnPSiteDesign](Remove-PnPSiteDesign.md)** |Removes a Site Design|SharePoint Online
+**[Set&#8209;PnPSiteDesign](Set-PnPSiteDesign.md)** |Updates a Site Design on the current tenant.|SharePoint Online
 **[Get&#8209;PnPSiteDesignRights](Get-PnPSiteDesignRights.md)** |Returns the principals with design rights on a specific Site Design|SharePoint Online
 **[Grant&#8209;PnPSiteDesignRights](Grant-PnPSiteDesignRights.md)** |Grants the specified principals rights to use the site design.|SharePoint Online
 **[Revoke&#8209;PnPSiteDesignRights](Revoke-PnPSiteDesignRights.md)** |Revokes the specified principals rights to use the site design.|SharePoint Online
 **[Add&#8209;PnPSiteScript](Add-PnPSiteScript.md)** |Creates a new Site Script on the current tenant.|SharePoint Online
 **[Get&#8209;PnPSiteScript](Get-PnPSiteScript.md)** |Retrieve Site Scripts that have been registered on the current tenant.|SharePoint Online
 **[Remove&#8209;PnPSiteScript](Remove-PnPSiteScript.md)** |Removes a Site Script|SharePoint Online
+**[Set&#8209;PnPSiteScript](Set-PnPSiteScript.md)** |Updates an existing Site Script on the current tenant.|SharePoint Online
 **[Get&#8209;PnPStorageEntity](Get-PnPStorageEntity.md)** |Retrieve Storage Entities / Farm Properties.|SharePoint Online
 **[Remove&#8209;PnPStorageEntity](Remove-PnPStorageEntity.md)** |Remove Storage Entities / Farm Properties.|SharePoint Online
 **[Set&#8209;PnPStorageEntity](Set-PnPStorageEntity.md)** |Set Storage Entities / Farm Properties.|SharePoint Online

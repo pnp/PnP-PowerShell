@@ -3,17 +3,19 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Add-PnPSiteScript
+# Set-PnPSiteScript
 
 ## SYNOPSIS
-Creates a new Site Script on the current tenant.
+Updates an existing Site Script on the current tenant.
 
 ## SYNTAX 
 
 ```powershell
-Add-PnPSiteScript -Title <String>
-                  -Content <String>
+Set-PnPSiteScript -Identity <TenantSiteScriptPipeBind>
+                  [-Title <String>]
                   [-Description <String>]
+                  [-Content <String>]
+                  [-Version <Int>]
                   [-Connection <SPOnlineConnection>]
 ```
 
@@ -21,10 +23,18 @@ Add-PnPSiteScript -Title <String>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Add-PnPSiteScript -Title "My Site Script" -Description "A more detailed description" -Content $script
+PS:> Set-PnPSiteScript -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f -Title "My Site Script"
 ```
 
-Adds a new Site Script, where $script variable contains the script.
+Updates an existing Site Script and changes the title.
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> $script = Get-PnPSiteScript -Identity f1d55d9b-b116-4f54-bc00-164a51e7e47f 
+PS:> Set-PnPSiteScript -Identity $script -Title "My Site Script"
+```
+
+Updates an existing Site Script and changes the title.
 
 ## PARAMETERS
 
@@ -35,7 +45,7 @@ A JSON string containing the site script
 Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Accept pipeline input: False
 ```
@@ -52,6 +62,18 @@ Position: Named
 Accept pipeline input: False
 ```
 
+### -Identity
+The guid or an object representing the site script
+
+```yaml
+Type: TenantSiteScriptPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
+
 ### -Title
 The title of the site script
 
@@ -59,7 +81,19 @@ The title of the site script
 Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Version
+Specifies the version of the site script
+
+```yaml
+Type: Int
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Accept pipeline input: False
 ```
