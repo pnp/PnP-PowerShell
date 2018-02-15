@@ -20,7 +20,7 @@ Set-PnPClientSideWebPart -Identity <ClientSideWebPartPipeBind>
 ```
 
 ## DESCRIPTION
-Sets specific client side webpart properties. Notice that the title parameter will only set the -internal- title of webpart. The title which is shown in the UI will, if possible, have to be set using the PropertiesJson parameter. Use Get-PnPClientSideWebPart to retrieve the instance id and properties of a webpart.
+Sets specific client side webpart properties. Notice that the title parameter will only set the -internal- title of webpart. The title which is shown in the UI will, if possible, have to be set using the PropertiesJson parameter. Use Get-PnPClientSideComponent to retrieve the instance id and properties of a webpart.
 
 ## EXAMPLES
 
