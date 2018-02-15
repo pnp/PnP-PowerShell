@@ -409,6 +409,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AddOffice365GroupToSite.cs" />
     <Compile Include="Admin\GetTenantAppCatalogUrl.cs" />
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
@@ -672,7 +673,6 @@
     <Compile Include="Search\GetSearchConfiguration.cs" />
     <Compile Include="RecycleBin\MoveRecycleBinItem.cs" />
     <Compile Include="Search\SubmitSearchQuery.cs" />
-    <Compile Include="Site\AddOffice365GroupToSite.cs" />
     <Compile Include="Site\AddSiteCollectionAdmin.cs" />
     <Compile Include="Site\GetAuditing.cs" />
     <Compile Include="RecycleBin\GetRecycleBinItem.cs" />
