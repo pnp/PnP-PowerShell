@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 {
     [Cmdlet(VerbsDiagnostic.Measure, "PnPWeb")]
     [CmdletHelp("Returns statistics on the web object",
-         SupportedPlatform = CmdletSupportedPlatform.Online|CmdletSupportedPlatform.SP2016)]
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2016,
         Category = CmdletHelpCategory.Diagnostic)]
     [CmdletExample(
         Code = @"PS:> Measure-PnPWeb",
@@ -111,13 +111,13 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             };
 
             var i = 0;
-            foreach(var folder in web.Folders)
+            foreach (var folder in web.Folders)
             {
                 stat += GetFolderStatistics(folder);
                 WriteProgress(progress, $"Retrieving folder data {folder.Name}", i++, web.Folders.Count);
             }
 
-            foreach(var list in uniqueLists)
+            foreach (var list in uniqueLists)
             {
                 WriteVerbose($"List {list.Title} has unique permissions");
             }
