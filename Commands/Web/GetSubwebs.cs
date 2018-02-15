@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands
         Remarks = "Retrieves all subsites of the current context and all of their nested child subsites returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSubWebs -Recurse -Include ""WebTemplate"",""Description"" | Select ServerRelativeUrl, WebTemplate, Description",
+        Code = @"PS:> Get-PnPSubWebs -Recurse -Includes ""WebTemplate"",""Description"" | Select ServerRelativeUrl, WebTemplate, Description",
         Remarks = "Retrieves all subsites of the current context and shows the ServerRelativeUrl, WebTemplate and Description properties in the resulting output",
         SortOrder = 3)]
     [CmdletExample(
