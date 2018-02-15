@@ -56,7 +56,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                 if (!string.IsNullOrEmpty(cmdletInfo.Verb) && !string.IsNullOrEmpty(cmdletInfo.Noun))
                 {
-                    string mdFilePath = $"{_solutionDir}\\Documentation\\{cmdletInfo.Verb}-{cmdletInfo.Noun}.{extension}";
+                    string mdFilePath = Path.Combine(_solutionDir,"Documentation",$"{cmdletInfo.Verb}-{cmdletInfo.Noun}.{extension}");
 
                     if (System.IO.File.Exists(mdFilePath))
                     {

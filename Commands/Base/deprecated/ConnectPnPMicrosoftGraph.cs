@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿#if !NETSTANDARD2_0
+using Microsoft.Identity.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Management.Automation;
@@ -63,3 +64,4 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
     }
 }
+#endif

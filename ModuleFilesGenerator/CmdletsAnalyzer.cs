@@ -43,10 +43,19 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     var cmdletAttribute = attribute as CmdletAttribute;
                     if (cmdletAttribute != null)
                     {
+#if !NETCOREAPP2_0
                         var a = cmdletAttribute;
                         cmdletInfo.Verb = a.VerbName;
                         cmdletInfo.Noun = a.NounName;
-
+#else
+                        var customAttributesData = type.GetCustomAttributesData();
+                        var customAttributeData = customAttributesData.FirstOrDefault(c => c.AttributeType == typeof(CmdletAttribute));
+                        if (customAttributeData != null)
+                        {
+                            cmdletInfo.Verb = customAttributeData.ConstructorArguments[0].Value.ToString();
+                            cmdletInfo.Noun = customAttributeData.ConstructorArguments[1].Value.ToString();
+                        }
+#endif
                     }
 #pragma warning disable CS0612 // Type or member is obsolete
                     var aliasAttribute = attribute as CmdletAliasAttribute;
@@ -317,10 +326,18 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                         if (aliases != null && aliases.Any())
                         {
+#if !NETCOREAPP2_0
                             foreach (var aliasAttribute in aliases)
                             {
                                 cmdletParameterInfo.Aliases.AddRange(aliasAttribute.AliasNames);
                             }
+#else
+                            var customAttributesData = fieldInfo.GetCustomAttributesData();
+                            foreach (var aliasAttribute in customAttributesData.Where(c => c.AttributeType == typeof(AliasAttribute)))
+                            {
+                                cmdletParameterInfo.Aliases.AddRange(aliasAttribute.ConstructorArguments.Select(a => a.ToString()));
+                            }
+#endif
                         }
                         parameters.Add(cmdletParameterInfo);
 
@@ -359,7 +376,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
 
 
-        #region Helpers
+#region Helpers
         private static List<FieldInfo> GetFields(Type t)
         {
             var fieldInfoList = new List<FieldInfo>();
@@ -388,6 +405,6 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 return name;
             }
         }
-        #endregion
+#endregion
     }
 }
