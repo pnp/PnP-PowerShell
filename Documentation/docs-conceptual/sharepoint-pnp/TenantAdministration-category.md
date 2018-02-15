@@ -2,6 +2,7 @@
 Cmdlet|Description|Platform
 :-----|:----------|:-------
 **[Get&#8209;PnPAccessToken](Get-PnPAccessToken.md)** |Returns the current OAuth Access token|All
+**[Add&#8209;PnPOffice365GroupToSite](Add-PnPOffice365GroupToSite.md)** |Groupifies a classic team site by creating an Office 365 group for it and connecting the site with the newly created group|SharePoint Online
 **[New&#8209;PnPSite](New-PnPSite.md)** |BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection|SharePoint Online
 **[Add&#8209;PnPSiteDesign](Add-PnPSiteDesign.md)** |Creates a new Site Design on the current tenant.|SharePoint Online
 **[Get&#8209;PnPSiteDesign](Get-PnPSiteDesign.md)** |Retrieve Site Designs that have been registered on the current tenant.|SharePoint Online

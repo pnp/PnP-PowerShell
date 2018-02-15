@@ -414,6 +414,7 @@
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\NavigationNodePipeBind.cs" />
+    <Compile Include="Base\PipeBinds\RoleDefinitionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
     <Compile Include="Branding\GetNavigationNode.cs" />
@@ -553,6 +554,9 @@
     <Compile Include="ClientSidePages\ClientSidePageUtilities.cs" />
     <Compile Include="ClientSidePages\SetClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
+    <Compile Include="Site\AddRoleDefinition.cs" />
+    <Compile Include="Site\GetRoleDefinition.cs" />
+    <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="SiteDesigns\SetSiteScript.cs" />
     <Compile Include="WebParts\AddClientSideWebPart.cs" />
@@ -847,7 +851,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent></PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <Target Name="BeforeBuild">
     <Exec Command="del $(ProjectDir)\obj\SharePointPnP.PowerShell.Core.*" />
