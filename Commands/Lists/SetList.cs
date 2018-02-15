@@ -70,13 +70,16 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Maximum minor versions to keep")]
         public uint MinorVersions = 10;
 
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.")]
+        public bool EnableModeration;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(SelectedWeb);
 
             if (list != null)
             {
-                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden);
+                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType);
 
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
@@ -107,6 +110,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     isDirty = true;
                 }
 
+                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden);
+
+                var enableVersioning = list.EnableVersioning;
+                var enableMinorVersions = list.EnableMinorVersions;
+                var hidden = list.Hidden;
+
                 if (MyInvocation.BoundParameters.ContainsKey("EnableVersioning") && EnableVersioning != enableVersioning)
                 {
                     list.EnableVersioning = EnableVersioning;
@@ -116,6 +125,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (MyInvocation.BoundParameters.ContainsKey("EnableMinorVersions") && EnableMinorVersions != enableMinorVersions)
                 {
                     list.EnableMinorVersions = EnableMinorVersions;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("EnableModeration") && list.EnableModeration != EnableModeration)
+                {
+                    list.EnableModeration = EnableModeration;
                     isDirty = true;
                 }
 
