@@ -28,6 +28,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
          Code = @"Set-PnPList -Identity ""Demo Library"" -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5",
          Remarks = "Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.",
          SortOrder = 5)]
+    [CmdletExample(
+        Code = @"Set-PnPList -Identity ""Demo List"" -EnableAttachments $true",
+        Remarks = "Turns on attachments on a list",
+        SortOrder = 6)]
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The ID, Title or Url of the list.")]
@@ -58,6 +62,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Hide the list from the SharePoint UI. Set to $true to hide, $false to show.")]
         public bool Hidden;
 
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable attachments. Set to $true to enable, $false to disable.")]
+        public bool EnableAttachments;
+
         [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning. Set to $true to enable, $false to disable.")]
         public bool EnableVersioning;
 
@@ -79,11 +86,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
             if (list != null)
             {
-                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType);
+                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType);
 
                 var enableVersioning = list.EnableVersioning;
                 var enableMinorVersions = list.EnableMinorVersions;
                 var hidden = list.Hidden;
+                var enableAttachments = list.EnableAttachments;
 
                 var isDirty = false;
                 if (BreakRoleInheritance)
@@ -125,6 +133,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (MyInvocation.BoundParameters.ContainsKey("EnableModeration") && list.EnableModeration != EnableModeration)
                 {
                     list.EnableModeration = EnableModeration;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("EnableAttachments") && EnableAttachments != enableAttachments)
+                {
+                    list.EnableAttachments = EnableAttachments;
                     isDirty = true;
                 }
 
