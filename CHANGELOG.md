@@ -14,8 +14,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Changed changelog format
 - Updated Remove-PnPNavigationNode cmdlet to support removal by Id
+- Updated Remove-PnPNavigationNode cmdlet to support the -All parameter
 - Updated Set-PnPList cmdlet to change moderation setting
 - Updated Set-PnPFileCheckedIn to approve the file
+
 
 ### Deprecated
 - Deprecated Remove-PnPNavigationNode -Title -Header parameters. Use Identity instead.
