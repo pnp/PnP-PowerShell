@@ -80,7 +80,7 @@
 ### [Get-PnPEventReceiver](Get-PnPEventReceiver.md)
 ### [Remove-PnPEventReceiver](Remove-PnPEventReceiver.md)
 ## [Features](Features-category.md)
-### [New-PnPExtensbilityHandlerObject](New-PnPExtensbilityHandlerObject.md)
+### [New-PnPExtensibilityHandlerObject](New-PnPExtensibilityHandlerObject.md)
 ### [Disable-PnPFeature](Disable-PnPFeature.md)
 ### [Enable-PnPFeature](Enable-PnPFeature.md)
 ### [Get-PnPFeature](Get-PnPFeature.md)

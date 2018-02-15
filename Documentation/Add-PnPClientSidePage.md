@@ -16,7 +16,6 @@ Add-PnPClientSidePage -Name <String>
                       [-PromoteAs <ClientSidePagePromoteType>]
                       [-CommentsEnabled [<SwitchParameter>]]
                       [-Publish [<SwitchParameter>]]
-                      [-PublishMessage <String>]
                       [-Web <WebPipeBind>]
                       [-Connection <SPOnlineConnection>]
 ```
@@ -92,18 +91,6 @@ Publishes the page once it is saved. Applicable to libraries set to create major
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -PublishMessage
-Sets the message for publishing the page.
-
-```yaml
-Type: String
 Parameter Sets: (All)
 
 Required: False

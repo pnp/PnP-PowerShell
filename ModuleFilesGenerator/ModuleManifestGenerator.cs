@@ -24,6 +24,9 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         }
         internal void Generate()
         {
+#if NETCOREAPP2_0
+            var spVersion = "Core";
+#else
             var spVersion = string.Empty;
             switch (_configurationName.ToLowerInvariant())
             {
@@ -47,6 +50,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         break;
                     }
             }
+#endif
             // Generate PSM1 file
             var aliasesToExport = new List<string>();
             var psm1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShell{spVersion}Aliases.psm1";
@@ -67,7 +71,11 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             }
 
             // Create Module Manifest
+#if !NETCOREAPP2_0
             var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShell{spVersion}.psd1";
+#else
+            var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShellCore.psd1";
+#endif
             var cmdletsToExportString = string.Join(",", _cmdlets.Select(c => "'" + c.FullCommand + "'"));
             string aliasesToExportString = null;
             if (aliasesToExport.Any())
@@ -84,8 +92,10 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             if (aliasesToExport != null)
             {
                 aliases = $"{Environment.NewLine}AliasesToExport = {aliasesToExport}";
+
                 nestedModules = $"{Environment.NewLine}@('SharePointPnPPowerShell{spVersion}Aliases.psm1')";
             }
+#if !NETCOREAPP2_0
             var manifest = $@"@{{
     RootModule = 'SharePointPnP.PowerShell.{spVersion}.Commands.dll'{nestedModules}
     ModuleVersion = '{_assemblyVersion}'
@@ -106,6 +116,28 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         }}
     }}
 }}";
+#else
+            var manifest = $@"@{{
+    RootModule = 'SharePointPnP.PowerShell.Core.dll'
+    ModuleVersion = '{_assemblyVersion}'
+    Description = 'SharePoint Patterns and Practices PowerShell Cmdlets for SharePoint Online'
+    GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
+    Author = 'SharePoint Patterns and Practices'
+    CompanyName = 'SharePoint Patterns and Practices'
+    PowerShellVersion = '5.0'
+    ProcessorArchitecture = 'None'
+    FunctionsToExport = '*'
+    CmdletsToExport = {cmdletsToExport}
+    VariablesToExport = '*'{aliases}
+    FormatsToProcess = 'SharePointPnP.PowerShell.{spVersion}.Format.ps1xml' 
+    PrivateData = @{{
+        PSData = @{{
+            ProjectUri = 'https://aka.ms/sppnp'
+            IconUri = 'https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/master/Commands/Resources/pnp.ico'
+        }}
+    }}
+}}";
+#endif
             File.WriteAllText(path, manifest, Encoding.UTF8);
         }
     }

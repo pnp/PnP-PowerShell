@@ -31,7 +31,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"ERROR: {ex.Message}");
                 return 1;
             }
             return 0;

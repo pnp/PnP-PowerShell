@@ -61,7 +61,9 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
                 }
                 else
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     SelectedWeb.DeleteNavigationNode(Title, Header, Location);
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
         }

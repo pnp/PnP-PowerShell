@@ -1,4 +1,6 @@
-﻿using Microsoft.Graph;
+﻿#if !NETSTANDARD2_0
+using Microsoft.Graph;
+#endif
 using SharePointPnP.PowerShell.Commands.Properties;
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     }
                     else
                     {
+#if !NETSTANDARD2_0
                         return (SPOnlineConnection.AuthenticationResult.Token);
+#else
+                        return SPOnlineConnection.AuthenticationResult.AccessToken;
+#endif
                     }
                 }
                 else
@@ -43,8 +49,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             base.BeginProcessing();
 
-            if (SPOnlineConnection.AuthenticationResult == null || 
+            if (SPOnlineConnection.AuthenticationResult == null ||
+#if !NETSTANDARD2_0
                 String.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.Token))
+#else
+                string.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.AccessToken))
+#endif
             {
                 throw new InvalidOperationException(Resources.NoAzureADAccessToken);
             }

@@ -194,7 +194,7 @@ Cmdlet|Description|Platform
 ### Features 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
-**[New&#8209;PnPExtensbilityHandlerObject](../../sharepoint-ps/sharepoint-pnp/New-PnPExtensbilityHandlerObject.md)** |Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet|All
+**[New&#8209;PnPExtensibilityHandlerObject](../../sharepoint-ps/sharepoint-pnp/New-PnPExtensibilityHandlerObject.md)** |Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTemplate cmdlet|All
 **[Disable&#8209;PnPFeature](../../sharepoint-ps/sharepoint-pnp/Disable-PnPFeature.md)** |Disables a feature|All
 **[Enable&#8209;PnPFeature](../../sharepoint-ps/sharepoint-pnp/Enable-PnPFeature.md)** |Enables a feature|All
 **[Get&#8209;PnPFeature](../../sharepoint-ps/sharepoint-pnp/Get-PnPFeature.md)** |Returns all activated or a specific activated feature|All
