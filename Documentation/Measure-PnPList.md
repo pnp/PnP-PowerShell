@@ -20,10 +20,26 @@ Measure-PnPList -Identity <ListPipeBind>
                 [-Connection <SPOnlineConnection>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Measure-PnPList "Documents"
+```
+
+Gets statistics on Documents document library
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Measure-PnPList "Documents" -BrokenPermissions -ItemLevel
+```
+
+Displays items and folders with broken permissions inside Documents library
+
 ## PARAMETERS
 
 ### -BrokenPermissions
-
+Show items with broken permissions
 
 ```yaml
 Type: SwitchParameter
@@ -59,7 +75,7 @@ Accept pipeline input: False
 ```
 
 ### -ItemLevel
-
+Show item level statistics
 
 ```yaml
 Type: SwitchParameter
