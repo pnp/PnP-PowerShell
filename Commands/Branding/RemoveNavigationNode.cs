@@ -61,10 +61,12 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
         {
             if (ParameterSetName == ParameterSet_REMOVEALLNODES)
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (Force || ShouldContinue(string.Format(Resources.RemoveNavigationNodeInLocation, Location), Resources.Confirm))
                 {
                     SelectedWeb.DeleteAllNavigationNodes(Location);
                 }
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             else
             {

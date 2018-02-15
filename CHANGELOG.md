@@ -3,13 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [2.24.1803.0 - Unreleased]
 ### Added
 - Added Get-PnPNavigationNode cmdlet
+- Added Get-PnPRoleDefinition cmdlet
+- Added Add-PnPRoleDefinition cmdlet
+- Added Remove-PnPRoleDefinition cmdlet
+- Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
 - Changed changelog format
 - Updated Remove-PnPNavigationNode cmdlet to support removal by Id
+- Updated Set-PnPList cmdlet to change moderation setting
+- Updated Set-PnPFileCheckedIn to approve the file
 
 ### Deprecated
 - Deprecated Remove-PnPNavigationNode -Title -Header parameters. Use Identity instead.
