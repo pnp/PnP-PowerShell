@@ -18,6 +18,7 @@ Set-PnPList -Identity <ListPipeBind>
             [-ClearSubscopes [<SwitchParameter>]]
             [-Title <String>]
             [-Hidden <Boolean>]
+            [-EnableAttachments <Boolean>]
             [-EnableVersioning <Boolean>]
             [-EnableMinorVersions <Boolean>]
             [-MajorVersions <UInt32>]
@@ -64,6 +65,13 @@ Set-PnPList -Identity "Demo Library" -EnableVersioning $true -EnableMinorVersion
 
 Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.
 
+### ------------------EXAMPLE 6------------------
+```powershell
+Set-PnPList -Identity "Demo List" -EnableAttachments $true
+```
+
+Turns on attachments on a list
+
 ## PARAMETERS
 
 ### -BreakRoleInheritance
@@ -95,6 +103,18 @@ If used the roles are copied from the parent web
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EnableAttachments
+Enable or disable attachments. Set to $true to enable, $false to disable.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
