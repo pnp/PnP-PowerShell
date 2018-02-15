@@ -10,10 +10,12 @@ Returns the subwebs of the current web
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
-               [-Identity <WebPipeBind>]
                [-Web <WebPipeBind>]
+               [-Includes <String[]>]
+               [-Identity <WebPipeBind>]
                [-Connection <SPOnlineConnection>]
 ```
 
@@ -24,19 +26,33 @@ Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
 PS:> Get-PnPSubWebs
 ```
 
-This will return all sub webs for the current web
+Retrieves all subsites of the current context returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPSubWebs -recurse
+PS:> Get-PnPSubWebs -Recurse
 ```
 
-This will return all sub webs for the current web and its sub webs
+Retrieves all subsites of the current context and all of their nested child subsites returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output
+
+### ------------------EXAMPLE 3------------------
+```powershell
+PS:> Get-PnPSubWebs -Recurse -Includes "WebTemplate","Description" | Select ServerRelativeUrl, WebTemplate, Description
+```
+
+Retrieves all subsites of the current context and shows the ServerRelativeUrl, WebTemplate and Description properties in the resulting output
+
+### ------------------EXAMPLE 4------------------
+```powershell
+PS:> Get-PnPSubWebs -Identity Team1 -Recurse
+```
+
+Retrieves all subsites of the subsite Team1 and all of its nested child subsites returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output
 
 ## PARAMETERS
 
 ### -Identity
-The guid of the web or web object
+If provided, only the subsite with the provided Id, GUID or the Web instance will be returned
 
 ```yaml
 Type: WebPipeBind
@@ -47,11 +63,35 @@ Position: 0
 Accept pipeline input: True
 ```
 
+### -Includes
+Specify properties to include when retrieving objects from the server.
+
+```yaml
+Type: String[]
+Parameter Sets: 
+
+Required: False
+Position: 0
+Accept pipeline input: False
+```
+
 ### -Recurse
-include subweb of the subwebs
+If provided, recursion through all subsites and their childs will take place to return them as well
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Web
+The web to apply the command to. Omit this parameter to use the current web.
+
+```yaml
+Type: WebPipeBind
 Parameter Sets: (All)
 
 Required: False
@@ -71,21 +111,9 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
-
-```yaml
-Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ## OUTPUTS
 
-### [List<Microsoft.SharePoint.Client.Web>](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
+### [Microsoft.SharePoint.Client.Web](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx)
 
 ## RELATED LINKS
 
