@@ -14,6 +14,7 @@ Checks in a file
 Set-PnPFileCheckedIn -Url <String>
                      [-CheckinType <CheckinType>]
                      [-Comment <String>]
+                     [-Approve [<SwitchParameter>]]
                      [-Web <WebPipeBind>]
                      [-Connection <SPOnlineConnection>]
 ```
@@ -35,6 +36,18 @@ PS:>Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckinType MinorCheck
 Checks in the file "Contract.docx" in the "Documents" library as a minor version and adds the check in comment "Smaller changes"
 
 ## PARAMETERS
+
+### -Approve
+Approve file
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
 
 ### -CheckinType
 The check in type to use. Defaults to Major

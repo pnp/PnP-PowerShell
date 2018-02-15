@@ -47,7 +47,7 @@ Creates additional permission level by cloning "Contribute" and removes flags De
 
 ### ------------------EXAMPLE 4------------------
 ```powershell
-PS> $roleDefinition = Get-PnPRoleDefinition -Identity Read
+PS> $roleDefinition = Get-PnPRoleDefinition -Identity "Contribute"
 PS:> Add-PnPRoleDefinition -RoleName "AddOnly" -Clone $roleDefinition -Exclude DeleteListItems, EditListItems
 ```
 
