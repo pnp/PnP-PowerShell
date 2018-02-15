@@ -252,7 +252,9 @@ Cmdlet|Description|Platforms
 **[Set&#8209;PnPAppSideLoading](Set-PnPAppSideLoading.md)** |Enables the App SideLoading Feature on a site|All
 **[Get&#8209;PnPAuditing](Get-PnPAuditing.md)** |Get the Auditing setting of a site|All
 **[Set&#8209;PnPAuditing](Set-PnPAuditing.md)** |Set Auditing setting for a site|All
-**[Add&#8209;PnPOffice365GroupToSite](Add-PnPOffice365GroupToSite.md)** |Groupifies a classic team site by creating a group for it and connecting the site with the newly created group|SharePoint Online
+**[Add&#8209;PnPRoleDefinition](Add-PnPRoleDefinition.md)** |Adds a Role Defintion (Permission Level) to the site collection in the current context|All
+**[Get&#8209;PnPRoleDefinition](Get-PnPRoleDefinition.md)** |Retrieves a Role Definitions of a site|All
+**[Remove&#8209;PnPRoleDefinition](Remove-PnPRoleDefinition.md)** |Remove a Role Definition from a site|All
 **[Get&#8209;PnPSite](Get-PnPSite.md)** |Returns the current site collection from the context.|All
 **[Set&#8209;PnPSite](Set-PnPSite.md)** |Sets Site Collection properties.|SharePoint Online
 **[Add&#8209;PnPSiteCollectionAdmin](Add-PnPSiteCollectionAdmin.md)** |Adds one or more users as site collection administrators to the site collection in the current context|All
@@ -284,6 +286,7 @@ Cmdlet|Description|Platforms
 Cmdlet|Description|Platforms
 :-----|:----------|:--------
 **[Get&#8209;PnPAccessToken](Get-PnPAccessToken.md)** |Returns the current OAuth Access token|All
+**[Add&#8209;PnPOffice365GroupToSite](Add-PnPOffice365GroupToSite.md)** |Groupifies a classic team site by creating an Office 365 group for it and connecting the site with the newly created group|SharePoint Online
 **[New&#8209;PnPSite](New-PnPSite.md)** |BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection|SharePoint Online
 **[Add&#8209;PnPSiteDesign](Add-PnPSiteDesign.md)** |Creates a new Site Design on the current tenant.|SharePoint Online
 **[Get&#8209;PnPSiteDesign](Get-PnPSiteDesign.md)** |Retrieve Site Designs that have been registered on the current tenant.|SharePoint Online

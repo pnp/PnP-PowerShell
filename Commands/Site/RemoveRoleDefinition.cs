@@ -1,38 +1,42 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Remove, "PnPRoleDefinition")]
-    [CmdletHelp("Remove the Role Definitions of a site",
-        Category = CmdletHelpCategory.Sites,
-        OutputType = typeof(RoleDefinition),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.roledefinition.aspx")]
+    [CmdletHelp("Remove a Role Definition from a site",
+        Category = CmdletHelpCategory.Sites)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPRoleDefinition",
-        Remarks = "Removes the Role Definition (Permission Level) from the current site",
+        Code = @"PS:> Remove-PnPRoleDefinition -Identity MyRoleDefinition",
+        Remarks = "Removes the specified Role Definition (Permission Level) from the current site",
         SortOrder = 1)]
     public class RemoveRoleDefinition : PnPCmdlet
     {
-		[Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to remove as site collection adminstrators. Can be both users and groups.")]
-		public string RoleName;	
-		
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The identity of the role definition, either a RoleDefinition object or a the name of roledefinition")]
+        public RoleDefinitionPipeBind Identity;
+
+        [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation to delete the role definition", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter Force;
+
         protected override void ExecuteCmdlet()
         {
-            var roleDefinition = ClientContext.Site.RootWeb.RoleDefinitions.GetByName(RoleName);
-            ClientContext.Load(roleDefinition);
-            ClientContext.ExecuteQueryRetry();
-            if (roleDefinition != null) {
+            var roleDefinition = Identity.GetRoleDefinition(ClientContext.Site);
+            if (roleDefinition != null)
+            {
                 try
                 {
-                    roleDefinition.Delete();
-                    ClientContext.ExecuteQueryRetry();
-                    WriteVerbose("Removed Role Definition \"{RoleName}\"")
+                    if (Force || ShouldContinue($@"Remove Role Definition ""{roleDefinition.Name}""?", "Confirm"))
+                    {
+                        roleDefinition.DeleteObject();
+                        ClientContext.ExecuteQueryRetry();
+                        WriteVerbose($@"Removed Role Definition ""{roleDefinition.Name}""");
+                    }
                 }
                 catch (ServerException e)
                 {
-                    WriteWarning($"Exception occurred while trying to remove the Role Definition: \"{e.Message}\". Will be skipped.");
+                    WriteWarning($@"Exception occurred while trying to remove the Role Definition: ""{e.Message}"". Will be skipped.");
                 }
             }
             else
