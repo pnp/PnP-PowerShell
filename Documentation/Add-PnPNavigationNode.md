@@ -54,6 +54,13 @@ PS:> Add-PnPNavigationNode -Title "Contoso Pharmaceuticals" -Url "http://contoso
 
 Adds a navigation node to the quicklaunch. The navigation node will have the title "Contoso Pharmaceuticals" and will link to the external url "http://contoso.sharepoint.com/sites/contosopharma/"
 
+### ------------------EXAMPLE 5------------------
+```powershell
+PS:> Add-PnPNavigationNode -Title "Wiki" -Location "QuickLaunch" -Url "wiki/"
+```
+
+Adds a navigation node to the quicklaunch. The navigation node will have the title "Wiki" and will link to Wiki library on the selected Web.
+
 ## PARAMETERS
 
 ### -External
@@ -117,7 +124,7 @@ Accept pipeline input: False
 ```
 
 ### -Url
-The url to navigate to when clicking the new menu item.
+The url to navigate to when clicking the new menu item. This can either be absolute or relative to the Web. Fragments are not supported.
 
 ```yaml
 Type: String
@@ -151,6 +158,10 @@ Required: False
 Position: Named
 Accept pipeline input: False
 ```
+
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.NavigationNode](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.NavigationNode.aspx)
 
 ## RELATED LINKS
 

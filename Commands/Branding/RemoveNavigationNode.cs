@@ -26,10 +26,14 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
     [CmdletExample(Code = @"PS:> Remove-PnPNavigationNode -Title Home -Location TopNavigationBar -Force",
         Remarks = "Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web.",
         SortOrder = 4)]
+    [CmdletExample(Code = @"PS:> Remove-PnPNavigationNode -Location QuickLaunch -All",
+        Remarks = "Will remove all the navigation nodes from the quick launch bar in the current web.",
+        SortOrder = 5)]
     public class RemoveNavigationNode : PnPWebCmdlet
     {
         private const string ParameterSet_BYNAME = "Remove node by Title";
         private const string ParameterSet_BYID = "Remove a node by ID";
+        private const string ParameterSet_REMOVEALLNODES = "All Nodes";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "The Id or node object to delete", ParameterSetName = ParameterSet_BYID)]
         public NavigationNodePipeBind Identity;
@@ -46,29 +50,43 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
         [Parameter(Mandatory = false, HelpMessage = "The header where the node is located", ParameterSetName = ParameterSet_BYNAME)]
         public string Header;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, HelpMessage = "Specifying the All parameter will remove all the nodes from specifed Location.", ParameterSetName = ParameterSet_REMOVEALLNODES)]
+        public SwitchParameter All;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
+
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue("Remove node?", Resources.Confirm))
+            if (ParameterSetName == ParameterSet_REMOVEALLNODES)
             {
-                if (ParameterSetName == ParameterSet_BYID)
-                {
-                    var node = SelectedWeb.Navigation.GetNodeById(Identity.Id);
-                    node.DeleteObject();
-                    ClientContext.ExecuteQueryAsync();
-                }
-                else
-                {
 #pragma warning disable CS0618 // Type or member is obsolete
-                    SelectedWeb.DeleteNavigationNode(Title, Header, Location);
+                if (Force || ShouldContinue(string.Format(Resources.RemoveNavigationNodeInLocation, Location), Resources.Confirm))
+                {
+                    SelectedWeb.DeleteAllNavigationNodes(Location);
+                }
 #pragma warning restore CS0618 // Type or member is obsolete
+            }
+            else
+            {
+                if (Force || ShouldContinue("Remove node?", Resources.Confirm))
+                {
+                    if (ParameterSetName == ParameterSet_BYID)
+                    {
+                        var node = SelectedWeb.Navigation.GetNodeById(Identity.Id);
+                        node.DeleteObject();
+                        ClientContext.ExecuteQueryAsync();
+                    }
+                    else
+                    {
+#pragma warning disable CS0618 // Type or member is obsolete
+                        SelectedWeb.DeleteNavigationNode(Title, Header, Location);
+#pragma warning restore CS0618 // Type or member is obsolete
+                    }
                 }
             }
         }
 
     }
-
-
 }

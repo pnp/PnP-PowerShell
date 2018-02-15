@@ -18,6 +18,14 @@ Remove-PnPNavigationNode -Identity <NavigationNodePipeBind>
                          [-Connection <SPOnlineConnection>]
 ```
 
+### All Nodes
+```powershell
+Remove-PnPNavigationNode -All [<SwitchParameter>]
+                         [-Force [<SwitchParameter>]]
+                         [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
+```
+
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
@@ -49,7 +57,26 @@ PS:> Remove-PnPNavigationNode -Title Home -Location TopNavigationBar -Force
 
 Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web.
 
+### ------------------EXAMPLE 5------------------
+```powershell
+PS:> Remove-PnPNavigationNode -Location QuickLaunch -All
+```
+
+Will remove all the navigation nodes from the quick launch bar in the current web.
+
 ## PARAMETERS
+
+### -All
+Specifying the All parameter will remove all the nodes from specifed Location.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: All Nodes
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.
