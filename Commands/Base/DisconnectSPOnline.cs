@@ -29,7 +29,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if (provider != null)
             {
                 //ImplementingAssembly was introduced in Windows PowerShell 5.0.
+#if !NETSTANDARD2_0
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.ImplementingAssembly.FullName == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
+#else
+                var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.Name == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
+#endif
                 foreach (var drive in drives)
                 {
                     SessionState.Drive.Remove(drive.Name, true, "Global");

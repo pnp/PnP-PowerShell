@@ -42,6 +42,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Publishes the page once it is saved.")]
         public SwitchParameter Publish;
 
+        [Obsolete("This parameter value will be ignored")]
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
         public string PublishMessage = string.Empty;
 
@@ -90,7 +91,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
             if (Publish)
             {
-                clientSidePage.Publish(PublishMessage);
+                clientSidePage.Publish();
             }
 
             WriteObject(clientSidePage);

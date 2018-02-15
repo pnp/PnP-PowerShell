@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿#if !NETSTANDARD2_0
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+#endif
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Enums;
@@ -19,14 +21,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     internal class SPOnlineConnectionHelper
     {
-        //private const string CommonAuthority = "https://login.windows.net/Common";
+#if !NETSTANDARD2_0
         public static AuthenticationContext AuthContext { get; set; }
-        //private static string ContextUrl { get; set; }
+#endif
 
         static SPOnlineConnectionHelper()
         {
         }
 
+#if !NETSTANDARD2_0
         internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
@@ -66,7 +69,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
+#endif
 
+#if !NETSTANDARD2_0
 #if ONPREMISES
         internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, string hightrustCertificatePath, string hightrustCertificatePassword, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
         {
@@ -88,7 +93,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 #endif
+#endif
 
+#if !NETSTANDARD2_0
 #if !ONPREMISES
         internal static SPOnlineConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
@@ -149,7 +156,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 #endif
+#endif
 
+#if !NETSTANDARD2_0
         internal static SPOnlineConnection InstantiateWebloginConnection(Uri url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
@@ -184,6 +193,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             throw new Exception("Error establishing a connection, context is null");
         }
+#endif
 
         internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
         {
@@ -267,6 +277,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 
+#if !NETSTANDARD2_0
         internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
@@ -306,6 +317,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
+#endif
 
         public static string GetRealmFromTargetUrl(Uri targetApplicationUri)
         {

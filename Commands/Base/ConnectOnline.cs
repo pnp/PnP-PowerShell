@@ -301,7 +301,7 @@ dir",
 #endif
         public SwitchParameter IgnoreSslErrors;
 
-      
+
 
 #if ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_HIGHTRUST, HelpMessage = "The path to the private key certificate (.pfx) to use for the High Trust connection")]
@@ -329,11 +329,19 @@ dir",
             SPOnlineConnection connection = null;
             if (ParameterSetName == ParameterSet_TOKEN)
             {
+#if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+#else
+                throw new NotImplementedException();
+#endif
             }
             else if (UseWebLogin)
             {
+#if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+#else
+                throw new NotImplementedException();
+#endif
             }
             else if (UseAdfs)
             {
@@ -344,8 +352,11 @@ dir",
                         creds = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
                     }
                 }
-
+#if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+#else
+                throw new NotImplementedException();
+#endif
             }
 #if !ONPREMISES
             else if (ParameterSetName == ParameterSet_SPOMANAGEMENT)
@@ -358,7 +369,11 @@ dir",
             }
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
+#if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+#else
+                throw new NotImplementedException();
+#endif
             }
             else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
             {
@@ -368,9 +383,13 @@ dir",
             {
                 ConnectGraphAAD();
             }
-            else if( ParameterSetName == ParameterSet_ACCESSTOKEN)
+            else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
             {
+#if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(new Uri(Url), AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+#else
+                throw new NotImplementedException();
+#endif
             }
 #endif
 #if ONPREMISES
@@ -434,9 +453,13 @@ dir",
                     File.Delete(configFile);
                 }
             }
+#if !NETSTANDARD2_0
             return SPOnlineConnectionHelper.InitiateAzureADNativeApplicationConnection(
                 new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
                 RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+#else
+            throw new NotImplementedException();
+#endif
         }
 
         private void ConnectGraphScopes()
@@ -450,15 +473,19 @@ dir",
         {
             var appCredentials = new ClientCredential(AppSecret);
             var authority = new Uri(GraphAADLogin, AADDomain).AbsoluteUri;
+#if !NETSTANDARD2_0
             var clientApplication = new ConfidentialClientApplication(authority, AppId, RedirectUri, appCredentials, null);
             var authenticationResult = clientApplication.AcquireTokenForClient(GraphDefaultScope, null).GetAwaiter().GetResult();
             SPOnlineConnection.AuthenticationResult = authenticationResult;
+#else
+            throw new NotImplementedException();
+#endif
         }
 #endif
 
 
 
-        private PSCredential GetCredentials()
+            private PSCredential GetCredentials()
         {
             PSCredential creds;
 
