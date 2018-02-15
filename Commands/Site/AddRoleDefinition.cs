@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone ""Contribute"" -Exclude ""DeleteListItems,EditListItems""",
         Remarks = @"Creates additional permission level by cloning ""Contribute"" and removes flags ""DeleteListItems,EditListItems""", SortOrder = 3)]
 
-    public class AddSiteCollectionAdmin : PnPCmdlet
+    public class AddRoleDefinition : PnPCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name of new permission level.")]
         public string RoleName;
