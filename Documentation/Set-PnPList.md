@@ -22,6 +22,7 @@ Set-PnPList -Identity <ListPipeBind>
             [-EnableMinorVersions <Boolean>]
             [-MajorVersions <UInt32>]
             [-MinorVersions <UInt32>]
+            [-EnableModeration <Boolean>]
             [-Web <WebPipeBind>]
             [-Connection <SPOnlineConnection>]
 ```
@@ -115,6 +116,18 @@ Accept pipeline input: False
 
 ### -EnableMinorVersions
 Enable or disable minor versions versioning. Set to $true to enable, $false to disable.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EnableModeration
+Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.
 
 ```yaml
 Type: Boolean

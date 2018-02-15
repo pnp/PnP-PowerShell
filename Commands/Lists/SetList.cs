@@ -110,12 +110,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     isDirty = true;
                 }
 
-                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden);
-
-                var enableVersioning = list.EnableVersioning;
-                var enableMinorVersions = list.EnableMinorVersions;
-                var hidden = list.Hidden;
-
                 if (MyInvocation.BoundParameters.ContainsKey("EnableVersioning") && EnableVersioning != enableVersioning)
                 {
                     list.EnableVersioning = EnableVersioning;
