@@ -10,9 +10,20 @@ Removes a menu item from either the quicklaunch or top navigation
 
 ## SYNTAX 
 
-### Remove a node by ID
+### By Title and Location
 ```powershell
-Remove-PnPNavigationNode -Identity <NavigationNodePipeBind>
+Remove-PnPNavigationNode -Title <String>
+                         -Location <NavigationType>
+                         [-Header <String>]
+                         [-Force [<SwitchParameter>]]
+                         [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
+```
+
+### By Location
+```powershell
+Remove-PnPNavigationNode -All [<SwitchParameter>]
+                         -Location <NavigationType>
                          [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
@@ -22,34 +33,38 @@ Remove-PnPNavigationNode -Identity <NavigationNodePipeBind>
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Remove-PnPNavigationNode -Identity 1032
-```
-
-Removes the navigation node with the specified id
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> $nodes = Get-PnPNavigationNode -QuickLaunch
-PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force
-```
-
-Retrieves all navigation nodes from the Quick Launch navigation, then removes the first node in the list and it will not ask for a confirmation
-
-### ------------------EXAMPLE 3------------------
-```powershell
 PS:> Remove-PnPNavigationNode -Title Recent -Location QuickLaunch
 ```
 
 Will remove the recent navigation node from the quick launch in the current web.
 
-### ------------------EXAMPLE 4------------------
+### ------------------EXAMPLE 2------------------
 ```powershell
 PS:> Remove-PnPNavigationNode -Title Home -Location TopNavigationBar -Force
 ```
 
 Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web.
 
+### ------------------EXAMPLE 3------------------
+```powershell
+PS:> Remove-PnPNavigationNode -Location QuickLaunch -All
+```
+
+Will remove all the navigation nodes from the quick launch bar in the current web.
+
 ## PARAMETERS
+
+### -All
+Specifying the All parameter will remove all the nodes from specifed Location.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: By Location
+
+Required: True
+Position: Named
+Accept pipeline input: False
+```
 
 ### -Force
 Specifying the Force parameter will skip the confirmation question.
@@ -63,16 +78,40 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Identity
-The Id or node object to delete
+### -Header
+The header where the node is located
 
 ```yaml
-Type: NavigationNodePipeBind
-Parameter Sets: Remove a node by ID
+Type: String
+Parameter Sets: By Title and Location
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -Location
+The location of the node(s) to remove (QuickLaunch, SearchNav, TopNavigationBar)
+
+```yaml
+Type: NavigationType
+Parameter Sets: (All)
 
 Required: True
-Position: 0
-Accept pipeline input: True
+Position: Named
+Accept pipeline input: False
+```
+
+### -Title
+The title of the node that needs to be removed
+
+```yaml
+Type: String
+Parameter Sets: By Title and Location
+
+Required: True
+Position: Named
+Accept pipeline input: False
 ```
 
 ### -Connection
