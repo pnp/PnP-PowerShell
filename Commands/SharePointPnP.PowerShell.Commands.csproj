@@ -410,11 +410,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
+    <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
+    <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Admin\RemoveTenantCdnOrigin.cs" />
+    <Compile Include="Admin\AddTenantCdnOrigin.cs" />
     <Compile Include="Admin\GetTenantAppCatalogUrl.cs" />
+    <Compile Include="Admin\GetTenantCdnOrigin.cs" />
+    <Compile Include="Admin\RemoveSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\RemoveStorageEntity.cs" />
+    <Compile Include="Admin\RemoveTenantTheme.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\NavigationNodePipeBind.cs" />
     <Compile Include="Base\PipeBinds\RoleDefinitionPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ThemePalettePipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ThemePipeBind.cs" />
+    <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
     <Compile Include="Branding\GetNavigationNode.cs" />
@@ -424,6 +434,7 @@
     <Compile Include="ClientSidePages\SetClientSideText.cs" />
     <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
+    <Compile Include="Model\SPOTheme.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
     <Compile Include="Diagnostic\MeasureResponseTimeMode.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />

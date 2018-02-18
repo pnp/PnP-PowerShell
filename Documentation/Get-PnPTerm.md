@@ -12,9 +12,9 @@ Returns a taxonomy term
 
 ### 
 ```powershell
-Get-PnPTerm -TermSet <Id, Title or TaxonomyItem>
-            -TermGroup <Id, Title or TermGroup>
-            [-Identity <Id, Name or Object>]
+Get-PnPTerm [-Identity <Id, Name or Object>]
+            [-TermSet <Id, Title or TaxonomyItem>]
+            [-TermGroup <Id, Title or TermGroup>]
             [-TermStore <Id, Name or Object>]
             [-Recursive [<SwitchParameter>]]
             [-Includes <String[]>]
@@ -54,14 +54,14 @@ Returns the term named "Small Finance", from the "Departments" termset in a term
 ## PARAMETERS
 
 ### -Identity
-The Id or Name of a Term
+
 
 ```yaml
 Type: Id, Name or Object
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -78,62 +78,62 @@ Accept pipeline input: False
 ```
 
 ### -Recursive
-Find the first term recursivly matching the label in a term hierarchy.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TermGroup
-Name of the termgroup to check.
+
 
 ```yaml
 Type: Id, Title or TermGroup
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -TermSet
-Name of the termset to check.
+
 
 ```yaml
 Type: Id, Title or TaxonomyItem
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -TermStore
-Term store to check; if not specified the default term store is used.
+
 
 ```yaml
 Type: Id, Name or Object
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

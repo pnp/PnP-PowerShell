@@ -10,18 +10,11 @@ Removes a webpart from a page
 
 ## SYNTAX 
 
-### ID
+### 
 ```powershell
-Remove-PnPWebPart -Identity <GuidPipeBind>
-                  -ServerRelativePageUrl <String>
-                  [-Web <WebPipeBind>]
-                  [-Connection <SPOnlineConnection>]
-```
-
-### NAME
-```powershell
-Remove-PnPWebPart -Title <String>
-                  -ServerRelativePageUrl <String>
+Remove-PnPWebPart [-Identity <GuidPipeBind>]
+                  [-Title <String>]
+                  [-ServerRelativePageUrl <String>]
                   [-Web <WebPipeBind>]
                   [-Connection <SPOnlineConnection>]
 ```
@@ -45,64 +38,64 @@ This will remove the webpart as defined by the XML in the listview.webpart file 
 ## PARAMETERS
 
 ### -Identity
-The Guid of the webpart
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: ID
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ServerRelativePageUrl
-Full server relative url of the webpart page, e.g. /sites/demo/sitepages/home.aspx
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: PageUrl
+Parameter Sets: 
+Aliases: new String[1] { "PageUrl" }
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Title
-The name of the webpart
+
 
 ```yaml
 Type: String
-Parameter Sets: NAME
-Aliases: Name
+Parameter Sets: 
+Aliases: new String[1] { "Name" }
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

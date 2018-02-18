@@ -10,27 +10,12 @@ Returns the items in the recycle bin from the context
 
 ## SYNTAX 
 
-### Identity
-```powershell
-Get-PnPRecycleBinItem [-Identity <GuidPipeBind>]
-                      [-Connection <SPOnlineConnection>]
-```
-
-### FirstStage
-```powershell
-Get-PnPRecycleBinItem [-FirstStage [<SwitchParameter>]]
-                      [-Connection <SPOnlineConnection>]
-```
-
-### SecondStage
-```powershell
-Get-PnPRecycleBinItem [-SecondStage [<SwitchParameter>]]
-                      [-Connection <SPOnlineConnection>]
-```
-
 ### 
 ```powershell
-Get-PnPRecycleBinItem [-Includes <String[]>]
+Get-PnPRecycleBinItem [-Identity <GuidPipeBind>]
+                      [-FirstStage [<SwitchParameter>]]
+                      [-SecondStage [<SwitchParameter>]]
+                      [-Includes <String[]>]
                       [-Connection <SPOnlineConnection>]
 ```
 
@@ -67,26 +52,26 @@ Returns all items in only the second stage recycle bin in the current site colle
 ## PARAMETERS
 
 ### -FirstStage
-Return all items in the first stage recycle bin
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: FirstStage
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-Returns a recycle bin item with a specific identity
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: Identity
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -103,26 +88,26 @@ Accept pipeline input: False
 ```
 
 ### -SecondStage
-Return all items in the second stage recycle bin
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: SecondStage
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

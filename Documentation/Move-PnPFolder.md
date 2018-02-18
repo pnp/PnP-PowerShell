@@ -10,9 +10,10 @@ Move a folder to another location in the current web
 
 ## SYNTAX 
 
+### 
 ```powershell
-Move-PnPFolder -Folder <String>
-               -TargetFolder <String>
+Move-PnPFolder [-Folder <String>]
+               [-TargetFolder <String>]
                [-Web <WebPipeBind>]
                [-Connection <SPOnlineConnection>]
 ```
@@ -36,50 +37,50 @@ This will move the folder Templates to the new location in 'Shared Documents/Rep
 ## PARAMETERS
 
 ### -Folder
-The folder to move
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TargetFolder
-The new parent location to which the folder should be moved to
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

@@ -10,25 +10,11 @@ Finds a file in the virtual file system of the web.
 
 ## SYNTAX 
 
-### Web
+### 
 ```powershell
-Find-PnPFile -Match <String>
-             [-Web <WebPipeBind>]
-             [-Connection <SPOnlineConnection>]
-```
-
-### List
-```powershell
-Find-PnPFile -List <ListPipeBind>
-             -Match <String>
-             [-Web <WebPipeBind>]
-             [-Connection <SPOnlineConnection>]
-```
-
-### Folder
-```powershell
-Find-PnPFile -Folder <FolderPipeBind>
-             -Match <String>
+Find-PnPFile [-Match <String>]
+             [-List <ListPipeBind>]
+             [-Folder <FolderPipeBind>]
              [-Web <WebPipeBind>]
              [-Connection <SPOnlineConnection>]
 ```
@@ -59,62 +45,62 @@ Will return all docx files located in given folder.
 ## PARAMETERS
 
 ### -Folder
-Folder object or relative url of a folder to query
+
 
 ```yaml
 Type: FolderPipeBind
-Parameter Sets: Folder
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -List
-List title, url or an actual List object to query
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: List
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Match
-Wildcard query
+
 
 ```yaml
 Type: String
-Parameter Sets: Web
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

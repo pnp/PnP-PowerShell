@@ -10,8 +10,9 @@ Deletes a list
 
 ## SYNTAX 
 
+### 
 ```powershell
-Remove-PnPList -Identity <ListPipeBind>
+Remove-PnPList [-Identity <ListPipeBind>]
                [-Recycle [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
@@ -44,27 +45,27 @@ Removes the list named 'Announcements' and saves to the Recycle Bin
 ## PARAMETERS
 
 ### -Force
-Specifying the Force parameter will skip the confirmation question.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The ID or Title of the list.
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Recycle
@@ -72,34 +73,34 @@ Accept pipeline input: True
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

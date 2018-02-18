@@ -10,8 +10,11 @@ Generates a provisioning template from a web
 
 ## SYNTAX 
 
+### 
 ```powershell
-Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
+Get-PnPProvisioningTemplate [-Out <String>]
+                            [-Schema <XMLPnPSchemaVersion>]
+                            [-IncludeAllTermGroups [<SwitchParameter>]]
                             [-IncludeSiteCollectionTermGroup [<SwitchParameter>]]
                             [-IncludeSiteGroups [<SwitchParameter>]]
                             [-IncludeTermGroupsSecurity [<SwitchParameter>]]
@@ -34,8 +37,6 @@ Get-PnPProvisioningTemplate [-IncludeAllTermGroups [<SwitchParameter>]]
                             [-TemplateProperties <Hashtable>]
                             [-OutputInstance [<SwitchParameter>]]
                             [-ExcludeContentTypesFromSyndication [<SwitchParameter>]]
-                            [-Out <String>]
-                            [-Schema <XMLPnPSchemaVersion>]
                             [-Web <WebPipeBind>]
                             [-Connection <SPOnlineConnection>]
 ```
@@ -141,167 +142,167 @@ Extracts a provisioning template in Office Open XML from the current web, exclud
 ## PARAMETERS
 
 ### -ContentTypeGroups
-Allows you to specify from which content type group(s) the content types should be included into the template.
+
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Encoding
-The encoding type of the XML file, Unicode is default
+
 
 ```yaml
 Type: Encoding
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ExcludeContentTypesFromSyndication
-Specify whether or not content types issued from a content hub should be exported. By default, these content types are included.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ExcludeHandlers
-Allows you to run all handlers, excluding the ones specified.
+
 
 ```yaml
 Type: Handlers
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ExtensibilityHandlers
-Allows you to specify ExtensbilityHandlers to execute while extracting a template.
+
 
 ```yaml
 Type: ExtensibilityHandler[]
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Force
-Overwrites the output file if it exists.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Handlers
-Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.
+
 
 ```yaml
 Type: Handlers
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -IncludeAllTermGroups
-If specified, all term groups will be included. Overrides IncludeSiteCollectionTermGroup.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -IncludeNativePublishingFiles
-If specified, out of the box / native publishing files will be saved.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -IncludeSearchConfiguration
-If specified the template will contain the current search configuration of the site.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -IncludeSiteCollectionTermGroup
-If specified, all the site collection term groups will be included. Overridden by IncludeAllTermGroups.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -IncludeSiteGroups
-If specified all site groups will be included.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -IncludeTermGroupsSecurity
-If specified all the managers and contributors of term groups will be included.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Out
-Filename to write to, optionally including full path
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
 Position: 0
@@ -309,158 +310,158 @@ Accept pipeline input: False
 ```
 
 ### -OutputInstance
-Returns the template as an in-memory object, which is an instance of the ProvisioningTemplate type of the PnP Core Component. It cannot be used together with the -Out parameter.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PersistBrandingFiles
-If specified the files used for masterpages, sitelogo, alternate CSS and the files that make up the composed look will be saved.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PersistMultiLanguageResources
-If specified, resource values for applicable artifacts will be persisted to a resource file
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PersistPublishingFiles
-If specified the files used for the publishing feature will be saved.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ResourceFilePrefix
-If specified, resource files will be saved with the specified prefix instead of using the template name specified. If no template name is specified the files will be called PnP-Resources.<language>.resx. See examples for more info.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Schema
-The schema of the output to use, defaults to the latest schema
+
 
 ```yaml
 Type: XMLPnPSchemaVersion
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: 1
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -SkipVersionCheck
-During extraction the version of the server will be checked for certain actions. If you specify this switch, this check will be skipped.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TemplateDisplayName
-It can be used to specify the DisplayName of the template file that will be extracted.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TemplateImagePreviewUrl
-It can be used to specify the ImagePreviewUrl of the template file that will be extracted.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TemplateProperties
-It can be used to specify custom Properties for the template file that will be extracted.
+
 
 ```yaml
 Type: Hashtable
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TemplateProviderExtensions
-Allows you to specify ITemplateProviderExtension to execute while extracting a template.
+
 
 ```yaml
 Type: ITemplateProviderExtension[]
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

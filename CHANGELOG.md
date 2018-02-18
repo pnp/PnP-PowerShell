@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.24.1803.0 - Unreleased]
 ### Added
+- Added Add-PnPTenantTheme
+- Added Get-PnPTenantTheme
+- Added Remove-PnPTenantTheme
+- Added Get-PnPTenantCdnOrigin
+- Added Add-PnPTenantCdnOrigin
+- Added Remove-PnPTenantCdnOrigin
+- Added Add-PnPSiteCollectionAppCatalog
+- Added Remove-PnPSiteCollectionAppCatalog
 - Added Get-PnPNavigationNode cmdlet
 - Added Get-PnPRoleDefinition cmdlet
 - Added Add-PnPRoleDefinition cmdlet

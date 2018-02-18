@@ -10,13 +10,14 @@ Gets statistics on response time for the specified endpoint by sending probe req
 
 ## SYNTAX 
 
+### 
 ```powershell
-Measure-PnPResponseTime [-Count <UInt32>]
+Measure-PnPResponseTime [-Url <DiagnosticEndpointPipeBind>]
+                        [-Count <UInt32>]
                         [-WarmUp <UInt32>]
                         [-Timeout <UInt32>]
                         [-Histogram <UInt32>]
                         [-Mode <MeasureResponseTimeMode>]
-                        [-Url <DiagnosticEndpointPipeBind>]
                         [-Connection <SPOnlineConnection>]
 ```
 
@@ -46,50 +47,50 @@ Builds histogram of response time for the home page of the web and exports to CS
 ## PARAMETERS
 
 ### -Count
-Number of probe requests to send
+
 
 ```yaml
 Type: UInt32
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Histogram
-Number of buckets in histogram in output statistics
+
 
 ```yaml
 Type: UInt32
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Mode
-Response time measurement mode. RoundTrip - measures full request round trip. SPRequestDuration - measures server processing time only, based on SPRequestDuration HTTP header. Latency - difference between RoundTrip and SPRequestDuration
+
 
 ```yaml
 Type: MeasureResponseTimeMode
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Timeout
-Idle timeout between requests to avoid request throttling
+
 
 ```yaml
 Type: UInt32
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -98,34 +99,34 @@ Accept pipeline input: False
 
 ```yaml
 Type: DiagnosticEndpointPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -WarmUp
-Number of warm up requests to send before start calculating statistics
+
 
 ```yaml
 Type: UInt32
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

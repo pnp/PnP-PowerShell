@@ -10,18 +10,11 @@ Returns the search configuration
 
 ## SYNTAX 
 
-### Xml
+### 
 ```powershell
-Get-PnPSearchConfiguration [-Path <String>]
-                           [-Scope <SearchConfigurationScope>]
-                           [-Web <WebPipeBind>]
-                           [-Connection <SPOnlineConnection>]
-```
-
-### OutputFormat
-```powershell
-Get-PnPSearchConfiguration [-OutputFormat <OutputFormat>]
-                           [-Scope <SearchConfigurationScope>]
+Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>]
+                           [-Path <String>]
+                           [-OutputFormat <OutputFormat>]
                            [-Web <WebPipeBind>]
                            [-Connection <SPOnlineConnection>]
 ```
@@ -66,62 +59,62 @@ Returns all custom managed properties and crawled property mapping at the curren
 ## PARAMETERS
 
 ### -OutputFormat
-Output format for of the configuration. Defaults to complete XML
+
 
 ```yaml
 Type: OutputFormat
-Parameter Sets: OutputFormat
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Path
-Local path where the search configuration will be saved
+
 
 ```yaml
 Type: String
-Parameter Sets: Xml
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Scope
-Scope to use. Either Web, Site, or Subscription. Defaults to Web
+
 
 ```yaml
 Type: SearchConfigurationScope
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

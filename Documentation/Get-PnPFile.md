@@ -10,36 +10,15 @@ Downloads a file.
 
 ## SYNTAX 
 
-### Return as file object
+### 
 ```powershell
-Get-PnPFile -Url <String>
-            [-Web <WebPipeBind>]
-            [-Connection <SPOnlineConnection>]
-```
-
-### Return as list item
-```powershell
-Get-PnPFile -Url <String>
-            [-AsListItem [<SwitchParameter>]]
-            [-ThrowExceptionIfFileNotFound [<SwitchParameter>]]
-            [-Web <WebPipeBind>]
-            [-Connection <SPOnlineConnection>]
-```
-
-### Return as string
-```powershell
-Get-PnPFile -Url <String>
-            [-AsString [<SwitchParameter>]]
-            [-Web <WebPipeBind>]
-            [-Connection <SPOnlineConnection>]
-```
-
-### Save to local path
-```powershell
-Get-PnPFile -AsFile [<SwitchParameter>]
-            -Url <String>
+Get-PnPFile [-Url <String>]
             [-Path <String>]
             [-Filename <String>]
+            [-AsFile [<SwitchParameter>]]
+            [-AsListItem [<SwitchParameter>]]
+            [-ThrowExceptionIfFileNotFound [<SwitchParameter>]]
+            [-AsString [<SwitchParameter>]]
             [-Force [<SwitchParameter>]]
             [-Web <WebPipeBind>]
             [-Connection <SPOnlineConnection>]
@@ -96,119 +75,119 @@ Retrieves the file by site relative URL and downloads it to c:\temp\company.spco
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Save to local path
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -AsListItem
-Returns the file as a listitem showing all its properties
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Return as list item
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -AsString
-Retrieve the file contents as a string
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Return as string
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Filename
-Name for the local file
+
 
 ```yaml
 Type: String
-Parameter Sets: Save to local path
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Force
-Overwrites the file if it exists.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Save to local path
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Path
-Local path where the file should be saved
+
 
 ```yaml
 Type: String
-Parameter Sets: Save to local path
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ThrowExceptionIfFileNotFound
-If provided in combination with -AsListItem, a Sytem.ArgumentException will be thrown if the file specified in the -Url argument does not exist. Otherwise it will return nothing instead.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Return as list item
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Url
-The URL (server or site relative) to the file
+
 
 ```yaml
 Type: String
-Parameter Sets: Return as file object
-Aliases: ServerRelativeUrl,SiteRelativeUrl
+Parameter Sets: 
+Aliases: new String[2] { "ServerRelativeUrl", "SiteRelativeUrl" }
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

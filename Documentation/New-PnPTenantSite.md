@@ -10,14 +10,15 @@ Creates a new site collection for the current tenant
 
 ## SYNTAX 
 
+### 
 ```powershell
-New-PnPTenantSite -Title <String>
-                  -Url <String>
-                  -Owner <String>
-                  -TimeZone <Int>
+New-PnPTenantSite [-Title <String>]
+                  [-Url <String>]
                   [-Description <String>]
+                  [-Owner <String>]
                   [-Lcid <UInt32>]
                   [-Template <String>]
+                  [-TimeZone <Int>]
                   [-ResourceQuota <Double>]
                   [-ResourceQuotaWarningLevel <Double>]
                   [-StorageQuota <Int>]
@@ -51,158 +52,158 @@ This will add a site collection with the title 'Contoso', the url 'https://tenan
 ## PARAMETERS
 
 ### -Description
-Specifies the description of the new site collection
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Force
-Do not ask for confirmation.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Lcid
-Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft: https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.splanguage.lcid.aspx
+
 
 ```yaml
 Type: UInt32
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Owner
-Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -RemoveDeletedSite
-Specifies if any existing site with the same URL should be removed from the recycle bin
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ResourceQuota
-Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.
+
 
 ```yaml
 Type: Double
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ResourceQuotaWarningLevel
-Specifies the warning level for the resource quota. This value must not exceed the value set for the ResourceQuota parameter
+
 
 ```yaml
 Type: Double
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -StorageQuota
-Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -StorageQuotaWarningLevel
-Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageQuota parameter
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Template
-Specifies the site collection template type. Use the Get-PnPWebTemplate cmdlet to get the list of valid templates. If no template is specified, one can be added later. The Template and LocaleId parameters must be a valid combination as returned from the Get-PnPWebTemplates cmdlet.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TimeZone
-Use Get-PnPTimeZoneId to retrieve possible timezone values
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Title
-Specifies the title of the new site collection
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Url
-Specifies the full URL of the new site collection. It must be in a valid managed path in the company's site. For example, for company contoso, valid managed paths are https://contoso.sharepoint.com/sites and https://contoso.sharepoint.com/teams.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -211,22 +212,22 @@ Accept pipeline input: False
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

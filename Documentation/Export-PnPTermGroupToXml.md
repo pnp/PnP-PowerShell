@@ -10,6 +10,7 @@ Exports a taxonomy TermGroup to either the output or to an XML file.
 
 ## SYNTAX 
 
+### 
 ```powershell
 Export-PnPTermGroupToXml [-Identity <Id, Title or TermGroup>]
                          [-Out <String>]
@@ -53,74 +54,74 @@ Retrieves a termgroup and subsequently exports that term group to a the file nam
 ## PARAMETERS
 
 ### -Encoding
-Defaults to Unicode
+
 
 ```yaml
 Type: Encoding
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Force
-Overwrites the output file if it exists.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -FullTemplate
-If specified, a full provisioning template structure will be returned
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The ID or name of the termgroup
+
 
 ```yaml
 Type: Id, Title or TermGroup
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
-Accept pipeline input: True
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -Out
-File to export the data to.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

@@ -10,8 +10,9 @@ Remove a Role Definition from a site
 
 ## SYNTAX 
 
+### 
 ```powershell
-Remove-PnPRoleDefinition -Identity <RoleDefinitionPipeBind>
+Remove-PnPRoleDefinition [-Identity <RoleDefinitionPipeBind>]
                          [-Force [<SwitchParameter>]]
                          [-Connection <SPOnlineConnection>]
 ```
@@ -28,38 +29,38 @@ Removes the specified Role Definition (Permission Level) from the current site
 ## PARAMETERS
 
 ### -Force
-Do not ask for confirmation to delete the role definition
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The identity of the role definition, either a RoleDefinition object or a the name of roledefinition
+
 
 ```yaml
 Type: RoleDefinitionPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

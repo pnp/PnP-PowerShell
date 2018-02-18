@@ -10,8 +10,9 @@ Sets Office 365 Group (aka Unified Group) properties
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPUnifiedGroup -Identity <UnifiedGroupPipeBind>
+Set-PnPUnifiedGroup [-Identity <UnifiedGroupPipeBind>]
                     [-DisplayName <String>]
                     [-Description <String>]
                     [-Owners <String[]>]
@@ -60,86 +61,86 @@ Adds demo@contoso.com as an additional owner to the group.
 ## PARAMETERS
 
 ### -Description
-The Description of the group to set.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -DisplayName
-The DisplayName of the group to set.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -GroupLogoPath
-The path to the logo file of to set.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The Identity of the Office 365 Group.
+
 
 ```yaml
 Type: UnifiedGroupPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
-Accept pipeline input: True
+Required: False
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -IsPrivate
-Makes the group private when selected.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Members
-The array UPN values of members to add to the group.
+
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Owners
-The array UPN values of owners to add to the group.
+
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

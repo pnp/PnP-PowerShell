@@ -10,6 +10,7 @@ Returns a time zone ID
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPTimeZoneId [-Match <String>]
 ```
@@ -36,11 +37,11 @@ This will return the time zone IDs for Stockholm
 ## PARAMETERS
 
 ### -Match
-A string to search for like 'Stockholm'
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
 Position: 0

@@ -10,17 +10,10 @@ Removes a menu item from either the quicklaunch or top navigation
 
 ## SYNTAX 
 
-### Remove a node by ID
+### 
 ```powershell
-Remove-PnPNavigationNode -Identity <NavigationNodePipeBind>
-                         [-Force [<SwitchParameter>]]
-                         [-Web <WebPipeBind>]
-                         [-Connection <SPOnlineConnection>]
-```
-
-### All Nodes
-```powershell
-Remove-PnPNavigationNode -All [<SwitchParameter>]
+Remove-PnPNavigationNode [-Identity <NavigationNodePipeBind>]
+                         [-All [<SwitchParameter>]]
                          [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
@@ -67,62 +60,62 @@ Will remove all the navigation nodes from the quick launch bar in the current we
 ## PARAMETERS
 
 ### -All
-Specifying the All parameter will remove all the nodes from specifed Location.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: All Nodes
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Force
-Specifying the Force parameter will skip the confirmation question.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The Id or node object to delete
+
 
 ```yaml
 Type: NavigationNodePipeBind
-Parameter Sets: Remove a node by ID
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

@@ -10,6 +10,7 @@ Returns the authentication realm
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPAuthenticationRealm [-Url <String>]
                            [-Connection <SPOnlineConnection>]
@@ -37,26 +38,26 @@ This will get the authentication realm for https://contoso.sharepoint.com
 ## PARAMETERS
 
 ### -Url
-Specifies the URL of the site
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

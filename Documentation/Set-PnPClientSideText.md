@@ -10,10 +10,11 @@ Set Client-Side Text Component properties
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPClientSideText -InstanceId <GuidPipeBind>
-                      -Text <String>
-                      -Page <ClientSidePagePipeBind>
+Set-PnPClientSideText [-Page <ClientSidePagePipeBind>]
+                      [-InstanceId <GuidPipeBind>]
+                      [-Text <String>]
                       [-Web <WebPipeBind>]
                       [-Connection <SPOnlineConnection>]
 ```
@@ -33,62 +34,62 @@ Sets the text of the client side text component.
 ## PARAMETERS
 
 ### -InstanceId
-The instance id of the text component
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
-Accept pipeline input: True
+Required: False
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -Page
-The name of the page
+
 
 ```yaml
 Type: ClientSidePagePipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Text
-Text to set
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
-Accept pipeline input: True
+Required: False
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

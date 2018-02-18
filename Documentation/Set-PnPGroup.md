@@ -10,8 +10,9 @@ Updates a group
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPGroup -Identity <GroupPipeBind>
+Set-PnPGroup [-Identity <GroupPipeBind>]
              [-SetAssociatedGroup <AssociatedGroupType>]
              [-AddRole <String>]
              [-RemoveRole <String>]
@@ -46,170 +47,170 @@ Sets the SharePoint group with the name 'site owners' as the owner of the ShareP
 ## PARAMETERS
 
 ### -AddRole
-Name of the permission set to add to this SharePoint group
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -AllowMembersEditMembership
-A switch parameter that specifies whether group members can modify membership in the group
+
 
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -AllowRequestToJoinLeave
-A switch parameter that specifies whether to allow users to request membership in the group and to allow users to request to leave the group
+
 
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -AutoAcceptRequestToJoinLeave
-A switch parameter that specifies whether users are automatically added or removed when they make a request
+
 
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Description
-The description for the group
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-A group object, an ID or a name of a group
+
 
 ```yaml
 Type: GroupPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -OnlyAllowMembersViewMembership
-A switch parameter that specifies whether only group members are allowed to view the list of members in the group
+
 
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Owner
-The owner for the group, which can be a user or another group
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -RemoveRole
-Name of the permission set to remove from this SharePoint group
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -RequestToJoinEmail
-The e-mail address to which membership requests are sent
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -SetAssociatedGroup
-One of the associated group types (Visitors, Members, Owners
+
 
 ```yaml
 Type: AssociatedGroupType
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Title
-The title for the group
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

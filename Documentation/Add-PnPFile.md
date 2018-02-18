@@ -10,28 +10,12 @@ Uploads a file to Web
 
 ## SYNTAX 
 
-### Upload file
+### 
 ```powershell
-Add-PnPFile -Path <String>
-            -Folder <String>
-            [-Checkout [<SwitchParameter>]]
-            [-CheckInComment <String>]
-            [-Approve [<SwitchParameter>]]
-            [-ApproveComment <String>]
-            [-Publish [<SwitchParameter>]]
-            [-PublishComment <String>]
-            [-UseWebDav [<SwitchParameter>]]
-            [-Values <Hashtable>]
-            [-ContentType <ContentTypePipeBind>]
-            [-Web <WebPipeBind>]
-            [-Connection <SPOnlineConnection>]
-```
-
-### Upload file from stream
-```powershell
-Add-PnPFile -FileName <String>
-            -Stream <Stream>
-            -Folder <String>
+Add-PnPFile [-Path <String>]
+            [-Folder <String>]
+            [-FileName <String>]
+            [-Stream <Stream>]
             [-Checkout [<SwitchParameter>]]
             [-CheckInComment <String>]
             [-Approve [<SwitchParameter>]]
@@ -92,134 +76,134 @@ This will add a file sample.docx to the Documents folder and will set the Modifi
 ## PARAMETERS
 
 ### -Approve
-Will auto approve the uploaded file.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ApproveComment
-The comment added to the approval.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -CheckInComment
-The comment added to the checkin.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Checkout
-If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ContentType
-Use to assign a ContentType to the file.
+
 
 ```yaml
 Type: ContentTypePipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -FileName
-Name for file
+
 
 ```yaml
 Type: String
-Parameter Sets: Upload file from stream
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Folder
-The destination folder in the site
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Path
-The local file path.
+
 
 ```yaml
 Type: String
-Parameter Sets: Upload file
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Publish
-Will auto publish the file.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PublishComment
-The comment added to the publish action.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Stream
-Stream with the file contents
+
 
 ```yaml
 Type: Stream
-Parameter Sets: Upload file from stream
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -228,84 +212,46 @@ Accept pipeline input: False
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Values
-Use the internal names of the fields when specifying field names.
 
-Single line of text: -Values @{"Title" = "Title New"}
-
-Multiple lines of text: -Values @{"MultiText" = "New text\n\nMore text"}
-
-Rich text: -Values @{"MultiText" = "<strong>New</strong> text"}
-
-Choice: -Values @{"Choice" = "Value 1"}
-
-Number: -Values @{"Number" = "10"}
-
-Currency: -Values @{"Number" = "10"}
-
-Currency: -Values @{"Currency" = "10"}
-
-Date and Time: -Values @{"DateAndTime" = "03/10/2015 14:16"}
-
-Lookup (id of lookup value): -Values @{"Lookup" = "2"}
-
-Multi value lookup (id of lookup values as array 1): -Values @{"MultiLookupField" = "1","2"}
-
-Multi value lookup (id of lookup values as array 2): -Values @{"MultiLookupField" = 1,2}
-
-Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField" = "1,2"}
-
-Yes/No: -Values @{"YesNo" = $false}
-
-Person/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{"Person" = "user1@domain.com","21"}
-
-Managed Metadata (single value with path to term): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"}
-
-Managed Metadata (single value with id of term): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818"} with Id of term
-
-Managed Metadata (multiple values with paths to terms): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE","CORPORATE|DEPARTMENTS|HR"}
-
-Managed Metadata (multiple values with ids of terms): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593"}
-
-Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnp"}
 
 ```yaml
 Type: Hashtable
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

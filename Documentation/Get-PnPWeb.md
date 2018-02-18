@@ -12,8 +12,8 @@ Returns the current web object
 
 ### 
 ```powershell
-Get-PnPWeb [-Includes <String[]>]
-           [-Identity <WebPipeBind>]
+Get-PnPWeb [-Identity <WebPipeBind>]
+           [-Includes <String[]>]
            [-Connection <SPOnlineConnection>]
 ```
 
@@ -29,15 +29,15 @@ This will return the current web
 ## PARAMETERS
 
 ### -Identity
-The guid of the web or web object
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Includes
@@ -53,14 +53,14 @@ Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

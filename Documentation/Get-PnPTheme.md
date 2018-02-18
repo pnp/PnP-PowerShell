@@ -10,6 +10,7 @@ Returns the current theme/composed look of the current web.
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPTheme [-DetectCurrentComposedLook [<SwitchParameter>]]
              [-Web <WebPipeBind>]
@@ -35,38 +36,38 @@ Returns the current composed look of the current web, and will try to detect the
 ## PARAMETERS
 
 ### -DetectCurrentComposedLook
-Specify this switch to not use the PnP Provisioning engine based composed look information but try to detect the current composed look as is.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

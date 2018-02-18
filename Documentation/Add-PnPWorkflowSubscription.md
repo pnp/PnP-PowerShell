@@ -10,15 +10,16 @@ Adds a workflow subscription to a list
 
 ## SYNTAX 
 
+### 
 ```powershell
-Add-PnPWorkflowSubscription -Name <String>
-                            -DefinitionName <String>
-                            -List <ListPipeBind>
-                            -HistoryListName <String>
-                            -TaskListName <String>
+Add-PnPWorkflowSubscription [-Name <String>]
+                            [-DefinitionName <String>]
+                            [-List <ListPipeBind>]
                             [-StartManually [<SwitchParameter>]]
                             [-StartOnCreated [<SwitchParameter>]]
                             [-StartOnChanged [<SwitchParameter>]]
+                            [-HistoryListName <String>]
+                            [-TaskListName <String>]
                             [-AssociationValues <Dictionary`2>]
                             [-Web <WebPipeBind>]
                             [-Connection <SPOnlineConnection>]
@@ -54,130 +55,130 @@ Adds an Workflow with the name "SendMessageWf" to the list "MyCustomList".
 
 ```yaml
 Type: Dictionary`2
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -DefinitionName
-The name of the workflow definition
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -HistoryListName
-The name of the History list
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -List
-The list to add the workflow to
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Name
-The name of the subscription
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -StartManually
-Switch if the workflow should be started manually, default value is 'true'
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -StartOnChanged
-Should the workflow run when an item is changed
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -StartOnCreated
-Should the workflow run when an new item is created
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TaskListName
-The name of the task list
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

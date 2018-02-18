@@ -10,8 +10,9 @@ Removes one or more users as site collection administrators from the site collec
 
 ## SYNTAX 
 
+### 
 ```powershell
-Remove-PnPSiteCollectionAdmin -Owners <List`1>
+Remove-PnPSiteCollectionAdmin [-Owners <List`1>]
                               [-Connection <SPOnlineConnection>]
 ```
 
@@ -51,26 +52,26 @@ This will remove all existing site collection administrators from the site colle
 ## PARAMETERS
 
 ### -Owners
-Specifies owner(s) to remove as site collection adminstrators. Can be both users and groups.
+
 
 ```yaml
 Type: List`1
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
-Accept pipeline input: True
+Required: False
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

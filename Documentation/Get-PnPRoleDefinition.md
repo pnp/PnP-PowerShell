@@ -10,6 +10,7 @@ Retrieves a Role Definitions of a site
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPRoleDefinition [-Identity <RoleDefinitionPipeBind>]
                       [-Connection <SPOnlineConnection>]
@@ -34,26 +35,26 @@ Retrieves the specified Role Definition (Permission Level) settings of the curre
 ## PARAMETERS
 
 ### -Identity
-The name of a role definition to retrieve.
+
 
 ```yaml
 Type: RoleDefinitionPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

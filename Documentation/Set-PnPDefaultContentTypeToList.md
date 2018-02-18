@@ -10,9 +10,10 @@ Sets the default content type for a list
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPDefaultContentTypeToList -List <ListPipeBind>
-                                -ContentType <ContentTypePipeBind>
+Set-PnPDefaultContentTypeToList [-List <ListPipeBind>]
+                                [-ContentType <ContentTypePipeBind>]
                                 [-Web <WebPipeBind>]
                                 [-Connection <SPOnlineConnection>]
 ```
@@ -29,50 +30,50 @@ This will set the Project content type (which has already been added to a list) 
 ## PARAMETERS
 
 ### -ContentType
-The content type object that needs to be added to the list
+
 
 ```yaml
 Type: ContentTypePipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -List
-The name of a content type, its ID or an actual content type object that needs to be removed from the specified list.
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

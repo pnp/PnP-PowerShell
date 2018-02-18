@@ -10,8 +10,9 @@ Sets parameters of a Client-Side Page
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPClientSidePage -Identity <ClientSidePagePipeBind>
+Set-PnPClientSidePage [-Identity <ClientSidePagePipeBind>]
                       [-Name <String>]
                       [-LayoutType <ClientSidePageLayoutType>]
                       [-PromoteAs <ClientSidePagePromoteType>]
@@ -47,98 +48,98 @@ Disables the comments on the Client-Side page named 'MyPage'
 ## PARAMETERS
 
 ### -CommentsEnabled
-Enables or Disables the comments on the page
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The name/identity of the page
+
 
 ```yaml
 Type: ClientSidePagePipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -LayoutType
-Sets the layout type of the page. (Default = Article)
+
 
 ```yaml
 Type: ClientSidePageLayoutType
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Name
-Sets the name of the page.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PromoteAs
-Allows to promote the page for a specific purpose (HomePage | NewsPage)
+
 
 ```yaml
 Type: ClientSidePagePromoteType
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Publish
-Publishes the page once it is saved.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

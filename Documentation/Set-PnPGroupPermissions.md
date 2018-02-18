@@ -10,9 +10,9 @@ Adds and/or removes permissions of a specific SharePoint group
 
 ## SYNTAX 
 
-### ByName
+### 
 ```powershell
-Set-PnPGroupPermissions -Identity <GroupPipeBind>
+Set-PnPGroupPermissions [-Identity <GroupPipeBind>]
                         [-List <ListPipeBind>]
                         [-AddRole <String[]>]
                         [-RemoveRole <String[]>]
@@ -60,75 +60,75 @@ Removes the 'Contribute' permissions from the list 'MyList' for the group with t
 ## PARAMETERS
 
 ### -AddRole
-Name of the permission set to add to this SharePoint group
+
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-Get the permissions of a specific group by name
+
 
 ```yaml
 Type: GroupPipeBind
-Parameter Sets: ByName
-Aliases: Name
+Parameter Sets: 
+Aliases: new String[1] { "Name" }
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -List
-The list to apply the command to.
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -RemoveRole
-Name of the permission set to remove from this SharePoint group
+
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

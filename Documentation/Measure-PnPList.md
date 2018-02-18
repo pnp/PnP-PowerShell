@@ -12,7 +12,7 @@ Returns statistics on the list object
 
 ### 
 ```powershell
-Measure-PnPList -Identity <ListPipeBind>
+Measure-PnPList [-Identity <ListPipeBind>]
                 [-ItemLevel [<SwitchParameter>]]
                 [-BrokenPermissions [<SwitchParameter>]]
                 [-Web <WebPipeBind>]
@@ -39,14 +39,14 @@ Displays items and folders with broken permissions inside Documents library
 ## PARAMETERS
 
 ### -BrokenPermissions
-Show items with broken permissions
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -55,11 +55,11 @@ Accept pipeline input: False
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Includes
@@ -75,38 +75,38 @@ Accept pipeline input: False
 ```
 
 ### -ItemLevel
-Show item level statistics
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-The web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

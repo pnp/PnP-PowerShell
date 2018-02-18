@@ -10,29 +10,14 @@ Add a taxonomy field
 
 ## SYNTAX 
 
-### Id
+### 
 ```powershell
-Add-PnPTaxonomyField -DisplayName <String>
-                     -InternalName <String>
+Add-PnPTaxonomyField [-List <ListPipeBind>]
+                     [-DisplayName <String>]
+                     [-InternalName <String>]
+                     [-TermSetPath <String>]
                      [-TaxonomyItemId <GuidPipeBind>]
-                     [-List <ListPipeBind>]
-                     [-Group <String>]
-                     [-Id <GuidPipeBind>]
-                     [-AddToDefaultView [<SwitchParameter>]]
-                     [-MultiValue [<SwitchParameter>]]
-                     [-Required [<SwitchParameter>]]
-                     [-FieldOptions <AddFieldOptions>]
-                     [-Web <WebPipeBind>]
-                     [-Connection <SPOnlineConnection>]
-```
-
-### Path
-```powershell
-Add-PnPTaxonomyField -TermSetPath <String>
-                     -DisplayName <String>
-                     -InternalName <String>
                      [-TermPathDelimiter <String>]
-                     [-List <ListPipeBind>]
                      [-Group <String>]
                      [-Id <GuidPipeBind>]
                      [-AddToDefaultView [<SwitchParameter>]]
@@ -58,170 +43,170 @@ Adds a new taxonomy field called "Test" that points to the TestTermSet which is 
 ## PARAMETERS
 
 ### -AddToDefaultView
-Switch Parameter if this field must be added to the default view
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -DisplayName
-The display name of the field
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -FieldOptions
-Specifies the control settings while adding a field. See https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.addfieldoptions.aspx for details
+
 
 ```yaml
 Type: AddFieldOptions
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Group
-The group name to where this field belongs to
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Id
-The ID for the field, must be unique
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -InternalName
-The internal name of the field
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -List
-The list object or name where this field needs to be added
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -MultiValue
-Switch Parameter if this Taxonomy field can hold multiple values
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Required
-Switch Parameter if the field is a required field
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TaxonomyItemId
-The ID of the Taxonomy item
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: Id
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TermPathDelimiter
-The path delimiter to be used, by default this is '|'
+
 
 ```yaml
 Type: String
-Parameter Sets: Path
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TermSetPath
-The path to the term that this needs be be bound
+
 
 ```yaml
 Type: String
-Parameter Sets: Path
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

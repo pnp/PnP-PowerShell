@@ -10,6 +10,7 @@ Returns the available apps from the app catalog
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPApp [-Identity <GuidPipeBind>]
            [-Connection <SPOnlineConnection>]
@@ -34,26 +35,26 @@ This will the specific app metadata from the app catalog.
 ## PARAMETERS
 
 ### -Identity
-Specifies the Id of an app which is available in the app catalog
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

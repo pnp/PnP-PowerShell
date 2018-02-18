@@ -10,14 +10,15 @@ Creates a new Site Design on the current tenant.
 
 ## SYNTAX 
 
+### 
 ```powershell
-Add-PnPSiteDesign -Title <String>
-                  -SiteScriptIds <GuidPipeBind[]>
-                  -WebTemplate <SiteWebTemplate>
+Add-PnPSiteDesign [-Title <String>]
+                  [-SiteScriptIds <GuidPipeBind[]>]
                   [-Description <String>]
                   [-IsDefault [<SwitchParameter>]]
                   [-PreviewImageAltText <String>]
                   [-PreviewImageUrl <String>]
+                  [-WebTemplate <SiteWebTemplate>]
                   [-Connection <SPOnlineConnection>]
 ```
 
@@ -33,98 +34,98 @@ Adds a new Site Design, with the specified title and description. When applied i
 ## PARAMETERS
 
 ### -Description
-The description of the site design
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -IsDefault
-Specifies if the site design is a default site design
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PreviewImageAltText
-Sets the text for the preview image
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PreviewImageUrl
-Sets the url to the preview image
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -SiteScriptIds
-An array of guids of site scripts
+
 
 ```yaml
 Type: GuidPipeBind[]
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Title
-The title of the site design
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -WebTemplate
-Specifies the type of site to which this design applies
+
 
 ```yaml
 Type: SiteWebTemplate
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

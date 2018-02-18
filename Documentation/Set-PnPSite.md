@@ -10,6 +10,7 @@ Sets Site Collection properties.
 
 ## SYNTAX 
 
+### 
 ```powershell
 Set-PnPSite [-Classification <String>]
             [-DisableFlows [<SwitchParameter>]]
@@ -49,38 +50,38 @@ Enables Flows for this site
 ## PARAMETERS
 
 ### -Classification
-The classification to set
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -DisableFlows
-Disables flows for this site
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

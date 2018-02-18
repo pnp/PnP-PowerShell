@@ -10,9 +10,10 @@ Revokes the specified principals rights to use the site design.
 
 ## SYNTAX 
 
+### 
 ```powershell
-Revoke-PnPSiteDesignRights -Principals <String[]>
-                           -Identity <TenantSiteDesignPipeBind>
+Revoke-PnPSiteDesignRights [-Identity <TenantSiteDesignPipeBind>]
+                           [-Principals <String[]>]
                            [-Connection <SPOnlineConnection>]
 ```
 
@@ -35,38 +36,38 @@ Revokes rights to the specified principals on the site design specified
 ## PARAMETERS
 
 ### -Identity
-The site design to use.
+
 
 ```yaml
 Type: TenantSiteDesignPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Principals
-One or more principals to revoke.
+
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

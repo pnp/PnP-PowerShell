@@ -10,8 +10,9 @@ Publishes/Deploys/Trusts an available app in the app catalog
 
 ## SYNTAX 
 
+### 
 ```powershell
-Publish-PnPApp -Identity <AppMetadataPipeBind>
+Publish-PnPApp [-Identity <AppMetadataPipeBind>]
                [-SkipFeatureDeployment [<SwitchParameter>]]
                [-Connection <SPOnlineConnection>]
 ```
@@ -28,15 +29,15 @@ This will deploy/trust an app into the app catalog. Notice that the app needs to
 ## PARAMETERS
 
 ### -Identity
-Specifies the Id of the app
+
 
 ```yaml
 Type: AppMetadataPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -SkipFeatureDeployment
@@ -44,22 +45,22 @@ Accept pipeline input: True
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

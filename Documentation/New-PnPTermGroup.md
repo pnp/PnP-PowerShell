@@ -10,8 +10,9 @@ Creates a taxonomy term group
 
 ## SYNTAX 
 
+### 
 ```powershell
-New-PnPTermGroup -Name <String>
+New-PnPTermGroup [-Name <String>]
                  [-Id <Guid>]
                  [-Description <String>]
                  [-TermStore <Id, Name or Object>]
@@ -30,65 +31,65 @@ Creates a new taxonomy term group named "Countries"
 ## PARAMETERS
 
 ### -Description
-Description to use for the term group.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Id
-GUID to use for the term group; if not specified, or the empty GUID, a random GUID is generated and used.
+
 
 ```yaml
 Type: Guid
-Parameter Sets: (All)
-Aliases: GroupId
+Parameter Sets: 
+Aliases: new String[1] { "GroupId" }
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Name
-Name of the taxonomy term group to create.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: GroupName
+Parameter Sets: 
+Aliases: new String[1] { "GroupName" }
 
-Required: True
-Position: Named
-Accept pipeline input: True
+Required: False
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -TermStore
-Term store to add the group to; if not specified the default term store is used.
+
 
 ```yaml
 Type: Id, Name or Object
-Parameter Sets: (All)
-Aliases: TermStoreName
+Parameter Sets: 
+Aliases: new String[1] { "TermStoreName" }
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

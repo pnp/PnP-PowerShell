@@ -10,8 +10,9 @@ Restores a site collection from the tenant scoped recycle bin
 
 ## SYNTAX 
 
+### 
 ```powershell
-Restore-PnPTenantRecycleBinItem -Url <String>
+Restore-PnPTenantRecycleBinItem [-Url <String>]
                                 [-Wait [<SwitchParameter>]]
                                 [-Force [<SwitchParameter>]]
                                 [-Connection <SPOnlineConnection>]
@@ -39,50 +40,50 @@ This will restore the deleted site collection with the url 'https://tenant.share
 ## PARAMETERS
 
 ### -Force
-If provided, no confirmation will be asked to restore the site collection from the tenant recycle bin
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Url
-Url of the site collection to restore from the tenant recycle bin
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Wait
-If provided, the PowerShell execution will halt until the site restore process has completed
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

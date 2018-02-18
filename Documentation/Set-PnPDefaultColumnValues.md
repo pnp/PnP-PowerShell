@@ -10,10 +10,11 @@ Sets default column values for a document library
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPDefaultColumnValues -Field <FieldPipeBind>
-                           -Value <String[]>
-                           -List <ListPipeBind>
+Set-PnPDefaultColumnValues [-List <ListPipeBind>]
+                           [-Field <FieldPipeBind>]
+                           [-Value <String[]>]
                            [-Folder <String>]
                            [-Web <WebPipeBind>]
                            [-Connection <SPOnlineConnection>]
@@ -72,74 +73,74 @@ Sets a default value for the MyMultiPeopleField people field on a library to a v
 ## PARAMETERS
 
 ### -Field
-The internal name, id or a reference to a field
+
 
 ```yaml
 Type: FieldPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Folder
-A library relative folder path, if not specified it will set the default column values on the root folder of the library ('/')
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -List
-The ID, Name or Url of the list.
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Value
-A list of values. In case of a text field the values will be concatenated, separated by a semi-colon. In case of a taxonomy field multiple values will added. In case of people field multiple values will be added.
+
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

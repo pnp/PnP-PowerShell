@@ -10,6 +10,7 @@ Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPUnifiedGroup [-Identity <UnifiedGroupPipeBind>]
                     [-ExcludeSiteUrl [<SwitchParameter>]]
@@ -55,26 +56,26 @@ Retrieves a specific Office 365 Group based on its object instance
 ## PARAMETERS
 
 ### -ExcludeSiteUrl
-Exclude fetching the site URL for Office 365 Groups. This speeds up large listings.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The Identity of the Office 365 Group.
+
 
 ```yaml
 Type: UnifiedGroupPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

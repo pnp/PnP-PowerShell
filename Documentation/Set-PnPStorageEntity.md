@@ -10,11 +10,12 @@ Set Storage Entities / Farm Properties.
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPStorageEntity -Key <String>
-                     -Value <String>
-                     -Comment <String>
-                     -Description <String>
+Set-PnPStorageEntity [-Key <String>]
+                     [-Value <String>]
+                     [-Comment <String>]
+                     [-Description <String>]
                      [-Connection <SPOnlineConnection>]
 ```
 
@@ -30,62 +31,62 @@ Sets an existing or adds a new storage entity / farm property
 ## PARAMETERS
 
 ### -Comment
-The comment to set.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Description
-The description to set.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Key
-The key of the value to set.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Value
-The value to set.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

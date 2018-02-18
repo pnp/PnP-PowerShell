@@ -10,17 +10,10 @@ Removes a subweb in the current web
 
 ## SYNTAX 
 
-### ByUrl
+### 
 ```powershell
-Remove-PnPWeb -Url <String>
-              [-Force [<SwitchParameter>]]
-              [-Web <WebPipeBind>]
-              [-Connection <SPOnlineConnection>]
-```
-
-### ByIdentity
-```powershell
-Remove-PnPWeb -Identity <WebPipeBind>
+Remove-PnPWeb [-Url <String>]
+              [-Identity <WebPipeBind>]
               [-Force [<SwitchParameter>]]
               [-Web <WebPipeBind>]
               [-Connection <SPOnlineConnection>]
@@ -52,62 +45,62 @@ Remove all subwebs and do not ask for confirmation
 ## PARAMETERS
 
 ### -Force
-Do not ask for confirmation to delete the subweb
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-Identity/Id/Web object to delete
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: ByIdentity
+Parameter Sets: 
 
-Required: True
-Position: Named
-Accept pipeline input: True
+Required: False
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -Url
-The site relative url of the web, e.g. 'Subweb1'
+
 
 ```yaml
 Type: String
-Parameter Sets: ByUrl
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

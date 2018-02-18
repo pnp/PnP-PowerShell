@@ -10,17 +10,10 @@ Return registered eventreceivers
 
 ## SYNTAX 
 
-### List
+### 
 ```powershell
 Get-PnPEventReceiver [-List <ListPipeBind>]
                      [-Identity <EventReceiverPipeBind>]
-                     [-Web <WebPipeBind>]
-                     [-Connection <SPOnlineConnection>]
-```
-
-### 
-```powershell
-Get-PnPEventReceiver [-Identity <EventReceiverPipeBind>]
                      [-Web <WebPipeBind>]
                      [-Includes <String[]>]
                      [-Connection <SPOnlineConnection>]
@@ -76,15 +69,15 @@ This will return the event receiver in the "ProjectList" list with the provided 
 ## PARAMETERS
 
 ### -Identity
-The Guid of the event receiver
+
 
 ```yaml
 Type: EventReceiverPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
-Accept pipeline input: True
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -Includes
@@ -100,38 +93,38 @@ Accept pipeline input: False
 ```
 
 ### -List
-The list object from which to get the event receiver object
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: List
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-The web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

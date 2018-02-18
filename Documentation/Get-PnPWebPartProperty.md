@@ -10,9 +10,10 @@ Returns a web part property
 
 ## SYNTAX 
 
+### 
 ```powershell
-Get-PnPWebPartProperty -ServerRelativePageUrl <String>
-                       -Identity <GuidPipeBind>
+Get-PnPWebPartProperty [-ServerRelativePageUrl <String>]
+                       [-Identity <GuidPipeBind>]
                        [-Key <String>]
                        [-Web <WebPipeBind>]
                        [-Connection <SPOnlineConnection>]
@@ -37,63 +38,63 @@ Returns the title property of the webpart.
 ## PARAMETERS
 
 ### -Identity
-The id of the webpart
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Key
-Name of a single property to be returned
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ServerRelativePageUrl
-Full server relative URL of the webpart page, e.g. /sites/mysite/sitepages/home.aspx
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: PageUrl
+Parameter Sets: 
+Aliases: new String[1] { "PageUrl" }
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

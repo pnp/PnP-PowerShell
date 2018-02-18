@@ -10,8 +10,9 @@ Return the JSON Manifest snippet for Azure Apps
 
 ## SYNTAX 
 
+### 
 ```powershell
-Get-PnPAzureADManifestKeyCredentials -CertPath <String>
+Get-PnPAzureADManifestKeyCredentials [-CertPath <String>]
 ```
 
 ## DESCRIPTION
@@ -36,14 +37,14 @@ Output the JSON snippet which needs to be replaced in the application manifest f
 ## PARAMETERS
 
 ### -CertPath
-Specifies the path to the certificate like .\mycert.cer
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 

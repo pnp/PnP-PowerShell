@@ -12,7 +12,7 @@ Return a folder object
 
 ### 
 ```powershell
-Get-PnPFolder -Url <String>
+Get-PnPFolder [-Url <String>]
               [-Web <WebPipeBind>]
               [-Includes <String[]>]
               [-Connection <SPOnlineConnection>]
@@ -52,39 +52,39 @@ Accept pipeline input: False
 ```
 
 ### -Url
-Site or server relative URL of the folder to retrieve. In the case of a server relative url, make sure that the url starts with the managed path as the current web.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: RelativeUrl
+Parameter Sets: 
+Aliases: new String[1] { "RelativeUrl" }
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Web
-The web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

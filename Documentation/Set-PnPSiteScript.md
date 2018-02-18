@@ -10,8 +10,9 @@ Updates an existing Site Script on the current tenant.
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPSiteScript -Identity <TenantSiteScriptPipeBind>
+Set-PnPSiteScript [-Identity <TenantSiteScriptPipeBind>]
                   [-Title <String>]
                   [-Description <String>]
                   [-Content <String>]
@@ -39,74 +40,74 @@ Updates an existing Site Script and changes the title.
 ## PARAMETERS
 
 ### -Content
-A JSON string containing the site script
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Description
-The description of the site script
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The guid or an object representing the site script
+
 
 ```yaml
 Type: TenantSiteScriptPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Title
-The title of the site script
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Version
-Specifies the version of the site script
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

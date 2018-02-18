@@ -10,6 +10,7 @@ Execute the current queued actions
 
 ## SYNTAX 
 
+### 
 ```powershell
 Execute-PnPQuery [-RetryCount <Int>]
                  [-RetryWait <Int>]
@@ -38,38 +39,38 @@ This will execute any queued actions / changes on the SharePoint Client Side Obj
 ## PARAMETERS
 
 ### -RetryCount
-Number of times to retry in case of throttling. Defaults to 10.
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -RetryWait
-Delay in seconds. Defaults to 1.
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

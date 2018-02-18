@@ -10,17 +10,10 @@ Sets the search configuration
 
 ## SYNTAX 
 
-### Config
+### 
 ```powershell
-Set-PnPSearchConfiguration -Configuration <String>
-                           [-Scope <SearchConfigurationScope>]
-                           [-Web <WebPipeBind>]
-                           [-Connection <SPOnlineConnection>]
-```
-
-### Path
-```powershell
-Set-PnPSearchConfiguration -Path <String>
+Set-PnPSearchConfiguration [-Configuration <String>]
+                           [-Path <String>]
                            [-Scope <SearchConfigurationScope>]
                            [-Web <WebPipeBind>]
                            [-Connection <SPOnlineConnection>]
@@ -59,26 +52,26 @@ Reads the search configuration from the specified XML file and sets it for the c
 ## PARAMETERS
 
 ### -Configuration
-Search configuration string
+
 
 ```yaml
 Type: String
-Parameter Sets: Config
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Path
-Path to a search configuration
+
 
 ```yaml
 Type: String
-Parameter Sets: Path
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -87,34 +80,34 @@ Accept pipeline input: False
 
 ```yaml
 Type: SearchConfigurationScope
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

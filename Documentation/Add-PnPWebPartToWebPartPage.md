@@ -10,22 +10,13 @@ Adds a webpart to a web part page in a specified zone
 
 ## SYNTAX 
 
-### XML
+### 
 ```powershell
-Add-PnPWebPartToWebPartPage -Xml <String>
-                            -ServerRelativePageUrl <String>
-                            -ZoneId <String>
-                            -ZoneIndex <Int>
-                            [-Web <WebPipeBind>]
-                            [-Connection <SPOnlineConnection>]
-```
-
-### FILE
-```powershell
-Add-PnPWebPartToWebPartPage -Path <String>
-                            -ServerRelativePageUrl <String>
-                            -ZoneId <String>
-                            -ZoneIndex <Int>
+Add-PnPWebPartToWebPartPage [-ServerRelativePageUrl <String>]
+                            [-Xml <String>]
+                            [-Path <String>]
+                            [-ZoneId <String>]
+                            [-ZoneIndex <Int>]
                             [-Web <WebPipeBind>]
                             [-Connection <SPOnlineConnection>]
 ```
@@ -49,87 +40,87 @@ This will add the webpart as defined by the XML in the $webpart variable to the 
 ## PARAMETERS
 
 ### -Path
-A path to a webpart file on a the file system.
+
 
 ```yaml
 Type: String
-Parameter Sets: FILE
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ServerRelativePageUrl
-Server Relative Url of the page to add the webpart to.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: PageUrl
+Parameter Sets: 
+Aliases: new String[1] { "PageUrl" }
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Xml
-A string containing the XML for the webpart.
+
 
 ```yaml
 Type: String
-Parameter Sets: XML
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ZoneId
-The Zone Id where the webpart must be placed
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ZoneIndex
-The Zone Index where the webpart must be placed
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

@@ -10,35 +10,36 @@ Returns a taxonomy item
 
 ## SYNTAX 
 
+### 
 ```powershell
-Get-PnPTaxonomyItem -TermPath <String>
+Get-PnPTaxonomyItem [-TermPath <String>]
                     [-Connection <SPOnlineConnection>]
 ```
 
 ## PARAMETERS
 
 ### -TermPath
-The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: Term
+Parameter Sets: 
+Aliases: new String[1] { "Term" }
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

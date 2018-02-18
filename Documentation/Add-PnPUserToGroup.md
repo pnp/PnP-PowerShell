@@ -10,18 +10,11 @@ Adds a user to a group
 
 ## SYNTAX 
 
-### Internal
+### 
 ```powershell
-Add-PnPUserToGroup -LoginName <String>
-                   -Identity <GroupPipeBind>
-                   [-Web <WebPipeBind>]
-                   [-Connection <SPOnlineConnection>]
-```
-
-### External
-```powershell
-Add-PnPUserToGroup -Identity <GroupPipeBind>
-                   -EmailAddress <String>
+Add-PnPUserToGroup [-LoginName <String>]
+                   [-Identity <GroupPipeBind>]
+                   [-EmailAddress <String>]
                    [-SendEmail [<SwitchParameter>]]
                    [-EmailBody <String>]
                    [-Web <WebPipeBind>]
@@ -47,14 +40,14 @@ Add the specified user to the group with Id 5
 ## PARAMETERS
 
 ### -EmailAddress
-The email address of the user
+
 
 ```yaml
 Type: String
-Parameter Sets: External
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -63,34 +56,34 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: External
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The group id, group name or group object to add the user to.
+
 
 ```yaml
 Type: GroupPipeBind
-Parameter Sets: Internal
+Parameter Sets: 
 
-Required: True
-Position: Named
-Accept pipeline input: True
+Required: False
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -LoginName
-The login name of the user
+
 
 ```yaml
 Type: String
-Parameter Sets: Internal
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -99,34 +92,34 @@ Accept pipeline input: False
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: External
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

@@ -10,18 +10,14 @@ Retrieves or searches provisioning templates from the PnP Template Gallery
 
 ## SYNTAX 
 
-### Identity
+### 
 ```powershell
 Get-PnPProvisioningTemplateFromGallery [-Identity <Guid>]
-                                       [-Path <String>]
-                                       [-Force [<SwitchParameter>]]
-```
-
-### Search
-```powershell
-Get-PnPProvisioningTemplateFromGallery [-Search <String>]
+                                       [-Search <String>]
                                        [-TargetPlatform <TargetPlatform>]
                                        [-TargetScope <TargetScope>]
+                                       [-Path <String>]
+                                       [-Force [<SwitchParameter>]]
 ```
 
 ## EXAMPLES
@@ -69,10 +65,10 @@ Retrieves a template with the specified ID and saves the template to the specifi
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Identity
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -81,10 +77,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: Guid
-Parameter Sets: Identity
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -93,10 +89,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: Identity
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -105,10 +101,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: Search
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -117,10 +113,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: TargetPlatform
-Parameter Sets: Search
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -129,10 +125,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: TargetScope
-Parameter Sets: Search
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

@@ -10,8 +10,9 @@ Loads a PnP file from the file systems
 
 ## SYNTAX 
 
+### 
 ```powershell
-Load-PnPProvisioningTemplate -Path <String>
+Load-PnPProvisioningTemplate [-Path <String>]
                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
 ```
 
@@ -34,26 +35,26 @@ Loads a PnP file from the file systems using some custom template provider exten
 ## PARAMETERS
 
 ### -Path
-Filename to read from, optionally including full path.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
 Accept pipeline input: False
 ```
 
 ### -TemplateProviderExtensions
-Allows you to specify ITemplateProviderExtension to execute while loading the template.
+
 
 ```yaml
 Type: ITemplateProviderExtension[]
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

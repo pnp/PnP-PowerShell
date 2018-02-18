@@ -10,9 +10,10 @@ Declares a list item as a record
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPListItemAsRecord -Identity <ListItemPipeBind>
-                        -List <ListPipeBind>
+Set-PnPListItemAsRecord [-List <ListPipeBind>]
+                        [-Identity <ListItemPipeBind>]
                         [-DeclarationDate <DateTime>]
                         [-Web <WebPipeBind>]
                         [-Connection <SPOnlineConnection>]
@@ -37,62 +38,62 @@ Declares the document in the documents library with id as a record
 ## PARAMETERS
 
 ### -DeclarationDate
-The declaration date
+
 
 ```yaml
 Type: DateTime
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The ID of the listitem, or actual ListItem object
+
 
 ```yaml
 Type: ListItemPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
-Accept pipeline input: True
+Required: False
+Position: 0
+Accept pipeline input: False
 ```
 
 ### -List
-The ID, Title or Url of the list.
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

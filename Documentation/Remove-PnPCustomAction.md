@@ -10,10 +10,11 @@ Removes a custom action
 
 ## SYNTAX 
 
+### 
 ```powershell
-Remove-PnPCustomAction [-Scope <CustomActionScope>]
+Remove-PnPCustomAction [-Identity <UserCustomActionPipeBind>]
+                       [-Scope <CustomActionScope>]
                        [-Force [<SwitchParameter>]]
-                       [-Identity <UserCustomActionPipeBind>]
                        [-Web <WebPipeBind>]
                        [-Connection <SPOnlineConnection>]
 ```
@@ -51,62 +52,62 @@ Removes all custom actions that are ScriptLinks
 ## PARAMETERS
 
 ### -Force
-Use the -Force flag to bypass the confirmation question
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Identity
-The id or name of the CustomAction that needs to be removed or a CustomAction instance itself
+
 
 ```yaml
 Type: UserCustomActionPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Scope
-Define if the CustomAction is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection.
+
 
 ```yaml
 Type: CustomActionScope
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

@@ -10,9 +10,10 @@ Returns a previously not loaded property of a ClientObject
 
 ## SYNTAX 
 
+### 
 ```powershell
-Get-PnPProperty -ClientObject <ClientObject>
-                -Property <String[]>
+Get-PnPProperty [-ClientObject <ClientObject>]
+                [-Property <String[]>]
                 [-Connection <SPOnlineConnection>]
 ```
 
@@ -43,38 +44,38 @@ Will load the views object of the specified list object and return its value to 
 ## PARAMETERS
 
 ### -ClientObject
-Specifies the object where the properties of should be retrieved
+
 
 ```yaml
 Type: ClientObject
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
 Accept pipeline input: False
 ```
 
 ### -Property
-The properties to load. If one property is specified its value will be returned to the output.
+
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: 1
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

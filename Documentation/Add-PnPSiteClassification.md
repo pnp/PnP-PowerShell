@@ -10,8 +10,9 @@ Adds one ore more site classification values to the list of possible values. Req
 
 ## SYNTAX 
 
+### 
 ```powershell
-Add-PnPSiteClassification -Classifications <List`1>
+Add-PnPSiteClassification [-Classifications <List`1>]
 ```
 
 ## EXAMPLES
@@ -39,10 +40,10 @@ Adds the "Top Secret" and the "For Your Eyes Only" classification to the already
 
 ```yaml
 Type: List`1
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 

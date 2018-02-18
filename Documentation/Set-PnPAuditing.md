@@ -10,9 +10,11 @@ Set Auditing setting for a site
 
 ## SYNTAX 
 
-### Specific flags
+### 
 ```powershell
-Set-PnPAuditing [-RetentionTime <Int>]
+Set-PnPAuditing [-EnableAll [<SwitchParameter>]]
+                [-DisableAll [<SwitchParameter>]]
+                [-RetentionTime <Int>]
                 [-TrimAuditLog [<SwitchParameter>]]
                 [-EditItems [<SwitchParameter>]]
                 [-CheckOutCheckInItems [<SwitchParameter>]]
@@ -21,20 +23,6 @@ Set-PnPAuditing [-RetentionTime <Int>]
                 [-EditContentTypesColumns [<SwitchParameter>]]
                 [-SearchContent [<SwitchParameter>]]
                 [-EditUsersPermissions [<SwitchParameter>]]
-                [-Connection <SPOnlineConnection>]
-```
-
-### Enable all
-```powershell
-Set-PnPAuditing -EnableAll [<SwitchParameter>]
-                [-RetentionTime <Int>]
-                [-TrimAuditLog [<SwitchParameter>]]
-                [-Connection <SPOnlineConnection>]
-```
-
-### Disable All
-```powershell
-Set-PnPAuditing -DisableAll [<SwitchParameter>]
                 [-Connection <SPOnlineConnection>]
 ```
 
@@ -83,146 +71,146 @@ Do auditing for:
 ## PARAMETERS
 
 ### -CheckOutCheckInItems
-Audit checking out or checking in items
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -DeleteRestoreItems
-Audit deleting or restoring items
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -DisableAll
-Disable all audit flags
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Disable All
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -EditContentTypesColumns
-Audit editing content types and columns
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -EditItems
-Audit editing items
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -EditUsersPermissions
-Audit editing users and permissions
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -EnableAll
-Enable all audit flags
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Enable all
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -MoveCopyItems
-Audit moving or copying items to another location in the site.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -RetentionTime
-Set the retention time
+
 
 ```yaml
 Type: Int
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -SearchContent
-Audit searching site content
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TrimAuditLog
-Trim the audit log
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Specific flags
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

@@ -12,7 +12,7 @@ Returns one or all views from a list
 
 ### 
 ```powershell
-Get-PnPView -List <ListPipeBind>
+Get-PnPView [-List <ListPipeBind>]
             [-Identity <ViewPipeBind>]
             [-Web <WebPipeBind>]
             [-Includes <String[]>]
@@ -45,14 +45,14 @@ Returns the view with the specified ID from the specified list
 ## PARAMETERS
 
 ### -Identity
-The ID or name of the view
+
 
 ```yaml
 Type: ViewPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -69,38 +69,38 @@ Accept pipeline input: False
 ```
 
 ### -List
-The ID or Url of the list.
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Web
-The web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

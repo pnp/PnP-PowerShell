@@ -10,6 +10,7 @@ Get the Auditing setting of a site
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPAuditing [-Connection <SPOnlineConnection>]
 ```
@@ -26,14 +27,14 @@ Gets the auditing settings of the current site
 ## PARAMETERS
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

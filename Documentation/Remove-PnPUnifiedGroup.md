@@ -10,8 +10,9 @@ Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups
 
 ## SYNTAX 
 
+### 
 ```powershell
-Remove-PnPUnifiedGroup -Identity <UnifiedGroupPipeBind>
+Remove-PnPUnifiedGroup [-Identity <UnifiedGroupPipeBind>]
 ```
 
 ## EXAMPLES
@@ -33,14 +34,14 @@ Removes the provided Office 365 Groups
 ## PARAMETERS
 
 ### -Identity
-The Identity of the Office 365 Group.
+
 
 ```yaml
 Type: UnifiedGroupPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 

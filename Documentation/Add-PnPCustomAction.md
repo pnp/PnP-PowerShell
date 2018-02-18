@@ -10,27 +10,13 @@ Adds a custom action
 
 ## SYNTAX 
 
-### Client Side Component Id
+### 
 ```powershell
-Add-PnPCustomAction -Name <String>
-                    -Title <String>
-                    -Location <String>
-                    -ClientSideComponentId <GuidPipeBind>
-                    [-RegistrationId <String>]
-                    [-RegistrationType <UserCustomActionRegistrationType>]
-                    [-Scope <CustomActionScope>]
-                    [-ClientSideComponentProperties <String>]
-                    [-Web <WebPipeBind>]
-                    [-Connection <SPOnlineConnection>]
-```
-
-### Default
-```powershell
-Add-PnPCustomAction -Name <String>
-                    -Title <String>
-                    -Description <String>
-                    -Group <String>
-                    -Location <String>
+Add-PnPCustomAction [-Name <String>]
+                    [-Title <String>]
+                    [-Description <String>]
+                    [-Group <String>]
+                    [-Location <String>]
                     [-Sequence <Int>]
                     [-Url <String>]
                     [-ImageUrl <String>]
@@ -39,6 +25,8 @@ Add-PnPCustomAction -Name <String>
                     [-Rights <PermissionKind[]>]
                     [-RegistrationType <UserCustomActionRegistrationType>]
                     [-Scope <CustomActionScope>]
+                    [-ClientSideComponentId <GuidPipeBind>]
+                    [-ClientSideComponentProperties <String>]
                     [-Web <WebPipeBind>]
                     [-Connection <SPOnlineConnection>]
 ```
@@ -60,206 +48,206 @@ Adds a new custom action to the custom list template, and sets the Title, Name a
 ## PARAMETERS
 
 ### -ClientSideComponentId
-The Client Side Component Id of the custom action
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: Client Side Component Id
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ClientSideComponentProperties
-The Client Side Component Properties of the custom action. Specify values as a json string : "{Property1 : 'Value1', Property2: 'Value2'}"
+
 
 ```yaml
 Type: String
-Parameter Sets: Client Side Component Id
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -CommandUIExtension
-XML fragment that determines user interface properties of the custom action
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Description
-The description of the custom action
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Group
-The group where this custom action needs to be added like 'SiteActions'
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ImageUrl
-The URL of the image associated with the custom action
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Location
-The actual location where this custom action need to be added like 'CommandUI.Ribbon'
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Name
-The name of the custom action
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -RegistrationId
-The identifier of the object associated with the custom action.
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -RegistrationType
-Specifies the type of object associated with the custom action
+
 
 ```yaml
 Type: UserCustomActionRegistrationType
-Parameter Sets: Default
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Rights
-A string array that contain the permissions needed for the custom action
+
 
 ```yaml
 Type: PermissionKind[]
-Parameter Sets: Default
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Scope
-The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.
+
 
 ```yaml
 Type: CustomActionScope
-Parameter Sets: Default
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Sequence
-Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.
+
 
 ```yaml
 Type: Int
-Parameter Sets: Default
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Title
-The title of the custom action
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Url
-The URL, URI or ECMAScript (JScript, JavaScript) function associated with the action
+
 
 ```yaml
 Type: String
-Parameter Sets: Default
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

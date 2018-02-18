@@ -10,12 +10,12 @@ Exports a taxonomy to either the output or to a file.
 
 ## SYNTAX 
 
-### TermSet
+### 
 ```powershell
 Export-PnPTaxonomy [-TermSetId <GuidPipeBind>]
-                   [-TermStoreName <String>]
                    [-IncludeID [<SwitchParameter>]]
                    [-Path <String>]
+                   [-TermStoreName <String>]
                    [-Force [<SwitchParameter>]]
                    [-Delimiter <String>]
                    [-Encoding <Encoding>]
@@ -48,98 +48,98 @@ Exports the term set with the specified id
 ## PARAMETERS
 
 ### -Delimiter
-The path delimiter to be used, by default this is '|'
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Encoding
-Defaults to Unicode
+
 
 ```yaml
 Type: Encoding
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Force
-Overwrites the output file if it exists.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -IncludeID
-If specified will include the ids of the taxonomy items in the output. Format: <label>;#<guid>
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Path
-File to export the data to.
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TermSetId
-If specified, will export the specified termset only
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: TermSet
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -TermStoreName
-Term store to export; if not specified the default term store is used.
+
 
 ```yaml
 Type: String
-Parameter Sets: TermSet
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

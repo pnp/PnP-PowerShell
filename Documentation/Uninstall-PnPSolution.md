@@ -10,9 +10,10 @@ Uninstalls a sandboxed solution from a site collection
 
 ## SYNTAX 
 
+### 
 ```powershell
-Uninstall-PnPSolution -PackageId <GuidPipeBind>
-                      -PackageName <String>
+Uninstall-PnPSolution [-PackageId <GuidPipeBind>]
+                      [-PackageName <String>]
                       [-MajorVersion <Int>]
                       [-MinorVersion <Int>]
                       [-Connection <SPOnlineConnection>]
@@ -30,62 +31,62 @@ Removes the package to the current site
 ## PARAMETERS
 
 ### -MajorVersion
-Optional major version of the solution, defaults to 1
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -MinorVersion
-Optional minor version of the solution, defaults to 0
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PackageId
-ID of the solution, from the solution manifest
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -PackageName
-Filename of the WSP file to uninstall
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

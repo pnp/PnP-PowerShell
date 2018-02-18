@@ -12,8 +12,8 @@ Returns a taxonomy term set
 
 ### 
 ```powershell
-Get-PnPTermSet -TermGroup <Id, Title or TermGroup>
-               [-Identity <Id, Name or Object>]
+Get-PnPTermSet [-Identity <Id, Name or Object>]
+               [-TermGroup <Id, Title or TermGroup>]
                [-TermStore <Id, Name or Object>]
                [-Includes <String[]>]
                [-Connection <SPOnlineConnection>]
@@ -45,14 +45,14 @@ Returns the termset with the given id from the termgroup called "Corporate" from
 ## PARAMETERS
 
 ### -Identity
-The Id or Name of a termset
+
 
 ```yaml
 Type: Id, Name or Object
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -69,38 +69,38 @@ Accept pipeline input: False
 ```
 
 ### -TermGroup
-Name of the term group to check.
+
 
 ```yaml
 Type: Id, Title or TermGroup
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -TermStore
-Term store to check; if not specified the default term store is used.
+
 
 ```yaml
 Type: Id, Name or Object
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

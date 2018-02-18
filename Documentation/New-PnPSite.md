@@ -10,41 +10,41 @@ BETA: This cmdlet is using early release APIs. Notice that functionality and par
 
 ## SYNTAX 
 
+### 
+```powershell
+New-PnPSite [-Type <SiteType>]
+            [-Connection <SPOnlineConnection>]
+```
+
 ### Communication Site with Built-In Site Design
 ```powershell
-New-PnPSite -Type <SiteType>
-            -Title <String>
+New-PnPSite -Title <String>
             -Url <String>
             [-Description <String>]
             [-Classification <String>]
             [-AllowFileSharingForGuestUsers [<SwitchParameter>]]
             [-SiteDesign <CommunicationSiteDesign>]
             [-Lcid <UInt32>]
-            [-Connection <SPOnlineConnection>]
 ```
 
 ### Team Site
 ```powershell
-New-PnPSite -Type <SiteType>
-            -Title <String>
+New-PnPSite -Title <String>
             -Alias <String>
             [-Description <String>]
             [-Classification <String>]
             [-IsPublic <String>]
-            [-Connection <SPOnlineConnection>]
 ```
 
 ### Communication Site with Custom Design
 ```powershell
-New-PnPSite -Type <SiteType>
-            -Title <String>
+New-PnPSite -Title <String>
             -Url <String>
             -SiteDesignId <GuidPipeBind>
             [-Description <String>]
             [-Classification <String>]
             [-AllowFileSharingForGuestUsers [<SwitchParameter>]]
             [-Lcid <UInt32>]
-            [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -212,14 +212,14 @@ Accept pipeline input: False
 ```
 
 ### -Type
-@Specifies with type of site to create.
+
 
 ```yaml
 Type: SiteType
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -236,14 +236,14 @@ Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

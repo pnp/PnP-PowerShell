@@ -10,37 +10,12 @@ Retrieves list items
 
 ## SYNTAX 
 
-### By Id
+### 
 ```powershell
-Get-PnPListItem -List <ListPipeBind>
+Get-PnPListItem [-List <ListPipeBind>]
                 [-Id <Int>]
-                [-Fields <String[]>]
-                [-Web <WebPipeBind>]
-                [-Connection <SPOnlineConnection>]
-```
-
-### By Unique Id
-```powershell
-Get-PnPListItem -List <ListPipeBind>
                 [-UniqueId <GuidPipeBind>]
-                [-Fields <String[]>]
-                [-Web <WebPipeBind>]
-                [-Connection <SPOnlineConnection>]
-```
-
-### By Query
-```powershell
-Get-PnPListItem -List <ListPipeBind>
                 [-Query <String>]
-                [-PageSize <Int>]
-                [-ScriptBlock <ScriptBlock>]
-                [-Web <WebPipeBind>]
-                [-Connection <SPOnlineConnection>]
-```
-
-### All Items
-```powershell
-Get-PnPListItem -List <ListPipeBind>
                 [-Fields <String[]>]
                 [-PageSize <Int>]
                 [-ScriptBlock <ScriptBlock>]
@@ -102,110 +77,110 @@ Retrieves all list items from the Tasks list in pages of 1000 items and breaks p
 ## PARAMETERS
 
 ### -Fields
-The fields to retrieve. If not specified all fields will be loaded in the returned list object.
+
 
 ```yaml
 Type: String[]
-Parameter Sets: All Items
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Id
-The ID of the item to retrieve
+
 
 ```yaml
 Type: Int
-Parameter Sets: By Id
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -List
-The list to query
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
 Accept pipeline input: False
 ```
 
 ### -PageSize
-The number of items to retrieve per page request.
+
 
 ```yaml
 Type: Int
-Parameter Sets: All Items
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Query
-The CAML query to execute against the list
+
 
 ```yaml
 Type: String
-Parameter Sets: By Query
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -ScriptBlock
-The script block to run after every page request.
+
 
 ```yaml
 Type: ScriptBlock
-Parameter Sets: All Items
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -UniqueId
-The unique id (GUID) of the item to retrieve
+
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: By Unique Id
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

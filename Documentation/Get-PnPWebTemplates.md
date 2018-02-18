@@ -10,6 +10,7 @@ Returns the available web templates.
 
 ## SYNTAX 
 
+### 
 ```powershell
 Get-PnPWebTemplates [-Lcid <UInt32>]
                     [-CompatibilityLevel <Int>]
@@ -45,38 +46,38 @@ Returns all webtemplates for the compatibility level 15
 ## PARAMETERS
 
 ### -CompatibilityLevel
-The version of SharePoint
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Lcid
-The language ID. For instance: 1033 for English
+
 
 ```yaml
 Type: UInt32
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

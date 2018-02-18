@@ -10,20 +10,12 @@ Sets a property bag value
 
 ## SYNTAX 
 
-### Folder
+### 
 ```powershell
-Set-PnPPropertyBagValue -Key <String>
-                        -Value <String>
+Set-PnPPropertyBagValue [-Key <String>]
+                        [-Value <String>]
+                        [-Indexed [<SwitchParameter>]]
                         [-Folder <String>]
-                        [-Web <WebPipeBind>]
-                        [-Connection <SPOnlineConnection>]
-```
-
-### Web
-```powershell
-Set-PnPPropertyBagValue -Key <String>
-                        -Value <String>
-                        -Indexed [<SwitchParameter>]
                         [-Web <WebPipeBind>]
                         [-Connection <SPOnlineConnection>]
 ```
@@ -54,14 +46,14 @@ This sets or adds a value to the folder MyFolder which is located in the root fo
 ## PARAMETERS
 
 ### -Folder
-Site relative url of the folder. See examples for use.
+
 
 ```yaml
 Type: String
-Parameter Sets: Folder
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -70,10 +62,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Web
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -82,10 +74,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: Web
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
@@ -94,34 +86,34 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: Web
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

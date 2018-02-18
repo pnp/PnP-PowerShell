@@ -10,8 +10,9 @@ Updates a Webhook subscription
 
 ## SYNTAX 
 
+### 
 ```powershell
-Set-PnPWebhookSubscription -Subscription <WebhookSubscriptionPipeBind>
+Set-PnPWebhookSubscription [-Subscription <WebhookSubscriptionPipeBind>]
                            [-List <ListPipeBind>]
                            [-NotificationUrl <String>]
                            [-ExpirationDate <DateTime>]
@@ -49,74 +50,74 @@ Note: The date will be converted to Universal Time
 ## PARAMETERS
 
 ### -ExpirationDate
-The date at which the Webhook subscription will expire. (Default: 6 months from today)
+
 
 ```yaml
 Type: DateTime
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -List
-The list object or name from which the Webhook subscription will be modified
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -NotificationUrl
-The URL of the Webhook endpoint that will be notified of the change
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Subscription
-The identity of the Webhook subscription to update
+
 
 ```yaml
 Type: WebhookSubscriptionPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
+Required: False
 Position: 0
-Accept pipeline input: True
+Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 

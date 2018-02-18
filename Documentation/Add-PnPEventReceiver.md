@@ -10,12 +10,13 @@ Adds a new remote event receiver
 
 ## SYNTAX 
 
+### 
 ```powershell
-Add-PnPEventReceiver -Name <String>
-                     -Url <String>
-                     -EventReceiverType <EventReceiverType>
-                     -Synchronization <EventReceiverSynchronization>
-                     [-List <ListPipeBind>]
+Add-PnPEventReceiver [-List <ListPipeBind>]
+                     [-Name <String>]
+                     [-Url <String>]
+                     [-EventReceiverType <EventReceiverType>]
+                     [-Synchronization <EventReceiverSynchronization>]
                      [-SequenceNumber <Int>]
                      [-Force [<SwitchParameter>]]
                      [-Web <WebPipeBind>]
@@ -41,112 +42,112 @@ This will add a new remote event receiver that is executed while a new subsite i
 ## PARAMETERS
 
 ### -EventReceiverType
-The type of the event receiver like ItemAdded, ItemAdding. See https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.eventreceivertype.aspx for the full list of available types.
+
 
 ```yaml
 Type: EventReceiverType
-Parameter Sets: (All)
-Aliases: Type
+Parameter Sets: 
+Aliases: new String[1] { "Type" }
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Force
-Overwrites the output file if it exists.
+
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -List
-The list object or name where the remote event receiver needs to be added. If omitted, the remote event receiver will be added to the web.
+
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Name
-The name of the remote event receiver
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -SequenceNumber
-The sequence number where this remote event receiver should be placed
+
 
 ```yaml
 Type: Int
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Synchronization
-The synchronization type: Asynchronous or Synchronous
+
 
 ```yaml
 Type: EventReceiverSynchronization
-Parameter Sets: (All)
-Aliases: Sync
+Parameter Sets: 
+Aliases: new String[1] { "Sync" }
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Url
-The URL of the remote event receiver web service
+
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: 
 
-Required: True
-Position: Named
+Required: False
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
+
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: (All)
+Parameter Sets: 
 
 Required: False
-Position: Named
+Position: 0
 Accept pipeline input: False
 ```
 
