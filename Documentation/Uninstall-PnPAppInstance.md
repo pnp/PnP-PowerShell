@@ -10,9 +10,8 @@ Removes an app from a site
 
 ## SYNTAX 
 
-### 
 ```powershell
-Uninstall-PnPAppInstance [-Identity <AppPipeBind>]
+Uninstall-PnPAppInstance -Identity <AppPipeBind>
                          [-Force [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
@@ -47,50 +46,50 @@ Uninstalls the app instance with the ID '99a00f6e-fb81-4dc7-8eac-e09c6f9132fe' a
 ## PARAMETERS
 
 ### -Force
-
+Do not ask for confirmation.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+Appinstance or Id of the addin to remove.
 
 ```yaml
 Type: AppPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

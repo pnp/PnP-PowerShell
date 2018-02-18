@@ -49,14 +49,14 @@ Returns all custom actions for the current web object.
 ## PARAMETERS
 
 ### -Identity
-
+Identity of the CustomAction to return. Omit to return all CustomActions.
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -73,50 +73,50 @@ Accept pipeline input: False
 ```
 
 ### -Scope
-
+Scope of the CustomAction, either Web, Site or All to return both
 
 ```yaml
 Type: CustomActionScope
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ThrowExceptionIfCustomActionNotFound
-
+Switch parameter if an exception should be thrown if the requested CustomAction does not exist (true) or if omitted, nothing will be returned in case the CustomAction does not exist
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,11 +10,17 @@ Permanently deletes all or a specific recycle bin item
 
 ## SYNTAX 
 
-### 
+### All
 ```powershell
-Clear-PnPRecycleBinItem [-Identity <RecycleBinItemPipeBind>]
-                        [-All [<SwitchParameter>]]
+Clear-PnPRecycleBinItem [-All [<SwitchParameter>]]
                         [-SecondStageOnly [<SwitchParameter>]]
+                        [-Force [<SwitchParameter>]]
+                        [-Connection <SPOnlineConnection>]
+```
+
+### Identity
+```powershell
+Clear-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind>
                         [-Force [<SwitchParameter>]]
                         [-Connection <SPOnlineConnection>]
 ```
@@ -45,62 +51,62 @@ Permanently deletes the recycle bin item stored under variable $item from the re
 ## PARAMETERS
 
 ### -All
-
+Clears all items
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: All
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Force
-
+If provided, no confirmation will be asked to permanently delete the recycle bin item
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+Id of the recycle bin item or the recycle bin item itself to permanently delete
 
 ```yaml
 Type: RecycleBinItemPipeBind
-Parameter Sets: 
+Parameter Sets: Identity
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -SecondStageOnly
-
+If provided, only all the items in the second stage recycle bin will be cleared
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: All
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

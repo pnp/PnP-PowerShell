@@ -10,11 +10,23 @@ Sets the available page layouts for the current site
 
 ## SYNTAX 
 
-### 
+### SPECIFIC
 ```powershell
-Set-PnPAvailablePageLayouts [-PageLayouts <String[]>]
-                            [-AllowAllPageLayouts [<SwitchParameter>]]
-                            [-InheritPageLayouts [<SwitchParameter>]]
+Set-PnPAvailablePageLayouts -PageLayouts <String[]>
+                            [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
+```
+
+### ALL
+```powershell
+Set-PnPAvailablePageLayouts -AllowAllPageLayouts [<SwitchParameter>]
+                            [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
+```
+
+### INHERIT
+```powershell
+Set-PnPAvailablePageLayouts -InheritPageLayouts [<SwitchParameter>]
                             [-Web <WebPipeBind>]
                             [-Connection <SPOnlineConnection>]
 ```
@@ -22,62 +34,62 @@ Set-PnPAvailablePageLayouts [-PageLayouts <String[]>]
 ## PARAMETERS
 
 ### -AllowAllPageLayouts
-
+An array of page layout files to set as available page layouts for the site.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: ALL
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -InheritPageLayouts
-
+Set the available page layouts to inherit from the parent site.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: INHERIT
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -PageLayouts
-
+An array of page layout files to set as available page layouts for the site.
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: SPECIFIC
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

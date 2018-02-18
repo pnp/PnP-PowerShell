@@ -10,11 +10,20 @@ Moves a file to a different location
 
 ## SYNTAX 
 
-### 
+### Server Relative
 ```powershell
-Move-PnPFile [-ServerRelativeUrl <String>]
-             [-SiteRelativeUrl <String>]
-             [-TargetUrl <String>]
+Move-PnPFile -ServerRelativeUrl <String>
+             -TargetUrl <String>
+             [-OverwriteIfAlreadyExists [<SwitchParameter>]]
+             [-Force [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
+```
+
+### Site Relative
+```powershell
+Move-PnPFile -SiteRelativeUrl <String>
+             -TargetUrl <String>
              [-OverwriteIfAlreadyExists [<SwitchParameter>]]
              [-Force [<SwitchParameter>]]
              [-Web <WebPipeBind>]
@@ -47,86 +56,86 @@ Moves a file named company.docx located in the document library called Documents
 ## PARAMETERS
 
 ### -Force
-
+If provided, no confirmation will be requested and the action will be performed
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -OverwriteIfAlreadyExists
-
+If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ServerRelativeUrl
-
+Server relative Url specifying the file to move. Must include the file name.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Server Relative
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -SiteRelativeUrl
-
+Site relative Url specifying the file to move. Must include the file name.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Site Relative
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -TargetUrl
-
+Server relative Url where to move the file to. Must include the file name.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: 1
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

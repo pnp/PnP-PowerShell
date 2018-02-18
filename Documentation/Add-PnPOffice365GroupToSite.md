@@ -10,12 +10,11 @@ Groupifies a classic team site by creating an Office 365 group for it and connec
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPOffice365GroupToSite [-Url <String>]
-                            [-Alias <String>]
+Add-PnPOffice365GroupToSite -Url <String>
+                            -Alias <String>
+                            -DisplayName <String>
                             [-Description <String>]
-                            [-DisplayName <String>]
                             [-Classification <String>]
                             [-IsPublic [<SwitchParameter>]]
                             [-KeepOldHomePage [<SwitchParameter>]]
@@ -37,98 +36,98 @@ This will add a group called MyGroup to the current site collection
 ## PARAMETERS
 
 ### -Alias
-
+Specifies the alias of the group. Cannot contain spaces.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Classification
-
+Specifies the classification of the group.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Description
-
+The optional description of the group.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -DisplayName
-
+The display name of the group.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -IsPublic
-
+Specifies if the group is public. Defaults to false.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -KeepOldHomePage
-
+Specifies if the current site home page is kept. Defaults to false.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Url
-
+Url of the site to be connected to an Office 365 Group.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

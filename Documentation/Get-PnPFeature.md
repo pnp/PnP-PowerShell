@@ -12,10 +12,10 @@ Returns all activated or a specific activated feature
 
 ### 
 ```powershell
-Get-PnPFeature [-Identity <FeaturePipeBind>]
-               [-Scope <FeatureScope>]
+Get-PnPFeature [-Scope <FeatureScope>]
                [-Web <WebPipeBind>]
                [-Includes <String[]>]
+               [-Identity <FeaturePipeBind>]
                [-Connection <SPOnlineConnection>]
 ```
 
@@ -52,15 +52,15 @@ This will return a specific activated site scoped feature
 ## PARAMETERS
 
 ### -Identity
-
+The feature ID or name to query for, Querying by name is not supported in version 15 of the Client Side Object Model
 
 ```yaml
 Type: FeaturePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Includes
@@ -76,38 +76,38 @@ Accept pipeline input: False
 ```
 
 ### -Scope
-
+The scope of the feature. Defaults to Web.
 
 ```yaml
 Type: FeatureScope
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

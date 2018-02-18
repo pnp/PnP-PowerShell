@@ -136,6 +136,7 @@
 ### [Get-PnPView](Get-PnPView.md)
 ### [Remove-PnPView](Remove-PnPView.md)
 ## [Microsoft Graph](MicrosoftGraph-category.md)
+### [Connect-PnPMicrosoftGraph](Connect-PnPMicrosoftGraph.md)
 ### [Add-PnPSiteClassification](Add-PnPSiteClassification.md)
 ### [Disable-PnPSiteClassification](Disable-PnPSiteClassification.md)
 ### [Enable-PnPSiteClassification](Enable-PnPSiteClassification.md)

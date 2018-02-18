@@ -10,7 +10,6 @@ Returns all or a specific theme
 
 ## SYNTAX 
 
-### 
 ```powershell
 Get-PnPTenantTheme [-Name <String>]
                    [-Connection <SPOnlineConnection>]
@@ -38,26 +37,26 @@ Returns the specified theme
 ## PARAMETERS
 
 ### -Name
-
+The name of the theme to retrieve
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

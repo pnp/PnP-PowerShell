@@ -10,10 +10,9 @@ Removes a content type from a document set
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPContentTypeFromDocumentSet [-ContentType <ContentTypePipeBind>]
-                                     [-DocumentSet <DocumentSetPipeBind>]
+Remove-PnPContentTypeFromDocumentSet -ContentType <ContentTypePipeBind>
+                                     -DocumentSet <DocumentSetPipeBind>
                                      [-Web <WebPipeBind>]
                                      [-Connection <SPOnlineConnection>]
 ```
@@ -37,50 +36,50 @@ This will remove the content type with ID '0x0101001F1CEFF1D4126E4CAD10F00B6137E
 ## PARAMETERS
 
 ### -ContentType
-
+The content type to remove. Either specify name, an id, or a content type object.
 
 ```yaml
 Type: ContentTypePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -DocumentSet
-
+The document set to remove the content type from. Either specify a name, a document set template object, an id, or a content type object
 
 ```yaml
 Type: DocumentSetPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,10 +10,19 @@ Imports a taxonomy from either a string array or a file
 
 ## SYNTAX 
 
-### 
+### Direct
 ```powershell
 Import-PnPTaxonomy [-Terms <String[]>]
-                   [-Path <String>]
+                   [-Lcid <Int>]
+                   [-TermStoreName <String>]
+                   [-Delimiter <String>]
+                   [-SynchronizeDeletions [<SwitchParameter>]]
+                   [-Connection <SPOnlineConnection>]
+```
+
+### File
+```powershell
+Import-PnPTaxonomy -Path <String>
                    [-Lcid <Int>]
                    [-TermStoreName <String>]
                    [-Delimiter <String>]
@@ -40,14 +49,14 @@ Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm' an
 ## PARAMETERS
 
 ### -Delimiter
-
+The path delimiter to be used, by default this is '|'
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -56,70 +65,70 @@ Accept pipeline input: False
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Path
-
+Specifies a file containing terms per line, in the format as required by the Terms parameter.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: File
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SynchronizeDeletions
-
+If specified, terms that exist in the termset, but are not in the imported data, will be removed.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Terms
-
+An array of strings describing termgroup, termset, term, subterms using a default delimiter of '|'.
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: Direct
 
 Required: False
-Position: 0
-Accept pipeline input: False
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -TermStoreName
-
+Term store to import to; if not specified the default term store is used.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -13,12 +13,19 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
 
 ## SYNTAX 
 
-### 
+### Single
 ```powershell
-Set-PnPUserProfileProperty [-Account <String>]
-                           [-PropertyName <String>]
-                           [-Value <String>]
-                           [-Values <String[]>]
+Set-PnPUserProfileProperty -Value <String>
+                           -Account <String>
+                           -PropertyName <String>
+                           [-Connection <SPOnlineConnection>]
+```
+
+### Multi
+```powershell
+Set-PnPUserProfileProperty -Values <String[]>
+                           -Account <String>
+                           -PropertyName <String>
                            [-Connection <SPOnlineConnection>]
 ```
 
@@ -44,62 +51,62 @@ Sets the MyProperty multi value property for the user as specified by the Accoun
 ## PARAMETERS
 
 ### -Account
-
+The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -PropertyName
-
+The property to set, for instance SPS-Skills or SPS-Location
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Value
-
+The value to set in the case of a single value property
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Single
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Values
-
+The values set in the case of a multi value property, e.g. "Value 1","Value 2"
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: Multi
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

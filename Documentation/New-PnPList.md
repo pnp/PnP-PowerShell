@@ -10,10 +10,9 @@ Creates a new list
 
 ## SYNTAX 
 
-### 
 ```powershell
-New-PnPList [-Title <String>]
-            [-Template <ListTemplateType>]
+New-PnPList -Title <String>
+            -Template <ListTemplateType>
             [-Url <String>]
             [-Hidden [<SwitchParameter>]]
             [-EnableVersioning [<SwitchParameter>]]
@@ -49,110 +48,110 @@ Create a new custom list and hides it from the SharePoint UI.
 ## PARAMETERS
 
 ### -EnableContentTypes
-
+Switch parameter if content types should be enabled on this list
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -EnableVersioning
-
+Switch parameter if versioning should be enabled
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Hidden
-
+Switch parameter if list should be hidden from the SharePoint UI
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -OnQuickLaunch
-
+Switch parameter if this list should be visible on the QuickLaunch
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Template
-
+The type of list to create.
 
 ```yaml
 Type: ListTemplateType
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Title
-
+The Title of the list
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Url
-
+If set, will override the url of the list.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

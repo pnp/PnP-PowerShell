@@ -10,9 +10,8 @@ Uninstalls an available add-in from the site
 
 ## SYNTAX 
 
-### 
 ```powershell
-Uninstall-PnPApp [-Identity <AppMetadataPipeBind>]
+Uninstall-PnPApp -Identity <AppMetadataPipeBind>
                  [-Connection <SPOnlineConnection>]
 ```
 
@@ -28,26 +27,26 @@ This will uninstall the specified app from the current site.
 ## PARAMETERS
 
 ### -Identity
-
+Specifies the Id of the Addin Instance
 
 ```yaml
 Type: AppMetadataPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,11 +10,20 @@ Sets list permissions
 
 ## SYNTAX 
 
-### 
+### Group
 ```powershell
-Set-PnPListPermission [-Identity <ListPipeBind>]
-                      [-Group <GroupPipeBind>]
-                      [-User <String>]
+Set-PnPListPermission -Group <GroupPipeBind>
+                      -Identity <ListPipeBind>
+                      [-AddRole <String>]
+                      [-RemoveRole <String>]
+                      [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
+```
+
+### User
+```powershell
+Set-PnPListPermission -User <String>
+                      -Identity <ListPipeBind>
                       [-AddRole <String>]
                       [-RemoveRole <String>]
                       [-Web <WebPipeBind>]
@@ -40,14 +49,14 @@ Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 
 ## PARAMETERS
 
 ### -AddRole
-
+The role that must be assigned to the group or user
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -56,34 +65,34 @@ Accept pipeline input: False
 
 ```yaml
 Type: GroupPipeBind
-Parameter Sets: 
+Parameter Sets: Group
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+The ID or Title of the list.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -RemoveRole
-
+The role that must be removed from the group or user
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -92,34 +101,34 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: User
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

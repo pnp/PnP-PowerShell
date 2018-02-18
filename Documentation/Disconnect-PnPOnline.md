@@ -10,7 +10,6 @@ Disconnects the context
 
 ## SYNTAX 
 
-### 
 ```powershell
 Disconnect-PnPOnline [-Connection <SPOnlineConnection>]
 ```
@@ -30,14 +29,14 @@ This will disconnect you from the server.
 ## PARAMETERS
 
 ### -Connection
-
+Connection to be used by cmdlet
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

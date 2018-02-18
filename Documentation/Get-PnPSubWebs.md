@@ -12,10 +12,10 @@ Returns the subwebs of the current web
 
 ### 
 ```powershell
-Get-PnPSubWebs [-Identity <WebPipeBind>]
-               [-Recurse [<SwitchParameter>]]
+Get-PnPSubWebs [-Recurse [<SwitchParameter>]]
                [-Web <WebPipeBind>]
                [-Includes <String[]>]
+               [-Identity <WebPipeBind>]
                [-Connection <SPOnlineConnection>]
 ```
 
@@ -52,15 +52,15 @@ Retrieves all subsites of the subsite Team1 and all of its nested child subsites
 ## PARAMETERS
 
 ### -Identity
-
+If provided, only the subsite with the provided Id, GUID or the Web instance will be returned
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Includes
@@ -76,38 +76,38 @@ Accept pipeline input: False
 ```
 
 ### -Recurse
-
+If provided, recursion through all subsites and their childs will take place to return them as well
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

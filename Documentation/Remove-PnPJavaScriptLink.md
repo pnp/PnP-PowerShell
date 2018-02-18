@@ -10,11 +10,10 @@ Removes a JavaScript link or block from a web or sitecollection
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPJavaScriptLink [-Identity <UserCustomActionPipeBind>]
-                         [-Force [<SwitchParameter>]]
+Remove-PnPJavaScriptLink [-Force [<SwitchParameter>]]
                          [-Scope <CustomActionScope>]
+                         [-Identity <UserCustomActionPipeBind>]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
 ```
@@ -66,63 +65,63 @@ Removes all the injected JavaScript files from both the Web and Site scope that 
 ## PARAMETERS
 
 ### -Force
-
+Use the -Force flag to bypass the confirmation question
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+Name or id of the JavaScriptLink to remove. Omit if you want to remove all JavaScript Links.
 
 ```yaml
 Type: UserCustomActionPipeBind
-Parameter Sets: 
-Aliases: new String[2] { "Key", "Name" }
+Parameter Sets: (All)
+Aliases: Key,Name
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Scope
-
+Define if the JavaScriptLink is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection.
 
 ```yaml
 Type: CustomActionScope
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

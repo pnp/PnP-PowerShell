@@ -10,9 +10,8 @@ Checks in a file
 
 ## SYNTAX 
 
-### 
 ```powershell
-Set-PnPFileCheckedIn [-Url <String>]
+Set-PnPFileCheckedIn -Url <String>
                      [-CheckinType <CheckinType>]
                      [-Comment <String>]
                      [-Approve [<SwitchParameter>]]
@@ -39,74 +38,74 @@ Checks in the file "Contract.docx" in the "Documents" library as a minor version
 ## PARAMETERS
 
 ### -Approve
-
+Approve file
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -CheckinType
-
+The check in type to use. Defaults to Major
 
 ```yaml
 Type: CheckinType
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Comment
-
+The check in comment
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Url
-
+The server relative url of the file to check in
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

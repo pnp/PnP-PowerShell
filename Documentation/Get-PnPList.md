@@ -12,10 +12,10 @@ Returns a List object
 
 ### 
 ```powershell
-Get-PnPList [-Identity <ListPipeBind>]
-            [-ThrowExceptionIfListNotFound [<SwitchParameter>]]
+Get-PnPList [-ThrowExceptionIfListNotFound [<SwitchParameter>]]
             [-Web <WebPipeBind>]
             [-Includes <String[]>]
+            [-Identity <ListPipeBind>]
             [-Connection <SPOnlineConnection>]
 ```
 
@@ -45,15 +45,15 @@ Returns a list with the given url.
 ## PARAMETERS
 
 ### -Identity
-
+The ID, name or Url (Lists/MyList) of the list.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Includes
@@ -69,38 +69,38 @@ Accept pipeline input: False
 ```
 
 ### -ThrowExceptionIfListNotFound
-
+Switch parameter if an exception should be thrown if the requested list does not exist (true) or if omitted, nothing will be returned in case the list does not exist
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

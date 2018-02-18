@@ -10,10 +10,9 @@ Connects a site to a hubsite.
 
 ## SYNTAX 
 
-### 
 ```powershell
-Connect-PnPHubSite [-Site <SitePipeBind>]
-                   [-HubSite <SitePipeBind>]
+Connect-PnPHubSite -Site <SitePipeBind>
+                   -HubSite <SitePipeBind>
                    [-Connection <SPOnlineConnection>]
 ```
 
@@ -32,38 +31,38 @@ This example adds the specified site to the hubsite.
 ## PARAMETERS
 
 ### -HubSite
-
+The hubsite to connect the site to
 
 ```yaml
 Type: SitePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Site
-
+The site to connect to the hubsite
 
 ```yaml
 Type: SitePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

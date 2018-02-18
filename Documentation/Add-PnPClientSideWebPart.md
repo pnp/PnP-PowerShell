@@ -10,15 +10,46 @@ Adds a Client-Side Web Part to a client-side page
 
 ## SYNTAX 
 
-### 
+### Default with built-in webpart
 ```powershell
-Add-PnPClientSideWebPart [-Page <ClientSidePagePipeBind>]
-                         [-DefaultWebPartType <DefaultClientSideWebParts>]
-                         [-Component <ClientSideComponentPipeBind>]
+Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
+                         -Page <ClientSidePagePipeBind>
                          [-WebPartProperties <PropertyBagPipeBind>]
                          [-Order <Int>]
-                         [-Section <Int>]
-                         [-Column <Int>]
+                         [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
+```
+
+### Default with 3rd party webpart
+```powershell
+Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
+                         -Page <ClientSidePagePipeBind>
+                         [-WebPartProperties <PropertyBagPipeBind>]
+                         [-Order <Int>]
+                         [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
+```
+
+### Positioned with built-in webpart
+```powershell
+Add-PnPClientSideWebPart -DefaultWebPartType <DefaultClientSideWebParts>
+                         -Section <Int>
+                         -Column <Int>
+                         -Page <ClientSidePagePipeBind>
+                         [-WebPartProperties <PropertyBagPipeBind>]
+                         [-Order <Int>]
+                         [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
+```
+
+### Positioned with 3rd party webpart
+```powershell
+Add-PnPClientSideWebPart -Component <ClientSideComponentPipeBind>
+                         -Section <Int>
+                         -Column <Int>
+                         -Page <ClientSidePagePipeBind>
+                         [-WebPartProperties <PropertyBagPipeBind>]
+                         [-Order <Int>]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
 ```
@@ -52,110 +83,110 @@ Adds a Client-Side component 'HelloWorld' to the page called 'MyPage' in section
 ## PARAMETERS
 
 ### -Column
-
+Sets the column where to insert the WebPart control.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Positioned with built-in webpart
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Component
-
+Specifies the component instance or Id to add.
 
 ```yaml
 Type: ClientSideComponentPipeBind
-Parameter Sets: 
+Parameter Sets: Default with 3rd party webpart
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -DefaultWebPartType
-
+Defines a default WebPart type to insert.
 
 ```yaml
 Type: DefaultClientSideWebParts
-Parameter Sets: 
+Parameter Sets: Default with built-in webpart
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Order
-
+Sets the order of the WebPart control. (Default = 1)
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Default with built-in webpart
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Page
-
+The name of the page.
 
 ```yaml
 Type: ClientSidePagePipeBind
-Parameter Sets: 
+Parameter Sets: Default with built-in webpart
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Section
-
+Sets the section where to insert the WebPart control.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Positioned with built-in webpart
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -WebPartProperties
-
+The properties of the WebPart
 
 ```yaml
 Type: PropertyBagPipeBind
-Parameter Sets: 
+Parameter Sets: Default with built-in webpart
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

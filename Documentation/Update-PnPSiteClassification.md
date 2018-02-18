@@ -10,12 +10,16 @@ Updates Site Classifications for the tenant. Requires a connection to the Micros
 
 ## SYNTAX 
 
-### 
+### Specific
 ```powershell
-Update-PnPSiteClassification [-Settings <SiteClassificationsSettings>]
-                             [-Classifications <List`1>]
+Update-PnPSiteClassification [-Classifications <List`1>]
                              [-DefaultClassification <String>]
                              [-UsageGuidelinesUrl <String>]
+```
+
+### Settings
+```powershell
+Update-PnPSiteClassification -Settings <SiteClassificationsSettings>
 ```
 
 ## EXAMPLES
@@ -47,50 +51,50 @@ sets the usage guideliness URL to the specified URL.
 ## PARAMETERS
 
 ### -Classifications
-
+A list of classifications, separated by commas. E.g. "HBI","LBI","Top Secret"
 
 ```yaml
 Type: List`1
-Parameter Sets: 
+Parameter Sets: Specific
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -DefaultClassification
-
+The default classification to be used. The value needs to be present in the list of possible classifications
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Specific
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Settings
-
+A settings object retrieved by Get-PnPSiteClassification
 
 ```yaml
 Type: SiteClassificationsSettings
-Parameter Sets: 
+Parameter Sets: Settings
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -UsageGuidelinesUrl
-
+The UsageGuidelinesUrl. Set to "" to clear.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Specific
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,10 +10,9 @@ Creates an ExtensibilityHandler Object, to be used by the Get-SPOProvisioningTem
 
 ## SYNTAX 
 
-### 
 ```powershell
-New-PnPExtensibilityHandlerObject [-Assembly <String>]
-                                  [-Type <String>]
+New-PnPExtensibilityHandlerObject -Type <String>
+                                  -Assembly <String>
                                   [-Configuration <String>]
                                   [-Disabled [<SwitchParameter>]]
 ```
@@ -32,50 +31,50 @@ This will create a new ExtensibilityHandler object that is run during extraction
 ## PARAMETERS
 
 ### -Assembly
-
+The full assembly name of the handler
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Configuration
-
+Any configuration data you want to send to the handler
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Disabled
-
+If set, the handler will be disabled
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Type
-
+The type of the handler
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 

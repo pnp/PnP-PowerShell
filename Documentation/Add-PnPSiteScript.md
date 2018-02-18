@@ -10,11 +10,10 @@ Creates a new Site Script on the current tenant.
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPSiteScript [-Title <String>]
+Add-PnPSiteScript -Title <String>
+                  -Content <String>
                   [-Description <String>]
-                  [-Content <String>]
                   [-Connection <SPOnlineConnection>]
 ```
 
@@ -30,50 +29,50 @@ Adds a new Site Script, where $script variable contains the script.
 ## PARAMETERS
 
 ### -Content
-
+A JSON string containing the site script
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Description
-
+The description of the site script
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Title
-
+The title of the site script
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

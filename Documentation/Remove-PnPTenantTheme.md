@@ -10,9 +10,8 @@ Removes a theme
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPTenantTheme [-Identity <ThemePipeBind>]
+Remove-PnPTenantTheme -Identity <ThemePipeBind>
                       [-Connection <SPOnlineConnection>]
 ```
 
@@ -31,27 +30,27 @@ Removes the specified theme.
 ## PARAMETERS
 
 ### -Identity
-
+The name of the theme to retrieve
 
 ```yaml
 Type: ThemePipeBind
-Parameter Sets: 
-Aliases: new String[1] { "Name" }
+Parameter Sets: (All)
+Aliases: Name
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

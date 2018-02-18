@@ -10,10 +10,9 @@ Adds a new section to a Client-Side page
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPClientSidePageSection [-Page <ClientSidePagePipeBind>]
-                             [-SectionTemplate <CanvasSectionTemplate>]
+Add-PnPClientSidePageSection -SectionTemplate <CanvasSectionTemplate>
+                             -Page <ClientSidePagePipeBind>
                              [-Order <Int>]
                              [-Web <WebPipeBind>]
                              [-Connection <SPOnlineConnection>]
@@ -46,62 +45,62 @@ Adds a new one column section to the Client-Side page 'MyPage'
 ## PARAMETERS
 
 ### -Order
-
+Sets the order of the section. (Default = 1)
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Page
-
+The name of the page
 
 ```yaml
 Type: ClientSidePagePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -SectionTemplate
-
+Specifies the columns template to use for the section.
 
 ```yaml
 Type: CanvasSectionTemplate
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

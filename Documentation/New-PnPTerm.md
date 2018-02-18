@@ -10,13 +10,12 @@ Creates a taxonomy term
 
 ## SYNTAX 
 
-### 
 ```powershell
-New-PnPTerm [-Name <String>]
+New-PnPTerm -Name <String>
+            -TermGroup <Id, Title or TermGroup>
+            -TermSet <Id, Title or TaxonomyItem>
             [-Id <Guid>]
             [-Lcid <Int>]
-            [-TermSet <Id, Title or TaxonomyItem>]
-            [-TermGroup <Id, Title or TermGroup>]
             [-Description <String>]
             [-CustomProperties <Hashtable>]
             [-LocalCustomProperties <Hashtable>]
@@ -36,123 +35,123 @@ Creates a new taxonomy term named "Finance" in the termset Departments which is 
 ## PARAMETERS
 
 ### -CustomProperties
-
+Custom Properties
 
 ```yaml
 Type: Hashtable
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Description
-
+Descriptive text to help users understand the intended use of this term.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Id
-
+The Id to use for the term; if not specified, or the empty GUID, a random GUID is generated and used.
 
 ```yaml
 Type: Guid
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Lcid
-
+The locale id to use for the term. Defaults to the current locale id.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -LocalCustomProperties
-
+Custom Properties
 
 ```yaml
 Type: Hashtable
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Name
-
+The name of the term.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -TermGroup
-
+The termgroup to create the term in.
 
 ```yaml
 Type: Id, Title or TermGroup
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -TermSet
-
+The termset to add the term to.
 
 ```yaml
 Type: Id, Title or TaxonomyItem
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -TermStore
-
+Term store to check; if not specified the default term store is used.
 
 ```yaml
 Type: Id, Name or Object
-Parameter Sets: 
-Aliases: new String[1] { "TermStoreName" }
+Parameter Sets: (All)
+Aliases: TermStoreName
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

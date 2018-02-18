@@ -10,14 +10,28 @@ Sets a taxonomy term value in a listitem field
 
 ## SYNTAX 
 
-### 
+### ITEMS
 ```powershell
-Set-PnPTaxonomyFieldValue [-ListItem <ListItem>]
-                          [-InternalFieldName <String>]
-                          [-TermId <GuidPipeBind>]
-                          [-Label <String>]
-                          [-TermPath <String>]
+Set-PnPTaxonomyFieldValue -ListItem <ListItem>
+                          -InternalFieldName <String>
                           [-Terms <Hashtable>]
+                          [-Connection <SPOnlineConnection>]
+```
+
+### ITEM
+```powershell
+Set-PnPTaxonomyFieldValue -TermId <GuidPipeBind>
+                          -ListItem <ListItem>
+                          -InternalFieldName <String>
+                          [-Label <String>]
+                          [-Connection <SPOnlineConnection>]
+```
+
+### PATH
+```powershell
+Set-PnPTaxonomyFieldValue -TermPath <String>
+                          -ListItem <ListItem>
+                          -InternalFieldName <String>
                           [-Connection <SPOnlineConnection>]
 ```
 
@@ -47,86 +61,86 @@ Sets the field called 'Department' with multiple terms by ID and label. You can 
 ## PARAMETERS
 
 ### -InternalFieldName
-
+The internal name of the field
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Label
-
+The Label value of the term
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: ITEM
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ListItem
-
+The list item to set the field value to
 
 ```yaml
 Type: ListItem
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TermId
-
+The Id of the Term
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: 
+Parameter Sets: ITEM
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TermPath
-
+A path in the form of GROUPLABEL|TERMSETLABEL|TERMLABEL
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: PATH
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Terms
-
+Allows you to specify terms with key value pairs that can be referred to in the template by means of the {id:label} token. See examples on how to use this parameter.
 
 ```yaml
 Type: Hashtable
-Parameter Sets: 
+Parameter Sets: ITEMS
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

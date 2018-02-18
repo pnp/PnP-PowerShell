@@ -10,9 +10,8 @@ Get a credential
 
 ## SYNTAX 
 
-### 
 ```powershell
-Get-PnPStoredCredential [-Name <String>]
+Get-PnPStoredCredential -Name <String>
                         [-Type <CredentialType>]
 ```
 
@@ -38,26 +37,26 @@ Gets the credential associated with the specified identifier from the credential
 ## PARAMETERS
 
 ### -Name
-
+The credential to retrieve.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Type
-
+The object type of the credential to return from the Credential Manager. Possible valus are 'O365', 'OnPrem' or 'PSCredential'
 
 ```yaml
 Type: CredentialType
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

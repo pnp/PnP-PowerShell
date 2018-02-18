@@ -10,9 +10,8 @@ Removes a specific user from the site collection User Information List
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPUser [-Identity <UserPipeBind>]
+Remove-PnPUser -Identity <UserPipeBind>
                [-Force [<SwitchParameter>]]
                [-Confirm [<SwitchParameter>]]
                [-Web <WebPipeBind>]
@@ -55,62 +54,62 @@ Remove the user with LoginName i:0#.f|membership|user@tenant.onmicrosoft.com fro
 ## PARAMETERS
 
 ### -Confirm
-
+Specifying the Confirm parameter will allow the confirmation question to be skipped
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Force
-
+Specifying the Force parameter will skip the confirmation question
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+User ID or login name
 
 ```yaml
 Type: UserPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

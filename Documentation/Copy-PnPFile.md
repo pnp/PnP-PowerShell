@@ -10,10 +10,10 @@ Copies a file or folder to a different location
 
 ## SYNTAX 
 
-### 
+### SOURCEURL
 ```powershell
-Copy-PnPFile [-SourceUrl <String>]
-             [-TargetUrl <String>]
+Copy-PnPFile -SourceUrl <String>
+             -TargetUrl <String>
              [-OverwriteIfAlreadyExists [<SwitchParameter>]]
              [-Force [<SwitchParameter>]]
              [-SkipSourceFolderName [<SwitchParameter>]]
@@ -103,87 +103,87 @@ Copies a file named company.docx in the library named Documents in SubSite1 to t
 ## PARAMETERS
 
 ### -Force
-
+If provided, no confirmation will be requested and the action will be performed
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -OverwriteIfAlreadyExists
-
+If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the copy operation will be canceled if the file already exists at the TargetUrl location.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SkipSourceFolderName
-
+If the source is a folder, the source folder name will not be created, only the contents within it.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SourceUrl
-
+Site relative Url specifying the file or folder to copy.
 
 ```yaml
 Type: String
-Parameter Sets: 
-Aliases: new String[1] { "SiteRelativeUrl" }
+Parameter Sets: SOURCEURL
+Aliases: SiteRelativeUrl
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -TargetUrl
-
+Server relative Url where to copy the file or folder to.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: 1
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,10 +10,16 @@ Returns all or a specific navigation node
 
 ## SYNTAX 
 
-### 
+### All nodes by location
 ```powershell
 Get-PnPNavigationNode [-Location <NavigationType>]
-                      [-Id <Int>]
+                      [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
+```
+
+### A single node by ID
+```powershell
+Get-PnPNavigationNode [-Id <Int>]
                       [-Web <WebPipeBind>]
                       [-Connection <SPOnlineConnection>]
 ```
@@ -52,50 +58,50 @@ Returns the selected navigation node and retrieves any children
 ## PARAMETERS
 
 ### -Id
-
+The Id of the node to retrieve
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: A single node by ID
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Location
-
+The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch
 
 ```yaml
 Type: NavigationType
-Parameter Sets: 
+Parameter Sets: All nodes by location
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

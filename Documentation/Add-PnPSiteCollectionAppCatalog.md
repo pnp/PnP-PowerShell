@@ -10,9 +10,8 @@ Adds a Site Collection scoped App Catalog to a site
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPSiteCollectionAppCatalog [-Site <SitePipeBind>]
+Add-PnPSiteCollectionAppCatalog -Site <SitePipeBind>
                                 [-Connection <SPOnlineConnection>]
 ```
 
@@ -28,26 +27,26 @@ This will add a SiteCollection app catalog to the specified site
 ## PARAMETERS
 
 ### -Site
-
+Url of the site to add the app catalog to.
 
 ```yaml
 Type: SitePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

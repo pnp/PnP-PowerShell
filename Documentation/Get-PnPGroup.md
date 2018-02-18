@@ -10,13 +10,37 @@ Returns a specific group or all groups.
 
 ## SYNTAX 
 
+### ByName
+```powershell
+Get-PnPGroup [-Web <WebPipeBind>]
+             [-Identity <GroupPipeBind>]
+             [-Connection <SPOnlineConnection>]
+```
+
+### Members
+```powershell
+Get-PnPGroup [-AssociatedMemberGroup [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
+```
+
+### Visitors
+```powershell
+Get-PnPGroup [-AssociatedVisitorGroup [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
+```
+
+### Owners
+```powershell
+Get-PnPGroup [-AssociatedOwnerGroup [<SwitchParameter>]]
+             [-Web <WebPipeBind>]
+             [-Connection <SPOnlineConnection>]
+```
+
 ### 
 ```powershell
-Get-PnPGroup [-Identity <GroupPipeBind>]
-             [-AssociatedMemberGroup [<SwitchParameter>]]
-             [-AssociatedVisitorGroup [<SwitchParameter>]]
-             [-AssociatedOwnerGroup [<SwitchParameter>]]
-             [-Web <WebPipeBind>]
+Get-PnPGroup [-Web <WebPipeBind>]
              [-Includes <String[]>]
              [-Connection <SPOnlineConnection>]
 ```
@@ -47,52 +71,52 @@ This will return the current members group for the site
 ## PARAMETERS
 
 ### -AssociatedMemberGroup
-
+Retrieve the associated member group
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Members
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -AssociatedOwnerGroup
-
+Retrieve the associated owner group
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Owners
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -AssociatedVisitorGroup
-
+Retrieve the associated visitor group
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Visitors
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+Get a specific group by name
 
 ```yaml
 Type: GroupPipeBind
-Parameter Sets: 
-Aliases: new String[1] { "Name" }
+Parameter Sets: ByName
+Aliases: Name
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Includes
@@ -108,26 +132,26 @@ Accept pipeline input: False
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

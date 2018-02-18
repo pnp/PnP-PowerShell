@@ -10,10 +10,9 @@ Return a workflow definition
 
 ## SYNTAX 
 
-### 
 ```powershell
-Get-PnPWorkflowDefinition [-Name <String>]
-                          [-PublishedOnly [<SwitchParameter>]]
+Get-PnPWorkflowDefinition [-PublishedOnly [<SwitchParameter>]]
+                          [-Name <String>]
                           [-Web <WebPipeBind>]
                           [-Connection <SPOnlineConnection>]
 ```
@@ -40,11 +39,11 @@ Gets an Workflow with the name "MyWorkflow" that is published.
 ## PARAMETERS
 
 ### -Name
-
+The name of the workflow
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
@@ -52,38 +51,38 @@ Accept pipeline input: False
 ```
 
 ### -PublishedOnly
-
+Return only the published workflows
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

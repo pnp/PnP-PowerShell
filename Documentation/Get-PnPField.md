@@ -13,10 +13,10 @@ Returns a field from a list or site
 ### 
 ```powershell
 Get-PnPField [-List <ListPipeBind>]
-             [-Identity <FieldPipeBind>]
              [-Group <String>]
              [-Web <WebPipeBind>]
              [-Includes <String[]>]
+             [-Identity <FieldPipeBind>]
              [-Connection <SPOnlineConnection>]
 ```
 
@@ -39,27 +39,27 @@ Gets the speakers field from the list Demo list
 ## PARAMETERS
 
 ### -Group
-
+Filter to the specified group
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+The field object or name to get
 
 ```yaml
 Type: FieldPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Includes
@@ -75,38 +75,38 @@ Accept pipeline input: False
 ```
 
 ### -List
-
+The list object or name where to get the field from
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
-Accept pipeline input: False
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

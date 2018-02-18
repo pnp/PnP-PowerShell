@@ -10,14 +10,18 @@ Retrieves or searches provisioning templates from the PnP Template Gallery
 
 ## SYNTAX 
 
-### 
+### Identity
 ```powershell
 Get-PnPProvisioningTemplateFromGallery [-Identity <Guid>]
-                                       [-Search <String>]
-                                       [-TargetPlatform <TargetPlatform>]
-                                       [-TargetScope <TargetScope>]
                                        [-Path <String>]
                                        [-Force [<SwitchParameter>]]
+```
+
+### Search
+```powershell
+Get-PnPProvisioningTemplateFromGallery [-Search <String>]
+                                       [-TargetPlatform <TargetPlatform>]
+                                       [-TargetScope <TargetScope>]
 ```
 
 ## EXAMPLES
@@ -65,10 +69,10 @@ Retrieves a template with the specified ID and saves the template to the specifi
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Identity
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -77,10 +81,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: Guid
-Parameter Sets: 
+Parameter Sets: Identity
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -89,10 +93,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Identity
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -101,10 +105,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Search
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -113,10 +117,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: TargetPlatform
-Parameter Sets: 
+Parameter Sets: Search
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -125,10 +129,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: TargetScope
-Parameter Sets: 
+Parameter Sets: Search
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

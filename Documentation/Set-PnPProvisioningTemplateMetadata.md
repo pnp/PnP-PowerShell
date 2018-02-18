@@ -10,9 +10,8 @@ Sets metadata of a provisioning template
 
 ## SYNTAX 
 
-### 
 ```powershell
-Set-PnPProvisioningTemplateMetadata [-Path <String>]
+Set-PnPProvisioningTemplateMetadata -Path <String>
                                     [-TemplateDisplayName <String>]
                                     [-TemplateImagePreviewUrl <String>]
                                     [-TemplateProperties <Hashtable>]
@@ -68,86 +67,86 @@ Sets the property 'Property1' to the value 'Test Value 1' of a provisioning temp
 ## PARAMETERS
 
 ### -Path
-
+Path to the xml or pnp file containing the provisioning template.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -TemplateDisplayName
-
+It can be used to specify the DisplayName of the template file that will be updated.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TemplateImagePreviewUrl
-
+It can be used to specify the ImagePreviewUrl of the template file that will be updated.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TemplateProperties
-
+It can be used to specify custom Properties for the template file that will be updated.
 
 ```yaml
 Type: Hashtable
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TemplateProviderExtensions
-
+Allows you to specify ITemplateProviderExtension to execute while extracting a template.
 
 ```yaml
 Type: ITemplateProviderExtension[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

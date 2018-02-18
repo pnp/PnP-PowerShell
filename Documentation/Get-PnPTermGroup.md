@@ -12,9 +12,9 @@ Returns a taxonomy term group
 
 ### 
 ```powershell
-Get-PnPTermGroup [-Identity <Id, Title or TaxonomyItem>]
-                 [-TermStore <Id, Name or Object>]
+Get-PnPTermGroup [-TermStore <Id, Name or Object>]
                  [-Includes <String[]>]
+                 [-Identity <Id, Title or TaxonomyItem>]
                  [-Connection <SPOnlineConnection>]
 ```
 
@@ -44,16 +44,16 @@ Returns the termgroup with the given ID from the site collection termstore
 ## PARAMETERS
 
 ### -Identity
-
+Name of the taxonomy term group to retrieve.
 
 ```yaml
 Type: Id, Title or TaxonomyItem
-Parameter Sets: 
-Aliases: new String[1] { "GroupName" }
+Parameter Sets: (All)
+Aliases: GroupName
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Includes
@@ -69,27 +69,27 @@ Accept pipeline input: False
 ```
 
 ### -TermStore
-
+Term store to check; if not specified the default term store is used.
 
 ```yaml
 Type: Id, Name or Object
-Parameter Sets: 
-Aliases: new String[1] { "TermStoreName" }
+Parameter Sets: (All)
+Aliases: TermStoreName
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

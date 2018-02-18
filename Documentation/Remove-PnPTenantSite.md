@@ -10,9 +10,8 @@ Removes a site collection
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPTenantSite [-Url <String>]
+Remove-PnPTenantSite -Url <String>
                      [-SkipRecycleBin [<SwitchParameter>]]
                      [-Force [<SwitchParameter>]]
                      [-Connection <SPOnlineConnection>]
@@ -47,51 +46,51 @@ This will remove the site collection with the url 'https://tenant.sharepoint.com
 ## PARAMETERS
 
 ### -Force
-
+Do not ask for confirmation.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SkipRecycleBin
-
+Do not add to the tenant scoped recycle bin when selected.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
-Aliases: new String[1] { "SkipTrash" }
+Parameter Sets: (All)
+Aliases: SkipTrash
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Url
-
+Specifies the full URL of the site collection that needs to be deleted
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

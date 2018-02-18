@@ -10,9 +10,8 @@ Gets owners of a paricular Office 365 Group (aka Unified Group)
 
 ## SYNTAX 
 
-### 
 ```powershell
-Get-PnPUnifiedGroupOwners [-Identity <UnifiedGroupPipeBind>]
+Get-PnPUnifiedGroupOwners -Identity <UnifiedGroupPipeBind>
 ```
 
 ## EXAMPLES
@@ -34,14 +33,14 @@ Retrieves all the owners of a specific Office 365 Group based on the group's obj
 ## PARAMETERS
 
 ### -Identity
-
+The Identity of the Office 365 Group.
 
 ```yaml
 Type: UnifiedGroupPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 

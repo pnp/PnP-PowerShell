@@ -10,7 +10,6 @@ Moves all items or a specific item in the first stage recycle bin of the current
 
 ## SYNTAX 
 
-### 
 ```powershell
 Move-PnPRecycleBinItem [-Identity <RecycleBinItemPipeBind>]
                        [-Force [<SwitchParameter>]]
@@ -43,38 +42,38 @@ Moves all the items in the first stage recycle bin of the current context to the
 ## PARAMETERS
 
 ### -Force
-
+If provided, no confirmation will be asked to move the first stage recycle bin items to the second stage
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+If provided, moves the item with the specific ID to the second stage recycle bin
 
 ```yaml
 Type: RecycleBinItemPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
-Accept pipeline input: False
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

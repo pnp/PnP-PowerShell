@@ -10,9 +10,8 @@ Removes one or more existing site classification values from the list of availab
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPSiteClassification [-Classifications <List`1>]
+Remove-PnPSiteClassification -Classifications <List`1>
                              [-Confirm [<SwitchParameter>]]
 ```
 
@@ -41,22 +40,22 @@ Removes the "HBI" site classification from the list of available values.
 
 ```yaml
 Type: List`1
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Confirm
-
+Specifying the Confirm parameter will allow the confirmation question to be skipped
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

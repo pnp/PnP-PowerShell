@@ -10,10 +10,9 @@ Enables Site Classifications for the tenant. Requires a connection to the Micros
 
 ## SYNTAX 
 
-### 
 ```powershell
-Enable-PnPSiteClassification [-Classifications <List`1>]
-                             [-DefaultClassification <String>]
+Enable-PnPSiteClassification -Classifications <List`1>
+                             -DefaultClassification <String>
                              [-UsageGuidelinesUrl <String>]
 ```
 
@@ -42,10 +41,10 @@ Enables Site Classifications for your tenant and provides three classification v
 
 ```yaml
 Type: List`1
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -54,10 +53,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -66,10 +65,10 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

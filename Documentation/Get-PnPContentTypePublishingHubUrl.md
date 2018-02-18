@@ -10,7 +10,6 @@ Returns the url to Content Type Publishing Hub
 
 ## SYNTAX 
 
-### 
 ```powershell
 Get-PnPContentTypePublishingHubUrl [-Connection <SPOnlineConnection>]
 ```
@@ -30,14 +29,14 @@ This will retrieve the url to the content type hub, connect to it, and then retr
 ## PARAMETERS
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

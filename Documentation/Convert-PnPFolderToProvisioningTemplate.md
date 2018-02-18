@@ -10,11 +10,10 @@ Creates a pnp package file of an existing template xml, and includes all files i
 
 ## SYNTAX 
 
-### 
 ```powershell
-Convert-PnPFolderToProvisioningTemplate [-Out <String>]
-                                        [-Folder <String>]
+Convert-PnPFolderToProvisioningTemplate -Out <String>
                                         [-Force [<SwitchParameter>]]
+                                        [-Folder <String>]
 ```
 
 ## EXAMPLES
@@ -36,37 +35,37 @@ Creates a pnp package file of an existing template xml, and includes all files i
 ## PARAMETERS
 
 ### -Folder
-
+Folder to process. If not specified the current folder will be used.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: 1
 Accept pipeline input: False
 ```
 
 ### -Force
-
+Overwrites the output file if it exists.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Out
-
+Filename to write to, optionally including full path.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
 Accept pipeline input: False
 ```

@@ -11,9 +11,8 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
 
 ## SYNTAX 
 
-### 
 ```powershell
-Get-PnPUserProfileProperty [-Account <String[]>]
+Get-PnPUserProfileProperty -Account <String[]>
                            [-Connection <SPOnlineConnection>]
 ```
 
@@ -39,26 +38,26 @@ Returns the profile properties for the specified users
 ## PARAMETERS
 
 ### -Account
-
+The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

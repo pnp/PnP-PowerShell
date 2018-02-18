@@ -10,10 +10,9 @@ Installs a sandboxed solution to a site collection. WARNING! This method can del
 
 ## SYNTAX 
 
-### 
 ```powershell
-Install-PnPSolution [-PackageId <GuidPipeBind>]
-                    [-SourceFilePath <String>]
+Install-PnPSolution -PackageId <GuidPipeBind>
+                    -SourceFilePath <String>
                     [-MajorVersion <Int>]
                     [-MinorVersion <Int>]
                     [-Connection <SPOnlineConnection>]
@@ -31,62 +30,62 @@ Installs the package to the current site
 ## PARAMETERS
 
 ### -MajorVersion
-
+Optional major version of the solution, defaults to 1
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -MinorVersion
-
+Optional minor version of the solution, defaults to 0
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -PackageId
-
+ID of the solution, from the solution manifest
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SourceFilePath
-
+Path to the sandbox solution package (.WSP) file
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

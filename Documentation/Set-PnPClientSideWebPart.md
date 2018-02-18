@@ -10,10 +10,9 @@ Set Client-Side Web Part properties
 
 ## SYNTAX 
 
-### 
 ```powershell
-Set-PnPClientSideWebPart [-Page <ClientSidePagePipeBind>]
-                         [-Identity <ClientSideWebPartPipeBind>]
+Set-PnPClientSideWebPart -Identity <ClientSideWebPartPipeBind>
+                         -Page <ClientSidePagePipeBind>
                          [-Title <String>]
                          [-PropertiesJson <String>]
                          [-Web <WebPipeBind>]
@@ -35,74 +34,74 @@ Sets the properties of the client side webpart given in the $myproperties variab
 ## PARAMETERS
 
 ### -Identity
-
+The identity of the webpart. This can be the webpart instance id or the title of a webpart
 
 ```yaml
 Type: ClientSideWebPartPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Page
-
+The name of the page
 
 ```yaml
 Type: ClientSidePagePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -PropertiesJson
-
+Sets the properties as a JSON string.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
-Accept pipeline input: False
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Title
-
+Sets the internal title of the webpart. Notice that this will NOT set a visible title.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
-Accept pipeline input: False
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

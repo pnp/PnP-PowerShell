@@ -10,9 +10,8 @@ Updates list settings
 
 ## SYNTAX 
 
-### 
 ```powershell
-Set-PnPList [-Identity <ListPipeBind>]
+Set-PnPList -Identity <ListPipeBind>
             [-EnableContentTypes <Boolean>]
             [-BreakRoleInheritance [<SwitchParameter>]]
             [-CopyRoleAssignments [<SwitchParameter>]]
@@ -76,182 +75,182 @@ Turns on attachments on a list
 ## PARAMETERS
 
 ### -BreakRoleInheritance
-
+If used the security inheritance is broken for this list
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ClearSubscopes
-
+If used the unique permissions are cleared from child objects and they can inherit role assignments from this object
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -CopyRoleAssignments
-
+If used the roles are copied from the parent web
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -EnableAttachments
-
+Enable or disable attachments. Set to $true to enable, $false to disable.
 
 ```yaml
 Type: Boolean
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -EnableContentTypes
-
+Set to $true to enable content types, set to $false to disable content types
 
 ```yaml
 Type: Boolean
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -EnableMinorVersions
-
+Enable or disable minor versions versioning. Set to $true to enable, $false to disable.
 
 ```yaml
 Type: Boolean
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -EnableModeration
-
+Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.
 
 ```yaml
 Type: Boolean
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -EnableVersioning
-
+Enable or disable versioning. Set to $true to enable, $false to disable.
 
 ```yaml
 Type: Boolean
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Hidden
-
+Hide the list from the SharePoint UI. Set to $true to hide, $false to show.
 
 ```yaml
 Type: Boolean
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+The ID, Title or Url of the list.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -MajorVersions
-
+Maximum major versions to keep
 
 ```yaml
 Type: UInt32
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -MinorVersions
-
+Maximum minor versions to keep
 
 ```yaml
 Type: UInt32
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Title
-
+The title of the list
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

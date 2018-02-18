@@ -10,11 +10,10 @@ Adds or updates a theme to the tenant.
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPTenantTheme [-Identity <ThemePipeBind>]
-                   [-Palette <ThemePalettePipeBind>]
-                   [-IsInverted <Boolean>]
+Add-PnPTenantTheme -Identity <ThemePipeBind>
+                   -Palette <ThemePalettePipeBind>
+                   -IsInverted <Boolean>
                    [-Connection <SPOnlineConnection>]
 ```
 
@@ -60,50 +59,50 @@ This example adds a theme to the current tenant.
 ## PARAMETERS
 
 ### -Identity
-
+The name of the theme to add or update
 
 ```yaml
 Type: ThemePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -IsInverted
-
+If the theme is inverted or not
 
 ```yaml
 Type: Boolean
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Palette
-
+The palette to add. See examples for more information.
 
 ```yaml
 Type: ThemePalettePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

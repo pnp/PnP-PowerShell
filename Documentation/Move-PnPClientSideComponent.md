@@ -10,12 +10,41 @@ Moves a Client-Side Component to a different section/column
 
 ## SYNTAX 
 
-### 
+### Move to other section
 ```powershell
-Move-PnPClientSideComponent [-Page <ClientSidePagePipeBind>]
-                            [-InstanceId <GuidPipeBind>]
-                            [-Section <Int>]
-                            [-Column <Int>]
+Move-PnPClientSideComponent -Section <Int>
+                            -InstanceId <GuidPipeBind>
+                            -Page <ClientSidePagePipeBind>
+                            [-Position <Int>]
+                            [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
+```
+
+### Move to other column
+```powershell
+Move-PnPClientSideComponent -Column <Int>
+                            -InstanceId <GuidPipeBind>
+                            -Page <ClientSidePagePipeBind>
+                            [-Position <Int>]
+                            [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
+```
+
+### Move within a column
+```powershell
+Move-PnPClientSideComponent -Position <Int>
+                            -InstanceId <GuidPipeBind>
+                            -Page <ClientSidePagePipeBind>
+                            [-Web <WebPipeBind>]
+                            [-Connection <SPOnlineConnection>]
+```
+
+### Move to other section and column
+```powershell
+Move-PnPClientSideComponent -Section <Int>
+                            -Column <Int>
+                            -InstanceId <GuidPipeBind>
+                            -Page <ClientSidePagePipeBind>
                             [-Position <Int>]
                             [-Web <WebPipeBind>]
                             [-Connection <SPOnlineConnection>]
@@ -57,86 +86,86 @@ Moves the specified component to the first section of the page into the second c
 ## PARAMETERS
 
 ### -Column
-
+The column to move the webpart to
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Move to other column
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -InstanceId
-
+The instance id of the control. Use Get-PnPClientSideControl retrieve the instance ids.
 
 ```yaml
 Type: GuidPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Page
-
+The name of the page
 
 ```yaml
 Type: ClientSidePagePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Position
-
+Change to order of the webpart in the column
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Move to other column
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Section
-
+The section to move the webpart to
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Move to other section
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

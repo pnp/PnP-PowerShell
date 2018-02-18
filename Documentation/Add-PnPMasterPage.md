@@ -10,11 +10,10 @@ Adds a Masterpage
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPMasterPage [-SourceFilePath <String>]
-                  [-Title <String>]
-                  [-Description <String>]
+Add-PnPMasterPage -SourceFilePath <String>
+                  -Title <String>
+                  -Description <String>
                   [-DestinationFolderHierarchy <String>]
                   [-UIVersion <String>]
                   [-DefaultCssFile <String>]
@@ -34,98 +33,98 @@ Adds a MasterPage from the local file "page.master" to the folder "SubFolder" in
 ## PARAMETERS
 
 ### -DefaultCssFile
-
+Default CSS file for the MasterPage, this Url is SiteRelative
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Description
-
+Description for the Masterpage
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -DestinationFolderHierarchy
-
+Folder hierarchy where the MasterPage will be deployed
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SourceFilePath
-
+Path to the file which will be uploaded
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Title
-
+Title for the Masterpage
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -UIVersion
-
+UIVersion of the Masterpage. Default = 15
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -1,6 +1,7 @@
 # Microsoft Graph 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
+**[Connect&#8209;PnPMicrosoftGraph](Connect-PnPMicrosoftGraph.md)** |Connect to the Microsoft Graph|All
 **[Add&#8209;PnPSiteClassification](Add-PnPSiteClassification.md)** |Adds one ore more site classification values to the list of possible values. Requires a connection to the Microsoft Graph.|SharePoint Online
 **[Disable&#8209;PnPSiteClassification](Disable-PnPSiteClassification.md)** |Disables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.|SharePoint Online
 **[Enable&#8209;PnPSiteClassification](Enable-PnPSiteClassification.md)** |Enables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.|SharePoint Online

@@ -10,9 +10,8 @@ Removes a taxonomy item
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPTaxonomyItem [-TermPath <String>]
+Remove-PnPTaxonomyItem -TermPath <String>
                        [-Force [<SwitchParameter>]]
                        [-Connection <SPOnlineConnection>]
 ```
@@ -24,35 +23,35 @@ Remove-PnPTaxonomyItem [-TermPath <String>]
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TermPath
-
+The path, delimited by | of the taxonomy item to remove, alike GROUPLABEL|TERMSETLABEL|TERMLABEL
 
 ```yaml
 Type: String
-Parameter Sets: 
-Aliases: new String[1] { "Term" }
+Parameter Sets: (All)
+Aliases: Term
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

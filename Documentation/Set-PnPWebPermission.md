@@ -10,12 +10,58 @@ Set permissions
 
 ## SYNTAX 
 
-### 
+### Group
 ```powershell
-Set-PnPWebPermission [-Identity <WebPipeBind>]
-                     [-Url <String>]
-                     [-Group <GroupPipeBind>]
-                     [-User <String>]
+Set-PnPWebPermission -Group <GroupPipeBind>
+                     [-AddRole <String[]>]
+                     [-RemoveRole <String[]>]
+                     [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
+```
+
+### User
+```powershell
+Set-PnPWebPermission -User <String>
+                     [-AddRole <String[]>]
+                     [-RemoveRole <String[]>]
+                     [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
+```
+
+### GroupByWebIdentity
+```powershell
+Set-PnPWebPermission -Identity <WebPipeBind>
+                     -Group <GroupPipeBind>
+                     [-AddRole <String[]>]
+                     [-RemoveRole <String[]>]
+                     [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
+```
+
+### UserByWebIdentity
+```powershell
+Set-PnPWebPermission -Identity <WebPipeBind>
+                     -User <String>
+                     [-AddRole <String[]>]
+                     [-RemoveRole <String[]>]
+                     [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
+```
+
+### GroupByWebUrl
+```powershell
+Set-PnPWebPermission -Url <String>
+                     -Group <GroupPipeBind>
+                     [-AddRole <String[]>]
+                     [-RemoveRole <String[]>]
+                     [-Web <WebPipeBind>]
+                     [-Connection <SPOnlineConnection>]
+```
+
+### UserByWebUrl
+```powershell
+Set-PnPWebPermission -Url <String>
+                     -User <String>
                      [-AddRole <String[]>]
                      [-RemoveRole <String[]>]
                      [-Web <WebPipeBind>]
@@ -44,14 +90,14 @@ Removes the 'Contribute' permission to the user 'user@contoso.com' for a web, sp
 ## PARAMETERS
 
 ### -AddRole
-
+The role that must be assigned to the group or user
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -60,46 +106,46 @@ Accept pipeline input: False
 
 ```yaml
 Type: GroupPipeBind
-Parameter Sets: 
+Parameter Sets: Group
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+Identity/Id/Web object
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: GroupByWebIdentity
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -RemoveRole
-
+The role that must be removed from the group or user
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Url
-
+The site relative url of the web, e.g. 'Subweb1'
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: GroupByWebUrl
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -108,34 +154,34 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: User
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

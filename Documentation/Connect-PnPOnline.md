@@ -10,10 +10,10 @@ Connect to a SharePoint site
 
 ## SYNTAX 
 
-### 
+### Main
 ```powershell
-Connect-PnPOnline [-ReturnConnection [<SwitchParameter>]]
-                  [-Url <String>]
+Connect-PnPOnline -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
                   [-Credentials <CredentialPipeBind>]
                   [-CurrentCredentials [<SwitchParameter>]]
                   [-UseAdfs [<SwitchParameter>]]
@@ -21,24 +21,131 @@ Connect-PnPOnline [-ReturnConnection [<SwitchParameter>]]
                   [-RetryCount <Int>]
                   [-RetryWait <Int>]
                   [-RequestTimeout <Int>]
-                  [-Realm <String>]
-                  [-AppId <String>]
-                  [-AppSecret <String>]
-                  [-UseWebLogin [<SwitchParameter>]]
                   [-AuthenticationMode <ClientAuthenticationMode>]
                   [-CreateDrive [<SwitchParameter>]]
                   [-DriveName <String>]
-                  [-SPOManagementShell [<SwitchParameter>]]
-                  [-ClientId <String>]
-                  [-RedirectUri <String>]
-                  [-Tenant <String>]
-                  [-CertificatePath <String>]
-                  [-CertificatePassword <SecureString>]
+                  [-Scopes <String[]>]
+                  [-TenantAdminUrl <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+                  [-IgnoreSslErrors [<SwitchParameter>]]
+```
+
+### Microsoft Graph using Scopes
+```powershell
+Connect-PnPOnline -Scopes <String[]>
+```
+
+### WebLogin
+```powershell
+Connect-PnPOnline -UseWebLogin [<SwitchParameter>]
+                  -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-Scopes <String[]>]
+                  [-TenantAdminUrl <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+                  [-IgnoreSslErrors [<SwitchParameter>]]
+```
+
+### SPO Management Shell Credentials
+```powershell
+Connect-PnPOnline -SPOManagementShell [<SwitchParameter>]
+                  -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-ClearTokenCache [<SwitchParameter>]]
+                  [-Scopes <String[]>]
+                  [-TenantAdminUrl <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+                  [-IgnoreSslErrors [<SwitchParameter>]]
+```
+
+### Access Token
+```powershell
+Connect-PnPOnline -AccessToken <String>
+                  -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+```
+
+### Token
+```powershell
+Connect-PnPOnline -AppId <String>
+                  -AppSecret <String>
+                  -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-Realm <String>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-Scopes <String[]>]
+                  [-TenantAdminUrl <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+                  [-IgnoreSslErrors [<SwitchParameter>]]
+```
+
+### Azure Active Directory
+```powershell
+Connect-PnPOnline -ClientId <String>
+                  -RedirectUri <String>
+                  -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
                   [-ClearTokenCache [<SwitchParameter>]]
                   [-AzureEnvironment <AzureEnvironment>]
                   [-Scopes <String[]>]
-                  [-AADDomain <String>]
-                  [-AccessToken <String>]
+                  [-TenantAdminUrl <String>]
+                  [-SkipTenantAdminCheck [<SwitchParameter>]]
+                  [-IgnoreSslErrors [<SwitchParameter>]]
+```
+
+### Microsoft Graph using Azure Active Directory
+```powershell
+Connect-PnPOnline -AppId <String>
+                  -AppSecret <String>
+                  -AADDomain <String>
+```
+
+### App-Only with Azure Active Directory
+```powershell
+Connect-PnPOnline -ClientId <String>
+                  -Tenant <String>
+                  -CertificatePath <String>
+                  -CertificatePassword <SecureString>
+                  -AzureEnvironment <AzureEnvironment>
+                  -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
+                  [-MinimalHealthScore <Int>]
+                  [-RetryCount <Int>]
+                  [-RetryWait <Int>]
+                  [-RequestTimeout <Int>]
+                  [-CreateDrive [<SwitchParameter>]]
+                  [-DriveName <String>]
+                  [-Scopes <String[]>]
                   [-TenantAdminUrl <String>]
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
                   [-IgnoreSslErrors [<SwitchParameter>]]
@@ -138,362 +245,362 @@ Connects to the Microsoft Graph API using application permissions via an app's d
 ## PARAMETERS
 
 ### -AADDomain
-
+The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Microsoft Graph using Azure Active Directory
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -AccessToken
-
+Connect with an existing Access Token
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Access Token
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -AppId
-
+The Application Client ID to use.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Token
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -AppSecret
-
+The Application Client Secret to use.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Token
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -AuthenticationMode
-
+Specify to use for instance use forms based authentication (FBA)
 
 ```yaml
 Type: ClientAuthenticationMode
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -AzureEnvironment
-
+The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.
 
 ```yaml
 Type: AzureEnvironment
-Parameter Sets: 
+Parameter Sets: Azure Active Directory
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -CertificatePassword
-
+Password to the certificate (*.pfx)
 
 ```yaml
 Type: SecureString
-Parameter Sets: 
+Parameter Sets: App-Only with Azure Active Directory
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -CertificatePath
-
+Path to the certificate (*.pfx)
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: App-Only with Azure Active Directory
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ClearTokenCache
-
+Clears the token cache.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Azure Active Directory
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ClientId
-
+The Client ID of the Azure AD Application
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Azure Active Directory
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -CreateDrive
-
+If you want to create a PSDrive connected to the URL
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Credentials
-
+Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.
 
 ```yaml
 Type: CredentialPipeBind
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -CurrentCredentials
-
+If you want to connect with the current user credentials
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -DriveName
-
+Name of the PSDrive to create (default: SPO)
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -IgnoreSslErrors
-
+Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -MinimalHealthScore
-
+Specifies a minimal server healthscore before any requests are executed.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Realm
-
+Authentication realm. If not specified will be resolved from the url specified.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Token
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -RedirectUri
-
+The Redirect URI of the Azure AD Application
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Azure Active Directory
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -RequestTimeout
-
+The request timeout. Default is 180000
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -RetryCount
-
+Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -RetryWait
-
+Defines how many seconds to wait before each retry. Default is 1 second.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ReturnConnection
-
+Returns the connection for use with the -Connection parameter on cmdlets.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
-Accept pipeline input: False
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Scopes
-
+The array of permission scopes for the Microsoft Graph API.
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SkipTenantAdminCheck
-
+Should we skip the check if this site is the Tenant admin site. Default is false
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SPOManagementShell
-
+Log in using the SharePoint Online Management Shell application
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: SPO Management Shell Credentials
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Tenant
-
+The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: App-Only with Azure Active Directory
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TenantAdminUrl
-
+The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Url
-
+The Url of the site collection to connect to.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Main
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -UseAdfs
-
+If you want to connect to your on-premises SharePoint farm using ADFS
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Main
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -UseWebLogin
-
+If you want to connect to SharePoint with browser based login
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: WebLogin
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 

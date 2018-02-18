@@ -10,9 +10,8 @@ Set the ClientContext
 
 ## SYNTAX 
 
-### 
 ```powershell
-Set-PnPContext [-Context <ClientContext>]
+Set-PnPContext -Context <ClientContext>
 ```
 
 ## DESCRIPTION
@@ -36,15 +35,15 @@ PS:> Get-PnPList # returns the lists from site A
 ## PARAMETERS
 
 ### -Context
-
+The ClientContext to set
 
 ```yaml
 Type: ClientContext
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: 1
+Accept pipeline input: True
 ```
 
 ## RELATED LINKS

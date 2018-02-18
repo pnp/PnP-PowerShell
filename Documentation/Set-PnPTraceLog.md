@@ -10,15 +10,19 @@ Turn log tracing on or off
 
 ## SYNTAX 
 
-### 
+### On
 ```powershell
-Set-PnPTraceLog [-On [<SwitchParameter>]]
+Set-PnPTraceLog -On [<SwitchParameter>]
                 [-LogFile <String>]
                 [-Level <LogLevel>]
                 [-Delimiter <String>]
                 [-IndentSize <Int>]
                 [-AutoFlush <Boolean>]
-                [-Off [<SwitchParameter>]]
+```
+
+### Off
+```powershell
+Set-PnPTraceLog -Off [<SwitchParameter>]
 ```
 
 ## DESCRIPTION
@@ -57,86 +61,86 @@ This turns off trace logging. It will flush any remaining messages to the log fi
 ## PARAMETERS
 
 ### -AutoFlush
-
+Auto flush the trace log. Defaults to true.
 
 ```yaml
 Type: Boolean
-Parameter Sets: 
+Parameter Sets: On
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Delimiter
-
+If specified the trace log entries will be delimited with this value.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: On
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -IndentSize
-
+Indents in the tracelog will be with this amount of characters. Defaults to 4.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: On
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Level
-
+The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.
 
 ```yaml
 Type: LogLevel
-Parameter Sets: 
+Parameter Sets: On
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -LogFile
-
+The path and filename of the file to write the trace log to.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: On
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Off
-
+Turn off tracing to log file.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Off
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -On
-
+Turn on tracing to log file
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: On
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 

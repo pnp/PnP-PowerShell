@@ -10,9 +10,8 @@ Removes a Site Collection scoped App Catalog from a site
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPSiteCollectionAppCatalog [-Site <SitePipeBind>]
+Remove-PnPSiteCollectionAppCatalog -Site <SitePipeBind>
                                    [-Connection <SPOnlineConnection>]
 ```
 
@@ -31,26 +30,26 @@ This will remove a SiteCollection app catalog from the specified site
 ## PARAMETERS
 
 ### -Site
-
+Url of the site to remove the app catalog from.
 
 ```yaml
 Type: SitePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

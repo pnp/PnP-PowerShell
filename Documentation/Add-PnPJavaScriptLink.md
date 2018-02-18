@@ -10,10 +10,9 @@ Adds a link to a JavaScript file to a web or sitecollection
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPJavaScriptLink [-Name <String>]
-                      [-Url <String[]>]
+Add-PnPJavaScriptLink -Name <String>
+                      -Url <String[]>
                       [-Sequence <Int>]
                       [-Scope <CustomActionScope>]
                       [-Web <WebPipeBind>]
@@ -42,75 +41,75 @@ Injects a reference to the latest v1 series jQuery library to all pages within t
 ## PARAMETERS
 
 ### -Name
-
+Name under which to register the JavaScriptLink
 
 ```yaml
 Type: String
-Parameter Sets: 
-Aliases: new String[1] { "Key" }
+Parameter Sets: (All)
+Aliases: Key
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Scope
-
+Defines if this JavaScript file will be injected to every page within the current site collection or web. All is not allowed in for this command. Default is web.
 
 ```yaml
 Type: CustomActionScope
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Sequence
-
+Sequence of this JavaScript being injected. Use when you have a specific sequence with which to have JavaScript files being added to the page. I.e. jQuery library first and then jQueryUI.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Url
-
+URL to the JavaScript file to inject
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

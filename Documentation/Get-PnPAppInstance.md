@@ -12,9 +12,9 @@ Returns a SharePoint AddIn Instance
 
 ### 
 ```powershell
-Get-PnPAppInstance [-Identity <AppPipeBind>]
-                   [-Web <WebPipeBind>]
+Get-PnPAppInstance [-Web <WebPipeBind>]
                    [-Includes <String[]>]
+                   [-Identity <AppPipeBind>]
                    [-Connection <SPOnlineConnection>]
 ```
 
@@ -40,15 +40,15 @@ This will return an addin instance with the specified id.
 ## PARAMETERS
 
 ### -Identity
-
+Specifies the Id of the App Instance
 
 ```yaml
 Type: AppPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Includes
@@ -64,26 +64,26 @@ Accept pipeline input: False
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

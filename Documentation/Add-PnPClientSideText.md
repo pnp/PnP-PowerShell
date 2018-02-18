@@ -10,13 +10,22 @@ Adds a text element to a client-side page.
 
 ## SYNTAX 
 
-### 
+### Default
 ```powershell
-Add-PnPClientSideText [-Page <ClientSidePagePipeBind>]
-                      [-Text <String>]
+Add-PnPClientSideText -Text <String>
+                      -Page <ClientSidePagePipeBind>
                       [-Order <Int>]
-                      [-Section <Int>]
-                      [-Column <Int>]
+                      [-Web <WebPipeBind>]
+                      [-Connection <SPOnlineConnection>]
+```
+
+### Positioned
+```powershell
+Add-PnPClientSideText -Text <String>
+                      -Section <Int>
+                      -Column <Int>
+                      -Page <ClientSidePagePipeBind>
+                      [-Order <Int>]
                       [-Web <WebPipeBind>]
                       [-Connection <SPOnlineConnection>]
 ```
@@ -36,86 +45,86 @@ Adds the text 'Hello World!' to the Client-Side Page 'MyPage'
 ## PARAMETERS
 
 ### -Column
-
+Sets the column where to insert the text control.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Positioned
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Order
-
+Sets the order of the text control. (Default = 1)
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Default
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Page
-
+The name of the page.
 
 ```yaml
 Type: ClientSidePagePipeBind
-Parameter Sets: 
+Parameter Sets: Default
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Section
-
+Sets the section where to insert the text control.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Positioned
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Text
-
+Specifies the text to display in the text area.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Default
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

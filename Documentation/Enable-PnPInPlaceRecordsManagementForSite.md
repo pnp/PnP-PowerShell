@@ -10,7 +10,6 @@ Enables in place records management for a site.
 
 ## SYNTAX 
 
-### 
 ```powershell
 Enable-PnPInPlaceRecordsManagementForSite [-Connection <SPOnlineConnection>]
 ```
@@ -27,14 +26,14 @@ The in place records management feature will be enabled and the in place record 
 ## PARAMETERS
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

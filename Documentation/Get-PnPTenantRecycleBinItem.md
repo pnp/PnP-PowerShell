@@ -10,7 +10,6 @@ Returns the items in the tenant scoped recycle bin
 
 ## SYNTAX 
 
-### 
 ```powershell
 Get-PnPTenantRecycleBinItem [-Connection <SPOnlineConnection>]
 ```
@@ -30,14 +29,14 @@ Returns all site collections in the tenant scoped recycle bin
 ## PARAMETERS
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

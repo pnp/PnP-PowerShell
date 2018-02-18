@@ -10,10 +10,16 @@ Sets a specific page layout to be the default page layout for a publishing site
 
 ## SYNTAX 
 
-### 
+### TITLE
 ```powershell
-Set-PnPDefaultPageLayout [-Title <String>]
-                         [-InheritFromParentSite [<SwitchParameter>]]
+Set-PnPDefaultPageLayout -Title <String>
+                         [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
+```
+
+### INHERIT
+```powershell
+Set-PnPDefaultPageLayout -InheritFromParentSite [<SwitchParameter>]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
 ```
@@ -44,50 +50,50 @@ Sets the default page layout to be inherited from the parent site
 ## PARAMETERS
 
 ### -InheritFromParentSite
-
+Set the default page layout to be inherited from the parent site.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: INHERIT
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Title
-
+Title of the page layout
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: TITLE
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

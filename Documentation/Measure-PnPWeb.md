@@ -10,11 +10,10 @@ Returns statistics on the web object
 
 ## SYNTAX 
 
-### 
 ```powershell
-Measure-PnPWeb [-Identity <WebPipeBind>]
-               [-Recursive [<SwitchParameter>]]
+Measure-PnPWeb [-Recursive [<SwitchParameter>]]
                [-IncludeHiddenList [<SwitchParameter>]]
+               [-Identity <WebPipeBind>]
                [-Connection <SPOnlineConnection>]
 ```
 
@@ -41,46 +40,46 @@ Gets statistics on the chosen including all sub webs
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -IncludeHiddenList
-
+Include hidden lists in statistics calculation
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Recursive
-
+Iterate all sub webs recursively
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,10 +10,9 @@ Adds a new origin to the public or private content delivery network (CDN).
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPTenantCdnOrigin [-OriginUrl <String>]
-                       [-CdnType <SPOTenantCdnType>]
+Add-PnPTenantCdnOrigin -OriginUrl <String>
+                       -CdnType <SPOTenantCdnType>
                        [-Connection <SPOnlineConnection>]
 ```
 
@@ -34,38 +33,40 @@ This example configures a public CDN on site level.
 ## PARAMETERS
 
 ### -CdnType
-
+Specifies the CDN type. The valid values are: public or private.
 
 ```yaml
 Type: SPOTenantCdnType
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -OriginUrl
+Specifies a path to the doc library to be configured. It can be provided in two ways: relative path, or a mask.
 
+Relative-Relative path depends on the OriginScope. If the originScope is Tenant, a path must be a relative path under the tenant root. If the originScope is Site, a path must be a relative path under the given Site. The path must point to the valid Document Library or a folder with a document library.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

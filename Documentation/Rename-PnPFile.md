@@ -10,11 +10,20 @@ Renames a file in its current location
 
 ## SYNTAX 
 
-### 
+### SERVER
 ```powershell
-Rename-PnPFile [-ServerRelativeUrl <String>]
-               [-SiteRelativeUrl <String>]
-               [-TargetFileName <String>]
+Rename-PnPFile -ServerRelativeUrl <String>
+               -TargetFileName <String>
+               [-OverwriteIfAlreadyExists [<SwitchParameter>]]
+               [-Force [<SwitchParameter>]]
+               [-Web <WebPipeBind>]
+               [-Connection <SPOnlineConnection>]
+```
+
+### SITE
+```powershell
+Rename-PnPFile -SiteRelativeUrl <String>
+               -TargetFileName <String>
                [-OverwriteIfAlreadyExists [<SwitchParameter>]]
                [-Force [<SwitchParameter>]]
                [-Web <WebPipeBind>]
@@ -47,86 +56,86 @@ Renames a file named company.docx located in the document library called Documen
 ## PARAMETERS
 
 ### -Force
-
+If provided, no confirmation will be requested and the action will be performed
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -OverwriteIfAlreadyExists
-
+If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ServerRelativeUrl
-
+Server relative Url specifying the file to rename. Must include the file name.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: SERVER
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -SiteRelativeUrl
-
+Site relative Url specifying the file to rename. Must include the file name.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: SITE
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -TargetFileName
-
+File name to rename the file to. Should only be the file name and not include the path to its location. Use Move-PnPFile to move the file to another location.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: 1
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

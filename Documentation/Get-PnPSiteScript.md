@@ -10,7 +10,6 @@ Retrieve Site Scripts that have been registered on the current tenant.
 
 ## SYNTAX 
 
-### 
 ```powershell
 Get-PnPSiteScript [-Identity <TenantSiteScriptPipeBind>]
                   [-SiteDesign <TenantSiteDesignPipeBind>]
@@ -36,38 +35,38 @@ Returns a specific registered site script
 ## PARAMETERS
 
 ### -Identity
-
+If specified will retrieve the specified site script
 
 ```yaml
 Type: TenantSiteScriptPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -SiteDesign
-
+If specified will retrieve the site scripts for this design
 
 ```yaml
 Type: TenantSiteDesignPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

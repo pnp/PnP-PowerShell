@@ -10,9 +10,8 @@ Returns the principals with design rights on a specific Site Design
 
 ## SYNTAX 
 
-### 
 ```powershell
-Get-PnPSiteDesignRights [-Identity <TenantSiteDesignPipeBind>]
+Get-PnPSiteDesignRights -Identity <TenantSiteDesignPipeBind>
                         [-Connection <SPOnlineConnection>]
 ```
 
@@ -28,26 +27,26 @@ Returns the principals with rights on a specific site design
 ## PARAMETERS
 
 ### -Identity
-
+The ID of the Site Design to receive the rights for
 
 ```yaml
 Type: TenantSiteDesignPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,10 +10,17 @@ Add/uploads an available app to the app catalog
 
 ## SYNTAX 
 
-### 
+### Add only
 ```powershell
-Add-PnPApp [-Path <String>]
-           [-Publish [<SwitchParameter>]]
+Add-PnPApp -Path <String>
+           [-Overwrite [<SwitchParameter>]]
+           [-Connection <SPOnlineConnection>]
+```
+
+### Add and Publish
+```powershell
+Add-PnPApp -Publish [<SwitchParameter>]
+           -Path <String>
            [-SkipFeatureDeployment [<SwitchParameter>]]
            [-Overwrite [<SwitchParameter>]]
            [-Connection <SPOnlineConnection>]
@@ -38,38 +45,38 @@ This will upload the specified app package to the app catalog and deploy/trust i
 ## PARAMETERS
 
 ### -Overwrite
-
+Overwrites the existing app package if it already exists
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Path
-
+Specifies the Id or an actual app metadata instance
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Add only
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Publish
-
+This will deploy/trust an app into the app catalog
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Add and Publish
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -78,22 +85,22 @@ Accept pipeline input: False
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Add and Publish
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

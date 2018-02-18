@@ -10,11 +10,17 @@ Set the masterpage
 
 ## SYNTAX 
 
-### 
+### Server Relative
 ```powershell
 Set-PnPMasterPage [-MasterPageServerRelativeUrl <String>]
                   [-CustomMasterPageServerRelativeUrl <String>]
-                  [-MasterPageSiteRelativeUrl <String>]
+                  [-Web <WebPipeBind>]
+                  [-Connection <SPOnlineConnection>]
+```
+
+### Site Relative
+```powershell
+Set-PnPMasterPage [-MasterPageSiteRelativeUrl <String>]
                   [-CustomMasterPageSiteRelativeUrl <String>]
                   [-Web <WebPipeBind>]
                   [-Connection <SPOnlineConnection>]
@@ -56,76 +62,76 @@ Sets the master page and custom master page based on a site relative URL
 ## PARAMETERS
 
 ### -CustomMasterPageServerRelativeUrl
-
+Specifies the custom Master page URL based on the server relative URL
 
 ```yaml
 Type: String
-Parameter Sets: 
-Aliases: new String[1] { "CustomMasterPageUrl" }
+Parameter Sets: Server Relative
+Aliases: CustomMasterPageUrl
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -CustomMasterPageSiteRelativeUrl
-
+Specifies the custom Master page URL based on the site relative URL
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Site Relative
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -MasterPageServerRelativeUrl
-
+Specifies the Master page URL based on the server relative URL
 
 ```yaml
 Type: String
-Parameter Sets: 
-Aliases: new String[1] { "MasterPageUrl" }
+Parameter Sets: Server Relative
+Aliases: MasterPageUrl
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -MasterPageSiteRelativeUrl
-
+Specifies the Master page URL based on the site relative URL
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Site Relative
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

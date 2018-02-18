@@ -270,6 +270,7 @@ Cmdlet|Description|Platform
 ### Microsoft Graph 
 Cmdlet|Description|Platform
 :-----|:----------|:-------
+**[Connect&#8209;PnPMicrosoftGraph](../../sharepoint-ps/sharepoint-pnp/Connect-PnPMicrosoftGraph.md)** |Connect to the Microsoft Graph|All
 **[Add&#8209;PnPSiteClassification](../../sharepoint-ps/sharepoint-pnp/Add-PnPSiteClassification.md)** |Adds one ore more site classification values to the list of possible values. Requires a connection to the Microsoft Graph.|SharePoint Online
 **[Disable&#8209;PnPSiteClassification](../../sharepoint-ps/sharepoint-pnp/Disable-PnPSiteClassification.md)** |Disables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.|SharePoint Online
 **[Enable&#8209;PnPSiteClassification](../../sharepoint-ps/sharepoint-pnp/Enable-PnPSiteClassification.md)** |Enables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.|SharePoint Online

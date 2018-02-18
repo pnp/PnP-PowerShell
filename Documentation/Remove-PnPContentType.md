@@ -10,9 +10,8 @@ Removes a content type from a web
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPContentType [-Identity <ContentTypePipeBind>]
+Remove-PnPContentType -Identity <ContentTypePipeBind>
                       [-Force [<SwitchParameter>]]
                       [-Web <WebPipeBind>]
                       [-Connection <SPOnlineConnection>]
@@ -37,50 +36,50 @@ This will remove a content type called "Project Document" from the current web w
 ## PARAMETERS
 
 ### -Force
-
+Specifying the Force parameter will skip the confirmation question.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+The name or ID of the content type to remove
 
 ```yaml
 Type: ContentTypePipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

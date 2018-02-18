@@ -10,9 +10,9 @@ Applies a provisioning template to a web
 
 ## SYNTAX 
 
-### 
+### Instance
 ```powershell
-Apply-PnPProvisioningTemplate [-Path <String>]
+Apply-PnPProvisioningTemplate [-InputInstance <ProvisioningTemplate>]
                               [-ResourceFolder <String>]
                               [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
                               [-IgnoreDuplicateDataRowErrors [<SwitchParameter>]]
@@ -23,8 +23,40 @@ Apply-PnPProvisioningTemplate [-Path <String>]
                               [-ExcludeHandlers <Handlers>]
                               [-ExtensibilityHandlers <ExtensibilityHandler[]>]
                               [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
-                              [-InputInstance <ProvisioningTemplate>]
-                              [-GalleryTemplateId <Guid>]
+                              [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
+```
+
+### Gallery
+```powershell
+Apply-PnPProvisioningTemplate [-GalleryTemplateId <Guid>]
+                              [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-IgnoreDuplicateDataRowErrors [<SwitchParameter>]]
+                              [-ProvisionContentTypesToSubWebs [<SwitchParameter>]]
+                              [-ClearNavigation [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
+                              [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
+```
+
+### Path
+```powershell
+Apply-PnPProvisioningTemplate -Path <String>
+                              [-ResourceFolder <String>]
+                              [-OverwriteSystemPropertyBagValues [<SwitchParameter>]]
+                              [-IgnoreDuplicateDataRowErrors [<SwitchParameter>]]
+                              [-ProvisionContentTypesToSubWebs [<SwitchParameter>]]
+                              [-ClearNavigation [<SwitchParameter>]]
+                              [-Parameters <Hashtable>]
+                              [-Handlers <Handlers>]
+                              [-ExcludeHandlers <Handlers>]
+                              [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+                              [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                               [-Web <WebPipeBind>]
                               [-Connection <SPOnlineConnection>]
 ```
@@ -95,38 +127,38 @@ Applies a provisioning template from an in-memory instance of a ProvisioningTemp
 ## PARAMETERS
 
 ### -ClearNavigation
-
+Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ExcludeHandlers
-
+Allows you to run all handlers, excluding the ones specified.
 
 ```yaml
 Type: Handlers
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ExtensibilityHandlers
-
+Allows you to specify ExtensbilityHandlers to execute while applying a template
 
 ```yaml
 Type: ExtensibilityHandler[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -135,142 +167,142 @@ Accept pipeline input: False
 
 ```yaml
 Type: Guid
-Parameter Sets: 
+Parameter Sets: Gallery
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Handlers
-
+Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.
 
 ```yaml
 Type: Handlers
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -IgnoreDuplicateDataRowErrors
-
+Ignore duplicate data row errors when the data row in the template already exists.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -InputInstance
-
+Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.
 
 ```yaml
 Type: ProvisioningTemplate
-Parameter Sets: 
+Parameter Sets: Instance
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -OverwriteSystemPropertyBagValues
-
+Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Parameters
-
+Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.
 
 ```yaml
 Type: Hashtable
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Path
-
+Path to the xml or pnp file containing the provisioning template.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: Path
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -ProvisionContentTypesToSubWebs
-
+If set content types will be provisioned if the target web is a subweb.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ResourceFolder
-
+Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TemplateProviderExtensions
-
+Allows you to specify ITemplateProviderExtension to execute while applying a template.
 
 ```yaml
 Type: ITemplateProviderExtension[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,9 +10,8 @@ Adds a Role Defintion (Permission Level) to the site collection in the current c
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPRoleDefinition [-RoleName <String>]
+Add-PnPRoleDefinition -RoleName <String>
                       [-Clone <RoleDefinitionPipeBind>]
                       [-Include <PermissionKind[]>]
                       [-Exclude <PermissionKind[]>]
@@ -57,74 +56,74 @@ Creates additional permission level by cloning "Contribute" and removes flags De
 ## PARAMETERS
 
 ### -Clone
-
+An existing permission level or the name of an permission level to clone as base template.
 
 ```yaml
 Type: RoleDefinitionPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Description
-
+Optional description for the new permission level.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Exclude
-
+Specifies permission flags(s) to disable.
 
 ```yaml
 Type: PermissionKind[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Include
-
+Specifies permission flags(s) to enable.
 
 ```yaml
 Type: PermissionKind[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -RoleName
-
+Name of new permission level.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

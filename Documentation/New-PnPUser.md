@@ -10,9 +10,8 @@ Adds a user to the built-in Site User Info List and returns a user object
 
 ## SYNTAX 
 
-### 
 ```powershell
-New-PnPUser [-LoginName <String>]
+New-PnPUser -LoginName <String>
             [-Web <WebPipeBind>]
             [-Connection <SPOnlineConnection>]
 ```
@@ -29,39 +28,39 @@ Adds a new user with the login user@company.com to the current site
 ## PARAMETERS
 
 ### -LoginName
-
+The users login name (user@company.com)
 
 ```yaml
 Type: String
-Parameter Sets: 
-Aliases: new String[1] { "LogonName" }
+Parameter Sets: (All)
+Aliases: LogonName
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

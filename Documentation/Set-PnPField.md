@@ -10,11 +10,10 @@ Changes one or more properties of a field in a specific list or for the whole we
 
 ## SYNTAX 
 
-### 
 ```powershell
-Set-PnPField [-List <ListPipeBind>]
-             [-Identity <FieldPipeBind>]
-             [-Values <Hashtable>]
+Set-PnPField -Values <Hashtable>
+             -Identity <FieldPipeBind>
+             [-List <ListPipeBind>]
              [-UpdateExistingLists [<SwitchParameter>]]
              [-Web <WebPipeBind>]
              [-Connection <SPOnlineConnection>]
@@ -46,74 +45,74 @@ Updates the AssignedTo field on the Tasks list to use customrendering.js for the
 ## PARAMETERS
 
 ### -Identity
-
+The field object, internal field name (case sensitive) or field id to update
 
 ```yaml
 Type: FieldPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -List
-
+The list object, name or id where to update the field. If omited the field will be updated on the web.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
-Accept pipeline input: False
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -UpdateExistingLists
-
+If provided, the field will be updated on existing lists that use it as well. If not provided or set to $false, existing lists using the field will remain unchanged but new lists will get the updated field.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Values
-
+Hashtable of properties to update on the field. Use the syntax @{property1="value";property2="value"}.
 
 ```yaml
 Type: Hashtable
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,9 +10,8 @@ Updates a Site Design on the current tenant.
 
 ## SYNTAX 
 
-### 
 ```powershell
-Set-PnPSiteDesign [-Identity <TenantSiteDesignPipeBind>]
+Set-PnPSiteDesign -Identity <TenantSiteDesignPipeBind>
                   [-Title <String>]
                   [-SiteScriptIds <GuidPipeBind[]>]
                   [-Description <String>]
@@ -44,122 +43,122 @@ Updates an existing Site Design and sets a new title.
 ## PARAMETERS
 
 ### -Description
-
+The description of the site design
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+The guid or an object representing the site design
 
 ```yaml
 Type: TenantSiteDesignPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -IsDefault
-
+Specifies if the site design is a default site design
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -PreviewImageAltText
-
+Sets the text for the preview image
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -PreviewImageUrl
-
+Sets the url to the preview image
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SiteScriptIds
-
+An array of guids of site scripts
 
 ```yaml
 Type: GuidPipeBind[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Title
-
+The title of the site design
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Version
-
+Specifies the version of the design
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -WebTemplate
-
+Specifies the type of site to which this design applies
 
 ```yaml
 Type: SiteWebTemplate
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

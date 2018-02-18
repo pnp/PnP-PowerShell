@@ -10,15 +10,14 @@ Sends an email using the Office 365 SMTP Service or SharePoint, depending on the
 
 ## SYNTAX 
 
-### 
 ```powershell
-Send-PnPMail [-Server <String>]
+Send-PnPMail -To <String[]>
+             -Subject <String>
+             -Body <String>
+             [-Server <String>]
              [-From <String>]
              [-Password <String>]
-             [-To <String[]>]
              [-Cc <String[]>]
-             [-Subject <String>]
-             [-Body <String>]
              [-Web <WebPipeBind>]
              [-Connection <SPOnlineConnection>]
 ```
@@ -49,50 +48,50 @@ Sends an e-mail via a custom SMTP server and requires a from address and passwor
 ## PARAMETERS
 
 ### -Body
-
+Body of the email
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Cc
-
+List of recipients on CC
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -From
-
+If using from address, you also have to provide a password
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Password
-
+If using a password, you also have to provide the associated from address
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -101,58 +100,58 @@ Accept pipeline input: False
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Subject
-
+Subject of the email
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -To
-
+List of recipients
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

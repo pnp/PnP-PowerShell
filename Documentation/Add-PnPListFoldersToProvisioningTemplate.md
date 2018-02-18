@@ -10,10 +10,9 @@ Adds folders to a list in a PnP Provisioning Template
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPListFoldersToProvisioningTemplate [-Path <String>]
-                                         [-List <ListPipeBind>]
+Add-PnPListFoldersToProvisioningTemplate -Path <String>
+                                         -List <ListPipeBind>
                                          [-Recursive [<SwitchParameter>]]
                                          [-IncludeSecurity [<SwitchParameter>]]
                                          [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
@@ -47,86 +46,86 @@ Adds all folders from a list with unique permissions to an in-memory PnP Provisi
 ## PARAMETERS
 
 ### -IncludeSecurity
-
+A switch to include ObjectSecurity information.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: 5
 Accept pipeline input: False
 ```
 
 ### -List
-
+The list to query
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: 2
 Accept pipeline input: False
 ```
 
 ### -Path
-
+Filename of the .PNP Open XML provisioning template to read from, optionally including full path.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
 Accept pipeline input: False
 ```
 
 ### -Recursive
-
+A switch parameter to include all folders in the list, or just top level folders.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: 4
 Accept pipeline input: False
 ```
 
 ### -TemplateProviderExtensions
-
+Allows you to specify ITemplateProviderExtension to execute while loading the template.
 
 ```yaml
 Type: ITemplateProviderExtension[]
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: 6
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,7 +10,6 @@ Retrieve Site Designs that have been registered on the current tenant.
 
 ## SYNTAX 
 
-### 
 ```powershell
 Get-PnPSiteDesign [-Identity <TenantSiteDesignPipeBind>]
                   [-Connection <SPOnlineConnection>]
@@ -35,26 +34,26 @@ Returns a specific registered site designs
 ## PARAMETERS
 
 ### -Identity
-
+If specified will retrieve the specified site design
 
 ```yaml
 Type: TenantSiteDesignPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

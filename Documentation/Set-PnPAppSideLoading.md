@@ -10,10 +10,15 @@ Enables the App SideLoading Feature on a site
 
 ## SYNTAX 
 
-### 
+### On
 ```powershell
-Set-PnPAppSideLoading [-On [<SwitchParameter>]]
-                      [-Off [<SwitchParameter>]]
+Set-PnPAppSideLoading -On [<SwitchParameter>]
+                      [-Connection <SPOnlineConnection>]
+```
+
+### Off
+```powershell
+Set-PnPAppSideLoading -Off [<SwitchParameter>]
                       [-Connection <SPOnlineConnection>]
 ```
 
@@ -40,10 +45,10 @@ This will turn off App side loading
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: Off
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
@@ -52,22 +57,22 @@ Accept pipeline input: False
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: On
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

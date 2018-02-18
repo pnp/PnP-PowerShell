@@ -10,13 +10,12 @@ Converts a provisioning template to an other schema version
 
 ## SYNTAX 
 
-### 
 ```powershell
-Convert-PnPProvisioningTemplate [-Path <String>]
+Convert-PnPProvisioningTemplate -Path <String>
                                 [-Out <String>]
-                                [-ToSchema <XMLPnPSchemaVersion>]
                                 [-Encoding <Encoding>]
                                 [-Force [<SwitchParameter>]]
+                                [-ToSchema <XMLPnPSchemaVersion>]
 ```
 
 ## EXAMPLES
@@ -45,62 +44,62 @@ Converts a provisioning template to the latest schema using the 201512 schema an
 ## PARAMETERS
 
 ### -Encoding
-
+The encoding type of the XML file, Unicode is default
 
 ```yaml
 Type: Encoding
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Force
-
+Overwrites the output file if it exists
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Out
-
+Filename to write to, optionally including full path
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Path
-
+Path to the xml file containing the provisioning template
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -ToSchema
-
+The schema of the output to use, defaults to the latest schema
 
 ```yaml
 Type: XMLPnPSchemaVersion
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: 1
 Accept pipeline input: False
 ```
 

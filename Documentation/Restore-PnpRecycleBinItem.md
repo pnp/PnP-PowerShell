@@ -10,10 +10,16 @@ Restores the provided recycle bin item to its original location
 
 ## SYNTAX 
 
-### 
+### Identity
 ```powershell
-Restore-PnPRecycleBinItem [-Identity <RecycleBinItemPipeBind>]
-                          [-All [<SwitchParameter>]]
+Restore-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind>
+                          [-Force [<SwitchParameter>]]
+                          [-Connection <SPOnlineConnection>]
+```
+
+### All
+```powershell
+Restore-PnPRecycleBinItem -All [<SwitchParameter>]
                           [-Force [<SwitchParameter>]]
                           [-Connection <SPOnlineConnection>]
 ```
@@ -37,50 +43,50 @@ Restores all the items in the first and second stage recycle bins to their origi
 ## PARAMETERS
 
 ### -All
-
+If provided all items will be stored 
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: All
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Force
-
+If provided, no confirmation will be asked to restore the recycle bin item
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+Id of the recycle bin item or the recycle bin item object itself to restore
 
 ```yaml
 Type: RecycleBinItemPipeBind
-Parameter Sets: 
+Parameter Sets: Identity
 
-Required: False
-Position: 0
-Accept pipeline input: False
+Required: True
+Position: Named
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

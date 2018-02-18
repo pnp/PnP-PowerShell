@@ -10,13 +10,23 @@ Adds a webpart to a wiki page in a specified table row and column
 
 ## SYNTAX 
 
-### 
+### XML
 ```powershell
-Add-PnPWebPartToWikiPage [-ServerRelativePageUrl <String>]
-                         [-Xml <String>]
-                         [-Path <String>]
-                         [-Row <Int>]
-                         [-Column <Int>]
+Add-PnPWebPartToWikiPage -Xml <String>
+                         -ServerRelativePageUrl <String>
+                         -Row <Int>
+                         -Column <Int>
+                         [-AddSpace [<SwitchParameter>]]
+                         [-Web <WebPipeBind>]
+                         [-Connection <SPOnlineConnection>]
+```
+
+### FILE
+```powershell
+Add-PnPWebPartToWikiPage -Path <String>
+                         -ServerRelativePageUrl <String>
+                         -Row <Int>
+                         -Column <Int>
                          [-AddSpace [<SwitchParameter>]]
                          [-Web <WebPipeBind>]
                          [-Connection <SPOnlineConnection>]
@@ -41,99 +51,99 @@ This will add the webpart as defined by the XML in the $webpart variable to the 
 ## PARAMETERS
 
 ### -AddSpace
-
+Must there be a extra space between the webpart
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Column
-
+Column number where the webpart must be placed
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Path
-
+A path to a webpart file on a the file system.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: FILE
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Row
-
+Row number where the webpart must be placed
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -ServerRelativePageUrl
-
+Full server relative url of the webpart page, e.g. /sites/demo/sitepages/home.aspx
 
 ```yaml
 Type: String
-Parameter Sets: 
-Aliases: new String[1] { "PageUrl" }
+Parameter Sets: (All)
+Aliases: PageUrl
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Xml
-
+A string containing the XML for the webpart.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: XML
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

@@ -10,10 +10,9 @@ Adds a link to a JavaScript snippet/block to a web or site collection
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPJavaScriptBlock [-Name <String>]
-                       [-Script <String>]
+Add-PnPJavaScriptBlock -Name <String>
+                       -Script <String>
                        [-Sequence <Int>]
                        [-Scope <CustomActionScope>]
                        [-Web <WebPipeBind>]
@@ -42,75 +41,75 @@ Add a JavaScript code block  to all pages within the current web under the name 
 ## PARAMETERS
 
 ### -Name
-
+The name of the script block. Can be used to identify the script with other cmdlets or coded solutions
 
 ```yaml
 Type: String
-Parameter Sets: 
-Aliases: new String[1] { "Key" }
+Parameter Sets: (All)
+Aliases: Key
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Scope
-
+The scope of the script to add to. Either Web or Site, defaults to Web. 'All' is not valid for this command.
 
 ```yaml
 Type: CustomActionScope
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Script
-
+The javascript block to add to the specified scope
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Sequence
-
+A sequence number that defines the order on the page
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

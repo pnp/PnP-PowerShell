@@ -10,9 +10,8 @@ Updates an available app from the app catalog
 
 ## SYNTAX 
 
-### 
 ```powershell
-Update-PnPApp [-Identity <AppMetadataPipeBind>]
+Update-PnPApp -Identity <AppMetadataPipeBind>
               [-Connection <SPOnlineConnection>]
 ```
 
@@ -28,26 +27,26 @@ This will update an already installed app if a new version is available. Retriev
 ## PARAMETERS
 
 ### -Identity
-
+Specifies the Id or an actual app metadata instance
 
 ```yaml
 Type: AppMetadataPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

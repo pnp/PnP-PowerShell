@@ -10,12 +10,19 @@ Executes a search query to retrieve indexed site collections
 
 ## SYNTAX 
 
-### 
+### Limit
 ```powershell
-Get-PnPSiteSearchQueryResults [-Query <String>]
-                              [-StartRow <Int>]
+Get-PnPSiteSearchQueryResults [-StartRow <Int>]
                               [-MaxResults <Int>]
-                              [-All [<SwitchParameter>]]
+                              [-Query <String>]
+                              [-Web <WebPipeBind>]
+                              [-Connection <SPOnlineConnection>]
+```
+
+### All
+```powershell
+Get-PnPSiteSearchQueryResults [-All [<SwitchParameter>]]
+                              [-Query <String>]
                               [-Web <WebPipeBind>]
                               [-Connection <SPOnlineConnection>]
 ```
@@ -67,74 +74,74 @@ Returns absolutely all site collections indexed by SharePoint Search
 ## PARAMETERS
 
 ### -All
-
+Automatically page results until the end to get more than 500 sites. Use with caution!
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: All
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -MaxResults
-
+Maximum amount of search results to return. Default and max is 500 search results.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Limit
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Query
-
+Search query in Keyword Query Language (KQL) to execute to refine the returned sites. If omitted, all indexed sites will be returned.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -StartRow
-
+Search result item to start returning the results from. Useful for paging. Leave at 0 to return all results.
 
 ```yaml
 Type: Int
-Parameter Sets: 
+Parameter Sets: Limit
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

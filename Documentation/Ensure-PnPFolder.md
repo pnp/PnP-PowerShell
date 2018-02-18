@@ -12,7 +12,7 @@ Returns a folder from a given site relative path, and will create it if it does 
 
 ### 
 ```powershell
-Ensure-PnPFolder [-SiteRelativePath <String>]
+Ensure-PnPFolder -SiteRelativePath <String>
                  [-Web <WebPipeBind>]
                  [-Includes <String[]>]
                  [-Connection <SPOnlineConnection>]
@@ -45,38 +45,38 @@ Accept pipeline input: False
 ```
 
 ### -SiteRelativePath
-
+Site Relative Folder Path
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
 Accept pipeline input: False
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

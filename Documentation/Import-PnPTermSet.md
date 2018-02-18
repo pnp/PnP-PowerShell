@@ -10,10 +10,9 @@ Imports a taxonomy term set from a file in the standard format.
 
 ## SYNTAX 
 
-### 
 ```powershell
-Import-PnPTermSet [-GroupName <String>]
-                  [-Path <String>]
+Import-PnPTermSet -GroupName <String>
+                  -Path <String>
                   [-TermSetId <Guid>]
                   [-SynchronizeDeletions [<SwitchParameter>]]
                   [-IsOpen <Nullable`1>]
@@ -64,110 +63,110 @@ Creates (or updates) the term set specified in the import file, setting the IsOp
 ## PARAMETERS
 
 ### -Contact
-
+Contact for the term set; if not specified, the existing setting is retained.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -GroupName
-
+Group to import the term set to; an error is returned if the group does not exist.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -IsOpen
-
+Whether the term set should be marked open; if not specified, then the existing setting is not changed.
 
 ```yaml
 Type: Nullable`1
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Owner
-
+Owner for the term set; if not specified, the existing setting is retained.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Path
-
+Local path to the file containing the term set to import, in the standard format (as the 'sample import file' available in the Term Store Administration).
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -SynchronizeDeletions
-
+If specified, the import will remove any terms (and children) previously in the term set but not in the import file; default is to leave them.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TermSetId
-
+GUID to use for the term set; if not specified, or the empty GUID, a random GUID is generated and used.
 
 ```yaml
 Type: Guid
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -TermStoreName
-
+Term store to import into; if not specified the default term store is used.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

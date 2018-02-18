@@ -10,10 +10,9 @@ Grants the specified principals rights to use the site design.
 
 ## SYNTAX 
 
-### 
 ```powershell
-Grant-PnPSiteDesignRights [-Identity <TenantSiteDesignPipeBind>]
-                          [-Principals <String[]>]
+Grant-PnPSiteDesignRights -Principals <String[]>
+                          -Identity <TenantSiteDesignPipeBind>
                           [-Rights <TenantSiteDesignPrincipalRights>]
                           [-Connection <SPOnlineConnection>]
 ```
@@ -37,50 +36,50 @@ Grants the specified principals View rights on the site design specified
 ## PARAMETERS
 
 ### -Identity
-
+The site design to use.
 
 ```yaml
 Type: TenantSiteDesignPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Principals
-
+One or more principals to grant rights to.
 
 ```yaml
 Type: String[]
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Rights
-
+The rights to set. Defaults to 'View'
 
 ```yaml
 Type: TenantSiteDesignPrincipalRights
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

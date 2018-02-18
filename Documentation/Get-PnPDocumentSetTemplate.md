@@ -12,7 +12,7 @@ Retrieves a document set template
 
 ### 
 ```powershell
-Get-PnPDocumentSetTemplate [-Identity <DocumentSetPipeBind>]
+Get-PnPDocumentSetTemplate -Identity <DocumentSetPipeBind>
                            [-Web <WebPipeBind>]
                            [-Includes <String[]>]
                            [-Connection <SPOnlineConnection>]
@@ -37,15 +37,15 @@ This will get the document set template with the id "0x0120D520005DB65D094035A24
 ## PARAMETERS
 
 ### -Identity
-
+Either specify a name, an id, a document set template object or a content type object
 
 ```yaml
 Type: DocumentSetPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -Includes
@@ -61,26 +61,26 @@ Accept pipeline input: False
 ```
 
 ### -Web
-
+The web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

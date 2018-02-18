@@ -10,10 +10,9 @@ Adds an item to a navigation element
 
 ## SYNTAX 
 
-### 
 ```powershell
-Add-PnPNavigationNode [-Location <NavigationType>]
-                      [-Title <String>]
+Add-PnPNavigationNode -Location <NavigationType>
+                      -Title <String>
                       [-Url <String>]
                       [-Header <String>]
                       [-First [<SwitchParameter>]]
@@ -65,98 +64,98 @@ Adds a navigation node to the quicklaunch. The navigation node will have the tit
 ## PARAMETERS
 
 ### -External
-
+Indicates the destination URL is outside of the site collection.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -First
-
+Add the new menu item to beginning of the collection.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Header
-
+Optionally value of a header entry to add the menu item to.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Location
-
+The location of the node to add. Either TopNavigationBar, QuickLaunch or SearchNav
 
 ```yaml
 Type: NavigationType
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Title
-
+The title of the node to add
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
-Position: 0
+Required: True
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Url
-
+The url to navigate to when clicking the new menu item. This can either be absolute or relative to the Web. Fragments are not supported.
 
 ```yaml
 Type: String
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 

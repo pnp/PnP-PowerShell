@@ -10,9 +10,8 @@ Removes a Webhook subscription from the resource
 
 ## SYNTAX 
 
-### 
 ```powershell
-Remove-PnPWebhookSubscription [-Identity <WebhookSubscriptionPipeBind>]
+Remove-PnPWebhookSubscription -Identity <WebhookSubscriptionPipeBind>
                               [-List <ListPipeBind>]
                               [-Force [<SwitchParameter>]]
                               [-Web <WebPipeBind>]
@@ -47,62 +46,62 @@ Removes the first Webhook subscription from the list MyList
 ## PARAMETERS
 
 ### -Force
-
+Specifying the Force parameter will skip the confirmation question.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Identity
-
+The identity of the Webhook subscription to remove
 
 ```yaml
 Type: WebhookSubscriptionPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: 0
-Accept pipeline input: False
+Accept pipeline input: True
 ```
 
 ### -List
-
+The list object or name which the Webhook subscription will be removed from
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Connection
-
+Optional connection to be used by cmdlet. Retrieve the value for this parameter by eiter specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: SPOnlineConnection
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
 ### -Web
-
+This parameter allows you to optionally apply the cmdlet action to a subweb within the current web. In most situations this parameter is not required and you can connect to the subweb using Connect-PnPOnline instead. Specify the GUID, server relative url (i.e. /sites/team1) or web instance of the web to apply the command to. Omit this parameter to use the current web.
 
 ```yaml
 Type: WebPipeBind
-Parameter Sets: 
+Parameter Sets: (All)
 
 Required: False
-Position: 0
+Position: Named
 Accept pipeline input: False
 ```
 
