@@ -1,22 +1,23 @@
-﻿using Microsoft.SharePoint.Client;
+﻿using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.SharePoint.Client;
 using System;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
-    public sealed class SitePipeBind
+    public sealed class HubSitePipeBind
     {
         private readonly Guid _id;
         private readonly string _url;
         private readonly Microsoft.SharePoint.Client.Site _site;
 
-        public SitePipeBind()
+        public HubSitePipeBind()
         {
             _id = Guid.Empty;
             _url = string.Empty;
             _site = null;
         }
 
-        public SitePipeBind(string url)
+        public HubSitePipeBind(string url)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -34,11 +35,16 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             _url = url;
         }
 
-        public SitePipeBind(Microsoft.SharePoint.Client.Site site)
+        public HubSitePipeBind(Microsoft.SharePoint.Client.Site site)
         {
             site.EnsureProperties(s => s.Url);
             _url = site.Url;
             _site = site;
+        }
+
+        public HubSitePipeBind(HubSiteProperties properties)
+        {
+            _url = properties.SiteUrl;
         }
 
         public string Url => _url;

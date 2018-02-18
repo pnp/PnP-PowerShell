@@ -405,8 +405,11 @@ Cmdlet|Description|Platform
 **[Get&#8209;PnPAccessToken](../../sharepoint-ps/sharepoint-pnp/Get-PnPAccessToken.md)** |Returns the current OAuth Access token|All
 **[Connect&#8209;PnPHubSite](../../sharepoint-ps/sharepoint-pnp/Connect-PnPHubSite.md)** |Connects a site to a hubsite.|SharePoint Online
 **[Disconnect&#8209;PnPHubSite](../../sharepoint-ps/sharepoint-pnp/Disconnect-PnPHubSite.md)** |Disconnects a site from a hubsite.|SharePoint Online
+**[Get&#8209;PnPHubSite](../../sharepoint-ps/sharepoint-pnp/Get-PnPHubSite.md)** |Retrieve all or a specific hubsite.|SharePoint Online
 **[Register&#8209;PnPHubSite](../../sharepoint-ps/sharepoint-pnp/Register-PnPHubSite.md)** |Registers a site as a hubsite|SharePoint Online
+**[Set&#8209;PnPHubSite](../../sharepoint-ps/sharepoint-pnp/Set-PnPHubSite.md)** |Sets hubsite properties|SharePoint Online
 **[Unregister&#8209;PnPHubSite](../../sharepoint-ps/sharepoint-pnp/Unregister-PnPHubSite.md)** |Unregisters a site as a hubsite|SharePoint Online
+**[Grant&#8209;PnPHubSiteRights](../../sharepoint-ps/sharepoint-pnp/Grant-PnPHubSiteRights.md)** |Retrieve all or a specific hubsite.|SharePoint Online
 **[Add&#8209;PnPOffice365GroupToSite](../../sharepoint-ps/sharepoint-pnp/Add-PnPOffice365GroupToSite.md)** |Groupifies a classic team site by creating an Office 365 group for it and connecting the site with the newly created group|SharePoint Online
 **[New&#8209;PnPSite](../../sharepoint-ps/sharepoint-pnp/New-PnPSite.md)** |BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection|SharePoint Online
 **[Add&#8209;PnPSiteCollectionAppCatalog](../../sharepoint-ps/sharepoint-pnp/Add-PnPSiteCollectionAppCatalog.md)** |Adds a Site Collection scoped App Catalog to a site|SharePoint Online
@@ -429,8 +432,10 @@ Cmdlet|Description|Platform
 **[Get&#8209;PnPTenantCdnEnabled](../../sharepoint-ps/sharepoint-pnp/Get-PnPTenantCdnEnabled.md)** |Retrieves if the Office 365 Content Delivery Network has been enabled.|SharePoint Online
 **[Set&#8209;PnPTenantCdnEnabled](../../sharepoint-ps/sharepoint-pnp/Set-PnPTenantCdnEnabled.md)** |Enables or disabled the public or private Office 365 Content Delivery Network (CDN).|SharePoint Online
 **[Add&#8209;PnPTenantCdnOrigin](../../sharepoint-ps/sharepoint-pnp/Add-PnPTenantCdnOrigin.md)** |Adds a new origin to the public or private content delivery network (CDN).|SharePoint Online
-**[Get&#8209;PnPTenantCdnOrigin](../../sharepoint-ps/sharepoint-pnp/Get-PnPTenantCdnOrigin.md)** |Adds a new origin to the public or private content delivery network (CDN).|SharePoint Online
+**[Get&#8209;PnPTenantCdnOrigin](../../sharepoint-ps/sharepoint-pnp/Get-PnPTenantCdnOrigin.md)** |Returns the current registered origins from the public or private content delivery network (CDN).|SharePoint Online
 **[Remove&#8209;PnPTenantCdnOrigin](../../sharepoint-ps/sharepoint-pnp/Remove-PnPTenantCdnOrigin.md)** |Removes an origin from the Public or Private content delivery network (CDN).|SharePoint Online
+**[Get&#8209;PnPTenantCdnPolicies](../../sharepoint-ps/sharepoint-pnp/Get-PnPTenantCdnPolicies.md)** |Returns the CDN Policies for the specified CDN (Public | Private).|SharePoint Online
+**[Set&#8209;PnPTenantCdnPolicy](../../sharepoint-ps/sharepoint-pnp/Set-PnPTenantCdnPolicy.md)** |Sets the CDN Policies for the specified CDN (Public | Private).|SharePoint Online
 **[Clear&#8209;PnPTenantRecycleBinItem](../../sharepoint-ps/sharepoint-pnp/Clear-PnPTenantRecycleBinItem.md)** |Permanently deletes a site collection from the tenant scoped recycle bin|All
 **[Restore&#8209;PnPTenantRecycleBinItem](../../sharepoint-ps/sharepoint-pnp/Restore-PnPTenantRecycleBinItem.md)** |Restores a site collection from the tenant scoped recycle bin|SharePoint Online
 **[Get&#8209;PnPTenantSite](../../sharepoint-ps/sharepoint-pnp/Get-PnPTenantSite.md)** |Retrieve site information.|SharePoint Online

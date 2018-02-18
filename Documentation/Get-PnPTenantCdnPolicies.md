@@ -3,17 +3,17 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPTenantCdnEnabled
+# Get-PnPTenantCdnPolicies
 
 ## SYNOPSIS
-Retrieves if the Office 365 Content Delivery Network has been enabled.
+Returns the CDN Policies for the specified CDN (Public | Private).
 
 ## SYNTAX 
 
 ### 
 ```powershell
-Get-PnPTenantCdnEnabled [-CdnType <SPOTenantCdnType>]
-                        [-Connection <SPOnlineConnection>]
+Get-PnPTenantCdnPolicies [-CdnType <SPOTenantCdnType>]
+                         [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -23,10 +23,10 @@ Enables or disabled the public or private Office 365 Content Delivery Network (C
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPTenantCdnEnabled -CdnType Public
+PS:> Get-PnPTenantCdnPolicies -CdnType Public
 ```
 
-Returns the enabled status of the specified CDN
+Returns the policies for the specified CDN type
 
 ## PARAMETERS
 

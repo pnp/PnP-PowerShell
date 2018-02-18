@@ -3,17 +3,16 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Get-PnPHubSite
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Retrieve all or a specific hubsite.
 
 ## SYNTAX 
 
 ### 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Get-PnPHubSite [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
@@ -27,24 +26,12 @@ Returns all site storage entities/farm properties
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
+PS:> Get-PnPTenantSite -Key MyKey
 ```
 
 Returns the storage entity/farm property with the given key.
 
 ## PARAMETERS
-
-### -Key
-
-
-```yaml
-Type: String
-Parameter Sets: 
-
-Required: False
-Position: 0
-Accept pipeline input: False
-```
 
 ### -Connection
 

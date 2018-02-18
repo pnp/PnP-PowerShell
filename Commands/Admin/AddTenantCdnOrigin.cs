@@ -22,10 +22,12 @@ You must be a SharePoint Online global administrator and a site collection admin
         Remarks = @"This example configures a public CDN on site level.", SortOrder = 1)]
     public class AddTenantCdnOrigin : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = @"Url of the site to add the app catalog to.")]
+        [Parameter(Mandatory = true, HelpMessage = @"Specifies a path to the doc library to be configured. It can be provided in two ways: relative path, or a mask.
+
+Relative-Relative path depends on the OriginScope. If the originScope is Tenant, a path must be a relative path under the tenant root. If the originScope is Site, a path must be a relative path under the given Site. The path must point to the valid Document Library or a folder with a document library.")]
         public string OriginUrl;
 
-        [Parameter(Mandatory = true, HelpMessage = "The type to add. Defaults to Public.")]
+        [Parameter(Mandatory = true, HelpMessage = "Specifies the CDN type. The valid values are: public or private.")]
         public SPOTenantCdnType CdnType;
 
         protected override void ExecuteCmdlet()

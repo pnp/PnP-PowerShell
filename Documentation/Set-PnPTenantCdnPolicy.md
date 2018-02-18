@@ -3,30 +3,30 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPTenantCdnEnabled
+# Set-PnPTenantCdnPolicy
 
 ## SYNOPSIS
-Retrieves if the Office 365 Content Delivery Network has been enabled.
+Sets the CDN Policies for the specified CDN (Public | Private).
 
 ## SYNTAX 
 
 ### 
 ```powershell
-Get-PnPTenantCdnEnabled [-CdnType <SPOTenantCdnType>]
-                        [-Connection <SPOnlineConnection>]
+Set-PnPTenantCdnPolicy [-CdnType <SPOTenantCdnType>]
+                       [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
-Enables or disabled the public or private Office 365 Content Delivery Network (CDN).
+Sets the CDN Policies for the specified CDN (Public | Private).
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPTenantCdnEnabled -CdnType Public
+PS:> Set-PnPTenantCdnPolicies -CdnType Public -PolicyType IncludeFileExtensions -PolicyValue "CSS,EOT,GIF,ICO,JPEG,JPG,JS,MAP,PNG,SVG,TTF,WOFF"
 ```
 
-Returns the enabled status of the specified CDN
+This example sets the IncludeFileExtensions policy to the specified value.
 
 ## PARAMETERS
 

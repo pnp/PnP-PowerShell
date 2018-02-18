@@ -18,11 +18,11 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPTenantCdnEnabled -CdnType Public -Enable $true",
-        Remarks = @"This example sets the Public CDN enabled.", SortOrder = 1)]
+        Code = @"PS:> Get-PnPTenantCdnEnabled -CdnType Public",
+        Remarks = @"Returns the enabled status of the specified CDN", SortOrder = 1)]
     public class GetTenantCdnEnabled : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The type of cdn to retrieve the origins from. Defaults to Public.")]
+        [Parameter(Mandatory = true, HelpMessage = "The type of cdn to retrieve the origins from")]
         public SPOTenantCdnType CdnType;
 
         protected override void ExecuteCmdlet()

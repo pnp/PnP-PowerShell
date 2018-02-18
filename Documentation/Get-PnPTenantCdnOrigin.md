@@ -6,7 +6,7 @@ schema: 2.0.0
 # Get-PnPTenantCdnOrigin
 
 ## SYNOPSIS
-Adds a new origin to the public or private content delivery network (CDN).
+Returns the current registered origins from the public or private content delivery network (CDN).
 
 ## SYNTAX 
 
@@ -17,18 +17,16 @@ Get-PnPTenantCdnOrigin [-CdnType <SPOTenantCdnType>]
 ```
 
 ## DESCRIPTION
-Add a new origin to the public or private CDN, on either Tenant level or on a single Site level. Effectively, a tenant admin points out to a document library, or a folder in the document library and requests that content in that library should be retrievable by using a CDN.
-
-You must be a SharePoint Online global administrator and a site collection administrator to run the cmdlet.
+Returns the current registered origins from the public or private content delivery network (CDN).
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Add-PnPTenantCdnOrigin -Url /sites/site/subfolder
+PS:> Get-PnPTenantCdnOrigin -CdnType Public
 ```
 
-This example configures a public CDN on site level.
+Returns the configured CDN origins for the specified CDN type
 
 ## PARAMETERS
 

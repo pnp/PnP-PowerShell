@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = true, HelpMessage = "Specify to enable or disable")]
         public bool Enable;
 
-        [Parameter(Mandatory = true, HelpMessage = "The type of cdn to retrieve the origins from. Defaults to Public.")]
+        [Parameter(Mandatory = true, HelpMessage = "The type of cdn to enable or disable")]
         public CdnType CdnType;
 
         [Parameter(Mandatory = false)]

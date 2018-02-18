@@ -414,9 +414,14 @@
     <Compile Include="Admin\AddTenantTheme.cs" />
     <Compile Include="Admin\DisconnectHubSite.cs" />
     <Compile Include="Admin\ConnectHubSite.cs" />
+    <Compile Include="Admin\GetHubSite.cs" />
     <Compile Include="Admin\GetTenantCdnEnabled.cs" />
+    <Compile Include="Admin\GrantHubSiteRights.cs" />
+    <Compile Include="Admin\SetHubSite.cs" />
+    <Compile Include="Admin\GetTenantCdnPolicies.cs" />
     <Compile Include="Admin\SetTenantCdnEnabled.cs" />
     <Compile Include="Admin\GetTenantTheme.cs" />
+    <Compile Include="Admin\SetTenantCdnPolicy.cs" />
     <Compile Include="Admin\UnregisterHubSite.cs" />
     <Compile Include="Admin\RegisterHubSite.cs" />
     <Compile Include="Admin\RemoveTenantCdnOrigin.cs" />
@@ -427,6 +432,7 @@
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Admin\RemoveTenantTheme.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\HubSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\NavigationNodePipeBind.cs" />
     <Compile Include="Base\PipeBinds\RoleDefinitionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ThemePalettePipeBind.cs" />
