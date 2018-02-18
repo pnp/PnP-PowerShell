@@ -1,4 +1,5 @@
-﻿using Microsoft.Online.SharePoint.TenantManagement;
+﻿#if !ONPREMISES
+using Microsoft.Online.SharePoint.TenantManagement;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
@@ -33,3 +34,4 @@ namespace SharePointPnP.PowerShell.Commands.Model
         public bool IsInverted { get; private set; }
     }
 }
+#endif
