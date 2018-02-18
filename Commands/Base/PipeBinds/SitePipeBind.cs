@@ -36,6 +36,8 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 
         public SitePipeBind(Microsoft.SharePoint.Client.Site site)
         {
+            site.EnsureProperties(s => s.Url);
+            _url = site.Url;
             _site = site;
         }
 
