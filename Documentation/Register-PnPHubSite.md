@@ -3,44 +3,40 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Register-PnPHubSite
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Registers a site as a hubsite
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Register-PnPHubSite -Site <SitePipeBind>
+                    [-Connection <SPOnlineConnection>]
 ```
+
+## DESCRIPTION
+Registers a site as a hubsite
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPStorageEntity
+PS:> Register-PnPHubSite -Site https://tenant.sharepoint.com/sites/myhubsite
 ```
 
-Returns all site storage entities/farm properties
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
-```
-
-Returns the storage entity/farm property with the given key.
+This example registers the specified site as a hubsite
 
 ## PARAMETERS
 
-### -Key
-The key of the value to retrieve.
+### -Site
+The site to register as a hubsite
 
 ```yaml
-Type: String
+Type: SitePipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

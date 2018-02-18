@@ -7,6 +7,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.24.1803.0 - Unreleased]
 ### Added
+- Added Get-PnPHubSite cmdlet
+- Added Set-PnPHubSite cmdlet
+- Added Grant-PnPHubSiteRights cmdlet
+- Added Register-PnPHubSite cmdlet
+- Added Unregister-PnPHubSite cmdlet
+- Added Connect-PnPHubSite cmdlet
+- Added Disconnect-PnPHubSite cmdlet
+- Added Add-PnPTenantTheme cmdlet
+- Added Get-PnPTenantTheme cmdlet
+- Added Remove-PnPTenantTheme cmdlet
+- Added Set-PnPTenantCdnEnabled cmdlet
+- Added Get-PnPTenantCdnEnabled cmdlet
+- Added Get-PnPTenantCdnOrigin cmdlet
+- Added Add-PnPTenantCdnOrigin cmdlet
+- Added Remove-PnPTenantCdnOrigin cmdlet
+- Added Get-PnPTenantCdnPolicies cmdlet
+- Added Set-PnPTenantCdnPolicy cmdlet
+- Added Add-PnPSiteCollectionAppCatalog cmdlet
+- Added Remove-PnPSiteCollectionAppCatalog cmdlet
 - Added Get-PnPNavigationNode cmdlet
 - Added Get-PnPRoleDefinition cmdlet
 - Added Add-PnPRoleDefinition cmdlet
@@ -20,9 +39,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Updated Set-PnPList cmdlet to change moderation setting
 - Updated Set-PnPFileCheckedIn to approve the file
 
-
 ### Deprecated
-- Deprecated Remove-PnPNavigationNode -Title -Header parameters. Use Identity instead.
+- Deprecated Remove-PnPNavigationNode -Title and -Header parameters. Use the Identity parameter instead.
 
 ## [2.23.1802.0] - 2018-02-05
 ### Added

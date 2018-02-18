@@ -3,46 +3,43 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Remove-PnPTenantTheme
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Removes a theme
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Remove-PnPTenantTheme -Identity <ThemePipeBind>
+                      [-Connection <SPOnlineConnection>]
 ```
+
+## DESCRIPTION
+Removes the specified theme from the tenant configuration
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPStorageEntity
+PS:> Remove-PnPTenantTheme -Name "MyCompanyTheme"
 ```
 
-Returns all site storage entities/farm properties
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
-```
-
-Returns the storage entity/farm property with the given key.
+Removes the specified theme.
 
 ## PARAMETERS
 
-### -Key
-The key of the value to retrieve.
+### -Identity
+The name of the theme to retrieve
 
 ```yaml
-Type: String
+Type: ThemePipeBind
 Parameter Sets: (All)
+Aliases: Name
 
-Required: False
-Position: Named
-Accept pipeline input: False
+Required: True
+Position: 0
+Accept pipeline input: True
 ```
 
 ### -Connection

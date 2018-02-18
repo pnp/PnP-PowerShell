@@ -3,44 +3,40 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Disconnect-PnPHubSite
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Disconnects a site from a hubsite.
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Disconnect-PnPHubSite -Site <SitePipeBind>
+                      [-Connection <SPOnlineConnection>]
 ```
+
+## DESCRIPTION
+Disconnects an site from a hubsite
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPStorageEntity
+PS:> Disconnect-PnPHubSite -Site https://tenant.sharepoint.com/sites/mysite -HubSite https://tenant.sharepoint.com/sites/hubsite
 ```
 
-Returns all site storage entities/farm properties
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
-```
-
-Returns the storage entity/farm property with the given key.
+This example adds the specified site to the hubsite.
 
 ## PARAMETERS
 
-### -Key
-The key of the value to retrieve.
+### -Site
+The site to disconnect from its hubsite
 
 ```yaml
-Type: String
+Type: SitePipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

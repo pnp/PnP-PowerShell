@@ -86,7 +86,7 @@ PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone $roleDefinition -Exclude
                 spRoleDef.BasePermissions = spBasePerm;
                 roleDefinition = ClientContext.Site.RootWeb.RoleDefinitions.Add(spRoleDef);
                 ClientContext.Load(roleDefinition);
-                ClientContext.ExecuteQuery();
+                ClientContext.ExecuteQueryRetry();
                 WriteObject(roleDefinition);
             }
             else

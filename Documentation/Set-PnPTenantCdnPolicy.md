@@ -3,44 +3,40 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Set-PnPTenantCdnPolicy
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Sets the CDN Policies for the specified CDN (Public | Private).
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Set-PnPTenantCdnPolicy -CdnType <SPOTenantCdnType>
+                       [-Connection <SPOnlineConnection>]
 ```
+
+## DESCRIPTION
+Sets the CDN Policies for the specified CDN (Public | Private).
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPStorageEntity
+PS:> Set-PnPTenantCdnPolicies -CdnType Public -PolicyType IncludeFileExtensions -PolicyValue "CSS,EOT,GIF,ICO,JPEG,JPG,JS,MAP,PNG,SVG,TTF,WOFF"
 ```
 
-Returns all site storage entities/farm properties
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
-```
-
-Returns the storage entity/farm property with the given key.
+This example sets the IncludeFileExtensions policy to the specified value.
 
 ## PARAMETERS
 
-### -Key
-The key of the value to retrieve.
+### -CdnType
+The type of cdn to retrieve the policies from
 
 ```yaml
-Type: String
+Type: SPOTenantCdnType
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

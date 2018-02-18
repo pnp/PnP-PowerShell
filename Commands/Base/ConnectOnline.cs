@@ -329,11 +329,7 @@ dir",
             SPOnlineConnection connection = null;
             if (ParameterSetName == ParameterSet_TOKEN)
             {
-#if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
-#else
-                throw new NotImplementedException();
-#endif
             }
             else if (UseWebLogin)
             {

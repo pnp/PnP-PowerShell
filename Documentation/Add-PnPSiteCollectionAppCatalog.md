@@ -3,44 +3,37 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Add-PnPSiteCollectionAppCatalog
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Adds a Site Collection scoped App Catalog to a site
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Add-PnPSiteCollectionAppCatalog -Site <SitePipeBind>
+                                [-Connection <SPOnlineConnection>]
 ```
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPStorageEntity
+PS:> Add-PnPOffice365GroupToSite -Site "https://contoso.sharepoint.com/sites/FinanceTeamsite"
 ```
 
-Returns all site storage entities/farm properties
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
-```
-
-Returns the storage entity/farm property with the given key.
+This will add a SiteCollection app catalog to the specified site
 
 ## PARAMETERS
 
-### -Key
-The key of the value to retrieve.
+### -Site
+Url of the site to add the app catalog to.
 
 ```yaml
-Type: String
+Type: SitePipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

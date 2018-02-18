@@ -29,7 +29,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
         }
 
-#if !NETSTANDARD2_0
         internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
@@ -69,7 +68,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
-#endif
 
 #if !NETSTANDARD2_0
 #if ONPREMISES

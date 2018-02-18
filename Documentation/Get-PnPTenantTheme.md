@@ -3,46 +3,49 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Get-PnPTenantTheme
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Returns all or a specific theme
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Get-PnPTenantTheme [-Name <String>]
+                   [-Connection <SPOnlineConnection>]
 ```
+
+## DESCRIPTION
+Returns all or a specific tenant theme.
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPStorageEntity
+PS:> Get-PnPTenantTheme
 ```
 
-Returns all site storage entities/farm properties
+Returns all themes
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
+PS:> Get-PnPTenantTheme -Name "MyCompanyTheme"
 ```
 
-Returns the storage entity/farm property with the given key.
+Returns the specified theme
 
 ## PARAMETERS
 
-### -Key
-The key of the value to retrieve.
+### -Name
+The name of the theme to retrieve
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 
 Required: False
-Position: Named
-Accept pipeline input: False
+Position: 0
+Accept pipeline input: True
 ```
 
 ### -Connection

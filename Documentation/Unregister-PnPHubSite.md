@@ -3,44 +3,40 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Unregister-PnPHubSite
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Unregisters a site as a hubsite
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Unregister-PnPHubSite -Site <SitePipeBind>
+                      [-Connection <SPOnlineConnection>]
 ```
+
+## DESCRIPTION
+Registers a site as a hubsite
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPStorageEntity
+PS:> Unregister-PnPHubSite -Site https://tenant.sharepoint.com/sites/myhubsite
 ```
 
-Returns all site storage entities/farm properties
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
-```
-
-Returns the storage entity/farm property with the given key.
+This example unregisters the specified site as a hubsite
 
 ## PARAMETERS
 
-### -Key
-The key of the value to retrieve.
+### -Site
+The site to unregister as a hubsite
 
 ```yaml
-Type: String
+Type: SitePipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

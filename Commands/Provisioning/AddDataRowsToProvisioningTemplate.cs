@@ -268,7 +268,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             {
                 var user = web.GetUserById(userId);
                 web.Context.Load(user, u => u.LoginName);
-                web.Context.ExecuteQuery();
+                web.Context.ExecuteQueryRetry();
                 _webUserCache[web.Id].Add(userId, user.LoginName);
             }
             return _webUserCache[web.Id][userId];

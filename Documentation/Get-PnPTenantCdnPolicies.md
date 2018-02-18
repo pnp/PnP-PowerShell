@@ -3,44 +3,40 @@ external help file:
 applicable: SharePoint Online
 schema: 2.0.0
 ---
-# Get-PnPStorageEntity
+# Get-PnPTenantCdnPolicies
 
 ## SYNOPSIS
-Retrieve Storage Entities / Farm Properties.
+Returns the CDN Policies for the specified CDN (Public | Private).
 
 ## SYNTAX 
 
 ```powershell
-Get-PnPStorageEntity [-Key <String>]
-                     [-Connection <SPOnlineConnection>]
+Get-PnPTenantCdnPolicies -CdnType <SPOTenantCdnType>
+                         [-Connection <SPOnlineConnection>]
 ```
+
+## DESCRIPTION
+Enables or disabled the public or private Office 365 Content Delivery Network (CDN).
 
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPStorageEntity
+PS:> Get-PnPTenantCdnPolicies -CdnType Public
 ```
 
-Returns all site storage entities/farm properties
-
-### ------------------EXAMPLE 2------------------
-```powershell
-PS:> Get-PnPStorageEntity -Key MyKey
-```
-
-Returns the storage entity/farm property with the given key.
+Returns the policies for the specified CDN type
 
 ## PARAMETERS
 
-### -Key
-The key of the value to retrieve.
+### -CdnType
+The type of cdn to retrieve the policies from
 
 ```yaml
-Type: String
+Type: SPOTenantCdnType
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Accept pipeline input: False
 ```
