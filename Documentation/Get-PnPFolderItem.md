@@ -18,10 +18,40 @@ Get-PnPFolderItem [-ItemType <String>]
                   [-Connection <SPOnlineConnection>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Get-PnPFolderItem -FolderSiteRelativeUrl "SitePages"
+```
+
+Returns the contents of the folder SitePages which is located in the root of the current web
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Get-PnPFolderItem -FolderSiteRelativeUrl "SitePages" -ItemName "Default.aspx"
+```
+
+Returns the file 'Default.aspx' which is located in the folder SitePages which is located in the root of the current web
+
+### ------------------EXAMPLE 3------------------
+```powershell
+PS:> Get-PnPFolderItem -FolderSiteRelativeUrl "SitePages" -ItemType Folder
+```
+
+Returns all folders in the folder SitePages which is located in the root of the current web
+
+### ------------------EXAMPLE 4------------------
+```powershell
+PS:> Get-PnPFolderItem -FolderSiteRelativeUrl "SitePages" -ItemType File
+```
+
+Returns all files in the folder SitePages which is located in the root of the current web
+
 ## PARAMETERS
 
 ### -FolderSiteRelativeUrl
-
+The site relative folder to retrieve
 
 ```yaml
 Type: String
@@ -33,7 +63,7 @@ Accept pipeline input: True
 ```
 
 ### -ItemName
-
+Optional name of the item to retrieve
 
 ```yaml
 Type: String
@@ -45,7 +75,7 @@ Accept pipeline input: False
 ```
 
 ### -ItemType
-
+The type of contents to retrieve, either File, Folder or All (default)
 
 ```yaml
 Type: String
