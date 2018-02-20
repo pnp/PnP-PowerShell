@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NETSTANDARD2_0
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -7,21 +8,21 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 {
     public static class Shell
     {
-        public static string Bash(string cmd)
+        public static List<string> Bash(string cmd)
         {
-            string result = Run("/bin/bash", $@"-c ""{cmd}""");
+            var result = Run("/bin/bash", $@"-c ""{cmd}""");
             return result;
         }
 
-        public static string Bat(string cmd)
+        public static List<string> Bat(string cmd)
         {
             var escapedArgs = cmd.Replace("\"", "\\\"");
-            string result = Run("cmd.exe", $@"/c ""{escapedArgs}""");
+            var result = Run("cmd.exe", $@"/c ""{escapedArgs}""");
             return result;
         }
 
 
-        private static string Run(string filename, string arguments)
+        private static List<string> Run(string filename, string arguments)
         {
             var process = new Process()
             {
@@ -32,12 +33,18 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                     RedirectStandardOutput = true,
                     UseShellExecute = false,
                     CreateNoWindow = false,
+                    RedirectStandardError = true
                 }
             };
+            var lines = new List<string>();
             process.Start();
-            string result = process.StandardOutput.ReadToEnd();
+            while (!process.StandardOutput.EndOfStream)
+            {
+                lines.Add(process.StandardOutput.ReadLine());
+            }
             process.WaitForExit();
-            return result;
+            return lines;
         }
     }
 }
+#endif
