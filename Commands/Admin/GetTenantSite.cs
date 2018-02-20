@@ -1,4 +1,5 @@
 ﻿#if !ONPREMISES
+using System;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
@@ -29,6 +30,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Alias("Identity")]
         public string Url;
 
+        [Obsolete("User WebTemplate")]
         [Parameter(Mandatory = false, HelpMessage = "By default, all sites will be return. Specify a template value alike 'STS#0' here to filter on the template")]
         public string Template;
 
@@ -38,6 +40,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "By default, the OneDrives are not returned. This switch includes all OneDrives.")]
         public SwitchParameter IncludeOneDriveSites;
 
+        [Obsolete]
         [Parameter(Mandatory = false, HelpMessage = "When the switch IncludeOneDriveSites is used, this switch ignores the question shown that the command can take a long time to execute")]
         public SwitchParameter Force;
 
