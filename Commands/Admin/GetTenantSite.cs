@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Detailed", Remarks = "Returns all sites with the full details of these sites", SortOrder = 3)]
     [CmdletExample(Code = @"PS:> Get-PnPTenantSite -IncludeOneDriveSites", Remarks = "Returns all sites including all OneDrive for Business sites", SortOrder = 4)]
     [CmdletExample(Code = @"PS:> Get-PnPTenantSite -IncludeOneDriveSites -Filter ""Url -like '-my.sharepoint.com/personal/'""", Remarks = "Returns all OneDrive for Business sites", SortOrder = 5)]
-    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -WebTemplate SITEPAGEPUBLISHING#0", Remarks = "Returns all Communication sites", SortOrder = 6)]
+    [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Template SITEPAGEPUBLISHING#0", Remarks = "Returns all Communication sites", SortOrder = 6)]
     [CmdletExample(Code = @"PS:> Get-PnPTenantSite -Filter ""Url -like 'sales'"" ", Remarks = "Returns all sites including 'sales' in the url", SortOrder = 7)]
     public class GetTenantSite : PnPAdminCmdlet
     {
@@ -30,8 +30,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Alias("Identity")]
         public string Url;
 
-        [Obsolete("User WebTemplate")]
-        [Parameter(Mandatory = false, HelpMessage = "By default, all sites will be return. Specify a template value alike 'STS#0' here to filter on the template")]
+        [Parameter(Mandatory = false, HelpMessage = @"By default, all sites will be returned. Specify a template value alike ""STS#0"" here to filter on the template")]
         public string Template;
 
         [Parameter(Mandatory = false, HelpMessage = "By default, not all returned attributes are populated. This switch populates all attributes. It can take several seconds to run. Without this, some attributes will show default values that may not be correct.")]
@@ -44,6 +43,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "When the switch IncludeOneDriveSites is used, this switch ignores the question shown that the command can take a long time to execute")]
         public SwitchParameter Force;
 
+        [Obsolete("Use Template")]
         [Parameter(Mandatory = false, HelpMessage = "Limit results to a specific web template name")]
         public string WebTemplate;
 
@@ -71,7 +71,9 @@ namespace SharePointPnP.PowerShell.Commands
                     {
                         IncludePersonalSite = IncludeOneDriveSites.IsPresent ? PersonalSiteFilter.Include : PersonalSiteFilter.UseServerDefault,
                         IncludeDetail = Detailed,
-                        Template = WebTemplate,
+#pragma warning disable CS0618 // Type or member is obsolete
+                        Template = Template ?? WebTemplate,
+#pragma warning restore CS0618 // Type or member is obsolete
                         Filter = Filter,
                     };
 
