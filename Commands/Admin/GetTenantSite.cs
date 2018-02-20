@@ -1,4 +1,5 @@
 ﻿#if !ONPREMISES
+using System;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
@@ -29,6 +30,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Alias("Identity")]
         public string Url;
 
+        [Obsolete("User WebTemplate")]
         [Parameter(Mandatory = false, HelpMessage = "By default, all sites will be return. Specify a template value alike 'STS#0' here to filter on the template")]
         public string Template;
 
@@ -38,6 +40,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "By default, the OneDrives are not returned. This switch includes all OneDrives.")]
         public SwitchParameter IncludeOneDriveSites;
 
+        [Obsolete]
         [Parameter(Mandatory = false, HelpMessage = "When the switch IncludeOneDriveSites is used, this switch ignores the question shown that the command can take a long time to execute")]
         public SwitchParameter Force;
 
@@ -64,32 +67,24 @@ namespace SharePointPnP.PowerShell.Commands
                 }
                 else
                 {
-                    SPOSitePropertiesEnumerableFilter filter = null;
-                    if (IncludeOneDriveSites || WebTemplate != null || Filter != null)
+                    SPOSitePropertiesEnumerableFilter filter = new SPOSitePropertiesEnumerableFilter()
                     {
-                        filter = new SPOSitePropertiesEnumerableFilter()
-                        {
-                            IncludePersonalSite = IncludeOneDriveSites.IsPresent ? PersonalSiteFilter.Include : PersonalSiteFilter.UseServerDefault,
-                            StartIndex = "0",
-                            IncludeDetail = Detailed,
-                            Template = WebTemplate,
-                            Filter = Filter,
-                        };
-                    }
+                        IncludePersonalSite = IncludeOneDriveSites.IsPresent ? PersonalSiteFilter.Include : PersonalSiteFilter.UseServerDefault,
+                        IncludeDetail = Detailed,
+                        Template = WebTemplate,
+                        Filter = Filter,
+                    };
 
-                    SPOSitePropertiesEnumerable list = null;
+                    SPOSitePropertiesEnumerable sitesList = null;
                     var sites = new List<SiteProperties>();
                     do
                     {
-                        list = filter == null ? Tenant.GetSiteProperties(list?.NextStartIndex ?? 0, Detailed) : Tenant.GetSitePropertiesFromSharePointByFilters(filter);
-                        Tenant.Context.Load(list);
+                        sitesList = Tenant.GetSitePropertiesFromSharePointByFilters(filter);
+                        Tenant.Context.Load(sitesList);
                         Tenant.Context.ExecuteQueryRetry();
-                        sites.AddRange(list.ToList());
-                        if(filter != null)
-                        {
-                            filter.StartIndex = list.NextStartIndex.ToString();
-                        }
-                    } while (list.NextStartIndex > 0);
+                        sites.AddRange(sitesList.ToList());
+                        filter.StartIndex = sitesList.NextStartIndexFromSharePoint;
+                    } while (!string.IsNullOrWhiteSpace(sitesList.NextStartIndexFromSharePoint));
 
                     if (Template != null)
                     {
