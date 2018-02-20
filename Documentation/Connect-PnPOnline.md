@@ -84,6 +84,14 @@ Connect-PnPOnline -AccessToken <String>
                   [-SkipTenantAdminCheck [<SwitchParameter>]]
 ```
 
+### PnP O365 Management Shell / DeviceLogin
+```powershell
+Connect-PnPOnline -PnPO365ManagementShell [<SwitchParameter>]
+                  -Url <String>
+                  [-ReturnConnection [<SwitchParameter>]]
+                  [-LaunchBrowser [<SwitchParameter>]]
+```
+
 ### Token
 ```powershell
 Connect-PnPOnline -AppId <String>
@@ -223,19 +231,33 @@ This will authenticate you using the SharePoint Online Management Shell applicat
 
 ### ------------------EXAMPLE 10------------------
 ```powershell
+PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPO365ManagementShell
+```
+
+This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.
+
+### ------------------EXAMPLE 11------------------
+```powershell
+PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPO365ManagementShell -LaunchBrowser
+```
+
+This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.
+
+### ------------------EXAMPLE 12------------------
+```powershell
 PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $myaccesstoken
 ```
 
 This will authenticate you using the provided access token
 
-### ------------------EXAMPLE 11------------------
+### ------------------EXAMPLE 13------------------
 ```powershell
 PS:> Connect-PnPOnline -Scopes $arrayOfScopes
 ```
 
 Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes
 
-### ------------------EXAMPLE 12------------------
+### ------------------EXAMPLE 14------------------
 ```powershell
 PS:> Connect-PnPOnline -AppId '<id>' -AppSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'
 ```
@@ -424,6 +446,18 @@ Position: Named
 Accept pipeline input: False
 ```
 
+### -LaunchBrowser
+Launch a browser automatically and copy the code to enter to the clipboard
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: PnP O365 Management Shell / DeviceLogin
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ### -MinimalHealthScore
 Specifies a minimal server healthscore before any requests are executed.
 
@@ -432,6 +466,18 @@ Type: Int
 Parameter Sets: Main
 
 Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -PnPO365ManagementShell
+Log in using the PnP O365 Management Shell application
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: PnP O365 Management Shell / DeviceLogin
+
+Required: True
 Position: Named
 Accept pipeline input: False
 ```

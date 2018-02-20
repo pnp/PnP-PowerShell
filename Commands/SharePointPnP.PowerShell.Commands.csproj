@@ -583,6 +583,9 @@
     <Compile Include="Site\AddRoleDefinition.cs" />
     <Compile Include="Site\GetRoleDefinition.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
+    <Compile Include="Utilities\Clipboard.cs" />
+    <Compile Include="Utilities\OperatingSystem.cs" />
+    <Compile Include="Utilities\Shell.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="SiteDesigns\SetSiteScript.cs" />
     <Compile Include="WebParts\AddClientSideWebPart.cs" />
