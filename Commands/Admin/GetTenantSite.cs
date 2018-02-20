@@ -64,32 +64,24 @@ namespace SharePointPnP.PowerShell.Commands
                 }
                 else
                 {
-                    SPOSitePropertiesEnumerableFilter filter = null;
-                    if (IncludeOneDriveSites || WebTemplate != null || Filter != null)
+                    SPOSitePropertiesEnumerableFilter filter = new SPOSitePropertiesEnumerableFilter()
                     {
-                        filter = new SPOSitePropertiesEnumerableFilter()
-                        {
-                            IncludePersonalSite = IncludeOneDriveSites.IsPresent ? PersonalSiteFilter.Include : PersonalSiteFilter.UseServerDefault,
-                            StartIndex = "0",
-                            IncludeDetail = Detailed,
-                            Template = WebTemplate,
-                            Filter = Filter,
-                        };
-                    }
+                        IncludePersonalSite = IncludeOneDriveSites.IsPresent ? PersonalSiteFilter.Include : PersonalSiteFilter.UseServerDefault,
+                        IncludeDetail = Detailed,
+                        Template = WebTemplate,
+                        Filter = Filter,
+                    };
 
-                    SPOSitePropertiesEnumerable list = null;
+                    SPOSitePropertiesEnumerable sitesList = null;
                     var sites = new List<SiteProperties>();
                     do
                     {
-                        list = filter == null ? Tenant.GetSiteProperties(list?.NextStartIndex ?? 0, Detailed) : Tenant.GetSitePropertiesFromSharePointByFilters(filter);
-                        Tenant.Context.Load(list);
+                        sitesList = Tenant.GetSitePropertiesFromSharePointByFilters(filter);
+                        Tenant.Context.Load(sitesList);
                         Tenant.Context.ExecuteQueryRetry();
-                        sites.AddRange(list.ToList());
-                        if(filter != null)
-                        {
-                            filter.StartIndex = list.NextStartIndex.ToString();
-                        }
-                    } while (list.NextStartIndex > 0);
+                        sites.AddRange(sitesList.ToList());
+                        filter.StartIndex = sitesList.NextStartIndexFromSharePoint;
+                    } while (!string.IsNullOrWhiteSpace(sitesList.NextStartIndexFromSharePoint));
 
                     if (Template != null)
                     {
