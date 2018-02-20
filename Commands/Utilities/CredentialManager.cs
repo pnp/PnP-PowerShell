@@ -9,9 +9,32 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 {
     internal static class CredentialManager
     {
+#if NETSTANDARD2_0
+        public static bool AddCredential(string name, string username, string password, bool overwrite)
+        {
+            if (OperatingSystem.IsWindows())
+            {
+
+                //       var cmd = $"clip < {tempfile}";
+                //       Shell.Bat(cmd);
+            }
+
+            if (OperatingSystem.IsMacOS())
+            {
+                var cmd = $"/usr/bin/security add-generic-password -a '{username}' -w '{password}' -s '{name}'";
+                if (overwrite)
+                {
+                    cmd += " -U";
+                }
+                Shell.Bash(cmd);
+            }
+            return true;
+        }
+#endif
 
         public static PSCredential GetCredential(string name)
         {
+#if !NETSTANDARD2_0
             PSCredential psCredential = null;
             IntPtr credPtr;
 
@@ -31,6 +54,71 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 psCredential = new PSCredential(username, securePassword);
             }
             return psCredential;
+#else
+            if (OperatingSystem.IsWindows())
+            {
+                PSCredential psCredential = null;
+                IntPtr credPtr;
+
+                bool success = CredRead(name, CRED_TYPE.GENERIC, 0, out credPtr);
+                if (success)
+                {
+                    var critCred = new CriticalCredentialHandle(credPtr);
+                    var cred = critCred.GetCredential();
+                    var username = cred.UserName;
+                    var securePassword = new SecureString();
+                    string credentialBlob = cred.CredentialBlob;
+                    char[] passwordChars = credentialBlob.ToCharArray();
+                    foreach (char c in passwordChars)
+                    {
+                        securePassword.AppendChar(c);
+                    }
+                    psCredential = new PSCredential(username, securePassword);
+                }
+                return psCredential;
+            }
+            if (OperatingSystem.IsMacOS())
+            {
+                var cmd = $"/usr/bin/security find-generic-password -s '{name}'";
+                var output = Shell.Bash(cmd);
+                string username = null;
+                string password = null;
+                foreach (var line in output)
+                {
+                    if (line.StartsWith("password: "))
+                    {
+                        password = line.Substring(10).Trim(new char[] { '"' });
+                    }
+                    if (line.Trim().StartsWith(@"""acct"""))
+                    {
+                        var acctline = line.Trim().Split(new string[] { "<blob>=" }, StringSplitOptions.None);
+                        username = acctline[1].Trim(new char[] { '"' });
+                    }
+                }
+                cmd = $"/usr/bin/security find-generic-password -s '{name}' -w";
+                output = Shell.Bash(cmd);
+                if(output.Count == 1)
+                {
+                    password = output[0];
+                }
+                if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                {
+                    return new PSCredential(username, CreateSecureString(password));
+                }
+            }
+            return null;
+#endif
+
+        }
+
+        private static SecureString CreateSecureString(string inputString)
+        {
+            var securityString = new SecureString();
+            foreach (var c in inputString)
+            {
+                securityString.AppendChar(c);
+            }
+            return securityString;
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
