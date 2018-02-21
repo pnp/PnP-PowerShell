@@ -1,18 +1,55 @@
 # SharePointPnP.PowerShell Changelog
+*Please no to commit changes to file, it is maintained by the repo owner.*
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [2.24.1803.0 - Unreleased]
 ### Added
+- Added Remove-PnPStoredCredential
+- Added Add-PnPStoredCredential
+- Added Get-PnPHubSite cmdlet
+- Added Set-PnPHubSite cmdlet
+- Added Grant-PnPHubSiteRights cmdlet
+- Added Register-PnPHubSite cmdlet
+- Added Unregister-PnPHubSite cmdlet
+- Added Connect-PnPHubSite cmdlet
+- Added Disconnect-PnPHubSite cmdlet
+- Added Add-PnPTenantTheme cmdlet
+- Added Get-PnPTenantTheme cmdlet
+- Added Remove-PnPTenantTheme cmdlet
+- Added Set-PnPTenantCdnEnabled cmdlet
+- Added Get-PnPTenantCdnEnabled cmdlet
+- Added Get-PnPTenantCdnOrigin cmdlet
+- Added Add-PnPTenantCdnOrigin cmdlet
+- Added Remove-PnPTenantCdnOrigin cmdlet
+- Added Get-PnPTenantCdnPolicies cmdlet
+- Added Set-PnPTenantCdnPolicy cmdlet
+- Added Add-PnPSiteCollectionAppCatalog cmdlet
+- Added Remove-PnPSiteCollectionAppCatalog cmdlet
 - Added Get-PnPNavigationNode cmdlet
+- Added Get-PnPRoleDefinition cmdlet
+- Added Add-PnPRoleDefinition cmdlet
+- Added Remove-PnPRoleDefinition cmdlet
+- Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
+- Fixed issues with Set-PnPTheme cmdlet not accepting site relative urls
+- Move-PnPFolder now returns the folder that has been moved
+- Updated Get-PnPStoredCredentials to support .NET Standard
+- Updated/fixed documentation on various cmdlets
+- Fixed issue with Get-PnPTenantSite not returning all sites in large tenants
+- Added -PnPO365Management Shell parameter login option to Connect-PnPOnline
 - Changed changelog format
 - Updated Remove-PnPNavigationNode cmdlet to support removal by Id
+- Updated Remove-PnPNavigationNode cmdlet to support the -All parameter
+- Updated Set-PnPList cmdlet to change moderation setting
+- Updated Set-PnPFileCheckedIn to approve the file
 
 ### Deprecated
-- Deprecated Remove-PnPNavigationNode -Title -Header parameters. Use Identity instead.
+- Deprecated Remove-PnPNavigationNode -Title and -Header parameters. Use the Identity parameter instead.
+- Marked -WebTemplate parameter on Get-PnPTenantSite as obsolete. Use -Template instead.
 
 ## [2.23.1802.0] - 2018-02-05
 ### Added

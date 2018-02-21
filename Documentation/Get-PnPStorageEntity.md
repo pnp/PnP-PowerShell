@@ -26,7 +26,7 @@ Returns all site storage entities/farm properties
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPTenantSite -Key MyKey
+PS:> Get-PnPStorageEntity -Key MyKey
 ```
 
 Returns the storage entity/farm property with the given key.

@@ -25,14 +25,14 @@ Retrieves a folder if it exists. Use Ensure-PnPFolder to create the folder if it
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Get-PnPFolder -RelativeUrl "Shared Documents"
+PS:> Get-PnPFolder -Url "Shared Documents"
 ```
 
 Returns the folder called 'Shared Documents' which is located in the root of the current web
 
 ### ------------------EXAMPLE 2------------------
 ```powershell
-PS:> Get-PnPFolder -RelativeUrl "/sites/demo/Shared Documents"
+PS:> Get-PnPFolder -Url "/sites/demo/Shared Documents"
 ```
 
 Returns the folder called 'Shared Documents' which is located in the root of the current web
@@ -90,7 +90,7 @@ Accept pipeline input: False
 
 ## OUTPUTS
 
-### [Microsoft.SharePoint.Client.Folder](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx)
+### [Microsoft.SharePoint.Client.Folder](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.folder.aspx)
 
 ## RELATED LINKS
 

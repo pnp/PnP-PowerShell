@@ -19,7 +19,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false)]
     [CmdletHelp("Connect to a SharePoint site",
-        "Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets",
+        @"Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets. 
+To automate authentication there are several options. The easiest would be to use the Windows Credential Manager. Either manually add a Generic Credential, or use the Add-PnPStoredCredential cmdlet to add an entry. The name you give to the credential can be used in two main ways. If you simply give it a name alike 'O365' or any other value you can specify this value for the Credentials parameter of this cmdlet.
+
+Alternatively you can specify a URL as a name, alike 'https://contoso.sharepoint.com'. Any site you connect to within the contoso tenant will then use the credentials you specified. For more information see the help for the Add-PnPStoredCredential cmdlet. (Get-Help Add-PnPStoredCredential).
+
+Make sure to check the SPOManagement, PnPO365ManagementShell and AccessToken parameters too.",
         DetailedDescription = "If no credentials have been specified, and the CurrentCredentials parameter has not been specified, you will be prompted for credentials.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
@@ -61,17 +66,25 @@ dir",
         Remarks = @"This will authenticate you using the SharePoint Online Management Shell application",
         SortOrder = 9)]
     [CmdletExample(
+        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPO365ManagementShell",
+        Remarks = @"This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.",
+        SortOrder = 10)]
+    [CmdletExample(
+        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPO365ManagementShell -LaunchBrowser",
+        Remarks = @"This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.",
+        SortOrder = 10)]
+    [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $myaccesstoken",
         Remarks = @"This will authenticate you using the provided access token",
-        SortOrder = 10)]
+        SortOrder = 11)]
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -Scopes $arrayOfScopes",
        Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes",
-       SortOrder = 11)]
+       SortOrder = 12)]
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -AppId '<id>' -AppSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'",
        Remarks = "Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.",
-       SortOrder = 12)]
+       SortOrder = 13)]
 #if ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://yourserver -ClientId 763d5e60-b57e-426e-8e87-b7258f7f8188 -HighTrustCertificatePath c:\HighTrust.pfx -HighTrustCertificatePassword 'password' -HighTrustCertificateIssuerId 6b9534d8-c2c1-49d6-9f4b-cd415620bca8",
@@ -87,6 +100,7 @@ dir",
         private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
         private const string ParameterSet_APPONLYAAD = "App-Only with Azure Active Directory";
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
+        private const string ParameterSet_DEVICELOGIN = "PnP O365 Management Shell / DeviceLogin";
         private const string ParameterSet_GRAPHWITHSCOPE = "Microsoft Graph using Scopes";
         private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
@@ -108,6 +122,7 @@ dir",
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
 #endif
         public SwitchParameter ReturnConnection;
 
@@ -119,6 +134,7 @@ dir",
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
 #endif
 #if ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_HIGHTRUST, HelpMessage = "The path to the private key certificate (.pfx) to use for the High Trust connection")]
@@ -225,6 +241,14 @@ dir",
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Log in using the SharePoint Online Management Shell application")]
         public SwitchParameter SPOManagementShell;
 
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = "Log in using the PnP O365 Management Shell application")]
+        public SwitchParameter PnPO365ManagementShell;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
+        public SwitchParameter LaunchBrowser;
+
+
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Client ID of the Azure AD Application")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Client ID of the Azure AD Application")]
 #endif
@@ -301,8 +325,6 @@ dir",
 #endif
         public SwitchParameter IgnoreSslErrors;
 
-
-
 #if ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_HIGHTRUST, HelpMessage = "The path to the private key certificate (.pfx) to use for the High Trust connection")]
         public string HighTrustCertificatePath;
@@ -329,11 +351,7 @@ dir",
             SPOnlineConnection connection = null;
             if (ParameterSetName == ParameterSet_TOKEN)
             {
-#if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
-#else
-                throw new NotImplementedException();
-#endif
             }
             else if (UseWebLogin)
             {
@@ -362,6 +380,17 @@ dir",
             else if (ParameterSetName == ParameterSet_SPOMANAGEMENT)
             {
                 connection = ConnectNativAAD(SPOManagementClientId, SPOManagementRedirectUri);
+            }
+            else if (ParameterSetName == ParameterSet_DEVICELOGIN)
+            {
+                connection = SPOnlineConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, (message) =>
+                {
+                    WriteWarning(message);
+                },
+                (progress) =>
+                {
+                    Host.UI.Write(progress);
+                });
             }
             else if (ParameterSetName == ParameterSet_NATIVEAAD)
             {
@@ -483,9 +512,7 @@ dir",
         }
 #endif
 
-
-
-            private PSCredential GetCredentials()
+        private PSCredential GetCredentials()
         {
             PSCredential creds;
 

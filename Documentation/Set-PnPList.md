@@ -18,10 +18,12 @@ Set-PnPList -Identity <ListPipeBind>
             [-ClearSubscopes [<SwitchParameter>]]
             [-Title <String>]
             [-Hidden <Boolean>]
+            [-EnableAttachments <Boolean>]
             [-EnableVersioning <Boolean>]
             [-EnableMinorVersions <Boolean>]
             [-MajorVersions <UInt32>]
             [-MinorVersions <UInt32>]
+            [-EnableModeration <Boolean>]
             [-Web <WebPipeBind>]
             [-Connection <SPOnlineConnection>]
 ```
@@ -63,6 +65,13 @@ Set-PnPList -Identity "Demo Library" -EnableVersioning $true -EnableMinorVersion
 
 Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.
 
+### ------------------EXAMPLE 6------------------
+```powershell
+Set-PnPList -Identity "Demo List" -EnableAttachments $true
+```
+
+Turns on attachments on a list
+
 ## PARAMETERS
 
 ### -BreakRoleInheritance
@@ -101,6 +110,18 @@ Position: Named
 Accept pipeline input: False
 ```
 
+### -EnableAttachments
+Enable or disable attachments. Set to $true to enable, $false to disable.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ### -EnableContentTypes
 Set to $true to enable content types, set to $false to disable content types
 
@@ -115,6 +136,18 @@ Accept pipeline input: False
 
 ### -EnableMinorVersions
 Enable or disable minor versions versioning. Set to $true to enable, $false to disable.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EnableModeration
+Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.
 
 ```yaml
 Type: Boolean

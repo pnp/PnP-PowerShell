@@ -16,6 +16,10 @@ using OfficeDevPnP.Core.Utilities;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -24,12 +28,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #if !NETSTANDARD2_0
         public static AuthenticationContext AuthContext { get; set; }
 #endif
-
         static SPOnlineConnectionHelper()
         {
         }
 
-#if !NETSTANDARD2_0
         internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
@@ -69,7 +71,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
-#endif
 
 #if !NETSTANDARD2_0
 #if ONPREMISES
@@ -95,6 +96,89 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #endif
 #endif
 
+        internal static SPOnlineConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback)
+        {
+            var connectionUri = new Uri(url);
+            HttpClient client = new HttpClient();
+            var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
+            var returnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+
+            messageCallback(returnData["message"]);
+
+            if (launchBrowser)
+            {
+                Utilities.Clipboard.Copy(returnData["user_code"]);
+                messageCallback("Code has been copied to clipboard");
+                OpenBrowser(returnData["verification_url"]);
+            }
+
+            var body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
+            body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
+
+            var tokenResult = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+            while (!tokenResult.IsSuccessStatusCode)
+            {
+                if(stopWatch.ElapsedMilliseconds > 60 * 1000)
+                {
+                    break;
+                }
+                progressCallback(".");
+                System.Threading.Thread.Sleep(1000);
+#if !NETSTANDARD2_0
+                // somehow .NET disposes of the stringcontent object 
+                body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
+                body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
+#endif
+                tokenResult = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+            }
+            if (tokenResult.IsSuccessStatusCode)
+            {
+                var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(tokenResult.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                var context = new ClientContext(url);
+                var accessToken = tokens["access_token"];
+                var refreshToken = tokens["refresh_token"];
+                var expiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
+
+                var spoConnection = new SPOnlineConnection(context, accessToken, refreshToken, expiresOn, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+                return spoConnection;
+            } else
+            {
+                progressCallback("Timeout");
+                return null;
+            }
+        }
+
+        internal static void OpenBrowser(string url)
+        {
+            try
+            {
+                Process.Start(url);
+            }
+            catch
+            {
+                // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                if (Utilities.OperatingSystem.IsWindows())
+                {
+                    url = url.Replace("&", "^&");
+                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                }
+                else if (Utilities.OperatingSystem.IsLinux())
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (Utilities.OperatingSystem.IsMacOS())
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
 #if !NETSTANDARD2_0
 #if !ONPREMISES
         internal static SPOnlineConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
@@ -418,7 +502,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);
 
         private static readonly Lazy<string> PnPPSVersionTagLazy = new Lazy<string>(
-            () => {
+            () =>
+            {
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 var result = $"PnPPS:{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.Split('.')[2]}";
                 return (result);

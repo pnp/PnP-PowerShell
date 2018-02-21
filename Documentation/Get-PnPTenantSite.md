@@ -14,8 +14,6 @@ Retrieve site information.
 Get-PnPTenantSite [-Template <String>]
                   [-Detailed [<SwitchParameter>]]
                   [-IncludeOneDriveSites [<SwitchParameter>]]
-                  [-Force [<SwitchParameter>]]
-                  [-WebTemplate <String>]
                   [-Filter <String>]
                   [-Url <String>]
                   [-Connection <SPOnlineConnection>]
@@ -63,7 +61,7 @@ Returns all OneDrive for Business sites
 
 ### ------------------EXAMPLE 6------------------
 ```powershell
-PS:> Get-PnPTenantSite -WebTemplate SITEPAGEPUBLISHING#0
+PS:> Get-PnPTenantSite -Template SITEPAGEPUBLISHING#0
 ```
 
 Returns all Communication sites
@@ -101,18 +99,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -Force
-When the switch IncludeOneDriveSites is used, this switch ignores the question shown that the command can take a long time to execute
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -IncludeOneDriveSites
 By default, the OneDrives are not returned. This switch includes all OneDrives.
 
@@ -126,7 +112,7 @@ Accept pipeline input: False
 ```
 
 ### -Template
-By default, all sites will be return. Specify a template value alike 'STS#0' here to filter on the template
+By default, all sites will be returned. Specify a template value alike "STS#0" here to filter on the template
 
 ```yaml
 Type: String
@@ -148,18 +134,6 @@ Aliases: Identity
 Required: False
 Position: 0
 Accept pipeline input: True
-```
-
-### -WebTemplate
-Limit results to a specific web template name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
 ```
 
 ### -Connection

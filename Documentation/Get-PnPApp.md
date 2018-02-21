@@ -11,7 +11,7 @@ Returns the available apps from the app catalog
 ## SYNTAX 
 
 ```powershell
-Get-PnPApp [-Identity <GuidPipeBind>]
+Get-PnPApp [-Identity <AppMetadataPipeBind>]
            [-Connection <SPOnlineConnection>]
 ```
 
@@ -37,7 +37,7 @@ This will the specific app metadata from the app catalog.
 Specifies the Id of an app which is available in the app catalog
 
 ```yaml
-Type: GuidPipeBind
+Type: AppMetadataPipeBind
 Parameter Sets: (All)
 
 Required: False

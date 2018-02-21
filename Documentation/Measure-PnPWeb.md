@@ -17,6 +17,22 @@ Measure-PnPWeb [-Recursive [<SwitchParameter>]]
                [-Connection <SPOnlineConnection>]
 ```
 
+## EXAMPLES
+
+### ------------------EXAMPLE 1------------------
+```powershell
+PS:> Measure-PnPWeb
+```
+
+Gets statistics on the current web
+
+### ------------------EXAMPLE 2------------------
+```powershell
+PS:> Measure-PnPList $web -Recursive
+```
+
+Gets statistics on the chosen including all sub webs
+
 ## PARAMETERS
 
 ### -Identity
@@ -32,7 +48,7 @@ Accept pipeline input: True
 ```
 
 ### -IncludeHiddenList
-
+Include hidden lists in statistics calculation
 
 ```yaml
 Type: SwitchParameter
@@ -44,7 +60,7 @@ Accept pipeline input: False
 ```
 
 ### -Recursive
-
+Iterate all sub webs recursively
 
 ```yaml
 Type: SwitchParameter

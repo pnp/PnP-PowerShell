@@ -15,6 +15,7 @@ Add-PnPDataRowsToProvisioningTemplate -List <ListPipeBind>
                                       -Query <String>
                                       -Path <String>
                                       [-Fields <String[]>]
+                                      [-TokenizeUrls [<SwitchParameter>]]
                                       [-TemplateProviderExtensions <ITemplateProviderExtension[]>]
                                       [-IncludeSecurity [<SwitchParameter>]]
                                       [-Web <WebPipeBind>]
@@ -108,6 +109,18 @@ Parameter Sets: (All)
 
 Required: False
 Position: 4
+Accept pipeline input: False
+```
+
+### -TokenizeUrls
+If set, this switch will try to tokenize the values with web and site related tokens
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Accept pipeline input: False
 ```
 
