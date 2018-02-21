@@ -36,6 +36,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
+- Fixed issue with Copy-PnPFile when copying to a location within the current web where metadata was not being retained
+- Fixed issue with Add-PnPFile when a new file was uploaded and using the cmdlet also field values where set, the version would increase to 2.0 instead of the expected 1.0
 - Fixed issues with Set-PnPTheme cmdlet not accepting site relative urls
 - Move-PnPFolder now returns the folder that has been moved
 - Updated Get-PnPStoredCredentials to support .NET Standard
