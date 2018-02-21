@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
 using Microsoft.Win32.SafeHandles;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
@@ -9,19 +10,24 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 {
     internal static class CredentialManager
     {
+
 #if NETSTANDARD2_0
-        public static bool AddCredential(string name, string username, string password, bool overwrite)
+        public static bool AddCredential(string name, string username, SecureString password, bool overwrite)
+#else
+        public static bool AddCredential(string name, string username, SecureString password)
+#endif
         {
+#if !NETSTANDARD2_0
+            WriteCredential(name, username, password);
+            return true;
+#else
             if (OperatingSystem.IsWindows())
             {
-
-                //       var cmd = $"clip < {tempfile}";
-                //       Shell.Bat(cmd);
-            }
-
-            if (OperatingSystem.IsMacOS())
+                WriteCredential(name, username, password);
+            } else if (OperatingSystem.IsMacOS())
             {
-                var cmd = $"/usr/bin/security add-generic-password -a '{username}' -w '{password}' -s '{name}'";
+                var pw = SecureStringToString(password);
+                var cmd = $"/usr/bin/security add-generic-password -a '{username}' -w '{pw}' -s '{name}'";
                 if (overwrite)
                 {
                     cmd += " -U";
@@ -29,8 +35,52 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 Shell.Bash(cmd);
             }
             return true;
-        }
 #endif
+        }
+
+        private static void WriteCredential(string applicationName, string userName, SecureString securePassword)
+        {
+            //https://gist.github.com/meziantou/10311113
+
+            var password = SecureStringToString(securePassword);
+
+            byte[] byteArray = password == null ? null : Encoding.Unicode.GetBytes(password);
+            // XP and Vista: 512; 
+            // 7 and above: 5*512
+            if (Environment.OSVersion.Version < new Version(6, 1) /* Windows 7 */)
+            {
+                if (byteArray != null && byteArray.Length > 512)
+                    throw new ArgumentOutOfRangeException("password", "The secret message has exceeded 512 bytes.");
+            }
+            else
+            {
+                if (byteArray != null && byteArray.Length > 512 * 5)
+                    throw new ArgumentOutOfRangeException("password", "The secret message has exceeded 2560 bytes.");
+            }
+
+            NativeCredential credential = new NativeCredential();
+            credential.AttributeCount = 0;
+            credential.Attributes = IntPtr.Zero;
+            credential.Comment = IntPtr.Zero;
+            credential.TargetAlias = IntPtr.Zero;
+            credential.Type = CRED_TYPE.GENERIC;
+            credential.Persist = (uint)3;
+            credential.CredentialBlobSize = (uint)(byteArray == null ? 0 : byteArray.Length);
+            credential.TargetName = Marshal.StringToCoTaskMemUni(applicationName);
+            credential.CredentialBlob = Marshal.StringToCoTaskMemUni(password);
+            credential.UserName = Marshal.StringToCoTaskMemUni(userName ?? Environment.UserName);
+
+            bool written = CredWrite(ref credential, 0);
+            Marshal.FreeCoTaskMem(credential.TargetName);
+            Marshal.FreeCoTaskMem(credential.CredentialBlob);
+            Marshal.FreeCoTaskMem(credential.UserName);
+
+            if (!written)
+            {
+                int lastError = Marshal.GetLastWin32Error();
+                throw new Exception(string.Format("CredWrite failed with the error code {0}.", lastError));
+            }
+        }
 
         public static PSCredential GetCredential(string name)
         {
@@ -66,13 +116,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                     var critCred = new CriticalCredentialHandle(credPtr);
                     var cred = critCred.GetCredential();
                     var username = cred.UserName;
-                    var securePassword = new SecureString();
-                    string credentialBlob = cred.CredentialBlob;
-                    char[] passwordChars = credentialBlob.ToCharArray();
-                    foreach (char c in passwordChars)
-                    {
-                        securePassword.AppendChar(c);
-                    }
+                    var securePassword = StringToSecureString(cred.CredentialBlob);
                     psCredential = new PSCredential(username, securePassword);
                 }
                 return psCredential;
@@ -84,11 +128,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 string username = null;
                 string password = null;
                 foreach (var line in output)
-                {
-                    if (line.StartsWith("password: "))
-                    {
-                        password = line.Substring(10).Trim(new char[] { '"' });
-                    }
+                {                
                     if (line.Trim().StartsWith(@"""acct"""))
                     {
                         var acctline = line.Trim().Split(new string[] { "<blob>=" }, StringSplitOptions.None);
@@ -103,7 +143,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 }
                 if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
-                    return new PSCredential(username, CreateSecureString(password));
+                    return new PSCredential(username, StringToSecureString(password));
                 }
             }
             return null;
@@ -111,10 +151,11 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 
         }
 
-        private static SecureString CreateSecureString(string inputString)
+        private static SecureString StringToSecureString(string inputString)
         {
             var securityString = new SecureString();
-            foreach (var c in inputString)
+            char[] chars = inputString.ToCharArray();
+            foreach (var c in chars)
             {
                 securityString.AppendChar(c);
             }
@@ -171,6 +212,13 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             public string UserName;
         }
 
+        public enum CRED_PERSIST : uint
+        {
+            CRED_PERSIST_SESSION = 1,
+            CRED_PERSIST_LOCAL_MACHINE = 2,
+
+            CRED_PERSIST_ENTERPRISE = 3
+        }
         public enum CRED_TYPE : uint
         {
             GENERIC = 1,
@@ -225,6 +273,23 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 return false;
             }
         }
+
+        private static string SecureStringToString(SecureString value)
+        {
+            IntPtr valuePtr = IntPtr.Zero;
+            try
+            {
+                valuePtr = Marshal.SecureStringToGlobalAllocUnicode(value);
+                return Marshal.PtrToStringUni(valuePtr);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
+            }
+        }
+
+        [DllImport("Advapi32.dll", SetLastError = true, EntryPoint = "CredWriteW", CharSet = CharSet.Unicode)]
+        public static extern bool CredWrite([In] ref NativeCredential userCredential, [In] UInt32 flags);
 
         [DllImport("Advapi32.dll", EntryPoint = "CredReadW", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool CredRead(string target, CRED_TYPE type, int reservedFlag, out IntPtr CredentialPtr);

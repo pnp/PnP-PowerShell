@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #if !NETSTANDARD2_0
         "Returns a stored credential from the Windows Credential Manager",
 #else
-        "Returns a stored credential from the Windows Credential Manager or the MacOS KeyChain"
+        "Returns a stored credential from the Windows Credential Manager or the MacOS KeyChain",
 #endif
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(Code = "PS:> Get-PnPStoredCredential -Name O365",

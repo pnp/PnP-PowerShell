@@ -109,6 +109,7 @@ Cmdlet|Description|Platform
 **[Disconnect&#8209;PnPOnline](../../sharepoint-ps/sharepoint-pnp/Disconnect-PnPOnline.md)** |Disconnects the context|All
 **[Get&#8209;PnPProperty](../../sharepoint-ps/sharepoint-pnp/Get-PnPProperty.md)** |Returns a previously not loaded property of a ClientObject|All
 **[Execute&#8209;PnPQuery](../../sharepoint-ps/sharepoint-pnp/Execute-PnPQuery.md)** |Execute the current queued actions|All
+**[Add&#8209;PnPStoredCredential](../../sharepoint-ps/sharepoint-pnp/Add-PnPStoredCredential.md)** |Adds a credential to the Windows Credential Manager|All
 **[Get&#8209;PnPStoredCredential](../../sharepoint-ps/sharepoint-pnp/Get-PnPStoredCredential.md)** |Get a credential|All
 **[Set&#8209;PnPTraceLog](../../sharepoint-ps/sharepoint-pnp/Set-PnPTraceLog.md)** |Turn log tracing on or off|All
 
