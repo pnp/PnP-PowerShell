@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Enums;
+using SharePointPnP.PowerShell.Commands.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         private string _refreshToken;
         internal Assembly coreAssembly;
         internal string userAgent;
+        internal ConnectionMethod ConnectionMethod { get; set; }
         internal string PnPVersionTag { get; set; }
         internal static List<ClientContext> ContextCache { get; set; }
 
@@ -98,6 +100,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ContextCache = new List<ClientContext> { context };
             PnPVersionTag = pnpVersionTag;
             Url = (new Uri(url)).AbsoluteUri;
+            ConnectionMethod = ConnectionMethod.Credentials;
         }
 
         public SPOnlineConnection(ClientContext context, string accessToken, string refreshToken, DateTime expiresOn, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
@@ -120,6 +123,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ContextCache = new List<ClientContext> { context };
             PnPVersionTag = pnpVersionTag;
             Url = (new Uri(url)).AbsoluteUri;
+            ConnectionMethod = ConnectionMethod.AccessToken;
             context.ExecutingWebRequest += (sender, args) =>
             {
                 args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + CurrentConnection.AccessToken;
