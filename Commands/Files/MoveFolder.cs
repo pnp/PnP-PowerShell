@@ -34,9 +34,14 @@ namespace SharePointPnP.PowerShell.Commands.Files
             ClientContext.Load(sourceFolder, f => f.Name, f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
 
-            var targetPath = string.Concat(TargetFolder,"/",sourceFolder.Name);
+            var targetPath = string.Concat(TargetFolder, "/", sourceFolder.Name);
             sourceFolder.MoveTo(targetPath);
             ClientContext.ExecuteQueryRetry();
+
+            var folder = SelectedWeb.GetFolderByServerRelativeUrl(targetPath);
+            ClientContext.Load(folder, f => f.Name, f => f.ItemCount, f => f.TimeLastModified, f => f.ListItemAllFields);
+            ClientContext.ExecuteQueryRetry();
+            WriteObject(folder);
         }
     }
 }
