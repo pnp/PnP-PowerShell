@@ -111,6 +111,7 @@ Cmdlet|Description|Platform
 **[Execute&#8209;PnPQuery](../../sharepoint-ps/sharepoint-pnp/Execute-PnPQuery.md)** |Execute the current queued actions|All
 **[Add&#8209;PnPStoredCredential](../../sharepoint-ps/sharepoint-pnp/Add-PnPStoredCredential.md)** |Adds a credential to the Windows Credential Manager|All
 **[Get&#8209;PnPStoredCredential](../../sharepoint-ps/sharepoint-pnp/Get-PnPStoredCredential.md)** |Get a credential|All
+**[Remove&#8209;PnPStoredCredential](../../sharepoint-ps/sharepoint-pnp/Remove-PnPStoredCredential.md)** |Removes a credential|All
 **[Set&#8209;PnPTraceLog](../../sharepoint-ps/sharepoint-pnp/Set-PnPTraceLog.md)** |Turn log tracing on or off|All
 
 

@@ -17,45 +17,130 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         public static bool AddCredential(string name, string username, SecureString password)
 #endif
         {
+            if (!name.StartsWith("PnPPS:"))
+            {
+                name = $"PnPPS:{name}";
+            }
 #if !NETSTANDARD2_0
-            WriteCredential(name, username, password);
+            WriteWindowsCredentialManagerEntry(name, username, password);
             return true;
 #else
             if (OperatingSystem.IsWindows())
             {
-                WriteCredential(name, username, password);
-            } else if (OperatingSystem.IsMacOS())
+                WriteWindowsCredentialManagerEntry(name, username, password);
+            }
+            else if (OperatingSystem.IsMacOS())
             {
-                var pw = SecureStringToString(password);
-                var cmd = $"/usr/bin/security add-generic-password -a '{username}' -w '{pw}' -s '{name}'";
-                if (overwrite)
-                {
-                    cmd += " -U";
-                }
-                Shell.Bash(cmd);
+                WriteMacOSKeyChainEntry(name, username, password, overwrite);
             }
             return true;
 #endif
         }
 
-        private static void WriteCredential(string applicationName, string userName, SecureString securePassword)
+        public static PSCredential GetCredential(string name)
         {
-            //https://gist.github.com/meziantou/10311113
+#if !NETSTANDARD2_0
+            var cred = ReadWindowsCredentialManagerEntry(name);
+            if (cred == null)
+            {
+                cred = ReadWindowsCredentialManagerEntry($"PnPPS:{name}");
+            }
+            return cred;
+#else
+            if (OperatingSystem.IsWindows())
+            {
+                var cred = ReadWindowsCredentialManagerEntry(name);
+                if (cred == null)
+                {
+                    cred = ReadWindowsCredentialManagerEntry($"PnPPS:{name}");
+                }
+                return cred;
+            }
+            if (OperatingSystem.IsMacOS())
+            {
+                var cred = ReadMacOSKeyChainEntry(name);
+                if (cred == null)
+                {
+                    cred = ReadMacOSKeyChainEntry($"PnPPS:{name}");
+                }
+                return cred;
+            }
+            return null;
+#endif
+        }
 
+        public static bool RemoveCredential(string name)
+        {
+#if !NETSTANDARD2_0
+            var success = DeleteWindowsCredentialManagerEntry(name);
+            if(!success)
+            {
+                success = DeleteWindowsCredentialManagerEntry($"PnPPS:{name}");
+            }
+            return success;
+#else
+            bool success = false;
+            if (OperatingSystem.IsWindows())
+            {
+                success = DeleteWindowsCredentialManagerEntry(name);
+                if (!success)
+                {
+                    success = DeleteWindowsCredentialManagerEntry($"PnPPS:{name}");
+                }
+            }
+            if (OperatingSystem.IsMacOS())
+            {
+                success = DeleteMacOSKeyChainEntry(name);
+                if (!success)
+                {
+                    success = DeleteMacOSKeyChainEntry($"PnPPS:{name}");
+                }
+                return success;
+            }
+            return success;
+#endif
+        }
+
+
+        #region PRIVATE
+
+        private static PSCredential ReadWindowsCredentialManagerEntry(string applicationName)
+        {
+            IntPtr credPtr;
+
+            bool success = CredRead(applicationName, CRED_TYPE.GENERIC, 0, out credPtr);
+            if (success)
+            {
+                var critCred = new CriticalCredentialHandle(credPtr);
+                var cred = critCred.GetCredential();
+                var username = cred.UserName;
+                var securePassword = StringToSecureString(cred.CredentialBlob);
+                return new PSCredential(username, securePassword);
+            }
+            return null;
+        }
+
+        private static bool DeleteWindowsCredentialManagerEntry(string applicationName)
+        {
+            bool success = CredDelete(applicationName, CRED_TYPE.GENERIC, 0);
+            return success;
+        }
+
+
+        private static void WriteWindowsCredentialManagerEntry(string applicationName, string userName, SecureString securePassword)
+        {
             var password = SecureStringToString(securePassword);
 
             byte[] byteArray = password == null ? null : Encoding.Unicode.GetBytes(password);
-            // XP and Vista: 512; 
-            // 7 and above: 5*512
-            if (Environment.OSVersion.Version < new Version(6, 1) /* Windows 7 */)
+            if (Environment.OSVersion.Version < new Version(6, 1))
             {
                 if (byteArray != null && byteArray.Length > 512)
-                    throw new ArgumentOutOfRangeException("password", "The secret message has exceeded 512 bytes.");
+                    throw new ArgumentOutOfRangeException("password", "The password has exceeded 512 bytes.");
             }
             else
             {
                 if (byteArray != null && byteArray.Length > 512 * 5)
-                    throw new ArgumentOutOfRangeException("password", "The secret message has exceeded 2560 bytes.");
+                    throw new ArgumentOutOfRangeException("password", "The password has exceeded 2560 bytes.");
             }
 
             NativeCredential credential = new NativeCredential();
@@ -78,77 +163,74 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             if (!written)
             {
                 int lastError = Marshal.GetLastWin32Error();
-                throw new Exception(string.Format("CredWrite failed with the error code {0}.", lastError));
+                throw new Exception($"CredWrite failed with the error code {lastError}");
             }
         }
 
-        public static PSCredential GetCredential(string name)
+#if NETSTANDARD2_0
+        private static PSCredential ReadMacOSKeyChainEntry(string name)
         {
-#if !NETSTANDARD2_0
-            PSCredential psCredential = null;
-            IntPtr credPtr;
-
-            bool success = CredRead(name, CRED_TYPE.GENERIC, 0, out credPtr);
-            if (success)
+            var cmd = $"/usr/bin/security find-generic-password -s '{name}'";
+            var output = Shell.Bash(cmd);
+            string username = null;
+            string password = null;
+            foreach (var line in output)
             {
-                var critCred = new CriticalCredentialHandle(credPtr);
-                var cred = critCred.GetCredential();
-                var username = cred.UserName;
-                var securePassword = new SecureString();
-                string credentialBlob = cred.CredentialBlob;
-                char[] passwordChars = credentialBlob.ToCharArray();
-                foreach (char c in passwordChars)
+                if (line.Trim().StartsWith(@"""acct"""))
                 {
-                    securePassword.AppendChar(c);
+                    var acctline = line.Trim().Split(new string[] { "<blob>=" }, StringSplitOptions.None);
+                    username = acctline[1].Trim(new char[] { '"' });
                 }
-                psCredential = new PSCredential(username, securePassword);
             }
-            return psCredential;
-#else
-            if (OperatingSystem.IsWindows())
+            cmd = $"/usr/bin/security find-generic-password -s '{name}' -w";
+            output = Shell.Bash(cmd);
+            if (output.Count == 1)
             {
-                PSCredential psCredential = null;
-                IntPtr credPtr;
-
-                bool success = CredRead(name, CRED_TYPE.GENERIC, 0, out credPtr);
-                if (success)
-                {
-                    var critCred = new CriticalCredentialHandle(credPtr);
-                    var cred = critCred.GetCredential();
-                    var username = cred.UserName;
-                    var securePassword = StringToSecureString(cred.CredentialBlob);
-                    psCredential = new PSCredential(username, securePassword);
-                }
-                return psCredential;
+                password = output[0];
             }
-            if (OperatingSystem.IsMacOS())
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
-                var cmd = $"/usr/bin/security find-generic-password -s '{name}'";
-                var output = Shell.Bash(cmd);
-                string username = null;
-                string password = null;
-                foreach (var line in output)
-                {                
-                    if (line.Trim().StartsWith(@"""acct"""))
-                    {
-                        var acctline = line.Trim().Split(new string[] { "<blob>=" }, StringSplitOptions.None);
-                        username = acctline[1].Trim(new char[] { '"' });
-                    }
-                }
-                cmd = $"/usr/bin/security find-generic-password -s '{name}' -w";
-                output = Shell.Bash(cmd);
-                if(output.Count == 1)
-                {
-                    password = output[0];
-                }
-                if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                {
-                    return new PSCredential(username, StringToSecureString(password));
-                }
+                return new PSCredential(username, StringToSecureString(password));
             }
             return null;
+        }
 #endif
 
+#if NETSTANDARD2_0
+        private static void WriteMacOSKeyChainEntry(string applicationName, string username, SecureString password, bool overwrite)
+        {
+            var pw = SecureStringToString(password);
+            var cmd = $"/usr/bin/security add-generic-password -a '{username}' -w '{pw}' -s '{applicationName}'";
+            if (overwrite)
+            {
+                cmd += " -U";
+            }
+            Shell.Bash(cmd);
+        }
+#endif
+
+#if NETSTANDARD2_0
+        private static bool DeleteMacOSKeyChainEntry(string name)
+        {
+            var cmd = $"/usr/bin/security delete-generic-password -s '{name}'";
+            var output = Shell.Bash(cmd);
+            var success = output.Count > 1 && !output[0].StartsWith("security:");
+            return success;
+        }
+#endif
+
+        private static string SecureStringToString(SecureString value)
+        {
+            IntPtr valuePtr = IntPtr.Zero;
+            try
+            {
+                valuePtr = Marshal.SecureStringToGlobalAllocUnicode(value);
+                return Marshal.PtrToStringUni(valuePtr);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
+            }
         }
 
         private static SecureString StringToSecureString(string inputString)
@@ -161,7 +243,9 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
             return securityString;
         }
+#endregion
 
+#region UNMANAGED
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct NativeCredential
         {
@@ -274,27 +358,19 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
-        private static string SecureStringToString(SecureString value)
-        {
-            IntPtr valuePtr = IntPtr.Zero;
-            try
-            {
-                valuePtr = Marshal.SecureStringToGlobalAllocUnicode(value);
-                return Marshal.PtrToStringUni(valuePtr);
-            }
-            finally
-            {
-                Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
-            }
-        }
+
 
         [DllImport("Advapi32.dll", SetLastError = true, EntryPoint = "CredWriteW", CharSet = CharSet.Unicode)]
-        public static extern bool CredWrite([In] ref NativeCredential userCredential, [In] UInt32 flags);
+        private static extern bool CredWrite([In] ref NativeCredential userCredential, [In] UInt32 flags);
 
         [DllImport("Advapi32.dll", EntryPoint = "CredReadW", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern bool CredRead(string target, CRED_TYPE type, int reservedFlag, out IntPtr CredentialPtr);
+        private static extern bool CredRead(string target, CRED_TYPE type, int reservedFlag, out IntPtr CredentialPtr);
 
         [DllImport("Advapi32.dll", EntryPoint = "CredFree", SetLastError = true)]
-        public static extern bool CredFree([In] IntPtr cred);
+        private static extern bool CredFree([In] IntPtr cred);
+
+        [DllImport("Advapi32.dll", EntryPoint = "CredDeleteW", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern bool CredDelete(string target, CRED_TYPE type, int reservedFlag);
+#endregion
     }
 }

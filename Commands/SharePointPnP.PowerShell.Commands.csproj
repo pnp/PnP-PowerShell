@@ -432,6 +432,7 @@
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Admin\RemoveTenantTheme.cs" />
     <Compile Include="Base\AddStoredCredential.cs" />
+    <Compile Include="Base\RemoveStoredCredential.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\HubSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\NavigationNodePipeBind.cs" />
