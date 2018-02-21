@@ -19,7 +19,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false)]
     [CmdletHelp("Connect to a SharePoint site",
-        "Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets",
+        @"Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets. 
+To automate authentication there are several options. The easiest would be to use the Windows Credential Manager. Either manually add a Generic Credential, or use the Add-PnPStoredCredential cmdlet to add an entry. The name you give to the credential can be used in two main ways. If you simply give it a name alike 'O365' or any other value you can specify this value for the Credentials parameter of this cmdlet.
+
+Alternatively you can specify a URL as a name, alike 'https://contoso.sharepoint.com'. Any site you connect to within the contoso tenant will then use the credentials you specified. For more information see the help for the Add-PnPStoredCredential cmdlet. (Get-Help Add-PnPStoredCredential).
+
+Make sure to check the SPOManagement, PnPO365ManagementShell and AccessToken parameters too.",
         DetailedDescription = "If no credentials have been specified, and the CurrentCredentials parameter has not been specified, you will be prompted for credentials.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(

@@ -12,5 +12,6 @@ Cmdlet|Description|Platform
 **[Disconnect&#8209;PnPOnline](Disconnect-PnPOnline.md)** |Disconnects the context|All
 **[Get&#8209;PnPProperty](Get-PnPProperty.md)** |Returns a previously not loaded property of a ClientObject|All
 **[Execute&#8209;PnPQuery](Execute-PnPQuery.md)** |Execute the current queued actions|All
+**[Add&#8209;PnPStoredCredential](Add-PnPStoredCredential.md)** |Adds a credential to the Windows Credential Manager|All
 **[Get&#8209;PnPStoredCredential](Get-PnPStoredCredential.md)** |Get a credential|All
 **[Set&#8209;PnPTraceLog](Set-PnPTraceLog.md)** |Turn log tracing on or off|All

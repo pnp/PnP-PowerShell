@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.24.1803.0 - Unreleased]
 ### Added
+- Added Add-PnPStoredCredential to add an entry to the platform Credential Manager
 - Added Get-PnPHubSite cmdlet
 - Added Set-PnPHubSite cmdlet
 - Added Grant-PnPHubSiteRights cmdlet
@@ -33,6 +34,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
+- Updated Get-PnPStoredCredentials to support .NET Standard
+- Updated/fixed documentation on various cmdlets
+- Fixed issue with Get-PnPTenantSite not returning all sites in large tenants
+- Added -PnPO365Management Shell parameter login option to Connect-PnPOnline
 - Changed changelog format
 - Updated Remove-PnPNavigationNode cmdlet to support removal by Id
 - Updated Remove-PnPNavigationNode cmdlet to support the -All parameter
@@ -41,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Deprecated
 - Deprecated Remove-PnPNavigationNode -Title and -Header parameters. Use the Identity parameter instead.
+- Marked -WebTemplate parameter on Get-PnPTenantSite as obsolete. Use -Template instead.
 
 ## [2.23.1802.0] - 2018-02-05
 ### Added
