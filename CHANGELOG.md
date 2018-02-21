@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
+- Move-PnPFolder now returns the folder that has been moved
 - Updated Get-PnPStoredCredentials to support .NET Standard
 - Updated/fixed documentation on various cmdlets
 - Fixed issue with Get-PnPTenantSite not returning all sites in large tenants
