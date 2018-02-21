@@ -1,5 +1,5 @@
 # SharePointPnP.PowerShell Changelog
-*Please no to commit changes to file, it is maintained by the repo owner.*
+*Please do not commit changes to this file, it is maintained by the repo owner.*
 
 All notable changes to this project will be documented in this file.
 
