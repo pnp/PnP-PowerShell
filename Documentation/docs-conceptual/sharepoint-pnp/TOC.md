@@ -206,6 +206,7 @@
 ### [Set-PnPAppSideLoading](Set-PnPAppSideLoading.md)
 ### [Get-PnPAuditing](Get-PnPAuditing.md)
 ### [Set-PnPAuditing](Set-PnPAuditing.md)
+### [Test-PnPOffice365GroupAlias](Test-PnPOffice365GroupAlias.md)
 ### [Add-PnPRoleDefinition](Add-PnPRoleDefinition.md)
 ### [Get-PnPRoleDefinition](Get-PnPRoleDefinition.md)
 ### [Remove-PnPRoleDefinition](Remove-PnPRoleDefinition.md)
