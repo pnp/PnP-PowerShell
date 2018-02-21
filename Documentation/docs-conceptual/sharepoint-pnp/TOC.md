@@ -25,6 +25,7 @@
 ### [Execute-PnPQuery](Execute-PnPQuery.md)
 ### [Add-PnPStoredCredential](Add-PnPStoredCredential.md)
 ### [Get-PnPStoredCredential](Get-PnPStoredCredential.md)
+### [Remove-PnPStoredCredential](Remove-PnPStoredCredential.md)
 ### [Set-PnPTraceLog](Set-PnPTraceLog.md)
 ## [Branding](Branding-category.md)
 ### [Add-PnPCustomAction](Add-PnPCustomAction.md)

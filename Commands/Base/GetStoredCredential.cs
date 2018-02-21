@@ -1,11 +1,13 @@
 ﻿using System.Management.Automation;
+using System.Net;
+using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet("Get", "PnPStoredCredential")]
+    [Cmdlet(VerbsCommon.Get, "PnPStoredCredential")]
     [CmdletHelp("Get a credential",
 #if !NETSTANDARD2_0
         "Returns a stored credential from the Windows Credential Manager",
@@ -34,23 +36,30 @@ namespace SharePointPnP.PowerShell.Commands.Base
         protected override void ProcessRecord()
         {
 #if !NETSTANDARD2_0
-            switch (Type)
+            var cred = Utilities.CredentialManager.GetCredential(Name);
+            if (cred != null)
             {
-                case CredentialType.O365:
-                    {
-                        WriteObject(CredentialManager.GetSharePointOnlineCredential(Name));
-                        break;
-                    }
-                case CredentialType.OnPrem:
-                    {
-                        WriteObject(CredentialManager.GetCredential(Name));
-                        break;
-                    }
-                case CredentialType.PSCredential:
-                    {
-                        WriteObject(Utilities.CredentialManager.GetCredential(Name));
-                        break;
-                    }
+                switch (Type)
+                {
+                    case CredentialType.O365:
+                        {
+                            if (cred != null)
+                            {
+                                WriteObject(new SharePointOnlineCredentials(cred.UserName, cred.Password));
+                            }
+                            break;
+                        }
+                    case CredentialType.OnPrem:
+                        {
+                            WriteObject(new NetworkCredential(cred.UserName, cred.Password));
+                            break;
+                        }
+                    case CredentialType.PSCredential:
+                        {
+                            WriteObject(cred);
+                            break;
+                        }
+                }
             }
 #else
             var creds = Utilities.CredentialManager.GetCredential(Name);
