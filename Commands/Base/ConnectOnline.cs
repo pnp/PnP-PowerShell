@@ -358,7 +358,8 @@ dir",
 #if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
 #else
-                throw new NotImplementedException();
+                WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. 
+Use -PnPO365ManagementShell instead");
 #endif
             }
             else if (UseAdfs)
