@@ -76,7 +76,7 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
                     {
                         var node = SelectedWeb.Navigation.GetNodeById(Identity.Id);
                         node.DeleteObject();
-                        ClientContext.ExecuteQueryAsync();
+                        ClientContext.ExecuteQueryRetry();
                     }
                     else
                     {
