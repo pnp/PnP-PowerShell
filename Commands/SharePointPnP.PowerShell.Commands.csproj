@@ -432,7 +432,7 @@
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Admin\RemoveTenantTheme.cs" />
     <Compile Include="Base\AddStoredCredential.cs" />
-    <Compile Include="Base\GenerateAdalCertificate.cs" />
+    <Compile Include="Base\GenerateAzureCertificate.cs" />
     <Compile Include="Base\RemoveStoredCredential.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\HubSitePipeBind.cs" />
@@ -586,6 +586,7 @@
     <Compile Include="Site\AddRoleDefinition.cs" />
     <Compile Include="Site\GetRoleDefinition.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
+    <Compile Include="Utilities\CertificateCrypto.cs" />
     <Compile Include="Utilities\CertificateHelper.cs" />
     <Compile Include="Utilities\Clipboard.cs" />
     <Compile Include="Utilities\OperatingSystem.cs" />

@@ -19,7 +19,9 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
+using SharePointPnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -121,7 +123,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             stopWatch.Start();
             while (!tokenResult.IsSuccessStatusCode)
             {
-                if(stopWatch.ElapsedMilliseconds > 60 * 1000)
+                if (stopWatch.ElapsedMilliseconds > 60 * 1000)
                 {
                     break;
                 }
@@ -144,7 +146,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 var spoConnection = new SPOnlineConnection(context, accessToken, refreshToken, expiresOn, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
                 return spoConnection;
-            } else
+            }
+            else
             {
                 progressCallback("Timeout");
                 return null;
@@ -225,10 +228,32 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
 
+        internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        {
+            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM);
+
+            var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+            var clientContext = authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment);
+            var context = PnPClientContext.ConvertFrom(clientContext, retryCount, retryWait * 1000);
+            var connectionType = ConnectionType.OnPrem;
+            if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+            {
+                connectionType = ConnectionType.O365;
+            }
+            if (skipAdminCheck == false)
+            {
+                if (IsTenantAdminSite(context))
+                {
+                    connectionType = ConnectionType.TenantAdmin;
+                }
+            }
+            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+        }
+
         internal static SPOnlineConnection InitiateAccessTokenConnection(Uri url, string accessToken, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAccessTokenAuthenticatedContext(url.ToString(), accessToken),retryCount, retryWait);
+            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAccessTokenAuthenticatedContext(url.ToString(), accessToken), retryCount, retryWait);
             var connectionType = ConnectionType.O365;
             if (skipAdminCheck == false)
             {

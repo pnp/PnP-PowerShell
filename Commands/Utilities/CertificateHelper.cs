@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -11,77 +12,56 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 {
     internal class CertificateHelper
     {
-        private static byte[] RSA_OID =
-            { 0x30, 0xD, 0x6, 0x9, 0x2A, 0x86, 0x48, 0x86, 0xF7, 0xD, 0x1, 0x1, 0x1, 0x5, 0x0 }; // Object ID for RSA
-
-        // Corresponding ASN identification bytes
-        const byte INTEGER = 0x2;
-        const byte SEQUENCE = 0x30;
+        private enum PemStringType
+        {
+            Certificate,
+            RsaPrivateKey
+        }
 
         internal static string PrivateKeyToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
             var param = ((RSACryptoServiceProvider)certificate.PrivateKey).ExportParameters(true);
+            string base64String;
+            using (var stream = new MemoryStream())
+            {
+                var writer = new BinaryWriter(stream);
+                writer.Write((byte)0x30); // SEQUENCE
+                using (var innerStream = new MemoryStream())
+                {
+                    var innerWriter = new BinaryWriter(innerStream);
+                    EncodeIntegerBigEndian(innerWriter, new byte[] { 0x00 }); // Version
+                    EncodeIntegerBigEndian(innerWriter, param.Modulus);
+                    EncodeIntegerBigEndian(innerWriter, param.Exponent);
+                    EncodeIntegerBigEndian(innerWriter, param.D);
+                    EncodeIntegerBigEndian(innerWriter, param.P);
+                    EncodeIntegerBigEndian(innerWriter, param.Q);
+                    EncodeIntegerBigEndian(innerWriter, param.DP);
+                    EncodeIntegerBigEndian(innerWriter, param.DQ);
+                    EncodeIntegerBigEndian(innerWriter, param.InverseQ);
+                    var length = (int)innerStream.Length;
+                    EncodeLength(writer, length);
+                    writer.Write(innerStream.GetBuffer(), 0, length);
+                }
 
-            List<byte> arrBinaryPrivateKey = new List<byte>();
-
-            arrBinaryPrivateKey.InsertRange(0, param.InverseQ);
-            AppendLength(ref arrBinaryPrivateKey, param.InverseQ.Length);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            arrBinaryPrivateKey.InsertRange(0, param.DQ);
-            AppendLength(ref arrBinaryPrivateKey, param.DQ.Length);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            arrBinaryPrivateKey.InsertRange(0, param.DP);
-            AppendLength(ref arrBinaryPrivateKey, param.DP.Length);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            arrBinaryPrivateKey.InsertRange(0, param.Q);
-            AppendLength(ref arrBinaryPrivateKey, param.Q.Length);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            arrBinaryPrivateKey.InsertRange(0, param.P);
-            AppendLength(ref arrBinaryPrivateKey, param.P.Length);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            arrBinaryPrivateKey.InsertRange(0, param.D);
-            AppendLength(ref arrBinaryPrivateKey, param.D.Length);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            arrBinaryPrivateKey.InsertRange(0, param.Exponent);
-            AppendLength(ref arrBinaryPrivateKey, param.Exponent.Length);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            arrBinaryPrivateKey.InsertRange(0, param.Modulus);
-            AppendLength(ref arrBinaryPrivateKey, param.Modulus.Length);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            arrBinaryPrivateKey.Insert(0, 0x00);
-            AppendLength(ref arrBinaryPrivateKey, 1);
-            arrBinaryPrivateKey.Insert(0, INTEGER);
-
-            AppendLength(ref arrBinaryPrivateKey, arrBinaryPrivateKey.Count);
-            arrBinaryPrivateKey.Insert(0, SEQUENCE);
-
-            string base64String = Convert.ToBase64String(arrBinaryPrivateKey.ToArray());
+                base64String = Convert.ToBase64String(stream.GetBuffer(), 0, (int)stream.Length);
+            }
 
             StringBuilder sb = new StringBuilder();
             if (useLineBreaks)
             {
                 sb.AppendLine("-----BEGIN RSA PRIVATE KEY-----");
                 sb.AppendLine(string.Join(Environment.NewLine, SplitText(base64String, 64)));
-                sb.AppendLine("-----END RSA PRIVATE KEY----");
+                sb.AppendLine("-----END RSA PRIVATE KEY-----");
             }
             else
             {
                 sb.Append("-----BEGIN RSA PRIVATE KEY-----");
                 sb.Append(base64String);
-                sb.Append("-----END RSA PRIVATE KEY----");
+                sb.Append("-----END RSA PRIVATE KEY-----");
             }
 
             return sb.ToString();
         }
-
 
         internal static string CertificateToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
@@ -103,20 +83,99 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return sb.ToString();
         }
 
-        private static void AppendLength(ref List<byte> arrBinaryData, int nLen)
+        internal static X509Certificate2 GetCertificateFromPEMstring(string publicCert, string privateKey)
         {
-            if (nLen <= byte.MaxValue)
+            var certBuffer = GetBytesFromPEM(publicCert, PemStringType.Certificate);
+            var keyBuffer = GetBytesFromPEM(privateKey, PemStringType.RsaPrivateKey);
+
+            var certificate = new X509Certificate2(certBuffer);
+
+            var prov = CertificateCrypto.DecodeRsaPrivateKey(keyBuffer);
+            certificate.PrivateKey = prov;
+
+            return certificate;
+        }
+
+        #region certificate manipulation
+        private static void EncodeLength(BinaryWriter stream, int length)
+        {
+            if (length < 0x80)
             {
-                arrBinaryData.Insert(0, Convert.ToByte(nLen));
-                arrBinaryData.Insert(0, 0x81); //This byte means that the length fits in one byte
+                // Short form
+                stream.Write((byte)length);
             }
             else
             {
-                arrBinaryData.Insert(0, Convert.ToByte(nLen % (byte.MaxValue + 1)));
-                arrBinaryData.Insert(0, Convert.ToByte(nLen / (byte.MaxValue + 1)));
-                arrBinaryData.Insert(0, 0x82); //This byte means that the length fits in two byte
+                // Long form
+                var temp = length;
+                var bytesRequired = 0;
+                while (temp > 0)
+                {
+                    temp >>= 8;
+                    bytesRequired++;
+                }
+                stream.Write((byte)(bytesRequired | 0x80));
+                for (var i = bytesRequired - 1; i >= 0; i--)
+                {
+                    stream.Write((byte)(length >> (8 * i) & 0xff));
+                }
+            }
+        }
+        private static void EncodeIntegerBigEndian(BinaryWriter stream, byte[] value, bool forceUnsigned = true)
+        {
+            stream.Write((byte)0x02); // INTEGER
+            var prefixZeros = 0;
+            for (var i = 0; i < value.Length; i++)
+            {
+                if (value[i] != 0) break;
+                prefixZeros++;
+            }
+            if (value.Length - prefixZeros == 0)
+            {
+                EncodeLength(stream, 1);
+                stream.Write((byte)0);
+            }
+            else
+            {
+                if (forceUnsigned && value[prefixZeros] > 0x7f)
+                {
+                    // Add a prefix zero to force unsigned if the MSB is 1
+                    EncodeLength(stream, value.Length - prefixZeros + 1);
+                    stream.Write((byte)0);
+                }
+                else
+                {
+                    EncodeLength(stream, value.Length - prefixZeros);
+                }
+                for (var i = prefixZeros; i < value.Length; i++)
+                {
+                    stream.Write(value[i]);
+                }
+            }
+        }
+
+        private static byte[] GetBytesFromPEM(string pemString, PemStringType type)
+        {
+            string header;
+            string footer;
+
+            switch (type)
+            {
+                case PemStringType.Certificate:
+                    header = "-----BEGIN CERTIFICATE-----";
+                    footer = "-----END CERTIFICATE-----";
+                    break;
+                case PemStringType.RsaPrivateKey:
+                    header = "-----BEGIN RSA PRIVATE KEY-----";
+                    footer = "-----END RSA PRIVATE KEY-----";
+                    break;
+                default:
+                    return null;
             }
 
+            int start = pemString.IndexOf(header, StringComparison.Ordinal) + header.Length;
+            int end = pemString.IndexOf(footer, start, StringComparison.Ordinal) - start;
+            return Convert.FromBase64String(pemString.Substring(start, end));
         }
 
         private static IEnumerable<string> SplitText(string text, int length)
@@ -127,6 +186,9 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
+        #endregion
+
+        #region self-signed
         internal static byte[] CreateSelfSignCertificatePfx(
             string x500,
             DateTime startTime,
@@ -216,7 +278,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 Check(NativeMethods.CryptGenKey(
                     providerContext,
                     1, // AT_KEYEXCHANGE
-                    1, // CRYPT_EXPORTABLE
+                    1 | (2048 << 16), // CRYPT_EXPORTABLE | 2048bit
                     out cryptKey));
 
                 IntPtr errorStringPtr;
@@ -528,6 +590,8 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 IntPtr reserved,
                 int flags);
         }
+
+        #endregion
     }
 
 }
