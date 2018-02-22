@@ -57,14 +57,19 @@ dir",
         Code = @"PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication",
         Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)",
         SortOrder = 7)]
+#if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -AppId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -AppSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany",
         Remarks = @"This will authenticate you to the German Azure environment using the German Azure endpoints for authentication",
         SortOrder = 8)]
+#endif
+#if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -SPOManagementShell",
         Remarks = @"This will authenticate you using the SharePoint Online Management Shell application",
         SortOrder = 9)]
+#endif
+#if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPO365ManagementShell",
         Remarks = @"This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.",
@@ -73,18 +78,25 @@ dir",
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPO365ManagementShell -LaunchBrowser",
         Remarks = @"This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.",
         SortOrder = 11)]
+#endif
+#if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $myaccesstoken",
         Remarks = @"This will authenticate you using the provided access token",
         SortOrder = 12)]
+#endif
+#if !ONPREMISES
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -Scopes $arrayOfScopes",
        Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes",
        SortOrder = 13)]
+#endif
+#if !ONPREMISES
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -AppId '<id>' -AppSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'",
        Remarks = "Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.",
        SortOrder = 14)]
+#endif
 #if ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://yourserver -ClientId 763d5e60-b57e-426e-8e87-b7258f7f8188 -HighTrustCertificatePath c:\HighTrust.pfx -HighTrustCertificatePassword 'password' -HighTrustCertificateIssuerId 6b9534d8-c2c1-49d6-9f4b-cd415620bca8",
