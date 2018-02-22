@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using SecureString = System.Security.SecureString;
 using RuntimeHelpers = System.Runtime.CompilerServices.RuntimeHelpers;
 
@@ -17,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         const byte INTEGER = 0x2;
         const byte SEQUENCE = 0x30;
 
-        public static string PrivateKeyToBase64(X509Certificate2 certificate, bool formatAsPEM = true)
+        internal static string PrivateKeyToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
             var param = ((RSACryptoServiceProvider)certificate.PrivateKey).ExportParameters(true);
 
@@ -63,14 +64,43 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             arrBinaryPrivateKey.Insert(0, SEQUENCE);
 
             string base64String = Convert.ToBase64String(arrBinaryPrivateKey.ToArray());
-            return formatAsPEM ? String.Join(Environment.NewLine, SplitText(base64String, 64)) : base64String;
+
+            StringBuilder sb = new StringBuilder();
+            if (useLineBreaks)
+            {
+                sb.AppendLine("-----BEGIN RSA PRIVATE KEY-----");
+                sb.AppendLine(string.Join(Environment.NewLine, SplitText(base64String, 64)));
+                sb.AppendLine("-----END RSA PRIVATE KEY----");
+            }
+            else
+            {
+                sb.Append("-----BEGIN RSA PRIVATE KEY-----");
+                sb.Append(base64String);
+                sb.Append("-----END RSA PRIVATE KEY----");
+            }
+
+            return sb.ToString();
         }
 
 
-        public static string CertificateToBase64(X509Certificate2 certificate, bool formatAsPEM = true)
+        internal static string CertificateToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
             string base64String = Convert.ToBase64String(certificate.GetRawCertData());
-            return formatAsPEM ? String.Join(Environment.NewLine, SplitText(base64String, 64)) : base64String;
+            StringBuilder sb = new StringBuilder();
+            if (useLineBreaks)
+            {
+                sb.AppendLine("-----BEGIN CERTIFICATE-----");
+                sb.AppendLine(string.Join(Environment.NewLine, SplitText(base64String, 64)));
+                sb.AppendLine("-----END CERTIFICATE-----");
+            }
+            else
+            {
+                sb.Append("-----BEGIN CERTIFICATE-----");
+                sb.Append(base64String);
+                sb.Append("-----END CERTIFICATE-----");
+            }
+
+            return sb.ToString();
         }
 
         private static void AppendLength(ref List<byte> arrBinaryData, int nLen)
@@ -97,7 +127,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static byte[] CreateSelfSignCertificatePfx(
+        internal static byte[] CreateSelfSignCertificatePfx(
             string x500,
             DateTime startTime,
             DateTime endTime)
@@ -110,7 +140,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return pfxData;
         }
 
-        public static byte[] CreateSelfSignCertificatePfx(
+        internal static byte[] CreateSelfSignCertificatePfx(
             string x500,
             DateTime startTime,
             DateTime endTime,
@@ -149,7 +179,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return pfxData;
         }
 
-        public static byte[] CreateSelfSignCertificatePfx(
+        internal static byte[] CreateSelfSignCertificatePfx(
             string x500,
             DateTime startTime,
             DateTime endTime,
