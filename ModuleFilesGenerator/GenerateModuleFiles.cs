@@ -23,8 +23,8 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 var helpFileGenerator = new HelpFileGenerator(cmdlets, cmdletAssembly, $"{assemblyPath}-help.xml");
                 helpFileGenerator.Generate();
 
-                var markDownGenerator = new MarkDownGenerator(cmdlets, solutionDir);
-                markDownGenerator.Generate();
+                //var markDownGenerator = new MarkDownGenerator(cmdlets, solutionDir);
+                //markDownGenerator.Generate();
 
                 var moduleManifestGenerator = new ModuleManifestGenerator(cmdlets, assemblyPath, configurationName, cmdletAssembly.GetName().Version);
                 moduleManifestGenerator.Generate();

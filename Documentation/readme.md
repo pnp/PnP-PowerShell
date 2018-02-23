@@ -25,6 +25,7 @@ Cmdlet|Description|Platforms
 **[Get&#8209;PnPAppAuthAccessToken](Get-PnPAppAuthAccessToken.md)** |Returns the access token|All
 **[Get&#8209;PnPAuthenticationRealm](Get-PnPAuthenticationRealm.md)** |Returns the authentication realm|All
 **[Get&#8209;PnPAzureADManifestKeyCredentials](Get-PnPAzureADManifestKeyCredentials.md)** |Return the JSON Manifest snippet for Azure Apps|All
+**[Generate&#8209;PnPAzureCertificate](Generate-PnPAzureCertificate.md)** |Get PEM values for an existing certificate (.pfx), or generate a new 2048bit self-signed certificate and manifest for use when using CSOM via an app-only ADAL application.  See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.  KeyCredentials contains the ADAL app manifest sections.  Certificate contains the PEM encoded certificate.  PrivateKey contains the PEM encoded private key of the certificate.|All
 **[Get&#8209;PnPConnection](Get-PnPConnection.md)** |Returns the current context|All
 **[Get&#8209;PnPContext](Get-PnPContext.md)** |Returns the current context|All
 **[Set&#8209;PnPContext](Set-PnPContext.md)** |Set the ClientContext|All
@@ -133,7 +134,7 @@ Cmdlet|Description|Platforms
 **[Set&#8209;PnPFileCheckedIn](Set-PnPFileCheckedIn.md)** |Checks in a file|All
 **[Set&#8209;PnPFileCheckedOut](Set-PnPFileCheckedOut.md)** |Checks out a file|All
 **[Add&#8209;PnPFolder](Add-PnPFolder.md)** |Creates a folder within a parent folder|All
-**[Ensure&#8209;PnPFolder](Ensure-PnPFolder.md)** |Returns a folder from a given site relative path, and will create it if it does not exist.|All
+**[Resolve&#8209;PnPFolder](Resolve-PnPFolder.md)** |Returns a folder from a given site relative path, and will create it if it does not exist.|All
 **[Get&#8209;PnPFolder](Get-PnPFolder.md)** |Return a folder object|All
 **[Move&#8209;PnPFolder](Move-PnPFolder.md)** |Move a folder to another location in the current web|All
 **[Remove&#8209;PnPFolder](Remove-PnPFolder.md)** |Deletes a folder within a parent folder|All

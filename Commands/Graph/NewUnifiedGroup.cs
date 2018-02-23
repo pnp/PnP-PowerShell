@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet("New", "PnPUnifiedGroup")]
+    [Cmdlet(VerbsCommon.New, "PnPUnifiedGroup")]
     [CmdletHelp("Creates a new Office 365 Group (aka Unified Group)",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]

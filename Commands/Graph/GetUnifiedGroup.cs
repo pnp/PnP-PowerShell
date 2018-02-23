@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet("Get", "PnPUnifiedGroup")]
+    [Cmdlet(VerbsCommon.Get, "PnPUnifiedGroup")]
     [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups",
         Category = CmdletHelpCategory.Graph, 
         SupportedPlatform = CmdletSupportedPlatform.Online)]

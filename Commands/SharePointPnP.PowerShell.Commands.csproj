@@ -533,7 +533,7 @@
     <Compile Include="Base\GetAuthenticationRealm.cs" />
     <Compile Include="Base\Constants.cs" />
     <Compile Include="Base\GetAzureADManifestKeyCredentials.cs" />
-    <Compile Include="Base\deprecated\ConnectPnPMicrosoftGraph.cs" />
+    <Compile Include="Base\deprecated\ConnectPnPMicrosoftGraph.deprecated.cs" />
     <Compile Include="Base\PipeBinds\DocumentSetPipeBind.cs" />
     <Compile Include="Base\PipeBinds\FeaturePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ListItemPipeBind.cs" />
