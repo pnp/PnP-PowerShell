@@ -287,10 +287,10 @@ dir",
         public SecureString CertificatePassword;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "PEM encoded certificate")]
-        public string Certificate;
+        public string PEMCertificate;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "PEM encoded private key for the certificate")]
-        public string PrivateKey;
+        public string PEMPrivateKey;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Clears the token cache.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Clears the token cache.")]
@@ -433,7 +433,7 @@ dir",
             else if (ParameterSetName == ParameterSet_APPONLYAADPEM)
             {
 #if !NETSTANDARD2_0
-                connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, PrivateKey, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+                connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
 #else
                 throw new NotImplementedException();
 #endif
