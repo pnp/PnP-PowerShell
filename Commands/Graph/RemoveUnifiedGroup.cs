@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet("Remove", "PnPUnifiedGroup")]
+    [Cmdlet(VerbsCommon.Remove, "PnPUnifiedGroup")]
     [CmdletHelp("Removes one Office 365 Group (aka Unified Group) or a list of Office 365 Groups",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]

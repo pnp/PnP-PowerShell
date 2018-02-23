@@ -8,8 +8,8 @@ using ClientCredential = Microsoft.Identity.Client.ClientCredential;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Obsolete("This cmdlet be removed in the April 2018 release. Use Connect-PnPOnline instead with the same parameters.")]
-    [Cmdlet("Connect", "PnPMicrosoftGraph", DefaultParameterSetName = ParameterSet_SCOPE)]
+    [Obsolete("This cmdlet will be removed in the April 2018 release. Use Connect-PnPOnline instead with the same parameters.")]
+    [Cmdlet(VerbsCommunications.Connect, "PnPMicrosoftGraph", DefaultParameterSetName = ParameterSet_SCOPE)]
     [CmdletHelp("Connect to the Microsoft Graph",
         "Uses the Microsoft Authentication Library (Preview) to connect to Azure AD and to get an OAuth 2.0 Access Token to consume the Microsoft Graph API",
         Category = CmdletHelpCategory.Graph)]
