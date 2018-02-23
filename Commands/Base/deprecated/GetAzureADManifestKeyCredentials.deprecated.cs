@@ -5,6 +5,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
+    [Obsolete("This cmdlet be removed in the May 2018 release. Use Get-PnPAzureCertificate.")]
     [Cmdlet(VerbsCommon.Get, "PnPAzureADManifestKeyCredentials")]
     [CmdletHelp("Return the JSON Manifest snippet for Azure Apps",
         "Creates the JSON snippet that is required for the manifest JSON file for Azure WebApplication / WebAPI apps", 

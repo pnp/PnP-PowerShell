@@ -21,14 +21,14 @@ The PnP commandlets can use the Active Directory Authentication Library (ADAL) t
 
 You are now ready to configure the Azure AD Application for invoking SharePoint Online with an App Only access token. In order to do that, you have to create and configure a self-signed X.509 certificate, which will be used to authenticate your Application against Azure AD, while requesting the App Only access token. 
 
-First of all, you have to create the self-signed X.509 Certificate, which can be created using the `Generate-PnPAzureCertificate` commandlet.
+First of all, you have to create the self-signed X.509 Certificate, which can be created using the `New-PnPAzureCertificate` commandlet.
 
 You may also add the `-Out` parameter if you want to save the certificate as a local .pfx file.
 
-Create a self signed certificate using `Generate-PnPAzureCertificate` (output truncated for readability):
+Create a self signed certificate using `New-PnPAzureCertificate` (output truncated for readability):
 
 ```PowerShell
-$cert = Generate-PnPAzureCertificate
+$cert = New-PnPAzureCertificate
 $cert
 
 Subject        : CN=pnp.contoso.com
@@ -48,7 +48,7 @@ PrivateKey     : -----BEGIN RSA PRIVATE KEY-----MIIEp...4W6g==-----END
                  RSA PRIVATE KEY-----
 ```
 
->For further details about the `Generate-PnPAzureCertificate` syntax and command line parameters you can read the documentation with `Get-Help Generate-PnPAzureCertificate -Detailed`.
+>For further details about the `New-PnPAzureCertificate` syntax and command line parameters you can read the documentation with `Get-Help New-PnPAzureCertificate -Detailed`. If you have an existing .pfx file you can get the PEM values and key credential manifest settings using `Get-PnPAzureCertificate`.
 
 Both the certificate and the private key is outputted as PEM encoded strings. This is useful in automation where you can store the values as environmental variables or as strings in Azure Keyvault, instead of bundling the actual .pfx file itself.
 
