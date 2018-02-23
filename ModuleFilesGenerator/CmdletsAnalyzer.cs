@@ -57,12 +57,13 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         }
 #endif
                     }
-#pragma warning disable CS0612 // Type or member is obsolete
-                    var aliasAttribute = attribute as CmdletAliasAttribute;
-#pragma warning restore CS0612 // Type or member is obsolete
+                    var aliasAttribute = attribute as AliasAttribute;
                     if (aliasAttribute != null)
                     {
-                        cmdletInfo.Aliases.Add(aliasAttribute.Alias);
+                        foreach (var name in aliasAttribute.AliasNames)
+                        {
+                            cmdletInfo.Aliases.Add(name);
+                        }
                     }
 
                     var helpAttribute = attribute as CmdletHelpAttribute;

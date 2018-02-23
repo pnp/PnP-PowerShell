@@ -7,6 +7,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.24.1803.0 - Unreleased]
 ### Added
+- Added Read-PnPProvisioningTemplate [Rename: see changed section]
+- Added Invoke-PnPQuery [Rename: see changed section]
+- Added Resolve-PnPFolder [Rename: see changed section]
+- Added New-PnPAzureCertificate cmdlet
+- Added Get-PnPAzureCertificate cmdlet
 - Added Test-PnPOffice365GroupAliasIsUsed
 - Added Remove-PnPStoredCredential
 - Added Add-PnPStoredCredential
@@ -33,11 +38,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Get-PnPRoleDefinition cmdlet
 - Added Add-PnPRoleDefinition cmdlet
 - Added Remove-PnPRoleDefinition cmdlet
-- Added New-PnPAzureCertificate cmdlet
-- Added Get-PnPAzureCertificate cmdlet
 - Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
+- Updated Connect-PnPOnline to support connecting using PEM encoded certificate strings
 - Fixed issue where it was not possible to use New-PnPSite when using Connect-PnPOnline with the -UseWebLogin parameter
 - Fixed issue with Copy-PnPFile when copying to a location within the current web where metadata was not being retained
 - Fixed issue with Add-PnPFile when a new file was uploaded and using the cmdlet also field values where set, the version would increase to 2.0 instead of the expected 1.0
@@ -52,9 +56,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Updated Remove-PnPNavigationNode cmdlet to support the -All parameter
 - Updated Set-PnPList cmdlet to change moderation setting
 - Updated Set-PnPFileCheckedIn to approve the file
-- Updated Connect-PnPOnline to support connecting using PEM encoded certificate strings
 
 ### Deprecated
+- Deprecated Load-PnPProvisioningTemplate, renaming it to Read-PnPProvisioningTemplate which follows the PowerShell approved verb standard. Load-PnPProvisioningTemplate has been added as an alias for Read-PnPProvisioningTemplate.
+- Deprecated Execute-PnPQuery, renaming it to Invoke-PnPQuery which follows the PowerShell approved verb standard. Execute-PnPQuery has been added as an alias for Invoke-PnPQuery.
+- Deprecated Ensure-PnPFolder, moving functionality to Resolve-PnPFolder which follows the PowerShell approved verb standard. Ensure-PnPFolder has been added as an alias for Resolve-PnPFolder.
+- Documentation/Markdown generation has been removed from build, now points to docs.microsoft.com
 - Deprecated Remove-PnPNavigationNode -Title and -Header parameters. Use the Identity parameter instead.
 - Marked -WebTemplate parameter on Get-PnPTenantSite as obsolete. Use -Template instead.
 - Deprecated Get-PnPAzureADManifestKeyCredentials. Use Get-PnPAzureCertificate instead.

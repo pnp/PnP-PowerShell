@@ -547,7 +547,7 @@
     <Compile Include="Base\GetContext.cs" />
     <Compile Include="Base\GetStoredCredential.cs" />
     <Compile Include="Base\GetHealthScore.cs" />
-    <Compile Include="Base\ExecuteQuery.cs" />
+    <Compile Include="Base\InvokeQuery.cs" />
     <Compile Include="Base\DisconnectSPOnline.cs" />
     <Compile Include="Base\PipeBinds\FieldPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ListPipeBind.cs" />
@@ -617,7 +617,7 @@
     <Compile Include="InformationManagement\GetSiteClosure.cs" />
     <Compile Include="InformationManagement\SetSiteClosure.cs" />
     <Compile Include="Provisioning\AddFileToProvisioningTemplate.cs" />
-    <Compile Include="Provisioning\LoadProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\ReadProvisioningTemplate.cs" />
     <Compile Include="Provisioning\NewProvisioningTemplate.cs" />
     <Compile Include="Components\PnPTemplatesGalleryResultItem.cs" />
     <Compile Include="Components\ProvisioningTemplateInformation.cs" />
@@ -750,7 +750,7 @@
     <Compile Include="Web\GetRequestAccessEmails.cs" />
     <Compile Include="Principals\GetUser.cs" />
     <Compile Include="Web\InvokeWebAction.cs" />
-    <Compile Include="Files\EnsureFolder.cs" />
+    <Compile Include="Files\ResolveFolder.cs" />
     <Compile Include="Files\AddFolder.cs" />
     <Compile Include="Web\RemovedIndexedProperty.cs" />
     <Compile Include="Files\RemoveFile.cs" />

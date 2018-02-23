@@ -67,7 +67,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 Source = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Source);
             }
             // Load the template
-            var template = LoadProvisioningTemplate
+            var template = ReadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
                 TemplateProviderExtensions);
 
