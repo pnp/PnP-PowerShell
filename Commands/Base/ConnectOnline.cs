@@ -316,8 +316,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #if ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "The Client ID of the Add-In Registration in SharePoint. Used as the HighTrustCertificateIssuerId if none is specified.")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_HIGHTRUST_PFX, HelpMessage = "The Client ID of the Add-In Registration in SharePoint. Used as the HighTrustCertificateIssuerId if none is specified.")]
-        public string ClientId;
 #endif
+        public string ClientId;
 
 #if !ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Redirect URI of the Azure AD Application")]
