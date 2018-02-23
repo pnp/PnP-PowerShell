@@ -33,6 +33,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Get-PnPRoleDefinition cmdlet
 - Added Add-PnPRoleDefinition cmdlet
 - Added Remove-PnPRoleDefinition cmdlet
+- Added New-PnPAzureCertificate cmdlet
+- Added Get-PnPAzureCertificate cmdlet
 - Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
@@ -50,10 +52,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Updated Remove-PnPNavigationNode cmdlet to support the -All parameter
 - Updated Set-PnPList cmdlet to change moderation setting
 - Updated Set-PnPFileCheckedIn to approve the file
+- Updated Connect-PnPOnline to support connecting using PEM encoded certificate strings
 
 ### Deprecated
 - Deprecated Remove-PnPNavigationNode -Title and -Header parameters. Use the Identity parameter instead.
 - Marked -WebTemplate parameter on Get-PnPTenantSite as obsolete. Use -Template instead.
+- Deprecated Get-PnPAzureADManifestKeyCredentials. Use Get-PnPAzureCertificate instead.
 
 ## [2.23.1802.0] - 2018-02-05
 ### Added
