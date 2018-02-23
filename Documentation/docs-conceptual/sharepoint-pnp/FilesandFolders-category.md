@@ -11,7 +11,7 @@ Cmdlet|Description|Platform
 **[Set&#8209;PnPFileCheckedIn](Set-PnPFileCheckedIn.md)** |Checks in a file|All
 **[Set&#8209;PnPFileCheckedOut](Set-PnPFileCheckedOut.md)** |Checks out a file|All
 **[Add&#8209;PnPFolder](Add-PnPFolder.md)** |Creates a folder within a parent folder|All
-**[Ensure&#8209;PnPFolder](Ensure-PnPFolder.md)** |Returns a folder from a given site relative path, and will create it if it does not exist.|All
+**[Resolve&#8209;PnPFolder](Resolve-PnPFolder.md)** |Returns a folder from a given site relative path, and will create it if it does not exist.|All
 **[Get&#8209;PnPFolder](Get-PnPFolder.md)** |Return a folder object|All
 **[Move&#8209;PnPFolder](Move-PnPFolder.md)** |Move a folder to another location in the current web|All
 **[Remove&#8209;PnPFolder](Remove-PnPFolder.md)** |Deletes a folder within a parent folder|All

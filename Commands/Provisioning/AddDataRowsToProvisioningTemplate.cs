@@ -17,7 +17,7 @@ using SPSite = Microsoft.SharePoint.Client.Site;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet("Add", "PnPDataRowsToProvisioningTemplate")]
+    [Cmdlet(VerbsCommon.Add, "PnPDataRowsToProvisioningTemplate")]
     [CmdletHelp("Adds datarows to a list inside a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(

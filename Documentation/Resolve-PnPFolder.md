@@ -3,7 +3,7 @@ external help file:
 applicable: SharePoint Server 2013, SharePoint Server 2016, SharePoint Online
 schema: 2.0.0
 ---
-# Ensure-PnPFolder
+# Resolve-PnPFolder
 
 ## SYNOPSIS
 Returns a folder from a given site relative path, and will create it if it does not exist.
@@ -12,10 +12,10 @@ Returns a folder from a given site relative path, and will create it if it does 
 
 ### 
 ```powershell
-Ensure-PnPFolder -SiteRelativePath <String>
-                 [-Web <WebPipeBind>]
-                 [-Includes <String[]>]
-                 [-Connection <SPOnlineConnection>]
+Resolve-PnPFolder -SiteRelativePath <String>
+                  [-Web <WebPipeBind>]
+                  [-Includes <String[]>]
+                  [-Connection <SPOnlineConnection>]
 ```
 
 ## DESCRIPTION
@@ -25,7 +25,7 @@ If you do not want the folder to be created, for instance just to test if a fold
 
 ### ------------------EXAMPLE 1------------------
 ```powershell
-PS:> Ensure-PnPFolder -SiteRelativePath "demofolder/subfolder"
+PS:> Resolve-PnPFolder -SiteRelativePath "demofolder/subfolder"
 ```
 
 Creates a folder called subfolder in a folder called demofolder located in the root folder of the site. If the folder hierarchy does not exist, it will be created.
