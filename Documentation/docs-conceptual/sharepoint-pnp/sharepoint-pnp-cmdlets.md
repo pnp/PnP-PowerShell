@@ -368,6 +368,7 @@ Cmdlet|Description|Platform
 **[Set&#8209;PnPAppSideLoading](../../sharepoint-ps/sharepoint-pnp/Set-PnPAppSideLoading.md)** |Enables the App SideLoading Feature on a site|All
 **[Get&#8209;PnPAuditing](../../sharepoint-ps/sharepoint-pnp/Get-PnPAuditing.md)** |Get the Auditing setting of a site|All
 **[Set&#8209;PnPAuditing](../../sharepoint-ps/sharepoint-pnp/Set-PnPAuditing.md)** |Set Auditing setting for a site|All
+**[Test&#8209;PnPOffice365GroupAliasIsUsed](../../sharepoint-ps/sharepoint-pnp/Test-PnPOffice365GroupAliasIsUsed.md)** |Tests if a given alias is already used used|SharePoint Online
 **[Add&#8209;PnPRoleDefinition](../../sharepoint-ps/sharepoint-pnp/Add-PnPRoleDefinition.md)** |Adds a Role Defintion (Permission Level) to the site collection in the current context|All
 **[Get&#8209;PnPRoleDefinition](../../sharepoint-ps/sharepoint-pnp/Get-PnPRoleDefinition.md)** |Retrieves a Role Definitions of a site|All
 **[Remove&#8209;PnPRoleDefinition](../../sharepoint-ps/sharepoint-pnp/Remove-PnPRoleDefinition.md)** |Remove a Role Definition from a site|All

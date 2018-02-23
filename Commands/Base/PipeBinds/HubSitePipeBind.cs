@@ -1,4 +1,5 @@
-﻿using Microsoft.Online.SharePoint.TenantAdministration;
+﻿#if !ONPREMISES
+using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using System;
 
@@ -53,3 +54,4 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         
     }
 }
+#endif

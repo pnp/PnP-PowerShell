@@ -83,6 +83,10 @@ Position: Named
 Accept pipeline input: False
 ```
 
+## OUTPUTS
+
+### [Microsoft.SharePoint.Client.Folder](https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.folder.aspx)
+
 ## RELATED LINKS
 
 [SharePoint Developer Patterns and Practices](http://aka.ms/sppnp)

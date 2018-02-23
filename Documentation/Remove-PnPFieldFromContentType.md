@@ -37,7 +37,7 @@ This will remove the site column with an internal name of "Project_Name" from a 
 ## PARAMETERS
 
 ### -ContentType
-The content type where the field is to be removed from.
+The content type where the field is to be removed from
 
 ```yaml
 Type: ContentTypePipeBind
@@ -49,7 +49,7 @@ Accept pipeline input: False
 ```
 
 ### -DoNotUpdateChildren
-If specified, inherited content types will not be updated.
+If specified, inherited content types will not be updated
 
 ```yaml
 Type: SwitchParameter
@@ -61,7 +61,7 @@ Accept pipeline input: False
 ```
 
 ### -Field
-The field to remove.
+The field to remove
 
 ```yaml
 Type: FieldPipeBind

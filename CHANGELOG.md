@@ -1,5 +1,5 @@
 # SharePointPnP.PowerShell Changelog
-*Please no to commit changes to file, it is maintained by the repo owner.*
+*Please do not commit changes to this file, it is maintained by the repo owner.*
 
 All notable changes to this project will be documented in this file.
 
@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.24.1803.0 - Unreleased]
 ### Added
+- Added Test-PnPOffice365GroupAliasIsUsed
 - Added Remove-PnPStoredCredential
 - Added Add-PnPStoredCredential
 - Added Get-PnPHubSite cmdlet
@@ -35,6 +36,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
+- Fixed issue where it was not possible to use New-PnPSite when using Connect-PnPOnline with the -UseWebLogin parameter
+- Fixed issue with Copy-PnPFile when copying to a location within the current web where metadata was not being retained
+- Fixed issue with Add-PnPFile when a new file was uploaded and using the cmdlet also field values where set, the version would increase to 2.0 instead of the expected 1.0
+- Fixed issues with Set-PnPTheme cmdlet not accepting site relative urls
+- Move-PnPFolder now returns the folder that has been moved
 - Updated Get-PnPStoredCredentials to support .NET Standard
 - Updated/fixed documentation on various cmdlets
 - Fixed issue with Get-PnPTenantSite not returning all sites in large tenants

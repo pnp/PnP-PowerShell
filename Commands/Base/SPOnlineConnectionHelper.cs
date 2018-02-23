@@ -206,7 +206,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADNativeApplication;
+            return spoConnection;
         }
 
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
@@ -225,7 +227,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            var spoConnection = new  SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
+            return spoConnection;
         }
 
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
@@ -262,7 +266,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            spoConnection.ConnectionMethod = Model.ConnectionMethod.AccessToken;
+            return spoConnection;
         }
 #endif
 #endif
@@ -297,8 +303,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         connectionType = ConnectionType.TenantAdmin;
                     }
                 }
-
-                return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+                var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+                spoConnection.ConnectionMethod = Model.ConnectionMethod.WebLogin;
+                return spoConnection;
             }
             throw new Exception("Error establishing a connection, context is null");
         }
@@ -383,7 +390,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            spoConnection.ConnectionMethod = Model.ConnectionMethod.Credentials;
+            return spoConnection;
         }
 
 #if !NETSTANDARD2_0
@@ -424,7 +433,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            spoConnection.ConnectionMethod = Model.ConnectionMethod.ADFS;
+            return spoConnection;
         }
 #endif
 

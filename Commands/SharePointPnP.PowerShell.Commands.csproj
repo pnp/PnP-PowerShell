@@ -451,6 +451,7 @@
     <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
     <Compile Include="Enums\CdnType.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
+    <Compile Include="Model\ConnectionMethod.cs" />
     <Compile Include="Model\SPOTheme.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
     <Compile Include="Diagnostic\MeasureResponseTimeMode.cs" />
@@ -586,6 +587,7 @@
     <Compile Include="Site\AddRoleDefinition.cs" />
     <Compile Include="Site\GetRoleDefinition.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
+    <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
     <Compile Include="Utilities\CertificateCrypto.cs" />
     <Compile Include="Utilities\CertificateHelper.cs" />
     <Compile Include="Utilities\Clipboard.cs" />

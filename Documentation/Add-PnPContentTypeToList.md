@@ -54,7 +54,7 @@ Accept pipeline input: False
 ```
 
 ### -List
-Specifies the list the content type needs to be added to
+Specifies the list to which the content type needs to be added
 
 ```yaml
 Type: ListPipeBind

@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletHelp("Return a folder object", Category = CmdletHelpCategory.Files,
         DetailedDescription = "Retrieves a folder if it exists. Use Ensure-PnPFolder to create the folder if it does not exist.",
         OutputType = typeof(Folder),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.folder.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-PnPFolder -Url ""Shared Documents""",
         Remarks = "Returns the folder called 'Shared Documents' which is located in the root of the current web",

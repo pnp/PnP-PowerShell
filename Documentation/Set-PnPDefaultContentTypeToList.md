@@ -29,7 +29,7 @@ This will set the Project content type (which has already been added to a list) 
 ## PARAMETERS
 
 ### -ContentType
-The content type object that needs to be added to the list
+The content type object that needs to be set as the default content type on the list. Content Type needs to be present on the list.
 
 ```yaml
 Type: ContentTypePipeBind
@@ -41,7 +41,7 @@ Accept pipeline input: False
 ```
 
 ### -List
-The name of a content type, its ID or an actual content type object that needs to be removed from the specified list.
+The name of a list, an ID or the actual list object to update
 
 ```yaml
 Type: ListPipeBind
