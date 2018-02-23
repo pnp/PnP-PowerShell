@@ -454,6 +454,7 @@
     <Compile Include="Enums\SiteWebTemplate.cs" />
     <Compile Include="Model\ConnectionMethod.cs" />
     <Compile Include="Model\SPOTheme.cs" />
+    <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
     <Compile Include="Diagnostic\MeasureResponseTimeMode.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
@@ -596,6 +597,7 @@
     <Compile Include="Utilities\Shell.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="SiteDesigns\SetSiteScript.cs" />
+    <Compile Include="Utilities\UrlUtilities.cs" />
     <Compile Include="WebParts\AddClientSideWebPart.cs" />
     <Compile Include="ClientSidePages\GetAvailableClientSideComponents.cs" />
     <Compile Include="ClientSidePages\RemoveClientSidePage.cs" />

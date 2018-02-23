@@ -7,9 +7,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.24.1803.0 - Unreleased]
 ### Added
-- Added Read-PnPProvisioningTemplate [Rename: see changed section]
-- Added Invoke-PnPQuery [Rename: see changed section]
-- Added Resolve-PnPFolder [Rename: see changed section]
+- Added Invoke-PnPSiteDesign
+- Added Read-PnPProvisioningTemplate [Rename: see deprecated section]
+- Added Invoke-PnPQuery [Rename: see deprecated section]
+- Added Resolve-PnPFolder [Rename: see deprecated section]
 - Added New-PnPAzureCertificate cmdlet
 - Added Get-PnPAzureCertificate cmdlet
 - Added Test-PnPOffice365GroupAliasIsUsed
