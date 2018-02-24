@@ -53,21 +53,12 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 #endif
             // Generate PSM1 file
             var aliasesToExport = new List<string>();
-            var psm1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShell{spVersion}Aliases.psm1";
-            var aliasBuilder = new StringBuilder();
             foreach (var cmdlet in _cmdlets.Where(c => c.Aliases.Any()))
             {
                 foreach (var alias in cmdlet.Aliases)
                 {
-                    var aliasLine = $"Set-Alias -Name {alias} -Value {cmdlet.FullCommand}";
-                    aliasBuilder.AppendLine(aliasLine);
                     aliasesToExport.Add(alias);
                 }
-            }
-
-            if (aliasesToExport.Any())
-            {
-                File.WriteAllText(psm1Path, aliasBuilder.ToString());
             }
 
             // Create Module Manifest
@@ -88,16 +79,13 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         private void WriteModuleManifest(string path, string spVersion, string cmdletsToExport, string aliasesToExport)
         {
             var aliases = "";
-            var nestedModules = "";
-            if (aliasesToExport != null)
-            {
-                aliases = $"{Environment.NewLine}AliasesToExport = {aliasesToExport}";
-
-                nestedModules = $"{Environment.NewLine}@('SharePointPnPPowerShell{spVersion}Aliases.psm1')";
-            }
+            //if (aliasesToExport != null)
+            //{
+            //    aliases = $"{Environment.NewLine}AliasesToExport = {aliasesToExport}";
+            //}
 #if !NETCOREAPP2_0
             var manifest = $@"@{{
-    RootModule = 'SharePointPnP.PowerShell.{spVersion}.Commands.dll'{nestedModules}
+    RootModule = 'SharePointPnP.PowerShell.{spVersion}.Commands.dll'
     ModuleVersion = '{_assemblyVersion}'
     Description = 'SharePoint Patterns and Practices PowerShell Cmdlets for SharePoint {spVersion}'
     GUID = '8f1147be-a8e4-4bd2-a705-841d5334edc0'
@@ -107,7 +95,8 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
     ProcessorArchitecture = 'None'
     FunctionsToExport = '*'
     CmdletsToExport = {cmdletsToExport}
-    VariablesToExport = '*'{aliases}
+    VariablesToExport = '*'
+    AliasesToExport = '*'
     FormatsToProcess = 'SharePointPnP.PowerShell.{spVersion}.Commands.Format.ps1xml' 
     PrivateData = @{{
         PSData = @{{
@@ -128,7 +117,8 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
     ProcessorArchitecture = 'None'
     FunctionsToExport = '*'
     CmdletsToExport = {cmdletsToExport}
-    VariablesToExport = '*'{aliases}
+    VariablesToExport = '*'
+    AliasesToExport = '*'
     FormatsToProcess = 'SharePointPnP.PowerShell.{spVersion}.Format.ps1xml' 
     PrivateData = @{{
         PSData = @{{
