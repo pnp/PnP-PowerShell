@@ -40,6 +40,10 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
             else
             {
                 ct = ContentType.ContentType;
+                if(!list.ContentTypeExistsById(ct.Id.ToString()))
+                {
+                    WriteError(new ErrorRecord(new System.Exception("Content type does not exist on list. Use Add-PnPContentTypeToList to add the content type first."), "CONTENTTYPENOTADDEDTOLIST", ErrorCategory.ResourceUnavailable, ct));
+                }
             }
             if (ct != null)
             {
