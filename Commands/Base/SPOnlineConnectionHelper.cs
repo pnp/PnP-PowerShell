@@ -80,6 +80,20 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
             var context = authManager.GetHighTrustCertificateAppOnlyAuthenticatedContext(url, clientId, hightrustCertificatePath, hightrustCertificatePassword, hightrustCertificateIssuerId);
+
+            return InstantiateHighTrustConnection(context, url, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, skipAdminCheck);
+        }
+
+        internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 hightrustCertificate, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
+        {
+            var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+            var context = authManager.GetHighTrustCertificateAppOnlyAuthenticatedContext(url, clientId, hightrustCertificate, hightrustCertificateIssuerId);
+
+            return InstantiateHighTrustConnection(context, url, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, skipAdminCheck);
+        }
+
+        private static SPOnlineConnection InstantiateHighTrustConnection(ClientContext context, string url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
+        {
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
 #if SP2016
@@ -93,7 +107,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url, tenantAdminUrl, PnPPSVersionTag);
         }
 #endif
 #endif
