@@ -29,7 +29,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         private List<CmdletInfo> GetCmdlets()
         {
             List<CmdletInfo> cmdlets = new List<CmdletInfo>();
-            var types = _assembly.GetTypes().Where(t => t.BaseType != null && (t.BaseType.Name.StartsWith("SPO") || t.BaseType.Name.StartsWith("PnP") || t.BaseType.Name == "PSCmdlet")).OrderBy(t => t.Name).ToArray();
+            var types = _assembly.GetTypes().Where(t => t.BaseType != null && (t.BaseType.Name.StartsWith("SPO") || t.BaseType.Name.StartsWith("PnP") || t.BaseType.Name == "PSCmdlet" || (t.BaseType.BaseType != null && (t.BaseType.BaseType.Name.StartsWith("PnP") || t.BaseType.BaseType.Name == "PSCmdlet")))).OrderBy(t => t.Name).ToArray();
 
             foreach (var type in types)
             {

@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !ONPREMISES && !NETSTANDARD2_0
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -9,7 +9,7 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteDesign", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteDesign", SupportsShouldProcess = true)] 
     [CmdletHelp(@"Apply a Site Design to an existing site.",
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
@@ -56,6 +56,7 @@ namespace SharePointPnP.PowerShell.Commands
                 TenantSiteDesign design = Identity.GetTenantSiteDesign(tenant);
                 if (design != null)
                 {
+                    
                     var results = tenant.ApplySiteDesign(SelectedWeb.Url, design.Id);
                     tenantContext.Load(results);
                     tenantContext.ExecuteQueryRetry();
