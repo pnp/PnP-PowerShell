@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharePointPnP.PowerShell.Core", "Commands\SharePointPnP.PowerShell.Core.csproj", "{F91159F1-31F8-47CF-B546-9487F9EF8426}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnPPowerShell", "Commands\PnPPowerShell.csproj", "{F91159F1-31F8-47CF-B546-9487F9EF8426}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharePointPnP.PowerShell.Core.Attributes", "HelpAttributes\SharePointPnP.PowerShell.Core.Attributes.csproj", "{2F4E9C95-E61A-44AB-8983-108ADCFE23F8}"
 EndProject

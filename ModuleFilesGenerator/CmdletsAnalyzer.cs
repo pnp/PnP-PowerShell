@@ -60,10 +60,21 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     var aliasAttribute = attribute as AliasAttribute;
                     if (aliasAttribute != null)
                     {
+#if !NETCOREAPP2_0
                         foreach (var name in aliasAttribute.AliasNames)
                         {
                             cmdletInfo.Aliases.Add(name);
                         }
+#else
+                        var customAttributeData = type.GetCustomAttributesData().FirstOrDefault(c => c.AttributeType == typeof(AliasAttribute));
+                        if (customAttributeData != null)
+                        {
+                            foreach (var name in customAttributeData.ConstructorArguments)
+                            {
+                                cmdletInfo.Aliases.Add(name.Value as string);
+                            }
+                        }
+#endif
                     }
 
                     var helpAttribute = attribute as CmdletHelpAttribute;
@@ -78,21 +89,22 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         cmdletInfo.OutputType = a.OutputType;
                         cmdletInfo.OutputTypeLink = a.OutputTypeLink;
                         cmdletInfo.OutputTypeDescription = a.OutputTypeDescription;
-                        if(a.SupportedPlatform.HasFlag(CmdletSupportedPlatform.All))
+                        if (a.SupportedPlatform.HasFlag(CmdletSupportedPlatform.All))
                         {
                             cmdletInfo.Platform = "All";
-                        } else
+                        }
+                        else
                         {
                             List<string> platforms = new List<string>();
-                            if(a.SupportedPlatform.HasFlag(CmdletSupportedPlatform.OnPremises))
+                            if (a.SupportedPlatform.HasFlag(CmdletSupportedPlatform.OnPremises))
                             {
                                 platforms.Add("SharePoint On-Premises");
                             }
-                            if(a.SupportedPlatform.HasFlag(CmdletSupportedPlatform.Online))
+                            if (a.SupportedPlatform.HasFlag(CmdletSupportedPlatform.Online))
                             {
                                 platforms.Add("SharePoint Online");
                             }
-                            if(a.SupportedPlatform.HasFlag(CmdletSupportedPlatform.SP2013))
+                            if (a.SupportedPlatform.HasFlag(CmdletSupportedPlatform.SP2013))
                             {
                                 platforms.Add("SharePoint 2013");
                             }
@@ -102,7 +114,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                             }
                             cmdletInfo.Platform = string.Join(", ", platforms);
                         }
-                       
+
                     }
                     var exampleAttribute = attribute as CmdletExampleAttribute;
                     if (exampleAttribute != null)
@@ -377,7 +389,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
 
 
-#region Helpers
+        #region Helpers
         private static List<FieldInfo> GetFields(Type t)
         {
             var fieldInfoList = new List<FieldInfo>();
@@ -406,6 +418,6 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 return name;
             }
         }
-#endregion
+        #endregion
     }
 }

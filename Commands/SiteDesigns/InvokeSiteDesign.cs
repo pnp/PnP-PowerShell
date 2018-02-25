@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES && !NETSTANDARD2_0
+﻿#if !ONPREMISES
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
