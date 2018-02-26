@@ -34,18 +34,8 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         {
             if (Identity != null)
             {
-                UnifiedGroupEntity group = null;
-
-                // We have to retrieve a specific group
-                if (Identity.Group != null)
-                {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken, includeSite: false);
-                }
-                else if (!String.IsNullOrEmpty(Identity.GroupId))
-                {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.GroupId, AccessToken, includeSite: false);
-                }
-
+                UnifiedGroupEntity group = Identity.GetGroup(AccessToken);
+                
                 if (group != null)
                 {
                     UnifiedGroupsUtility.DeleteUnifiedGroup(group.GroupId, AccessToken);
