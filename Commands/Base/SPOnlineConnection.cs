@@ -113,7 +113,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             Context = context;
-            Context.ExecutingWebRequest += Context_ExecutingWebRequest;
             ConnectionType = connectionType;
             MinimalHealthScore = minimalHealthScore;
             RetryCount = retryCount;
@@ -126,8 +125,24 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ConnectionMethod = ConnectionMethod.AccessToken;
             context.ExecutingWebRequest += (sender, args) =>
             {
+                args.WebRequestExecutor.WebRequest.UserAgent = userAgent;
                 args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + CurrentConnection.AccessToken;
             };
+        }
+
+        public SPOnlineConnection(string accessToken, string refreshToken, DateTime expiresOn, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag)
+        {
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
+            ExpiresOn = expiresOn;
+            var coreAssembly = Assembly.GetExecutingAssembly();
+            userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+            ConnectionType = connectionType;
+            MinimalHealthScore = minimalHealthScore;
+            RetryCount = retryCount;
+            RetryWait = retryWait;
+            PnPVersionTag = pnpVersionTag;
+            ConnectionMethod = ConnectionMethod.GraphDeviceLogin;
         }
 
 

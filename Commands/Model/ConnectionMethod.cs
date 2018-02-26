@@ -13,6 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
         AccessToken,
         AzureADAppOnly,
         AzureADNativeApplication,
-        ADFS
+        ADFS,
+        GraphDeviceLogin
     }
 }

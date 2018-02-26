@@ -1,23 +1,25 @@
-﻿using OfficeDevPnP.Core.Entities;
+﻿using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.Core.Framework.Graph;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Model;
 using SharePointPnP.PowerShell.Commands.Utilities.REST;
+using SharePointPnP.PowerShell.Commands.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
+using SharePointPnP.PowerShell.Commands.Utilities.Graph;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPUnifiedGroup")]
+    [Cmdlet(VerbsCommon.Get, "PnPUnifiedGroup2")]
     [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups",
-        Category = CmdletHelpCategory.Graph,
+        Category = CmdletHelpCategory.Graph, 
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroup",
@@ -39,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
        Remarks = "Retrieves a specific Office 365 Group based on its object instance",
        SortOrder = 5)]
-    public class GetUnifiedGroup : PnPGraphCmdlet
+    public class GetUnifiedGroup2 : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The Identity of the Office 365 Group.")]
         public UnifiedGroupPipeBind Identity;
@@ -50,25 +52,38 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         protected override void ExecuteCmdlet()
         {
             UnifiedGroupEntity group = null;
-            List<UnifiedGroupEntity> groups = null;
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken);
+            //    group = Identity.GetGroup(AccessToken);
             }
             else
             {
-                // Retrieve all the groups
-                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, includeSite: !ExcludeSiteUrl.IsPresent);
+                var entities = GraphHelper.ExecuteGetRequest<ResponseCollection<GraphObject>>(SPOnlineConnection.CurrentConnection.AccessToken, "v1.0/groups?$filter=groupTypes/any(gt : gt eq 'Unified')&$select=id,displayName,mailNickname,description,mail").Items;
+                var groups = new List<UnifiedGroupEntity>();
+                foreach(var entity in entities)
+                {
+                    var unifiedGroup = new UnifiedGroupEntity()
+                    {
+                        GroupId = entity.Id.ToString(),
+                        DisplayName = entity.Values["displayName"] as string,
+                        MailNickname = entity.Values["mailNickname"] as string,
+                        Description = entity.Values["description"] as string,
+                        Mail = entity.Values["mail"] as string
+                    };
+                    var drive = GraphHelper.ExecuteGetRequest<GraphObject>(SPOnlineConnection.CurrentConnection.AccessToken, $"v1.0/groups/{entity.Id}/drive/root/webUrl");
+                    var url = drive.Values["value"].ToString();
+                    unifiedGroup.SiteUrl = url.Substring(0, url.LastIndexOf('/'));
+
+                    groups.Add(unifiedGroup);
+                }
+                WriteObject(groups, true);
+              
             }
 
             if (group != null)
             {
                 WriteObject(group);
-            }
-            else if (groups != null)
-            {
-                WriteObject(groups, true);
             }
         }
     }

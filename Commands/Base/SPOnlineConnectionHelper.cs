@@ -168,6 +168,68 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
+        internal static SPOnlineConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback)
+        {
+            var connectionUri = new Uri("https://graph.microsoft.com");
+            HttpClient client = new HttpClient();
+            var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
+            var returnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+
+          
+
+            if (launchBrowser)
+            {
+                Utilities.Clipboard.Copy(returnData["user_code"]);
+                messageCallback("Code has been copied to clipboard");
+#if !NETSTANDARD2_0
+                BrowserHelper.OpenBrowser(returnData["verification_url"]);
+#else
+                OpenBrowser(returnData["verification_url"]);
+#endif
+            } else
+            {
+                messageCallback(returnData["message"]);
+            }
+
+            var body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
+            body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
+
+            var tokenResult = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+            while (!tokenResult.IsSuccessStatusCode)
+            {
+                if (stopWatch.ElapsedMilliseconds > 60 * 1000)
+                {
+                    break;
+                }
+                progressCallback(".");
+                System.Threading.Thread.Sleep(1000);
+#if !NETSTANDARD2_0
+                // somehow .NET disposes of the stringcontent object 
+                body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
+                body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
+#endif
+                tokenResult = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+            }
+            if (tokenResult.IsSuccessStatusCode)
+            {
+                var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(tokenResult.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                var accessToken = tokens["access_token"];
+                var refreshToken = tokens["refresh_token"];
+                var expiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
+
+                var spoConnection = new SPOnlineConnection(accessToken, refreshToken, expiresOn, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
+                return spoConnection;
+            }
+            else
+            {
+                progressCallback("Timeout");
+                return null;
+            }
+        }
+
         internal static void OpenBrowser(string url)
         {
             try

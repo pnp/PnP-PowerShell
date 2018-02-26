@@ -452,7 +452,10 @@
     <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
     <Compile Include="Enums\CdnType.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
+    <Compile Include="Graph\GetUnifiedGroup2.cs" />
     <Compile Include="Model\ConnectionMethod.cs" />
+    <Compile Include="Model\GraphObject.cs" />
+    <Compile Include="Model\ResponseCollection.cs" />
     <Compile Include="Model\SPOTheme.cs" />
     <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
@@ -590,9 +593,12 @@
     <Compile Include="Site\GetRoleDefinition.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
+    <Compile Include="Utilities\BrowserHelper.cs" />
     <Compile Include="Utilities\CertificateCrypto.cs" />
     <Compile Include="Utilities\CertificateHelper.cs" />
     <Compile Include="Utilities\Clipboard.cs" />
+    <Compile Include="Utilities\Graph\BatchRequest.cs" />
+    <Compile Include="Utilities\Graph\GraphHelper.cs" />
     <Compile Include="Utilities\OperatingSystem.cs" />
     <Compile Include="Utilities\Shell.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
