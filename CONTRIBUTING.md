@@ -87,10 +87,11 @@ If only parts of a cmdlet require different behaviour based upon the different v
 The verb of a cmdlet (get-, add-, etc.) should follow acceptable cmdlet standards and should be part of one of the built in verbs classes (VerbsCommon, VerbsData, etc.):
 
 ## Documentation contributions
-If you want to contribute to cmdlet documentation, please do not make a pull request to modify the actual files in the Documentation folder itself. Those files
-are automatically generated based upon comments in the actual classes. So if you want to modify documentation or add an example of a cmdlet, navigate to the
+The PowerShell documentation is located on [docs.microsoft.com](https://docs.microsoft.com/en-us/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps)
+
+This documentation is automatically generated based upon statements/attributes in the source code of a cmdlet. If you want to modify documentation or add an example of a cmdlet, navigate to the
 corresponding class where the cmdlet is being implemented and add the comments there. An example can for instance be found in
 
-https://github.com/OfficeDev/PnP-PowerShell/blob/dev/Commands/Fields/AddField.cs
+https://github.com/sharepoint/PnP-PowerShell/blob/dev/Commands/Fields/AddField.cs
 
-Notice the [CmdletHelp("")] and [CmdletExample()] class attributes that describe the cmdlet.
+Notice the [CmdletHelp("")] and [CmdletExample()] class attributes that describe the cmdlet. A description for a parameter is located in the [Parameter(HelpMessage = "") attribute.
