@@ -1,33 +1,25 @@
 # Contribution guidance
 
-
-
-*work in progress*
-
-
-
 All PnP repositories are following up on the standard PnP process on getting started and contribute. 
-
 
 See following PnP wiki page from the main repository for additional details. 
 
-
-
 - For getting started guidance, see [Setting up your environment](https://github.com/OfficeDev/PnP/wiki/Setting-up-your-environment). 
-
-
 
 *Notice that you'll need to update the URLs based on used repository. All community contributions are also more than welcome. 
 Please see following page for additional insights on the model.
 
-
-
 - For contributing to PnP, see [Contributing to Office 365 developer patterns and practices](https://github.com/OfficeDev/PnP/wiki/contributing-to-Office-365-developer-patterns-and-practices)
-
-
-
 ---
 
+## Building the source code ##
+
+If you have set up up the projects and you are ready to build the source code, make sure to build the SharePointPnP.PowerShellModuleFilesGenerator project first. This project will be executed after every build and it will generate the required PSD1 and XML files with cmdlet documentation in them.
+
+When you build the solution a postbuild script will copy the required files to a folder in your users folder called 
+*C:\Users\\\<YourUserName\>\Documents\WindowsPowerShell\Modules\SharePointPnPPowerShell\<Platform\>*. During build also the help and document files will be generated. If you have a session of PowerShell open in which you have used the PnP Cmdlets, make sure to close this PowerShell session first before you build. You will receive a build error otherwise because it tries to overwrite files that are in use.
+
+To debug the cmdlets: launch PowerShell and attach Visual Studio to the powershell.exe process. In case you want to debug methods in PnP Sites Core, make sure that you open the PnP Sites Core project instead, and then attach Visual Studio to the powershell.exe. In case you see strange debug behavior, like it wants to debug PSReadLine.ps1, uninstall the PowerShell extension from Visual Studio.
 
 ## Code contributions
 In order to succesfully compile the PnP PowerShell solution you will _also_ have to download *and build in Visual Studio* the [PnP-Sites-Core](https://github.com/OfficeDev/PnP-Sites-Core) repository and make the dev branch available. The PowerShell solution depends on it. In order to succesfully 
