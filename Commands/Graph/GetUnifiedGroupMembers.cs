@@ -33,15 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                // We have to retrieve a specific group
-                if (Identity.Group != null)
-                {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken, includeSite: false);
-                }
-                else if (!String.IsNullOrEmpty(Identity.GroupId))
-                {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.GroupId, AccessToken, includeSite: false);
-                }
+                group = Identity.GetGroup(AccessToken);
             }
 
             if (group != null)
