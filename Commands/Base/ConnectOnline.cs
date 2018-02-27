@@ -307,13 +307,35 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         public SwitchParameter SPOManagementShell;
 
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = "Log in using the PnP O365 Management Shell application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application. You will be asked to consent to: 
+            
+* Read and write managed metadata
+* Have full control of all site collections
+* Read user profiles
+* Invite guest users to the organization
+* Read and write all groups
+* Read and write directory data
+* Access the directory as you
+* Read and write identity providers
+* Access the directory as you")]
         public SwitchParameter PnPO365ManagementShell;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
         public SwitchParameter LaunchBrowser;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Log in using the PnP O365 Management Shell application towards the Graph")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application towards the Graph. You will be asked to consent to: 
+
+* Read and write managed metadata
+* Have full control of all site collections
+* Read user profiles
+* Invite guest users to the organization
+* Read and write all groups
+* Read and write directory data
+* Access the directory as you
+* Read and write identity providers
+* Access the directory as you
+")]
         public SwitchParameter Graph;
 
 
@@ -633,7 +655,7 @@ Use -PnPO365ManagementShell instead");
 
         private SPOnlineConnection ConnectGraphDeviceLogin()
         {
-            return SPOnlineConnectionHelper.InstantiateGraphDeviceLoginConnection(true, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, (message) =>
+            return SPOnlineConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, (message) =>
             {
                 WriteWarning(message);
             },

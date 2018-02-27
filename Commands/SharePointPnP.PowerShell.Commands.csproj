@@ -457,6 +457,7 @@
     <Compile Include="Model\GraphObject.cs" />
     <Compile Include="Model\ResponseCollection.cs" />
     <Compile Include="Model\SPOTheme.cs" />
+    <Compile Include="Model\TokenResult.cs" />
     <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
     <Compile Include="Diagnostic\MeasureResponseTimeMode.cs" />

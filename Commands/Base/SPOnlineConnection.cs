@@ -17,8 +17,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
     {
         internal static string DeviceLoginAppId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
 
-        private string _accessToken;
-        private string _refreshToken;
         internal Assembly coreAssembly;
         internal string userAgent;
         internal ConnectionMethod ConnectionMethod { get; set; }
@@ -26,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         internal static List<ClientContext> ContextCache { get; set; }
 
         public static AuthenticationResult AuthenticationResult { get; set; }
-
+        public static TokenResult TokenResult { get; set; }
         public static SPOnlineConnection CurrentConnection { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
         public int MinimalHealthScore { get; protected set; }
@@ -43,45 +41,31 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             get
             {
-                if (!string.IsNullOrEmpty(_accessToken) && DateTime.Now > ExpiresOn && !string.IsNullOrEmpty(RefreshToken))
+                if (!string.IsNullOrEmpty(TokenResult.AccessToken) && DateTime.Now > TokenResult.ExpiresOn && !string.IsNullOrEmpty(TokenResult.RefreshToken))
                 {
                     // Expired token
                     var client = new HttpClient();
                     var uri = new Uri(Url);
                     var url = $"{uri.Scheme}://{uri.Host}";
-                    var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={_refreshToken}");
+                    var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={TokenResult.RefreshToken}");
                     body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     var result = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
                     var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                    _accessToken = tokens["access_token"];
-                    _refreshToken = tokens["refresh_token"];
-                    ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
+                    TokenResult.AccessToken = tokens["access_token"];
+                    TokenResult.RefreshToken = tokens["refresh_token"];
+                    TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
                     //var credmgr = new CredentialManager(_moduleBase);
                     ///credmgr.Add(Url, _accessToken, _refreshToken, ExpiresOn);
                 }
-                return _accessToken;
+                return TokenResult.AccessToken;
             }
             set
             {
-                _accessToken = value;
+                TokenResult.AccessToken = value;
             }
         }
-
-        internal string RefreshToken
-        {
-            get
-            {
-                return _refreshToken;
-            }
-            set
-            {
-                _refreshToken = value;
-            }
-        }
-
-        internal DateTime ExpiresOn { get; set; }
 
         public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
         {
@@ -103,13 +87,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ConnectionMethod = ConnectionMethod.Credentials;
         }
 
-        public SPOnlineConnection(ClientContext context, string accessToken, string refreshToken, DateTime expiresOn, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
+        public SPOnlineConnection(ClientContext context, TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
-            AccessToken = accessToken;
-            RefreshToken = refreshToken;
-            ExpiresOn = expiresOn;
+            TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             Context = context;
@@ -130,11 +112,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             };
         }
 
-        public SPOnlineConnection(string accessToken, string refreshToken, DateTime expiresOn, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag)
+        public SPOnlineConnection(TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag)
         {
-            AccessToken = accessToken;
-            RefreshToken = refreshToken;
-            ExpiresOn = expiresOn;
+            TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             ConnectionType = connectionType;

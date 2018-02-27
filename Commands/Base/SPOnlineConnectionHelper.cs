@@ -22,6 +22,7 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Commands.Model;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -114,58 +115,52 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback)
         {
+            SPOnlineConnection spoConnection = null;
             var connectionUri = new Uri(url);
             HttpClient client = new HttpClient();
             var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
             var returnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-
+            var context = new ClientContext(url);
             messageCallback(returnData["message"]);
 
             if (launchBrowser)
             {
                 Utilities.Clipboard.Copy(returnData["user_code"]);
                 messageCallback("Code has been copied to clipboard");
-                OpenBrowser(returnData["verification_url"]);
-            }
-
-            var body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
-            body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
-
-            var tokenResult = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
-
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
-            while (!tokenResult.IsSuccessStatusCode)
-            {
-                if (stopWatch.ElapsedMilliseconds > 60 * 1000)
-                {
-                    break;
-                }
-                progressCallback(".");
-                System.Threading.Thread.Sleep(1000);
 #if !NETSTANDARD2_0
-                // somehow .NET disposes of the stringcontent object 
-                body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
-                body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
+                BrowserHelper.OpenBrowser(returnData["verification_url"], (success) =>
+                {
+                    if (success)
+                    {
+                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                        if (tokenResult != null)
+                        {
+                            progressCallback("Token received");
+                            spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+                        }
+                        else
+                        {
+                            progressCallback("No token received.");
+                        }
+                    }
+                });
+#else
+                OpenBrowser(returnData["verification_url"]);
 #endif
-                tokenResult = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
-            }
-            if (tokenResult.IsSuccessStatusCode)
-            {
-                var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(tokenResult.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                var context = new ClientContext(url);
-                var accessToken = tokens["access_token"];
-                var refreshToken = tokens["refresh_token"];
-                var expiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
-
-                var spoConnection = new SPOnlineConnection(context, accessToken, refreshToken, expiresOn, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
-                return spoConnection;
             }
             else
             {
-                progressCallback("Timeout");
-                return null;
+                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                if (tokenResult != null)
+                {
+                    progressCallback("Token received");
+                    spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+                } else
+                {
+                    progressCallback("No token received.");
+                }
             }
+            return spoConnection;
         }
 
         internal static SPOnlineConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback)
@@ -175,30 +170,65 @@ namespace SharePointPnP.PowerShell.Commands.Base
             var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
             var returnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
 
-          
+            SPOnlineConnection spoConnection = null;
 
             if (launchBrowser)
             {
                 Utilities.Clipboard.Copy(returnData["user_code"]);
                 messageCallback("Code has been copied to clipboard");
 #if !NETSTANDARD2_0
-                BrowserHelper.OpenBrowser(returnData["verification_url"]);
+                BrowserHelper.OpenBrowser(returnData["verification_url"], (success) =>
+                {
+                    if (success)
+                    {
+                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                        if (tokenResult != null)
+                        {
+                            progressCallback("Token received");
+                            spoConnection = new SPOnlineConnection(tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
+                        }
+                        else
+                        {
+                            progressCallback("No token received.");
+                        }
+                    }
+                });
 #else
                 OpenBrowser(returnData["verification_url"]);
 #endif
-            } else
+            }
+            else
             {
                 messageCallback(returnData["message"]);
-            }
 
+
+                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+
+                if (tokenResult != null)
+                {
+                    progressCallback("Token received");
+                    spoConnection = new SPOnlineConnection(tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
+                }
+                else
+                {
+                    progressCallback("No token received.");
+                }
+            }
+            return spoConnection;
+        }
+
+
+
+        private static TokenResult GetTokenResult(Uri connectionUri, Dictionary<string, string> returnData, Action<string> messageCallback, Action<string> progressCallback)
+        {
+            HttpClient client = new HttpClient();
             var body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
             body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
 
-            var tokenResult = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
-
+            var responseMessage = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            while (!tokenResult.IsSuccessStatusCode)
+            while (!responseMessage.IsSuccessStatusCode)
             {
                 if (stopWatch.ElapsedMilliseconds > 60 * 1000)
                 {
@@ -206,22 +236,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 progressCallback(".");
                 System.Threading.Thread.Sleep(1000);
-#if !NETSTANDARD2_0
-                // somehow .NET disposes of the stringcontent object 
                 body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
                 body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
-#endif
-                tokenResult = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+                responseMessage = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
             }
-            if (tokenResult.IsSuccessStatusCode)
+            if (responseMessage.IsSuccessStatusCode)
             {
-                var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(tokenResult.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                var accessToken = tokens["access_token"];
-                var refreshToken = tokens["refresh_token"];
-                var expiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
-
-                var spoConnection = new SPOnlineConnection(accessToken, refreshToken, expiresOn, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
-                return spoConnection;
+                return JsonConvert.DeserializeObject<TokenResult>(responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult());
             }
             else
             {
@@ -303,7 +324,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            var spoConnection = new  SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
             return spoConnection;
         }

@@ -33,7 +33,10 @@ namespace SharePointPnP.PowerShell.Commands
             {
                 throw new InvalidOperationException(Resources.NoConnection);
             }
-
+            if (SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
+            {
+                throw new InvalidOperationException(Resources.NoConnection);
+            }
         }
 
         protected virtual void ExecuteCmdlet()

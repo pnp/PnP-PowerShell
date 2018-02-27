@@ -52,7 +52,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            if (SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
+            
+            if (SPOnlineConnection.CurrentConnection  != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
             {
                 if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))
                 {

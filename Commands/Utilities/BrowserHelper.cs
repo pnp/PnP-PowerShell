@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 {
     internal static class BrowserHelper
     {
-        public static void OpenBrowser(string url, System.Drawing.Icon icon = null)
+        public static void OpenBrowser(string url, Action<bool> success, System.Drawing.Icon icon = null)
         {
             var thread = new Thread(() =>
             {
@@ -27,16 +27,21 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 };
 
                 form.SuspendLayout();
-                form.Width = 450;
-                form.Height = 600;
+                form.Width = 568;
+                form.Height = 1012;
                 form.Text = $"Authenticate";
                 form.Controls.Add(browser);
                 form.ResumeLayout(false);
+                form.FormClosed += (sender, args) =>
+                {
+                    success(false);
+                };
                 browser.Navigated += (sender, args) =>
                 {
-                    if (browser.Url.Equals("https://login.microsoftonline.com/common/login") || browser.Url.ToString().ToLower().StartsWith("https://login.microsoftonline.com/common/reprocess"))
+                    if(browser.DocumentText.Contains("You have signed in to the PnP Office 365 Management Shell application on your device. You may now close this window."))
                     {
                         form.Close();
+                        success(true);
                     }
                 };
                 browser.Navigate(url);
