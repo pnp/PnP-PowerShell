@@ -37,6 +37,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #endif
                     }
                 }
+                else if (SPOnlineConnection.CurrentConnection.AccessToken != null)
+                {
+                    return SPOnlineConnection.CurrentConnection.AccessToken;
+                }
                 else
                 {
                     ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(Resources.NoAzureADAccessToken), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
@@ -48,15 +52,25 @@ namespace SharePointPnP.PowerShell.Commands.Base
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-
-            if (SPOnlineConnection.AuthenticationResult == null ||
+            
+            if (SPOnlineConnection.CurrentConnection  != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
+            {
+                if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))
+                {
+                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
+                }
+            }
+            else
+            {
+                if (SPOnlineConnection.AuthenticationResult == null ||
 #if !NETSTANDARD2_0
                 String.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.Token))
 #else
                 string.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.AccessToken))
 #endif
-            {
-                throw new InvalidOperationException(Resources.NoAzureADAccessToken);
+                {
+                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
+                }
             }
         }
 

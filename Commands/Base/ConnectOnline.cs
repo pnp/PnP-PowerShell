@@ -86,10 +86,12 @@ dir",
         SortOrder = 12)]
 #endif
 #if !ONPREMISES
+#if !NETSTANDARD2_0
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -Scopes $arrayOfScopes",
        Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes",
        SortOrder = 13)]
+#endif
 #endif
 #if !ONPREMISES
     [CmdletExample(
@@ -123,7 +125,10 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private const string ParameterSet_APPONLYAADPEM = "App-Only with Azure Active Directory using certificate as PEM strings";
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP O365 Management Shell / DeviceLogin";
+        private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Office 365 Management Shell to the Microsoft Graph";
+#if !NETSTANDARD2_0
         private const string ParameterSet_GRAPHWITHSCOPE = "Microsoft Graph using Scopes";
+#endif
         private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
@@ -302,11 +307,36 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         public SwitchParameter SPOManagementShell;
 
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = "Log in using the PnP O365 Management Shell application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application. You will be asked to consent to: 
+            
+* Read and write managed metadata
+* Have full control of all site collections
+* Read user profiles
+* Invite guest users to the organization
+* Read and write all groups
+* Read and write directory data
+* Access the directory as you
+* Read and write identity providers
+* Access the directory as you")]
         public SwitchParameter PnPO365ManagementShell;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
         public SwitchParameter LaunchBrowser;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application towards the Graph. You will be asked to consent to: 
+
+* Read and write managed metadata
+* Have full control of all site collections
+* Read user profiles
+* Invite guest users to the organization
+* Read and write all groups
+* Read and write directory data
+* Access the directory as you
+* Read and write identity providers
+* Access the directory as you
+")]
+        public SwitchParameter Graph;
 
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The Client ID of the Azure AD Application")]
@@ -349,6 +379,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
+#if !NETSTANDARD2_0
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
@@ -357,6 +388,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHSCOPE, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         public string[] Scopes;
+#endif
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
         public string AADDomain;
@@ -474,14 +506,11 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_DEVICELOGIN)
             {
-                connection = SPOnlineConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, (message) =>
-                {
-                    WriteWarning(message);
-                },
-                (progress) =>
-                {
-                    Host.UI.Write(progress);
-                });
+                    connection = ConnectDeviceLogin();
+            }
+            else if (ParameterSetName == ParameterSet_GRAPHDEVICELOGIN)
+            {
+                connection = ConnectGraphDeviceLogin();
             }
             else if (ParameterSetName == ParameterSet_NATIVEAAD)
             {
@@ -503,10 +532,12 @@ Use -PnPO365ManagementShell instead");
                 throw new NotImplementedException();
 #endif
             }
+#if !NETSTANDARD2_0
             else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
             {
                 ConnectGraphScopes();
             }
+#endif
             else if (ParameterSetName == ParameterSet_GRAPHWITHAAD)
             {
                 ConnectGraphAAD();
@@ -543,10 +574,12 @@ Use -PnPO365ManagementShell instead");
                 connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AuthenticationMode);
             }
 #if !ONPREMISES
+#if !NETSTANDARD2_0
             if (MyInvocation.BoundParameters.ContainsKey("Scopes") && ParameterSetName != ParameterSet_GRAPHWITHSCOPE)
             {
                 ConnectGraphScopes();
             }
+#endif
 #endif
             WriteVerbose($"PnP PowerShell Cmdlets ({System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
             SPOnlineConnection.CurrentConnection = connection;
@@ -594,11 +627,42 @@ Use -PnPO365ManagementShell instead");
 #endif
         }
 
+#if !NETSTANDARD2_0
         private void ConnectGraphScopes()
         {
             var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
             var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
             SPOnlineConnection.AuthenticationResult = authenticationResult;
+        }
+#endif
+
+        private SPOnlineConnection ConnectDeviceLogin()
+        {
+            var uri = new Uri(Url);
+            if ($"https://{uri.Host}".Equals(Url.ToLower()))
+            {
+                Url = Url + "/";
+            }
+            return SPOnlineConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, (message) =>
+            {
+                WriteWarning(message);
+            },
+            (progress) =>
+            {
+                Host.UI.Write(progress);
+            });
+        }
+
+        private SPOnlineConnection ConnectGraphDeviceLogin()
+        {
+            return SPOnlineConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, (message) =>
+            {
+                WriteWarning(message);
+            },
+            (progress) =>
+            {
+                Host.UI.Write(progress);
+            });
         }
 
         private void ConnectGraphAAD()

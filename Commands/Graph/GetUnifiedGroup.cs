@@ -4,6 +4,8 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Model;
+using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPUnifiedGroup")]
     [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups",
-        Category = CmdletHelpCategory.Graph, 
+        Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroup",

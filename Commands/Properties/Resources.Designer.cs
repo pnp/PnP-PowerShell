@@ -287,7 +287,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Azure AD connection, please connect first with Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain.
+        ///   Looks up a localized string similar to No Azure AD connection, please connect first with Connect-PnPOnline -Graph, Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain.
         /// </summary>
         internal static string NoAzureADAccessToken {
             get {
