@@ -597,8 +597,6 @@
     <Compile Include="Utilities\CertificateCrypto.cs" />
     <Compile Include="Utilities\CertificateHelper.cs" />
     <Compile Include="Utilities\Clipboard.cs" />
-    <Compile Include="Utilities\Graph\BatchRequest.cs" />
-    <Compile Include="Utilities\Graph\GraphHelper.cs" />
     <Compile Include="Utilities\OperatingSystem.cs" />
     <Compile Include="Utilities\Shell.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
