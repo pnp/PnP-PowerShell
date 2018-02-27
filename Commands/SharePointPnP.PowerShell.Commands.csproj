@@ -452,7 +452,6 @@
     <Compile Include="ClientSidePages\SetClientSideWebPart.cs" />
     <Compile Include="Enums\CdnType.cs" />
     <Compile Include="Enums\SiteWebTemplate.cs" />
-    <Compile Include="Graph\GetUnifiedGroup2.cs" />
     <Compile Include="Model\ConnectionMethod.cs" />
     <Compile Include="Model\GraphObject.cs" />
     <Compile Include="Model\ResponseCollection.cs" />
