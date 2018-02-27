@@ -10,7 +10,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteDesign", SupportsShouldProcess = true)] 
-    [CmdletHelp(@"Apply a Site Design to an existing site.",
+    [CmdletHelp(@"Apply a Site Design to an existing site. * Requires Tenant Administration Rights *",
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(

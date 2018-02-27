@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Model;
-using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
