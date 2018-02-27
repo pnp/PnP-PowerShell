@@ -445,6 +445,7 @@
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
     <Compile Include="Branding\GetNavigationNode.cs" />
+    <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
     <Compile Include="ClientSidePages\RemoveClientSideComponent.cs" />
     <Compile Include="ClientSidePages\MoveClientSideComponent.cs" />
