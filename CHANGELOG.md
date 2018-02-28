@@ -45,7 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
-- Added -Graph [and -LaunchBrowser] option to authenticate with Connect-PnPOnline using the Graph application 
+- Added -Graph [and -LaunchBrowser] option to authenticate with Connect-PnPOnline to the Graph using the PnP O365 Management Shell Azure AD Application 
 - Updated the UnifiedGroup cmdlets to also take an Alias of group as a value for the -Identity parameter
 - Minor documentations updates [thechriskent]
 - Updated Connect-PnPOnline to support connecting using PEM encoded certificate strings
