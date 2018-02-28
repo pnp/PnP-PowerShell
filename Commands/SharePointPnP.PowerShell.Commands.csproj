@@ -416,12 +416,14 @@
     <Compile Include="Admin\DisconnectHubSite.cs" />
     <Compile Include="Admin\ConnectHubSite.cs" />
     <Compile Include="Admin\GetHubSite.cs" />
+    <Compile Include="Admin\SetTenant.cs" />
     <Compile Include="Admin\GetTenantCdnEnabled.cs" />
     <Compile Include="Admin\GrantHubSiteRights.cs" />
     <Compile Include="Admin\SetHubSite.cs" />
     <Compile Include="Admin\GetTenantCdnPolicies.cs" />
     <Compile Include="Admin\SetTenantCdnEnabled.cs" />
     <Compile Include="Admin\GetTenantTheme.cs" />
+    <Compile Include="Admin\GetTenant.cs" />
     <Compile Include="Admin\SetTenantCdnPolicy.cs" />
     <Compile Include="Admin\UnregisterHubSite.cs" />
     <Compile Include="Admin\RegisterHubSite.cs" />
@@ -457,6 +459,8 @@
     <Compile Include="Model\ConnectionMethod.cs" />
     <Compile Include="Model\GraphObject.cs" />
     <Compile Include="Model\ResponseCollection.cs" />
+    <Compile Include="Model\SPOPublicCdnOrigin.cs" />
+    <Compile Include="Model\SPOTenant.cs" />
     <Compile Include="Model\SPOTheme.cs" />
     <Compile Include="Model\TokenResult.cs" />
     <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
