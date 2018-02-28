@@ -1,4 +1,5 @@
-﻿using Microsoft.Online.SharePoint.TenantAdministration;
+﻿#if !ONPREMISES
+using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using System;
@@ -591,3 +592,4 @@ namespace SharePointPnP.PowerShell.Commands.Model
         private int emailAttestationReAuthDays;
     }
 }
+#endif
