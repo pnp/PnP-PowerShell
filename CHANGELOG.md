@@ -7,16 +7,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.24.1803.0 - Unreleased]
 ### Added
-- Added Get-PnPTenant
-- Added Set-PnPTenant
-- Added Set-PnPWebTheme
-- Added Invoke-PnPSiteDesign
-- Added Read-PnPProvisioningTemplate [Rename: see deprecated section]
-- Added Invoke-PnPQuery [Rename: see deprecated section]
-- Added Resolve-PnPFolder [Rename: see deprecated section]
+- Added Get-PnPTenant cmdlet
+- Added Set-PnPTenant cmdlet
+- Added Set-PnPWebTheme cmdlet
+- Added Invoke-PnPSiteDesign cmdlet
+- Added Read-PnPProvisioningTemplate cmdlet [Rename: see deprecated section]
+- Added Invoke-PnPQuery cmdlet [Rename: see deprecated section]
+- Added Resolve-PnPFolder cmdlet [Rename: see deprecated section]
 - Added New-PnPAzureCertificate cmdlet
 - Added Get-PnPAzureCertificate cmdlet
-- Added Test-PnPOffice365GroupAliasIsUsed
+- Added Test-PnPOffice365GroupAliasIsUsed cmdlet
 - Added Remove-PnPStoredCredential
 - Added Add-PnPStoredCredential
 - Added Get-PnPHubSite cmdlet
@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Implemented .NET 2.0 Standard project to allow for cross-platform use with PowerShell 6.0
 
 ### Changed
+- Updated Set-PnPClientSidePage to support setting the page title
 - Added -Graph [and -LaunchBrowser] option to authenticate with Connect-PnPOnline to the Graph using the PnP O365 Management Shell Azure AD Application 
 - Updated the UnifiedGroup cmdlets to also take an Alias of group as a value for the -Identity parameter
 - Minor documentations updates [thechriskent]
