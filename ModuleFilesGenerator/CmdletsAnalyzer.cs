@@ -166,6 +166,10 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                             syntaxes.Add(cmdletSyntax);
                         }
                         var typeString = field.FieldType.Name;
+                        if (field.FieldType.IsGenericType)
+                        {
+                            typeString = field.FieldType.GenericTypeArguments[0].Name;
+                        }
                         var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
                         if (fieldAttribute != null)
                         {
@@ -206,6 +210,10 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     syntaxes.Add(cmdletSyntax);
                 }
                 var typeString = additionalParameter.ParameterType.Name;
+                if (additionalParameter.ParameterType.IsGenericType)
+                {
+                    typeString = additionalParameter.ParameterType.GenericTypeArguments[0].Name;
+                }
                 var fieldAttribute = additionalParameter.ParameterType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
                 if (fieldAttribute != null)
                 {
@@ -248,6 +256,10 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         foreach (var syntax in syntaxes)
                         {
                             var typeString = field.FieldType.Name;
+                            if (field.FieldType.IsGenericType)
+                            {
+                                typeString = field.FieldType.GenericTypeArguments[0].Name;
+                            }
                             var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
                             if (fieldAttribute != null)
                             {
@@ -292,9 +304,9 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                 if (!obsolete)
                 {
-                    var aliases = fieldInfo.GetCustomAttributes<AliasAttribute>(true);
-                    var parameterAttributes = fieldInfo.GetCustomAttributes<ParameterAttribute>(true);
-                    var pnpParameterAttributes = fieldInfo.GetCustomAttributes<PnPParameterAttribute>(true);
+                    var aliases = field.GetCustomAttributes<AliasAttribute>(true);
+                    var parameterAttributes = field.GetCustomAttributes<ParameterAttribute>(true);
+                    var pnpParameterAttributes = field.GetCustomAttributes<PnPParameterAttribute>(true);
                     foreach (var parameterAttribute in parameterAttributes)
                     {
                         var description = parameterAttribute.HelpMessage;
@@ -307,12 +319,18 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                                 description = helpParameterAttribute.HelpMessage;
                             }
                         }
+                        
                         var typeString = field.FieldType.Name;
+                        if(field.FieldType.IsGenericType)
+                        {
+                            typeString = field.FieldType.GenericTypeArguments[0].Name;
+                        }
                         var fieldAttribute = field.FieldType.GetCustomAttributes<CmdletPipelineAttribute>(false).FirstOrDefault();
                         if (fieldAttribute != null)
                         {
                             if (fieldAttribute.Type != null)
                             {
+                               
                                 typeString = string.Format(fieldAttribute.Description, fieldAttribute.Type.Name);
                             }
                             else
@@ -383,11 +401,8 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     ParameterSetName = additionalParameter.ParameterSetName
                 });
             }
-
             return parameters;
         }
-
-
 
         #region Helpers
         private static List<FieldInfo> GetFields(Type t)
