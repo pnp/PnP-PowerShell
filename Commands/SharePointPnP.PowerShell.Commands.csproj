@@ -117,7 +117,8 @@
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\pnp.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
@@ -885,9 +886,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\pnp.ico" />
+    <Content Include="Resources\pnp.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
