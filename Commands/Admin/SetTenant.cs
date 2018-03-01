@@ -30,7 +30,7 @@ Set-PnPTenant -NoAcessRedirectUrl 'http://www.contoso.com'",
         Code = @"PS:> Set-PnPTenant -ShowAllUsersClaim $false",
         Remarks = @"This example hides the ""All Users"" claim group in People Picker.", SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Set-SPOTenant -UsePersistentCookiesForExplorerView $true",
+        Code = @"PS:> Set-PnPTenant -UsePersistentCookiesForExplorerView $true",
         Remarks = @"This example enables the use of special persisted cookie for Open with Explorer.", SortOrder = 3)]
     public class SetTenant : PnPAdminCmdlet
     {
