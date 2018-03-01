@@ -24,8 +24,8 @@ You must be a SharePoint Online global administrator to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPTenantCdnPolicies -CdnType Public -PolicyType IncludeFileExtensions -PolicyValue ""CSS,EOT,GIF,ICO,JPEG,JPG,JS,MAP,PNG,SVG,TTF,WOFF""",
-        Remarks = @"This example sets the IncludeFileExtensions policy to the specified value.", SortOrder = 1)]
+        Code = @"PS:> Get-PnPTenant",
+        Remarks = @"This example returns all tenant settings", SortOrder = 1)]
     public class GetTenant : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()

@@ -19,6 +19,19 @@ Currently, there are no parameters for this cmdlet.
 You must be a SharePoint Online global administrator to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPTenantSite -Identity https://contoso.sharepoint.com/sites/team1 -LockState NoAccess
+Set-PnPTenant -NoAcessRedirectUrl 'http://www.contoso.com'",
+        Remarks = @"This example blocks access to https://contoso.sharepoint.com/sites/team1 and redirects traffic to http://www.contoso.com.", SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPTenant -ShowEveryoneExceptExternalUsersClaim $false",
+        Remarks = @"This example hides the ""Everyone Except External Users"" claim in People Picker.", SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPTenant -ShowAllUsersClaim $false",
+        Remarks = @"This example hides the ""All Users"" claim group in People Picker.", SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Set-SPOTenant -UsePersistentCookiesForExplorerView $true",
+        Remarks = @"This example enables the use of special persisted cookie for Open with Explorer.", SortOrder = 3)]
     public class SetTenant : PnPAdminCmdlet
     {
         const string ParameterSet_COMPATIBILITYLEVEL = "Compabitility Level";

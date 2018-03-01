@@ -49,8 +49,8 @@ Make sure to check the SPOManagement, PnPO365ManagementShell and AccessToken par
         SortOrder = 5)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -CreateDrive
-cd SPO:\\
-dir",
+PS:> cd SPO:\\
+PS:> dir",
         Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It will also create a SPO:\\ drive you can use to navigate around the site",
         SortOrder = 6)]
     [CmdletExample(

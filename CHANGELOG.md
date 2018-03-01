@@ -70,10 +70,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Updated Set-PnPFileCheckedIn to approve the file
 
 ### Deprecated
+- [SharePoint Online Only] Deprecated Get-PnPAppInstance, Import-PnPAppPackage, Uninstall-PnPAppPackage. Use Add-PnPApp, Install-PnPApp, Publish-PnPApp, Uninstall-PnPApp, Remove-PnPApp instead where applicable.
 - Deprecated Load-PnPProvisioningTemplate, renaming it to Read-PnPProvisioningTemplate which follows the PowerShell approved verb standard. Load-PnPProvisioningTemplate has been added as an alias for Read-PnPProvisioningTemplate.
 - Deprecated Execute-PnPQuery, renaming it to Invoke-PnPQuery which follows the PowerShell approved verb standard. Execute-PnPQuery has been added as an alias for Invoke-PnPQuery.
 - Deprecated Ensure-PnPFolder, moving functionality to Resolve-PnPFolder which follows the PowerShell approved verb standard. Ensure-PnPFolder has been added as an alias for Resolve-PnPFolder.
-- Documentation/Markdown generation has been removed from build, now points to docs.microsoft.com
+- Documentation/Markdown generation has been removed from build, now points to https://docs.microsoft.com/en-us/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps
 - Deprecated Remove-PnPNavigationNode -Title and -Header parameters. Use the Identity parameter instead.
 - Marked -WebTemplate parameter on Get-PnPTenantSite as obsolete. Use -Template instead.
 - Deprecated Get-PnPAzureADManifestKeyCredentials. Use Get-PnPAzureCertificate instead.
