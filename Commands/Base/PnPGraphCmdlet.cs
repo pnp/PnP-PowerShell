@@ -51,9 +51,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void BeginProcessing()
         {
+
             base.BeginProcessing();
-            
-            if (SPOnlineConnection.CurrentConnection  != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
+
+#if !NETSTANDARD2_0
+
+            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
             {
                 if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))
                 {
@@ -63,15 +66,30 @@ namespace SharePointPnP.PowerShell.Commands.Base
             else
             {
                 if (SPOnlineConnection.AuthenticationResult == null ||
-#if !NETSTANDARD2_0
                 String.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.Token))
-#else
-                string.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.AccessToken))
-#endif
                 {
                     throw new InvalidOperationException(Resources.NoAzureADAccessToken);
                 }
             }
+#else
+            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
+            {
+                // Graph Connection
+                if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))
+                {
+                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
+                }
+            }
+            else
+            {
+                //Normal connection
+                if (SPOnlineConnection.AuthenticationResult == null ||
+                string.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.AccessToken))
+                {
+                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
+                }
+            }
+#endif
         }
 
         protected virtual void ExecuteCmdlet()
