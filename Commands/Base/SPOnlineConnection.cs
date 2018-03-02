@@ -56,14 +56,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     TokenResult.AccessToken = tokens["access_token"];
                     TokenResult.RefreshToken = tokens["refresh_token"];
                     TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
-                    //var credmgr = new CredentialManager(_moduleBase);
-                    ///credmgr.Add(Url, _accessToken, _refreshToken, ExpiresOn);
                 }
                 return TokenResult.AccessToken;
             }
             set
             {
-                TokenResult.AccessToken = value;
+                if (TokenResult != null)
+                {
+                    TokenResult.AccessToken = value;
+                }
             }
         }
 
