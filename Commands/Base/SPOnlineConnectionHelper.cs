@@ -195,6 +195,19 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 });
 #else
                 OpenBrowser(returnData["verification_url"]);
+                messageCallback(returnData["message"]);
+
+                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+
+                if (tokenResult != null)
+                {
+                    progressCallback("Token received");
+                    spoConnection = new SPOnlineConnection(tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
+                }
+                else
+                {
+                    progressCallback("No token received.");
+                }
 #endif
             }
             else

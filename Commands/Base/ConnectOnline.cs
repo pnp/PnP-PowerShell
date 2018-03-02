@@ -324,7 +324,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
         public SwitchParameter LaunchBrowser;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application towards the Graph. You will be asked to consent to: 
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application towards the Graph. You will be asked to consent to: 
 
 * Read and write managed metadata
 * Have full control of all site collections
