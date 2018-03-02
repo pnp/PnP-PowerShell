@@ -600,8 +600,8 @@ Use -PnPO365ManagementShell instead");
             if (SPOnlineConnection.CurrentConnection != null)
             {
                 var hostUri = new Uri(SPOnlineConnection.CurrentConnection.Url);
-                Environment.SetEnvironmentVariable("PNPHOST", hostUri.Host);
-                Environment.SetEnvironmentVariable("PNPSITE", hostUri.LocalPath);
+                Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
+                Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
             }
             if (ReturnConnection)
             {
