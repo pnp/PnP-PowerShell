@@ -597,6 +597,12 @@ Use -PnPO365ManagementShell instead");
                     SessionState.Drive.New(drive, "Global");
                 }
             }
+            if (SPOnlineConnection.CurrentConnection != null)
+            {
+                var hostUri = new Uri(SPOnlineConnection.CurrentConnection.Url);
+                Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
+                Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
+            }
             if (ReturnConnection)
             {
                 WriteObject(connection);

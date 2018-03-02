@@ -44,6 +44,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         internal static bool DisconnectCurrentService(SPOnlineConnection connection)
         {
             SPOnlineConnection.CurrentConnection.AccessToken = string.Empty;
+            Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
+            Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
             if (connection == null)
                 return false;
             connection = null;
