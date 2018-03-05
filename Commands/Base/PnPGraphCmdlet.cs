@@ -72,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
 #else
-            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
+            if (SPOnlineConnection.CurrentConnection != null && (SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin || SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.AccessToken))
             {
                 // Graph Connection
                 if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))

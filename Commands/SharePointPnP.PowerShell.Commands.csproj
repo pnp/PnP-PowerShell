@@ -435,6 +435,7 @@
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Admin\RemoveTenantTheme.cs" />
     <Compile Include="Base\AddStoredCredential.cs" />
+    <Compile Include="Base\GetAccessToken.cs" />
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
     <Compile Include="Base\RemoveStoredCredential.cs" />
@@ -539,7 +540,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Apps\UninstallAppInstance.cs" />
-    <Compile Include="Base\GetPnPAccessToken.cs" />
     <Compile Include="Base\GetProperty.cs" />
     <Compile Include="Base\GetAuthenticationRealm.cs" />
     <Compile Include="Base\Constants.cs" />

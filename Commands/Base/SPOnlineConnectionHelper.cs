@@ -146,6 +146,19 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 });
 #else
                 OpenBrowser(returnData["verification_url"]);
+                messageCallback(returnData["message"]);
+
+                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+
+                if (tokenResult != null)
+                {
+                    progressCallback("Token received");
+                    spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
+                }
+                else
+                {
+                    progressCallback("No token received.");
+                }
 #endif
             }
             else
@@ -155,11 +168,28 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     progressCallback("Token received");
                     spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
-                } else
+                }
+                else
                 {
                     progressCallback("No token received.");
                 }
             }
+            spoConnection.ConnectionMethod = ConnectionMethod.DeviceLogin;
+            return spoConnection;
+        }
+
+        internal static SPOnlineConnection InstantiateGraphAccessTokenConnection(string accessToken)
+        {
+#if NETSTANDARD2_0
+            var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
+#else
+            var jwtToken = new System.IdentityModel.Tokens.JwtSecurityToken(accessToken);
+#endif
+            var tokenResult = new TokenResult();
+            tokenResult.AccessToken = accessToken;
+            tokenResult.ExpiresOn = jwtToken.ValidTo;
+            var spoConnection = new SPOnlineConnection(tokenResult, ConnectionMethod.AccessToken, ConnectionType.O365, 0, 0, 0, PnPPSVersionTag);
+            spoConnection.ConnectionMethod = ConnectionMethod.GraphDeviceLogin;
             return spoConnection;
         }
 
@@ -185,7 +215,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         if (tokenResult != null)
                         {
                             progressCallback("Token received");
-                            spoConnection = new SPOnlineConnection(tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
+                            spoConnection = new SPOnlineConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
                         }
                         else
                         {
@@ -202,7 +232,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (tokenResult != null)
                 {
                     progressCallback("Token received");
-                    spoConnection = new SPOnlineConnection(tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
+                    spoConnection = new SPOnlineConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
                 }
                 else
                 {
@@ -220,13 +250,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (tokenResult != null)
                 {
                     progressCallback("Token received");
-                    spoConnection = new SPOnlineConnection(tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
+                    spoConnection = new SPOnlineConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag);
                 }
                 else
                 {
                     progressCallback("No token received.");
                 }
             }
+            spoConnection.ConnectionMethod = ConnectionMethod.GraphDeviceLogin;
             return spoConnection;
         }
 
@@ -363,7 +394,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag);
         }
-
+#endif
+#endif
+#if !ONPREMISES
         internal static SPOnlineConnection InitiateAccessTokenConnection(Uri url, string accessToken, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
@@ -380,7 +413,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
             spoConnection.ConnectionMethod = Model.ConnectionMethod.AccessToken;
             return spoConnection;
         }
-#endif
 #endif
 
 #if !NETSTANDARD2_0

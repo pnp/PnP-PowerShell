@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="1.1.2-preview0008" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PowerShellStandard.Library" Version="3.0.0-preview-01" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.2.1" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
   </ItemGroup>
 
