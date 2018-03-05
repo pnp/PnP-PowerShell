@@ -113,7 +113,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             };
         }
 
-        public SPOnlineConnection(TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag)
+        public SPOnlineConnection(TokenResult tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag)
         {
             TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
@@ -123,7 +123,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             RetryCount = retryCount;
             RetryWait = retryWait;
             PnPVersionTag = pnpVersionTag;
-            ConnectionMethod = ConnectionMethod.GraphDeviceLogin;
+            ConnectionMethod = ConnectionMethod;
         }
 
 

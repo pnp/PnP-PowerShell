@@ -11,6 +11,9 @@ using SharePointPnP.PowerShell.Commands.Provider;
 using File = System.IO.File;
 using System.Net;
 using Microsoft.Identity.Client;
+#if NETSTANDARD2_0
+using System.IdentityModel.Tokens.Jwt;
+#endif
 #if !ONPREMISES
 using Microsoft.SharePoint.Client.CompliancePolicy;
 #endif
@@ -167,7 +170,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADPEM, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
 #endif
 #if ONPREMISES
@@ -506,11 +509,11 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_DEVICELOGIN)
             {
-                    connection = ConnectDeviceLogin();
+                connection = ConnectDeviceLogin();
             }
             else if (ParameterSetName == ParameterSet_GRAPHDEVICELOGIN)
             {
-                connection = ConnectGraphDeviceLogin();
+                connection = ConnectGraphDeviceLogin(null);
             }
             else if (ParameterSetName == ParameterSet_NATIVEAAD)
             {
@@ -545,10 +548,27 @@ Use -PnPO365ManagementShell instead");
             else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
             {
 #if !NETSTANDARD2_0
-                connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(new Uri(Url), AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+                var jwtToken = new System.IdentityModel.Tokens.JwtSecurityToken(AccessToken);
 #else
-                throw new NotImplementedException();
+                var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
 #endif
+                var aud = jwtToken.Audiences.FirstOrDefault();
+                if (aud != null)
+                {
+                    Url = aud;
+                }
+                if (Url.ToLower() == "https://graph.microsoft.com")
+                {
+                    connection = ConnectGraphDeviceLogin(AccessToken);
+                }
+                else
+                {
+                    //#if !NETSTANDARD2_0
+                    connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(new Uri(Url), AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, AzureEnvironment);
+                    //#else
+                    //throw new NotImplementedException();
+                    //#endif
+                }
             }
 #endif
 #if ONPREMISES
@@ -599,9 +619,17 @@ Use -PnPO365ManagementShell instead");
             }
             if (SPOnlineConnection.CurrentConnection != null)
             {
-                var hostUri = new Uri(SPOnlineConnection.CurrentConnection.Url);
-                Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
-                Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
+                if (SPOnlineConnection.CurrentConnection.ConnectionMethod != Model.ConnectionMethod.GraphDeviceLogin)
+                {
+                    var hostUri = new Uri(SPOnlineConnection.CurrentConnection.Url);
+                    Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
+                    Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
+                }
+                else
+                {
+                    Environment.SetEnvironmentVariable("PNPPSHOST", "GRAPH");
+                    Environment.SetEnvironmentVariable("PNPPSSITE", "GRAPH");
+                }
             }
             if (ReturnConnection)
             {
@@ -659,16 +687,23 @@ Use -PnPO365ManagementShell instead");
             });
         }
 
-        private SPOnlineConnection ConnectGraphDeviceLogin()
+        private SPOnlineConnection ConnectGraphDeviceLogin(string accessToken)
         {
-            return SPOnlineConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, (message) =>
+            if (string.IsNullOrEmpty(accessToken))
             {
-                WriteWarning(message);
-            },
-            (progress) =>
+                return SPOnlineConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, (message) =>
+                {
+                    WriteWarning(message);
+                },
+                (progress) =>
+                {
+                    Host.UI.Write(progress);
+                });
+            }
+            else
             {
-                Host.UI.Write(progress);
-            });
+                return SPOnlineConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken);
+            }
         }
 
         private void ConnectGraphAAD()
