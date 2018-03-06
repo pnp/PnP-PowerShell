@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [2.24.1803.0 - Unreleased]
+## [2.24.1803.0] - 2018-03-06
 ### Added
 - Added Get-PnPTenant cmdlet
 - Added Set-PnPTenant cmdlet
