@@ -32,10 +32,13 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
         public string PropertyName;
 
         [Parameter(Mandatory = true, HelpMessage = "The value to set in the case of a single value property", ParameterSetName = "Single")]
+        [AllowEmptyString]
+        [AllowNull]
         public string Value;
 
         [Parameter(Mandatory = true, HelpMessage = "The values set in the case of a multi value property, e.g. \"Value 1\",\"Value 2\"",ParameterSetName = "Multi")]
         [AllowEmptyString]
+        [AllowNull]
         public string[] Values;
 
         protected override void ExecuteCmdlet()
