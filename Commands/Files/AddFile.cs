@@ -215,6 +215,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
             if (Approve)
                 SelectedWeb.ApproveFile(fileUrl, ApproveComment);
 
+            var listitem = file.EnsureProperty(f => f.ListItemAllFields);
+            var parentList = listitem.EnsureProperty(f => f.ParentList);
+            var rootFolder = parentList.EnsureProperty(f => f.RootFolder);
             WriteObject(file);
         }
     }
