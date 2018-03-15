@@ -538,7 +538,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 
 #if !NETSTANDARD2_0
-        internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false)
+        internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool skipAdminCheck = false, string loginProviderName = null)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
 
@@ -546,7 +546,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             string adfsHost;
             string adfsRelyingParty;
-            GetAdfsConfigurationFromTargetUri(url, out adfsHost, out adfsRelyingParty);
+            GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
 
             if (string.IsNullOrEmpty(adfsHost) || string.IsNullOrEmpty(adfsRelyingParty))
             {
@@ -629,12 +629,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return null;
         }
 
-        public static void GetAdfsConfigurationFromTargetUri(Uri targetApplicationUri, out string adfsHost, out string adfsRelyingParty)
+        public static void GetAdfsConfigurationFromTargetUri(Uri targetApplicationUri, string loginProviderName, out string adfsHost, out string adfsRelyingParty)
         {
             adfsHost = "";
             adfsRelyingParty = "";
 
-            var trustEndpoint = new Uri(new Uri(targetApplicationUri.GetLeftPart(UriPartial.Authority)), "/_trust/");
+            var trustEndpoint = new Uri(new Uri(targetApplicationUri.GetLeftPart(UriPartial.Authority)), !string.IsNullOrWhiteSpace(loginProviderName) ? $"/_trust/?trust={loginProviderName}" : "/_trust/");
             var request = (HttpWebRequest)WebRequest.Create(trustEndpoint);
             request.AllowAutoRedirect = false;
 
