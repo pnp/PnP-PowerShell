@@ -467,7 +467,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             {
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             }
-
             PSCredential creds = null;
             if (Credentials != null)
             {
@@ -672,33 +671,82 @@ Use -PnPO365ManagementShell instead");
 
         private SPOnlineConnection ConnectDeviceLogin()
         {
+            bool ctrlCAsInput = false;
+            if (Host.Name == "ConsoleHost")
+            {
+                ctrlCAsInput = Console.TreatControlCAsInput;
+                Console.TreatControlCAsInput = true;
+            }
+            
             var uri = new Uri(Url);
             if ($"https://{uri.Host}".Equals(Url.ToLower()))
             {
                 Url = Url + "/";
             }
-            return SPOnlineConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, (message) =>
+            var connection = SPOnlineConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, (message) =>
             {
                 WriteWarning(message);
             },
             (progress) =>
             {
                 Host.UI.Write(progress);
+            },
+            () =>
+            {
+                if (Host.Name == "ConsoleHost")
+                {
+                    if (Console.KeyAvailable)
+                    {
+                        var cki = Console.ReadKey(true);
+                        if(cki.Key == ConsoleKey.C && cki.Modifiers == ConsoleModifiers.Control)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
             });
+            Console.TreatControlCAsInput = ctrlCAsInput;
+            return connection;
         }
 
         private SPOnlineConnection ConnectGraphDeviceLogin(string accessToken)
         {
+           
             if (string.IsNullOrEmpty(accessToken))
             {
-                return SPOnlineConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, (message) =>
+                bool ctrlCAsInput = false;
+                if (Host.Name == "ConsoleHost")
+                {
+                    ctrlCAsInput = Console.TreatControlCAsInput;
+                    Console.TreatControlCAsInput = true;
+                }
+
+                var connection = SPOnlineConnectionHelper.InstantiateGraphDeviceLoginConnection(LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, (message) =>
                 {
                     WriteWarning(message);
                 },
                 (progress) =>
                 {
                     Host.UI.Write(progress);
+                },
+                () =>
+                {
+                    if (Host.Name == "ConsoleHost")
+                    {
+                        if (Console.KeyAvailable)
+                        {
+                            var cki = Console.ReadKey(true);
+                            if (cki.Key == ConsoleKey.C && cki.Modifiers == ConsoleModifiers.Control)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
                 });
+                Console.TreatControlCAsInput = ctrlCAsInput;
+                return connection;
             }
             else
             {
