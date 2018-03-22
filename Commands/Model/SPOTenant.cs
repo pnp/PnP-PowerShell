@@ -14,6 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
     {
         public SPOTenant(Tenant tenant)
         {
+            this.hideDefaultThemes = tenant.HideDefaultThemes;
             this.storageQuota = tenant.StorageQuota;
             this.storageQuotaAllocated = tenant.StorageQuotaAllocated;
             this.resourceQuota = tenant.ResourceQuota;
@@ -339,6 +340,8 @@ namespace SharePointPnP.PowerShell.Commands.Model
             }
         }
 
+        public bool HideDefaultThemes => hideDefaultThemes;
+
         public long StorageQuota => storageQuota;
 
         public long StorageQuotaAllocated => storageQuotaAllocated;
@@ -464,6 +467,8 @@ namespace SharePointPnP.PowerShell.Commands.Model
         public bool EmailAttestationRequired => emailAttestationRequired;
 
         public int EmailAttestationReAuthDays => emailAttestationReAuthDays;
+
+        private bool hideDefaultThemes;
 
         private long storageQuota;
 

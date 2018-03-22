@@ -7,8 +7,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.25.1804.0] - Unreleased
 ### Added
+- Added Get-PnPHideDefaultThemes
+- Added Set-PnPHideDefaultThemes
 
 ### Changed
+- Fixed issue with Set-PnPTenantTheme not recognizing a parameter value accordingly.
+- Added -HideDefaultThemes parameter to Set-PnPTenant
+- Get-PnPTenant now returns if default themes are hidden or not
 - Added ability to cancel Device Login requests with CTRL+C
 - Renamed Connect-PnPHubSite to Add-PnPHubSiteAssociation and added alias for Connect-PnPHubSite
 - Renamed Disconnect-PnPHubSite to Remove-PnPHubSiteAssociation and added alias for Disconnect-PnPHubSite

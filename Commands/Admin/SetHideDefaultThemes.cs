@@ -13,27 +13,28 @@ using SharePointPnP.PowerShell.Commands.Model;
 
 namespace SharePointPnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenant")]
-    [CmdletHelp(@"Returns organization-level site collection properties",
-        DetailedDescription = @"Returns organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
-ResourceQuotaAllocated, and SiteCreationMode.
-
-Currently, there are no parameters for this cmdlet.
+    [Cmdlet(VerbsCommon.Set, "PnPHideDefaultThemes")]
+    [CmdletHelp(@"Defines if the default / OOTB themes should be visible to users or not.",
+        DetailedDescription = @"Use this cmdlet to hide or show the default themes to users
 
 You must be a SharePoint Online global administrator to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPTenant",
-        Remarks = @"This example returns all tenant settings", SortOrder = 1)]
-    public class GetTenant : PnPAdminCmdlet
+        Code = @"PS:> Set-PnPHideDefaultThemes -HideDefaultThemes $true",
+        Remarks = @"This example hides the default themes", SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPHideDefaultThemes -HideDefaultThemes $false",
+        Remarks = @"This example shows the default themes", SortOrder = 1)]
+    public class SetHideDefaultThemes : PnPAdminCmdlet
     {
+        [Parameter(Mandatory = true, HelpMessage = "Defines if the default themes should be visible or hidden")]
+        public bool HideDefaultThemes = false;
+
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(Tenant);
-            ClientContext.Load(Tenant, t => t.HideDefaultThemes);
+            Tenant.HideDefaultThemes = HideDefaultThemes;
             ClientContext.ExecuteQueryRetry();
-            WriteObject(new SPOTenant(Tenant));
         }
     }
 }
