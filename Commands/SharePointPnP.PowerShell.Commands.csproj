@@ -410,12 +410,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AddHubSiteAssociation.cs" />
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
-    <Compile Include="Admin\DisconnectHubSite.cs" />
-    <Compile Include="Admin\ConnectHubSite.cs" />
     <Compile Include="Admin\GetHubSite.cs" />
+    <Compile Include="Admin\RemoveHubSiteAssociation.cs" />
     <Compile Include="Admin\SetTenant.cs" />
     <Compile Include="Admin\GetTenantCdnEnabled.cs" />
     <Compile Include="Admin\GrantHubSiteRights.cs" />
