@@ -401,6 +401,9 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
         [Parameter(Mandatory = false)]
         public int? EmailAttestationReAuthDays;
 
+        [Parameter(Mandatory = false, HelpMessage = "Defines if the default themes are visible or hidden")]
+        public bool? HideDefaultThemes;
+
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
@@ -632,7 +635,7 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
                 Tenant.DisallowInfectedFileDownload = DisallowInfectedFileDownload.Value;
                 isDirty = true;
             }
-            if (string.IsNullOrEmpty(SharingBlockedDomainList))
+            if (!string.IsNullOrEmpty(SharingBlockedDomainList))
             {
                 if (!Tenant.RequireAcceptingAccountMatchInvitedAccount)
                 {
@@ -950,6 +953,11 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
                 {
                     throw new InvalidOperationException("Setting the property EmailAttestationReAuthDays is not supported by your version of the service");
                 }
+                isDirty = true;
+            }
+            if(HideDefaultThemes.HasValue)
+            {
+                Tenant.HideDefaultThemes = HideDefaultThemes.Value;
                 isDirty = true;
             }
             if (isDirty)
