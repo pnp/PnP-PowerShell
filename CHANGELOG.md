@@ -9,10 +9,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Added ability to cancel Device Login requests with CTRL+C
+- Renamed Connect-PnPHubSite to Add-PnPHubSiteAssociation and added alias for Connect-PnPHubSite
+- Renamed Disconnect-PnPHubSite to Remove-PnPHubSiteAssociation and added alias for Disconnect-PnPHubSite
 - Fixed output of File/Folder objects which caused the creation of an error message that was not thrown to the output but was available in the $error built-in variable
 - Fixed Set-PnPUserProfileProperty cmdlet to accept $null values to clear properties.
 
 ### Deprecated
+- Deprecated Connect-PnPHubSite. Use Add-PnPHubSiteAssociation
+- Depcreated Disconnect-PnPHubSite. Use Remove-PnPHubSiteAssociation
 
 
 ## [2.24.1803.0] - 2018-03-06
