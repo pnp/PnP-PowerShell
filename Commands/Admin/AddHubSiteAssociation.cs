@@ -10,15 +10,16 @@ using System;
 
 namespace SharePointPnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommunications.Connect, "PnPHubSite")]
+    [Cmdlet(VerbsCommon.Add, "PnPHubSiteAssociation")]
+    [Alias("Connect-PnPHubSite")]
     [CmdletHelp("Connects a site to a hubsite.",
         DetailedDescription = @"Connects an existing site to a hubsite",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Connect-PnPHubSite -Site https://tenant.sharepoint.com/sites/mysite -HubSite https://tenant.sharepoint.com/sites/hubsite",
+        Code = @"PS:> Add-PnPHubSiteAssociation -Site https://tenant.sharepoint.com/sites/mysite -HubSite https://tenant.sharepoint.com/sites/hubsite",
         Remarks = @"This example adds the specified site to the hubsite.", SortOrder = 1)]
-    public class ConnectHubSite : PnPAdminCmdlet
+    public class AddHubSiteAssociation : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = @"The site to connect to the hubsite")]
         public SitePipeBind Site;
