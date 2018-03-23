@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed output of File/Folder objects which caused the creation of an error message that was not thrown to the output but was available in the $error built-in variable
 - Fixed Set-PnPUserProfileProperty cmdlet to accept $null values to clear properties
 - Fixed Invoke-PnPSiteDesign where you connected to the -admin URL, and it ignored the WebUrl parameter when applying the site design
+- Added WebUrl parameter to Set-PnPWebTheme to support connection via -admin URL needed by app-only connections
 
 ### Deprecated
 - Deprecated Connect-PnPHubSite. Use Add-PnPHubSiteAssociation
