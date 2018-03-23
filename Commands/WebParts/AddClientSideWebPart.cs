@@ -122,6 +122,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
             }
 
             clientSidePage.Save();
+            WriteObject(webpart);
         }
     }
 }
