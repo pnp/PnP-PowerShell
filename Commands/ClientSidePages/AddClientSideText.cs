@@ -56,26 +56,28 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 // If the client side page object cannot be found
                 throw new Exception($"Page {Page} cannot be found.");
 
-            var text = new ClientSideText() { Text = Text };
+            var textControl = new ClientSideText() { Text = Text };
             if (MyInvocation.BoundParameters.ContainsKey("Section"))
             {
                 if (MyInvocation.BoundParameters.ContainsKey("Section"))
                 {
-                    clientSidePage.AddControl(text,
+                    clientSidePage.AddControl(textControl,
                     clientSidePage.Sections[Section - 1].Columns[Column - 1], Order);
                 }
                 else
                 {
-                    clientSidePage.AddControl(text, clientSidePage.Sections[Section - 1], Order);
+                    clientSidePage.AddControl(textControl, clientSidePage.Sections[Section - 1], Order);
                 }
             }
             else
             {
-                clientSidePage.AddControl(text, Order);
+                clientSidePage.AddControl(textControl, Order);
             }
 
             // Save the page
             clientSidePage.Save();
+
+            WriteObject(textControl);
         }
     }
 }
