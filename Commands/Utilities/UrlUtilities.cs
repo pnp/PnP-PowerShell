@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Utilities
 {
@@ -11,10 +8,9 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         public static string GetTenantAdministrationUrl(Uri uri)
         {
             var uriParts = uri.Host.Split('.');
+            if (uriParts[0].EndsWith("-admin")) return uri.OriginalString;
             if (!uriParts[0].EndsWith("-admin"))
-            {
                 return $"https://{uriParts[0]}-admin.{string.Join(".", uriParts.Skip(1))}";
-            }
             return null;
         }
 

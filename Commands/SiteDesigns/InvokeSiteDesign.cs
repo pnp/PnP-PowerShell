@@ -56,8 +56,7 @@ namespace SharePointPnP.PowerShell.Commands
                 TenantSiteDesign design = Identity.GetTenantSiteDesign(tenant);
                 if (design != null)
                 {
-                    
-                    var results = tenant.ApplySiteDesign(SelectedWeb.Url, design.Id);
+                    var results = tenant.ApplySiteDesign(webUrl, design.Id);
                     tenantContext.Load(results);
                     tenantContext.ExecuteQueryRetry();
                     WriteObject(results, true);
