@@ -10,20 +10,18 @@ using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
-    [Cmdlet(VerbsLifecycle.Disable, "PnPInPlaceRecordsManagementForSite")]
-    [CmdletHelp("Disables in place records management for a site.",
+    [Cmdlet(VerbsCommon.Get, "PnPInPlaceRecordsManagement")]
+    [CmdletHelp("Returns if the place records management feature is enabled.",
         Category = CmdletHelpCategory.RecordsManagement)]
     [CmdletExample(
-        Code = @"PS:> Disable-PnPInPlaceRecordsManagementForSite",
-        Remarks = "The in place records management feature will be disabled",
+        Code = @"PS:> Get-PnPInPlaceRecordsManagement",
+        Remarks = "Returns if $true if in place records management is active",
         SortOrder = 1)]
-
-    [Obsolete("Use Set-PnPInPlaceRecordsManagement -Enabled $false instead")]
-    public class DisableInPlaceRecordsManagementForSite : PnPCmdlet
+    public class GetInPlaceRecordsManagement : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()
         {
-            this.ClientContext.Site.DisableInPlaceRecordsManagementFeature();
+            WriteObject(ClientContext.Site.IsFeatureActive(new Guid(Microsoft.SharePoint.Client.RecordsManagementExtensions.INPLACE_RECORDS_MANAGEMENT_FEATURE_ID)));
         }
 
     }

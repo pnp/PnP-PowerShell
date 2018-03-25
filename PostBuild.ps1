@@ -3,7 +3,7 @@ param($ProjectDir, $ConfigurationName, $TargetDir, $TargetFileName, $SolutionDir
 if($ConfigurationName -like "Debug*")
 {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
-	if($TargetDir -like "*netstandard2.0*")
+	if($TargetDir -like "*Core*")
 	{
 		$DestinationFolder = "$documentsFolder\PowerShell\Modules\SharePointPnPPowerShellCore"
 	} else {
@@ -32,7 +32,7 @@ if($ConfigurationName -like "Debug*")
 	Try {
 		Copy-Item "$TargetDir\*.dll" -Destination "$DestinationFolder"
 		Copy-Item "$TargetDir\*help.xml" -Destination "$DestinationFolder"
-		if($TargetDir -like "*netstandard2.0*")
+		if($TargetDir -like "*Core*")
 		{
 			Copy-Item "$TargetDir\ModuleFiles\*" -Destination "$DestinationFolder"
 		} else {
