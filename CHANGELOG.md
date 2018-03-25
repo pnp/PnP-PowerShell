@@ -33,7 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Deprecated Disable-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Enabled $true
 - Deprecated Enabled-PnPInPlaceRecordsManagmenetForSite in favor of Set-PnPInPlaceRecordsManagement -Disabled $true
 - Deprecated Connect-PnPHubSite. Use Add-PnPHubSiteAssociation
-- Depcreated Disconnect-PnPHubSite. Use Remove-PnPHubSiteAssociation
+- Deprecated Disconnect-PnPHubSite. Use Remove-PnPHubSiteAssociation
 
 
 ## [2.24.1803.0] - 2018-03-06
