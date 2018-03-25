@@ -7,10 +7,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.25.1804.0] - Unreleased
 ### Added
-- Added Get-PnPHideDefaultThemes
-- Added Set-PnPHideDefaultThemes
+- Added Get-PnPHideDefaultThemes cmdlet
+- Added Set-PnPHideDefaultThemes cmdlet
+- Added Get-PnPListRecordDeclaration cmdlet
+- Added Set-PnPListRecordDeclaration cmdlet
+- Added Get-PnPInPlaceRecordsManagement cmdlet
+- Added Get-PnPInformationRightsManagement cmdlet
+- Added Set-PnPInformationRightsManagement cmdlet
 
 ### Changed
+- Updated Set-PnPInPlaceRecordsManagement cmdlet to use a -Enabled parameter instead of -On and -Off
 - Add-PnPClientSideWebPart and Add-PnPClientSideText now return the client side component added
 - Fixed issue with Set-PnPTenantTheme not recognizing a parameter value accordingly
 - Added -HideDefaultThemes parameter to Set-PnPTenant
@@ -24,6 +30,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added WebUrl parameter to Set-PnPWebTheme to support connection via -admin URL needed by app-only connections
 
 ### Deprecated
+- Deprecated Disable-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Enabled $true
+- Deprecated Enabled-PnPInPlaceRecordsManagmenetForSite in favor of Set-PnPInPlaceRecordsManagement -Disabled $true
 - Deprecated Connect-PnPHubSite. Use Add-PnPHubSiteAssociation
 - Depcreated Disconnect-PnPHubSite. Use Remove-PnPHubSiteAssociation
 

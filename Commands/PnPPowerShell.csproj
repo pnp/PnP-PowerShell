@@ -6,7 +6,22 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AssemblyName>SharePointPnP.PowerShell.Core</AssemblyName>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\DebugCore\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\ReleaseCore\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="obj\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="ModuleFiles\SharePointPnP.PowerShell.2013.Commands.Format.ps1xml" />
@@ -18,7 +33,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Identity.Client" Version="1.1.2-preview0008" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="PowerShellStandard.Library" Version="3.0.0-preview-01" />
+    <PackageReference Include="PowerShellStandard.Library" Version="3.0.0-preview-02" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.2.1" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
   </ItemGroup>
@@ -37,7 +52,7 @@
 
   <ItemGroup>
     <Reference Include="OfficeDevPnP.Core">
-      <HintPath>..\..\PnP-Sites-Core\Core\OfficeDevPnP.Core\bin\Debug\netstandard2.0\OfficeDevPnP.Core.dll</HintPath>
+      <HintPath>..\..\PnP-Sites-Core\Core\OfficeDevPnP.Core\bin\DebugCore\OfficeDevPnP.Core.dll</HintPath>
     </Reference>
     <Reference Include="SharePointPnP.Client">
       <HintPath>..\..\PnP-Sites-Core\Assemblies\16.1\SharePointPnP.Client.dll</HintPath>
