@@ -26,10 +26,10 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         public SPOTenantCdnType CdnType;
 
         [Parameter(Mandatory = true, HelpMessage = "The type of the policy to set")]
-        public SPOTenantCdnPolicyType PolicyType { get; set; }
+        public SPOTenantCdnPolicyType PolicyType;
 
         [Parameter(Mandatory = true, HelpMessage = "The value of the policy to set")]
-        public string PolicyValue { get; set; }
+        public string PolicyValue;
 
         protected override void ExecuteCmdlet()
         {
