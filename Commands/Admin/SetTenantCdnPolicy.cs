@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPTenantCdnPolicies -CdnType Public -PolicyType IncludeFileExtensions -PolicyValue ""CSS,EOT,GIF,ICO,JPEG,JPG,JS,MAP,PNG,SVG,TTF,WOFF""",
+        Code = @"PS:> Set-PnPTenantCdnPolicy -CdnType Public -PolicyType IncludeFileExtensions -PolicyValue ""CSS,EOT,GIF,ICO,JPEG,JPG,JS,MAP,PNG,SVG,TTF,WOFF""",
         Remarks = @"This example sets the IncludeFileExtensions policy to the specified value.", SortOrder = 1)]
     public class SetTenantCdnPolicy : PnPAdminCmdlet
     {
