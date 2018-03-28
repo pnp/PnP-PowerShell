@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         SortOrder = 5)]
     public class AddNavigationNode : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The location of the node to add. Either TopNavigationBar, QuickLaunch or SearchNav")]
+        [Parameter(Mandatory = true, HelpMessage = "The location of the node to add. Either TopNavigationBar, QuickLaunch, SearchNav")]
         public NavigationType Location;
 
         [Parameter(Mandatory = true, HelpMessage = "The title of the node to add")]
