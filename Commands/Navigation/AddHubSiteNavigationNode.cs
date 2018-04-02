@@ -1,12 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Add, "PnPNavigationNode")]
+    [Cmdlet(VerbsCommon.Add, "PnPHubSiteNavigationNode")]
     [CmdletHelp("Adds an item to a navigation element",
         "Adds a menu item to either the quicklaunch or top navigation",
         OutputType = typeof(NavigationNode),
@@ -32,37 +36,46 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Code = @"PS:> Add-PnPNavigationNode -Title ""Wiki"" -Location ""QuickLaunch"" -Url ""wiki/""",
         Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Wiki"" and will link to Wiki library on the selected Web.",
         SortOrder = 5)]
-    public class AddNavigationNode : PnPWebCmdlet
+    public class AddHubSiteNavigationNode : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The location of the node to add. Either TopNavigationBar, QuickLaunch, SearchNav")]
-        public NavigationType Location;
+        [Parameter(Mandatory = false,HelpMessage="The key of the parent. Leave empty to add to the top level")]
+        public string ParentKey;
 
         [Parameter(Mandatory = true, HelpMessage = "The title of the node to add")]
         public string Title;
 
-        [Parameter(Mandatory = false, HelpMessage = "The url to navigate to when clicking the new menu item. This can either be absolute or relative to the Web. Fragments are not supported.")]
-        public string Url;
-
-        [Parameter(Mandatory = false, HelpMessage = "Optionally value of a header entry to add the menu item to.")]
-        public string Header;
-
-        [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection.")]
-        public SwitchParameter First;
-
-        [Parameter(Mandatory = false, HelpMessage = "Indicates the destination URL is outside of the site collection.")]
-        public SwitchParameter External;
+        [Parameter(Mandatory = false, HelpMessage = "The url to navigate to when clicking the new menu item. This can either be absolute or relative to the Web. Fragments are not supported. Leave empty to create a header.")]
+        [AllowEmptyString]
+        public string Url = "";
 
         protected override void ExecuteCmdlet()
         {
-            if (Url == null)
+            var node = new HubSiteNavigationNode()
             {
-                ClientContext.Load(SelectedWeb, w => w.Url);
-                ClientContext.ExecuteQueryRetry();
-                Url = SelectedWeb.Url;
+                SimpleUrl = Url,
+                Title = Title,
+            };
+
+           
+            var navigation = SelectedWeb.GetHubSiteData().Navigation;
+
+            var highestKeyNode = navigation.Flatten(a => a.Nodes).OrderByDescending(p => Convert.ToInt32(p.Key)).FirstOrDefault();
+            var key = Convert.ToInt32(highestKeyNode.Key) + 1;
+
+            node.Key = key.ToString();
+
+            if (!string.IsNullOrEmpty(ParentKey))
+            {
+                var parentNode = navigation.FirstOrDefaultFromMany(n => n.Nodes, p => p.Key == ParentKey);
+                parentNode.Nodes.Add(node);
+            } else
+            {
+                navigation.Add(node);
             }
 
-            var newNavNode = SelectedWeb.AddNavigationNode(Title, new Uri(Url, UriKind.RelativeOrAbsolute), Header, Location, External.IsPresent, !First.IsPresent);
-            WriteObject(newNavNode);
+            SelectedWeb.SetHubSiteMenu(navigation);
+
+            WriteObject(node);
         }
     }
 }

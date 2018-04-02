@@ -10,8 +10,8 @@ using Microsoft.Online.SharePoint.TenantManagement;
 namespace SharePointPnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
-    [CmdletHelp(@"Returns organization-level site collection properties",
-        DetailedDescription = @"Returns organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
+    [CmdletHelp(@"Sets organization-level site collection properties",
+        DetailedDescription = @"Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
 ResourceQuotaAllocated, and SiteCreationMode.
 
 Currently, there are no parameters for this cmdlet.
