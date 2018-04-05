@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPOffice365GroupToSite -Site ""https://contoso.sharepoint.com/sites/FinanceTeamsite""",
+        Code = @"PS:> Add-PnPSiteCollectionAppCatalog -Site ""https://contoso.sharepoint.com/sites/FinanceTeamsite""",
         Remarks = @"This will add a SiteCollection app catalog to the specified site", SortOrder = 1)]
     public class AddSiteCollectionAppCatalog: PnPAdminCmdlet
     {
