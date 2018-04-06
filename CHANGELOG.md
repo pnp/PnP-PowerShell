@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Get-PnPInPlaceRecordsManagement cmdlet
 - Added Get-PnPInformationRightsManagement cmdlet
 - Added Set-PnPInformationRightsManagement cmdlet
+- Added New-PnPUPABulkImportJob cmdlet
+- Added Get-PnPUPABulkImportStatus cmdlet
 
 ### Changed
 - Added Scope parameter to Add-PnPApp, Get-PnPApp, Install-PnPApp, Publish-PnPApp, Remove-PnPApp, Uninstall-PnPApp, Unpublish-PnPApp, Update-PnPApp to support site collection app catalog
