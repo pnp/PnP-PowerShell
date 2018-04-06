@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [2.25.1804.0] - Unreleased
 ### Added
 - Added -Tree parameter to Get-PnPNavigationNode which will return a tree representation of the selected navigation structure
+- Added -Parent parameter which takes an ID to Add-PnPNavigationNode instead of using the -Header parameter
 - Added -Scope parameter to Add-PnPApp, Get-PnPApp, Install-PnPApp, Publish-PnPApp, Remove-PnPApp, Uninstall-PnPApp, Unpublish-PnPApp, Update-PnPApp to support site collection app catalog
 - Added -Wait parameter to Install-PnPApp which will wait for the installation to finish
 - Added Get-PnPHideDefaultThemes cmdlet
@@ -37,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added WebUrl parameter to Set-PnPWebTheme to support connection via -admin URL needed by app-only connections
 
 ### Deprecated
+- Deprecated -Header parameter on Add-PnPNavigationNode in favor or -Parent [Id]
 - Deprecated Disable-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Enabled $true
 - Deprecated Enabled-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Disabled $true
 - Deprecated Connect-PnPHubSite. Use Add-PnPHubSiteAssociation

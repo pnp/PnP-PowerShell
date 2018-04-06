@@ -17,8 +17,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso"" and will link to the url ""http://contoso.sharepoint.com/sites/contoso/""",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso USA"" -Url ""http://contoso.sharepoint.com/sites/contoso/usa/"" -Location ""QuickLaunch"" -Header ""Contoso""",
-        Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso USA"", will link to the url ""http://contoso.sharepoint.com/sites/contoso/usa/"" and will have ""Contoso"" as a parent navigation node.",
+        Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso USA"" -Url ""http://contoso.sharepoint.com/sites/contoso/usa/"" -Location ""QuickLaunch"" -Parent 2012",
+        Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso USA"", will link to the url ""http://contoso.sharepoint.com/sites/contoso/usa/"" and will have the node with id 2012 as a parent navigation node.",
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso"" -Url ""http://contoso.sharepoint.com/sites/contoso/"" -Location ""QuickLaunch"" -First",
@@ -47,7 +47,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         public int? Parent;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional value of a header entry to add the menu item to.")]
-        [Obsolete("Use ParentKey instead")]
+        [Obsolete("Use Parent instead")]
         public string Header;
 
         [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection.")]
