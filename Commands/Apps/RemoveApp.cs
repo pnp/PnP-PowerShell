@@ -2,6 +2,7 @@
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Apps
@@ -10,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletHelp("Removes an app from the app catalog", SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.Apps)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe", 
+        Code = @"PS:> Remove-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
         Remarks = @"This will remove the specified app from the tenant scoped app catalog", SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Remove-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site",
@@ -27,7 +28,16 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         {
             var manager = new OfficeDevPnP.Core.ALM.AppManager(ClientContext);
 
-            manager.Remove(Identity.Id, Scope);
+            var app = Identity.GetAppMetadata(ClientContext, Scope);
+
+            if (app != null)
+            {
+                manager.Remove(app, Scope);
+            }
+            else
+            {
+                throw new Exception("Cannot find app");
+            }
         }
     }
 }
