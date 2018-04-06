@@ -43,7 +43,11 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "The url to navigate to when clicking the new menu item. This can either be absolute or relative to the Web. Fragments are not supported.")]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "Optionally value of a header entry to add the menu item to.")]
+        [Parameter(Mandatory = false, HelpMessage = "The key of the parent. Leave empty to add to the top level")]
+        public int? Parent;
+
+        [Parameter(Mandatory = false, HelpMessage = "Optional value of a header entry to add the menu item to.")]
+        [Obsolete("Use ParentKey instead")]
         public string Header;
 
         [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection.")]
@@ -60,9 +64,55 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 ClientContext.ExecuteQueryRetry();
                 Url = SelectedWeb.Url;
             }
-
-            var newNavNode = SelectedWeb.AddNavigationNode(Title, new Uri(Url, UriKind.RelativeOrAbsolute), Header, Location, External.IsPresent, !First.IsPresent);
-            WriteObject(newNavNode);
+            if (Parent.HasValue)
+            {
+                var parentNode = SelectedWeb.Navigation.GetNodeById(Parent.Value);
+                ClientContext.Load(parentNode);
+                ClientContext.ExecuteQueryRetry();
+                var addedNode = parentNode.Children.Add(new NavigationNodeCreationInformation()
+                {
+                    Title = Title,
+                    Url = Url,
+                    IsExternal = External.IsPresent,
+                    AsLastNode = !First.IsPresent
+                });
+                ClientContext.Load(addedNode);
+                ClientContext.ExecuteQueryRetry();
+                WriteObject(addedNode);
+            }
+            else
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                if (!string.IsNullOrEmpty(Header))
+                {
+                    var newNavNode = SelectedWeb.AddNavigationNode(Title, new Uri(Url, UriKind.RelativeOrAbsolute), Header, Location, External.IsPresent, !First.IsPresent);
+                    WriteObject(newNavNode);
+                }
+                else
+                {
+                    NavigationNodeCollection nodeCollection = null;
+                    if (Location == NavigationType.SearchNav)
+                    {
+                        nodeCollection = SelectedWeb.LoadSearchNavigation();
+                    }
+                    else
+                    {
+                        nodeCollection = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
+                        ClientContext.Load(nodeCollection);
+                    }
+                    var addedNode = nodeCollection.Add(new NavigationNodeCreationInformation()
+                    {
+                        Title = Title,
+                        Url = Url,
+                        IsExternal = External.IsPresent,
+                        AsLastNode = !First.IsPresent
+                    });
+                    ClientContext.Load(addedNode);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(addedNode);
+                }
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
         }
     }
 }

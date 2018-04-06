@@ -1,4 +1,6 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Enums;
@@ -37,32 +39,54 @@ PS> $children = $node.Children",
         [Parameter(Mandatory = false, HelpMessage = "The Id of the node to retrieve", ParameterSetName = ParameterSet_BYID)]
         public int Id;
 
+        [Parameter(Mandatory = false, HelpMessage = "Show a tree view of all navigation nodes")]
+        public SwitchParameter Tree;
+
         protected override void ExecuteCmdlet()
         {
+
             if (ParameterSetName == ParameterSet_ALLBYLOCATION)
             {
-                NavigationNodeCollection nodes = null;
-                switch (Location)
+                if (Tree.IsPresent)
                 {
-                    case NavigationType.QuickLaunch:
-                        {
-                            nodes = SelectedWeb.Navigation.QuickLaunch;
-                            break;
-                        }
-                    case NavigationType.TopNavigationBar:
-                        {
-                            nodes = SelectedWeb.Navigation.TopNavigationBar;
-                            break;
-                        }
-                    case NavigationType.SearchNav:
-                        {
-                            nodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
-                            break;
-                        }
+                    NavigationNodeCollection navigationNodes = null;
+                    if (Location == NavigationType.SearchNav)
+                    {
+                        navigationNodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
+                    }
+                    else
+                    {
+                        navigationNodes = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
+                    }
+                    var nodesCollection = ClientContext.LoadQuery(navigationNodes);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(GetTree(nodesCollection, 0));
                 }
-                ClientContext.Load(nodes);
-                ClientContext.ExecuteQueryRetry();
-                WriteObject(nodes, true);
+                else
+                {
+                    NavigationNodeCollection nodes = null;
+                    switch (Location)
+                    {
+                        case NavigationType.QuickLaunch:
+                            {
+                                nodes = SelectedWeb.Navigation.QuickLaunch;
+                                break;
+                            }
+                        case NavigationType.TopNavigationBar:
+                            {
+                                nodes = SelectedWeb.Navigation.TopNavigationBar;
+                                break;
+                            }
+                        case NavigationType.SearchNav:
+                            {
+                                nodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
+                                break;
+                            }
+                    }
+                    ClientContext.Load(nodes);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(nodes, true);
+                }
             }
             if (MyInvocation.BoundParameters.ContainsKey("Id"))
             {
@@ -70,8 +94,46 @@ PS> $children = $node.Children",
                 ClientContext.Load(node);
                 ClientContext.Load(node, n => n.Children.IncludeWithDefaultProperties());
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(node);
+                if (Tree.IsPresent)
+                {
+                    WriteObject(GetTree(new List<NavigationNode>() { node }, 0));
+                }
+                else
+                {
+                    WriteObject(node);
+                }
             }
+        }
+
+        private List<string> GetTree(IEnumerable<NavigationNode> nodes, int level)
+        {
+            var lines = new List<string>();
+            var line = "";
+            if (level > 0)
+            {
+                line = string.Join("", Enumerable.Repeat("  ", level));
+            }
+            var index = 1;
+            foreach (var node in nodes)
+            {
+                if (!node.IsObjectPropertyInstantiated("Children"))
+                {
+                    ClientContext.Load(node.Children);
+                    ClientContext.ExecuteQueryRetry();
+                }
+
+                line += "──";
+
+                line += $" [{node.Id}] - {node.Title} - {node.Url}";
+                lines.Add(line);
+                if (node.Children != null && node.Children.Any())
+                {
+                    lines.AddRange(GetTree(node.Children.AsEnumerable(), level + 1));
+                }
+                index++;
+                line = "";
+            }
+            return lines;
         }
     }
 }
