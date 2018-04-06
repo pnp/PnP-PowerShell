@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !ONPREMISES
+using System;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
@@ -84,3 +85,4 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
         }
     }
 }
+#endif
