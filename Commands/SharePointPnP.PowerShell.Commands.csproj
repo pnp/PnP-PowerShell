@@ -447,7 +447,7 @@
     <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
-    <Compile Include="Branding\GetNavigationNode.cs" />
+    <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
     <Compile Include="ClientSidePages\RemoveClientSideComponent.cs" />
@@ -610,6 +610,9 @@
     <Compile Include="Utilities\CertificateHelper.cs" />
     <Compile Include="Utilities\Clipboard.cs" />
     <Compile Include="Utilities\OperatingSystem.cs" />
+    <Compile Include="Utilities\REST\MetadataType.cs" />
+    <Compile Include="Utilities\REST\RestHelper.cs" />
+    <Compile Include="Utilities\REST\RestRequest.cs" />
     <Compile Include="Utilities\Shell.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="SiteDesigns\SetSiteScript.cs" />
@@ -830,7 +833,7 @@
     <Compile Include="Utilities\SendMail.cs" />
     <Compile Include="WebParts\AddWebPartToWebPartPage.cs" />
     <Compile Include="WebParts\AddWebPartToWikiPage.cs" />
-    <Compile Include="Branding\AddNavigationNode.cs" />
+    <Compile Include="Navigation\AddNavigationNode.cs" />
     <Compile Include="WebParts\SetWebPartProperty.cs" />
     <Compile Include="WebParts\RemoveWebPart.cs" />
     <Compile Include="WebParts\GetWebPart.cs" />
@@ -844,7 +847,7 @@
     <Compile Include="Branding\GetCustomAction.cs" />
     <Compile Include="Branding\AddCustomAction.cs" />
     <Compile Include="Web\GetPropertyBag.cs" />
-    <Compile Include="Branding\RemoveNavigationNode.cs">
+    <Compile Include="Navigation\RemoveNavigationNode.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Web\RemovePropertyBagValue.cs" />
