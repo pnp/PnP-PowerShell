@@ -41,21 +41,13 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
             if (MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
-                AppMetadata app = null;
-                if (Identity.Id != Guid.Empty)
-                {
-                    app = manager.GetAvailable(Identity.Id, Scope);
-                } else if(!string.IsNullOrEmpty(Identity.Title))
-                {
-                    app = manager.GetAvailable(Identity.Title, Scope);
-                }
+                var app = Identity.GetAppMetadata(ClientContext, Scope);
                 if (app != null)
                 {
                     WriteObject(app);
-                }
-                else
+                } else
                 {
-                    throw new System.Exception("App not found");
+                    throw new Exception("Cannot find app");
                 }
             }
             else

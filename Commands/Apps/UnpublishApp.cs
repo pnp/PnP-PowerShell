@@ -2,6 +2,7 @@
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Apps
@@ -10,8 +11,8 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletHelp("Unpublishes/retracts an available add-in from the app catalog",
         Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = @"PS:> Unpublish-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe", 
-        Remarks = @"This will retract, but not remove, the specified app from the tenant app catalog", 
+        Code = @"PS:> Unpublish-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
+        Remarks = @"This will retract, but not remove, the specified app from the tenant app catalog",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Unpublish-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site",
@@ -29,7 +30,15 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         {
             var manager = new OfficeDevPnP.Core.ALM.AppManager(ClientContext);
 
-            manager.Retract(Identity.Id, Scope);
+            var app = Identity.GetAppMetadata(ClientContext, Scope);
+            if (app != null)
+            {
+                manager.Retract(app, Scope);
+            }
+            else
+            {
+                throw new Exception("Cannot find app");
+            }
         }
     }
 }

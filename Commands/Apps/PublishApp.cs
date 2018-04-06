@@ -2,6 +2,7 @@
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Apps
@@ -30,7 +31,14 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         {
             var manager = new OfficeDevPnP.Core.ALM.AppManager(ClientContext);
 
-            manager.Deploy(Identity.Id, SkipFeatureDeployment, Scope);
+            var app = Identity.GetAppMetadata(ClientContext, Scope);
+            if (app != null)
+            {
+                manager.Deploy(app, SkipFeatureDeployment, Scope);
+            } else
+            {
+                throw new Exception("Cannot find app");
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using OfficeDevPnP.Core.ALM;
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Apps
@@ -29,7 +30,15 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         protected override void ExecuteCmdlet()
         {
             var manager = new AppManager(ClientContext);
-            manager.Upgrade(Identity.Id, Scope);
+            var app = Identity.GetAppMetadata(ClientContext, Scope);
+            if (app != null)
+            {
+                manager.Upgrade(Identity.Id, Scope);
+            }
+            else
+            {
+                throw new Exception("Cannot find app");
+            }
         }
     }
 }

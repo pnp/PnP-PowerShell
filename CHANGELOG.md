@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.25.1804.0] - Unreleased
 ### Added
+- Added -Scope parameter to Add-PnPApp, Get-PnPApp, Install-PnPApp, Publish-PnPApp, Remove-PnPApp, Uninstall-PnPApp, Unpublish-PnPApp, Update-PnPApp to support site collection app catalog
+- Added -Wait parameter to Install-PnPApp which will wait for the installation to finish
 - Added Get-PnPHideDefaultThemes cmdlet
 - Added Set-PnPHideDefaultThemes cmdlet
 - Added Get-PnPListRecordDeclaration cmdlet
@@ -18,7 +20,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Get-PnPUPABulkImportStatus cmdlet
 
 ### Changed
-- Added Scope parameter to Add-PnPApp, Get-PnPApp, Install-PnPApp, Publish-PnPApp, Remove-PnPApp, Uninstall-PnPApp, Unpublish-PnPApp, Update-PnPApp to support site collection app catalog
+
+- ALM Cmdlets (Add-PnPApp, etc.) now allow for specifying the app title instead of only an id.
 - Updated Set-PnPInPlaceRecordsManagement cmdlet to use a -Enabled parameter instead of -On and -Off
 - Add-PnPClientSideWebPart and Add-PnPClientSideText now return the client side component added
 - Fixed issue with Set-PnPTenantTheme not recognizing a parameter value accordingly
