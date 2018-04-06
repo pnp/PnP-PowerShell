@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Set-PnPInformationRightsManagement cmdlet
 
 ### Changed
+- Added Scope parameter to Add-PnPApp, Get-PnPApp, Install-PnPApp, Publish-PnPApp, Remove-PnPApp, Uninstall-PnPApp, Unpublish-PnPApp, Update-PnPApp to support site collection app catalog
 - Updated Set-PnPInPlaceRecordsManagement cmdlet to use a -Enabled parameter instead of -On and -Off
 - Add-PnPClientSideWebPart and Add-PnPClientSideText now return the client side component added
 - Fixed issue with Set-PnPTenantTheme not recognizing a parameter value accordingly
@@ -31,7 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Deprecated
 - Deprecated Disable-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Enabled $true
-- Deprecated Enabled-PnPInPlaceRecordsManagmenetForSite in favor of Set-PnPInPlaceRecordsManagement -Disabled $true
+- Deprecated Enabled-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Disabled $true
 - Deprecated Connect-PnPHubSite. Use Add-PnPHubSiteAssociation
 - Deprecated Disconnect-PnPHubSite. Use Remove-PnPHubSiteAssociation
 
