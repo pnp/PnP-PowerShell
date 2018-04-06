@@ -14,8 +14,6 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         DetailedDescription = @"Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
 ResourceQuotaAllocated, and SiteCreationMode.
 
-Currently, there are no parameters for this cmdlet.
-
 You must be a SharePoint Online global administrator to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
