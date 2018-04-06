@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !ONPREMISES
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Linq;
@@ -92,3 +93,4 @@ PS:> New-PnPUPABulkImportJob -Folder ""Shared Documents"" -Path profiles.json -I
         }
     }
 }
+#endif
