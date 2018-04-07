@@ -65,6 +65,14 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Hide the list from the SharePoint UI. Set to $true to hide, $false to show.")]
         public bool Hidden;
 
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable force checkout. Set to $true to enable, $false to disable.")]
+        public bool ForceCheckout;
+
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "Set the list experience: Auto, NewExperience or ClassExperience")]
+        public ListExperience ListExperience;
+#endif
+
         [Parameter(Mandatory = false, HelpMessage = "Enable or disable attachments. Set to $true to enable, $false to disable.")]
         public bool EnableAttachments;
 
@@ -148,17 +156,31 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     isDirty = true;
                 }
 
-                if(MyInvocation.BoundParameters.ContainsKey("Description"))
+                if (MyInvocation.BoundParameters.ContainsKey("Description"))
                 {
                     list.Description = Description;
                     isDirty = true;
                 }
 
-                if(MyInvocation.BoundParameters.ContainsKey("EnableFolderCreation"))
+                if (MyInvocation.BoundParameters.ContainsKey("EnableFolderCreation"))
                 {
                     list.EnableFolderCreation = EnableFolderCreation;
                     isDirty = true;
                 }
+
+                if (MyInvocation.BoundParameters.ContainsKey("ForceCheckout"))
+                {
+                    list.ForceCheckout = ForceCheckout;
+                    isDirty = true;
+                }
+
+#if !ONPREMISES
+                if (MyInvocation.BoundParameters.ContainsKey("ListExperience"))
+                {
+                    list.ListExperienceOptions = ListExperience;
+                    isDirty = true;
+                }
+#endif
 
                 if (isDirty)
                 {
@@ -167,12 +189,16 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 }
                 isDirty = false;
 
+
+
+
                 if (list.EnableVersioning)
                 {
                     // list or doclib?
 
                     if (list.BaseType == BaseType.DocumentLibrary)
                     {
+
                         if (MyInvocation.BoundParameters.ContainsKey("MajorVersions"))
                         {
                             list.MajorVersionLimit = (int)MajorVersions;
@@ -193,6 +219,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                             isDirty = true;
                         }
                     }
+
+
                 }
                 if (isDirty)
                 {
