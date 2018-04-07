@@ -59,11 +59,17 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "The title of the list")]
         public string Title = string.Empty;
 
+        [Parameter(Mandatory = false, HelpMessage = "The description of the list")]
+        public string Description;
+
         [Parameter(Mandatory = false, HelpMessage = "Hide the list from the SharePoint UI. Set to $true to hide, $false to show.")]
         public bool Hidden;
 
         [Parameter(Mandatory = false, HelpMessage = "Enable or disable attachments. Set to $true to enable, $false to disable.")]
         public bool EnableAttachments;
+
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable folder creation. Set to $true to enable, $false to disable.")]
+        public bool EnableFolderCreation;
 
         [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning. Set to $true to enable, $false to disable.")]
         public bool EnableVersioning;
@@ -139,6 +145,18 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (MyInvocation.BoundParameters.ContainsKey("EnableAttachments") && EnableAttachments != enableAttachments)
                 {
                     list.EnableAttachments = EnableAttachments;
+                    isDirty = true;
+                }
+
+                if(MyInvocation.BoundParameters.ContainsKey("Description"))
+                {
+                    list.Description = Description;
+                    isDirty = true;
+                }
+
+                if(MyInvocation.BoundParameters.ContainsKey("EnableFolderCreation"))
+                {
+                    list.EnableFolderCreation = EnableFolderCreation;
                     isDirty = true;
                 }
 
