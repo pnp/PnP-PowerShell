@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added additional properties to Set-PnPList
 - ALM Cmdlets (Add-PnPApp, etc.) now allow for specifying the app title instead of only an id.
 - Updated Set-PnPInPlaceRecordsManagement cmdlet to use a -Enabled parameter instead of -On and -Off
 - Add-PnPClientSideWebPart and Add-PnPClientSideText now return the client side component added
@@ -36,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed Set-PnPUserProfileProperty cmdlet to accept $null values to clear properties
 - Fixed Invoke-PnPSiteDesign where you connected to the -admin URL, and it ignored the WebUrl parameter when applying the site design
 - Added WebUrl parameter to Set-PnPWebTheme to support connection via -admin URL needed by app-only connections
+- Fixed issue with 
 
 ### Deprecated
 - Deprecated -Header parameter on Add-PnPNavigationNode in favor or -Parent [Id]
@@ -43,6 +45,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Deprecated Enabled-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Disabled $true
 - Deprecated Connect-PnPHubSite. Use Add-PnPHubSiteAssociation
 - Deprecated Disconnect-PnPHubSite. Use Remove-PnPHubSiteAssociation
+
+### Contributors
+casselc
+stevebeauge
+velingeorgiev
+cebud
+jensotto
 
 
 ## [2.24.1803.0] - 2018-03-06
