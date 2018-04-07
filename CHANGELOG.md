@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- Added additional properties to Set-PnPList
+- Added additional properties to Set-PnPList: Description, EnableFolderCreation, ForceCheckout, ListExperience
 - ALM Cmdlets (Add-PnPApp, etc.) now allow for specifying the app title instead of only an id.
 - Updated Set-PnPInPlaceRecordsManagement cmdlet to use a -Enabled parameter instead of -On and -Off
 - Add-PnPClientSideWebPart and Add-PnPClientSideText now return the client side component added
