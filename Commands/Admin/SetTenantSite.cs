@@ -72,6 +72,11 @@ namespace SharePointPnP.PowerShell.Commands
         {
             Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
+            if (MyInvocation.BoundParameters.ContainsKey("LockState"))
+            {
+                Tenant.SetSiteLockState(Url, LockState, Wait, Wait ? timeoutFunction : null);
+            }
+
             Tenant.SetSiteProperties(Url, title: Title,
                 sharingCapability: Sharing,
                 storageMaximumLevel: StorageMaximumLevel,
@@ -92,10 +97,6 @@ namespace SharePointPnP.PowerShell.Commands
                     admins.Add(userEntity);
                 }
                 Tenant.AddAdministrators(admins, new Uri(Url));
-            }
-            if (MyInvocation.BoundParameters.ContainsKey("LockState"))
-            {
-                Tenant.SetSiteLockState(Url, LockState, Wait, Wait ? timeoutFunction : null);
             }
         }
 
