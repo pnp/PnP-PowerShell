@@ -8,11 +8,11 @@ using SharePointPnP.PowerShell.Commands.Provider;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
-    [CmdletHelp("Disconnects the context", 
+    [CmdletHelp("Disconnects the context",
         "Disconnects the current context and requires you to build up a new connection in order to use the Cmdlets again. Using Connect-PnPOnline to connect to a different site has the same effect.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> Disconnect-PnPOnline", 
+        Code = @"PS:> Disconnect-PnPOnline",
         Remarks = @"This will disconnect you from the server.",
         SortOrder = 1)]
     public class DisconnectSPOnline : PSCmdlet
@@ -22,8 +22,19 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            if (!DisconnectCurrentService(Connection ?? SPOnlineConnection.CurrentConnection))
+            var success = false;
+            if (Connection != null)
+            {
+                success = DisconnectProvidedService(Connection);
+            }
+            else
+            {
+                success = DisconnectCurrentService();
+            }
+            if (!success)
+            {
                 throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
+            }
 
             var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
             if (provider != null)
@@ -41,14 +52,27 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
-        internal static bool DisconnectCurrentService(SPOnlineConnection connection)
+        internal static bool DisconnectProvidedService(SPOnlineConnection connection)
         {
-            SPOnlineConnection.CurrentConnection.AccessToken = string.Empty;
+            connection.AccessToken = string.Empty;
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
             if (connection == null)
                 return false;
+            connection.Context = null;
             connection = null;
+            return true;
+        }
+
+        internal static bool DisconnectCurrentService()
+        {
+            SPOnlineConnection.CurrentConnection.AccessToken = string.Empty;
+            Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
+            Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
+            if (SPOnlineConnection.CurrentConnection == null)
+                return false;
+            SPOnlineConnection.CurrentConnection.Context = null;
+            SPOnlineConnection.CurrentConnection = null;
             return true;
         }
     }

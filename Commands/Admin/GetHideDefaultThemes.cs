@@ -13,27 +13,22 @@ using SharePointPnP.PowerShell.Commands.Model;
 
 namespace SharePointPnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenant")]
-    [CmdletHelp(@"Returns organization-level site collection properties",
-        DetailedDescription = @"Returns organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
-ResourceQuotaAllocated, and SiteCreationMode.
-
-Currently, there are no parameters for this cmdlet.
+    [Cmdlet(VerbsCommon.Get, "PnPHideDefaultThemes")]
+    [CmdletHelp(@"Returns if the default / OOTB themes should be visible to users or not.",
+        DetailedDescription = @"Returns if the default themes are visible. Use Set-PnPHideDefaultThemes to change this value.
 
 You must be a SharePoint Online global administrator to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPTenant",
-        Remarks = @"This example returns all tenant settings", SortOrder = 1)]
-    public class GetTenant : PnPAdminCmdlet
+        Code = @"PS:> Get-PnPHideDefaultThemes",
+        Remarks = @"This example returns the current setting if the default themes should be visible", SortOrder = 1)]
+    public class GetHideDefaultThemes : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(Tenant);
-            ClientContext.Load(Tenant, t => t.HideDefaultThemes);
-            ClientContext.ExecuteQueryRetry();
-            WriteObject(new SPOTenant(Tenant));
+            var value = Tenant.EnsureProperty(t => t.HideDefaultThemes);
+            WriteObject(value);
         }
     }
 }

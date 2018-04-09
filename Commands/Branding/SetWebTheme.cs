@@ -24,6 +24,9 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Color Palette Url based on the site or server relative url")]
         public ThemePipeBind Theme;
 
+        [Parameter(Mandatory = false, HelpMessage = "The URL of the web to apply the theme to. If not specified it will default to the current web based upon the URL specified with Connect-PnPOnline.")]
+        public string WebUrl;
+
         protected override void ExecuteCmdlet()
         {
             var url = SelectedWeb.EnsureProperty(w => w.Url);
@@ -31,8 +34,21 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             using (var tenantContext = ClientContext.Clone(tenantUrl))
             {
                 var tenant = new Tenant(tenantContext);
+                var webUrl = url;
+                if (!string.IsNullOrEmpty(WebUrl))
+                {
+                    try
+                    {
+                        var uri = new Uri(WebUrl);
+                        webUrl = WebUrl;
+                    }
+                    catch
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new System.Exception("Invalid URL"), "INVALIDURL", ErrorCategory.InvalidArgument, WebUrl));
+                    }
+                }
 
-                tenant.SetWebTheme(Theme.Name, url);
+                tenant.SetWebTheme(Theme.Name, webUrl);
                 tenantContext.ExecuteQueryRetry();
             }
         }

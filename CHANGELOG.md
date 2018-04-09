@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [2.25.1804.0] - Unreleased
+### Added
+- Added -Tree parameter to Get-PnPNavigationNode which will return a tree representation of the selected navigation structure
+- Added -Parent parameter which takes an ID to Add-PnPNavigationNode instead of using the -Header parameter
+- Added -Scope parameter to Add-PnPApp, Get-PnPApp, Install-PnPApp, Publish-PnPApp, Remove-PnPApp, Uninstall-PnPApp, Unpublish-PnPApp, Update-PnPApp to support site collection app catalog
+- Added -Wait parameter to Install-PnPApp which will wait for the installation to finish
+- Added Get-PnPHideDefaultThemes cmdlet
+- Added Set-PnPHideDefaultThemes cmdlet
+- Added Get-PnPListRecordDeclaration cmdlet
+- Added Set-PnPListRecordDeclaration cmdlet
+- Added Get-PnPInPlaceRecordsManagement cmdlet
+- Added Get-PnPInformationRightsManagement cmdlet
+- Added Set-PnPInformationRightsManagement cmdlet
+- Added New-PnPUPABulkImportJob cmdlet
+- Added Get-PnPUPABulkImportStatus cmdlet
+
+### Changed
+
+- Added additional properties to Set-PnPList: Description, EnableFolderCreation, ForceCheckout, ListExperience
+- ALM Cmdlets (Add-PnPApp, etc.) now allow for specifying the app title instead of only an id.
+- Updated Set-PnPInPlaceRecordsManagement cmdlet to use a -Enabled parameter instead of -On and -Off
+- Add-PnPClientSideWebPart and Add-PnPClientSideText now return the client side component added
+- Fixed issue with Set-PnPTenantTheme not recognizing a parameter value accordingly
+- Added -HideDefaultThemes parameter to Set-PnPTenant
+- Get-PnPTenant now returns if default themes are hidden or not
+- Added ability to cancel Device Login requests with CTRL+C
+- Renamed Connect-PnPHubSite to Add-PnPHubSiteAssociation and added alias for Connect-PnPHubSite
+- Renamed Disconnect-PnPHubSite to Remove-PnPHubSiteAssociation and added alias for Disconnect-PnPHubSite
+- Fixed output of File/Folder objects which caused the creation of an error message that was not thrown to the output but was available in the $error built-in variable
+- Fixed Set-PnPUserProfileProperty cmdlet to accept $null values to clear properties
+- Fixed Invoke-PnPSiteDesign where you connected to the -admin URL, and it ignored the WebUrl parameter when applying the site design
+- Added WebUrl parameter to Set-PnPWebTheme to support connection via -admin URL needed by app-only connections
+- Fixed issue with 
+
+### Deprecated
+- Deprecated -Header parameter on Add-PnPNavigationNode in favor or -Parent [Id]
+- Deprecated Disable-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Enabled $true
+- Deprecated Enabled-PnPInPlaceRecordsManagementForSite in favor of Set-PnPInPlaceRecordsManagement -Disabled $true
+- Deprecated Connect-PnPHubSite. Use Add-PnPHubSiteAssociation
+- Deprecated Disconnect-PnPHubSite. Use Remove-PnPHubSiteAssociation
+
+### Contributors
+casselc
+stevebeauge
+velingeorgiev
+cebud
+jensotto
+
+
 ## [2.24.1803.0] - 2018-03-06
 ### Added
 - Added Get-PnPTenant cmdlet

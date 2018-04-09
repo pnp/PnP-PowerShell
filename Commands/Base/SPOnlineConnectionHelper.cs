@@ -113,7 +113,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #endif
 #endif
 
-        internal static SPOnlineConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback)
+        internal static SPOnlineConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest)
         {
             SPOnlineConnection spoConnection = null;
             var connectionUri = new Uri(url);
@@ -132,7 +132,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     if (success)
                     {
-                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
                         if (tokenResult != null)
                         {
                             progressCallback("Token received");
@@ -148,7 +148,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 OpenBrowser(returnData["verification_url"]);
                 messageCallback(returnData["message"]);
 
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
 
                 if (tokenResult != null)
                 {
@@ -163,7 +163,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             else
             {
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
                 if (tokenResult != null)
                 {
                     progressCallback("Token received");
@@ -193,7 +193,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static SPOnlineConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback)
+        internal static SPOnlineConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest)
         {
             var connectionUri = new Uri("https://graph.microsoft.com");
             HttpClient client = new HttpClient();
@@ -211,7 +211,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     if (success)
                     {
-                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
                         if (tokenResult != null)
                         {
                             progressCallback("Token received");
@@ -227,7 +227,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 OpenBrowser(returnData["verification_url"]);
                 messageCallback(returnData["message"]);
 
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
 
                 if (tokenResult != null)
                 {
@@ -245,7 +245,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 messageCallback(returnData["message"]);
 
 
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback);
+                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
 
                 if (tokenResult != null)
                 {
@@ -263,7 +263,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
 
 
-        private static TokenResult GetTokenResult(Uri connectionUri, Dictionary<string, string> returnData, Action<string> messageCallback, Action<string> progressCallback)
+        private static TokenResult GetTokenResult(Uri connectionUri, Dictionary<string, string> returnData, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest)
         {
             HttpClient client = new HttpClient();
             var body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
@@ -272,7 +272,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
             var responseMessage = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            while (!responseMessage.IsSuccessStatusCode)
+            var shouldCancel = cancelRequest();
+            while (!responseMessage.IsSuccessStatusCode && !shouldCancel)
             {
                 if (stopWatch.ElapsedMilliseconds > 60 * 1000)
                 {
@@ -283,6 +284,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
                 body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
                 responseMessage = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+                shouldCancel = cancelRequest();
             }
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -290,7 +292,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             else
             {
-                progressCallback("Timeout");
+                if (shouldCancel)
+                {
+                    messageCallback("Cancelled");
+                }
+                else
+                {
+                    messageCallback("Timeout");
+                }
                 return null;
             }
         }
