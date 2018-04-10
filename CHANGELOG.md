@@ -15,6 +15,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+## [2.25.1804.1]
+### Changed
+- Now using signed core library assembly
+- Updated Set-PnPTenantSite to handle changing the Site Lock State correctly. You cannot use both -LockState and set other properties at the same time due to possible delays in making the lockstate effective.
+
 
 ## [2.25.1804.0]
 ### Added
