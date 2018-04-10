@@ -7,17 +7,17 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPGroup",DefaultParameterSetName="All")]
-    [CmdletHelp("Returns a specific group or all groups.",
+    [CmdletHelp("Returns a specific SharePoint group or all SharePoint groups in site.",
         Category = CmdletHelpCategory.Principals,
         OutputType = typeof(List<Group>),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.group.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-PnPGroup", 
-        Remarks = "Returns all groups",
+        Remarks = "Returns all SharePoint groups in a site",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Get-PnPGroup -Identity 'My Site Users'", 
-        Remarks = "This will return the group called 'My Site Users' if available",
+        Remarks = "This will return the group called 'My Site Users' in if available in the current site",
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Get-PnPGroup -AssociatedMemberGroup",
