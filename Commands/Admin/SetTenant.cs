@@ -19,7 +19,7 @@ You must be a SharePoint Online global administrator to run the cmdlet.",
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
         Code = @"PS:> Set-PnPTenantSite -Identity https://contoso.sharepoint.com/sites/team1 -LockState NoAccess
-Set-PnPTenant -NoAcessRedirectUrl 'http://www.contoso.com'",
+Set-PnPTenant -NoAccessRedirectUrl 'http://www.contoso.com'",
         Remarks = @"This example blocks access to https://contoso.sharepoint.com/sites/team1 and redirects traffic to http://www.contoso.com.", SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Set-PnPTenant -ShowEveryoneExceptExternalUsersClaim $false",
