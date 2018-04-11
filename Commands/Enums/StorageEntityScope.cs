@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.Enums
 {
     public enum StorageEntityScope
     {
-        Web = 1,
+        Site = 1,
         Tenant = 2
     }
 }
