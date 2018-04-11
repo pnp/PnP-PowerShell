@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.26.1805.0] - Unreleased
 ### Added
+- Added -Scope parameter to Get-PnPStorageEntity, Set-PnPStorageEntity and Remove-PnPStorageEntity to allow for handling storage entity on web scope.
 
 ### Changed
 - Updated Set-PnPTenantSite to handle changing the Site Lock State correctly. You cannot use both -LockState and set other properties at the same time due to possible delays in making the lockstate effective.

@@ -25,19 +25,31 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = true, HelpMessage = "The value to set.")]
         public string Value;
 
-        [Parameter(Mandatory = true, HelpMessage = "The comment to set.")]
+        [Parameter(Mandatory = false, HelpMessage = "The comment to set.")]
+        [AllowNull]
         public string Comment;
 
-        [Parameter(Mandatory = true, HelpMessage = "The description to set.")]
+        [Parameter(Mandatory = false, HelpMessage = "The description to set.")]
+        [AllowNull]
         public string Description;
 
+        [Parameter(Mandatory = false, HelpMessage = "Defines the scope of the storage entity. Defaults to Tenant.")]
+        public StorageEntityScope Scope = StorageEntityScope.Tenant;
+
         protected override void ExecuteCmdlet()
-        {          
-            var appCatalogUri = ClientContext.Web.GetAppCatalog();
-            using (var clonedContext = ClientContext.Clone(appCatalogUri))
+        {
+            if (Scope == StorageEntityScope.Tenant)
             {
-                clonedContext.Web.SetStorageEntity(Key, Value, Description, Comment);
-                clonedContext.ExecuteQueryRetry();
+                var appCatalogUri = ClientContext.Web.GetAppCatalog();
+                using (var clonedContext = ClientContext.Clone(appCatalogUri))
+                {
+                    clonedContext.Web.SetStorageEntity(Key, Value, Description, Comment);
+                    clonedContext.ExecuteQueryRetry();
+                }
+            }
+            else
+            {
+                ClientContext.Web.SetStorageEntity(Key, Value, Description, Comment);
             }
         }
     }

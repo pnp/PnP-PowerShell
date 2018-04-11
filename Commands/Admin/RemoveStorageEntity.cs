@@ -22,13 +22,23 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = true, HelpMessage = "The key of the value to set.")]
         public string Key;
 
+        [Parameter(Mandatory = false, HelpMessage = "Defines the scope of the storage entity. Defaults to Tenant.")]
+        public StorageEntityScope Scope = StorageEntityScope.Tenant;
+
         protected override void ExecuteCmdlet()
-        {          
-            var appCatalogUri = ClientContext.Web.GetAppCatalog();
-            using (var clonedContext = ClientContext.Clone(appCatalogUri))
+        {
+            if (Scope == StorageEntityScope.Tenant)
             {
-                clonedContext.Web.RemoveStorageEntity(Key);
-                clonedContext.ExecuteQueryRetry();
+                var appCatalogUri = ClientContext.Web.GetAppCatalog();
+                using (var clonedContext = ClientContext.Clone(appCatalogUri))
+                {
+                    clonedContext.Web.RemoveStorageEntity(Key);
+                    clonedContext.ExecuteQueryRetry();
+                }
+            } else
+            {
+                ClientContext.Web.RemoveStorageEntity(Key);
+                ClientContext.ExecuteQueryRetry();
             }
         }
     }
