@@ -447,6 +447,7 @@
     <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />

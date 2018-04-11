@@ -429,6 +429,11 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01);
                             break;
                         }
+                    case XMLPnPSchemaVersion.V201805:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
+                            break;
+                        }
                 }
 
                 if (extension == ".pnp")
