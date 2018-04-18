@@ -1,14 +1,10 @@
-﻿using Microsoft.Online.SharePoint.TenantAdministration.Internal;
+﻿#if !ONPREMISES
+using Microsoft.Online.SharePoint.TenantAdministration.Internal;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Apps
 {
@@ -40,3 +36,4 @@ Denying a permission request removes that request from the list of permission re
 
     }
 }
+#endif
