@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.26.1805.0] - Unreleased
 ### Added
+- Added Enable-PnPTenantServicePrincipal
+- Added Disable-PnPTenantServicePrincipal
+- Added Get-PnPTenantServicePrincipal
+- Added Get-PnPTenantServicePermissionRequests
+- Added Get-PnPTenantServicePermissionGrants
+- Added Approve-PnPTenantServicePrincipalPermissionRequest
+- Added Deny-PnPTenantServicePrincipalPermissionRequest
+- Added Revoke-PnPTenantServicePrincipalPermission
 - Added -Scope parameter to Get-PnPStorageEntity, Set-PnPStorageEntity and Remove-PnPStorageEntity to allow for handling storage entity on site collection scope. This only works on site collections which have a site collection app catalog available.
 
 ### Changed

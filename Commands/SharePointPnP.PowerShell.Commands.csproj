@@ -411,6 +411,14 @@
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Apps\DenyTenantServicePrincipalPermissionRequest.cs" />
+    <Compile Include="Apps\DisableTenantServicePrincipal.cs" />
+    <Compile Include="Apps\RevokeTenantServicePrincipalPermission.cs" />
+    <Compile Include="Apps\GetTenantServicePrincipal.cs" />
+    <Compile Include="Apps\EnableTenantServicePrincipal.cs" />
+    <Compile Include="Apps\ApproveTenantServicePrincipalPermissionRequest.cs" />
+    <Compile Include="Apps\GetTenantServicePrincipalPermissionRequests.cs" />
+    <Compile Include="Apps\GetTenantServicePrincipalPermissionGrants.cs" />
     <Compile Include="Admin\SetHideDefaultThemes.cs" />
     <Compile Include="Admin\GetHubSite.cs" />
     <Compile Include="Admin\GetHideDefaultThemes.cs" />
@@ -448,6 +456,7 @@
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
+    <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
