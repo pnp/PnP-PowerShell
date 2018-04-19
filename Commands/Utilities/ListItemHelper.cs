@@ -62,6 +62,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 
                                 var value = values[key];
                                 if (value == null) goto default;
+                                if (value is string && string.IsNullOrWhiteSpace(value+"")) goto default;
                                 if (value.GetType().IsArray)
                                 {
                                     foreach (var arrayItem in (value as IEnumerable))
