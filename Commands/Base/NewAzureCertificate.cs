@@ -21,11 +21,11 @@ Certificate contains the PEM encoded certificate.
 PrivateKey contains the PEM encoded private key of the certificate.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> Generate-PnPAzureCertificate",
+        Code = @"PS:> New-PnPAzureCertificate",
         Remarks = @"This will generate a default self-signed certificate named ""pnp.contoso.com"" valid for 10 years.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Generate-PnPAzureCertificate -CommonName ""My Certificate"" -ValidYears 30 ",
+        Code = @"PS:> New-PnPAzureCertificate -CommonName ""My Certificate"" -ValidYears 30 ",
         Remarks = @"This will output a certificate named ""My Certificate"" which expires in 30 years from now.",
         SortOrder = 2)]
     public class NewPnPAdalCertificate : PSCmdlet
