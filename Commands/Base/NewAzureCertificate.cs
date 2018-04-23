@@ -84,7 +84,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
                 {
                     Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
                 }
-                byte[] certData = certificate.Export(X509ContentType.Pfx);
+                byte[] certData = certificate.Export(X509ContentType.Pfx, Password);
                 File.WriteAllBytes(Out, certData);
             }
 
