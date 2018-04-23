@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Deny-PnPTenantServicePrincipalPermissionRequest
 - Added Revoke-PnPTenantServicePrincipalPermission
 - Added -Scope parameter to Get-PnPStorageEntity, Set-PnPStorageEntity and Remove-PnPStorageEntity to allow for handling storage entity on site collection scope. This only works on site collections which have a site collection app catalog available.
+- Added -Password option to New-PnPAzureCertificate
 
 ### Changed
 

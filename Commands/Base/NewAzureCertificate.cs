@@ -51,12 +51,13 @@ PrivateKey contains the PEM encoded private key of the certificate.",
         [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.pfx)", Position = 6)]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "Number of years until expiration (default is 10, max is 30)", Position = 6)]
+        [Parameter(Mandatory = false, HelpMessage = "Number of years until expiration (default is 10, max is 30)", Position = 7)]
         public int ValidYears = 10;
 
+        [Parameter(Mandatory = false, HelpMessage = "Optional certificate password", Position = 8)]
+        public SecureString Password;
         protected override void ProcessRecord()
         {
-            X509Certificate2 certificate;
             var x500Values = new List<string>();
             if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
             if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
@@ -74,8 +75,8 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-            byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo);
-            certificate = new X509Certificate2(certificateBytes, (SecureString)null, X509KeyStorageFlags.Exportable);
+            byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, Password);
+            var certificate = new X509Certificate2(certificateBytes, Password, X509KeyStorageFlags.Exportable);
 
             if (!string.IsNullOrWhiteSpace(Out))
             {
