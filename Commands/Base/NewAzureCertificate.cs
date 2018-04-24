@@ -55,7 +55,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
         public int ValidYears = 10;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional certificate password", Position = 8)]
-        public SecureString Password;
+        public SecureString CertificatePassword;
         protected override void ProcessRecord()
         {
             var x500Values = new List<string>();
@@ -75,8 +75,8 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-            byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, Password);
-            var certificate = new X509Certificate2(certificateBytes, Password, X509KeyStorageFlags.Exportable);
+            byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
+            var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable);
 
             if (!string.IsNullOrWhiteSpace(Out))
             {
@@ -84,7 +84,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
                 {
                     Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
                 }
-                byte[] certData = certificate.Export(X509ContentType.Pfx, Password);
+                byte[] certData = certificate.Export(X509ContentType.Pfx, CertificatePassword);
                 File.WriteAllBytes(Out, certData);
             }
 
@@ -109,6 +109,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             record.Properties.Add(new PSVariableProperty(new PSVariable("Subject", certificate.Subject)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("ValidFrom", certificate.NotBefore)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("ValidTo", certificate.NotAfter)));
+            record.Properties.Add(new PSVariableProperty(new PSVariable("Thumbprint", certificate.Thumbprint)));
 
             record.Properties.Add(new PSVariableProperty(new PSVariable("KeyCredentials", manifestEntry)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate", CertificateHelper.CertificateToBase64(certificate))));

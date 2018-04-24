@@ -40,7 +40,6 @@ PrivateKey contains the PEM encoded private key of the certificate.",
         [Parameter(Mandatory = false, HelpMessage = "Password to the certificate (*.pfx)")]
         public SecureString CertificatePassword;
 
-
         protected override void ProcessRecord()
         {
             if (!Path.IsPathRooted(CertificatePath))
@@ -70,6 +69,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             record.Properties.Add(new PSVariableProperty(new PSVariable("Subject", certificate.Subject)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("ValidFrom", certificate.NotBefore)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("ValidTo", certificate.NotAfter)));
+            record.Properties.Add(new PSVariableProperty(new PSVariable("Thumbprint", certificate.Thumbprint)));
 
             record.Properties.Add(new PSVariableProperty(new PSVariable("KeyCredentials", manifestEntry)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate", CertificateHelper.CertificateToBase64(certificate))));
