@@ -6,6 +6,9 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -44,6 +47,10 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
+            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.TelemetryClient != null)
+            {
+                SPOnlineConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
+            }
             try
             {
                 if (SPOnlineConnection.CurrentConnection.MinimalHealthScore != -1)
@@ -107,10 +114,14 @@ namespace SharePointPnP.PowerShell.Commands
             }
             catch (Exception ex)
             {
+                if (SPOnlineConnection.CurrentConnection.TelemetryClient != null)
+                {
+                    SPOnlineConnection.CurrentConnection.TelemetryClient.TrackException(ex);
+                }
                 SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
                 WriteError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
+                SPOnlineConnection.CurrentConnection.TelemetryClient.Flush();
             }
         }
-
     }
 }

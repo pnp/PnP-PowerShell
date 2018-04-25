@@ -8,6 +8,7 @@ using OfficeDevPnP.Core.ALM;
 using System;
 using SharePointPnP.PowerShell.Commands.Enums;
 using OfficeDevPnP.Core.Enums;
+using Microsoft.SharePoint.Client;
 
 namespace SharePointPnP.PowerShell.Commands.Apps
 {

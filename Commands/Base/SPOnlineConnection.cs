@@ -1,4 +1,6 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Enums;
@@ -31,6 +33,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public int RetryCount { get; protected set; }
         public int RetryWait { get; protected set; }
         public PSCredential PSCredential { get; protected set; }
+
+        public TelemetryClient TelemetryClient { get; set; }
 
         public string Url { get; protected set; }
 
@@ -70,6 +74,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
         {
+            InitializeTelemetry();
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             if (context == null)
@@ -90,6 +95,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public SPOnlineConnection(ClientContext context, TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
         {
+            InitializeTelemetry();
+
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
             TokenResult = tokenResult;
@@ -113,8 +120,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
             };
         }
 
+
         public SPOnlineConnection(TokenResult tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag)
         {
+            InitializeTelemetry();
             TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
@@ -166,6 +175,28 @@ namespace SharePointPnP.PowerShell.Commands.Base
         internal static void ClearContextCache()
         {
             ContextCache.Clear();
+        }
+
+        internal void InitializeTelemetry()
+        {
+            //TelemetryConfiguration config = new TelemetryConfiguration();
+
+            TelemetryClient = new TelemetryClient();
+            TelemetryClient.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
+            TelemetryClient.Context.Operation.Id = Guid.NewGuid().ToString();
+            var coreAssembly = Assembly.GetExecutingAssembly();
+            
+            TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+#if NETSTANDARD2_0
+            TelemetryClient.Context.Properties.Add("Platform", "SPOCore");
+#elif SP2013
+            TelemetryClient.Context.Properties.Add("Platform", "SP2013");
+#elif SP2016
+            TelemetryClient.Context.Properties.Add("Platform", "SP2016");
+#else
+            TelemetryClient.Context.Properties.Add("Platform", "SPO");
+#endif
+            TelemetryClient.TrackEvent("Connect-PnPOnline");
         }
 
     }
