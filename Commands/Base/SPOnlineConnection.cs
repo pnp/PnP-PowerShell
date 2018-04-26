@@ -74,7 +74,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
         {
-            InitializeTelemetry();
+            InitializeTelemetry(context);
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             if (context == null)
@@ -95,7 +95,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public SPOnlineConnection(ClientContext context, TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
         {
-            InitializeTelemetry();
+            InitializeTelemetry(context);
 
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -123,7 +123,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public SPOnlineConnection(TokenResult tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag)
         {
-            InitializeTelemetry();
+            InitializeTelemetry(null);
             TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
@@ -177,13 +177,28 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ContextCache.Clear();
         }
 
-        internal void InitializeTelemetry()
+        internal void InitializeTelemetry(ClientContext context)
         {
+            var serverLibraryVersion = "";
+            var serverVersion = "";
+            if (context != null)
+            {
+                if(context.ServerLibraryVersion != null)
+                {
+                    serverLibraryVersion = context.ServerLibraryVersion.ToString();
+                }
+                if(context.ServerVersion != null)
+                {
+                    serverVersion = context.ServerVersion.ToString();
+                }
+            }
             TelemetryClient = new TelemetryClient();
             TelemetryClient.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
             TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
             TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-            
+            TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
+            TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
+
             var coreAssembly = Assembly.GetExecutingAssembly();
             
             TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
