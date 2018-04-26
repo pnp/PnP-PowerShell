@@ -21,6 +21,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Fixed issue where New-PnPUnifiedGroup prompted for creation even though mail alias did not exist
+
 ### Deprecated
 
 ### Contributors

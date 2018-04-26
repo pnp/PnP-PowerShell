@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            if(MailNickname.Contains(" "))
+            if (MailNickname.Contains(" "))
             {
                 throw new ArgumentException("MailNickname cannot contain spaces.");
             }
@@ -69,9 +69,11 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
             if (!Force)
             {
-                var existingGroup = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken,
+                var candidates = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken,
                     mailNickname: MailNickname,
-                    endIndex: 1).Any();
+                    endIndex: 1);
+                // ListUnifiedGroups retreives groups with starts-with, so need another check
+                var existingGroup = candidates.Any(g => g.MailNickname.Equals(MailNickname, StringComparison.CurrentCultureIgnoreCase));
 
                 forceCreation = !existingGroup || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
             }
