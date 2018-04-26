@@ -179,17 +179,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal void InitializeTelemetry()
         {
-            //TelemetryConfiguration config = new TelemetryConfiguration();
-
             TelemetryClient = new TelemetryClient();
             TelemetryClient.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
-            TelemetryClient.Context.Operation.Id = Guid.NewGuid().ToString();
+            TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
+            TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+            
             var coreAssembly = Assembly.GetExecutingAssembly();
             
             TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
-#if NETSTANDARD2_0
-            TelemetryClient.Context.Properties.Add("Platform", "SPOCore");
-#elif SP2013
+#if SP2013
             TelemetryClient.Context.Properties.Add("Platform", "SP2013");
 #elif SP2016
             TelemetryClient.Context.Properties.Add("Platform", "SP2016");
