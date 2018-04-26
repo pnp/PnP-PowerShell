@@ -24,6 +24,11 @@ namespace SharePointPnP.PowerShell.Commands
         {
             base.BeginProcessing();
 
+            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.TelemetryClient != null)
+            {
+                SPOnlineConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
+            }
+
             if (MyInvocation.InvocationName.ToUpper().IndexOf("-SPO", StringComparison.Ordinal) > -1)
             {
                 WriteWarning($"PnP Cmdlets starting with the SPO Prefix will be deprecated in the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
@@ -47,10 +52,6 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.TelemetryClient != null)
-            {
-                SPOnlineConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
-            }
             try
             {
                 if (SPOnlineConnection.CurrentConnection.MinimalHealthScore != -1)
