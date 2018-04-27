@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
                 if (Publish)
                 {
-                    if (manager.Deploy(result, SkipFeatureDeployment))
+                    if (manager.Deploy(result, SkipFeatureDeployment, Scope))
                     {
                         result = manager.GetAvailable(result.Id, Scope);
                     }
