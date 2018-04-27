@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 - Martin Duceb [cebud]
+- Kev Maitland [kevmaitland]
 
 ## [2.25.1804.1]
 ### Changed
