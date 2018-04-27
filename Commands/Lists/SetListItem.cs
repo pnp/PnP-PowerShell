@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             "\n\nNumber: -Values @{\"NumberField\" = \"10\"}" +
             "\n\nCurrency: -Values @{\"NumberField\" = \"10\"}" +
             "\n\nCurrency: -Values @{\"CurrencyField\" = \"10\"}" +
-            "\n\nDate and Time: -Values @{\"DateAndTimeField\" = \"03/10/2015 14:16\"}" +
+            "\n\nDate and Time: -Values @{\"DateAndTimeField\" = \"03/13/2015 14:16\"}" +
             "\n\nLookup (id of lookup value): -Values @{\"LookupField\" = \"2\"}" +
             "\n\nMulti value lookup (id of lookup values as array 1): -Values @{\"MultiLookupField\" = \"1\",\"2\"}" +
             "\n\nMulti value lookup (id of lookup values as array 2): -Values @{\"MultiLookupField\" = 1,2}" +
