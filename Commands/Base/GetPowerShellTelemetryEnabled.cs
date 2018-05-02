@@ -1,5 +1,4 @@
 ﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Base

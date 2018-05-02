@@ -1,15 +1,6 @@
 ﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
-using System.Collections.Generic;
-#if NETSTANDARD2_0
-using System.IdentityModel.Tokens.Jwt;
-#else
-using System.IdentityModel.Tokens;
-#endif
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
