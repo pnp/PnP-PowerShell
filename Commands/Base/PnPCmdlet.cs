@@ -124,5 +124,10 @@ namespace SharePointPnP.PowerShell.Commands
                 SPOnlineConnection.CurrentConnection.TelemetryClient.Flush();
             }
         }
+
+        protected override void EndProcessing()
+        {
+            base.EndProcessing();
+        }
     }
 }

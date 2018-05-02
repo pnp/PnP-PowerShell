@@ -448,6 +448,9 @@
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Admin\RemoveTenantTheme.cs" />
     <Compile Include="Base\AddStoredCredential.cs" />
+    <Compile Include="Base\DisablePowerShellTelemetry.cs" />
+    <Compile Include="Base\GetPowerShellTelemetryEnabled.cs" />
+    <Compile Include="Base\EnablePowerShellTelemetry.cs" />
     <Compile Include="Base\GetAccessToken.cs" />
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
