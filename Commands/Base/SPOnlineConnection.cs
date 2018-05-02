@@ -242,7 +242,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 TelemetryClient = new TelemetryClient();
                 TelemetryClient.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
                 TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
-                TelemetryClient.Context.Cloud.RoleName = "";
+                TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
                 TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
                 TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
                 TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
