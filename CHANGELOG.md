@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.26.1805.0] - Unreleased
 ### Added
+- Added Enable-PnPPowerShellTelemetry, Disable-PnPPowerShellTelemetry, Get-PnPPowershellTelemetryEnabled
 - Added Enable-PnPTenantServicePrincipal
 - Added Disable-PnPTenantServicePrincipal
 - Added Get-PnPTenantServicePrincipal
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added output of thumbprint for New-PnPAzureCertificate and Get-PnPAzureCertificat
 
 ### Changed
+- Added -NoTelemetry switch to Connect-PnPOnline
 - Updated Connect-PnPOnline to allow for -LoginProviderName when using -UseAdfs to authenticate
 - Fixed issue where Add-PnPApp would fail where -Publish parameter was specified and -Scope was set to Site
 - Fixed issue where New-PnPUnifiedGroup prompted for creation even though mail alias did not exist
