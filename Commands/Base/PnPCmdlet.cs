@@ -128,11 +128,6 @@ namespace SharePointPnP.PowerShell.Commands
         protected override void EndProcessing()
         {
             base.EndProcessing();
-
-            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.TelemetryClient != null)
-            {
-                SPOnlineConnection.CurrentConnection.TelemetryClient.Flush();
-            }
         }
     }
 }
