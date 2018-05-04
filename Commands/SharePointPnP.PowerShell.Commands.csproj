@@ -300,6 +300,9 @@
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
@@ -366,6 +369,9 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel">
       <Private>False</Private>
@@ -411,6 +417,14 @@
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Apps\DenyTenantServicePrincipalPermissionRequest.cs" />
+    <Compile Include="Apps\DisableTenantServicePrincipal.cs" />
+    <Compile Include="Apps\RevokeTenantServicePrincipalPermission.cs" />
+    <Compile Include="Apps\GetTenantServicePrincipal.cs" />
+    <Compile Include="Apps\EnableTenantServicePrincipal.cs" />
+    <Compile Include="Apps\ApproveTenantServicePrincipalPermissionRequest.cs" />
+    <Compile Include="Apps\GetTenantServicePrincipalPermissionRequests.cs" />
+    <Compile Include="Apps\GetTenantServicePrincipalPermissionGrants.cs" />
     <Compile Include="Admin\SetHideDefaultThemes.cs" />
     <Compile Include="Admin\GetHubSite.cs" />
     <Compile Include="Admin\GetHideDefaultThemes.cs" />
@@ -434,6 +448,9 @@
     <Compile Include="Admin\RemoveStorageEntity.cs" />
     <Compile Include="Admin\RemoveTenantTheme.cs" />
     <Compile Include="Base\AddStoredCredential.cs" />
+    <Compile Include="Base\DisablePowerShellTelemetry.cs" />
+    <Compile Include="Base\GetPowerShellTelemetryEnabled.cs" />
+    <Compile Include="Base\EnablePowerShellTelemetry.cs" />
     <Compile Include="Base\GetAccessToken.cs" />
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
@@ -447,6 +464,8 @@
     <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="Enums\StorageEntityScope.cs" />
+    <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />

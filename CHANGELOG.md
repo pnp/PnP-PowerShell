@@ -5,15 +5,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [2.26.1805.0] - Unreleased
+## [2.26.1805.0]
 ### Added
+- Added Enable-PnPPowerShellTelemetry, Disable-PnPPowerShellTelemetry, Get-PnPPowershellTelemetryEnabled
+- Added Enable-PnPTenantServicePrincipal
+- Added Disable-PnPTenantServicePrincipal
+- Added Get-PnPTenantServicePrincipal
+- Added Get-PnPTenantServicePermissionRequests
+- Added Get-PnPTenantServicePermissionGrants
+- Added Approve-PnPTenantServicePrincipalPermissionRequest
+- Added Deny-PnPTenantServicePrincipalPermissionRequest
+- Added Revoke-PnPTenantServicePrincipalPermission
+- Added -Scope parameter to Get-PnPStorageEntity, Set-PnPStorageEntity and Remove-PnPStorageEntity to allow for handling storage entity on site collection scope. This only works on site collections which have a site collection app catalog available.
+- Added -CertificatePassword option to New-PnPAzureCertificate
+- Added output of thumbprint for New-PnPAzureCertificate and Get-PnPAzureCertificat
 
 ### Changed
-- Updated Set-PnPTenantSite to handle changing the Site Lock State correctly. You cannot use both -LockState and set other properties at the same time due to possible delays in making the lockstate effective.
+- Added -NoTelemetry switch to Connect-PnPOnline
+- Updated Connect-PnPOnline to allow for -LoginProviderName when using -UseAdfs to authenticate
+- Fixed issue where Add-PnPApp would fail where -Publish parameter was specified and -Scope was set to Site
+- Fixed issue where New-PnPUnifiedGroup prompted for creation even though mail alias did not exist
 
 ### Deprecated
 
 ### Contributors
+- Martin Duceb [cebud]
+- Kev Maitland [kevmaitland]
+- Martin Loitzl [mloitzl]
 
 ## [2.25.1804.1]
 ### Changed

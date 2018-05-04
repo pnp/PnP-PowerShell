@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
                 if (Publish)
                 {
-                    if (manager.Deploy(result, SkipFeatureDeployment))
+                    if (manager.Deploy(result, SkipFeatureDeployment, Scope))
                     {
                         result = manager.GetAvailable(result.Id, Scope);
                     }
@@ -72,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
             catch
             {
                 // Exception occurred rolling back
-                manager.Remove(result);
+                manager.Remove(result, Scope);
                 throw;
             }
         }

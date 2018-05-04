@@ -21,11 +21,11 @@ Certificate contains the PEM encoded certificate.
 PrivateKey contains the PEM encoded private key of the certificate.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> Generate-PnPAzureCertificate",
+        Code = @"PS:> New-PnPAzureCertificate",
         Remarks = @"This will generate a default self-signed certificate named ""pnp.contoso.com"" valid for 10 years.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Generate-PnPAzureCertificate -CommonName ""My Certificate"" -ValidYears 30 ",
+        Code = @"PS:> New-PnPAzureCertificate -CommonName ""My Certificate"" -ValidYears 30 ",
         Remarks = @"This will output a certificate named ""My Certificate"" which expires in 30 years from now.",
         SortOrder = 2)]
     public class NewPnPAdalCertificate : PSCmdlet
@@ -51,12 +51,13 @@ PrivateKey contains the PEM encoded private key of the certificate.",
         [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.pfx)", Position = 6)]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "Number of years until expiration (default is 10, max is 30)", Position = 6)]
+        [Parameter(Mandatory = false, HelpMessage = "Number of years until expiration (default is 10, max is 30)", Position = 7)]
         public int ValidYears = 10;
 
+        [Parameter(Mandatory = false, HelpMessage = "Optional certificate password", Position = 8)]
+        public SecureString CertificatePassword;
         protected override void ProcessRecord()
         {
-            X509Certificate2 certificate;
             var x500Values = new List<string>();
             if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
             if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
@@ -74,8 +75,8 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-            byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo);
-            certificate = new X509Certificate2(certificateBytes, (SecureString)null, X509KeyStorageFlags.Exportable);
+            byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
+            var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable);
 
             if (!string.IsNullOrWhiteSpace(Out))
             {
@@ -83,7 +84,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
                 {
                     Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
                 }
-                byte[] certData = certificate.Export(X509ContentType.Pfx);
+                byte[] certData = certificate.Export(X509ContentType.Pfx, CertificatePassword);
                 File.WriteAllBytes(Out, certData);
             }
 
@@ -108,6 +109,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             record.Properties.Add(new PSVariableProperty(new PSVariable("Subject", certificate.Subject)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("ValidFrom", certificate.NotBefore)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("ValidTo", certificate.NotAfter)));
+            record.Properties.Add(new PSVariableProperty(new PSVariable("Thumbprint", certificate.Thumbprint)));
 
             record.Properties.Add(new PSVariableProperty(new PSVariable("KeyCredentials", manifestEntry)));
             record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate", CertificateHelper.CertificateToBase64(certificate))));

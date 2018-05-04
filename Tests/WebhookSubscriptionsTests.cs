@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !ONPREMISES
+using Microsoft.SharePoint.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OfficeDevPnP.Core.Entities;
 using System;
@@ -29,6 +30,7 @@ namespace SharePointPnP.PowerShell.Tests
             list.EnsureProperty(l => l.Id);
             return list;
         }
+
 
         [TestMethod]
         public void AddListWebhookSubscriptionTest()
@@ -149,3 +151,4 @@ namespace SharePointPnP.PowerShell.Tests
         }
     }
 }
+#endif
