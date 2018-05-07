@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [2.27.1806.0] Unreleased
 ### Added
 
+- Added -CollapseSpecification option to Submit-PnPSearchQuery
+
 ### Changed
 
 ### Deprecated
