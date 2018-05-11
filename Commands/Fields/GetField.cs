@@ -32,6 +32,9 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false, HelpMessage = "Filter to the specified group")]
         public string Group;
 
+        [Parameter(Mandatory = false, ValueFromPipeline = false, HelpMessage = "Search site hierarchy for fields")]
+        public SwitchParameter InSiteHierarchy;
+
         protected override void ExecuteCmdlet()
         {
             if (List != null)
@@ -67,8 +70,10 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 {
                     if (!string.IsNullOrEmpty(Group))
                     {
-                        WriteObject(fieldCollection.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)),true);
-                    } else {
+                        WriteObject(fieldCollection.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)), true);
+                    }
+                    else
+                    {
                         WriteObject(fieldCollection, true);
                     }
                 }
@@ -81,15 +86,36 @@ namespace SharePointPnP.PowerShell.Commands.Fields
             {
                 if (Identity.Id == Guid.Empty && string.IsNullOrEmpty(Identity.Name))
                 {
-                    ClientContext.Load(SelectedWeb.Fields, fc => fc.IncludeWithDefaultProperties(RetrievalExpressions));
-                    ClientContext.ExecuteQueryRetry();
-                    if (!string.IsNullOrEmpty(Group))
+                    if (InSiteHierarchy.IsPresent)
                     {
-                        WriteObject(SelectedWeb.Fields.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)), true);
+                        ClientContext.Load(SelectedWeb.AvailableFields, fc => fc.IncludeWithDefaultProperties(RetrievalExpressions));
                     }
                     else
                     {
-                        WriteObject(SelectedWeb.Fields, true);
+                        ClientContext.Load(SelectedWeb.Fields, fc => fc.IncludeWithDefaultProperties(RetrievalExpressions));
+                    }
+                    ClientContext.ExecuteQueryRetry();
+                    if (!string.IsNullOrEmpty(Group))
+                    {
+                        if (InSiteHierarchy.IsPresent)
+                        {
+                            WriteObject(SelectedWeb.AvailableFields.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)).OrderBy(f => f.Title), true);
+                        }
+                        else
+                        {
+                            WriteObject(SelectedWeb.Fields.Where(f => f.Group.Equals(Group, StringComparison.InvariantCultureIgnoreCase)).OrderBy(f => f.Title), true);
+                        }
+                    }
+                    else
+                    {
+                        if (InSiteHierarchy.IsPresent)
+                        {
+                            WriteObject(SelectedWeb.AvailableFields.OrderBy(f => f.Title), true);
+                        }
+                        else
+                        {
+                            WriteObject(SelectedWeb.Fields.OrderBy(f => f.Title), true);
+                        }
                     }
                 }
                 else
@@ -97,11 +123,25 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                     Field field = null;
                     if (Identity.Id != Guid.Empty)
                     {
-                        field = SelectedWeb.Fields.GetById(Identity.Id);
+                        if (InSiteHierarchy.IsPresent)
+                        {
+                            field = SelectedWeb.AvailableFields.GetById(Identity.Id);
+                        }
+                        else
+                        {
+                            field = SelectedWeb.Fields.GetById(Identity.Id);
+                        }
                     }
                     else if (!string.IsNullOrEmpty(Identity.Name))
                     {
-                        field = SelectedWeb.Fields.GetByInternalNameOrTitle(Identity.Name);
+                        if (InSiteHierarchy.IsPresent)
+                        {
+                            field = SelectedWeb.AvailableFields.GetByInternalNameOrTitle(Identity.Name);
+                        }
+                        else
+                        {
+                            field = SelectedWeb.Fields.GetByInternalNameOrTitle(Identity.Name);
+                        }
                     }
                     ClientContext.Load(field, RetrievalExpressions);
                     ClientContext.ExecuteQueryRetry();
