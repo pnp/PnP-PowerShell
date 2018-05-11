@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added -CollapseSpecification option to Submit-PnPSearchQuery
+- Added -InSiteHierarchy to Get-PnPField to search for fields in the site collection
 
 ### Changed
 - Fix for issue where using Add-PnPFile and setting Created and Modified did not update values
