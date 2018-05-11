@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Utilities;
 // IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Add-PnPListItem Cmdlet
 
@@ -108,7 +109,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (Values != null)
                 {
 #if !ONPREMISES
-                    item = ListItemHelper.UpdateListItem(item, Values, SystemUpdate, (warning) =>
+                    var updateType = ListItemUpdateType.Update;
+                    if(SystemUpdate.IsPresent)
+                    {
+                        updateType = ListItemUpdateType.SystemUpdate;
+                    }
+                    item = ListItemHelper.UpdateListItem(item, Values, updateType, (warning) =>
                       {
                           WriteWarning(warning);
                       },
@@ -118,7 +124,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                       }
                       );
 #else
-                    item = ListItemHelper.UpdateListItem(item, Values, false, (warning) =>
+                    item = ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.Update, (warning) =>
                       {
                           WriteWarning(warning);
                       },

@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using SharePointPnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static ListItem UpdateListItem(ListItem item, Hashtable valuesToSet, bool systemUpdate, Action<string> warningCallback, Action<string, string> terminatingError)
+        public static ListItem UpdateListItem(ListItem item, Hashtable valuesToSet, ListItemUpdateType updateType, Action<string> warningCallback, Action<string, string> terminatingError)
         {
             var itemValues = new List<FieldUpdateValue>();
 
@@ -253,13 +254,23 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 }
             }
 #if !ONPREMISES
-            if (systemUpdate)
+            switch(updateType)
             {
-                item.SystemUpdate();
-            }
-            else
-            {
-                item.Update();
+                case ListItemUpdateType.Update:
+                    {
+                        item.Update();
+                        break;
+                    }
+                case ListItemUpdateType.SystemUpdate:
+                    {
+                        item.SystemUpdate();
+                        break;
+                    }
+                case ListItemUpdateType.UpdateOverwriteVersion:
+                    {
+                        item.UpdateOverwriteVersion();
+                        break;
+                    }
             }
 #else
             item.Update();

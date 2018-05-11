@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added -CollapseSpecification option to Submit-PnPSearchQuery
 
 ### Changed
+- Fix for issue where using Add-PnPFile and setting Created and Modified did not update values
 
 ### Deprecated
 

@@ -8,6 +8,7 @@ using Microsoft.SharePoint.Client.Taxonomy;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Taxonomy;
 using SharePointPnP.PowerShell.Commands.Utilities;
 
@@ -120,7 +121,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
                 if (Values != null)
                 {
-                    item = ListItemHelper.UpdateListItem(item, Values, false,
+                    item = ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.Update,
                         (warning) =>
                         {
                             WriteWarning(warning);
