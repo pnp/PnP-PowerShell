@@ -5,18 +5,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [2.27.1806.0] Unreleased
+## [2.27.1806.0]
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Contributors
+
+## [2.26.1805.1]
+### Added
+
+- Added -Timeout option to Add-PnPApp
 - Added -CollapseSpecification option to Submit-PnPSearchQuery
 - Added -InSiteHierarchy to Get-PnPField to search for fields in the site collection
 
 ### Changed
 - Fix for issue where using Add-PnPFile and setting Created and Modified did not update values
-
-### Deprecated
-
-### Contributors
 
 ## [2.26.1805.0]
 ### Added
