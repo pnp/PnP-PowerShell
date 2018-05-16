@@ -41,6 +41,9 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the existing app package if it already exists")]
         public SwitchParameter Overwrite;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the timeout in seconds. Defaults to 200.")]
+        public int Timeout = 200;
+
         protected override void ExecuteCmdlet()
         {
             if (!System.IO.Path.IsPathRooted(Path))
@@ -54,7 +57,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
             var manager = new AppManager(ClientContext);
 
-            var result = manager.Add(bytes, fileInfo.Name, Overwrite, Scope);
+            var result = manager.Add(bytes, fileInfo.Name, Overwrite, Scope, timeoutSeconds: Timeout);
 
             try
             {

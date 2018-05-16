@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
@@ -187,7 +188,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
             {
                 var item = file.ListItemAllFields;
 
-                ListItemHelper.UpdateListItem(item, Values, true,
+                ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.UpdateOverwriteVersion,
                     (warning) =>
                     {
                         WriteWarning(warning);
@@ -201,7 +202,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
             {
                 var item = file.ListItemAllFields;
                 item["ContentTypeId"] = targetContentType.Id.StringValue;
+#if !ONPREMISES
+                item.UpdateOverwriteVersion();
+#else
                 item.Update();
+#endif
                 ClientContext.ExecuteQueryRetry();
             }
 
@@ -214,7 +219,8 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
             if (Approve)
                 SelectedWeb.ApproveFile(fileUrl, ApproveComment);
-
+            ClientContext.Load(file);
+            ClientContext.ExecuteQueryRetry();
             WriteObject(file);
         }
     }

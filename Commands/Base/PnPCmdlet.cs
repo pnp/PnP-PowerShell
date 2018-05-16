@@ -115,13 +115,8 @@ namespace SharePointPnP.PowerShell.Commands
             }
             catch (Exception ex)
             {
-                if (SPOnlineConnection.CurrentConnection.TelemetryClient != null)
-                {
-                    SPOnlineConnection.CurrentConnection.TelemetryClient.TrackException(ex);
-                }
                 SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
                 WriteError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
-                SPOnlineConnection.CurrentConnection.TelemetryClient.Flush();
             }
         }
 
