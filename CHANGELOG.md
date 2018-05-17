@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Fixed edge cases where progress sent to PowerShell would be null, causing the provisioning of a template to end prematurely.
 
 ### Deprecated
 
