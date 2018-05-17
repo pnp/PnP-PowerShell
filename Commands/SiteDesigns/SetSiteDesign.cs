@@ -106,7 +106,6 @@ PS:> Set-PnPSiteDesign -Identity $design -Title ""My Updated Company Design""",
                 {
                     Tenant.UpdateSiteDesign(design);
                     ClientContext.ExecuteQueryRetry();
-                    WriteObject(design);
                 }
                 WriteObject(design);
             } else
