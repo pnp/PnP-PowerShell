@@ -17,6 +17,8 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
         Code = @"PS:> Disable-PnPInPlaceRecordsManagementForSite",
         Remarks = "The in place records management feature will be disabled",
         SortOrder = 1)]
+
+    [Obsolete("Use Set-PnPInPlaceRecordsManagement -Enabled $false instead")]
     public class DisableInPlaceRecordsManagementForSite : PnPCmdlet
     {
         protected override void ExecuteCmdlet()

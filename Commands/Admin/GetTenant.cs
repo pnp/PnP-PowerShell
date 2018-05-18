@@ -31,6 +31,7 @@ You must be a SharePoint Online global administrator to run the cmdlet.",
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
+            ClientContext.Load(Tenant, t => t.HideDefaultThemes);
             ClientContext.ExecuteQueryRetry();
             WriteObject(new SPOTenant(Tenant));
         }

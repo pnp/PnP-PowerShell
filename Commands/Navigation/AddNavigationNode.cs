@@ -17,8 +17,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso"" and will link to the url ""http://contoso.sharepoint.com/sites/contoso/""",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso USA"" -Url ""http://contoso.sharepoint.com/sites/contoso/usa/"" -Location ""QuickLaunch"" -Header ""Contoso""",
-        Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso USA"", will link to the url ""http://contoso.sharepoint.com/sites/contoso/usa/"" and will have ""Contoso"" as a parent navigation node.",
+        Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso USA"" -Url ""http://contoso.sharepoint.com/sites/contoso/usa/"" -Location ""QuickLaunch"" -Parent 2012",
+        Remarks = @"Adds a navigation node to the quicklaunch. The navigation node will have the title ""Contoso USA"", will link to the url ""http://contoso.sharepoint.com/sites/contoso/usa/"" and will have the node with id 2012 as a parent navigation node.",
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Add-PnPNavigationNode -Title ""Contoso"" -Url ""http://contoso.sharepoint.com/sites/contoso/"" -Location ""QuickLaunch"" -First",
@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         SortOrder = 5)]
     public class AddNavigationNode : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The location of the node to add. Either TopNavigationBar, QuickLaunch or SearchNav")]
+        [Parameter(Mandatory = true, HelpMessage = "The location of the node to add. Either TopNavigationBar, QuickLaunch, SearchNav")]
         public NavigationType Location;
 
         [Parameter(Mandatory = true, HelpMessage = "The title of the node to add")]
@@ -43,7 +43,11 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "The url to navigate to when clicking the new menu item. This can either be absolute or relative to the Web. Fragments are not supported.")]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = "Optionally value of a header entry to add the menu item to.")]
+        [Parameter(Mandatory = false, HelpMessage = "The key of the parent. Leave empty to add to the top level")]
+        public int? Parent;
+
+        [Parameter(Mandatory = false, HelpMessage = "Optional value of a header entry to add the menu item to.")]
+        [Obsolete("Use Parent instead")]
         public string Header;
 
         [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection.")]
@@ -51,7 +55,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
         [Parameter(Mandatory = false, HelpMessage = "Indicates the destination URL is outside of the site collection.")]
         public SwitchParameter External;
-        
+
         protected override void ExecuteCmdlet()
         {
             if (Url == null)
@@ -60,9 +64,55 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 ClientContext.ExecuteQueryRetry();
                 Url = SelectedWeb.Url;
             }
-
-            var newNavNode = SelectedWeb.AddNavigationNode(Title, new Uri(Url, UriKind.RelativeOrAbsolute), Header, Location, External.IsPresent, !First.IsPresent);
-            WriteObject(newNavNode);
+            if (Parent.HasValue)
+            {
+                var parentNode = SelectedWeb.Navigation.GetNodeById(Parent.Value);
+                ClientContext.Load(parentNode);
+                ClientContext.ExecuteQueryRetry();
+                var addedNode = parentNode.Children.Add(new NavigationNodeCreationInformation()
+                {
+                    Title = Title,
+                    Url = Url,
+                    IsExternal = External.IsPresent,
+                    AsLastNode = !First.IsPresent
+                });
+                ClientContext.Load(addedNode);
+                ClientContext.ExecuteQueryRetry();
+                WriteObject(addedNode);
+            }
+            else
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                if (!string.IsNullOrEmpty(Header))
+                {
+                    var newNavNode = SelectedWeb.AddNavigationNode(Title, new Uri(Url, UriKind.RelativeOrAbsolute), Header, Location, External.IsPresent, !First.IsPresent);
+                    WriteObject(newNavNode);
+                }
+                else
+                {
+                    NavigationNodeCollection nodeCollection = null;
+                    if (Location == NavigationType.SearchNav)
+                    {
+                        nodeCollection = SelectedWeb.LoadSearchNavigation();
+                    }
+                    else
+                    {
+                        nodeCollection = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
+                        ClientContext.Load(nodeCollection);
+                    }
+                    var addedNode = nodeCollection.Add(new NavigationNodeCreationInformation()
+                    {
+                        Title = Title,
+                        Url = Url,
+                        IsExternal = External.IsPresent,
+                        AsLastNode = !First.IsPresent
+                    });
+                    ClientContext.Load(addedNode);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(addedNode);
+                }
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Utilities;
 // IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Add-PnPListItem Cmdlet
 
@@ -48,7 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             "\n\nNumber: -Values @{\"NumberField\" = \"10\"}" +
             "\n\nCurrency: -Values @{\"NumberField\" = \"10\"}" +
             "\n\nCurrency: -Values @{\"CurrencyField\" = \"10\"}" +
-            "\n\nDate and Time: -Values @{\"DateAndTimeField\" = \"03/10/2015 14:16\"}" +
+            "\n\nDate and Time: -Values @{\"DateAndTimeField\" = \"03/13/2015 14:16\"}" +
             "\n\nLookup (id of lookup value): -Values @{\"LookupField\" = \"2\"}" +
             "\n\nMulti value lookup (id of lookup values as array 1): -Values @{\"MultiLookupField\" = \"1\",\"2\"}" +
             "\n\nMulti value lookup (id of lookup values as array 2): -Values @{\"MultiLookupField\" = 1,2}" +
@@ -108,7 +109,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (Values != null)
                 {
 #if !ONPREMISES
-                    item = ListItemHelper.UpdateListItem(item, Values, SystemUpdate, (warning) =>
+                    var updateType = ListItemUpdateType.Update;
+                    if(SystemUpdate.IsPresent)
+                    {
+                        updateType = ListItemUpdateType.SystemUpdate;
+                    }
+                    item = ListItemHelper.UpdateListItem(item, Values, updateType, (warning) =>
                       {
                           WriteWarning(warning);
                       },
@@ -118,7 +124,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                       }
                       );
 #else
-                    item = ListItemHelper.UpdateListItem(item, Values, false, (warning) =>
+                    item = ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.Update, (warning) =>
                       {
                           WriteWarning(warning);
                       },

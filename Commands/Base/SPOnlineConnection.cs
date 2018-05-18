@@ -1,4 +1,6 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Enums;
@@ -7,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Management.Automation.Host;
 using System.Net.Http;
 using System.Reflection;
 using System.Web;
@@ -31,6 +34,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public int RetryCount { get; protected set; }
         public int RetryWait { get; protected set; }
         public PSCredential PSCredential { get; protected set; }
+
+        public TelemetryClient TelemetryClient { get; set; }
 
         public string Url { get; protected set; }
 
@@ -68,8 +73,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
-        public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
+        public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry)
         {
+            if (!disableTelemetry)
+            {
+                InitializeTelemetry(context, host);
+            }
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             if (context == null)
@@ -88,8 +97,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ConnectionMethod = ConnectionMethod.Credentials;
         }
 
-        public SPOnlineConnection(ClientContext context, TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag)
+        public SPOnlineConnection(ClientContext context, TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry)
         {
+            if (!disableTelemetry)
+            {
+                InitializeTelemetry(context, host);
+            }
+
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
             TokenResult = tokenResult;
@@ -113,8 +127,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
             };
         }
 
-        public SPOnlineConnection(TokenResult tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag)
+
+        public SPOnlineConnection(TokenResult tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry)
         {
+            if (!disableTelemetry)
+            {
+                InitializeTelemetry(null, host);
+            }
             TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
@@ -168,5 +187,78 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ContextCache.Clear();
         }
 
+        internal void InitializeTelemetry(ClientContext context, PSHost host)
+        {
+
+            var enableTelemetry = false;
+            var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
+
+            if (!System.IO.File.Exists(telemetryFile))
+            {
+#if ONPREMISES
+                if (Environment.UserInteractive && Environment.GetCommandLineArgs().FirstOrDefault(a => a.ToLower().StartsWith("-noni")) == null)
+                {
+                    var choices = new System.Collections.ObjectModel.Collection<ChoiceDescription>();
+                    choices.Add(new ChoiceDescription("&Allow", "You will allow us to transmit anonymous data"));
+                    choices.Add(new ChoiceDescription("&Do not allow", "You do not allow us to transmit anonymous data"));
+                    if (host.UI.PromptForChoice("PnP PowerShell Telemetry", $"Please allow us to transmit anonymous metrics in order to make PnP PowerShell even better.{Environment.NewLine}We transmit the version of PnP PowerShell you are using, the version of SharePoint you are connecting to and which cmdlet you are executing. We do not transmit tenant/server URLs nor parameter values and content.{Environment.NewLine}{Environment.NewLine}Your decision will be recorded in a file a called .pnppowershelltelemetry which will be located in your profile folder ({userProfile}).{Environment.NewLine}{Environment.NewLine}You can choose to disable and/or enable telemetry at a later stage by using Enable-PnPPowerShellTelemetry or Disable-PnPPowerShellTelemetry. Get-PnPPowerShellTelemetryEnabled will provide you with your current setting.", choices, 0) == 0)
+                    {
+                        enableTelemetry = true;
+                        System.IO.File.WriteAllText(telemetryFile, "allow");
+                    }
+                    else
+                    {
+                        System.IO.File.WriteAllText(telemetryFile, "disallow");
+                    }
+                }
+#else
+                enableTelemetry = true;
+#endif
+
+            }
+            else
+            {
+                if (System.IO.File.ReadAllText(telemetryFile).ToLower() == "allow")
+                {
+                    enableTelemetry = true;
+                }
+            }
+            if (enableTelemetry)
+            {
+                var serverLibraryVersion = "";
+                var serverVersion = "";
+                if (context != null)
+                {
+                    if (context.ServerLibraryVersion != null)
+                    {
+                        serverLibraryVersion = context.ServerLibraryVersion.ToString();
+                    }
+                    if (context.ServerVersion != null)
+                    {
+                        serverVersion = context.ServerVersion.ToString();
+                    }
+                }
+                TelemetryClient = new TelemetryClient();
+                TelemetryClient.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
+                TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
+                TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
+                TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+                TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
+                TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
+
+                var coreAssembly = Assembly.GetExecutingAssembly();
+
+                TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+#if SP2013
+            TelemetryClient.Context.Properties.Add("Platform", "SP2013");
+#elif SP2016
+            TelemetryClient.Context.Properties.Add("Platform", "SP2016");
+#else
+                TelemetryClient.Context.Properties.Add("Platform", "SPO");
+#endif
+                TelemetryClient.TrackEvent("Connect-PnPOnline");
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.SharePoint.Client.Taxonomy;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Taxonomy;
 using SharePointPnP.PowerShell.Commands.Utilities;
 
@@ -52,7 +53,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             "\n\nNumber: -Values @{\"Number\" = \"10\"}" +
             "\n\nCurrency: -Values @{\"Number\" = \"10\"}" +
             "\n\nCurrency: -Values @{\"Currency\" = \"10\"}" +
-            "\n\nDate and Time: -Values @{\"DateAndTime\" = \"03/10/2015 14:16\"}" +
+            "\n\nDate and Time: -Values @{\"DateAndTime\" = \"03/13/2015 14:16\"}" +
             "\n\nLookup (id of lookup value): -Values @{\"Lookup\" = \"2\"}" +
             "\n\nMulti value lookup (id of lookup values as array 1): -Values @{\"MultiLookupField\" = \"1\",\"2\"}" +
             "\n\nMulti value lookup (id of lookup values as array 2): -Values @{\"MultiLookupField\" = 1,2}" +
@@ -120,7 +121,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
                 if (Values != null)
                 {
-                    item = ListItemHelper.UpdateListItem(item, Values, false,
+                    item = ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.Update,
                         (warning) =>
                         {
                             WriteWarning(warning);

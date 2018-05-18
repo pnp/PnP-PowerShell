@@ -1,6 +1,8 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.ALM;
+using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Enums;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Apps
@@ -15,6 +17,9 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletExample(
         Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Publish",
         Remarks = @"This will upload the specified app package to the app catalog and deploy/trust it at the same time.", SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Scope Site -Publish",
+        Remarks = @"This will upload the specified app package to the site collection app catalog and deploy/trust it at the same time.", SortOrder = 2)]
     public class AddApp : PnPCmdlet
     {
         private const string ParameterSet_ADD = "Add only";
@@ -24,6 +29,9 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_PUBLISH, ValueFromPipeline = true, HelpMessage = "Specifies the Id or an actual app metadata instance")]
         public string Path;
 
+        [Parameter(Mandatory = false, HelpMessage = "Defines which app catalog to use. Defaults to Tenant")]
+        public AppCatalogScope Scope = AppCatalogScope.Tenant;
+
         [Parameter(Mandatory = true, ValueFromPipeline = false, ParameterSetName = ParameterSet_PUBLISH, HelpMessage = "This will deploy/trust an app into the app catalog")]
         public SwitchParameter Publish;
 
@@ -32,6 +40,9 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites the existing app package if it already exists")]
         public SwitchParameter Overwrite;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the timeout in seconds. Defaults to 200.")]
+        public int Timeout = 200;
 
         protected override void ExecuteCmdlet()
         {
@@ -46,16 +57,16 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 
             var manager = new AppManager(ClientContext);
 
-            var result = manager.Add(bytes, fileInfo.Name, Overwrite);
+            var result = manager.Add(bytes, fileInfo.Name, Overwrite, Scope, timeoutSeconds: Timeout);
 
             try
             {
 
                 if (Publish)
                 {
-                    if (manager.Deploy(result, SkipFeatureDeployment))
+                    if (manager.Deploy(result, SkipFeatureDeployment, Scope))
                     {
-                        result = manager.GetAvailable(result.Id);
+                        result = manager.GetAvailable(result.Id, Scope);
                     }
 
                 }
@@ -64,7 +75,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
             catch
             {
                 // Exception occurred rolling back
-                manager.Remove(result);
+                manager.Remove(result, Scope);
                 throw;
             }
         }

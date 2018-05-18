@@ -6,6 +6,9 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -20,6 +23,11 @@ namespace SharePointPnP.PowerShell.Commands
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
+
+            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.TelemetryClient != null)
+            {
+                SPOnlineConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
+            }
 
             if (MyInvocation.InvocationName.ToUpper().IndexOf("-SPO", StringComparison.Ordinal) > -1)
             {
@@ -112,5 +120,9 @@ namespace SharePointPnP.PowerShell.Commands
             }
         }
 
+        protected override void EndProcessing()
+        {
+            base.EndProcessing();
+        }
     }
 }
