@@ -46,6 +46,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "Exclude fetching the site URL for Office 365 Groups. This speeds up large listings.")]
         public SwitchParameter ExcludeSiteUrl;
 
+        [Parameter(Mandatory = false, HelpMessage = "Include Classification value of Office 365 Groups.")]
+        public SwitchParameter IncludeClassification;
+
         protected override void ExecuteCmdlet()
         {
             UnifiedGroupEntity group = null;
@@ -58,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             else
             {
                 // Retrieve all the groups
-                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, includeSite: !ExcludeSiteUrl.IsPresent);
+                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, includeSite: !ExcludeSiteUrl.IsPresent, includeClassification:IncludeClassification.IsPresent);
             }
 
             if (group != null)

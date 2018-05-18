@@ -42,23 +42,23 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 
         public String GroupId => (_groupId);
 
-        public UnifiedGroupEntity GetGroup(string accessToken)
+        public UnifiedGroupEntity GetGroup(string accessToken, bool includeClassification = false)
         {
             UnifiedGroupEntity group = null;
             if (Group != null)
             {
-                group = UnifiedGroupsUtility.GetUnifiedGroup(Group.GroupId, accessToken);
+                group = UnifiedGroupsUtility.GetUnifiedGroup(Group.GroupId, accessToken, includeClassification:includeClassification);
             }
             else if (!String.IsNullOrEmpty(GroupId))
             {
-                group = UnifiedGroupsUtility.GetUnifiedGroup(GroupId, accessToken);
+                group = UnifiedGroupsUtility.GetUnifiedGroup(GroupId, accessToken, includeClassification:includeClassification);
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var groups = UnifiedGroupsUtility.ListUnifiedGroups(accessToken, DisplayName, includeSite: true);
+                var groups = UnifiedGroupsUtility.ListUnifiedGroups(accessToken, DisplayName, includeSite: true, includeClassification:includeClassification);
                 if (groups == null || groups.Count == 0)
                 {
-                    groups = UnifiedGroupsUtility.ListUnifiedGroups(accessToken, mailNickname: DisplayName, includeSite: true);
+                    groups = UnifiedGroupsUtility.ListUnifiedGroups(accessToken, mailNickname: DisplayName, includeSite: true, includeClassification:includeClassification);
                 }
                 if (groups != null && groups.Any())
                 {
