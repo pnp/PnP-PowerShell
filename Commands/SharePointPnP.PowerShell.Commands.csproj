@@ -419,6 +419,7 @@
     <Compile Include="Admin\AddTenantTheme.cs" />
     <Compile Include="Apps\DenyTenantServicePrincipalPermissionRequest.cs" />
     <Compile Include="Apps\DisableTenantServicePrincipal.cs" />
+    <Compile Include="Apps\GrantTenantServicePrincipalPermission.cs" />
     <Compile Include="Apps\RevokeTenantServicePrincipalPermission.cs" />
     <Compile Include="Apps\GetTenantServicePrincipal.cs" />
     <Compile Include="Apps\EnableTenantServicePrincipal.cs" />
