@@ -18,7 +18,7 @@ You must be a SharePoint Online global administrator and a site collection admin
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPTenantCdnOrigin -Url /sites/site/subfolder -CdnType Public",
+        Code = @"PS:> Add-PnPTenantCdnOrigin -OriginUrl /sites/site/subfolder -CdnType Public",
         Remarks = @"This example configures a public CDN on site level.", SortOrder = 1)]
     public class AddTenantCdnOrigin : PnPAdminCmdlet
     {

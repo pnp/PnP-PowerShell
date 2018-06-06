@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPHubSiteAssociation -Site https://tenant.sharepoint.com/sites/mysite -HubSite https://tenant.sharepoint.com/sites/hubsite",
+        Code = @"PS:> Remove-PnPHubSiteAssociation -Site https://tenant.sharepoint.com/sites/mysite",
         Remarks = @"This example adds the specified site to the hubsite.", SortOrder = 1)]
     public class RemoveHubSiteAssociation : PnPAdminCmdlet
     {
