@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
     [CmdletHelp(@"Grant Permissions to associate sites to Hub Sites.",
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
-    [CmdletExample(Code = @"PS:> Grant-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals "myuser@mydomain.com","myotheruser@mydomain.com" -Rights Join", Remarks = "This example shows how to grant right to myuser and myotheruser to associate their sites with hubsite", SortOrder = 1)]
+    [CmdletExample(Code = @"PS:> Grant-PnPHubSiteRights -Identity https://contoso.sharepoint.com/sites/hubsite -Principals ""myuser@mydomain.com"",""myotheruser@mydomain.com"" -Rights Join", Remarks = "This example shows how to grant right to myuser and myotheruser to associate their sites with hubsite", SortOrder = 1)]
     public class GrantHubSiteRights : PnPAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
