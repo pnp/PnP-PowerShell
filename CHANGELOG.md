@@ -9,7 +9,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
-- Fixed Unregister-PnPHubSite where you could not unregister a hub site if the site was deleted before unregistering
 
 ### Deprecated
 
@@ -21,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Fixed edge cases where progress sent to PowerShell would be null, causing the provisioning of a template to end prematurely.
+- Fixed Unregister-PnPHubSite where you could not unregister a hub site if the site was deleted before unregistering
 
 ### Deprecated
 
