@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Title of the list.")]
         public ListPipeBind Identity = new ListPipeBind();
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Defines if the list should be moved to recycle bin or directly deleted.")]
         public SwitchParameter Recycle;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]

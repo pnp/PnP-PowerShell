@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         Code = @"PS:> Get-PnPClientSideComponent -Page Home",
         Remarks = @"Returns all controls defined on the given page.", SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPClientSideComponent -Page Home -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
+        Code = @"PS:> Get-PnPClientSideComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82",
         Remarks = @"Returns a specific control defined on the given page.", SortOrder = 2)]
     public class GetClientSideControl : PnPWebCmdlet
     {

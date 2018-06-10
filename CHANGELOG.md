@@ -5,10 +5,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [2.27.1806.0]
+## [Unreleased]
 ### Added
 
 ### Changed
+
+### Deprecated
+
+### Contributors
+
+## [2.27.1806.0]
+### Added
+- Added Grant-PnPTenantServicePrincipalPermission to explicitely grant a permission on a resource for the tenant.
+
+### Changed
+- Fixed edge cases where progress sent to PowerShell would be null, causing the provisioning of a template to end prematurely.
+- Fixed Unregister-PnPHubSite where you could not unregister a hub site if the site was deleted before unregistering
 
 ### Deprecated
 
@@ -20,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added -Timeout option to Add-PnPApp
 - Added -CollapseSpecification option to Submit-PnPSearchQuery
 - Added -InSiteHierarchy to Get-PnPField to search for fields in the site collection
+- Added Get-PnPSearchCrawlLog
 
 ### Changed
 - Fix for issue where using Add-PnPFile and setting Created and Modified did not update values

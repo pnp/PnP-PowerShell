@@ -271,12 +271,15 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             applyingInformation.ProgressDelegate = (message, step, total) =>
             {
-                var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
-                progressRecord.Activity = $"Applying template to {SelectedWeb.Url}";
-                progressRecord.StatusDescription = message;
-                progressRecord.PercentComplete = percentage;
-                progressRecord.RecordType = ProgressRecordType.Processing;
-                WriteProgress(progressRecord);
+                if (message != null)
+                {
+                    var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
+                    progressRecord.Activity = $"Applying template to {SelectedWeb.Url}";
+                    progressRecord.StatusDescription = message;
+                    progressRecord.PercentComplete = percentage;
+                    progressRecord.RecordType = ProgressRecordType.Processing;
+                    WriteProgress(progressRecord);
+                }
             };
 
             var warningsShown = new List<string>();
@@ -296,19 +299,30 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                         }
                     case ProvisioningMessageType.Progress:
                         {
-                            var activity = message;
-                            if (message.IndexOf("|") > -1)
+                            if (message != null)
                             {
-                                var messageSplitted = message.Split('|');
-                                if (messageSplitted.Length == 4)
+                                var activity = message;
+                                if (message.IndexOf("|") > -1)
                                 {
-                                    var current = double.Parse(messageSplitted[2]);
-                                    var total = double.Parse(messageSplitted[3]);
-                                    subProgressRecord.RecordType = ProgressRecordType.Processing;
-                                    subProgressRecord.Activity = messageSplitted[0];
-                                    subProgressRecord.StatusDescription = messageSplitted[1];
-                                    subProgressRecord.PercentComplete = Convert.ToInt32((100 / total) * current);
-                                    WriteProgress(subProgressRecord);
+                                    var messageSplitted = message.Split('|');
+                                    if (messageSplitted.Length == 4)
+                                    {
+                                        var current = double.Parse(messageSplitted[2]);
+                                        var total = double.Parse(messageSplitted[3]);
+                                        subProgressRecord.RecordType = ProgressRecordType.Processing;
+                                        subProgressRecord.Activity = string.IsNullOrEmpty(messageSplitted[0]) ? "-" : messageSplitted[0];
+                                        subProgressRecord.StatusDescription = string.IsNullOrEmpty(messageSplitted[1]) ? "-" : messageSplitted[1];
+                                        subProgressRecord.PercentComplete = Convert.ToInt32((100 / total) * current);
+                                        WriteProgress(subProgressRecord);
+                                    }
+                                    else
+                                    {
+                                        subProgressRecord.Activity = "Processing";
+                                        subProgressRecord.RecordType = ProgressRecordType.Processing;
+                                        subProgressRecord.StatusDescription = activity;
+                                        subProgressRecord.PercentComplete = 0;
+                                        WriteProgress(subProgressRecord);
+                                    }
                                 }
                                 else
                                 {
@@ -318,14 +332,6 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                                     subProgressRecord.PercentComplete = 0;
                                     WriteProgress(subProgressRecord);
                                 }
-                            }
-                            else
-                            {
-                                subProgressRecord.Activity = "Processing";
-                                subProgressRecord.RecordType = ProgressRecordType.Processing;
-                                subProgressRecord.StatusDescription = activity;
-                                subProgressRecord.PercentComplete = 0;
-                                WriteProgress(subProgressRecord);
                             }
                             break;
                         }

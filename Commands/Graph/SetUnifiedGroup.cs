@@ -45,10 +45,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "The Description of the group to set.")]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of owners to add to the group.")]
+        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of owners to set to the group. Note: Will replace owners.")]
         public String[] Owners;
 
-        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of members to add to the group.")]
+        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of members to set to the group. Note: Will replace members.")]
         public String[] Members;
 
         [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected.")]
