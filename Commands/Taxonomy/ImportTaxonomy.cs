@@ -18,6 +18,10 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Code = @"PS:> Import-PnPTaxonomy -Terms 'Company|Locations|Stockholm|Central','Company|Locations|Stockholm|North'",
         Remarks = "Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm' and two subterms: 'Central', and 'North'",
         SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Import-PnPTaxonomy -Path ./mytaxonomyterms.txt",
+        Remarks = "Imports the taxonomy from the file specified. Each line has to be in the format TERMGROUP|TERMSET|TERM. See example 2 for examples of the format.",
+        SortOrder = 3)]
     public class ImportTaxonomy : PnPCmdlet
     {
 
