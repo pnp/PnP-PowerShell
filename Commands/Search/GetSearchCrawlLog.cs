@@ -42,7 +42,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Remarks = "Returns the last 100 crawl log entries for site content.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog ""https://<tenant>-my.sharepoint.com/personal""",
+        Code = @"PS:> Get-PnPSearchCrawlLog -Filter ""https://<tenant>-my.sharepoint.com/personal""",
         Remarks = "Returns the last 100 crawl log entries for OneDrive content.",
         SortOrder = 2)]
     [CmdletExample(
