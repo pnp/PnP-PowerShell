@@ -6,9 +6,6 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using SharePointPnP.PowerShell.Commands.Enums;
 
@@ -43,6 +40,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Code = @"PS:> Add-PnPFile -FileName sample.docx -Folder ""Documents"" -Values @{Modified=""1/1/2016""; Created=""1/1/2017""; Editor=23}",
         Remarks = "This will add a file sample.docx to the Documents folder and will set the Modified date to 1/1/2016, Created date to 1/1/2017 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.",
         SortOrder = 6)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPFile -FileName sample.docx -Folder ""Documents"" -NewFileName ""differentname.docx""",
+        Remarks = "This will upload a local file sample.docx to the Documents folder giving it the filename differentname.docx on SharePoint",
+        SortOrder = 7)]
 
     public class AddFile : PnPWebCmdlet
     {
@@ -57,9 +58,12 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Name for file")]
         public string FileName = string.Empty;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ASFILE, HelpMessage = "Filename to give the file on SharePoint")]
+        public string NewFileName = string.Empty;
+
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Stream with the file contents")]
         public Stream Stream;
-
 
         [Parameter(Mandatory = false, HelpMessage = "If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.")]
         public SwitchParameter Checkout;
@@ -109,14 +113,20 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-
             if (ParameterSetName == ParameterSet_ASFILE)
             {
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                 }
-                FileName = System.IO.Path.GetFileName(Path);
+                if (string.IsNullOrEmpty(NewFileName))
+                {
+                    FileName = System.IO.Path.GetFileName(Path);
+                }
+                else
+                {
+                    FileName = NewFileName;
+                }
             }
 
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
@@ -128,7 +138,6 @@ namespace SharePointPnP.PowerShell.Commands.Files
             //Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
-
                 try
                 {
                     var list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
