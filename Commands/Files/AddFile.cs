@@ -41,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "This will add a file sample.docx to the Documents folder and will set the Modified date to 1/1/2016, Created date to 1/1/2017 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.",
         SortOrder = 6)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFile -FileName sample.docx -Folder ""Documents"" -FileName ""differentname.docx""",
+        Code = @"PS:> Add-PnPFile -FileName sample.docx -Folder ""Documents"" -NewFileName ""differentname.docx""",
         Remarks = "This will upload a local file sample.docx to the Documents folder giving it the filename differentname.docx on SharePoint",
         SortOrder = 7)]
 
@@ -57,8 +57,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
         public string Folder = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Name for file")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ASFILE, HelpMessage = "Filename to give the file on SharePoint")]
         public string FileName = string.Empty;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ASFILE, HelpMessage = "Filename to give the file on SharePoint")]
+        public string NewFileName = string.Empty;
+
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Stream with the file contents")]
         public Stream Stream;
 
@@ -116,9 +119,13 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 {
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                 }
-                if (string.IsNullOrEmpty(FileName))
+                if (string.IsNullOrEmpty(NewFileName))
                 {
                     FileName = System.IO.Path.GetFileName(Path);
+                }
+                else
+                {
+                    FileName = NewFileName;
                 }
             }
 
