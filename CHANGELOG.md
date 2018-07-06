@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [2.28.1807.0] Unreleased
+## [2.29.1808.0] unreleased
 ### Added
 
 ### Changed
@@ -13,6 +13,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Deprecated
 
 ### Contributors
+
+## [2.28.1807.0]
+### Changed
+- Added IncludeClassification to Get-PnPUnifiedGroup
+- Updated documentation for Get-PnPSearchCrawlLog
+- Added -NewFileName to Add-PnPFile cmdlet
+
+### Contributors
+- vipulkelkar
+- wobba
+- koenzomers
 
 ## [2.27.1806.0]
 ### Added
