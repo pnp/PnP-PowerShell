@@ -5,30 +5,46 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace SharePointPnP.PowerShell.Commands
 {
     public class PnPCmdlet : PSCmdlet
     {
-        public ClientContext ClientContext => SPOnlineConnection.CurrentConnection.Context;
+        public ClientContext ClientContext => Connection?.Context ?? SPOnlineConnection.CurrentConnection.Context;
+
+        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
+        [PnPParameter(Order = 99)]
+        public SPOnlineConnection Connection = null;
 
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
 
+            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.TelemetryClient != null)
+            {
+                SPOnlineConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
+            }
+
             if (MyInvocation.InvocationName.ToUpper().IndexOf("-SPO", StringComparison.Ordinal) > -1)
             {
                 WriteWarning($"PnP Cmdlets starting with the SPO Prefix will be deprecated in the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
             }
-            if (SPOnlineConnection.CurrentConnection == null)
+            if (SPOnlineConnection.CurrentConnection == null && Connection == null)
             {
                 throw new InvalidOperationException(Resources.NoConnection);
             }
-            if (ClientContext == null)
+            if (SPOnlineConnection.CurrentConnection == null && ClientContext == null)
             {
                 throw new InvalidOperationException(Resources.NoConnection);
             }
-
+            if (SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
+            {
+                throw new InvalidOperationException(Resources.NoConnection);
+            }
         }
 
         protected virtual void ExecuteCmdlet()
@@ -93,7 +109,7 @@ namespace SharePointPnP.PowerShell.Commands
                     ExecuteCmdlet();
                 }
             }
-            catch(System.Management.Automation.PipelineStoppedException)
+            catch (System.Management.Automation.PipelineStoppedException)
             {
                 //swallow pipeline stopped exception
             }
@@ -104,5 +120,9 @@ namespace SharePointPnP.PowerShell.Commands
             }
         }
 
+        protected override void EndProcessing()
+        {
+            base.EndProcessing();
+        }
     }
 }

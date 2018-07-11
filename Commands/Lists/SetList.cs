@@ -13,17 +13,25 @@ namespace SharePointPnP.PowerShell.Commands.Lists
          Remarks = "Switches the Enable Content Type switch on the list",
          SortOrder = 1)]
     [CmdletExample(
+         Code = @"Set-PnPList -Identity ""Demo List"" -Hidden $true",
+         Remarks = "Hides the list from the SharePoint UI.",
+         SortOrder = 2)]
+    [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo List"" -EnableVersioning $true",
          Remarks = "Turns on major versions on a list",
-         SortOrder = 2)]
+         SortOrder = 3)]
     [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo List"" -EnableVersioning $true -MajorVersions 20",
          Remarks = "Turns on major versions on a list and sets the maximum number of Major Versions to keep to 20.",
-         SortOrder = 3)]
+         SortOrder = 4)]
     [CmdletExample(
          Code = @"Set-PnPList -Identity ""Demo Library"" -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5",
          Remarks = "Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.",
-         SortOrder = 4)]
+         SortOrder = 5)]
+    [CmdletExample(
+        Code = @"Set-PnPList -Identity ""Demo List"" -EnableAttachments $true",
+        Remarks = "Turns on attachments on a list",
+        SortOrder = 6)]
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The ID, Title or Url of the list.")]
@@ -51,6 +59,26 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "The title of the list")]
         public string Title = string.Empty;
 
+        [Parameter(Mandatory = false, HelpMessage = "The description of the list")]
+        public string Description;
+
+        [Parameter(Mandatory = false, HelpMessage = "Hide the list from the SharePoint UI. Set to $true to hide, $false to show.")]
+        public bool Hidden;
+
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable force checkout. Set to $true to enable, $false to disable.")]
+        public bool ForceCheckout;
+
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "Set the list experience: Auto, NewExperience or ClassExperience")]
+        public ListExperience ListExperience;
+#endif
+
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable attachments. Set to $true to enable, $false to disable.")]
+        public bool EnableAttachments;
+
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable folder creation. Set to $true to enable, $false to disable.")]
+        public bool EnableFolderCreation;
+
         [Parameter(Mandatory = false, HelpMessage = "Enable or disable versioning. Set to $true to enable, $false to disable.")]
         public bool EnableVersioning;
 
@@ -63,12 +91,22 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Maximum minor versions to keep")]
         public uint MinorVersions = 10;
 
+        [Parameter(Mandatory = false, HelpMessage = "Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.")]
+        public bool EnableModeration;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(SelectedWeb);
 
             if (list != null)
             {
+                list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType);
+
+                var enableVersioning = list.EnableVersioning;
+                var enableMinorVersions = list.EnableMinorVersions;
+                var hidden = list.Hidden;
+                var enableAttachments = list.EnableAttachments;
+
                 var isDirty = false;
                 if (BreakRoleInheritance)
                 {
@@ -82,16 +120,17 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     isDirty = true;
                 }
 
+                if (MyInvocation.BoundParameters.ContainsKey("Hidden") && Hidden != list.Hidden)
+                {
+                    list.Hidden = Hidden;
+                    isDirty = true;
+                }
+
                 if (MyInvocation.BoundParameters.ContainsKey("EnableContentTypes") && list.ContentTypesEnabled != EnableContentTypes)
                 {
                     list.ContentTypesEnabled = EnableContentTypes;
                     isDirty = true;
                 }
-
-                list.EnsureProperties(l => l.EnableVersioning, l => l.EnableMinorVersions);
-
-                var enableVersioning = list.EnableVersioning;
-                var enableMinorVersions = list.EnableMinorVersions;
 
                 if (MyInvocation.BoundParameters.ContainsKey("EnableVersioning") && EnableVersioning != enableVersioning)
                 {
@@ -105,6 +144,44 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     isDirty = true;
                 }
 
+                if (MyInvocation.BoundParameters.ContainsKey("EnableModeration") && list.EnableModeration != EnableModeration)
+                {
+                    list.EnableModeration = EnableModeration;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("EnableAttachments") && EnableAttachments != enableAttachments)
+                {
+                    list.EnableAttachments = EnableAttachments;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("Description"))
+                {
+                    list.Description = Description;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("EnableFolderCreation"))
+                {
+                    list.EnableFolderCreation = EnableFolderCreation;
+                    isDirty = true;
+                }
+
+                if (MyInvocation.BoundParameters.ContainsKey("ForceCheckout"))
+                {
+                    list.ForceCheckout = ForceCheckout;
+                    isDirty = true;
+                }
+
+#if !ONPREMISES
+                if (MyInvocation.BoundParameters.ContainsKey("ListExperience"))
+                {
+                    list.ListExperienceOptions = ListExperience;
+                    isDirty = true;
+                }
+#endif
+
                 if (isDirty)
                 {
                     list.Update();
@@ -112,12 +189,16 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 }
                 isDirty = false;
 
+
+
+
                 if (list.EnableVersioning)
                 {
                     // list or doclib?
 
                     if (list.BaseType == BaseType.DocumentLibrary)
                     {
+
                         if (MyInvocation.BoundParameters.ContainsKey("MajorVersions"))
                         {
                             list.MajorVersionLimit = (int)MajorVersions;
@@ -138,6 +219,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                             isDirty = true;
                         }
                     }
+
+
                 }
                 if (isDirty)
                 {

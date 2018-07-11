@@ -5,7 +5,7 @@ using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFile", DefaultParameterSetName = "URLASFILEOBJECT")]
+    [Cmdlet(VerbsCommon.Get, "PnPFile", DefaultParameterSetName = "Return as file object")]
     [CmdletHelp("Downloads a file.",
         Category = CmdletHelpCategory.Files,
         OutputType = typeof(File),
@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "Retrieves the file and downloads it to the current folder",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor",
+        Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile",
         Remarks = "Retrieves the file and downloads it to c:\\temp\\company.spcolor",
         SortOrder = 2)]
     [CmdletExample(
@@ -31,16 +31,16 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "Retrieves the file and returns it as a ListItem object",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor",
+        Code = @"PS:> Get-PnPFile -Url _catalogs/themes/15/company.spcolor -Path c:\temp -FileName company.spcolor -AsFile",
         Remarks = "Retrieves the file by site relative URL and downloads it to c:\\temp\\company.spcolor",
         SortOrder = 6)]
 
     public class GetFile : PnPWebCmdlet
     {
-        private const string URLTOPATH = "URLTOPATH";
-        private const string URLASSTRING = "URLASSTRING";
-        private const string URLASLISTITEM = "URLASLISTITEM";
-        private const string URLASFILEOBJECT = "URLASFILEOBJECT";
+        private const string URLTOPATH = "Save to local path";
+        private const string URLASSTRING = "Return as string";
+        private const string URLASLISTITEM = "Return as list item";
+        private const string URLASFILEOBJECT = "Return as file object";
 
         [Parameter(Mandatory = true, ParameterSetName = URLASFILEOBJECT, HelpMessage = "The URL (server or site relative) to the file", Position = 0, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, ParameterSetName = URLASLISTITEM, HelpMessage = "The URL (server or site relative) to the file", Position = 0, ValueFromPipeline = true)]
@@ -66,6 +66,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false, ParameterSetName = URLASSTRING, HelpMessage = "Retrieve the file contents as a string")]
         public SwitchParameter AsString;
+
+        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH, HelpMessage = "Overwrites the file if it exists.")]
+        public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
@@ -98,7 +101,14 @@ namespace SharePointPnP.PowerShell.Commands.Files
             switch (ParameterSetName)
             {
                 case URLTOPATH:
-                    SelectedWeb.SaveFileToLocal(serverRelativeUrl, Path, Filename);
+                    SelectedWeb.SaveFileToLocal(serverRelativeUrl, Path, Filename, (filetosave) =>
+                    {
+                        if (!Force)
+                        {
+                            WriteWarning($"File '{filetosave}' exists already. use the -Force parameter to overwrite the file.");
+                        }
+                        return Force;
+                    });
                     break;
                 case URLASFILEOBJECT:
                     file = SelectedWeb.GetFileByServerRelativeUrl(serverRelativeUrl);

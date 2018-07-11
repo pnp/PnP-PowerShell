@@ -7,12 +7,24 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "PnPWorkflowSubscription")]
-    [CmdletHelp("Returns a workflow subscriptions from a list",
+    [CmdletHelp("Return a workflow subscription",
+        "Returns a workflow subscriptions from a list",
         Category = CmdletHelpCategory.Workflows,
-        OutputType=typeof(WorkflowSubscription),
-        OutputTypeLink= "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowsubscription.aspx"
+        OutputType = typeof(WorkflowSubscription),
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.workflowservices.workflowsubscription.aspx"
         )]
-
+    [CmdletExample(
+        Code = @"PS:> Get-PnPWorkflowSubscription -Name MyWorkflow", 
+        Remarks = @"Gets an Workflow subscription with the name ""MyWorkflow"".",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPWorkflowSubscription -Name MyWorkflow -list $list", 
+        Remarks = @"Gets an Workflow subscription with the name ""MyWorkflow"" from the list $list.",
+        SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPList -identity ""MyList"" | Get-PnPWorkflowSubscription -Name MyWorkflow", 
+        Remarks = @"Gets an Workflow subscription with the name ""MyWorkflow"" from the list ""MyList"".",
+        SortOrder = 3)]
     public class GetWorkflowSubscription : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The name of the workflow", Position = 0)]

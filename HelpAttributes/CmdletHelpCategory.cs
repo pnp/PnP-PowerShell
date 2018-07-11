@@ -2,6 +2,9 @@
 
 namespace SharePointPnP.PowerShell.CmdletHelpAttributes
 {
+    /// <summary>
+    /// The available categories for cmdlet help categorization
+    /// </summary>
     public enum CmdletHelpCategory
     {
         [EnumMember(Value = "Tenant Administration")]
@@ -46,6 +49,11 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         [EnumMember(Value = "Records Management")]
         RecordsManagement = 26,
         [EnumMember(Value = "Client-Side Pages")]
-        ClientSidePages = 27
+        ClientSidePages = 27,
+        [EnumMember(Value = "Diagnostic utilites")]
+        Diagnostic = 28,
+        [EnumMember(Value = "Site Designs")]
+        SiteDesigns = 29
+            
     }
 }

@@ -6,6 +6,8 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using SharePointPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
@@ -38,21 +40,30 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Code = @"PS:> Add-PnPFile -FileName sample.docx -Folder ""Documents"" -Values @{Modified=""1/1/2016""; Created=""1/1/2017""; Editor=23}",
         Remarks = "This will add a file sample.docx to the Documents folder and will set the Modified date to 1/1/2016, Created date to 1/1/2017 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.",
         SortOrder = 6)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPFile -FileName sample.docx -Folder ""Documents"" -NewFileName ""differentname.docx""",
+        Remarks = "This will upload a local file sample.docx to the Documents folder giving it the filename differentname.docx on SharePoint",
+        SortOrder = 7)]
 
     public class AddFile : PnPWebCmdlet
     {
+        private const string ParameterSet_ASFILE = "Upload file";
+        private const string ParameterSet_ASSTREAM = "Upload file from stream";
 
-        [Parameter(Mandatory = true, ParameterSetName = "AsFile", HelpMessage = "The local file path.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASFILE, HelpMessage = "The local file path.")]
         public string Path = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The destination folder in the site")]
         public string Folder = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Name for file")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Name for file")]
         public string FileName = string.Empty;
-        [Parameter(Mandatory = true, ParameterSetName = "AsStream", HelpMessage = "Stream with the file contents")]
-        public Stream Stream;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ASFILE, HelpMessage = "Filename to give the file on SharePoint")]
+        public string NewFileName = string.Empty;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Stream with the file contents")]
+        public Stream Stream;
 
         [Parameter(Mandatory = false, HelpMessage = "If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.")]
         public SwitchParameter Checkout;
@@ -75,7 +86,26 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false)]
         public SwitchParameter UseWebDav;
 
-        [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names")]
+        [Parameter(Mandatory = false, HelpMessage = "Use the internal names of the fields when specifying field names." +
+                                                     "\n\nSingle line of text: -Values @{\"Title\" = \"Title New\"}" +
+                                                     "\n\nMultiple lines of text: -Values @{\"MultiText\" = \"New text\\n\\nMore text\"}" +
+                                                     "\n\nRich text: -Values @{\"MultiText\" = \"<strong>New</strong> text\"}" +
+             "\n\nChoice: -Values @{\"Choice\" = \"Value 1\"}" +
+             "\n\nNumber: -Values @{\"Number\" = \"10\"}" +
+             "\n\nCurrency: -Values @{\"Number\" = \"10\"}" +
+             "\n\nCurrency: -Values @{\"Currency\" = \"10\"}" +
+             "\n\nDate and Time: -Values @{\"DateAndTime\" = \"03/10/2015 14:16\"}" +
+             "\n\nLookup (id of lookup value): -Values @{\"Lookup\" = \"2\"}" +
+             "\n\nMulti value lookup (id of lookup values as array 1): -Values @{\"MultiLookupField\" = \"1\",\"2\"}" +
+             "\n\nMulti value lookup (id of lookup values as array 2): -Values @{\"MultiLookupField\" = 1,2}" +
+             "\n\nMulti value lookup (id of lookup values as string): -Values @{\"MultiLookupField\" = \"1,2\"}" +
+             "\n\nYes/No: -Values @{\"YesNo\" = $false}" +
+             "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"Person\" = \"user1@domain.com\",\"21\"}" +
+             "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}" +
+             "\n\nManaged Metadata (single value with id of term): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
+             "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}" +
+             "\n\nManaged Metadata (multiple values with ids of terms): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\",\"52d88107-c2a8-4bf0-adfa-04bc2305b593\"}" +
+             "\n\nHyperlink or Picture: -Values @{\"Hyperlink\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
 
         [Parameter(Mandatory = false, HelpMessage = "Use to assign a ContentType to the file.")]
@@ -83,14 +113,20 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-
-            if (ParameterSetName == "AsFile")
+            if (ParameterSetName == ParameterSet_ASFILE)
             {
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                 }
-                FileName = System.IO.Path.GetFileName(Path);
+                if (string.IsNullOrEmpty(NewFileName))
+                {
+                    FileName = System.IO.Path.GetFileName(Path);
+                }
+                else
+                {
+                    FileName = NewFileName;
+                }
             }
 
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
@@ -102,7 +138,6 @@ namespace SharePointPnP.PowerShell.Commands.Files
             //Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
-
                 try
                 {
                     var list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
@@ -148,7 +183,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 }
             }
             Microsoft.SharePoint.Client.File file;
-            if (ParameterSetName == "AsFile")
+            if (ParameterSetName == ParameterSet_ASFILE)
             {
 
                 file = folder.UploadFile(FileName, Path, true);
@@ -162,20 +197,25 @@ namespace SharePointPnP.PowerShell.Commands.Files
             {
                 var item = file.ListItemAllFields;
 
-                foreach (var key in Values.Keys)
-                {
-                    item[key as string] = Values[key];
-                }
-
-                item.Update();
-
-                ClientContext.ExecuteQueryRetry();
+                ListItemHelper.UpdateListItem(item, Values, ListItemUpdateType.UpdateOverwriteVersion,
+                    (warning) =>
+                    {
+                        WriteWarning(warning);
+                    },
+                    (terminatingErrorMessage, terminatingErrorCode) =>
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
+                    });
             }
             if (ContentType != null)
             {
                 var item = file.ListItemAllFields;
                 item["ContentTypeId"] = targetContentType.Id.StringValue;
+#if !ONPREMISES
+                item.UpdateOverwriteVersion();
+#else
                 item.Update();
+#endif
                 ClientContext.ExecuteQueryRetry();
             }
 
@@ -188,7 +228,8 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
             if (Approve)
                 SelectedWeb.ApproveFile(fileUrl, ApproveComment);
-
+            ClientContext.Load(file);
+            ClientContext.ExecuteQueryRetry();
             WriteObject(file);
         }
     }

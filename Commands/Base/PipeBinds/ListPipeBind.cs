@@ -45,7 +45,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             return Title ?? Id.ToString();
         }
 
-        internal List GetList(Web web)
+        internal List GetList(Web web, params System.Linq.Expressions.Expression<Func<List,object>>[] retrievals)
         {
             List list = null;
             if (List != null)
@@ -67,6 +67,10 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             if (list != null)
             {
                 web.Context.Load(list, l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl);
+                if(retrievals != null)
+                {
+                    web.Context.Load(list, retrievals);
+                }
                 web.Context.ExecuteQueryRetry();
             }
             return list;

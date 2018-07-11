@@ -558,10 +558,6 @@
         <TypeName>Microsoft.SharePoint.Client.File</TypeName>
         <TypeName>Microsoft.SharePoint.Client.Folder</TypeName>
       </ViewSelectedBy>
-      <GroupBy>
-        <ScriptBlock>$_.PSParentPath.Replace("SharePointPnPPowerShell2016\SharePoint::", "")</ScriptBlock>
-        <Label>Folder</Label>
-      </GroupBy>
       <TableControl>
         <TableHeaders>
           <TableColumnHeader>
@@ -587,30 +583,30 @@
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.Name -eq ""){
-                  $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexof("/") + 1)
+                    $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexof("/") + 1)
                   }
                   else{
-                  $_.Name
+                    $_.Name
                   }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "Folder" -and $_.Name -eq ""){
-                  "Subweb"
+                    "Subweb"
                   }
                   else{
-                  $_.GetType().Name
+                    $_.GetType().Name
                   }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "File"){
-                  $_.Length
+                    $_.Length
                   }
                   else{
-                  $_.ItemCount
+                    $_.ItemCount
                   }
                 </ScriptBlock>
               </TableColumnItem>
@@ -1224,6 +1220,50 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Email</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>NavigationNode</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.SharePoint.Client.NavigationNode</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Title</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Visible</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Url</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Title</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>IsVisible</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Url</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

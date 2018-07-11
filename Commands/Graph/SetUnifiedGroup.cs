@@ -5,13 +5,15 @@ using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPUnifiedGroup")]
     [CmdletHelp("Sets Office 365 Group (aka Unified Group) properties",
-        Category = CmdletHelpCategory.Graph)]
+        Category = CmdletHelpCategory.Graph,
+        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -DisplayName ""My Displayname""",
        Remarks = "Sets the display name of the group where $group is a Group entity",
@@ -43,10 +45,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "The Description of the group to set.")]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of owners to add to the group.")]
+        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of owners to set to the group. Note: Will replace owners.")]
         public String[] Owners;
 
-        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of members to add to the group.")]
+        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of members to set to the group. Note: Will replace members.")]
         public String[] Members;
 
         [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected.")]
@@ -61,15 +63,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                // We have to retrieve a specific group
-                if (Identity.Group != null)
-                {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.Group.GroupId, AccessToken);
-                }
-                else if (!String.IsNullOrEmpty(Identity.GroupId))
-                {
-                    group = UnifiedGroupsUtility.GetUnifiedGroup(Identity.GroupId, AccessToken);
-                }
+                group = Identity.GetGroup(AccessToken);
             }
 
             Stream groupLogoStream = null;
@@ -87,6 +81,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
                 UnifiedGroupsUtility.UpdateUnifiedGroup(group.GroupId, AccessToken, displayName: DisplayName,
                     description: Description, owners: Owners, members: Members, groupLogo: groupLogoStream, isPrivate: IsPrivate);
+            } else
+            {
+                WriteError(new ErrorRecord(new Exception("Group not found"), "GROUPNOTFOUND", ErrorCategory.ObjectNotFound, this));
             }
         }
     }

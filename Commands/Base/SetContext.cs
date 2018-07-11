@@ -5,7 +5,8 @@ using Microsoft.SharePoint.Client;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "PnPContext")]
-    [CmdletHelp("Sets the Client Context to use by the cmdlets",
+    [CmdletHelp("Set the ClientContext",
+        "Sets the Client Context to use by the cmdlets, which allows easy context switching. See examples for details.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url $siteAurl -Credentials $credentials

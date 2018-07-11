@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Remarks = "Sets the search configuration for the current tenant",
         SortOrder = 3)]
     [CmdletExample(
-          Code = @"PS:> Set-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription",
+        Code = @"PS:> Set-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription",
         Remarks = "Reads the search configuration from the specified XML file and sets it for the current tenant",
         SortOrder = 4)]
 

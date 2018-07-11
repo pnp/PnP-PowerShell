@@ -287,7 +287,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Azure AD connection, please connect first with Connect-PnPMicrosoftGraph.
+        ///   Looks up a localized string similar to No Azure AD connection, please connect first with Connect-PnPOnline -Graph, Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain.
         /// </summary>
         internal static string NoAzureADAccessToken {
             get {
@@ -332,21 +332,20 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        internal static System.Drawing.Icon pnp {
-            get {
-                object obj = ResourceManager.GetObject("pnp", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Remove Client-Side Page?.
         /// </summary>
         internal static string RemoveClientSidePage {
             get {
                 return ResourceManager.GetString("RemoveClientSidePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove component with instance id &apos;{0}&apos;?.
+        /// </summary>
+        internal static string RemoveComponentWithInstanceId0 {
+            get {
+                return ResourceManager.GetString("RemoveComponentWithInstanceId0", resourceCulture);
             }
         }
         
@@ -365,6 +364,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string RemoveCustomAction {
             get {
                 return ResourceManager.GetString("RemoveCustomAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The classification &apos;{0}&apos; you are trying remove is currently set as the default classification. Do you want to remove this classification? It will also remove this as  the default classification.
+        /// </summary>
+        internal static string RemoveDefaultClassification0 {
+            get {
+                return ResourceManager.GetString("RemoveDefaultClassification0", resourceCulture);
             }
         }
         
@@ -441,6 +449,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove all Navigation Nodes in {0}?.
+        /// </summary>
+        internal static string RemoveNavigationNodeInLocation {
+            get {
+                return ResourceManager.GetString("RemoveNavigationNodeInLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove propertybag value.
         /// </summary>
         internal static string RemovePropertyBagValue {
@@ -455,6 +472,24 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string RemoveSiteCollection0 {
             get {
                 return ResourceManager.GetString("RemoveSiteCollection0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove site design?.
+        /// </summary>
+        internal static string RemoveSiteDesign {
+            get {
+                return ResourceManager.GetString("RemoveSiteDesign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove site script?.
+        /// </summary>
+        internal static string RemoveSiteScript {
+            get {
+                return ResourceManager.GetString("RemoveSiteScript", resourceCulture);
             }
         }
         
@@ -527,6 +562,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string RemoveWebhookSubscription0From1_2 {
             get {
                 return ResourceManager.GetString("RemoveWebhookSubscription0From1_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Web Part with title &apos;{0}&apos;?.
+        /// </summary>
+        internal static string RemoveWebPartWithTitle0 {
+            get {
+                return ResourceManager.GetString("RemoveWebPartWithTitle0", resourceCulture);
             }
         }
         

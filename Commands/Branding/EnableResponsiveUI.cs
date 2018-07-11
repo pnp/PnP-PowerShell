@@ -5,11 +5,12 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPResponsiveUI")]
-    [CmdletHelp("Enables the PnP Responsive UI implementation on a classic SharePoint Site", Category = CmdletHelpCategory.Branding)]
+    [CmdletHelp("Activates the PnP Response UI Add-on",
+        "Enables the PnP Responsive UI implementation on a classic SharePoint Site", Category = CmdletHelpCategory.Branding)]
     [CmdletExample(
-        Code="PS:> Enable-PnPResponsiveUI",
+        Code = "PS:> Enable-PnPResponsiveUI",
         SortOrder = 1,
-        Remarks="Will upload a CSS file, a JavaScript file and adds a custom action to the root web of the current site collection, enabling the responsive UI on the site collection. The CSS and JavaScript files are located in the style library, in a folder called SP.Responsive.UI.")]
+        Remarks = "Will upload a CSS file, a JavaScript file and adds a custom action to the root web of the current site collection, enabling the responsive UI on the site collection. The CSS and JavaScript files are located in the style library, in a folder called SP.Responsive.UI.")]
 
     public class EnableResponsiveUI : PnPWebCmdlet
     {

@@ -13,9 +13,10 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet("New", "PnPUnifiedGroup")]
+    [Cmdlet(VerbsCommon.New, "PnPUnifiedGroup")]
     [CmdletHelp("Creates a new Office 365 Group (aka Unified Group)",
-        Category = CmdletHelpCategory.Graph)]
+        Category = CmdletHelpCategory.Graph,
+        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> New-PnPUnifiedGroup -DisplayName $displayName -Description $description -MailNickname $nickname",
        Remarks = "Creates a public Office 365 Group with all the required properties",
@@ -40,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, HelpMessage = "The Description of the Office 365 Group.")]
         public String Description;
 
-        [Parameter(Mandatory = true, HelpMessage = "The Mail Nickname of the Office 365 Group.")]
+        [Parameter(Mandatory = true, HelpMessage = "The Mail Nickname of the Office 365 Group. Cannot contain spaces.")]
         public String MailNickname;
 
         [Parameter(Mandatory = false, HelpMessage = "The array UPN values of the group's owners.")]
@@ -60,13 +61,19 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
+            if (MailNickname.Contains(" "))
+            {
+                throw new ArgumentException("MailNickname cannot contain spaces.");
+            }
             bool forceCreation;
 
             if (!Force)
             {
-                var existingGroup = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken,
+                var candidates = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken,
                     mailNickname: MailNickname,
-                    endIndex: 1).Any();
+                    endIndex: 1);
+                // ListUnifiedGroups retreives groups with starts-with, so need another check
+                var existingGroup = candidates.Any(g => g.MailNickname.Equals(MailNickname, StringComparison.CurrentCultureIgnoreCase));
 
                 forceCreation = !existingGroup || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
             }

@@ -97,7 +97,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                         }
                     case XMLPnPSchemaVersion.V201512:
                         {
+#pragma warning disable CS0618 // Type or member is obsolete
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
+#pragma warning restore CS0618 // Type or member is obsolete
                             break;
                         }
                     case XMLPnPSchemaVersion.V201605:
@@ -108,6 +110,16 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                     case XMLPnPSchemaVersion.V201705:
                         {
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05);
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201801:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01);
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201805:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
                             break;
                         }
                 }

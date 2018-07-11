@@ -206,7 +206,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             if (!AsIncludeFile) return xml;
             XElement xElement = XElement.Parse(xml);
             // Get the Files Element
-            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
+            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05;
 
             var filesElement = xElement.Descendants(pnp + "Files").FirstOrDefault();
             if (filesElement != null)
@@ -275,6 +275,16 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 case XMLPnPSchemaVersion.V201705:
                     {
                         formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05);
+                        break;
+                    }
+                case XMLPnPSchemaVersion.V201801:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01);
+                        break;
+                    }
+                case XMLPnPSchemaVersion.V201805:
+                    {
+                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
                         break;
                     }
             }

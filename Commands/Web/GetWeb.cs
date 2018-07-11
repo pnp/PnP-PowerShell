@@ -14,9 +14,13 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(Web),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPWeb",
+        Remarks = "This will return the current web",
+        SortOrder = 1)]
     public class GetWeb : PnPRetrievalsCmdlet<Web>
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The guid of the web or web object")]
         public WebPipeBind Identity;
 
         protected override void ExecuteCmdlet()

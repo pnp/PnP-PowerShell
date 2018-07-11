@@ -73,7 +73,7 @@ $env:APPSETTING_AppId = "<your id>"
 $env:APPSETTING_AppSecret = "<your secret>"
 ```
 
-* Edit .\Engine\shared.ps1 to match your environment if you have renamed column prefix or similar, or if you want to provision sites on the managed path */sites* and not */teams*
+* Edit .\Engine\shared.ps1 to match your environment if you have renamed column prefix or similar, or if you want to provision sites on the managed path */sites* and not */teams*, or to change the timezone for the provisioned sites.
 * Run .\Engine\mrprovision.ps1
 * Once done visit the newly created site (link from Site Directory, or via e-mail)
 	* The requestor and site owner will get e-mails when the site is ready

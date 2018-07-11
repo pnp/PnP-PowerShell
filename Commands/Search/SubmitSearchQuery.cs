@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Search
 {
-    [Cmdlet("Submit", "PnPSearchQuery", DefaultParameterSetName = "Limit")]
+    [Cmdlet(VerbsLifecycle.Submit, "PnPSearchQuery", DefaultParameterSetName = "Limit")]
     [CmdletHelp("Executes an arbitrary search query against the SharePoint search index",
         Category = CmdletHelpCategory.Search,
         OutputType = typeof(List<dynamic>))]
@@ -73,6 +73,9 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the name of the client which issued the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ClientType = "ContentSearchLow";
+
+        [Parameter(Mandatory = false, HelpMessage = "Limit the number of items per the collapse specification. See https://docs.microsoft.com/en-us/sharepoint/dev/general-development/customizing-search-results-in-sharepoint#collapse-similar-search-results-using-the-collapsespecification-property for more information.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public string CollapseSpecification;
 
         [Parameter(Mandatory = false, HelpMessage = "The keyword query’s hidden constraints.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string HiddenConstraints;
@@ -217,6 +220,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
             if (MyInvocation.BoundParameters.ContainsKey("SourceId")) keywordQuery.SourceId = SourceId;
             if (MyInvocation.BoundParameters.ContainsKey("ProcessBestBets")) keywordQuery.ProcessBestBets = ProcessBestBets;
             if (MyInvocation.BoundParameters.ContainsKey("ProcessPersonalFavorites")) keywordQuery.ProcessPersonalFavorites = ProcessPersonalFavorites;
+            if (MyInvocation.BoundParameters.ContainsKey("CollapseSpecification")) keywordQuery.CollapseSpecification = CollapseSpecification;
 
             if (SortList != null)
             {

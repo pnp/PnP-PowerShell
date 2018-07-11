@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
@@ -7,9 +8,12 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Apps
 {
+#if!ONPREMISES
+    [Obsolete("Use Add-PnPApp, Install-PnPApp instead")]
+#endif
     [Cmdlet(VerbsData.Import, "PnPAppPackage")]
     [CmdletHelp("Adds a SharePoint Addin to a site",
-        DetailedDescription = "This commands requires that you have an addin package to deploy",
+        "This commands requires that you have an addin package to deploy",
         Category = CmdletHelpCategory.Apps,
          OutputType = typeof(AppInstance),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.appinstance.aspx")]

@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage="The description of the new web")]
         public string Description = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage="The language id of the new web. default = 1033 for English")]
         public int Locale = 1033;
 
         [Parameter(Mandatory = true, HelpMessage= "The site definition template to use for the new web, e.g. STS#0. Use Get-PnPWebTemplates to fetch a list of available templates")]

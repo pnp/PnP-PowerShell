@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         OutputType=typeof(Guid),
         OutputTypeDescription = "Returns the Id of the workflow definition")]
     [CmdletExample(
-        Code = @"Add-PnPWorkflowDefinition -Definition $wfdef", 
+        Code = @"PS:> Add-PnPWorkflowDefinition -Definition $wfdef", 
         Remarks = "Adds an existing workflow definition, retrieved by Get-PnPWorkflowDefinition, to a site.",
         SortOrder = 1)]
     public class AddWorkflowDefinition : PnPWebCmdlet
