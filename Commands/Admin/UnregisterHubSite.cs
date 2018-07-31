@@ -28,9 +28,16 @@ namespace SharePointPnP.PowerShell.Commands.Admin
             var hubSitesProperties = Tenant.GetHubSitesProperties();
             ClientContext.Load(hubSitesProperties);
             ClientContext.ExecuteQueryRetry();
-            var hubSite = hubSitesProperties.Single(h => h.SiteUrl.Equals(Site.Url, StringComparison.OrdinalIgnoreCase));
-
-            Tenant.UnregisterHubSiteById(hubSite.ID);
+            HubSiteProperties props = null;
+            if (Site.Id != Guid.Empty)
+            {
+                props = hubSitesProperties.Single(h => h.SiteId == Site.Id);
+            }
+            else
+            {
+                props = hubSitesProperties.Single(h => h.SiteUrl.Equals(Site.Url, StringComparison.OrdinalIgnoreCase));
+            }
+            Tenant.UnregisterHubSiteById(props.ID);
             ClientContext.ExecuteQueryRetry();
         }
     }
