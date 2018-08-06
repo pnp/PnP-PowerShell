@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Web;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -119,6 +120,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
                 var logEntries = crawlLog.GetCrawledUrls(false, RowLimit, Filter, true, contentSourceId, (int)LogLevel, -1, StartDate, EndDate);
                 ClientContext.ExecuteQueryRetry();
+
                 var entries = new List<CrawlEntry>(logEntries.Value.Rows.Count);
                 foreach (var dictionary in logEntries.Value.Rows)
                 {
@@ -131,8 +133,18 @@ namespace SharePointPnP.PowerShell.Commands.Search
                     {
                         entries.Add(entry);
                     }
-
                 }
+
+                if (ContentSource == ContentSource.UserProfiles && contentSourceId == -1)
+                {
+                    // Crawling has changed and uses one content source
+                    // Need to apply post-filter to pull out profile entries only
+                    entries =
+                        entries.Where(e => HttpUtility.UrlDecode(e.Url.ToString()).ToLower().Contains(":443/person"))
+                            .ToList();
+                }
+
+
                 WriteObject(entries.Take(origLimit).OrderByDescending(i => i.CrawlTime).ToList());
             }
             catch (Exception e)
@@ -153,7 +165,8 @@ namespace SharePointPnP.PowerShell.Commands.Search
             var hostName = GetHostName();
             var spContent = crawlLog.GetCrawledUrls(false, 10, $"https://{hostName}.sharepoint.com/sites", true, -1, (int)LogLevel.All, -1, DateTime.Now.AddDays(-100), DateTime.Now.AddDays(1));
             ClientContext.ExecuteQueryRetry();
-            return (int)spContent.Value.Rows.First()["ContentSourceID"];
+            if (spContent.Value.Rows.Count > 0) return (int)spContent.Value.Rows.First()["ContentSourceID"];
+            return -1;
         }
 
         private int GetContentSourceIdForUserProfiles(DocumentCrawlLog crawlLog)
@@ -161,7 +174,8 @@ namespace SharePointPnP.PowerShell.Commands.Search
             var hostName = GetHostName();
             var peopleContent = crawlLog.GetCrawledUrls(false, 100, $"sps3s://{hostName}-my.sharepoint.com", true, -1, (int)LogLevel.All, -1, DateTime.Now.AddDays(-100), DateTime.Now.AddDays(1));
             ClientContext.ExecuteQueryRetry();
-            return (int)peopleContent.Value.Rows.First()["ContentSourceID"];
+            if (peopleContent.Value.Rows.Count > 0) return (int)peopleContent.Value.Rows.First()["ContentSourceID"];
+            return -1;
         }
 
         private static CrawlEntry MapCrawlLogEntry(Dictionary<string, object> dictionary)
