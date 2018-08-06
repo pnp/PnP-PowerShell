@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         Remarks = "Restores the recycle bin item with Id 72e4d749-d750-4989-b727-523d6726e442 to its original location",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPRecycleBinItems | ? FileLeafName -like ""*.docx"" | Restore-PnpRecycleBinItem",
+        Code = @"PS:> Get-PnPRecycleBinItem | ? FileLeafName -like ""*.docx"" | Restore-PnpRecycleBinItem",
         Remarks = "Restores all the items in the first and second stage recycle bins to their original location of which the filename ends with the .docx extension",
         SortOrder = 2)]
     
