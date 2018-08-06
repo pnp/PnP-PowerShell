@@ -20,30 +20,40 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         {
             if (string.IsNullOrEmpty(url))
             {
-                throw new ArgumentException("Url");
+                throw new ArgumentException("Site");
             }
-            Uri uri;
-            try
+            if (Guid.TryParse(url, out Guid siteId))
             {
-                uri = new Uri(url);
+                _id = siteId;
             }
-            catch (UriFormatException)
+            else
             {
-                throw new ArgumentException("Url");
+                Uri uri;
+                try
+                {
+                    uri = new Uri(url);
+                }
+                catch (UriFormatException)
+                {
+                    throw new ArgumentException("Site");
+                }
+                _url = url;
             }
-            _url = url;
         }
 
         public SitePipeBind(Microsoft.SharePoint.Client.Site site)
         {
-            site.EnsureProperties(s => s.Url);
+            site.EnsureProperties(s => s.Url, s => s.Id);
             _url = site.Url;
             _site = site;
+            _id = site.Id;
         }
 
         public string Url => _url;
 
         public Microsoft.SharePoint.Client.Site Site => _site;
-        
+
+        public Guid Id => _id;
+
     }
 }
