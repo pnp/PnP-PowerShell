@@ -10,11 +10,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Fixed Get-PnPSearchCrawlLog where listing user profile crawl entries failed for some tenants
+- Added default pipebind to Get-PnPListitem 
+- Add-PnPDocumentSet now adds the content type to the document library.
 
 ### Deprecated
 
 ### Contributors
-
+- KoenZomers
 ## [2.28.1807.0]
 ### Changed
 - Added IncludeClassification to Get-PnPUnifiedGroup
