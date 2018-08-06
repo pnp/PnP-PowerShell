@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         private const string ParameterSet_BYUNIQUEID = "By Unique Id";
         private const string ParameterSet_BYQUERY = "By Query";
         private const string ParameterSet_ALLITEMS = "All Items";
-        [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve", ParameterSetName = ParameterSet_BYID)]
