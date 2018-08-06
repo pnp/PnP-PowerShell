@@ -7,16 +7,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.29.1808.0] unreleased
 ### Added
+- Added Get-PnPLabel and Set-PnPLabel to get and set compliancy tags/labels on a list or library. Only available for SharePoint Online.
 
 ### Changed
 - Fixed Get-PnPSearchCrawlLog where listing user profile crawl entries failed for some tenants
 - Added default pipebind to Get-PnPListitem 
 - Add-PnPDocumentSet now adds the content type to the document library.
+- Updated documentation for Clear-PnPRecycleBinItem and Restore-PnPRecycleBinItem
+- Updated documentation for New-PnPSite
 
 ### Deprecated
 
 ### Contributors
 - KoenZomers
+- robinmeure
+
 ## [2.28.1807.0]
 ### Changed
 - Added IncludeClassification to Get-PnPUnifiedGroup
