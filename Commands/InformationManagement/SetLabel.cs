@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿#if !ONPREMISES
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -6,7 +7,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPLabel")]
-    [CmdletHelp("Sets a label/tag on the specified list or library", Category = CmdletHelpCategory.InformationManagement)]
+    [CmdletHelp("Sets a label/tag on the specified list or library", Category = CmdletHelpCategory.InformationManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Set-PnPLabel  -List ""Demo List"" -Label ""Project Documentation""",
        Remarks = @"This sets an O365 label on the specified list or library. ", SortOrder = 1)]
@@ -60,3 +61,4 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
         }
     }
 }
+#endif
