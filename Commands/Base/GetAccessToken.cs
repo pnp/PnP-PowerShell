@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 #else
 using System.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 #endif
 using System.Linq;
 using System.Management.Automation;

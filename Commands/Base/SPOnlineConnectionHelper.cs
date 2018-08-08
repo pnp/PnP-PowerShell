@@ -180,11 +180,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateGraphAccessTokenConnection(string accessToken, PSHost host, bool disableTelemetry)
         {
-#if NETSTANDARD2_0
             var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
-#else
-            var jwtToken = new System.IdentityModel.Tokens.JwtSecurityToken(accessToken);
-#endif
             var tokenResult = new TokenResult();
             tokenResult.AccessToken = accessToken;
             tokenResult.ExpiresOn = jwtToken.ValidTo;
