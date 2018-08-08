@@ -552,11 +552,7 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
             {
-#if !NETSTANDARD2_0
-                var jwtToken = new System.IdentityModel.Tokens.JwtSecurityToken(AccessToken);
-#else
                 var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
-#endif
                 var aud = jwtToken.Audiences.FirstOrDefault();
                 if (aud != null)
                 {
