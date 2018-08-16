@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
     [Cmdlet(VerbsCommon.Get, "PnPUser")]
     [CmdletHelp("Returns site users of current web",
         Category = CmdletHelpCategory.Principals,
-        DetailedDescription = "This command will return all the users that exist in the current site collection its User Information List",
+        DetailedDescription = "This command will return all users that exist in the current site collection's User Information List",
         OutputType = typeof(User),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx")]
     [CmdletExample(
