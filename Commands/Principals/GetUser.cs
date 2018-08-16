@@ -84,13 +84,13 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                     var usersWithDirectPermissions = SelectedWeb.SiteUsers.Where(u => SelectedWeb.RoleAssignments.Any(ra => ra.Member.LoginName == u.LoginName));
 
                     // Get all the users contained in SharePoint Groups
-                    SelectedWeb.Context.Load(SelectedWeb.SiteGroups, sg => sg.Include(u => u.Users.Include(retrievalExpressions)));
+                    SelectedWeb.Context.Load(SelectedWeb.SiteGroups, sg => sg.Include(u => u.Users.Include(retrievalExpressions), u => u.LoginName));
                     SelectedWeb.Context.ExecuteQueryRetry();
 
+                    // Get all SharePoint groups that have been assigned access
                     var usersWithGroupPermissions = new List<User>();
-                    foreach (var group in SelectedWeb.SiteGroups)
+                    foreach (var group in SelectedWeb.SiteGroups.Where(g => SelectedWeb.RoleAssignments.Any(ra => ra.Member.LoginName == g.LoginName)))
                     {
-                        // If they're in a SharePoint Group, they always have some kind of access rights, so add them all
                         usersWithGroupPermissions.AddRange(group.Users);
                     }
 
