@@ -230,14 +230,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 var serverVersion = "";
                 if (context != null)
                 {
-                    if (context.ServerLibraryVersion != null)
+                    try
                     {
-                        serverLibraryVersion = context.ServerLibraryVersion.ToString();
+                        if (context.ServerLibraryVersion != null)
+                        {
+                            serverLibraryVersion = context.ServerLibraryVersion.ToString();
+                        }
+                        if (context.ServerVersion != null)
+                        {
+                            serverVersion = context.ServerVersion.ToString();
+                        }
                     }
-                    if (context.ServerVersion != null)
-                    {
-                        serverVersion = context.ServerVersion.ToString();
-                    }
+                    catch { }
                 }
                 TelemetryClient = new TelemetryClient();
                 TelemetryClient.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
