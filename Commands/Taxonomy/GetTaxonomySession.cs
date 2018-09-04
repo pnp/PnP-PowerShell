@@ -14,7 +14,10 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
     {
         protected override void ExecuteCmdlet()
         {
-            WriteObject(ClientContext.Site.GetTaxonomySession());
+            var session = ClientContext.Site.GetTaxonomySession();
+            ClientContext.Load(session.TermStores);
+            ClientContext.ExecuteQueryRetry();
+            WriteObject(session);
         }
 
     }

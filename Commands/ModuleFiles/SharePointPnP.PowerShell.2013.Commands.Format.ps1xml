@@ -1270,5 +1270,28 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>TaxonomySession</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.SharePoint.Client.Taxonomy.TaxonomySession</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>TermStores</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>TermStores</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
   </ViewDefinitions>
 </Configuration>
