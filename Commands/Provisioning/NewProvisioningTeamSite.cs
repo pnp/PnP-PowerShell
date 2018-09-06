@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Code = @"PS:> $site = New-PnPProvisioningTeamSite -Alias ""MyTeamSite"" -Title ""My Team Site""",
        Remarks = "Creates a new team site object with the specified variables",
        SortOrder = 1)]
-    public class NewProvisioningTeamSite : PnPCmdlet
+    public class NewProvisioningTeamSite : PSCmdlet
     {
 
         [Parameter(Mandatory = true)]
@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false)]
         public string[] TemplateIds;
 
-        protected override void ExecuteCmdlet()
+        protected override void ProcessRecord()
         {
             var site = new TeamSiteCollection
             {

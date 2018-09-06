@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Code = @"PS:> $site = New-PnPProvisioningTeamNoGroupSubSite -Url ""MyTeamSubsite"" -Title ""My Team Site"" -TimeZoneId 4",
        Remarks = "Creates a new team site subsite object with the specified variables",
        SortOrder = 1)]
-    public class NewProvisioningTeamNoGroupSubSite : PnPCmdlet
+    public class NewProvisioningTeamNoGroupSubSite : PSCmdlet
     {
 
         [Parameter(Mandatory = true)]
@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false)]
         public SwitchParameter UseDifferentPermissionsFromParentSite;
 
-        protected override void ExecuteCmdlet()
+        protected override void ProcessRecord()
         {
             SiteCollection c;
             var site = new TeamNoGroupSubSite()

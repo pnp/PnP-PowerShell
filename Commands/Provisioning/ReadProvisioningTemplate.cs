@@ -3,6 +3,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.IO;
 using System.Management.Automation;
@@ -54,7 +55,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
             // Load the provisioning template file
             Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = ApplyProvisioningTemplate.IsOpenOfficeFile(stream);
+            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
 
             XMLTemplateProvider provider;
             if (isOpenOfficeFile)

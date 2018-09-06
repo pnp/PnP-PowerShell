@@ -5,14 +5,14 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommon.New, "PnPProvisioningTeamGroupSite", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.New, "PnPProvisioningTeamNoGroupSite", SupportsShouldProcess = true)]
     [CmdletHelp("Creates a team site without an Office 365 group object",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> $site = New-PnPProvisioningTeamNoGroupSite -Alias ""MyTeamSite"" -Title ""My Team Site""",
        Remarks = "Creates a new team site object with the specified variables",
        SortOrder = 1)]
-    public class NewProvisioningTeamNoGroupSite : PnPCmdlet
+    public class NewProvisioningTeamNoGroupSite : PSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Url;
@@ -38,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false)]
         public string[] TemplateIds;
 
-        protected override void ExecuteCmdlet()
+        protected override void ProcessRecord()
         {
             var site = new TeamNoGroupSiteCollection
             {

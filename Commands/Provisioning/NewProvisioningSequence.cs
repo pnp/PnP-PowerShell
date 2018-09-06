@@ -16,11 +16,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Code = @"PS:> $sequence = New-PnPProvisioningSequence -Id ""MySequence""",
        Remarks = "Creates a new instance of a provisioning sequence object and sets the Id to the value specified.",
        SortOrder = 2)]
-    public class NewProvisioningSequence : PnPCmdlet
+    public class NewProvisioningSequence : PSCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Optional Id of the sequence", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Id;
-        protected override void ExecuteCmdlet()
+        protected override void ProcessRecord()
         {
             var result = new ProvisioningSequence();
             if (this.MyInvocation.BoundParameters.ContainsKey("Id"))

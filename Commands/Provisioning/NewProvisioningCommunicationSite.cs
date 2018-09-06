@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Code = @"PS:> $site = New-PnPProvisioningCommunicationSite -Url ""/sites/mycommunicationsite"" -Title ""My Team Site""",
        Remarks = "Creates a new communication site object with the specified variables",
        SortOrder = 1)]
-    public class NewProvisioningCommunicationSite : PnPCmdlet
+    public class NewProvisioningCommunicationSite : PSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Url;
@@ -44,7 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false)]
         public string[] TemplateIds;
 
-        protected override void ExecuteCmdlet()
+        protected override void ProcessRecord()
         {
             var site = new CommunicationSiteCollection
             {

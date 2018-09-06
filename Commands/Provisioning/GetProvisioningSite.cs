@@ -17,14 +17,14 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Code = @"PS:> Get-PnPProvisioningSite -Sequence $mysequence -Identity 8058ea99-af7b-4bb7-b12a-78f93398041e",
        Remarks = "Returns the specified site from the specified sequence",
        SortOrder = 2)]
-    public class GetProvisioningSite : PnPCmdlet
+    public class GetProvisioningSite : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The sequence to retrieve the site from", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ProvisioningSequence Sequence;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional Id of the site", ParameterSetName = ParameterAttribute.AllParameterSets, ValueFromPipeline = true)]
         public ProvisioningSitePipeBind Identity;
-        protected override void ExecuteCmdlet()
+        protected override void ProcessRecord()
         {
             if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
             {

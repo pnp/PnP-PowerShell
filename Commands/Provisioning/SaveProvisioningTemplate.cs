@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Save, "PnPProvisioningTemplate")]
-    [CmdletHelp("Saves a PnP file to the file systems",
+    [CmdletHelp("Saves a PnP file to the file system",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Save-PnPProvisioningTemplate -InputInstance $template -Out .\template.pnp",

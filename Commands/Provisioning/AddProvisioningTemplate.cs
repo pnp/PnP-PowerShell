@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Code = @"PS:> Add-PnPProvisioningTemplate -Hierarchy $myhierarchy -Template $mytemplate",
        Remarks = "Adds an existing sequence object to an existing hierarchy object",
        SortOrder = 1)]
-    public class AddProvisioningTemplate : PnPCmdlet
+    public class AddProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The template to add to the hierarchy")]
         public ProvisioningTemplate Template;
@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = true, HelpMessage = "The hierarchy to add the template to", ValueFromPipeline = true)]
         public ProvisioningHierarchy Hierarchy;
 
-        protected override void ExecuteCmdlet()
+        protected override void ProcessRecord()
         {
             if(Hierarchy.Templates.FirstOrDefault(t => t.Id == Template.Id) == null)
             {

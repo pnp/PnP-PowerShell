@@ -17,14 +17,14 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        Code = @"PS:> Get-PnPProvisioningSequence -Hierarchy $myhierarchy -Identity ""mysequence""",
        Remarks = "Returns the specified sequence from the specified hierarchy",
        SortOrder = 2)]
-    public class GetProvisioningSequence : PnPCmdlet
+    public class GetProvisioningSequence : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The hierarchy to retrieve the sequence from", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ProvisioningHierarchy Hierarchy;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional Id of the sequence", ParameterSetName = ParameterAttribute.AllParameterSets, ValueFromPipeline = true)]
         public ProvisioningSequencePipeBind Identity;
-        protected override void ExecuteCmdlet()
+        protected override void ProcessRecord()
         {
             if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
