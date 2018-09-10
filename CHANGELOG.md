@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.2.1810.0] Unreleased
+### Added
+
+### Changed
+
+### Deprecated
+
+### Contributors
+
+## [3.1.1809.0]
+
+### Changed
+- Minor bugfixes
+- Updated core library
+
 ## [3.0.1808.0]
 ### Added
 - Added Get-PnPLabel and Set-PnPLabel to get and set compliancy tags/labels on a list or library. Only available for SharePoint Online.
