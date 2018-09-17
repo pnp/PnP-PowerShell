@@ -22,10 +22,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         public string Title;
 
         [Parameter(Mandatory = false)]
-        public string Description;
+        public string Description = "";
 
         [Parameter(Mandatory = false)]
-        public string DisplayName;
+        public string DisplayName = "";
 
         [Parameter(Mandatory = false)]
         public string Classification;
@@ -54,7 +54,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             if (TemplateIds != null)
             {
                 site.Templates.AddRange(TemplateIds.ToList());
-            }
+            } 
             WriteObject(site);
         }
     }
