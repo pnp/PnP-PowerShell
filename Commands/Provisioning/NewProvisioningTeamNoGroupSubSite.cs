@@ -45,7 +45,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             var site = new TeamNoGroupSubSite()
             {
                 Url = Url,
-                Language = Language.ToString(),
+                Language = (int)Language,
                 QuickLaunchEnabled = !QuickLaunchDisabled.IsPresent,
                 UseSamePermissionsAsParentSite = !UseDifferentPermissionsFromParentSite.IsPresent,
                 TimeZoneId = (int)TimeZoneId,
