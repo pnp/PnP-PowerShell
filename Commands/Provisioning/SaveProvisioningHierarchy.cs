@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
@@ -11,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Save, "PnPProvisioningHierarchy")]
     [CmdletHelp("Saves a PnP provisioning hierarchy to the file system",
-        Category = CmdletHelpCategory.Provisioning)]
+        Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Save-PnPProvisioningHierarchy -Hierarchy $hierarchy -Out .\hierarchy.pnp",
        Remarks = "Saves a PnP provisioning hiearchy to the file system",
@@ -92,3 +93,4 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         }
     }
 }
+#endif

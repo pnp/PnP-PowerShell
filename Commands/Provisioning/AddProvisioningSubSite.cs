@@ -1,6 +1,6 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Add, "PnPProvisioningSubSite", SupportsShouldProcess = true)]
     [CmdletHelp("Adds a provisioning sequence object to a provisioning site object",
-        Category = CmdletHelpCategory.Provisioning)]
+        Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Add-PnPProvisioningSequence -Hierarchy $myhierarchy -Sequence $mysequence",
        Remarks = "Adds an existing sequence object to an existing hierarchy object",
@@ -31,10 +31,12 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             if (Site.Sites.Cast<TeamNoGroupSubSite>().FirstOrDefault(s => s.Url == SubSite.Url) == null)
             {
                 Site.Sites.Add(SubSite);
-            } else
+            }
+            else
             {
                 WriteError(new ErrorRecord(new Exception($"Site with URL {SubSite.Url} already exists in sequence"), "DUPLICATEURL", ErrorCategory.InvalidData, SubSite));
             }
         }
     }
 }
+#endif

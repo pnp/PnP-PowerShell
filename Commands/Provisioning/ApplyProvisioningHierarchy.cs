@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !ONPREMISES
+using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
@@ -8,6 +9,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,15 +19,21 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet("Apply", "PnPProvisioningHierarchy", SupportsShouldProcess = true)]
     [CmdletHelp("Adds a provisioning sequence object to a provisioning site object",
-        Category = CmdletHelpCategory.Provisioning)]
+        Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPProvisioningSequence -Hierarchy $myhierarchy -Sequence $mysequence",
-       Remarks = "Adds an existing sequence object to an existing hierarchy object",
+       Code = @"PS:> Apply-PnPProvisioningHierarchy -Path myfile.pnp",
+       Remarks = "Will read the provisioning hierarchy from the filesystem and will apply the sequences in the hierarchy",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> New-PnPProvisioningSequence -Id ""MySequence"" | Add-PnPProvisioningSequence -Hierarchy $hierarchy",
-       Remarks = "Creates a new instance of a provisioning sequence object and sets the Id to the value specified, then the sequence is added to an existing hierarchy object",
-       SortOrder = 2)]
+       Code = @"PS:> Apply-PnPProvisioningHierarchy -Path myfile.pnp -SequenceId ""mysequence""",
+       Remarks = "Will read the provisioning hierarchy from the filesystem and will apply the specified sequence in the hierarchy",
+       SortOrder = 1)]
+    [CmdletExample(
+     Code = @"PS:> Apply-PnPProvisioningHierarchy -Path myfile.pnp -Parameters @{""ListTitle""=""Projects"";""parameter2""=""a second value""}",
+     Remarks = @"Applies a provisioning hierarchy template to the current tenant. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.
+
+For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.",
+     SortOrder = 3)]
     public class ApplyProvisioningHierarchy : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
@@ -57,6 +65,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
+
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the hierarchy by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public Hashtable Parameters;
 
         [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter OverwriteSystemPropertyBagValues;
@@ -216,6 +227,20 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                         break;
                     }
             }
+            if (Parameters != null)
+            {
+                foreach (var parameter in Parameters.Keys)
+                {
+                    if (hierarchyToApply.Parameters.ContainsKey(parameter.ToString()))
+                    {
+                        hierarchyToApply.Parameters[parameter.ToString()] = Parameters[parameter].ToString();
+                    }
+                    else
+                    {
+                        hierarchyToApply.Parameters.Add(parameter.ToString(), Parameters[parameter].ToString());
+                    }
+                }
+            }
             if (!string.IsNullOrEmpty(SequenceId))
             {
                 Tenant.ApplyProvisionHierarchy(hierarchyToApply, SequenceId, applyingInformation);
@@ -332,3 +357,4 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         }
     }
 }
+#endif

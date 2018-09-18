@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
@@ -9,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Add, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
     [CmdletHelp("Adds a provisioning template object to a provisioning hierarchy",
-        Category = CmdletHelpCategory.Provisioning)]
+        Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Add-PnPProvisioningTemplate -Hierarchy $myhierarchy -Template $mytemplate",
        Remarks = "Adds an existing sequence object to an existing hierarchy object",
@@ -33,3 +34,4 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         }
     }
 }
+#endif

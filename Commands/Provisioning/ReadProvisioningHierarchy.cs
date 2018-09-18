@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
@@ -13,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
     [Cmdlet(VerbsCommunications.Read, "PnPProvisioningHierarchy")]
     [CmdletHelp("Loads/Reads a PnP provisioning hierarchy from the file system and returns an in-memory instance of this template.",
-        Category = CmdletHelpCategory.Provisioning)]
+        Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Read-PnPProvisioningHierarchy -Path hierarchy.pnp",
        Remarks = "Reads a PnP provisioning hierarchy file from the file system and returns an in-memory instance",
@@ -66,3 +67,4 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         }
     }
 }
+#endif

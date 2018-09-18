@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Linq;
 using System.Management.Automation;
@@ -7,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.New, "PnPProvisioningTeamNoGroupSubSite", SupportsShouldProcess = true)]
     [CmdletHelp("Creates a team site subsite with no Office 365 group object",
-        Category = CmdletHelpCategory.Provisioning)]
+        Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> $site = New-PnPProvisioningTeamNoGroupSubSite -Url ""MyTeamSubsite"" -Title ""My Team Site"" -TimeZoneId 4",
        Remarks = "Creates a new team site subsite object with the specified variables",
@@ -60,3 +61,4 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         }
     }
 }
+#endif

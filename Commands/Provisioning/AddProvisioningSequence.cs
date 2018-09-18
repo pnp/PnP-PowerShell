@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.Add, "PnPProvisioningSequence", SupportsShouldProcess = true)]
     [CmdletHelp("Adds a provisioning sequence object to a provisioning hierarchy",
-        Category = CmdletHelpCategory.Provisioning)]
+        Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Add-PnPProvisioningSequence -Hierarchy $myhierarchy -Sequence $mysequence",
        Remarks = "Adds an existing sequence object to an existing hierarchy object",
@@ -24,17 +25,19 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         [Parameter(Mandatory = true, HelpMessage = "Optional Id of the sequence", ParameterSetName = ParameterAttribute.AllParameterSets, ValueFromPipeline = true)]
         public ProvisioningSequence Sequence;
-        
+
         protected override void ProcessRecord()
         {
             if (Hierarchy.Sequences.FirstOrDefault(s => s.ID == Sequence.ID) == null)
             {
                 Hierarchy.Sequences.Add(Sequence);
                 WriteObject(Hierarchy);
-            } else
+            }
+            else
             {
                 WriteError(new ErrorRecord(new Exception($"Sequence with ID {Sequence.ID} already exists in hierarchy"), "DUPLICATESEQUENCEID", ErrorCategory.InvalidData, Sequence));
             }
         }
     }
 }
+#endif
