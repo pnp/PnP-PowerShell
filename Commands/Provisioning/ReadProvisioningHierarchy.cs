@@ -46,8 +46,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             FileConnectorBase fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
 
             // Load the provisioning template file
-            Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
+            var isOpenOfficeFile = false;
+            using (var stream = fileConnector.GetFileStream(templateFileName))
+            {
+                isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
+            }
 
             XMLTemplateProvider provider;
             if (isOpenOfficeFile)
@@ -61,7 +64,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             }
 
             ProvisioningHierarchy provisioningHierarchy = provider.GetHierarchy(templateFileName);
-
+            provisioningHierarchy.Connector = provider.Connector;
             // Return the result
             return provisioningHierarchy;
         }

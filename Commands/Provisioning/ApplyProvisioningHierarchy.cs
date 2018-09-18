@@ -4,10 +4,8 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -192,7 +190,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
             ProvisioningHierarchy hierarchyToApply = null;
 
-            switch(ParameterSetName)
+            switch (ParameterSetName)
             {
                 case ParameterSet_PATH:
                     {
@@ -257,103 +255,11 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
         private ProvisioningHierarchy GetHierarchy()
         {
-            ProvisioningHierarchy hierarchy = null;
-            FileConnectorBase fileConnector;
-
-            bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
-            string templateFileName = System.IO.Path.GetFileName(Path);
-            if (templateFromFileSystem)
+            if(!System.IO.Path.IsPathRooted(Path))
             {
-                if (!System.IO.Path.IsPathRooted(Path))
-                {
-                    Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
-                }
-                if (!System.IO.File.Exists(Path))
-                {
-                    throw new FileNotFoundException($"File not found");
-                }
-                if (!string.IsNullOrEmpty(ResourceFolder))
-                {
-                    if (!System.IO.Path.IsPathRooted(ResourceFolder))
-                    {
-                        ResourceFolder = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
-                            ResourceFolder);
-                    }
-                }
-                var fileInfo = new FileInfo(Path);
-                fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-            else
-            {
-                Uri fileUri = new Uri(Path);
-                var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, fileUri);
-                var templateContext = ClientContext.Clone(webUrl.ToString());
-
-                var library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
-                var idx = library.IndexOf("/", StringComparison.Ordinal);
-                library = library.Substring(0, idx);
-
-                // This syntax creates a SharePoint connector regardless we have the -InputInstance argument or not
-                fileConnector = new SharePointConnector(templateContext, templateContext.Url, library);
-            }
-
-            // If we don't have the -InputInstance parameter, we load the template from the source connector
-
-            using (var stream = fileConnector.GetFileStream(templateFileName))
-            {
-                var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
-                XMLTemplateProvider provider;
-                if (isOpenOfficeFile)
-                {
-                    provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
-                    templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
-                }
-                else
-                {
-                    if (templateFromFileSystem)
-                    {
-                        provider = new XMLFileSystemTemplateProvider(Path, "");
-                    }
-                    else
-                    {
-                        throw new NotSupportedException("Only .pnp package files are supported from a SharePoint library");
-                    }
-                }
-
-                var formatter = XMLPnPSchemaFormatter.LatestFormatter;
-                formatter.Initialize(provider);
-
-                var serializer = (IProvisioningHierarchyFormatter)formatter;
-                
-                hierarchy = serializer.ToProvisioningHierarchy(provider.Connector.GetFileStream(Path));
-
-                hierarchy.Connector = fileConnector;
-                if (hierarchy == null)
-                {
-                    // If we don't have the template, raise an error and exit
-                    WriteError(new ErrorRecord(new Exception("The -Path parameter targets an invalid repository or template object."), "WRONG_PATH", ErrorCategory.SyntaxError, null));
-                    return null;
-                }
-
-                //if (isOpenOfficeFile)
-                //{
-                //    hierarchy.Connector = provider.Connector;
-                //}
-                //else
-                //{
-                //    if (ResourceFolder != null)
-                //    {
-                //        var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
-                //        provisioningTemplate.Connector = fileSystemConnector;
-                //    }
-                //    else
-                //    {
-                //        provisioningTemplate.Connector = provider.Connector;
-                //    }
-                //}
-
-                return hierarchy;
-            }
+            return ReadProvisioningHierarchy.LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions);
         }
     }
 }

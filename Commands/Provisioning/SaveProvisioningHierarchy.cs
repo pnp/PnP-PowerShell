@@ -6,6 +6,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
@@ -48,6 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 if (Force || ShouldContinue(string.Format(Properties.Resources.File0ExistsOverwrite, Out),
                     Properties.Resources.Confirm))
                 {
+                    System.IO.File.Delete(Out);
                     proceed = true;
                 }
             }
@@ -78,17 +80,73 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
             if (extension == ".pnp")
             {
-               // var connector = new OpenXMLConnector(Out, fileSystemConnector);
+                // var connector = new OpenXMLConnector(Out, fileSystemConnector);
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                       Out, fileSystemConnector);
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
                 provider.SaveAs(Hierarchy, templateFileName);
+
+                ProcessFiles(Out, fileSystemConnector, provider.Connector);
+
+                //provider.SaveAs(Hierarchy, templateFileName);
                 //connector.Commit();
             }
             else
             {
                 XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(outPath, "");
                 provider.SaveAs(Hierarchy, Out);
+            }
+        }
+
+        private void ProcessFiles(string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        {
+            var hierarchy = ReadProvisioningHierarchy.LoadProvisioningHierarchyFromFile(templateFileName, null);
+            if (Hierarchy.Tenant?.AppCatalog != null)
+            {
+                foreach (var app in Hierarchy.Tenant.AppCatalog.Packages)
+                {
+                    AddFile(app.Src, hierarchy, fileSystemConnector, connector);
+                }
+            }
+            if(Hierarchy.Tenant?.SiteScripts != null)
+            {
+                foreach(var siteScript in Hierarchy.Tenant.SiteScripts)
+                {
+                    AddFile(siteScript.JsonFilePath, hierarchy, fileSystemConnector, connector);
+                }
+            }
+            if (Hierarchy.Localizations != null && Hierarchy.Localizations.Any())
+            {
+                foreach (var location in Hierarchy.Localizations)
+                {
+                    AddFile(location.ResourceFile, hierarchy, fileSystemConnector, connector);
+                }
+            }
+            foreach (var template in Hierarchy.Templates)
+            {
+                if (template.Files.Any())
+                {
+                    foreach (var file in template.Files)
+                    {
+                        AddFile(file.Src, hierarchy, fileSystemConnector, connector);
+                    }
+                }
+            }
+
+        }
+
+        private void AddFile(string sourceName, ProvisioningHierarchy hierarchy, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        {
+            using (var fs = fileSystemConnector.GetFileStream(sourceName))
+            {
+                var fileName = sourceName.IndexOf("\\") > 0 ? sourceName.Substring(sourceName.LastIndexOf("\\") + 1) : sourceName;
+                var folderName = sourceName.IndexOf("\\") > 0 ? sourceName.Substring(0, sourceName.LastIndexOf("\\")) : "";
+                hierarchy.Connector.SaveFileStream(fileName, folderName, fs);
+
+                if (hierarchy.Connector is ICommitableFileConnector)
+                {
+                    ((ICommitableFileConnector)hierarchy.Connector).Commit();
+                }
             }
         }
     }
