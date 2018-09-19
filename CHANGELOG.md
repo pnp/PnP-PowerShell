@@ -7,6 +7,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [3.2.1810.0] Unreleased
 ### Added
+- Add-PnPProvisioningSequence
+- Add-PnPProvisioningSite
+- Add-PnPProvisioningSubSite
+- Apply-PnPProvisioningHierarchy
+- Get-PnPProvisioningSite
+- New-PnPProvisioningHierarchy
+- New-PnPProvisioningSequence
+- New-PnPProvisioningCommunicationSite
+- New-PnPProvisioningTeamNoGroupSite
+- New-PnPProvisioningTeamNoGroupSubSite
+- New-PnPProvisioningTeamSite
+- Read-PnPProvisioningHierarchy
+- Save-PnPProvisioningHierarchy
+- Test-PnPProvisioningHierarchy
 
 ### Changed
 
