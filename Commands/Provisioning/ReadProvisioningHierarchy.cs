@@ -11,7 +11,6 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-
     [Cmdlet(VerbsCommunications.Read, "PnPProvisioningHierarchy")]
     [CmdletHelp("Loads/Reads a PnP provisioning hierarchy from the file system and returns an in-memory instance of this template.",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
@@ -57,11 +56,18 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             {
                 provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
                 templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+
+                var hierarchy = (provider as XMLOpenXMLTemplateProvider).GetHierarchy();
+                if (hierarchy != null)
+                {
+                    hierarchy.Connector = provider.Connector;
+                    return hierarchy;
+                }
             }
             else
             {
                 provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
-            }
+            } 
 
             ProvisioningHierarchy provisioningHierarchy = provider.GetHierarchy(templateFileName);
             provisioningHierarchy.Connector = provider.Connector;

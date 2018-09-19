@@ -81,11 +81,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             if (extension == ".pnp")
             {
                 // var connector = new OpenXMLConnector(Out, fileSystemConnector);
-                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-                      Out, fileSystemConnector);
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
-                provider.SaveAs(Hierarchy, templateFileName);
 
+                XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
+                      Out, fileSystemConnector, templateFileName: templateFileName);
+                provider.SaveAs(Hierarchy, templateFileName);
                 ProcessFiles(Out, fileSystemConnector, provider.Connector);
 
                 //provider.SaveAs(Hierarchy, templateFileName);
@@ -108,9 +108,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                     AddFile(app.Src, hierarchy, fileSystemConnector, connector);
                 }
             }
-            if(Hierarchy.Tenant?.SiteScripts != null)
+            if (Hierarchy.Tenant?.SiteScripts != null)
             {
-                foreach(var siteScript in Hierarchy.Tenant.SiteScripts)
+                foreach (var siteScript in Hierarchy.Tenant.SiteScripts)
                 {
                     AddFile(siteScript.JsonFilePath, hierarchy, fileSystemConnector, connector);
                 }
