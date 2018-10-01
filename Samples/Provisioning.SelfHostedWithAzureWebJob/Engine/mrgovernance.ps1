@@ -4,7 +4,7 @@ param(
 
 . $PSScriptRoot/shared.ps1
 
-Write-Output @"
+Write-Output -InputObject @"
   ___  ___       _____                                                
   |  \/  |      |  __ \                                               
   | .  . |_ __  | |  \/ _____   _____ _ __ _ __   __ _ _ __   ___ ___ 
@@ -18,7 +18,7 @@ Write-Output @"
 
 $variablesSet = CheckEnvironmentalVariables
 if ($variablesSet -eq $false) {    
-    Write-Output "Missing one of the following environmental variables: TenantURL, PrimarySiteCollectionOwnerEmail, SiteDirectoryUrl, AppId, AppSecret"
+    Write-Output -InputObject "Missing one of the following environmental variables: TenantURL, PrimarySiteCollectionOwnerEmail, SiteDirectoryUrl, AppId, AppSecret"
     exit
 }
 Connect -Url "$tenantURL$siteDirectorySiteUrl"
@@ -32,7 +32,7 @@ foreach ($site in $res.ResultRows) {
     Connect -Url "$tenantURL$siteDirectorySiteUrl"
     $siteItem = Get-PnPListItem -List $siteDirectoryList -Id $itemId
 
-    Write-Output "Processing $url - $itemId"
+    Write-Output -InputObject "Processing $url - $itemId"
     if ($syncPermissions) {        
         SyncPermissions -siteUrl $url -item $siteItem
     }

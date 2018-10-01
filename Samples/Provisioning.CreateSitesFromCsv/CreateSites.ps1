@@ -46,7 +46,7 @@ else
     # Prompts for credentials, if not found in the Windows Credential Manager.
     $email = Read-Host -Prompt "Please enter tenant admin email"
     $pass = Read-host -AsSecureString "Please enter tenant admin password"
-    $credentials = New-Object –TypeName "System.Management.Automation.PSCredential" –ArgumentList $email, $pass
+    $credentials = New-Object -TypeName "System.Management.Automation.PSCredential" –ArgumentList $email, $pass
 }
 
 if($credentials -eq $null -or $csvConfig -eq $null) 
@@ -67,7 +67,7 @@ foreach ($item in $csvConfig)
 
         Write-Host "Provisioning site collection $siteUrl" -ForegroundColor Yellow
          
-        if(Get-PnPTenantSite | where {$_.Url -eq $siteUrl}) 
+        if(Get-PnPTenantSite | where-Object -FilterScript {$_.Url -eq $siteUrl}) 
         {
             Write-Host "Site collection $siteUrl exists. Moving to the next one." -ForegroundColor Yellow
             continue
@@ -87,7 +87,7 @@ foreach ($item in $csvConfig)
 
         Write-Host "Provisioning sub web $siteUrl." -ForegroundColor Yellow
         
-        if(Get-PnPSubWebs | where {$_.Url -eq $siteUrl}) 
+        if(Get-PnPSubWebs | where-Object -FilterScript {$_.Url -eq $siteUrl}) 
         {
             Write-Host "Sub web $siteUrl exists. Moving to the next one." -ForegroundColor Yellow
             continue
