@@ -59,7 +59,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 var webTemplate = ClientContext.Web.EnsureProperty(w => w.WebTemplate);
                 if (webTemplate == "GROUP")
                 {
-                    if (System.IO.Path.IsPathRooted(LogoFilePath))
+                    if (!System.IO.Path.IsPathRooted(LogoFilePath))
                     {
                         LogoFilePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
                     }
