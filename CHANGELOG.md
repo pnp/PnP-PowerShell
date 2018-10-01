@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Test-PnPProvisioningHierarchy
 
 ### Changed
-
+- Updated Set-PnPSite to allow for setting of logo on modern team site
 ### Deprecated
 
 ### Contributors
