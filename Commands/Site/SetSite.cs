@@ -25,6 +25,10 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Set-PnPSite -DisableFlows:$false",
         Remarks = "Enables Flows for this site",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPSite -SiteLogoPath c:\images\mylogo.png",
+        Remarks = "Sets the logo if the site is a modern team site",
+        SortOrder = 4)]
     public class SetSite : PnPCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The classification to set")]
@@ -33,7 +37,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = "Disables flows for this site")]
         public SwitchParameter DisableFlows;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the logo")]
+        [Parameter(Mandatory = false, HelpMessage = "Sets the logo if the site is modern team site. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl")]
         public string LogoFilePath;
 
         protected override void ExecuteCmdlet()
