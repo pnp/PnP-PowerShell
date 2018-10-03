@@ -85,6 +85,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                       Out, fileSystemConnector, templateFileName: templateFileName);
+                WriteObject("Processing template");
                 provider.SaveAs(Hierarchy, templateFileName);
                 ProcessFiles(Out, fileSystemConnector, provider.Connector);
 
@@ -105,6 +106,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             {
                 foreach (var app in Hierarchy.Tenant.AppCatalog.Packages)
                 {
+                    WriteObject($"Processing {app.Src}");
                     AddFile(app.Src, hierarchy, fileSystemConnector, connector);
                 }
             }
@@ -112,6 +114,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             {
                 foreach (var siteScript in Hierarchy.Tenant.SiteScripts)
                 {
+                    WriteObject($"Processing {siteScript.JsonFilePath}");
                     AddFile(siteScript.JsonFilePath, hierarchy, fileSystemConnector, connector);
                 }
             }
@@ -119,6 +122,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             {
                 foreach (var location in Hierarchy.Localizations)
                 {
+                    WriteObject($"Processing {location.ResourceFile}");
                     AddFile(location.ResourceFile, hierarchy, fileSystemConnector, connector);
                 }
             }
@@ -126,8 +130,15 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             {
                 if(template.WebSettings != null && template.WebSettings.SiteLogo != null)
                 {
-                    if (!template.WebSettings.SiteLogo.StartsWith("https://",StringComparison.InvariantCultureIgnoreCase) && !template.WebSettings.SiteLogo.StartsWith("{"))
+                    // is it a file?
+                    var isFile = false;
+                    using (var fileStream = fileSystemConnector.GetFileStream(template.WebSettings.SiteLogo))
                     {
+                        isFile = fileStream != null;
+                    }
+                    if (isFile)
+                    {
+                        WriteObject($"Processing {template.WebSettings.SiteLogo}");
                         AddFile(template.WebSettings.SiteLogo, hierarchy, fileSystemConnector, connector);
                     }
                 }
