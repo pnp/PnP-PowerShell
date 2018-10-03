@@ -124,6 +124,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             }
             foreach (var template in Hierarchy.Templates)
             {
+                if(template.WebSettings != null && template.WebSettings.SiteLogo != null)
+                {
+                    if (!template.WebSettings.SiteLogo.StartsWith("https://",StringComparison.InvariantCultureIgnoreCase) && !template.WebSettings.SiteLogo.StartsWith("{"))
+                    {
+                        AddFile(template.WebSettings.SiteLogo, hierarchy, fileSystemConnector, connector);
+                    }
+                }
                 if (template.Files.Any())
                 {
                     foreach (var file in template.Files)
