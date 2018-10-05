@@ -12,6 +12,7 @@ using System.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using SharePointPnP.PowerShell.Commands.Components;
 using System.Collections.Generic;
+using SharePointPnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
@@ -152,7 +153,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                 // If we don't have the -InputInstance parameter, we load the template from the source connector
 
                 Stream stream = fileConnector.GetFileStream(templateFileName);
-                var isOpenOfficeFile = IsOpenOfficeFile(stream);
+                var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
                 XMLTemplateProvider provider;
                 if (isOpenOfficeFile)
                 {
@@ -355,23 +356,6 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
         }
 
-        internal static bool IsOpenOfficeFile(Stream stream)
-        {
-            bool istrue = false;
-            // SIG 50 4B 03 04 14 00
-
-            byte[] bytes = new byte[6];
-            stream.Read(bytes, 0, 6);
-            var signature = string.Empty;
-            foreach (var b in bytes)
-            {
-                signature += b.ToString("X2");
-            }
-            if (signature == "504B03041400")
-            {
-                istrue = true;
-            }
-            return istrue;
-        }
+     
     }
 }
