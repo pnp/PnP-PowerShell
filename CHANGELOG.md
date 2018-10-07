@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Updated Set-PnPSite to allow for setting of a logo on modern team site
+- Updated Get-PnPTerm to allow for -IncludeChildTerms parameter, which will load, if available all child terms
+- Updated Get-PnPTerm to allow for only specifying the id of a termset, without needing to require to specify the termset and termgroup.
 
 ### Deprecated
 
