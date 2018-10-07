@@ -583,30 +583,30 @@
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.Name -eq ""){
-                    $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexof("/") + 1)
+                  $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexof("/") + 1)
                   }
                   else{
-                    $_.Name
+                  $_.Name
                   }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "Folder" -and $_.Name -eq ""){
-                    "Subweb"
+                  "Subweb"
                   }
                   else{
-                    $_.GetType().Name
+                  $_.GetType().Name
                   }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "File"){
-                    $_.Length
+                  $_.Length
                   }
                   else{
-                    $_.ItemCount
+                  $_.ItemCount
                   }
                 </ScriptBlock>
               </TableColumnItem>
@@ -795,6 +795,9 @@
             <Width>36</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Child Terms</Label>
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -804,6 +807,16 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if($_.IsObjectPropertyInstantiated("Terms")){
+                    $_.TermsCount
+                  }
+                  else{
+                    "$($_.TermsCount) (Not loaded)"
+                  }
+                </ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -1685,7 +1698,7 @@
         </TableRowEntries>
       </TableControl>
     </View>
-   <View>
+    <View>
       <Name>SPOWebAppServicePrincipalPermissionRequest</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.Online.SharePoint.TenantAdministration.Internal.SPOWebAppServicePrincipalPermissionRequest</TypeName>
