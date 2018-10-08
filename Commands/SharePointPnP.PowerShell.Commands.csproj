@@ -459,6 +459,7 @@
     <Compile Include="Admin\RemoveTenantTheme.cs" />
     <Compile Include="Base\AddStoredCredential.cs" />
     <Compile Include="Base\DisablePowerShellTelemetry.cs" />
+    <Compile Include="Base\GetException.cs" />
     <Compile Include="Base\GetPowerShellTelemetryEnabled.cs" />
     <Compile Include="Base\EnablePowerShellTelemetry.cs" />
     <Compile Include="Base\GetAccessToken.cs" />
@@ -480,6 +481,7 @@
     <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
+    <Compile Include="Model\PnPException.cs" />
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />

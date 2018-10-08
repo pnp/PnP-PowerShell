@@ -1306,5 +1306,28 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>PnPException</Name>
+      <ViewSelectedBy>
+        <TypeName>SharePointPnP.PowerShell.Commands.Model.PnPException</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Message</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Stacktrace</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ScriptLineNumber</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
   </ViewDefinitions>
 </Configuration>
