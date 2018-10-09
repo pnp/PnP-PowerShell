@@ -1,6 +1,6 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Webs)]
     public class SetWeb : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "Sets the logo of the web to the current url. If you want to set the logo to a modern team site, use Set-PnPSite -SiteLogoPath")]
         public string SiteLogoUrl;
 
         [Parameter(Mandatory = false)]

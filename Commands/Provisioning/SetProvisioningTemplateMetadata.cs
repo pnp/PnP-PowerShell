@@ -8,6 +8,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using System.Collections;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
+using SharePointPnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
@@ -86,7 +87,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             XMLTemplateProvider provider;
             ProvisioningTemplate provisioningTemplate;
             Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = ApplyProvisioningTemplate.IsOpenOfficeFile(stream);
+            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
             if (isOpenOfficeFile)
             {
                 provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
