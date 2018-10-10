@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.2.1810.0] Unreleased
+## [3.3.1811.0] Unreleased
+### Added
+
+### Changed
+- Updated New-PnPSite to support language/locale for new sites.
+
+### Contributors
+## [3.2.1810.0] Released
 ### Added
 - Add-PnPProvisioningSequence : Adds an in-memory sequence to an in-memory provisioning hierarchy
 - Add-PnPProvisioningSite : Adds an in-memory site definition to a in-memory sequence
