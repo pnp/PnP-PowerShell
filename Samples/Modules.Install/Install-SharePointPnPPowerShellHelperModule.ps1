@@ -39,11 +39,11 @@ param (
 
        if (!(Get-command -Module $moduleName).count -gt 0)
        {
-           Install-Module $moduleName -Force -SkipPublisherCheck
+           Install-Module -Name $moduleName -Force -SkipPublisherCheck
        }
 
-       Write-Output "The modules for $moduleVersion have been installed and can now be used"
-       Write-Output 'On the next release you can just run Update-Module -force to update this and other installed modules'
+       Write-Output -InputObject "The modules for $moduleVersion have been installed and can now be used"
+       Write-Output -InputObject 'On the next release you can just run Update-Module -force to update this and other installed modules'
 }
 
 function Request-SPOOrOnPremises
@@ -51,9 +51,9 @@ function Request-SPOOrOnPremises
     [string]$title="Confirm"
     [string]$message="Which version of the Modules do you want to install?"
     
-	$SPO = New-Object System.Management.Automation.Host.ChoiceDescription "SharePoint &Online", "SharePoint Online"
-    $SP2016 = New-Object System.Management.Automation.Host.ChoiceDescription "SharePoint 201&6", "SharePoint 2016"
-	$SP2013 = New-Object System.Management.Automation.Host.ChoiceDescription "SharePoint 201&3", "SharePoint 2013"
+	$SPO = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint &Online", "SharePoint Online"
+    $SP2016 = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint 201&6", "SharePoint 2016"
+	$SP2013 = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint 201&3", "SharePoint 2013"
 	$options = [System.Management.Automation.Host.ChoiceDescription[]]($SPO, $SP2016, $SP2013)
 
 	$result = $host.ui.PromptForChoice($title, $message, $options, 0)
@@ -69,12 +69,12 @@ function Request-SPOOrOnPremises
 
 if ((Get-command -Module PowerShellGet).count -gt 0) 
     { 
-    Write-Output 'PowerShellPackageManagement now installed we will now run the next command in 10 Seconds'
+    Write-Output -InputObject 'PowerShellPackageManagement now installed we will now run the next command in 10 Seconds'
     Start-Sleep -Seconds 10 
     Install-SharePointPnPPowerShellModule -ModuleToInstall (Request-SPOOrOnPremises)
     }
     else
         {
-        Write-Output "PowerShellPackageManagement is not installed on this Machine - Please run the below to install - you will need to Copy and Paste it as i'm not doing everything for you ;-)"
-        Write-Output "Invoke-Expression (New-Object Net.WebClient).DownloadString('http://bit.ly/PSPackManInstall')"
+        Write-Output -InputObject "PowerShellPackageManagement is not installed on this Machine - Please run the below to install - you will need to Copy and Paste it as i'm not doing everything for you ;-)"
+        Write-Output -InputObject "Invoke-Expression (New-Object -TypeName Net.WebClient).DownloadString('http://bit.ly/PSPackManInstall')"
         }

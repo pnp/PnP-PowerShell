@@ -106,12 +106,12 @@ function Add-PnPModernListWebPart() {
    }
 
    If (($Section -eq 0) -and ($Column -eq 0)) {
-      Write-Warning "The Section and Column fields for the [$WebPartTitle] web part have been left blank or have zero values"
+      Write-Warning -Message "The Section and Column fields for the [$WebPartTitle] web part have been left blank or have zero values"
       try {
          Add-PnPClientSideWebPart -Page $PageName -DefaultWebPartType List -WebPartProperties $webPartProperties
       }
       catch {
-         Write-Error "Unable to add [$WebPartTitle] web part to the [$PageName] page. Check that that there is a section [$Section] with [$Column] columns"
+         Write-Error -Message "Unable to add [$WebPartTitle] web part to the [$PageName] page. Check that that there is a section [$Section] with [$Column] columns"
       }
    }
    Else {
@@ -119,45 +119,45 @@ function Add-PnPModernListWebPart() {
          Add-PnPClientSideWebPart -Page $PageName -DefaultWebPartType List -WebPartProperties $webPartProperties -Section $Section -Column $Column -ErrorAction Stop #-Order $Order
       }
       catch {
-         Write-Error "Unable to add [$WebPartTitle] web part to the [$PageName] page. Check that that there is a section [$Section] with [$Column] columns"
+         Write-Error -Message "Unable to add [$WebPartTitle] web part to the [$PageName] page. Check that that there is a section [$Section] with [$Column] columns"
       }
    }
 }
 #Import 'Site' worksheet from the excel configuration spreadsheet
 
 try {
-   Write-Verbose "Importing site worksheet from the excel configuration file: [$configFilePath]"
+   Write-Verbose -Message "Importing site worksheet from the excel configuration file: [$configFilePath]"
    $xlSiteSheet = Import-Excel -Path $configFilePath -WorkSheetname Site #Opens the excel file and imports the Site worksheet
 }
 catch {
-   Write-Error "Unable to open spreadsheet from [$configFilePath] or 'Site' worksheet does not exist"
+   Write-Error -Message "Unable to open spreadsheet from [$configFilePath] or 'Site' worksheet does not exist"
    EXIT
 }
 
 #Save site url to a variable and connect to the site
 try {
-   Write-Verbose "Importing site url from the site worksheet."
+   Write-Verbose -Message "Importing site url from the site worksheet."
    $site = $xlSiteSheet[0].'TargetSiteUrl'  #gets the first site url value from the TargetSiteUrl column
     
-   Write-Verbose "Connecting to site: $site"
+   Write-Verbose -Message "Connecting to site: $site"
    Connect-PnPOnline -Url $site
 }
 catch {
-   Write-Error "Unable to open site at [$site]"
+   Write-Error -Message "Unable to open site at [$site]"
    EXIT
 }
 
 #Import 'ModernPages' worksheet from the excel configuration spreadsheet
 try {
-   Write-Verbose "Importing ModernPages worksheet from the excel configuration file."
+   Write-Verbose -Message "Importing ModernPages worksheet from the excel configuration file."
    $xlPagesSheet = Import-Excel -Path $configFilePath -WorkSheetname ModernPages #Imports the Libraries worksheet
 }
 catch { 
-   Write-Error "Unable to open spreadsheet from [$configFilePath] or 'ModernPages' worksheet does not exist."
+   Write-Error -Message "Unable to open spreadsheet from [$configFilePath] or 'ModernPages' worksheet does not exist."
    EXIT
 }
 
-Write-Verbose "Begin adding ModernPages to the site."
+Write-Verbose -Message "Begin adding ModernPages to the site."
 
 #Import each worksheet row and add modern site pages and relevant sections to the site
 ForEach ($row in $xlPagesSheet) {
@@ -167,11 +167,11 @@ ForEach ($row in $xlPagesSheet) {
 
    #Add new modern site page
    try {
-      Write-Verbose "Adding the $page page with $layout layout."
+      Write-Verbose -Message "Adding the $page page with $layout layout."
       Add-PnPClientSidePage -Name $page -LayoutType $layout
    }
    catch {
-      Write-Warning "Unable to add [$page] page."
+      Write-Warning -Message "Unable to add [$page] page."
    }
    
    #Add sections to the new page (in the order specified in the worksheet)
@@ -181,12 +181,12 @@ ForEach ($row in $xlPagesSheet) {
       $sectionOrder = 1
 
       ForEach ($section in $arraySections) {
-         Write-Verbose "Adding the $section section to the $page page. Section order is $sectionOrder."
+         Write-Verbose -Message "Adding the $section section to the $page page. Section order is $sectionOrder."
          try {
             Add-PnPClientSidePageSection -Page $page  -SectionTemplate $section -Order $sectionOrder
          }
          catch {
-            Write-Warning "Unable to add [$section] section to [$page] page. Ensure [$section] is a valid Section Template value (e.g. OneColumn, TwoColumn, ThreeColumn etc)"
+            Write-Warning -Message "Unable to add [$section] section to [$page] page. Ensure [$section] is a valid Section Template value (e.g. OneColumn, TwoColumn, ThreeColumn etc)"
          }
          $sectionOrder++
       }
@@ -194,15 +194,15 @@ ForEach ($row in $xlPagesSheet) {
 } 
 
 try {
-   Write-Verbose "Importing ModernListLibraryWebParts worksheet from the excel configuration file."
+   Write-Verbose -Message "Importing ModernListLibraryWebParts worksheet from the excel configuration file."
    $xlWebPartsSheet = Import-Excel -Path $configFilePath -WorkSheetname ModernListLibraryWebParts #Imports the Libraries worksheet
 }
 catch { 
-   Write-Error "Unable to open spreadsheet from [$configFilePath] or 'ModernListLibraryWebParts' worksheet does not exist."
+   Write-Error -Message "Unable to open spreadsheet from [$configFilePath] or 'ModernListLibraryWebParts' worksheet does not exist."
    EXIT
 }
 
-Write-Verbose "Begin adding Modern List / Library web parts to pages:"
+Write-Verbose -Message "Begin adding Modern List / Library web parts to pages:"
 
 #iterate through the worksheet rows and add web parts to the pages
 ForEach ($row in $xlWebPartsSheet) {
@@ -216,9 +216,9 @@ ForEach ($row in $xlWebPartsSheet) {
    $wpTitle = $row.'WebPartTitle'; #saves value in WebPartTitle column to a variable
    $wpHeight = $row.'WebPartHeight'; #saves value in WebPartHeight column to a variable
 
-   Write-Verbose "Adding web part to the '$page' page with title [$wpTitle]"
-   Write-Verbose "web part will be added with '$viewName' view for the '$listLibraryName' $wpType"
-   Write-Verbose "web part will be added to column $column in section $section height is set to $wpHeight" #order is: $order
+   Write-Verbose -Message "Adding web part to the '$page' page with title [$wpTitle]"
+   Write-Verbose -Message "web part will be added with '$viewName' view for the '$listLibraryName' $wpType"
+   Write-Verbose -Message "web part will be added to column $column in section $section height is set to $wpHeight" #order is: $order
     
    Add-PnPModernListWebPart -PageName $page -WebPartType $wpType -ListName $listLibraryName -ViewName $viewName -WebPartHeight $wpHeight -WebPartTitle $wpTitle -Section $section -Column $column #-Order $order
 }
