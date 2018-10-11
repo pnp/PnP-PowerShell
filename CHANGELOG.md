@@ -10,8 +10,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Updated New-PnPSite to support language/locale for new sites.
+- Updated documentation for New-PnPTenantSite
+- Updated samples
 
 ### Contributors
+- Paul Bullock (pkbullock)
+- François-Xavier Cat (lazywinadmin)
+
 ## [3.2.1810.0] Released
 ### Added
 - Add-PnPProvisioningSequence : Adds an in-memory sequence to an in-memory provisioning hierarchy
