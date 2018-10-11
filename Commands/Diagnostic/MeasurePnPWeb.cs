@@ -19,8 +19,8 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         Remarks = @"Gets statistics on the current web",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Measure-PnPList $web -Recursive",
-        Remarks = @"Gets statistics on the chosen including all sub webs",
+        Code = @"PS:> Measure-PnPWeb $web -Recursive",
+        Remarks = @"Gets statistics on the provided web including all its subwebs",
         SortOrder = 2)]
 
     public class MeasurePnPWeb : PnPCmdlet
