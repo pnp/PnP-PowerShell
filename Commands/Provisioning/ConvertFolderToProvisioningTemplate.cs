@@ -1,11 +1,11 @@
-﻿using System;
+﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
+using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
@@ -95,6 +95,8 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             string templateFileName = Path.GetFileNameWithoutExtension(Out) + ".xml";
             bool templateFileMissing = dirInfo.GetFiles(templateFileName, SearchOption.TopDirectoryOnly).Length == 0;
             if (templateFileMissing) throw new InvalidOperationException("You need an xml template file (" + templateFileName + ") with the same name as the .pnp outfile in order to pack a folder to a .pnp package file.");
+
+            info.Properties.TemplateFileName = templateFileName;
 
             foreach (var currentFile in dirInfo.GetFiles("*.*", SearchOption.AllDirectories))
             {
