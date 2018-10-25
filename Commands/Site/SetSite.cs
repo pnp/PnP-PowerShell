@@ -25,10 +25,6 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Set-PnPSite -DisableFlows:$false",
         Remarks = "Enables Flows for this site",
         SortOrder = 3)]
-    [CmdletExample(
-        Code = @"PS:> Set-PnPSite -SiteLogoPath c:\images\mylogo.png",
-        Remarks = "Sets the logo if the site is a modern team site",
-        SortOrder = 4)]
     public class SetSite : PnPCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The classification to set")]
