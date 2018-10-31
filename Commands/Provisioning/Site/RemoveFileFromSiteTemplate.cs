@@ -4,23 +4,21 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPFileFromProvisioningTemplate")]
-    [CmdletHelp("Removes a file from a PnP Provisioning Template",
+    [Cmdlet(VerbsCommon.Remove, "PnPFileFromSiteTemplate")]
+    [Alias("Remove-PnPFileFromProvisioningTemplate")]
+    [CmdletHelp("Removes a file from a PnP Site Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Remove-PnPFileFromProvisioningTemplate -Path template.pnp -FilePath filePath",
+       Code = @"PS:> Remove-PnPFileFromSiteTemplate -Path template.pnp -FilePath filePath",
        Remarks = "Removes a file from an in-memory PnP Provisioning Template",
        SortOrder = 1)]
-    public class RemoveFileFromProvisioningTemplate : PSCmdlet
+    public class RemoveFileFromSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to read the template from, optionally including full path.")]
         public string Path;
@@ -38,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            ProvisioningTemplate template = ReadProvisioningTemplate
+            ProvisioningTemplate template = ReadSiteTemplate
                 .LoadProvisioningTemplateFromFile(Path,
                 TemplateProviderExtensions);
 

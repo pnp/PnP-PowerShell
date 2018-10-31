@@ -13,74 +13,75 @@ using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning template from a web",
+    [Cmdlet(VerbsCommon.Get, "PnPSiteTemplate", SupportsShouldProcess = true)]
+    [Alias("Get-PnPProvisioningTemplate")]
+    [CmdletHelp("Generates a provisioning site template from a web",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp",
+       Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp",
        Remarks = "Extracts a provisioning template in Office Open XML from the current web.",
        SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.xml",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.xml",
        Remarks = "Extracts a provisioning template in XML format from the current web.",
        SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -Schema V201503",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp -Schema V201503",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web and saves it in the V201503 version of the schema.",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -IncludeAllTermGroups",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp -IncludeAllTermGroups",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web and includes all term groups, term sets and terms from the Managed Metadata Service Taxonomy.",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -IncludeSiteCollectionTermGroup",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp -IncludeSiteCollectionTermGroup",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web and includes the term group currently (if set) assigned to the site collection.",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistComposedLookFiles",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp -PersistComposedLookFiles",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web and saves the files that make up the composed look to the same folder as where the template is saved.",
         SortOrder = 6)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -Handlers Lists, SiteSecurity",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp -Handlers Lists, SiteSecurity",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, but only processes lists and site security when generating the template.",
         SortOrder = 7)]
     [CmdletExample(
         Code = @"
 PS:> $handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 PS:> $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
-PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
+PS:> Get-PnPSiteTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
         Remarks = @"This will create two new ExtensibilityHandler objects that are run during extraction of the template",
         SortOrder = 8)]
 #if !SP2013
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistMultiLanguageResources",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp -PersistMultiLanguageResources",
         Introduction = "Only supported on SP2016 and SP Online",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named after the value specified in the Out parameter. For instance if the Out parameter is specified as -Out 'template.xml' the generated resource file will be called 'template.en-US.resx'.",
         SortOrder = 9)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistMultiLanguageResources -ResourceFilePrefix MyResources",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp -PersistMultiLanguageResources -ResourceFilePrefix MyResources",
         Introduction = "Only supported on SP2016 and SP Online",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, and for supported artifacts it will create a resource file for each supported language (based upon the language settings of the current web). The generated resource files will be named 'MyResources.en-US.resx' etc.",
         SortOrder = 10)]
 #endif
     [CmdletExample(
-        Code = @"PS:> $template = Get-PnPProvisioningTemplate -OutputInstance",
+        Code = @"PS:> $template = Get-PnPSiteTemplate -OutputInstance",
         Remarks = "Extracts an instance of a provisioning template object from the current web. This syntax cannot be used together with the -Out parameter, but it can be used together with any other supported parameters.",
         SortOrder = 11)]
     [CmdletExample(
-        Code = "PS:> Get-PnPProvisioningTemplate -Out template.pnp -ContentTypeGroups \"Group A\",\"Group B\"",
+        Code = "PS:> Get-PnPSiteTemplate -Out template.pnp -ContentTypeGroups \"Group A\",\"Group B\"",
         Remarks = @"Extracts a provisioning template in Office Open XML from the current web, but only processes content types from the to given content type groups.",
         SortOrder = 12)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ExcludeContentTypesFromSyndication",
+        Code = @"PS:> Get-PnPSiteTemplate -Out template.pnp -ExcludeContentTypesFromSyndication",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, excluding content types provisioned through content type syndication (content type hub), in order to prevent provisioning errors if the target also provision the content type using syndication.",
         SortOrder = 13)]
     [CmdletRelatedLink(
         Text = "Encoding",
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
-    public class GetProvisioningTemplate : PnPWebCmdlet
+    public class GetSiteTemplate : PnPWebCmdlet
     {
         private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");

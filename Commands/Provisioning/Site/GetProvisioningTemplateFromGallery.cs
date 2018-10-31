@@ -14,8 +14,9 @@ using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
+    [Obsolete("The PnP Template Gallery has been shut down.")]
     [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplateFromGallery", DefaultParameterSetName = "Search")]
     [CmdletHelp("Retrieves or searches provisioning templates from the PnP Template Gallery", Category = CmdletHelpCategory.Lists)]
     [CmdletExample(

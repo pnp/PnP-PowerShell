@@ -15,22 +15,23 @@ using System.Text;
 using System.Text.RegularExpressions;
 using SPSite = Microsoft.SharePoint.Client.Site;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPDataRowsToProvisioningTemplate")]
+    [Cmdlet(VerbsCommon.Add, "PnPDataRowsToSiteTemplate")]
+    [Alias("Add-PnPDataRowsToProvisioningTemplate")]
     [CmdletHelp("Adds datarows to a list inside a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice'",
+       Code = @"PS:> Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice'",
        Remarks = "Adds datarows to a list in an in-memory PnP Provisioning Template",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice' -IncludeSecurity",
+       Code = @"PS:> Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice' -IncludeSecurity",
       Remarks = "Adds datarows to a list in an in-memory PnP Provisioning Template",
        SortOrder = 2)]
-    public class AddDataRowsToProvisioningTemplate : PnPWebCmdlet
+    public class AddDataRowsToSiteTemplate : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML provisioning template to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
         public string Path;
 
         [Parameter(Mandatory = true, HelpMessage = "The list to query")]
@@ -64,7 +65,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            var template = ReadProvisioningTemplate
+            var template = ReadSiteTemplate
                     .LoadProvisioningTemplateFromFile(Path,
                     TemplateProviderExtensions);
 
