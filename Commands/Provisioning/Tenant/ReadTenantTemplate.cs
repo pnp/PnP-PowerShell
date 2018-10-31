@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
@@ -8,22 +9,17 @@ using System;
 using System.IO;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-
-    [Cmdlet(VerbsCommunications.Read, "PnPProvisioningTemplate")]
-    [Alias("Load-PnPProvisioningTemplate")]
-    [CmdletHelp("Loads/Reads a PnP file from the file system",
-        Category = CmdletHelpCategory.Provisioning)]
+    [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate")]
+    [Alias("Read-PnPProvisioningHierarchy")]
+    [CmdletHelp("Loads/Reads a PnP tenant template from the file system and returns an in-memory instance of this template.",
+        Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp",
-       Remarks = "Loads a PnP file from the file system",
+       Code = @"PS:> Read-PnPTenantTemplate -Path template.pnp",
+       Remarks = "Reads a PnP tenant templatey file from the file system and returns an in-memory instance",
        SortOrder = 1)]
-    [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
-       Remarks = "Loads a PnP file from the file system using some custom template provider extenions while loading the file.",
-       SortOrder = 2)]
-    public class ReadProvisioningTemplate : PSCmdlet
+    public class ReadTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to read from, optionally including full path.")]
         public string Path;
@@ -33,18 +29,14 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
-            if(MyInvocation.InvocationName.ToLower() == "load-pnpprovisioningtemplate")
-            {
-                WriteWarning("Load-PnPProvisioningTemplate has been deprecated in favor of Read-PnPProvisioningTemplate which supports the same parameters.");
-            }
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-            WriteObject(LoadProvisioningTemplateFromFile(Path, TemplateProviderExtensions));
+            WriteObject(LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions));
         }
 
-        internal static ProvisioningTemplate LoadProvisioningTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions)
+        internal static ProvisioningHierarchy LoadProvisioningHierarchyFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions)
         {
             // Prepare the File Connector
             string templateFileName = System.IO.Path.GetFileName(templatePath);
@@ -54,25 +46,35 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             FileConnectorBase fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
 
             // Load the provisioning template file
-            Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
+            var isOpenOfficeFile = false;
+            using (var stream = fileConnector.GetFileStream(templateFileName))
+            {
+                isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
+            }
 
             XMLTemplateProvider provider;
             if (isOpenOfficeFile)
             {
                 provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
                 templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+
+                var hierarchy = (provider as XMLOpenXMLTemplateProvider).GetHierarchy();
+                if (hierarchy != null)
+                {
+                    hierarchy.Connector = provider.Connector;
+                    return hierarchy;
+                }
             }
             else
             {
                 provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
-            }
+            } 
 
-            ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
-            provisioningTemplate.Connector = provider.Connector;
-
+            ProvisioningHierarchy provisioningHierarchy = provider.GetHierarchy(templateFileName);
+            provisioningHierarchy.Connector = provider.Connector;
             // Return the result
-            return provisioningTemplate;
+            return provisioningHierarchy;
         }
     }
 }
+#endif

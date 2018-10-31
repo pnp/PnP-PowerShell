@@ -13,6 +13,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Updated documentation for New-PnPTenantSite
 - Fixed documentation for Measure-PnPWeb
 - Updated samples
+- Fixes issue with Set-PnPUnifiedGroup where if you only change for instance the displayname a private group would be marked as public.
+
+### Deprecated
+- Marked Get-PnPProvisioningTemplateFromGallery as deprecated as the PnP Template Gallery has been shut down.
 
 ### Contributors
 - Paul Bullock (pkbullock)

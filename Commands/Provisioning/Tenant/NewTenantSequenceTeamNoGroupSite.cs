@@ -4,22 +4,26 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.New, "PnPProvisioningCommunicationSite", SupportsShouldProcess = true)]
-    [CmdletHelp("Creates a communication site object",
+    [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSite", SupportsShouldProcess = true)]
+    [Alias("New-PnPProvisioningTeamNoGroupSite")]
+    [CmdletHelp("Creates a new team site without an Office 365 group in-memory object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> $site = New-PnPProvisioningCommunicationSite -Url ""/sites/mycommunicationsite"" -Title ""My Team Site""",
-       Remarks = "Creates a new communication site object with the specified variables",
+       Code = @"PS:> $site = New-PnPTenantSequenceTeamNoGroupSite -Alias ""MyTeamSite"" -Title ""My Team Site""",
+       Remarks = "Creates a new team site object with the specified variables",
        SortOrder = 1)]
-    public class NewProvisioningCommunicationSite : PSCmdlet
+    public class NewTenantSequenceTeamNoGroupSite : PSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Url;
-
+        
         [Parameter(Mandatory = true)]
         public string Title;
+
+        [Parameter(Mandatory = true)]
+        public uint TimeZoneId;
 
         [Parameter(Mandatory = false)]
         public uint Language;
@@ -31,37 +35,23 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         public string Description;
 
         [Parameter(Mandatory = false)]
-        public string Classification;
-
-        [Parameter(Mandatory = false)]
-        public string SiteDesignId;
-
-        [Parameter(Mandatory = false)]
         public SwitchParameter HubSite;
-
-        [Parameter(Mandatory = false)]
-        public SwitchParameter AllowFileSharingForGuestUsers;
 
         [Parameter(Mandatory = false)]
         public string[] TemplateIds;
 
         protected override void ProcessRecord()
         {
-            var site = new CommunicationSiteCollection
+            var site = new TeamNoGroupSiteCollection
             {
                 Url = Url,
                 Language = (int)Language,
                 Owner = Owner,
-                AllowFileSharingForGuestUsers = AllowFileSharingForGuestUsers.IsPresent,
-                Classification = Classification,
+                TimeZoneId = (int)TimeZoneId,
                 Description = Description,
                 IsHubSite = HubSite.IsPresent,
-                Title = Title,
+                Title = Title
             };
-            if(MyInvocation.BoundParameters.ContainsKey("SiteDesignId"))
-            {
-                site.SiteDesign = SiteDesignId;
-            }
             if (TemplateIds != null)
             {
                 site.Templates.AddRange(TemplateIds.ToList());

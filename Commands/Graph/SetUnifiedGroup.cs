@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
@@ -78,10 +77,15 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     }
                     groupLogoStream = new FileStream(GroupLogoPath, FileMode.Open, FileAccess.Read);
                 }
-
+                bool? isPrivateGroup = null;
+                if(IsPrivate.IsPresent)
+                {
+                    isPrivateGroup = IsPrivate.ToBool();
+                }
                 UnifiedGroupsUtility.UpdateUnifiedGroup(group.GroupId, AccessToken, displayName: DisplayName,
-                    description: Description, owners: Owners, members: Members, groupLogo: groupLogoStream, isPrivate: IsPrivate);
-            } else
+                    description: Description, owners: Owners, members: Members, groupLogo: groupLogoStream, isPrivate: isPrivateGroup);
+            }
+            else
             {
                 WriteError(new ErrorRecord(new Exception("Group not found"), "GROUPNOTFOUND", ErrorCategory.ObjectNotFound, this));
             }

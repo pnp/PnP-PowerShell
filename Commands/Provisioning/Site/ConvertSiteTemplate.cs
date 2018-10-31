@@ -7,27 +7,28 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Convert, "PnPProvisioningTemplate")]
-    [CmdletHelp("Converts a provisioning template to an other schema version",
+    [Cmdlet(VerbsData.Convert, "PnPSiteTemplate")]
+    [Alias("Convert-PnPProvisioningTemplate")]
+    [CmdletHelp("Converts a site template to an other schema version",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml",
-     Remarks = @"Converts a provisioning template to the latest schema and outputs the result to current console.",
+     Code = @"PS:> Convert-PnPSiteTemplate -Path template.xml",
+     Remarks = @"Converts a site template to the latest schema and outputs the result to current console.",
      SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml -Out newtemplate.xml",
-     Remarks = @"Converts a provisioning template to the latest schema and outputs the result the newtemplate.xml file.",
+     Code = @"PS:> Convert-PnPSiteTemplate -Path template.xml -Out newtemplate.xml",
+     Remarks = @"Converts a site template to the latest schema and outputs the result the newtemplate.xml file.",
      SortOrder = 2)]
     [CmdletExample(
-     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml -Out newtemplate.xml -ToSchema V201512",
-     Remarks = @"Converts a provisioning template to the latest schema using the 201512 schema and outputs the result the newtemplate.xml file.",
+     Code = @"PS:> Convert-PnPSiteTemplate -Path template.xml -Out newtemplate.xml -ToSchema V201512",
+     Remarks = @"Converts a site template to the latest schema using the 201512 schema and outputs the result the newtemplate.xml file.",
      SortOrder = 3)]
      [CmdletRelatedLink(
         Text ="Encoding", 
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
-    public class ConvertProvisioningTemplate : PSCmdlet
+    public class ConvertSiteTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the provisioning template")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the site template")]
         public string Path;
 
         [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path")]
@@ -120,6 +121,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                     case XMLPnPSchemaVersion.V201805:
                         {
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201807:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_07);
                             break;
                         }
                 }

@@ -1,26 +1,27 @@
-﻿using System;
+﻿using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
+using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
-using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Convert, "PnPFolderToProvisioningTemplate")]
+    [Cmdlet(VerbsData.Convert, "PnPFolderToSiteTemplate")]
+    [Alias("Convert-PnPFolderToProvisioningTemplate")]
     [CmdletHelp("Creates a pnp package file of an existing template xml, and includes all files in the current folder",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Convert-PnPFolderToProvisioningTemplate -Out template.pnp",
+       Code = @"PS:> Convert-PnPFolderToSiteTemplate -Out template.pnp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the current folder",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Convert-PnPFolderToProvisioningTemplate -Out template.pnp -Folder c:\temp",
+       Code = @"PS:> Convert-PnPFolderToSiteTemplate -Out template.pnp -Folder c:\temp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the c:\\temp folder",
        SortOrder = 2)]
-    public class ConvertProvisioningTemplateFromFolder : PSCmdlet
+    public class ConvertFolderToSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
         public string Out;
@@ -95,6 +96,8 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             string templateFileName = Path.GetFileNameWithoutExtension(Out) + ".xml";
             bool templateFileMissing = dirInfo.GetFiles(templateFileName, SearchOption.TopDirectoryOnly).Length == 0;
             if (templateFileMissing) throw new InvalidOperationException("You need an xml template file (" + templateFileName + ") with the same name as the .pnp outfile in order to pack a folder to a .pnp package file.");
+
+            info.Properties.TemplateFileName = templateFileName;
 
             foreach (var currentFile in dirInfo.GetFiles("*.*", SearchOption.AllDirectories))
             {

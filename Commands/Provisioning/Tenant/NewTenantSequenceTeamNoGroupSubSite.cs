@@ -4,20 +4,22 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.New, "PnPProvisioningTeamNoGroupSite", SupportsShouldProcess = true)]
-    [CmdletHelp("Creates a team site without an Office 365 group object",
+    [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSubSite", SupportsShouldProcess = true)]
+    [Alias("New-PnPProvisioningTeamNoGroupSubSite")]
+    [CmdletHelp("Creates a team site subsite with no Office 365 group object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> $site = New-PnPProvisioningTeamNoGroupSite -Alias ""MyTeamSite"" -Title ""My Team Site""",
-       Remarks = "Creates a new team site object with the specified variables",
+       Code = @"PS:> $site = New-PnPTenantSequenceTeamNoGroupSubSite -Url ""MyTeamSubsite"" -Title ""My Team Site"" -TimeZoneId 4",
+       Remarks = "Creates a new team site subsite object with the specified variables",
        SortOrder = 1)]
-    public class NewProvisioningTeamNoGroupSite : PSCmdlet
+    public class NewTenantSequenceTeamNoGroupSubSite : PSCmdlet
     {
+
         [Parameter(Mandatory = true)]
         public string Url;
-        
+
         [Parameter(Mandatory = true)]
         public string Title;
 
@@ -28,27 +30,28 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         public uint Language;
 
         [Parameter(Mandatory = false)]
-        public string Owner;
-
-        [Parameter(Mandatory = false)]
         public string Description;
-
-        [Parameter(Mandatory = false)]
-        public SwitchParameter HubSite;
 
         [Parameter(Mandatory = false)]
         public string[] TemplateIds;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter QuickLaunchDisabled;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter UseDifferentPermissionsFromParentSite;
+
         protected override void ProcessRecord()
         {
-            var site = new TeamNoGroupSiteCollection
+            SiteCollection c;
+            var site = new TeamNoGroupSubSite()
             {
                 Url = Url,
                 Language = (int)Language,
-                Owner = Owner,
+                QuickLaunchEnabled = !QuickLaunchDisabled.IsPresent,
+                UseSamePermissionsAsParentSite = !UseDifferentPermissionsFromParentSite.IsPresent,
                 TimeZoneId = (int)TimeZoneId,
                 Description = Description,
-                IsHubSite = HubSite.IsPresent,
                 Title = Title
             };
             if (TemplateIds != null)
