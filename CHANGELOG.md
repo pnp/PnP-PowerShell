@@ -5,10 +5,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.2.1810.0] Unreleased
+## [3.3.1811.0] Unreleased
 ### Added
 
 ### Changed
+- Updated New-PnPSite to support language/locale for new sites.
+- Updated documentation for New-PnPTenantSite
+- Fixed documentation for Measure-PnPWeb
+- Updated samples
+- Fixes issue with Set-PnPUnifiedGroup where if you only change for instance the displayname a private group would be marked as public.
+
+### Deprecated
+- Marked Get-PnPProvisioningTemplateFromGallery as deprecated as the PnP Template Gallery has been shut down.
+
+### Contributors
+- Paul Bullock (pkbullock)
+- François-Xavier Cat (lazywinadmin)
+- Koen Zomers (KoenZomers)
+
+## [3.2.1810.0] Released
+### Added
+- Add-PnPProvisioningSequence : Adds an in-memory sequence to an in-memory provisioning hierarchy
+- Add-PnPProvisioningSite : Adds an in-memory site definition to a in-memory sequence
+- Add-PnPProvisioningSubSite : Adds an in-memory sub site defintion to an in-memory site
+- Apply-PnPProvisioningHierarchy : Applies a provisioninghierarchy with a site sequence to a tenant
+- Get-PnPProvisioningSite : Returns a site as an in-memory object from a given provisioning hierarchy
+- New-PnPProvisioningHierarchy : Creates a new in-memory provisioning hierarchy
+- New-PnPProvisioningSequence : Creates a new in-memory provisioning sequence
+- New-PnPProvisioningCommunicationSite : Creates a new in-memory communication site definition
+- New-PnPProvisioningTeamNoGroupSite : Creates a new in-memory team site definition which has no associated office365 group
+- New-PnPProvisioningTeamNoGroupSubSite : Creates a new in-memory team sub site definition which has no associated office365 group
+- New-PnPProvisioningTeamSite : Creates a new in-memory team site definition
+- Read-PnPProvisioningHierarchy : Reads an existing (file based) provisioning hierarchy into an in-memory instance
+- Save-PnPProvisioningHierarchy : Saves an in-memory provisioning hierarchy to a pnp file
+- Test-PnPProvisioningHierarchy : Tests an in-memory hierarchy if all template references are correct in the site sequence
+- Get-PnPException : Returns the last occured exception that occured while using PowerShell.
+
+### Changed
+- Updated Set-PnPSite to allow for setting of a logo on modern team site
+- Updated Get-PnPTerm to allow for -IncludeChildTerms parameter, which will load, if available all child terms
+- Updated Get-PnPTerm to allow for only specifying the id of a termset, without needing to require to specify the termset and termgroup.
 
 ### Deprecated
 

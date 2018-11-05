@@ -583,30 +583,30 @@
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.Name -eq ""){
-                    $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexof("/") + 1)
+                  $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexof("/") + 1)
                   }
                   else{
-                    $_.Name
+                  $_.Name
                   }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "Folder" -and $_.Name -eq ""){
-                    "Subweb"
+                  "Subweb"
                   }
                   else{
-                    $_.GetType().Name
+                  $_.GetType().Name
                   }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "File"){
-                    $_.Length
+                  $_.Length
                   }
                   else{
-                    $_.ItemCount
+                  $_.ItemCount
                   }
                 </ScriptBlock>
               </TableColumnItem>
@@ -795,6 +795,9 @@
             <Width>36</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Child Terms</Label>
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -804,6 +807,16 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if($_.IsObjectPropertyInstantiated("Terms")){
+                  $_.TermsCount
+                  }
+                  else{
+                  "$($_.TermsCount) (Not loaded)"
+                  }
+                </ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -1685,7 +1698,7 @@
         </TableRowEntries>
       </TableControl>
     </View>
-   <View>
+    <View>
       <Name>SPOWebAppServicePrincipalPermissionRequest</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.Online.SharePoint.TenantAdministration.Internal.SPOWebAppServicePrincipalPermissionRequest</TypeName>
@@ -1765,6 +1778,96 @@
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
+    </View>
+    <View>
+      <Name>TaxonomySession</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.SharePoint.Client.Taxonomy.TaxonomySession</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>TermStores</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>TermStores</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>SiteCollection</Name>
+      <ViewSelectedBy>
+        <TypeName>OfficeDevPnP.Core.Framework.Provisioning.Model.SiteCollection</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Title</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Templates</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>SubSites</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Title</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Templates</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Sites</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>PnPException</Name>
+      <ViewSelectedBy>
+        <TypeName>SharePointPnP.PowerShell.Commands.Model.PnPException</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Message</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Stacktrace</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ScriptLineNumber</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
     </View>
   </ViewDefinitions>
 </Configuration>

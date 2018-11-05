@@ -589,30 +589,30 @@
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.Name -eq ""){
-                    $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexOf("/") + 1)
+                  $_.ServerRelativeUrl.TrimEnd("/").Substring($_.ServerRelativeUrl.TrimEnd("/").LastIndexOf("/") + 1)
                   }
                   else{
-                    $_.Name
+                  $_.Name
                   }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "Folder" -and $_.Name -eq ""){
-                    "Subweb"
+                  "Subweb"
                   }
                   else{
-                    $_.GetType().Name
+                  $_.GetType().Name
                   }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
                   if($_.GetType().Name -eq "File"){
-                    $_.Length
+                  $_.Length
                   }
                   else{
-                    $_.ItemCount
+                  $_.ItemCount
                   }
                 </ScriptBlock>
               </TableColumnItem>
@@ -801,6 +801,9 @@
             <Width>36</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Child Terms</Label>
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -810,6 +813,16 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if($_.IsObjectPropertyInstantiated("Terms")){
+                  $_.TermsCount
+                  }
+                  else{
+                  "$($_.TermsCount) (Not loaded)"
+                  }
+                </ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -1290,7 +1303,7 @@
           <TableColumnHeader>
             <Label>Alias</Label>
             <Alignment>left</Alignment>
-          </TableColumnHeader>          
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -1366,7 +1379,8 @@
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
-    </View><View>
+    </View>
+    <View>
       <Name>TenantSiteDesign</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.Online.SharePoint.TenantAdministration.TenantSiteDesign</TypeName>
@@ -1439,7 +1453,7 @@
               <TableColumnItem>
                 <PropertyName>Version</PropertyName>
               </TableColumnItem>
-               <TableColumnItem>
+              <TableColumnItem>
                 <PropertyName>Content</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
@@ -1515,7 +1529,7 @@
             <Label>Position</Label>
             <Alignment>left</Alignment>
           </TableColumnHeader>
-         <TableColumnHeader>
+          <TableColumnHeader>
             <Label>PropertiesJson</Label>
             <Alignment>left</Alignment>
           </TableColumnHeader>
@@ -1541,7 +1555,7 @@
               <TableColumnItem>
                 <PropertyName>Order</PropertyName>
               </TableColumnItem>
-             <TableColumnItem>
+              <TableColumnItem>
                 <PropertyName>PropertiesJson</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
@@ -1549,12 +1563,12 @@
         </TableRowEntries>
       </TableControl>
     </View>
-   <View>
+    <View>
       <Name>NavigationNode</Name>
       <ViewSelectedBy>
         <TypeName>Microsoft.SharePoint.Client.NavigationNode</TypeName>
       </ViewSelectedBy>
-       <TableControl>
+      <TableControl>
         <TableHeaders>
           <TableColumnHeader>
             <Label>Id</Label>
@@ -1779,6 +1793,29 @@
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
+    </View>
+    <View>
+      <Name>PnPException</Name>
+      <ViewSelectedBy>
+        <TypeName>SharePointPnP.PowerShell.Commands.Model.PnPException</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Message</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Stacktrace</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ScriptLineNumber</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
     </View>
   </ViewDefinitions>
 </Configuration>

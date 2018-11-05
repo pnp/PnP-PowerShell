@@ -3,6 +3,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.IO;
 using System.Management.Automation;
@@ -10,19 +11,19 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
 
-    [Cmdlet(VerbsCommunications.Read, "PnPProvisioningTemplate")]
-    [Alias("Load-PnPProvisioningTemplate")]
+    [Cmdlet(VerbsCommunications.Read, "PnPSiteTemplate")]
+    [Alias("Load-PnPProvisioningTemplate", "Read-PnPProvisioningTemplate")]
     [CmdletHelp("Loads/Reads a PnP file from the file system",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp",
-       Remarks = "Loads a PnP file from the file systems",
+       Code = @"PS:> Read-PnPSiteTemplate -Path template.pnp",
+       Remarks = "Loads a PnP file from the file system",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
-       Remarks = "Loads a PnP file from the file systems using some custom template provider extenions while loading the file.",
+       Code = @"PS:> Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
+       Remarks = "Loads a PnP file from the file system using some custom template provider extenions while loading the file.",
        SortOrder = 2)]
-    public class ReadProvisioningTemplate : PSCmdlet
+    public class ReadSiteTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to read from, optionally including full path.")]
         public string Path;
@@ -54,7 +55,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
             // Load the provisioning template file
             Stream stream = fileConnector.GetFileStream(templateFileName);
-            var isOpenOfficeFile = ApplyProvisioningTemplate.IsOpenOfficeFile(stream);
+            var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
 
             XMLTemplateProvider provider;
             if (isOpenOfficeFile)

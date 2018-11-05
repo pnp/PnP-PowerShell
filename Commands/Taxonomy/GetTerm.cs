@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Taxonomy
 {
@@ -32,24 +32,33 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         SortOrder = 2)]
     public class GetTerm : PnPRetrievalsCmdlet<Term>
     {
-        [Parameter(Mandatory = false, HelpMessage = "The Id or Name of a Term")]
+        private const string ParameterSet_TERM = "By Term Id";
+        private const string ParameterSet_TERMSET = "By Termset";
+        private Term term;
+
+        [Parameter(Mandatory = true, HelpMessage = "The Id or Name of a Term", ParameterSetName = ParameterSet_TERM)]
+        [Parameter(Mandatory = false, HelpMessage = "The Id or Name of a Term", ParameterSetName = ParameterSet_TERMSET)]
         public GenericObjectNameIdPipeBind<TermSet> Identity;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the termset to check.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the termset to check.", ParameterSetName = ParameterSet_TERMSET)]
         public TaxonomyItemPipeBind<TermSet> TermSet;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the termgroup to check.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "Name of the termgroup to check.", ParameterSetName = ParameterSet_TERMSET)]
         public TermGroupPipeBind TermGroup;
 
-        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.", ParameterSetName = ParameterSet_TERM)]
+        [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.", ParameterSetName = ParameterSet_TERMSET)]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 
-        [Parameter(Mandatory = false, HelpMessage = "Find the first term recursivly matching the label in a term hierarchy.")]
+        [Parameter(Mandatory = false, HelpMessage = "Find the first term recursivly matching the label in a term hierarchy.", ParameterSetName = ParameterSet_TERMSET)]
         public SwitchParameter Recursive;
+
+        [Parameter(Mandatory = false, HelpMessage = "Includes the hierarchy of child terms if available", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter IncludeChildTerms;
 
         protected override void ExecuteCmdlet()
         {
-            DefaultRetrievalExpressions = new Expression<Func<Term, object>>[] { g => g.Name, g => g.Id };
+            DefaultRetrievalExpressions = new Expression<Func<Term, object>>[] { g => g.Name, g => g.TermsCount, g => g.Id };
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
             TermStore termStore = null;
@@ -76,72 +85,122 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                 }
             }
 
-            TermGroup termGroup = null;
-
-            if (TermGroup.Id != Guid.Empty)
+            if (ParameterSetName == ParameterSet_TERM)
             {
-                termGroup = termStore.Groups.GetById(TermGroup.Id);
-            }
-            else if (!string.IsNullOrEmpty(TermGroup.Name))
-            {
-                termGroup = termStore.Groups.GetByName(TermGroup.Name);
-            }
-
-            TermSet termSet;
-            if (TermSet.Id != Guid.Empty)
-            {
-                termSet = termGroup.TermSets.GetById(TermSet.Id);
-            }
-            else if (!string.IsNullOrEmpty(TermSet.Title))
-            {
-                termSet = termGroup.TermSets.GetByName(TermSet.Title);
+                if (Identity.IdValue != Guid.Empty)
+                {
+                    term = termStore.GetTerm(Identity.IdValue);
+                    ClientContext.Load(term, RetrievalExpressions);
+                    ClientContext.ExecuteQueryRetry();
+                    if (IncludeChildTerms.IsPresent && term.TermsCount > 0)
+                    {
+                        LoadChildTerms(term);
+                    }
+                    WriteObject(term);
+                } else
+                {
+                    WriteError(new ErrorRecord(new Exception("Insuffication parameters"), "INSUFFICIENTPARAMETERS", ErrorCategory.SyntaxError, this));
+                }
             }
             else
             {
-                termSet = TermSet.Item;
-            }
-            if (Identity != null)
-            {
-                Term term = null;
-                if (Identity.IdValue != Guid.Empty)
+                TermGroup termGroup = null;
+
+                if (TermGroup != null && TermGroup.Id != Guid.Empty)
                 {
-                    term = termSet.Terms.GetById(Identity.IdValue);
+                    termGroup = termStore.Groups.GetById(TermGroup.Id);
                 }
-                else
+                else if (TermGroup != null && !string.IsNullOrEmpty(TermGroup.Name))
                 {
-                    var termName = TaxonomyExtensions.NormalizeName(Identity.StringValue);
-                    if (!Recursive)
+                    termGroup = termStore.Groups.GetByName(TermGroup.Name);
+                }
+
+                TermSet termSet = null;
+                if (TermSet != null)
+                {
+                    if (TermSet.Id != Guid.Empty)
                     {
-                        term = termSet.Terms.GetByName(termName);
+                        termSet = termGroup.TermSets.GetById(TermSet.Id);
+                    }
+                    else if (!string.IsNullOrEmpty(TermSet.Title))
+                    {
+                        termSet = termGroup.TermSets.GetByName(TermSet.Title);
                     }
                     else
                     {
-                        var lmi = new LabelMatchInformation(ClientContext)
-                        {
-                            TrimUnavailable = true,
-                            TermLabel = termName
-                        };
-
-                        var termMatches = termSet.GetTerms(lmi);
-                        ClientContext.Load(termMatches);
-                        ClientContext.ExecuteQueryRetry();
-
-                        if (termMatches.AreItemsAvailable)
-                        {
-                            term = termMatches.FirstOrDefault();
-                        }
+                        termSet = TermSet.Item;
                     }
                 }
-                ClientContext.Load(term, RetrievalExpressions);
-                ClientContext.ExecuteQueryRetry();
-                WriteObject(term);
+                if (Identity != null)
+                {
+                    term = null;
+                    if (Identity.IdValue != Guid.Empty)
+                    {
+                        term = termStore.GetTerm(Identity.IdValue);
+                    }
+                    else
+                    {
+                        var termName = TaxonomyExtensions.NormalizeName(Identity.StringValue);
+                        if (!Recursive)
+                        {
+                            term = termSet.Terms.GetByName(termName);
+                        }
+                        else
+                        {
+                            var lmi = new LabelMatchInformation(ClientContext)
+                            {
+                                TrimUnavailable = true,
+                                TermLabel = termName
+                            };
+
+                            var termMatches = termSet.GetTerms(lmi);
+                            ClientContext.Load(termMatches);
+                            ClientContext.ExecuteQueryRetry();
+
+                            if (termMatches.AreItemsAvailable)
+                            {
+                                term = termMatches.FirstOrDefault();
+                            }
+                        }
+                    }
+                    ClientContext.Load(term, RetrievalExpressions);
+                    ClientContext.ExecuteQueryRetry();
+                    if (IncludeChildTerms.IsPresent && term.TermsCount > 0)
+                    {
+                        LoadChildTerms(term);
+                    }
+                    WriteObject(term);
+                }
+                else
+                {
+                    var query = termSet.Terms.IncludeWithDefaultProperties(RetrievalExpressions);
+                    var terms = ClientContext.LoadQuery(query);
+                    ClientContext.ExecuteQueryRetry();
+                    if (IncludeChildTerms.IsPresent)
+                    {
+                        foreach (var collectionTerm in terms)
+                        {
+                            if (collectionTerm.TermsCount > 0)
+                            {
+                                LoadChildTerms(collectionTerm);
+                            }
+                        }
+                    }
+                    WriteObject(terms, true);
+                }
             }
-            else
+        }
+
+        private void LoadChildTerms(Term incomingTerm)
+        {
+            ClientContext.Load(incomingTerm.Terms, ts => ts.IncludeWithDefaultProperties(RetrievalExpressions));
+            ClientContext.ExecuteQueryRetry();
+            foreach (var childTerm in incomingTerm.Terms)
             {
-                var query = termSet.Terms.IncludeWithDefaultProperties(RetrievalExpressions);
-                var terms = ClientContext.LoadQuery(query);
-                ClientContext.ExecuteQueryRetry();
-                WriteObject(terms, true);
+                if (childTerm.TermsCount > 0)
+                {
+                    LoadChildTerms(childTerm);
+                }
             }
         }
     }

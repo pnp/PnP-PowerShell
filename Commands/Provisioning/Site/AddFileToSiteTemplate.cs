@@ -13,26 +13,27 @@ using System.Net;
 using PnPFileLevel = OfficeDevPnP.Core.Framework.Provisioning.Model.FileLevel;
 using SPFile = Microsoft.SharePoint.Client.File;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPFileToProvisioningTemplate")]
-    [CmdletHelp("Adds a file to a PnP Provisioning Template",
+    [Cmdlet(VerbsCommon.Add, "PnPFileToSiteTemplate")]
+    [Alias("Add-PnPFileToProvisioningTemplate")]
+    [CmdletHelp("Adds a file to a PnP Site Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
-       Remarks = "Adds a file to a PnP Provisioning Template",
+       Code = @"PS:> Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
+       Remarks = "Adds a file to a PnP Site Template",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder",
-       Remarks = "Adds a file reference to a PnP Provisioning XML Template",
+       Code = @"PS:> Add-PnPFileToSiteTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder",
+       Remarks = "Adds a file reference to a PnP Site XML Template",
        SortOrder = 2)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source ""./myfile.png"" -Folder ""folderinsite"" -FileLevel Published -FileOverwrite:$false",
-       Remarks = "Adds a file to a PnP Provisioning Template, specifies the level as Published and defines to not overwrite the file if it exists in the site.",
+       Code = @"PS:> Add-PnPFileToSiteTemplate -Path template.pnp -Source ""./myfile.png"" -Folder ""folderinsite"" -FileLevel Published -FileOverwrite:$false",
+       Remarks = "Adds a file to a PnP Site Template, specifies the level as Published and defines to not overwrite the file if it exists in the site.",
        SortOrder = 3)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
-       Remarks = "Adds a file to a PnP Provisioning Template with a custom container for the file",
+       Code = @"PS:> Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
+       Remarks = "Adds a file to a PnP Site Template with a custom container for the file",
        SortOrder = 4)]
     [CmdletExample(
         Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -SourceUrl $urlOfFile",
@@ -40,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         SortOrder = 4)]
     public class AddFileToProvisioningTemplate : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML provisioning template to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
         public string Path;
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = "LocalSourceFile", HelpMessage = "The file to add to the in-memory template, optionally including full path.")]
@@ -71,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            var template = ReadProvisioningTemplate
+            var template = ReadSiteTemplate
                 .LoadProvisioningTemplateFromFile(Path,
                 TemplateProviderExtensions);
 

@@ -74,7 +74,7 @@ function SetRequestAccessEmail([string]$siteUrl, [string]$ownersEmail) {
     Connect -Url $siteUrl
     $emails = Get-PnPRequestAccessEmails
     if ($emails -ne $ownersEmail) {
-        Write-Output "`tSetting site request e-mail to $ownersEmail"    
+        Write-Output -InputObject "`tSetting site request e-mail to $ownersEmail"    
         Set-PnPRequestAccessEmails -Emails $ownersEmail
     }
 }
@@ -85,32 +85,32 @@ function SyncPermissions {
         [Microsoft.SharePoint.Client.ListItem]$item
     )
 
-    Write-Output "`tSyncing owners/members/visitors from site to directory list"
+    Write-Output -InputObject "`tSyncing owners/members/visitors from site to directory list"
     Connect -Url $siteUrl
     $visitorsGroup = Get-PnPGroup -AssociatedVisitorGroup -ErrorAction SilentlyContinue
     $membersGroup = Get-PnPGroup -AssociatedMemberGroup -ErrorAction SilentlyContinue
     $ownersGroup = Get-PnPGroup -AssociatedOwnerGroup -ErrorAction SilentlyContinue
 
-    $visitors = @($visitorsGroup.Users | select -ExpandProperty LoginName)
-    $members = @($membersGroup.Users | select -ExpandProperty LoginName)
-    $owners = @($ownersGroup.Users | select -ExpandProperty LoginName)
+    $visitors = @($visitorsGroup.Users | Select-Object -ExpandProperty LoginName)
+    $members = @($membersGroup.Users | Select-Object -ExpandProperty LoginName)
+    $owners = @($ownersGroup.Users | Select-Object -ExpandProperty LoginName)
 
     Connect -Url "$tenantURL$siteDirectorySiteUrl"
 
-    $owners = @($owners -notlike 'SHAREPOINT\system' | % {New-PnPUser -LoginName $_ | select -ExpandProperty ID} | sort) 
-    $members = @($members -notlike 'SHAREPOINT\system' | % {New-PnPUser -LoginName $_ | select -ExpandProperty ID} | sort) 
-    $visitors = @($visitors -notlike 'SHAREPOINT\system' | % {New-PnPUser -LoginName $_ | select -ExpandProperty ID} | sort) 
+    $owners = @($owners -notlike 'SHAREPOINT\system' | Foreach-Object -Process {New-PnPUser -LoginName $_ | Select-Object -ExpandProperty ID} | Sort-Object) 
+    $members = @($members -notlike 'SHAREPOINT\system' | Foreach-Object -Process {New-PnPUser -LoginName $_ | Select-Object -ExpandProperty ID} | Sort-Object) 
+    $visitors = @($visitors -notlike 'SHAREPOINT\system' | Foreach-Object -Process {New-PnPUser -LoginName $_ | Select-Object -ExpandProperty ID} | Sort-Object) 
     
-    $existingOwners = @($item["$($columnPrefix)SiteOwners"] | select -ExpandProperty LookupId | sort)
-    $existingMembers = @($item["$($columnPrefix)SiteMembers"] | select -ExpandProperty LookupId | sort)
-    $existingVisitors = @($item["$($columnPrefix)SiteVisitors"] | select -ExpandProperty LookupId | sort)
+    $existingOwners = @($item["$($columnPrefix)SiteOwners"] | Select-Object -ExpandProperty LookupId | Sort-Object)
+    $existingMembers = @($item["$($columnPrefix)SiteMembers"] | Select-Object -ExpandProperty LookupId | Sort-Object)
+    $existingVisitors = @($item["$($columnPrefix)SiteVisitors"] | Select-Object -ExpandProperty LookupId | Sort-Object)
 
     $diffOwner = Compare-Object -ReferenceObject $owners -DifferenceObject $existingOwners -PassThru
     $diffMember = Compare-Object -ReferenceObject $members -DifferenceObject $existingMembers -PassThru
     $diffVisitor = Compare-Object -ReferenceObject $visitors -DifferenceObject $existingVisitors -PassThru
 
     if ($diffOwner -or $diffMember -or $diffVisitor) {
-        Write-Output "`tUpdating changed owners/members/visitors"
+        Write-Output -InputObject "`tUpdating changed owners/members/visitors"
         $siteItem = Set-PnPListItem -List $siteDirectoryList -Identity $itemId -Values @{"$($columnPrefix)SiteOwners" = $owners; "$($columnPrefix)SiteMembers" = $members; "$($columnPrefix)SiteVisitors" = $visitors}
     }
 }
