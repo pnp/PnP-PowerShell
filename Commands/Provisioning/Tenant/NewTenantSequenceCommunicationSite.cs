@@ -48,6 +48,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningcommunicationsite")
+            {
+                WriteWarning("New-PnPProvisioningCommunicationSite has been deprecated. Use New-PnPTenantSequenceCommunicationSite instead.");
+            }
+
             var site = new CommunicationSiteCollection
             {
                 Url = Url,

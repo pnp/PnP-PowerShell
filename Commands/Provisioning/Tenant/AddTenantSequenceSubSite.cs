@@ -25,6 +25,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "add-pnpprovisioningsubsite")
+            {
+                WriteWarning("Add-PnPProvisioningSubSite has been deprecated. Use Add-PnPTenantSequenceSubSite instead.");
+            }
+
             if (Site.Sites.Cast<TeamNoGroupSubSite>().FirstOrDefault(s => s.Url == SubSite.Url) == null)
             {
                 Site.Sites.Add(SubSite);

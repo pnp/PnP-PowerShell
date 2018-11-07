@@ -29,6 +29,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioninghierarchy")
+            {
+                WriteWarning("New-PnPProvisioningHierarchy has been deprecated. Use New-PnPTenantTemplate instead.");
+            }
             var result = new ProvisioningHierarchy();
             result.Author = Author;
             result.Description = Description;

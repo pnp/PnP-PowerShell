@@ -24,6 +24,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "add-pnpprovisioningsite")
+            {
+                WriteWarning("Add-PnPProvisioningSite has been deprecated. Use Add-PnPTenantSequenceSite instead.");
+            }
             Sequence.SiteCollections.Add(Site.Site);
             WriteObject(Sequence);
         }

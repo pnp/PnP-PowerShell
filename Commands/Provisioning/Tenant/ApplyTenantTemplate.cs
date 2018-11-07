@@ -86,6 +86,11 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
         protected override void ExecuteCmdlet()
         {
+            if (MyInvocation.InvocationName.ToLower() == "apply-pnpprovisioninghierarchy")
+            {
+                WriteWarning("Apply-PnPProvisioningHierarchy has been deprecated. Use Apply-PnPTenantTemplate instead.");
+            }
+
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
 
             if (MyInvocation.BoundParameters.ContainsKey("Handlers"))

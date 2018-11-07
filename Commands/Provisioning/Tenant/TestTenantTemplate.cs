@@ -23,6 +23,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ExecuteCmdlet()
         {
+            if (MyInvocation.InvocationName.ToLower() == "test-pnpprovisioninghierarchy")
+            {
+                WriteWarning("Test-PnPProvisioningHierarchy has been deprecated. Use Test-PnPTenantTemplate instead.");
+            }
             List<string> issues = new List<string>();
             foreach(var sequence in Template.Sequences)
             {
