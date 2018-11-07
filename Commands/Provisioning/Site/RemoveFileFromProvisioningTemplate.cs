@@ -10,15 +10,14 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPFileFromSiteTemplate")]
-    [Alias("Remove-PnPFileFromProvisioningTemplate")]
-    [CmdletHelp("Removes a file from a PnP Site Template",
+    [Cmdlet(VerbsCommon.Remove, "PnPFileFromProvisioningTemplate")]
+    [CmdletHelp("Removes a file from a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Remove-PnPFileFromSiteTemplate -Path template.pnp -FilePath filePath",
+       Code = @"PS:> Remove-PnPFileFromProvisioningTemplate -Path template.pnp -FilePath filePath",
        Remarks = "Removes a file from an in-memory PnP Provisioning Template",
        SortOrder = 1)]
-    public class RemoveFileFromSiteTemplate : PSCmdlet
+    public class RemoveFileFromProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to read the template from, optionally including full path.")]
         public string Path;
@@ -36,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            ProvisioningTemplate template = ReadSiteTemplate
+            ProvisioningTemplate template = ReadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
                 TemplateProviderExtensions);
 

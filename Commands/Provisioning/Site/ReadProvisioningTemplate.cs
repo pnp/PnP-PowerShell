@@ -11,19 +11,19 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
 
-    [Cmdlet(VerbsCommunications.Read, "PnPSiteTemplate")]
-    [Alias("Load-PnPProvisioningTemplate", "Read-PnPProvisioningTemplate")]
+    [Cmdlet(VerbsCommunications.Read, "PnPProvisioningTemplate")]
+    [Alias("Load-PnPProvisioningTemplate")]
     [CmdletHelp("Loads/Reads a PnP file from the file system",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Read-PnPSiteTemplate -Path template.pnp",
+       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp",
        Remarks = "Loads a PnP file from the file system",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Read-PnPSiteTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
+       Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
        Remarks = "Loads a PnP file from the file system using some custom template provider extenions while loading the file.",
        SortOrder = 2)]
-    public class ReadSiteTemplate : PSCmdlet
+    public class ReadProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to read from, optionally including full path.")]
         public string Path;
