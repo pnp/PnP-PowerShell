@@ -27,6 +27,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public ProvisioningSequencePipeBind Identity;
         protected override void ProcessRecord()
         {
+
+            if (MyInvocation.InvocationName.ToLower() == "get-pnpprovisioningsequence")
+            {
+                WriteWarning("Get-PnPProvisioningSequence has been deprecated. Use Get-PnPTenantSequence instead.");
+            }
             if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
                 WriteObject(Template.Sequences, true);

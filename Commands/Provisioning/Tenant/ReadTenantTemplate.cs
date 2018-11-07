@@ -29,6 +29,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "read-pnpprovisioninghierarchy")
+            {
+                WriteWarning("Read-PnPProvisioningHierarchy has been deprecated. Use Read-PnPTenantTemplate instead.");
+            }
+
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

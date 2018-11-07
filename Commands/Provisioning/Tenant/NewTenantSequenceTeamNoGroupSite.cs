@@ -42,6 +42,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningteamnogroupsite")
+            {
+                WriteWarning("New-PnPProvisioningTeamNoGroupSite has been deprecated. Use New-PnPTenantSequenceTeamNoGroupSite instead.");
+            }
+
             var site = new TeamNoGroupSiteCollection
             {
                 Url = Url,

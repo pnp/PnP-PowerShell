@@ -8,7 +8,7 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.Add, "PnpProvisioningTemplate", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Add, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
     [CmdletHelp("Adds a PnP Provisioning Template object to a tenant template",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
