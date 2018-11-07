@@ -7,21 +7,20 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Convert, "PnPSiteTemplate")]
-    [Alias("Convert-PnPProvisioningTemplate")]
-    [CmdletHelp("Converts a site template to an other schema version",
+    [Cmdlet(VerbsData.Convert, "PnPProvisioningTemplate")]
+    [CmdletHelp("Converts a provisioning template to an other schema version",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-     Code = @"PS:> Convert-PnPSiteTemplate -Path template.xml",
-     Remarks = @"Converts a site template to the latest schema and outputs the result to current console.",
+     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml",
+     Remarks = @"Converts a provisioning template to the latest schema and outputs the result to current console.",
      SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Convert-PnPSiteTemplate -Path template.xml -Out newtemplate.xml",
-     Remarks = @"Converts a site template to the latest schema and outputs the result the newtemplate.xml file.",
+     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml -Out newtemplate.xml",
+     Remarks = @"Converts a provisioning template to the latest schema and outputs the result the newtemplate.xml file.",
      SortOrder = 2)]
     [CmdletExample(
-     Code = @"PS:> Convert-PnPSiteTemplate -Path template.xml -Out newtemplate.xml -ToSchema V201512",
-     Remarks = @"Converts a site template to the latest schema using the 201512 schema and outputs the result the newtemplate.xml file.",
+     Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml -Out newtemplate.xml -ToSchema V201512",
+     Remarks = @"Converts a provisioning template to the latest schema using the 201512 schema and outputs the result the newtemplate.xml file.",
      SortOrder = 3)]
      [CmdletRelatedLink(
         Text ="Encoding", 

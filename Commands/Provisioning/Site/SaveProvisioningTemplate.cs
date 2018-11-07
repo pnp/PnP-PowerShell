@@ -13,15 +13,14 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Save, "PnPSiteTemplate")]
-    [Alias("Save-PnPProvisioningTemplate")]
+    [Cmdlet(VerbsData.Save, "PnPProvisioningTemplate")]
     [CmdletHelp("Saves a PnP site template to the file system",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Save-PnPSiteTemplate -InputInstance $template -Out .\template.pnp",
        Remarks = "Saves a PnP site template to the file system as a PnP file.",
        SortOrder = 1)]
-    public class SaveSiteTemplate : PSCmdlet
+    public class SaveProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
         public ProvisioningTemplate InputInstance;

@@ -16,25 +16,23 @@ using Microsoft.SharePoint.Client;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPListFoldersToSiteTemplate")]
-    [Alias("Add-PnPListFoldersToProvisioningTemplate")]
-
+    [Cmdlet(VerbsCommon.Add, "PnPListFoldersToProvisioningTemplate")]
     [CmdletHelp("Adds folders to a list in a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPListFoldersToSiteTemplate -Path template.pnp -List 'PnPTestList'",
+       Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList'",
        Remarks = "Adds top level folders from a list to an existing template and returns an in-memory PnP Site Template",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPListFoldersToSiteTemplate -Path template.pnp -List 'PnPTestList' -Recursive",
+       Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive",
        Remarks = "Adds all folders from a list to an existing template and returns an in-memory PnP Site Template",
        SortOrder = 2)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPListFoldersToSiteTemplate -Path template.pnp -List 'PnPTestList' -Recursive -IncludeSecurity",
+       Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive -IncludeSecurity",
        Remarks = "Adds all folders from a list with unique permissions to an in-memory PnP Site Template",
        SortOrder = 3)]
 
-    public class AddListFoldersToSiteTemplate : PnPWebCmdlet
+    public class AddListFoldersToProvisioningTemplate : PnPWebCmdlet
     {
 
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
@@ -61,7 +59,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            var template = ReadSiteTemplate
+            var template = ReadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
                 TemplateProviderExtensions);
 

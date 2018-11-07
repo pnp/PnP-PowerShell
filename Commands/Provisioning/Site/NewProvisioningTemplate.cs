@@ -4,15 +4,14 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsCommon.New, "PnPSiteTemplate", SupportsShouldProcess = true)]
-    [Alias("New-PnPProvisioningTemplate")]
-    [CmdletHelp("Creates a new site template object",
+    [Cmdlet(VerbsCommon.New, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
+    [CmdletHelp("Creates a new provisioning template object",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> $template = New-PnPSiteTemplate",
+       Code = @"PS:> $template = New-PnPProvisioningTemplate",
        Remarks = "Creates a new instance of a site template object.",
        SortOrder = 1)]
-    public class NewSiteTemplate : PSCmdlet
+    public class NewProvisioningTemplate : PSCmdlet
     {
         protected override void ProcessRecord()
         {

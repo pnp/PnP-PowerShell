@@ -14,6 +14,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed documentation for Measure-PnPWeb
 - Updated samples
 - Fixes issue with Set-PnPUnifiedGroup where if you only change for instance the displayname a private group would be marked as public.
+- Renamed (and created aliases for the old cmdlet name) Apply-PnPProvisioningHierarchy to Apply-PnPTenantTemplate
+- Renamed (and created aliases for the old cmdlet name) Add-PnPProvisioningSequence to Add-PnPTenantSequence
+- Renamed (and created aliases for the old cmdlet name) Add-PnPProvisioningSite to Add-PnPTenantSequenceSite
+- Renamed (and created aliases for the old cmdlet name) Add-PnPPnPProvisioningSubSite to Add-PnPTenantSequenceSubSite
+- Renamed (and created aliases for the old cmdlet name) Get-PnPProvisioningSequence to Get-PnPTenantSequence
+- Renamed (and created aliases for the old cmdlet name) Get-PnPProvisioningSite to Get-PnPTenantSequenceSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningSequence to New-PnPTenantSequence
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningTeamSite to New-PnPTenantSequenceTeamSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningCommunicationSite to New-PnPTenantSequenceCommunicationSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningTeamNoGroupSite to New-PnPTenantSequenceTeamNoGroupSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningTeamNoGroupSubSite to New-PnPTenantSequenceTeamNoGroupSubSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningHierarchy to New-PnPTenantTemplate
+- Renamed (and created aliases for the old cmdlet name) Read-PnPProvisioningHierarchy to Read-PnPTenantTemplate
+- Renamed (and created aliases for the old cmdlet name) Save-PnPProvisioningHierarchy to Save-PnPTenantTemplate
+- Renamed (and created aliases for the old cmdlet name) Test-PnPProvisioningHierarchy to Test-PnPTenantTemplate
 
 ### Deprecated
 - Marked Get-PnPProvisioningTemplateFromGallery as deprecated as the PnP Template Gallery has been shut down.
