@@ -57,7 +57,7 @@ namespace SharePointPnP.PowerShell.Tests
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty("AppId") && !string.IsNullOrEmpty("AppSecret"))
+                    if (!string.IsNullOrEmpty(AppId) && !string.IsNullOrEmpty(AppSecret))
                     {
                         // Use oAuth Token to authenticate
                         if (!string.IsNullOrEmpty(Realm))

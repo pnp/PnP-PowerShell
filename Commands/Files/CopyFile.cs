@@ -256,8 +256,47 @@ namespace SharePointPnP.PowerShell.Commands.Files
             var binaryStream = srcFile.OpenBinaryStream();
             _sourceContext.ExecuteQueryRetry();
             if (string.IsNullOrWhiteSpace(filename)) filename = srcFile.Name;
-            targetFolder.UploadFile(filename, binaryStream.Value, OverwriteIfAlreadyExists);
+            this.UploadFileWithInvalidCharacters(targetFolder, filename, binaryStream.Value, OverwriteIfAlreadyExists);
             _targetContext.ExecuteQueryRetry();
+        }
+
+
+        private File UploadFileWithInvalidCharacters(Folder folder, string fileName, System.IO.Stream stream, bool overwriteIfExists)
+        {
+            if (fileName == null)
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentException("Filename is required");
+            }
+            /*
+            if (Regex.IsMatch(fileName, REGEX_INVALID_FILE_NAME_CHARS))
+            {
+                throw new ArgumentException(CoreResources.FileFolderExtensions_UploadFile_The_argument_must_be_a_single_file_name_and_cannot_contain_path_characters_, nameof(fileName));
+            }
+            */
+
+            // Create the file
+            var newFileInfo = new FileCreationInformation()
+            {
+                ContentStream = stream,
+                Url = fileName,
+                Overwrite = overwriteIfExists
+            };
+
+            var file = folder.Files.Add(newFileInfo);
+            folder.Context.Load(file);
+            folder.Context.ExecuteQueryRetry();
+
+            return file;
         }
     }
 }
