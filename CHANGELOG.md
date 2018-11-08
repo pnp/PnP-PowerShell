@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Copy-PnPFile now supports special characters like '&' in file names
 - Updated New-PnPSite to support language/locale for new sites.
 - Updated documentation for New-PnPTenantSite
 - Fixed documentation for Measure-PnPWeb, Set-PnPSite
@@ -37,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Paul Bullock (pkbullock)
 - François-Xavier Cat (lazywinadmin)
 - Koen Zomers (KoenZomers)
+- Kevin McDonnell (kevmcdonk)
 
 ## [3.2.1810.0] Released
 ### Added
