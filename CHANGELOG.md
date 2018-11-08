@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Updated New-PnPSite to support language/locale for new sites.
 - Updated documentation for New-PnPTenantSite
-- Fixed documentation for Measure-PnPWeb
+- Fixed documentation for Measure-PnPWeb, Set-PnPSite
 - Updated samples
 - Fixes issue with Set-PnPUnifiedGroup where if you only change for instance the displayname a private group would be marked as public.
 - Renamed (and created aliases for the old cmdlet name) Apply-PnPProvisioningHierarchy to Apply-PnPTenantTemplate
