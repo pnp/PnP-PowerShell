@@ -73,6 +73,61 @@ namespace SharePointPnP.PowerShell.Tests
             }
         }
 
+        public PSTestScope(string siteUrl, bool connect = true)
+        {
+            SiteUrl = siteUrl;
+            CredentialManagerEntry = ConfigurationManager.AppSettings["SPOCredentialManagerLabel"];
+            Realm = ConfigurationManager.AppSettings["Realm"];
+            AppId = ConfigurationManager.AppSettings["AppId"];
+            AppSecret = ConfigurationManager.AppSettings["AppSecret"];
+
+            var iss = InitialSessionState.CreateDefault();
+            if (connect)
+            {
+                SessionStateCmdletEntry ssce = new SessionStateCmdletEntry("Connect-PnPOnline", typeof(ConnectOnline), null);
+
+                iss.Commands.Add(ssce);
+            }
+            _runSpace = RunspaceFactory.CreateRunspace(iss);
+
+            _runSpace.Open();
+
+            // Sets the execution policy to unrestricted. Requires Visual Studio to run in elevated mode.
+            var pipeLine = _runSpace.CreatePipeline();
+            Command cmd = new Command("Set-ExecutionPolicy");
+            cmd.Parameters.Add("ExecutionPolicy", "Unrestricted");
+            cmd.Parameters.Add("Scope", "Process");
+            pipeLine.Commands.Add(cmd);
+            pipeLine.Invoke();
+
+            if (connect)
+            {
+                pipeLine = _runSpace.CreatePipeline();
+                cmd = new Command("connect-pnponline");
+                cmd.Parameters.Add("Url", SiteUrl);
+                if (!string.IsNullOrEmpty(CredentialManagerEntry))
+                {
+                    // Use Windows Credential Manager to authenticate
+                    cmd.Parameters.Add("Credentials", CredentialManagerEntry);
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(AppId) && !string.IsNullOrEmpty(AppSecret))
+                    {
+                        // Use oAuth Token to authenticate
+                        if (!string.IsNullOrEmpty(Realm))
+                        {
+                            cmd.Parameters.Add("Realm", Realm);
+                        }
+                        cmd.Parameters.Add("AppId", AppId);
+                        cmd.Parameters.Add("AppSecret", AppSecret);
+                    }
+                }
+                pipeLine.Commands.Add(cmd);
+                pipeLine.Invoke();
+            }
+        }
+
 
         public Collection<PSObject> ExecuteCommand(string cmdletString)
         {

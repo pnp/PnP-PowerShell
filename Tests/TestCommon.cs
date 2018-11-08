@@ -17,7 +17,6 @@ namespace SharePointPnP.PowerShell.Tests
             // Read configuration data
             TenantUrl = ConfigurationManager.AppSettings["SPOTenantUrl"];
             DevSiteUrl = ConfigurationManager.AppSettings["SPODevSiteUrl"];
-            Dev2SiteUrl = ConfigurationManager.AppSettings["SPODev2SiteUrl"];
 
             if (string.IsNullOrEmpty(TenantUrl) || string.IsNullOrEmpty(DevSiteUrl))
             {
@@ -109,9 +108,9 @@ namespace SharePointPnP.PowerShell.Tests
             return CreateContext(DevSiteUrl, Credentials);
         }
 
-        public static ClientContext CreateClientContextDev2()
+        public static ClientContext CreateClientContext(string siteUrl)
         {
-            return CreateContext(Dev2SiteUrl, Credentials);
+            return CreateContext(siteUrl, Credentials);
         }
 
         public static ClientContext CreateTenantClientContext()
@@ -174,6 +173,12 @@ namespace SharePointPnP.PowerShell.Tests
                 secureString.AppendChar(c);
 
             return secureString;
+        }
+
+        public static string GetTenantRootUrl(ClientContext ctx)
+        {
+            var uri = new Uri(ctx.Url);
+            return $"https://{uri.DnsSafeHost}";
         }
         #endregion
     }
