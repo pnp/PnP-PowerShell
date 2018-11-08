@@ -272,6 +272,7 @@
     <Compile Include="EventReceiverTests.cs" />
     <Compile Include="FeatureTests.cs" />
     <Compile Include="FieldsTests.cs" />
+    <Compile Include="FilesTest.cs" />
     <Compile Include="InvokeWebActionTest.cs" />
     <Compile Include="ListDataRowProvisioningTemplate.cs" />
     <Compile Include="ProvisioningTemplateTests.cs" />
