@@ -16,13 +16,20 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.deletedsiteproperties.aspx")]
     [CmdletExample(
         Code = @"PS:> Get-PnPTenantRecycleBinItem",
-        Remarks = "Returns all site collections in the tenant scoped recycle bin",
+        Remarks = "Returns all classic site collections in the tenant scoped recycle bin",
         SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPTenantRecycleBinItem -IncludeModernSites",
+        Remarks = "Returns all modern and classic site collections in the tenant scoped recycle bin",
+        SortOrder = 2)]
     public class GetTenantRecycleBinItems : PnPAdminCmdlet
     {
+        [Parameter(Mandatory = false, HelpMessage = "If provided, it will also return all Modern Sites next to the classic sites that have been deleted and are in the tenant scoped recycle bin")]
+        public SwitchParameter IncludeModernSites;
+
         protected override void ExecuteCmdlet()
         {
-            var deletedSites = Tenant.GetDeletedSiteProperties(0);
+            var deletedSites = IncludeModernSites ? Tenant.GetDeletedSitePropertiesFromSharePoint("0") : Tenant.GetDeletedSiteProperties(0);
             ClientContext.Load(deletedSites, c => c.IncludeWithDefaultProperties(s => s.Url, s => s.SiteId, s => s.DaysRemaining, s => s.Status));
             ClientContext.ExecuteQueryRetry();
             if (deletedSites.AreItemsAvailable)
