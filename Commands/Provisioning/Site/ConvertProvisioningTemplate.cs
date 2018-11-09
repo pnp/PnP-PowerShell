@@ -25,9 +25,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
      [CmdletRelatedLink(
         Text ="Encoding", 
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
-    public class ConvertProvisioningTemplate : PSCmdlet
+    public class ConvertSiteTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the provisioning template")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the site template")]
         public string Path;
 
         [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path")]
@@ -104,7 +104,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                         }
                     case XMLPnPSchemaVersion.V201605:
                         {
+#pragma warning disable CS0618 // Type or member is obsolete
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
+#pragma warning restore CS0618 // Type or member is obsolete
                             break;
                         }
                     case XMLPnPSchemaVersion.V201705:
@@ -120,6 +122,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                     case XMLPnPSchemaVersion.V201805:
                         {
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201807:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_07);
                             break;
                         }
                 }

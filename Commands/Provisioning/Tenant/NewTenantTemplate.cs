@@ -3,16 +3,17 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.New, "PnPProvisioningHierarchy", SupportsShouldProcess = true)]
-    [CmdletHelp("Creates a new provisioning hierarchy object",
+    [Cmdlet(VerbsCommon.New, "PnPTenantTemplate", SupportsShouldProcess = true)]
+    [Alias("New-PnPProvisioningHierarchy")]
+    [CmdletHelp("Creates a new tenant template object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> $hierarchy = New-PnPProvisioningHierarchy",
-       Remarks = "Creates a new instance of a provisioning hierarchy object.",
+       Code = @"PS:> $template = New-PnPTenantTemplate",
+       Remarks = "Creates a new instance of a tenant template object.",
        SortOrder = 1)]
-    public class NewProvisioningHierarchy : PSCmdlet
+    public class NewTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = false)]
         public string Author;
@@ -28,6 +29,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioninghierarchy")
+            {
+                WriteWarning("New-PnPProvisioningHierarchy has been deprecated. Use New-PnPTenantTemplate instead.");
+            }
             var result = new ProvisioningHierarchy();
             result.Author = Author;
             result.Description = Description;

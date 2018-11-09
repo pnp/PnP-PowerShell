@@ -9,19 +9,21 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsData.Save, "PnPProvisioningHierarchy")]
+    [Cmdlet(VerbsData.Save, "PnPTenantTemplate")]
+    [Alias("Save-PnPProvisioningHierarchy")]
     [CmdletHelp("Saves a PnP provisioning hierarchy to the file system",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Save-PnPProvisioningHierarchy -Hierarchy $hierarchy -Out .\hierarchy.pnp",
-       Remarks = "Saves a PnP provisioning hiearchy to the file system",
+       Code = @"PS:> Save-PnPTenantTemplate -Template $template -Out .\hierarchy.pnp",
+       Remarks = "Saves a PnP tenant template to the file system",
        SortOrder = 1)]
-    public class SaveProvisioningHierarchy : PSCmdlet
+    public class SaveTenantTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningHierarchy type of the PnP Core Component. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
-        public ProvisioningHierarchy Hierarchy;
+        [Parameter(Mandatory = true, HelpMessage = "Allows you to provide an in-memory instance of a Tenant Template. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
+        [Alias("Hierarchy")]
+        public ProvisioningHierarchy Template;
 
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
         public string Out;
@@ -29,11 +31,12 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
-        //[Parameter(Mandatory = false, HelpMessage = "Allows you to specify the ITemplateProviderExtension to execute while saving a template.")]
-        //public ITemplateProviderExtension[] TemplateProviderExtensions;
-
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "save-pnpprovisioninghierarchy")
+            {
+                WriteWarning("Save-PnPProvisioningHierarchy has been deprecated. Use Save-PnPTenantTemplate instead.");
+            }
             // Determine the output file name and path
             string outFileName = Path.GetFileName(Out);
 
@@ -86,7 +89,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                       Out, fileSystemConnector, templateFileName: templateFileName);
                 WriteObject("Processing template");
-                provider.SaveAs(Hierarchy, templateFileName);
+                provider.SaveAs(Template, templateFileName);
                 ProcessFiles(Out, fileSystemConnector, provider.Connector);
 
                 //provider.SaveAs(Hierarchy, templateFileName);
@@ -95,38 +98,38 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             else
             {
                 XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(outPath, "");
-                provider.SaveAs(Hierarchy, Out);
+                provider.SaveAs(Template, Out);
             }
         }
 
         private void ProcessFiles(string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
         {
-            var hierarchy = ReadProvisioningHierarchy.LoadProvisioningHierarchyFromFile(templateFileName, null);
-            if (Hierarchy.Tenant?.AppCatalog != null)
+            var hierarchy = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null);
+            if (Template.Tenant?.AppCatalog != null)
             {
-                foreach (var app in Hierarchy.Tenant.AppCatalog.Packages)
+                foreach (var app in Template.Tenant.AppCatalog.Packages)
                 {
                     WriteObject($"Processing {app.Src}");
                     AddFile(app.Src, hierarchy, fileSystemConnector, connector);
                 }
             }
-            if (Hierarchy.Tenant?.SiteScripts != null)
+            if (Template.Tenant?.SiteScripts != null)
             {
-                foreach (var siteScript in Hierarchy.Tenant.SiteScripts)
+                foreach (var siteScript in Template.Tenant.SiteScripts)
                 {
                     WriteObject($"Processing {siteScript.JsonFilePath}");
                     AddFile(siteScript.JsonFilePath, hierarchy, fileSystemConnector, connector);
                 }
             }
-            if (Hierarchy.Localizations != null && Hierarchy.Localizations.Any())
+            if (Template.Localizations != null && Template.Localizations.Any())
             {
-                foreach (var location in Hierarchy.Localizations)
+                foreach (var location in Template.Localizations)
                 {
                     WriteObject($"Processing {location.ResourceFile}");
                     AddFile(location.ResourceFile, hierarchy, fileSystemConnector, connector);
                 }
             }
-            foreach (var template in Hierarchy.Templates)
+            foreach (var template in Template.Templates)
             {
                 if(template.WebSettings != null && template.WebSettings.SiteLogo != null)
                 {

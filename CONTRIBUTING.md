@@ -14,6 +14,8 @@ Please see following page for additional insights on the model.
 
 ## Building the source code ##
 
+Once you have downloaded the code, in the folder with the PnP PowerShell source code, open the solution file SharePointPnP.PowerShell.sln.
+
 If you have set up up the projects and you are ready to build the source code, make sure to build the SharePointPnP.PowerShellModuleFilesGenerator project first. This project will be executed after every build and it will generate the required PSD1 and XML files with cmdlet documentation in them.
 
 When you build the solution a postbuild script will copy the required files to a folder in your users folder called 
@@ -23,7 +25,7 @@ To debug the cmdlets: launch PowerShell and attach Visual Studio to the powershe
 
 ## Code contributions
 In order to succesfully compile the PnP PowerShell solution you will _also_ have to download *and build in Visual Studio* the [PnP-Sites-Core](https://github.com/OfficeDev/PnP-Sites-Core) repository and make the dev branch available. The PowerShell solution depends on it. In order to succesfully 
-compile it, make sure that PnP-Sites-Core is located at the same level as PnP-PowerShell.
+compile it, make sure that PnP-Sites-Core is located at the same level as PnP-PowerShell and you open the solution file OfficeDevPnP.Core.sln located in the Core subfolder of the sourcecode.
 
 So:
 ```

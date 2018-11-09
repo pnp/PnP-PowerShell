@@ -4,14 +4,11 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFileFromProvisioningTemplate")]
     [CmdletHelp("Removes a file from a PnP Provisioning Template",

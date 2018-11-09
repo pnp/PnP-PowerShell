@@ -4,16 +4,17 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.New, "PnPProvisioningTeamSite", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamSite", SupportsShouldProcess = true)]
+    [Alias("New-PnPProvisioningTeamSite")]
     [CmdletHelp("Creates a team site object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> $site = New-PnPProvisioningTeamSite -Alias ""MyTeamSite"" -Title ""My Team Site""",
+       Code = @"PS:> $site = New-PnPTenantSequenceTeamSite -Alias ""MyTeamSite"" -Title ""My Team Site""",
        Remarks = "Creates a new team site object with the specified variables",
        SortOrder = 1)]
-    public class NewProvisioningTeamSite : PSCmdlet
+    public class NewTenantSequenceTeamSite : PSCmdlet
     {
 
         [Parameter(Mandatory = true)]
@@ -42,6 +43,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningcommunicationsite")
+            {
+                WriteWarning("New-PnPProvisioningCommunicationSite has been deprecated. Use New-PnPTenantSequenceCommunicationSite instead.");
+            }
+
             var site = new TeamSiteCollection
             {
                 Alias = Alias,

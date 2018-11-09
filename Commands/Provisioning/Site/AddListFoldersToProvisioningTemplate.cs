@@ -14,29 +14,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPListFoldersToProvisioningTemplate")]
-
     [CmdletHelp("Adds folders to a list in a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList'",
-       Remarks = "Adds top level folders from a list to an existing template and returns an in-memory PnP Provisioning Template",
+       Remarks = "Adds top level folders from a list to an existing template and returns an in-memory PnP Site Template",
        SortOrder = 1)]
     [CmdletExample(
        Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive",
-       Remarks = "Adds all folders from a list to an existing template and returns an in-memory PnP Provisioning Template",
+       Remarks = "Adds all folders from a list to an existing template and returns an in-memory PnP Site Template",
        SortOrder = 2)]
     [CmdletExample(
        Code = @"PS:> Add-PnPListFoldersToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Recursive -IncludeSecurity",
-       Remarks = "Adds all folders from a list with unique permissions to an in-memory PnP Provisioning Template",
+       Remarks = "Adds all folders from a list with unique permissions to an in-memory PnP Site Template",
        SortOrder = 3)]
 
     public class AddListFoldersToProvisioningTemplate : PnPWebCmdlet
     {
 
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML provisioning template to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
         public string Path;
 
         [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 2)]

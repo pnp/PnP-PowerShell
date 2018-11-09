@@ -13,10 +13,10 @@ using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning template from a web",
+    [CmdletHelp("Generates a provisioning site template from a web",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp",
@@ -416,7 +416,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                         }
                     case XMLPnPSchemaVersion.V201605:
                         {
+#pragma warning disable CS0618 // Type or member is obsolete
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
+#pragma warning restore CS0618 // Type or member is obsolete
                             break;
                         }
                     case XMLPnPSchemaVersion.V201705:

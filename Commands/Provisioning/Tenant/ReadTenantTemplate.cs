@@ -9,16 +9,17 @@ using System;
 using System.IO;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommunications.Read, "PnPProvisioningHierarchy")]
-    [CmdletHelp("Loads/Reads a PnP provisioning hierarchy from the file system and returns an in-memory instance of this template.",
+    [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate")]
+    [Alias("Read-PnPProvisioningHierarchy")]
+    [CmdletHelp("Loads/Reads a PnP tenant template from the file system and returns an in-memory instance of this template.",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Read-PnPProvisioningHierarchy -Path hierarchy.pnp",
-       Remarks = "Reads a PnP provisioning hierarchy file from the file system and returns an in-memory instance",
+       Code = @"PS:> Read-PnPTenantTemplate -Path template.pnp",
+       Remarks = "Reads a PnP tenant templatey file from the file system and returns an in-memory instance",
        SortOrder = 1)]
-    public class ReadProvisioningHierarchy : PSCmdlet
+    public class ReadTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to read from, optionally including full path.")]
         public string Path;
@@ -28,6 +29,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "read-pnpprovisioninghierarchy")
+            {
+                WriteWarning("Read-PnPProvisioningHierarchy has been deprecated. Use Read-PnPTenantTemplate instead.");
+            }
+
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

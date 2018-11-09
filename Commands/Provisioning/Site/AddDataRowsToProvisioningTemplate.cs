@@ -15,7 +15,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using SPSite = Microsoft.SharePoint.Client.Site;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPDataRowsToProvisioningTemplate")]
     [CmdletHelp("Adds datarows to a list inside a PnP Provisioning Template",
@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        SortOrder = 2)]
     public class AddDataRowsToProvisioningTemplate : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML provisioning template to read from, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
         public string Path;
 
         [Parameter(Mandatory = true, HelpMessage = "The list to query")]

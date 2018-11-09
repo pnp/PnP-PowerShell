@@ -13,26 +13,27 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet("Apply", "PnPProvisioningHierarchy", SupportsShouldProcess = true)]
-    [CmdletHelp("Adds a provisioning sequence object to a provisioning site object",
+    [Cmdlet("Apply", "PnPTenantTemplate", SupportsShouldProcess = true)]
+    [Alias("Apply-PnPProvisioningHierarchy")]
+    [CmdletHelp("Applies a tenant template to the current tenant.",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Apply-PnPProvisioningHierarchy -Path myfile.pnp",
-       Remarks = "Will read the provisioning hierarchy from the filesystem and will apply the sequences in the hierarchy",
+       Code = @"PS:> Apply-PnPTenantTemplate -Path myfile.pnp",
+       Remarks = "Will read the tenant template from the filesystem and will apply the sequences in the template",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Apply-PnPProvisioningHierarchy -Path myfile.pnp -SequenceId ""mysequence""",
-       Remarks = "Will read the provisioning hierarchy from the filesystem and will apply the specified sequence in the hierarchy",
+       Code = @"PS:> Apply-PnPTenantTemplate -Path myfile.pnp -SequenceId ""mysequence""",
+       Remarks = "Will read the tenant template from the filesystem and will apply the specified sequence in the template",
        SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Apply-PnPProvisioningHierarchy -Path myfile.pnp -Parameters @{""ListTitle""=""Projects"";""parameter2""=""a second value""}",
-     Remarks = @"Applies a provisioning hierarchy template to the current tenant. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.
+     Code = @"PS:> Apply-PnPTenantTemplate -Path myfile.pnp -Parameters @{""ListTitle""=""Projects"";""parameter2""=""a second value""}",
+     Remarks = @"Applies a tenant template to the current tenant. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.
 
 For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.",
      SortOrder = 3)]
-    public class ApplyProvisioningHierarchy : PnPAdminCmdlet
+    public class ApplyTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
         private const string ParameterSet_OBJECT = "By Object";
@@ -44,12 +45,13 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         public string Path;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OBJECT)]
-        public ProvisioningHierarchy Hierarchy;
+        [Alias("Hierarchy")]
+        public ProvisioningHierarchy Template;
 
         [Parameter(Mandatory = false)]
         public string SequenceId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the tenant template is located will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ResourceFolder;
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.", ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -84,6 +86,11 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
         protected override void ExecuteCmdlet()
         {
+            if (MyInvocation.InvocationName.ToLower() == "apply-pnpprovisioninghierarchy")
+            {
+                WriteWarning("Apply-PnPProvisioningHierarchy has been deprecated. Use Apply-PnPTenantTemplate instead.");
+            }
+
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
 
             if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
@@ -199,7 +206,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                     }
                 case ParameterSet_OBJECT:
                     {
-                        hierarchyToApply = Hierarchy;
+                        hierarchyToApply = Template;
                         if (ResourceFolder != null)
                         {
                             var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
@@ -259,7 +266,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-            return ReadProvisioningHierarchy.LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions);
+            return ReadTenantTemplate.LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions);
         }
     }
 }
