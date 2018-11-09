@@ -48,7 +48,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 WriteWarning("New-PnPProvisioningTeamNoGroupSubSite has been deprecated. Use New-PnPTenantSequenceTeamNoGroupSubSite instead.");
             }
 
-            SiteCollection c;
             var site = new TeamNoGroupSubSite()
             {
                 Url = Url,

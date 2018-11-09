@@ -114,9 +114,6 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the Geo/Region restrictions of this site.", ParameterSetName = ParameterSet_PROPERTIES)]
         public RestrictedToRegion? RestrictedToGeo;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies a list of email domains that is allowed for sharing with the external collaborators. Specify a comma separated list for example ""contoso.com"",""fabrikam.com""", ParameterSetName = ParameterSet_PROPERTIES)]
-        List<string> SharingAllowedDomainList;
-
         [Parameter(Mandatory = false, HelpMessage = @"Disables or enables the Social Bar for Site Collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter SocialBarOnSitePagesDisabled;
 

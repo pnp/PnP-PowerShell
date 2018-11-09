@@ -416,7 +416,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                         }
                     case XMLPnPSchemaVersion.V201605:
                         {
+#pragma warning disable CS0618 // Type or member is obsolete
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
+#pragma warning restore CS0618 // Type or member is obsolete
                             break;
                         }
                     case XMLPnPSchemaVersion.V201705:
