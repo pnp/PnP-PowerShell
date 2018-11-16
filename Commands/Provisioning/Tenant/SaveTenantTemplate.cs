@@ -33,6 +33,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "save-pnpprovisioninghierarchy")
+            {
+                WriteWarning("Save-PnPProvisioningHierarchy has been deprecated. Use Save-PnPTenantTemplate instead.");
+            }
             // Determine the output file name and path
             string outFileName = Path.GetFileName(Out);
 

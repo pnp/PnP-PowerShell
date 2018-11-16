@@ -24,6 +24,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public string Id;
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningsequence")
+            {
+                WriteWarning("New-PnPProvisioningSequence has been deprecated. Use New-PnPTenantSequence instead.");
+            }
+
             var result = new ProvisioningSequence();
             if (this.MyInvocation.BoundParameters.ContainsKey("Id"))
             {

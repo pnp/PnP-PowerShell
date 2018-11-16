@@ -9,19 +9,18 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
-    [Cmdlet(VerbsData.Convert, "PnPFolderToSiteTemplate")]
-    [Alias("Convert-PnPFolderToProvisioningTemplate")]
+    [Cmdlet(VerbsData.Convert, "PnPFolderToProvisioningTemplate")]
     [CmdletHelp("Creates a pnp package file of an existing template xml, and includes all files in the current folder",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Convert-PnPFolderToSiteTemplate -Out template.pnp",
+       Code = @"PS:> Convert-PnPFolderToProvisioningTemplate -Out template.pnp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the current folder",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Convert-PnPFolderToSiteTemplate -Out template.pnp -Folder c:\temp",
+       Code = @"PS:> Convert-PnPFolderToProvisioningTemplate -Out template.pnp -Folder c:\temp",
        Remarks = "Creates a pnp package file of an existing template xml, and includes all files in the c:\\temp folder",
        SortOrder = 2)]
-    public class ConvertFolderToSiteTemplate : PSCmdlet
+    public class ConvertFolderToProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
         public string Out;

@@ -5,15 +5,41 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.3.1811.0] Unreleased
+## [3.4.1812.0]
+
 ### Added
 
 ### Changed
+
+### Deprecated
+
+### Contributors
+
+## [3.3.1811.0]
+### Added
+
+### Changed
+- Copy-PnPFile now supports special characters like '&' in file names
 - Updated New-PnPSite to support language/locale for new sites.
 - Updated documentation for New-PnPTenantSite
-- Fixed documentation for Measure-PnPWeb
+- Fixed documentation for Measure-PnPWeb, Set-PnPSite
 - Updated samples
 - Fixes issue with Set-PnPUnifiedGroup where if you only change for instance the displayname a private group would be marked as public.
+- Renamed (and created aliases for the old cmdlet name) Apply-PnPProvisioningHierarchy to Apply-PnPTenantTemplate
+- Renamed (and created aliases for the old cmdlet name) Add-PnPProvisioningSequence to Add-PnPTenantSequence
+- Renamed (and created aliases for the old cmdlet name) Add-PnPProvisioningSite to Add-PnPTenantSequenceSite
+- Renamed (and created aliases for the old cmdlet name) Add-PnPPnPProvisioningSubSite to Add-PnPTenantSequenceSubSite
+- Renamed (and created aliases for the old cmdlet name) Get-PnPProvisioningSequence to Get-PnPTenantSequence
+- Renamed (and created aliases for the old cmdlet name) Get-PnPProvisioningSite to Get-PnPTenantSequenceSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningSequence to New-PnPTenantSequence
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningTeamSite to New-PnPTenantSequenceTeamSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningCommunicationSite to New-PnPTenantSequenceCommunicationSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningTeamNoGroupSite to New-PnPTenantSequenceTeamNoGroupSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningTeamNoGroupSubSite to New-PnPTenantSequenceTeamNoGroupSubSite
+- Renamed (and created aliases for the old cmdlet name) New-PnPProvisioningHierarchy to New-PnPTenantTemplate
+- Renamed (and created aliases for the old cmdlet name) Read-PnPProvisioningHierarchy to Read-PnPTenantTemplate
+- Renamed (and created aliases for the old cmdlet name) Save-PnPProvisioningHierarchy to Save-PnPTenantTemplate
+- Renamed (and created aliases for the old cmdlet name) Test-PnPProvisioningHierarchy to Test-PnPTenantTemplate
 
 ### Deprecated
 - Marked Get-PnPProvisioningTemplateFromGallery as deprecated as the PnP Template Gallery has been shut down.
@@ -22,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Paul Bullock (pkbullock)
 - François-Xavier Cat (lazywinadmin)
 - Koen Zomers (KoenZomers)
+- Kevin McDonnell (kevmcdonk)
 
 ## [3.2.1810.0] Released
 ### Added

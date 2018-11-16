@@ -15,24 +15,23 @@ using SPFile = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
-    [Cmdlet(VerbsCommon.Add, "PnPFileToSiteTemplate")]
-    [Alias("Add-PnPFileToProvisioningTemplate")]
-    [CmdletHelp("Adds a file to a PnP Site Template",
+    [Cmdlet(VerbsCommon.Add, "PnPFileToProvisioningTemplate")]
+    [CmdletHelp("Adds a file to a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder",
        Remarks = "Adds a file to a PnP Site Template",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToSiteTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder",
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.xml -Source $sourceFilePath -Folder $targetFolder",
        Remarks = "Adds a file reference to a PnP Site XML Template",
        SortOrder = 2)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToSiteTemplate -Path template.pnp -Source ""./myfile.png"" -Folder ""folderinsite"" -FileLevel Published -FileOverwrite:$false",
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source ""./myfile.png"" -Folder ""folderinsite"" -FileLevel Published -FileOverwrite:$false",
        Remarks = "Adds a file to a PnP Site Template, specifies the level as Published and defines to not overwrite the file if it exists in the site.",
        SortOrder = 3)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPFileToSiteTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
+       Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -Source $sourceFilePath -Folder $targetFolder -Container $container",
        Remarks = "Adds a file to a PnP Site Template with a custom container for the file",
        SortOrder = 4)]
     [CmdletExample(
@@ -72,7 +71,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
             // Load the template
-            var template = ReadSiteTemplate
+            var template = ReadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
                 TemplateProviderExtensions);
 

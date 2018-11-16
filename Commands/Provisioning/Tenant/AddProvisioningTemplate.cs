@@ -8,15 +8,14 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
-    [Cmdlet(VerbsCommon.Add, "PnPSiteTemplate", SupportsShouldProcess = true)]
-    [Alias("Add-PnpProvisioningTemplate")]
-    [CmdletHelp("Adds a PnP Site Template object to a tenant template",
+    [Cmdlet(VerbsCommon.Add, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
+    [CmdletHelp("Adds a PnP Provisioning Template object to a tenant template",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPSiteTemplate -TenantTemplate $tenanttemplate -SiteTemplate $sitetemplate",
+       Code = @"PS:> Add-PnpProvisioningTemplate -TenantTemplate $tenanttemplate -SiteTemplate $sitetemplate",
        Remarks = "Adds an existing site template to an existing tenant template object",
        SortOrder = 1)]
-    public class AddSiteTemplate : PSCmdlet
+    public class AddProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The template to add to the tenant template")]
         [Alias("Template")]

@@ -30,6 +30,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "add-pnpprovisioningsequence")
+            {
+                WriteWarning("Add-PnPProvisioningSequence has been deprecated. Use Add-PnPTenantSequence instead.");
+            }
             if (Template.Sequences.FirstOrDefault(s => s.ID == Sequence.ID) == null)
             {
                 Template.Sequences.Add(Sequence);

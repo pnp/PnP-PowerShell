@@ -303,14 +303,14 @@
     <Reference Include="Microsoft.ApplicationInsights, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.8.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    <Reference Include="Microsoft.Data.OData, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.8.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
@@ -401,8 +401,8 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+    <Reference Include="System.Spatial, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.8.4\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.0.0\lib\netstandard1.0\System.Text.Encodings.Web.dll</HintPath>
@@ -505,7 +505,7 @@
     <Compile Include="Provisioning\Tenant\ReadTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\SaveTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\TestTenantTemplate.cs" />
-    <Compile Include="Provisioning\Tenant\AddSiteTemplate.cs" />
+    <Compile Include="Provisioning\Tenant\AddProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Tenant\AddTenantSequenceSubSite.cs" />
     <Compile Include="Provisioning\Tenant\AddTenantSequenceSite.cs" />
     <Compile Include="Provisioning\Tenant\GetTenantSequenceSite.cs" />
@@ -686,27 +686,27 @@
     <Compile Include="Provider\SPOProxy\SPOProxyImplementation.cs" />
     <Compile Include="Provider\SPOProxy\SPOProxyCopyItem.cs" />
     <Compile Include="Provider\SPOProxy\SPOProxyMoveItem.cs" />
-    <Compile Include="Provisioning\Site\AddListFoldersToSiteTemplate.cs" />
-    <Compile Include="Provisioning\Site\AddDataRowsToSiteTemplate.cs" />
+    <Compile Include="Provisioning\Site\AddListFoldersToProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\Site\AddDataRowsToProvisioningTemplate.cs" />
     <Compile Include="InformationManagement\ClosureState.cs" />
     <Compile Include="InformationManagement\GetSiteClosure.cs" />
     <Compile Include="InformationManagement\SetSiteClosure.cs" />
-    <Compile Include="Provisioning\Site\AddFileToSiteTemplate.cs" />
-    <Compile Include="Provisioning\Site\ReadSiteTemplate.cs" />
-    <Compile Include="Provisioning\Site\NewSiteTemplate.cs" />
+    <Compile Include="Provisioning\Site\AddFileToProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\Site\ReadProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\Site\NewProvisioningTemplate.cs" />
     <Compile Include="Components\PnPTemplatesGalleryResultItem.cs" />
     <Compile Include="Components\ProvisioningTemplateInformation.cs" />
-    <Compile Include="Provisioning\Site\RemoveFileFromSiteTemplate.cs" />
-    <Compile Include="Provisioning\Site\SaveSiteTemplate.cs" />
+    <Compile Include="Provisioning\Site\RemoveFileFromProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\Site\SaveProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Site\GetProvisioningTemplateFromGallery.cs" />
-    <Compile Include="Provisioning\Site\SetSiteTemplateMetadata.cs" />
+    <Compile Include="Provisioning\Site\SetProvisioningTemplateMetadata.cs" />
     <Compile Include="Provisioning\Site\ConvertFolderToProvisioningTemplate.cs" />
     <Compile Include="Branding\DisableResponsiveUI.cs" />
     <Compile Include="Branding\EnableResponsiveUI.cs" />
-    <Compile Include="Provisioning\Site\ConvertSiteTemplate.cs" />
+    <Compile Include="Provisioning\Site\ConvertProvisioningTemplate.cs" />
     <Compile Include="Branding\GetJavaScriptLink.cs" />
-    <Compile Include="Provisioning\Site\ApplySiteTemplate.cs" />
-    <Compile Include="Provisioning\Site\GetSiteTemplate.cs" />
+    <Compile Include="Provisioning\Site\ApplyProvisioningTemplate.cs" />
+    <Compile Include="Provisioning\Site\GetProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Site\NewProvisioningTemplateFromFolder.cs" />
     <Compile Include="Branding\GetTheme.cs" />
     <Compile Include="ContentTypes\RemoveFieldFromContentType.cs" />

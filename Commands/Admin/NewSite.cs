@@ -1,15 +1,15 @@
 ﻿#if !ONPREMISES
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Enums;
 using System;
-using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPSite")]
-    [CmdletHelp("BETA: This cmdlet is using early release APIs. Notice that functionality and parameters can change. Creates a new site collection",
+    [CmdletHelp("Creates a new site collection",
         "The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Team Site are supported. If you want to create a classic site, use New-PnPTenantSite.",
         OutputType = typeof(string),
         OutputTypeDescription = "Returns the url of the newly created site collection",

@@ -27,6 +27,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public ProvisioningSitePipeBind Identity;
         protected override void ProcessRecord()
         {
+            if (MyInvocation.InvocationName.ToLower() == "get-pnpprovisioningsite")
+            {
+                WriteWarning("Get-PnPProvisioningSite has been deprecated. Use Get-PnPTenantSequenceSite instead.");
+            }
+
             if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
                 WriteObject(Sequence.SiteCollections, true);
