@@ -23,6 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     SortOrder = 2)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
+        private Assembly modernizationAssembly;
         private Assembly sitesCoreAssembly;
         private Assembly newtonsoftAssembly;
 
@@ -134,6 +135,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             {
                 newtonsoftAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
                 sitesCoreAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
+                modernizationAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             }
             catch { }
@@ -148,6 +150,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             if (args.Name.StartsWith("Newtonsoft.Json"))
             {
                 return newtonsoftAssembly;
+            }
+            if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
+            {
+                return modernizationAssembly;
             }
             return null;
         }
