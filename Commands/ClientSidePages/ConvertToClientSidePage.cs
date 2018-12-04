@@ -105,7 +105,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
                 if (clientSidePage != null)
                 {
-                    WriteObject(serverRelativeClientPageUrl);
+                    WriteObject(clientSidePage);
                 }
             }
             finally
