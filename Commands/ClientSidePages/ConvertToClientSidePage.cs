@@ -130,32 +130,15 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         private void FixAssemblyResolving()
         {
-#if DEBUG
             try
             {
-                newtonsoftAssembly = System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-                string fileToLoad = System.IO.Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization", "OfficeDevPnP.Core.dll");
-                if (System.IO.File.Exists(fileToLoad))
-                {
-                    // case with binaries deployed to powershell modules folder
-                }
-                else
-                {
-                    // running test cases from VS
-                    fileToLoad = new System.IO.FileInfo(@"..\..\..\binaries\OfficeDevPnP.Core.dll").FullName;
-                }
-                
-                sitesCoreAssembly = Assembly.LoadFrom(fileToLoad);
+                newtonsoftAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
+                sitesCoreAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             }
             catch { }
-#else
-            newtonsoftAssembly = System.Reflection.Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-            sitesCoreAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
-            System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-#endif
         }
 
-#if !DEBUG
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             if (args.Name.StartsWith("OfficeDevPnP.Core"))
@@ -168,8 +151,6 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
             return null;
         }
-#endif
-
     }
 }
 #endif

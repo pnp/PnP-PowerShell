@@ -55,20 +55,6 @@ if($ConfigurationName -like "Debug*")
 					}
 				} 
 				"Debug" {
-					# Copy PnP Sites Core version used by Modernization framework, needed to be able to load a strong named version
-					$SharePointPnPModerizationFolder = "$DestinationFolder\SharePointPnP.Modernization"
-					if(Test-Path $SharePointPnPModerizationFolder)
-					{
-						Remove-Item $SharePointPnPModerizationFolder\*
-					} 
-					else 
-					{
-						Write-Host "Creating target folder: $SharePointPnPModerizationFolder"
-						New-Item -Path $SharePointPnPModerizationFolder -ItemType Directory -Force >$null # Suppress output
-					}
-					Write-Host "Copying $TargetDir..\..\..\binaries\OfficeDevPnP.Core.dll to $SharePointPnPModerizationFolder"
-					Copy-Item "$TargetDir\..\..\..\binaries\OfficeDevPnP.Core.dll" -Destination "$SharePointPnPModerizationFolder"
-
 					Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShellOnline.psd1" -Destination  "$DestinationFolder"
 					Copy-Item "$TargetDir\ModuleFiles\SharePointPnP.PowerShell.Online.Commands.Format.ps1xml" -Destination "$DestinationFolder"
 					if(Test-Path -Path "$TargetDir\ModuleFiles\SharePointPnPPowerShellOnlineAliases.psm1")
