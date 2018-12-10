@@ -5,6 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <PnPCorePath Condition=" '$(PnPCorePath)' == '' ">
     </PnPCorePath>
+    <PnPModernizationFramework Condition=" '$(PnPModernizationFrameworkPath)' == '' ">
+    </PnPModernizationFramework>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -119,6 +121,9 @@
   <PropertyGroup>
     <ApplicationIcon>
     </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
@@ -296,12 +301,30 @@
       </ItemGroup>
     </Otherwise>
   </Choose>
+  <Choose>
+    <When Condition=" '$(PnPModernizationFrameworkPath)' == '' ">
+      <ItemGroup>
+        <Reference Include="SharePointPnP.Modernization.Framework">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>..\Binaries\SharePointPnP.Modernization.Framework.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="SharePointPnP.Modernization.Framework">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>$(PnPModernizationFrameworkPath)</HintPath>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ApplicationInsights, Version=2.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.8.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.8.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -378,8 +401,8 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel">
@@ -465,6 +488,7 @@
     <Compile Include="Base\GetAccessToken.cs" />
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
+    <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
     <Compile Include="Base\RemoveStoredCredential.cs" />
@@ -483,6 +507,7 @@
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Model\PnPException.cs" />
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
+    <Compile Include="ClientSidePages\ConvertToClientSidePage.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
@@ -664,6 +689,7 @@
     <Compile Include="Utilities\Clipboard.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="Utilities\OperatingSystem.cs" />
+    <Compile Include="ClientSidePages\WebPartMappingLoader.cs" />
     <Compile Include="Utilities\REST\MetadataType.cs" />
     <Compile Include="Utilities\REST\RestHelper.cs" />
     <Compile Include="Utilities\REST\RestRequest.cs" />
@@ -954,7 +980,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\pnp.ico" />
+    <EmbeddedResource Include="ClientSidePages\webpartmapping.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
