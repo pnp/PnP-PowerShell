@@ -314,7 +314,7 @@
       <ItemGroup>
         <Reference Include="SharePointPnP.Modernization.Framework">
           <SpecificVersion>False</SpecificVersion>
-          <HintPath>'$(PnPModernizationFrameworkPath)</HintPath>
+          <HintPath>$(PnPModernizationFrameworkPath)</HintPath>
         </Reference>
       </ItemGroup>
     </Otherwise>
