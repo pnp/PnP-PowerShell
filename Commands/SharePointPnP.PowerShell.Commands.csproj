@@ -5,6 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <PnPCorePath Condition=" '$(PnPCorePath)' == '' ">
     </PnPCorePath>
+    <PnPModernizationFramework Condition=" '$(PnPModernizationFrameworkPath)' == '' ">
+    </PnPModernizationFramework>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -299,6 +301,24 @@
       </ItemGroup>
     </Otherwise>
   </Choose>
+  <Choose>
+    <When Condition=" '$(PnPModernizationFrameworkPath)' == '' ">
+      <ItemGroup>
+        <Reference Include="SharePointPnP.Modernization.Framework">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>..\Binaries\SharePointPnP.Modernization.Framework.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="SharePointPnP.Modernization.Framework">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>'$(PnPModernizationFrameworkPath)</HintPath>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
   <ItemGroup>
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
@@ -375,9 +395,6 @@
     </Reference>
     <Reference Include="SharePointPnP.IdentityModel.Extensions, Version=1.2.3.0, Culture=neutral, PublicKeyToken=5e633289e95c321a, processorArchitecture=MSIL">
       <HintPath>..\packages\SharePointPnP.IdentityModel.Extensions.1.2.3\lib\net45\SharePointPnP.IdentityModel.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="SharePointPnP.Modernization.Framework">
-      <HintPath>..\Binaries\SharePointPnP.Modernization.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.PowerShell.Commands.Management" />

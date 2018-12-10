@@ -126,8 +126,9 @@ namespace SharePointPnP.PowerShell.Commands
                 {
                     creationInformation.SiteDesign = _communicationSiteParameters.SiteDesign;
                 }
-                var results = ClientContext.CreateSiteAsync(creationInformation);
-                var returnedContext = results.GetAwaiter().GetResult();
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation);
+                //var results = ClientContext.CreateSiteAsync(creationInformation);
+                //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
             }
             else
@@ -140,8 +141,9 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.IsPublic = _teamSiteParameters.IsPublic;
                 creationInformation.Lcid = _teamSiteParameters.Lcid;
 
-                var results = ClientContext.CreateSiteAsync(creationInformation);
-                var returnedContext = results.GetAwaiter().GetResult();
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation);
+                //var results = ClientContext.CreateSiteAsync(creationInformation);
+                //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
             }
         }
