@@ -9,10 +9,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsDiagnostic.Test, "PnPTenantTemplate", SupportsShouldProcess = true)]
     [Alias("Test-PnPProvisioningHierarchy")]
-    [CmdletHelp("Tests a provisioning hierarchy for invalid references",
+    [CmdletHelp("Tests a tenant template for invalid references",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Test-PnPProvisioningHierarchy -Hierarchy $myhierarchy",
+       Code = @"PS:> Test-PnPTenantTemplate -Template $myTemplate",
        Remarks = "Checks for valid template references",
        SortOrder = 1)]
     public class TestTenantTemplate : PnPCmdlet
