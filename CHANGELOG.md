@@ -9,7 +9,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- ConvertTo-PnPClientSidePage: creates a modern client side page from a classic wiki or web part page
+
 ### Changed
+- Added support for setting the page header type in Set-PnPClientSidePage
 
 ### Deprecated
 
@@ -46,7 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 - Paul Bullock (pkbullock)
-- François-Xavier Cat (lazywinadmin)
+- Franï¿½ois-Xavier Cat (lazywinadmin)
 - Koen Zomers (KoenZomers)
 - Kevin McDonnell (kevmcdonk)
 
