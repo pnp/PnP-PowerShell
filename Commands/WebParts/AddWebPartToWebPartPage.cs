@@ -12,8 +12,8 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
     [CmdletHelp("Adds a web part to a web part page in a specified zone",
         Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(
-   Code = @"PS:> Add-PnPWebPartToWebPartPage -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Path ""c:\myfiles\listview.web part"" -ZoneId ""Header"" -ZoneIndex 1 ",
-   Remarks = @"This will add the web part as defined by the XML in the listview.web part file to the specified page in the specified zone and with the order index of 1", SortOrder = 1)]
+   Code = @"PS:> Add-PnPWebPartToWebPartPage -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Path ""c:\myfiles\listview.webpart"" -ZoneId ""Header"" -ZoneIndex 1 ",
+   Remarks = @"This will add the web part as defined by the XML in the listview.webpart file to the specified page in the specified zone and with the order index of 1", SortOrder = 1)]
     [CmdletExample(
   Code = @"PS:> Add-PnPWebPartToWebPartPage -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -XML $webpart -ZoneId ""Header"" -ZoneIndex 1 ",
   Remarks = @"This will add the web part as defined by the XML in the $webpart variable to the specified page in the specified zone and with the order index of 1", SortOrder = 1)]
