@@ -455,7 +455,7 @@ jensotto
 **2015-09-21**
 
 * Added -Parameters parameter to Apply-SPOProvisioningTemplate. See help for the cmdlet for more info.
-* Renamed PageUrl parameter of Webpart cmdlets to ServerRelativePageUrl. Set PageUrl as parameter alias to not break existing scripts.
+* Renamed PageUrl parameter of web part cmdlets to ServerRelativePageUrl. Set PageUrl as parameter alias to not break existing scripts.
 
 **2015-09-17**
 
@@ -484,7 +484,7 @@ jensotto
 
 **2015-08-10**
 
-* Added Get-SPOWebPartXml cmdlet to export webpart XML from a page.
+* Added Get-SPOWebPartXml cmdlet to export web part XML from a page.
 
 **2015-08-07**
 
@@ -595,7 +595,7 @@ still works as before.
 
 **2015-01-07**
 
-* Introduced new Cmdlet: Get-SPOWebPartProperty to return webpart properties
+* Introduced new Cmdlet: Get-SPOWebPartProperty to return web part properties
 * Updated Set-SPOWebPartProperty cmdlet to support int values
 
 **2015-01-02**
