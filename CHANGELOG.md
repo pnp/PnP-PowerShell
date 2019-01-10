@@ -8,14 +8,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- Added Reset-PnPFileVersion cmdlet
 
 ### Changed
 
 - Add-PnPClientSidePageSection: Added support for section the section background of a client side page
+- Updated file and folder cmdlets to support special characters
 
 ### Deprecated
 
 ### Contributors
+- Eric Skaggs (skaggej)
+- Gautam Sheth (gautamdsheth)
 
 ## [3.4.1812.0]
 
