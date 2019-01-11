@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
@@ -28,6 +27,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     internal class SPOnlineConnectionHelper
     {
+
+#if DEBUG
+        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/dev/version.txt");
+#else
+        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/master/version.txt");
+#endif
+        private static bool VersionChecked;
+
 #if !NETSTANDARD2_0
         public static AuthenticationContext AuthContext { get; set; }
 #endif
@@ -692,5 +699,34 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 return (result);
             },
             true);
+
+        public static string GetLatestVersion()
+        {
+            try
+            {
+                if (!VersionChecked)
+                {
+                    using (var client = new WebClient())
+                    {
+                        SPOnlineConnectionHelper.VersionChecked = true;
+                        var onlineVersion = client.DownloadString(VersionCheckUrl);
+                        onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
+                        var assembly = Assembly.GetExecutingAssembly();
+                        var currentVersion = ((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version;
+                        if (Version.TryParse(onlineVersion, out Version availableVersion))
+                        {
+                            if (availableVersion > new Version(currentVersion))
+                            {
+                                return $"A newer version of PnP PowerShell is available: {availableVersion}. Consider upgrading.";
+                            }
+                        }
+                        SPOnlineConnectionHelper.VersionChecked = true;
+                    }
+                }
+            }
+            catch
+            { }
+            return null;
+        }
     }
 }
