@@ -6,6 +6,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.Modernization.Framework.Transform;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System.Reflection;
+using SharePointPnP.Modernization.Framework.Cache;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -21,6 +22,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -WebPartMappingFile c:\contoso\webpartmapping.xml",
     Remarks = "Converts a wiki page named 'somepage' to a client side page using a custom provided mapping file",
     SortOrder = 2)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -AddPageAcceptBanner",
+    Remarks = "Converts a wiki page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog.",
+    SortOrder = 3)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private Assembly modernizationAssembly;
@@ -44,6 +49,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "Adds the page accept banner web part. The actual web part is specified in webpartmapping.xml file")]
         public SwitchParameter AddPageAcceptBanner = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "By default the item level permissions on a page are copied to the created client side page. Use this switch to prevent the copy.")]
+        public SwitchParameter SkipItemLevelPermissionCopyToClientSidePage = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Clears the page component cache. Can be needed if you've installed a new web part to the site and want to use that in a custom webpartmapping file. Restarting your PS session has the same effect.")]
+        public SwitchParameter ClearPageComponentCache = false;
 
         protected override void ExecuteCmdlet()
         {
@@ -93,11 +104,18 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     Overwrite = this.Overwrite,
                     TargetPageTakesSourcePageName = this.TakeSourcePageName,
                     ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
+                    KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
                     },
                 };
+
+                // Clear the client side component cache
+                if (this.ClearPageComponentCache)
+                {
+                    CacheManager.Instance.ClearClientSideComponents();
+                }
 
                 string serverRelativeClientPageUrl = pageTransformator.Transform(pti);
 

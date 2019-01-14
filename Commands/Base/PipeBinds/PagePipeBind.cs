@@ -1,5 +1,6 @@
 ﻿#if !ONPREMISES
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Linq;
@@ -45,9 +46,10 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         internal ListItem GetPage(Web web)
         {
             // Get pages library
-            ListCollection listCollection = web.Lists;
-            listCollection.EnsureProperties(coll => coll.Include(li => li.BaseTemplate));
-            var sitePagesLibrary = listCollection.Where(p => p.BaseTemplate == (int)ListTemplateType.WebPageLibrary).FirstOrDefault();
+            web.EnsureProperty(w => w.ServerRelativeUrl);
+            var listServerRelativeUrl = UrlUtility.Combine(web.ServerRelativeUrl, "sitepages");
+            var sitePagesLibrary = web.GetList(listServerRelativeUrl);
+
             if (sitePagesLibrary != null)
             {
                 CamlQuery query = null;
