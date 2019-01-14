@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Remarks = "Will prompt you to confirm to enable telemetry tracking.",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Enable-PnPPowerShellTelemetry",
+       Code = "PS:> Enable-PnPPowerShellTelemetry -Force",
        Remarks = "Will enable telemetry tracking without prompting.",
        SortOrder = 2)]
     public class EnablePowerShellTelemetry : PSCmdlet
