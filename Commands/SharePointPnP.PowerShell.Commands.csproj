@@ -506,6 +506,7 @@
     <Compile Include="Files\ResetFileVersion.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
+    <Compile Include="Lists\ClearDefaultColumnValues.cs" />
     <Compile Include="Model\PnPException.cs" />
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
     <Compile Include="ClientSidePages\ConvertToClientSidePage.cs" />
