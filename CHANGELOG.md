@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Added
+- Added Clear-PnPDefaultColumnValues cmdlet
+
+### Changed
+
+- Set-PnPDefaultColumnValues: Fixed character encoding issue on folders #1706
+
+### Deprecated
+
+### Contributors
+
+
 ## [3.5.1901.0]
 
 ### Added
