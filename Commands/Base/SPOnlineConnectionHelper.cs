@@ -556,7 +556,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             string adfsHost;
             string adfsRelyingParty;
-            GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
+            OfficeDevPnP.Core.AuthenticationManager.GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
 
             if (string.IsNullOrEmpty(adfsHost) || string.IsNullOrEmpty(adfsRelyingParty))
             {
@@ -661,35 +661,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
             return null;
-        }
-
-        public static void GetAdfsConfigurationFromTargetUri(Uri targetApplicationUri, string loginProviderName, out string adfsHost, out string adfsRelyingParty)
-        {
-            adfsHost = "";
-            adfsRelyingParty = "";
-
-            var trustEndpoint = new Uri(new Uri(targetApplicationUri.GetLeftPart(UriPartial.Authority)), !string.IsNullOrWhiteSpace(loginProviderName) ? $"/_trust/?trust={loginProviderName}" : "/_trust/");
-            var request = (HttpWebRequest)WebRequest.Create(trustEndpoint);
-            request.AllowAutoRedirect = false;
-
-            try
-            {
-                using (var response = request.GetResponse())
-                {
-                    var locationHeader = response.Headers["Location"];
-                    if (locationHeader != null)
-                    {
-                        var redirectUri = new Uri(locationHeader);
-                        Dictionary<string, string> queryParameters = Regex.Matches(redirectUri.Query, "([^?=&]+)(=([^&]*))?").Cast<Match>().ToDictionary(x => x.Groups[1].Value, x => Uri.UnescapeDataString(x.Groups[3].Value));
-                        adfsHost = redirectUri.Host;
-                        adfsRelyingParty = queryParameters["wtrealm"];
-                    }
-                }
-            }
-            catch (WebException ex)
-            {
-                throw new Exception("Endpoint does not use ADFS for authentication.", ex);
-            }
         }
 
         private static bool IsTenantAdminSite(ClientRuntimeContext clientContext)
