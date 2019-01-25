@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false)]
     [CmdletHelp("Connect to a SharePoint site",
-        @"Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets. 
+        @"Connects to a SharePoint site and creates a context that is required for the other PnP Cmdlets.
 To automate authentication there are several options. The easiest would be to use the Windows Credential Manager. Either manually add a Generic Credential, or use the Add-PnPStoredCredential cmdlet to add an entry. The name you give to the credential can be used in two main ways. If you simply give it a name alike 'O365' or any other value you can specify this value for the Credentials parameter of this cmdlet.
 
 Alternatively you can specify a URL as a name, alike 'https://contoso.sharepoint.com'. Any site you connect to within the contoso tenant will then use the credentials you specified. For more information see the help for the Add-PnPStoredCredential cmdlet. (Get-Help Add-PnPStoredCredential).
@@ -191,6 +191,9 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect to your on-premises SharePoint farm using ADFS")]
         public SwitchParameter UseAdfs;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Authenticate using Kerberos to an on-premises ADFS instance.")]
+        public SwitchParameter Kerberos;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The name of the ADFS trusted login provider")]
         public string LoginProviderName;
 
@@ -316,8 +319,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         public SwitchParameter SPOManagementShell;
 
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application. You will be asked to consent to: 
-            
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application. You will be asked to consent to:
+
 * Read and write managed metadata
 * Have full control of all site collections
 * Read user profiles
@@ -333,7 +336,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Launch a browser automatically and copy the code to enter to the clipboard")]
         public SwitchParameter LaunchBrowser;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application towards the Graph. You will be asked to consent to: 
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = @"Log in using the PnP O365 Management Shell application towards the Graph. You will be asked to consent to:
 
 * Read and write managed metadata
 * Have full control of all site collections
@@ -497,13 +500,13 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #if !NETSTANDARD2_0
                 connection = SPOnlineConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
 #else
-                WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. 
+                WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework.
 Use -PnPO365ManagementShell instead");
 #endif
             }
             else if (UseAdfs)
             {
-                if (creds == null)
+                if (!Kerberos && creds == null)
                 {
                     if ((creds = GetCredentials()) == null)
                     {
@@ -511,7 +514,18 @@ Use -PnPO365ManagementShell instead");
                     }
                 }
 #if !NETSTANDARD2_0
-                connection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url), creds, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, NoTelemetry, SkipTenantAdminCheck, LoginProviderName);
+                connection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
+                    Kerberos,
+                    creds,
+                    Host,
+                    MinimalHealthScore,
+                    RetryCount,
+                    RetryWait,
+                    RequestTimeout,
+                    TenantAdminUrl,
+                    NoTelemetry,
+                    SkipTenantAdminCheck,
+                    LoginProviderName);
 #else
                 throw new NotImplementedException();
 #endif
@@ -765,7 +779,7 @@ Use -PnPO365ManagementShell instead");
             }
         }
 
-       
+
         private void ConnectGraphAAD()
         {
             var appCredentials = new ClientCredential(AppSecret);

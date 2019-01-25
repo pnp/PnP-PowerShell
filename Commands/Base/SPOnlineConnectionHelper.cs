@@ -550,11 +550,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 
 #if !NETSTANDARD2_0
-        internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
+        internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-
-            var networkCredentials = credentials.GetNetworkCredential();
 
             string adfsHost;
             string adfsRelyingParty;
@@ -565,7 +563,31 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 throw new Exception("Cannot retrieve ADFS settings.");
             }
 
-            var context = PnPClientContext.ConvertFrom(authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(), networkCredentials.UserName, networkCredentials.Password, networkCredentials.Domain, adfsHost, adfsRelyingParty), retryCount, retryWait * 1000);
+            PnPClientContext context;
+            if (useKerberos)
+            {
+                context = PnPClientContext.ConvertFrom(authManager.GetADFSKerberosMixedAuthenticationContext(url.ToString(),
+                                adfsHost,
+                                adfsRelyingParty),
+                            retryCount,
+                            retryWait * 1000);
+            }
+            else
+            {
+                if (null == credentials)
+                {
+                    throw new ArgumentNullException(nameof(credentials));
+                }
+                var networkCredentials = credentials.GetNetworkCredential();
+                context = PnPClientContext.ConvertFrom(authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(),
+                                networkCredentials.UserName,
+                                networkCredentials.Password,
+                                networkCredentials.Domain,
+                                adfsHost,
+                                adfsRelyingParty),
+                            retryCount,
+                            retryWait * 1000);
+            }
 
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
