@@ -44,6 +44,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.5.1901.0")]
-[assembly: AssemblyFileVersion("3.5.1901.0")]
+[assembly: AssemblyVersion("3.6.1902.0")]
+[assembly: AssemblyFileVersion("3.6.1902.0")]
 [assembly: InternalsVisibleTo("SharePointPnP.PowerShell.Tests")]
