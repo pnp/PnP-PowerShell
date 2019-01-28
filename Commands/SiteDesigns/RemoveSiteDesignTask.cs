@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands
         Description = @"Removes a Site Design Task. If the execution of the associated site script has already started the execution will not be terminated.",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd",
+        Code = @"PS:> Remove-PnPSiteDesignTask -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd",
         Remarks = "Removes the specified site design task",
         SortOrder = 1)]
     public class RemoveSiteDesignTask : PnPAdminCmdlet
