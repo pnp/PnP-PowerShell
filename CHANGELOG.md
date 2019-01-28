@@ -9,10 +9,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added Clear-PnPDefaultColumnValues cmdlet
+- Added Remove-PnPSearchConfiguration cmdlet
 
 ### Changed
 
 - Set-PnPDefaultColumnValues: Fixed character encoding issue on folders #1706
+- Fixed import of search configuration to tenant via string
 
 ### Deprecated
 

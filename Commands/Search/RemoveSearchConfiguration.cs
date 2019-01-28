@@ -8,27 +8,27 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Search
 {
-    [Cmdlet(VerbsCommon.Set, "PnPSearchConfiguration")]
-    [CmdletHelp("Sets the search configuration",
+    [Cmdlet(VerbsCommon.Remove, "PnPSearchConfiguration")]
+    [CmdletHelp("Remove the search configuration",
         Category = CmdletHelpCategory.Search)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPSearchConfiguration -Configuration $config",
-        Remarks = "Sets the search configuration for the current web",
+        Code = @"PS:> Remove-PnPSearchConfiguration -Configuration $config",
+        Remarks = "Remove the search configuration for the current web (does not remove managed property mappings)",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPSearchConfiguration -Configuration $config -Scope Site",
-        Remarks = "Sets the search configuration for the current site collection",
+        Code = @"PS:> Remove-PnPSearchConfiguration -Configuration $config -Scope Site",
+        Remarks = "Remove the search configuration for the current site collection (does not remove managed property mappings)",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPSearchConfiguration -Configuration $config -Scope Subscription",
-        Remarks = "Sets the search configuration for the current tenant",
+        Code = @"PS:> Remove-PnPSearchConfiguration -Configuration $config -Scope Subscription",
+        Remarks = "Remove the search configuration for the current tenant (does not remove managed property mappings)",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription",
-        Remarks = "Reads the search configuration from the specified XML file and sets it for the current tenant",
+        Code = @"PS:> Remove-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription",
+        Remarks = "Reads the search configuration from the specified XML file and remove it for the current tenant (does not remove managed property mappings)",
         SortOrder = 4)]
 
-    public class SetSearchConfiguration : PnPWebCmdlet
+    public class RemoveSearchConfiguration : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "Config", HelpMessage = "Search configuration string")]
         public string Configuration;
@@ -53,12 +53,12 @@ namespace SharePointPnP.PowerShell.Commands.Search
             {
                 case SearchConfigurationScope.Web:
                     {
-                        SelectedWeb.SetSearchConfiguration(Configuration);
+                        SelectedWeb.DeleteSearchConfiguration(Configuration);
                         break;
                     }
                 case SearchConfigurationScope.Site:
                     {
-                        ClientContext.Site.SetSearchConfiguration(Configuration);
+                        ClientContext.Site.DeleteSearchConfiguration(Configuration);
                         break;
                     }
                 case SearchConfigurationScope.Subscription:
@@ -68,7 +68,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
                             throw new InvalidOperationException(Resources.CurrentSiteIsNoTenantAdminSite);
                         }
 
-                        ClientContext.ImportSearchSettingsConfiguration(Configuration, SearchObjectLevel.SPSiteSubscription);
+                        ClientContext.DeleteSearchSettings(Configuration, SearchObjectLevel.SPSiteSubscription);
                         break;
                     }
             }

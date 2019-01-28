@@ -548,6 +548,7 @@
     <Compile Include="RecordsManagement\GetInPlaceRecordsManagement.cs" />
     <Compile Include="RecordsManagement\SetListRecordDeclaration.cs" />
     <Compile Include="Search\GetSearchCrawlLog.cs" />
+    <Compile Include="Search\RemoveSearchConfiguration.cs" />
     <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
     <Compile Include="Diagnostic\MeasureResponseTimeMode.cs" />
