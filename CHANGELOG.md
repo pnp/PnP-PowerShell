@@ -5,7 +5,6 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-
 ## [3.6.1902.0]
 
 ### Added
@@ -21,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Set-PnPDefaultColumnValues: Fixed character encoding issue on folders #1706
 - Fixed import of search configuration to tenant via string
+
 ## [3.5.1901.0]
 
 ### Added
