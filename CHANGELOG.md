@@ -5,9 +5,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+
 ## [3.6.1902.0]
 
 ### Added
+- Added Clear-PnPDefaultColumnValues cmdlet
+- Added Remove-PnPSearchConfiguration cmdlet
 - Added Export-PnPClientSidePage to export a page to a Provisioning Template
 - Added Add-PnPSiteDesignTask to apply a site design to a site. Intended as a replacement for Invoke-PnPSiteDesign as it the task can handle more than 30 actions.
 - Added Get-PnPSiteDesignRun to retrieve the list of site designs applied to a site collection
@@ -15,6 +18,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Get-PnPSiteDesignTask to retrieve a list of all currently scheduled site design tasks.
 - Added Remove-PnPSiteDesignTask to remove a previously scheduled site design task.
 
+### Changed
+- Set-PnPDefaultColumnValues: Fixed character encoding issue on folders #1706
+- Fixed import of search configuration to tenant via string
 ## [3.5.1901.0]
 
 ### Added

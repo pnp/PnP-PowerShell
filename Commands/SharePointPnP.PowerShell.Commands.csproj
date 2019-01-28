@@ -507,6 +507,7 @@
     <Compile Include="Files\ResetFileVersion.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
+    <Compile Include="Lists\ClearDefaultColumnValues.cs" />
     <Compile Include="Model\PnPException.cs" />
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
     <Compile Include="ClientSidePages\ConvertToClientSidePage.cs" />
@@ -553,6 +554,7 @@
     <Compile Include="SiteDesigns\GetSiteDesignRunStatus.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignRun.cs" />
     <Compile Include="SiteDesigns\AddSiteDesignTask.cs" />
+    <Compile Include="Search\RemoveSearchConfiguration.cs" />
     <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
     <Compile Include="SiteDesigns\RemoveSiteDesignTask.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
