@@ -491,6 +491,7 @@
     <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
+    <Compile Include="Base\PipeBinds\TenantSiteDesignTaskPipeBind.cs" />
     <Compile Include="Base\RemoveStoredCredential.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\HubSitePipeBind.cs" />
@@ -527,6 +528,7 @@
     <Compile Include="Model\SPOTenant.cs" />
     <Compile Include="Model\SPOTheme.cs" />
     <Compile Include="Model\TokenResult.cs" />
+    <Compile Include="ClientSidePages\ExportClientSidePage.cs" />
     <Compile Include="Provisioning\Tenant\ApplyTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ReadTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\SaveTenantTemplate.cs" />
@@ -547,7 +549,12 @@
     <Compile Include="RecordsManagement\GetInPlaceRecordsManagement.cs" />
     <Compile Include="RecordsManagement\SetListRecordDeclaration.cs" />
     <Compile Include="Search\GetSearchCrawlLog.cs" />
+    <Compile Include="SiteDesigns\GetSiteDesignTask.cs" />
+    <Compile Include="SiteDesigns\GetSiteDesignRunStatus.cs" />
+    <Compile Include="SiteDesigns\GetSiteDesignRun.cs" />
+    <Compile Include="SiteDesigns\AddSiteDesignTask.cs" />
     <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
+    <Compile Include="SiteDesigns\RemoveSiteDesignTask.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
     <Compile Include="Diagnostic\MeasureResponseTimeMode.cs" />
     <Compile Include="SiteDesigns\AddSiteScript.cs" />
