@@ -53,8 +53,11 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "By default the item level permissions on a page are copied to the created client side page. Use this switch to prevent the copy.")]
         public SwitchParameter SkipItemLevelPermissionCopyToClientSidePage = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "Clears the page component cache. Can be needed if you've installed a new web part to the site and want to use that in a custom webpartmapping file. Restarting your PS session has the same effect.")]
-        public SwitchParameter ClearPageComponentCache = false;
+        [Parameter(Mandatory = false, HelpMessage = "Clears the cache. Can be needed if you've installed a new web part to the site and want to use that in a custom webpartmapping file. Restarting your PS session has the same effect.")]
+        public SwitchParameter ClearCache = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Copies the page metadata to the created modern page.")]
+        public SwitchParameter CopyPageMetadata = false;
 
         protected override void ExecuteCmdlet()
         {
@@ -105,6 +108,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     TargetPageTakesSourcePageName = this.TakeSourcePageName,
                     ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
+                    CopyPageMetadata = this.CopyPageMetadata,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
@@ -112,9 +116,11 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 };
 
                 // Clear the client side component cache
-                if (this.ClearPageComponentCache)
+                if (this.ClearCache)
                 {
                     CacheManager.Instance.ClearClientSideComponents();
+                    CacheManager.Instance.ClearFieldsToCopy();
+                    CacheManager.Instance.ClearBaseTemplate();
                 }
 
                 string serverRelativeClientPageUrl = pageTransformator.Transform(pti);
