@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Set-PnPDefaultColumnValues: Fixed character encoding issue on folders #1706
 - Fixed import of search configuration to tenant via string
+- Set-PnPTenantSite: Added support for setting default sharing and sharing permissions
 
 ### Deprecated
 
