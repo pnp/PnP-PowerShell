@@ -15,11 +15,11 @@ namespace SharePointPnP.PowerShell.Commands.SiteDesigns
         Description = @"Retrieves a list of site designs applied to a specified site collection. If the WebUrl parameter is not specified we show the list of designs applied to the current site. The returned output includes the ID of the scheduled job, the web and site IDs, and the site design ID, version, and title.",
        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Get-SPOSiteDesignRun",
+       Code = @"PS:> Get-PnPSiteDesignRun",
        Remarks = "This example returns a list of the site designs applied to the current site. Providing a specific site design ID will return the details for just that applied site design.",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Get-SPOSiteDesignRun -WebUrl https://mytenant.sharepoint.com/sites/project",
+       Code = @"PS:> Get-PnPSiteDesignRun -WebUrl https://mytenant.sharepoint.com/sites/project",
        Remarks = "This example returns a list of the site designs applied to the specified site. Providing a specific site design ID will return the details for just that applied site design.",
        SortOrder = 2)]
     public class GetSiteDesignRun : PnPWebCmdlet
