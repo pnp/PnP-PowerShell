@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Enable-PnPTelemetry and Disable-PnPTelemetry do not require a connection anymore.
 - Return more friendly exception if App Catalog does not exist when using Set-PnPStorageEntity, Get-PnPStorageEntity or Remove-PnPStorageEntity
 - Added -SystemUpdate flag to Set-PnPListItemPermission
+- Clean up temp data when using PEM string certificates, and support password on PEM string certificates.
 
 ### Contributors
 - Koen Zomers (KoenZomers)

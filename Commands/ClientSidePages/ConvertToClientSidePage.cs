@@ -7,6 +7,7 @@ using SharePointPnP.Modernization.Framework.Transform;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System.Reflection;
 using SharePointPnP.Modernization.Framework.Cache;
+using Microsoft.SharePoint.Client;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -129,12 +130,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
                 string serverRelativeClientPageUrl = pageTransformator.Transform(pti);
 
-                ClientSidePagePipeBind cpb = new ClientSidePagePipeBind(System.IO.Path.GetFileName(serverRelativeClientPageUrl));
-                var clientSidePage = cpb.GetPage(this.ClientContext);
-
-                if (clientSidePage != null)
+                // Output the server relative url to the newly created page
+                if (!string.IsNullOrEmpty(serverRelativeClientPageUrl))
                 {
-                    WriteObject(clientSidePage);
+                    WriteObject(serverRelativeClientPageUrl);
                 }
             }
             finally
