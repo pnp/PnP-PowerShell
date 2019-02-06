@@ -64,7 +64,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.RequestTimeout = requestTimeout;
 #if !ONPREMISES
             context.DisableReturnValueCache = true;
-#elif SP2016
+#elif SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
             var connectionType = ConnectionType.OnPrem;
@@ -104,7 +104,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-#if SP2016
+#if SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
             var connectionType = ConnectionType.OnPrem;
@@ -442,7 +442,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 context.RequestTimeout = requestTimeout;
 #if !ONPREMISES
                 context.DisableReturnValueCache = true;
-#elif SP2016
+#elif SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
                 var connectionType = ConnectionType.OnPrem;
@@ -474,7 +474,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.ApplicationName = Properties.Resources.ApplicationName;
 #if !ONPREMISES
             context.DisableReturnValueCache = true;
-#elif SP2016
+#elif SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
             context.RequestTimeout = requestTimeout;
@@ -574,7 +574,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.RequestTimeout = requestTimeout;
 #if !ONPREMISES
             context.DisableReturnValueCache = true;
-#elif SP2016
+#elif SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
 

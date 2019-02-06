@@ -9,6 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SharePointPnP.PowerShell.SP2013.Commands")]
 #elif SP2016
 [assembly: AssemblyTitle("SharePointPnP.PowerShell.SP2016.Commands")]
+#elif SP2019
+[assembly: AssemblyTitle("SharePointPnP.PowerShell.SP2019.Commands")]
 #else
 [assembly: AssemblyTitle("SharePointPnP.PowerShell.Online.Commands")]
 #endif
@@ -19,6 +21,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2013.Commands")]
 #elif SP2016
 [assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2016.Commands")]
+#elif SP2019
+[assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2019.Commands")]
 #else
 [assembly: AssemblyProduct("SharePointPnP.PowerShell.Online.Commands")]
 #endif
