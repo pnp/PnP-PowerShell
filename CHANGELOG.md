@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Return more friendly exception if App Catalog does not exist when using Set-PnPStorageEntity, Get-PnPStorageEntity or Remove-PnPStorageEntity
 - Added -SystemUpdate flag to Set-PnPListItemPermission
 - Clean up temp data when using PEM string certificates, and support password on PEM string certificates.
+- Updated Set-PnPGroup to update both the Notes -and- the Description of a SharePoint group if using the -Description parameter
 
 ### Contributors
 - Koen Zomers (KoenZomers)
