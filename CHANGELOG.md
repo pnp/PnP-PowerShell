@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed import of search configuration to tenant via string
 - Set-PnPTenantSite: Added support for setting default sharing and sharing permissions
 - ConvertTo-PnPClientSidePage: Added support for copying page metadata to the modern version of the page + parameter to clear the transformation cache
+- Clean up temp data when using PEM string certificates, and support password on PEM string certificates.
 
 ## [3.5.1901.0]
 
