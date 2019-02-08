@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
@@ -95,3 +96,4 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         }
     }
 }
+#endif

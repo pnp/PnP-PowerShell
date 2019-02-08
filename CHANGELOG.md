@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.6.1902.0]
+
+### Added
+- Added initial support for SharePoint 2019
+- Added Clear-PnPDefaultColumnValues cmdlet
+- Added Remove-PnPSearchConfiguration cmdlet
+- Added Export-PnPClientSidePage to export a page to a Provisioning Template
+- Added Add-PnPSiteDesignTask to apply a site design to a site. Intended as a replacement for Invoke-PnPSiteDesign as it the task can handle more than 30 actions.
+- Added Get-PnPSiteDesignRun to retrieve the list of site designs applied to a site collection
+- Added Get-PnPSiteDesignRunStatus to retrieve a list of all site script actions executed for a specified site design applied to a site
+- Added Get-PnPSiteDesignTask to retrieve a list of all currently scheduled site design tasks.
+- Added Remove-PnPSiteDesignTask to remove a previously scheduled site design task.
+- Added -IncludeHiddenLists to Get-PnPProvisioningTemplate to optionally also extract hidden lists in a template.
+- Added -HubSiteId to New-PnPSite to associate the site with a hubsite at creation time
+- Added -Owners to New-PnPSite to set the owners while creating a modern team site.
+
+### Changed
+- Set-PnPDefaultColumnValues: Fixed character encoding issue on folders #1706
+- Fixed import of search configuration to tenant via string
+- Set-PnPTenantSite: Added support for setting default sharing and sharing permissions
+- ConvertTo-PnPClientSidePage: Added support for copying page metadata to the modern version of the page + parameter to clear the transformation cache
+- Enable-PnPTelemetry and Disable-PnPTelemetry do not require a connection anymore.
+- Return more friendly exception if App Catalog does not exist when using Set-PnPStorageEntity, Get-PnPStorageEntity or Remove-PnPStorageEntity
+- Added -SystemUpdate flag to Set-PnPListItemPermission
+- Clean up temp data when using PEM string certificates, and support password on PEM string certificates.
+- Updated Set-PnPGroup to update both the Notes -and- the Description of a SharePoint group if using the -Description parameter
+
+### Contributors
+- Koen Zomers (KoenZomers)
+- Gautam Sheth (gautamdsheth)
+
 ## [3.5.1901.0]
 
 ### Added

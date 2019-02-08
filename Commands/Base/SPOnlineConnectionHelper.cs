@@ -18,6 +18,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Utilities;
@@ -64,7 +65,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.RequestTimeout = requestTimeout;
 #if !ONPREMISES
             context.DisableReturnValueCache = true;
-#elif SP2016
+#elif SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
             var connectionType = ConnectionType.OnPrem;
@@ -104,7 +105,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-#if SP2016
+#if SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
             var connectionType = ConnectionType.OnPrem;
@@ -385,9 +386,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM);
+            string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
+            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
 
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
             var clientContext = authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment);
@@ -404,7 +406,27 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
+
+            CleanupCryptoMachineKey(certificate);
+
             return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry);
+        }
+
+        private static void CleanupCryptoMachineKey(X509Certificate2 certificate)
+        {
+            var privateKey = (RSACryptoServiceProvider) certificate.PrivateKey;
+            string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
+            certificate.Reset();
+            var path = Environment.GetEnvironmentVariable("ProgramData");
+            if (string.IsNullOrEmpty(path)) path = @"C:\ProgramData";
+            try
+            {
+                System.IO.File.Delete(string.Format(@"{0}\Microsoft\Crypto\RSA\MachineKeys\{1}", path, uniqueKeyContainerName));
+            }
+            catch (Exception)
+            {
+                // best effort cleanup
+            }
         }
 #endif
 #endif
@@ -442,7 +464,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 context.RequestTimeout = requestTimeout;
 #if !ONPREMISES
                 context.DisableReturnValueCache = true;
-#elif SP2016
+#elif SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
                 var connectionType = ConnectionType.OnPrem;
@@ -474,7 +496,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.ApplicationName = Properties.Resources.ApplicationName;
 #if !ONPREMISES
             context.DisableReturnValueCache = true;
-#elif SP2016
+#elif SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
             context.RequestTimeout = requestTimeout;
@@ -574,7 +596,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.RequestTimeout = requestTimeout;
 #if !ONPREMISES
             context.DisableReturnValueCache = true;
-#elif SP2016
+#elif SP2016 || SP2019
             context.DisableReturnValueCache = true;
 #endif
 

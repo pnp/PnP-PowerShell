@@ -149,6 +149,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 {
                     foreach (var file in template.Files)
                     {
+                        WriteObject($"Processing {file.Src}");
                         AddFile(file.Src, hierarchy, fileSystemConnector, connector);
                     }
                 }

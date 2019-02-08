@@ -7,6 +7,7 @@
         <member name="T:SharePointPnP.Modernization.Framework.Cache.CacheManager">
             <summary>
             Caching manager, singleton
+            Important: don't cache SharePoint Client objects as these are tied to a specific client context and hence will fail when there's context switching!
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.Instance">
@@ -21,6 +22,56 @@
             <param name="page">Page to grab the components for</param>
             <returns></returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearClientSideComponents">
+            <summary>
+            Clear the clientside component cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetBaseTemplate(Microsoft.SharePoint.Client.Web)">
+            <summary>
+            Get's the base template that will be used to filter out "OOB" fields
+            </summary>
+            <param name="web">web to operate against</param>
+            <returns>Provisioning template of the base template of STS#0</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearBaseTemplate">
+            <summary>
+            Clear base template cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetFieldsToCopy(Microsoft.SharePoint.Client.Web,Microsoft.SharePoint.Client.List)">
+            <summary>
+            Get the list of fields that need to be copied from cache. If cache is empty the list will be calculated
+            </summary>
+            <param name="web">Web to operate against</param>
+            <param name="pagesLibrary">Pages library instance</param>
+            <returns>List of fields that need to be copied</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearFieldsToCopy">
+            <summary>
+            Clear the fields to copy cache
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Cache.FieldData">
+            <summary>
+            Field data used to transfer information about a field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldName">
+            <summary>
+            Internal name of the field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldId">
+            <summary>
+            Id of the field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldType">
+            <summary>
+            Type of the field
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Constants">
             <summary>
             Constants used 
@@ -29,6 +80,21 @@
         <member name="T:SharePointPnP.Modernization.Framework.Entities.AudienceEntity">
             <summary>
             Holds information about the defined audiences
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.ListItemPermission">
+            <summary>
+            Class used to temporarily hold list item level permissions that need to be re-applied
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.ListItemPermission.RoleAssignments">
+            <summary>
+            Roles assigned to the list item
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.ListItemPermission.Principals">
+            <summary>
+            Resolved principals used in those roles, kept for performance reasons
             </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.WebPartEntity">
@@ -449,6 +515,13 @@
             </summary>
             <returns>Information about the analyzed wiki page</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.IsNestedLayoutsZoneOuter(AngleSharp.Dom.IElement)">
+            <summary>
+            Check if this element is nested in another already processed element...this needs to be skipped to avoid content duplication and possible processing errors
+            </summary>
+            <param name="contentHost">element to check</param>
+            <returns>true if embedded in a already processed element</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.ContainsWebPart(AngleSharp.Dom.Html.IHtmlElement)">
             <summary>
             Does the tree of nodes somewhere contain a web part?
@@ -684,6 +757,11 @@
             Source wiki/webpart page we want to transform
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.Folder">
+            <summary>
+            Folder where the page to transform lives in
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.TargetPageName">
             <summary>
             Name for the transformed page
@@ -717,6 +795,11 @@
         <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.KeepPageSpecificPermissions">
             <summary>
             Apply the item level page permissions on to the target page, defaults to true
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.CopyPageMetadata">
+            <summary>
+            Copy the page metadata (if any) to the created modern client side page. Defaults to false
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.ModernizationCenterInformation">
@@ -787,7 +870,7 @@
             <param name="pageTransformationInformation">Information about the page to transform</param>
             <returns>The path to created modern page</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.SwapPages(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.SwapPages(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation,SharePointPnP.Modernization.Framework.Entities.ListItemPermission)">
             <summary>
             Performs the logic needed to swap a genered Migrated_Page.aspx to Page.aspx and then Page.aspx to Old_Page.aspx
             </summary>
@@ -2228,12 +2311,13 @@
             Class that deals with site (both site collection and web site) creation, status, retrieval and settings
             </summary>
         </member>
-        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetPages(Microsoft.SharePoint.Client.Web,System.String)">
+        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetPages(Microsoft.SharePoint.Client.Web,System.String,System.String)">
             <summary>
             Returns the site pages from a web, optionally filtered on pagename
             </summary>
             <param name="web">Web to get the pages from</param>
             <param name="pageNameStartsWith">Filter to get all pages starting with</param>
+            <param name="folder"></param>
             <returns>A list of pages (ListItem intances)</returns>
         </member>
         <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetAdmins(Microsoft.SharePoint.Client.Web)">
