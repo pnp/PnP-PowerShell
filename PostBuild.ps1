@@ -93,6 +93,10 @@ if($ConfigurationName -like "Debug*")
 		{
 			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShell2016"
 		}
+		"Release19"
+		{
+			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShell2019"
+		}
 		"Release"
 		{
 			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShellOnline"
@@ -131,6 +135,14 @@ if($ConfigurationName -like "Debug*")
 				if(Test-Path -Path "$TargetDir\ModuleFiles\SharePointPnPPowerShell2016Aliases.psm1")
 				{
 					Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2016Aliases.psm1" -Destination "$DestinationFolder"
+				}
+			} 
+			"Release19" {
+				Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2019.psd1" -Destination  "$DestinationFolder"
+				Copy-Item "$TargetDir\ModuleFiles\SharePointPnP.PowerShell.2019.Commands.Format.ps1xml" -Destination "$DestinationFolder"
+				if(Test-Path -Path "$TargetDir\ModuleFiles\SharePointPnPPowerShell2019Aliases.psm1")
+				{
+					Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2019Aliases.psm1" -Destination "$DestinationFolder"
 				}
 			} 
 			"Release" {
