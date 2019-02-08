@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Get-PnPSiteDesignTask to retrieve a list of all currently scheduled site design tasks.
 - Added Remove-PnPSiteDesignTask to remove a previously scheduled site design task.
 - Added -IncludeHiddenLists to Get-PnPProvisioningTemplate to optionally also extract hidden lists in a template.
+- Added -HubSiteId to New-PnPSite to associate the site with a hubsite at creation time
+- Added -Owners to New-PnPSite to set the owners while creating a modern team site.
 
 ### Changed
 - Set-PnPDefaultColumnValues: Fixed character encoding issue on folders #1706
