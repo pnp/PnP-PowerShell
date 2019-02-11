@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.6.1902.1]
+
+### Added
+
+### Changed
+- Fixed Set-PnPTenantSite where the NoScriptSite parameter would always be set to false if not specified.
+
+### Contributors
+
+
 ## [3.6.1902.0]
 
 ### Added
