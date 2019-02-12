@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.6.1902.2]
+
+### Added
+
+### Changed
+- Fixed issue where New-PnPSite would through a null reference exception when creating a site collection without associating it to a hubsite.
+- Fixed issue were Save-PnPTenantTemplate was not adding files the PnP file.
+- Fixed issue where Save-PnPTenantTemplate would not allow files larger than 10MB.
+
+### Contributors
+
 ## [3.6.1902.1]
 
 ### Added
