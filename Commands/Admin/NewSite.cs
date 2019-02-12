@@ -124,7 +124,10 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.ShareByEmailEnabled = _communicationSiteParameters.AllowFileSharingForGuestUsers || _communicationSiteParameters.ShareByEmailEnabled;
 #pragma warning restore CS0618 // Type or member is obsolete
                 creationInformation.Lcid = _communicationSiteParameters.Lcid;
-                creationInformation.HubSiteId = HubSiteId.Id;
+                if (MyInvocation.BoundParameters.ContainsKey("HubSiteId"))
+                {
+                    creationInformation.HubSiteId = HubSiteId.Id;
+                }
                 if (ParameterSetName == "CommunicationCustomInDesign")
                 {
                     creationInformation.SiteDesignId = _communicationSiteParameters.SiteDesignId.Id;
@@ -147,7 +150,10 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.Description = _teamSiteParameters.Description;
                 creationInformation.IsPublic = _teamSiteParameters.IsPublic;
                 creationInformation.Lcid = _teamSiteParameters.Lcid;
-                creationInformation.HubSiteId = HubSiteId.Id;
+                if (MyInvocation.BoundParameters.ContainsKey("HubSiteId"))
+                {
+                    creationInformation.HubSiteId = HubSiteId.Id;
+                }
                 creationInformation.Owners = _teamSiteParameters.Owners;
 
                 var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation);
