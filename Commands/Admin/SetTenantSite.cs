@@ -67,7 +67,7 @@ namespace SharePointPnP.PowerShell.Commands
         public SiteLockState? LockState;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if a site allows custom script or not. See https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f for more information.", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SwitchParameter NoScriptSite;
+        public SwitchParameter? NoScriptSite;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the default link permission for the site collection. None - Respect the organization default link permission. View - Sets the default link permission for the site to ""view"" permissions. Edit - Sets the default link permission for the site to ""edit"" permissions", ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingPermissionType? DefaultLinkPermission;
