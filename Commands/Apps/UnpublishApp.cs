@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsData.Unpublish, "PnPApp")]
     [CmdletHelp("Unpublishes/retracts an available add-in from the app catalog",
-        Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online)]
+        Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Unpublish-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
         Remarks = @"This will retract, but not remove, the specified app from the tenant app catalog",
