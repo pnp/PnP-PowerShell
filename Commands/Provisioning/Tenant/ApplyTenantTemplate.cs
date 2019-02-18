@@ -6,6 +6,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -91,7 +92,13 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 WriteWarning("Apply-PnPProvisioningHierarchy has been deprecated. Use Apply-PnPTenantTemplate instead.");
             }
 
+            var sitesProvisioned = new List<ProvisionedSite>();
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
+
+            applyingInformation.SiteProvisionedDelegate = (title, url) =>
+            {
+                sitesProvisioned.Add(new ProvisionedSite() { Title = title, Url = url });
+            };
 
             if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
             {
@@ -258,11 +265,14 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 }
             }
 
+            WriteObject(sitesProvisioned, true);
+
         }
+
 
         private ProvisioningHierarchy GetHierarchy()
         {
-            if(!System.IO.Path.IsPathRooted(Path))
+            if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
