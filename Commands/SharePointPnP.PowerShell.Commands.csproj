@@ -598,6 +598,7 @@
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
     <Compile Include="Model\PnPException.cs" />
+    <Compile Include="Model\ProvisionedSite.cs" />
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
     <Compile Include="ClientSidePages\ConvertToClientSidePage.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
