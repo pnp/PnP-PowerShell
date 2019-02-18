@@ -6,6 +6,8 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.Modernization.Framework.Transform;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System.Reflection;
+using SharePointPnP.Modernization.Framework.Cache;
+using Microsoft.SharePoint.Client;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -21,6 +23,14 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -WebPartMappingFile c:\contoso\webpartmapping.xml",
     Remarks = "Converts a wiki page named 'somepage' to a client side page using a custom provided mapping file",
     SortOrder = 2)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -AddPageAcceptBanner",
+    Remarks = "Converts a wiki page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog.",
+    SortOrder = 3)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -CopyPageMetadata",
+    Remarks = "Converts a wiki page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
+    SortOrder = 4)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private Assembly modernizationAssembly;
@@ -44,6 +54,15 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "Adds the page accept banner web part. The actual web part is specified in webpartmapping.xml file")]
         public SwitchParameter AddPageAcceptBanner = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "By default the item level permissions on a page are copied to the created client side page. Use this switch to prevent the copy.")]
+        public SwitchParameter SkipItemLevelPermissionCopyToClientSidePage = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Clears the cache. Can be needed if you've installed a new web part to the site and want to use that in a custom webpartmapping file. Restarting your PS session has the same effect.")]
+        public SwitchParameter ClearCache = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Copies the page metadata to the created modern page.")]
+        public SwitchParameter CopyPageMetadata = false;
 
         protected override void ExecuteCmdlet()
         {
@@ -93,20 +112,28 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     Overwrite = this.Overwrite,
                     TargetPageTakesSourcePageName = this.TakeSourcePageName,
                     ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
+                    KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
+                    CopyPageMetadata = this.CopyPageMetadata,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
                     },
                 };
 
+                // Clear the client side component cache
+                if (this.ClearCache)
+                {
+                    CacheManager.Instance.ClearClientSideComponents();
+                    CacheManager.Instance.ClearFieldsToCopy();
+                    CacheManager.Instance.ClearBaseTemplate();
+                }
+
                 string serverRelativeClientPageUrl = pageTransformator.Transform(pti);
 
-                ClientSidePagePipeBind cpb = new ClientSidePagePipeBind(System.IO.Path.GetFileName(serverRelativeClientPageUrl));
-                var clientSidePage = cpb.GetPage(this.ClientContext);
-
-                if (clientSidePage != null)
+                // Output the server relative url to the newly created page
+                if (!string.IsNullOrEmpty(serverRelativeClientPageUrl))
                 {
-                    WriteObject(clientSidePage);
+                    WriteObject(serverRelativeClientPageUrl);
                 }
             }
             finally
