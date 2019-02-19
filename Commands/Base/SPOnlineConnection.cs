@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Web;
@@ -170,6 +171,25 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if (context == null)
             {
                 context = Context.Clone(url);
+                try
+                {
+                    context.ExecuteQueryRetry();
+                }
+                catch (Exception ex)
+
+                {
+                    if (ex is WebException || ex is NotSupportedException)
+                    {
+                        // legacy auth?
+                        var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+                        context = authManager.GetAzureADCredentialsContext(url.ToString(), CurrentConnection.PSCredential.UserName, CurrentConnection.PSCredential.Password);
+                        context.ExecuteQueryRetry();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 ContextCache.Add(context);
             }
             Context = context;

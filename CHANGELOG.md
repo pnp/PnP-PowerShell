@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.7.1903.0]
 
 ### Added
+- Added support to Connect-PnPOnline authenticate to SharePoint Online when Legacy Authentication has been turned off (Set-PnPTenant -LegacyAuthProtocolsEnabled:$false / Set-SPOTenant -LegacyAuthProtocolsEnabled:$false)
 
 ### Changed
 - Apply-PnPTenantTemplate will now list the sites created after applying a tenant template.

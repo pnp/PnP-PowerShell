@@ -519,6 +519,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         context.ExecuteQueryRetry();
                     }
+#if !ONPREMISES
+                    catch (NotSupportedException)
+                    {
+                        // legacy auth?
+                        var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+                        context = PnPClientContext.ConvertFrom(authManager.GetAzureADCredentialsContext(url.ToString(), credentials.UserName, credentials.Password));
+                        context.ExecuteQueryRetry();
+                    }
+#endif
                     catch (ClientRequestException)
                     {
                         context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
