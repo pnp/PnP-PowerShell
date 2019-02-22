@@ -97,7 +97,10 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
             applyingInformation.SiteProvisionedDelegate = (title, url) =>
             {
-                sitesProvisioned.Add(new ProvisionedSite() { Title = title, Url = url });
+                if (sitesProvisioned.FirstOrDefault(s => s.Url == url) == null)
+                {
+                    sitesProvisioned.Add(new ProvisionedSite() { Title = title, Url = url });
+                }
             };
 
             if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
