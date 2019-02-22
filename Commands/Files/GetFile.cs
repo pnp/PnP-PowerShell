@@ -1,7 +1,10 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System;
+using System.IO;
+using System.Management.Automation;
+using File = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
@@ -101,7 +104,8 @@ namespace SharePointPnP.PowerShell.Commands.Files
             switch (ParameterSetName)
             {
                 case URLTOPATH:
-                    SelectedWeb.SaveFileToLocal(serverRelativeUrl, Path, Filename, (filetosave) =>
+
+                    SaveFileToLocal(SelectedWeb, serverRelativeUrl, Path, Filename, (filetosave) =>
                     {
                         if (!Force)
                         {
@@ -150,6 +154,40 @@ namespace SharePointPnP.PowerShell.Commands.Files
                     WriteObject(SelectedWeb.GetFileAsString(serverRelativeUrl));
                     break;
             }
+        }
+
+        private void SaveFileToLocal(Web web, string serverRelativeUrl, string localPath, string localFileName = null, Func<string, bool> fileExistsCallBack = null)
+        {
+            var file = web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+
+            var clientContext = web.Context as ClientContext;
+            clientContext.Load(file);
+            clientContext.ExecuteQueryRetry();
+
+            ClientResult<Stream> stream = file.OpenBinaryStream();
+            clientContext.ExecuteQueryRetry();
+
+            var fileOut = System.IO.Path.Combine(localPath, !string.IsNullOrEmpty(localFileName) ? localFileName : file.Name);
+
+            if (!System.IO.File.Exists(fileOut) || (fileExistsCallBack != null && fileExistsCallBack(fileOut)))
+            {
+                using (Stream fileStream = new FileStream(fileOut, FileMode.Create))
+                {
+                    CopyStream(stream.Value, fileStream);
+                }
+            }
+        }
+
+        private void CopyStream(Stream source, Stream destination)
+        {
+            byte[] buffer = new byte[32768];
+            int bytesRead;
+
+            do
+            {
+                bytesRead = source.Read(buffer, 0, buffer.Length);
+                destination.Write(buffer, 0, bytesRead);
+            } while (bytesRead != 0);
         }
     }
 }
