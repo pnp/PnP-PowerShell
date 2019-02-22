@@ -11,7 +11,6 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net;
 using PnPFileLevel = OfficeDevPnP.Core.Framework.Provisioning.Model.FileLevel;
-using SPFile = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
@@ -35,21 +34,24 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
        Remarks = "Adds a file to a PnP Site Template with a custom container for the file",
        SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -SourceUrl $urlOfFile",
-        Remarks = "Adds a file to a PnP Provisioning Template retrieved from the currently connected web. The url can be either full, server relative or Web relative url.",
-        SortOrder = 4)]
+        Code = @"PS:> Add-PnPFileToProvisioningTemplate -Path template.pnp -SourceUrl ""Shared%20Documents/ProjectStatus.docs""",
+        Remarks = "Adds a file to a PnP Provisioning Template retrieved from the currently connected site. The url can be server relative or web relative. If specifying a server relative url has to start with the current site url.",
+        SortOrder = 5)]
     public class AddFileToProvisioningTemplate : PnPWebCmdlet
     {
+        const string parameterSet_LOCALFILE = "Local File";
+        const string parameterSet_REMOTEFILE = "Remove File";
+
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename of the .PNP Open XML site template to read from, optionally including full path.")]
         public string Path;
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "LocalSourceFile", HelpMessage = "The file to add to the in-memory template, optionally including full path.")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = parameterSet_LOCALFILE, HelpMessage = "The file to add to the in-memory template, optionally including full path.")]
         public string Source;
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "RemoteSourceFile", HelpMessage = "The file to add to the in-memory template, specifying its url in the current connected Web.")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = parameterSet_REMOTEFILE, HelpMessage = "The file to add to the in-memory template, specifying its url in the current connected Web.")]
         public string SourceUrl;
 
-        [Parameter(Mandatory = true, Position = 2, ParameterSetName = "LocalSourceFile", HelpMessage = "The target Folder for the file to add to the in-memory template.")]
+        [Parameter(Mandatory = true, Position = 2, ParameterSetName = parameterSet_LOCALFILE, HelpMessage = "The target Folder for the file to add to the in-memory template.")]
         public string Folder;
 
         [Parameter(Mandatory = false, Position = 3, HelpMessage = "The target Container for the file to add to the in-memory template, optional argument.")]
@@ -79,7 +81,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             {
                 throw new ApplicationException("Invalid template file!");
             }
-            if (this.ParameterSetName == "RemoteSourceFile")
+            if (this.ParameterSetName == parameterSet_REMOTEFILE)
             {
                 SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 var sourceUri = new Uri(SourceUrl, UriKind.RelativeOrAbsolute);
@@ -96,13 +98,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                 if (ClientContext.HasPendingRequest) ClientContext.ExecuteQuery();
                 try
                 {
-                    using (var fi = SPFile.OpenBinaryDirect(ClientContext, serverRelativeUrl))
-                    using (var ms = new MemoryStream())
+                    var fi = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                    var fileStream = fi.OpenBinaryStream();
+                    ClientContext.ExecuteQueryRetry();
+                    using (var ms = fileStream.Value)
                     {
-                        // We are using a temporary memory stream because the file connector is seeking in the stream
-                        // and the stream provided by OpenBinaryDirect does not allow it
-                        fi.Stream.CopyTo(ms);
-                        ms.Position = 0;
                         AddFileToTemplate(template, ms, folderWebRelativeUrl, fileName, folderWebRelativeUrl);
                     }
                 }
