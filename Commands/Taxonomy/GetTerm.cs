@@ -99,7 +99,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                     WriteObject(term);
                 } else
                 {
-                    WriteError(new ErrorRecord(new Exception("Insuffication parameters"), "INSUFFICIENTPARAMETERS", ErrorCategory.SyntaxError, this));
+                    WriteError(new ErrorRecord(new Exception("Insufficient parameters"), "INSUFFICIENTPARAMETERS", ErrorCategory.SyntaxError, this));
                 }
             }
             else
