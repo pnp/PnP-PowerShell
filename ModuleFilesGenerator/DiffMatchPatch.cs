@@ -1206,7 +1206,7 @@ namespace DiffMatchPatch {
                   text_insert = text_insert.Substring(commonlength);
                   text_delete = text_delete.Substring(commonlength);
                 }
-                // Factor out any common suffixies.
+                // Factor out any common suffixes.
                 commonlength = this.diff_commonSuffix(text_insert, text_delete);
                 if (commonlength != 0) {
                   diffs[pointer].text = text_insert.Substring(text_insert.Length
