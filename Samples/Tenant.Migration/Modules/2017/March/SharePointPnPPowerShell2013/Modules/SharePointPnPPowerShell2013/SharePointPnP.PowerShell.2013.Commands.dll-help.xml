@@ -16082,7 +16082,7 @@ PS:&gt; Add-PnPFieldFromXml -List "Demo List" -FieldXml $xml</dev:code>
         <command:parameter required="true" position="named">
           <maml:name>TermSetPath</maml:name>
           <maml:description>
-            <maml:para>The path to the term that this needs be be bound</maml:para>
+            <maml:para>The path to the term that this needs to be bound</maml:para>
           </maml:description>
           <command:parameterValue required="true">String</command:parameterValue>
         </command:parameter>
@@ -16282,7 +16282,7 @@ PS:&gt; Add-PnPFieldFromXml -List "Demo List" -FieldXml $xml</dev:code>
       <command:parameter required="true" position="named">
         <maml:name>TermSetPath</maml:name>
         <maml:description>
-          <maml:para>The path to the term that this needs be be bound</maml:para>
+          <maml:para>The path to the term that this needs to be bound</maml:para>
         </maml:description>
         <command:parameterValue required="true">String</command:parameterValue>
         <dev:type>

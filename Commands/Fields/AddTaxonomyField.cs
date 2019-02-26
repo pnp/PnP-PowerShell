@@ -29,7 +29,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The internal name of the field")]
         public string InternalName;
 
-        [Parameter(Mandatory = true, ParameterSetName = "Path", HelpMessage = "The path to the term that this needs be be bound")]
+        [Parameter(Mandatory = true, ParameterSetName = "Path", HelpMessage = "The path to the term that this needs to be bound")]
         public string TermSetPath;
 
         [Parameter(Mandatory = false, ParameterSetName = "Id", HelpMessage = "The ID of the Taxonomy item")]
