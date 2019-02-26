@@ -340,7 +340,7 @@ The values are $true and $false.")]
         [Parameter(Mandatory = false)]
         public bool? NotificationsInSharePointEnabled;
 
-        [Parameter(Mandatory = false, HelpMessage = @"ermits the use of special characters in file and folder names in SharePoint Online and OneDrive for Business document libraries.
+        [Parameter(Mandatory = false, HelpMessage = @"Permits the use of special characters in file and folder names in SharePoint Online and OneDrive for Business document libraries.
 
 Note:
 The only two characters that can be managed at this time are the # and % characters.
