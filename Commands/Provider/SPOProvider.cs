@@ -293,7 +293,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 //Get data
                 var spoParameters = DynamicParameters as SPOChildItemsParameters;
                 var folderAndFiles = spoParameters != null && spoParameters.Limit != SPOChildItemsParameters.Limits.Default ? GetFolderItems(folder, false, (int)spoParameters.Limit).ToArray() : GetFolderItems(folder).ToArray();
-                var serverRelaitivePath = GetServerRelativePath(path);
+                var serverRelativePath = GetServerRelativePath(path);
 
                 foreach (var subFolder in folderAndFiles.OfType<Folder>().ToList())
                 {
@@ -307,12 +307,12 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     {
                         name = subFolder.Name;
                     }
-                    WriteItemObject(name, serverRelaitivePath, true);
+                    WriteItemObject(name, serverRelativePath, true);
                 }
 
                 foreach (var file in folderAndFiles.OfType<File>().ToList())
                 {
-                    WriteItemObject(file.Name, serverRelaitivePath, false);
+                    WriteItemObject(file.Name, serverRelativePath, false);
                 }
 
                 //Restore item cache timeout
