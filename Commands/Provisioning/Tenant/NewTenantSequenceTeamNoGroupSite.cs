@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
     [CmdletHelp("Creates a new team site without an Office 365 group in-memory object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> $site = New-PnPTenantSequenceTeamNoGroupSite -Alias ""MyTeamSite"" -Title ""My Team Site""",
+       Code = @"PS:> $site = New-PnPTenantSequenceTeamNoGroupSite -Url ""/sites/MyTeamSite"" -Title ""My Team Site""",
        Remarks = "Creates a new team site object with the specified variables",
        SortOrder = 1)]
     public class NewTenantSequenceTeamNoGroupSite : PSCmdlet
