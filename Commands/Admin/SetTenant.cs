@@ -925,7 +925,7 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
-                    throw new InvalidOperationException("Setting the property FilePickerExternalImageSearchEanbled is not supported by your version of the service");
+                    throw new InvalidOperationException("Setting the property FilePickerExternalImageSearchEnabled is not supported by your version of the service");
                 }
                 isDirty = true;
             }
