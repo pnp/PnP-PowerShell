@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, HelpMessage = "Term store to check; if not specified the default term store is used.", ParameterSetName = ParameterSet_TERMSET)]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 
-        [Parameter(Mandatory = false, HelpMessage = "Find the first term recursivly matching the label in a term hierarchy.", ParameterSetName = ParameterSet_TERMSET)]
+        [Parameter(Mandatory = false, HelpMessage = "Find the first term recursively matching the label in a term hierarchy.", ParameterSetName = ParameterSet_TERMSET)]
         public SwitchParameter Recursive;
 
         [Parameter(Mandatory = false, HelpMessage = "Includes the hierarchy of child terms if available", ParameterSetName = ParameterAttribute.AllParameterSets)]
