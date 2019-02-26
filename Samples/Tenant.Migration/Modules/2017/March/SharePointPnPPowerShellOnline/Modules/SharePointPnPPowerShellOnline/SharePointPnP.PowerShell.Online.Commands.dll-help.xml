@@ -22246,7 +22246,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         <command:parameter required="true" position="named">
           <maml:name>TermGroup</maml:name>
           <maml:description>
-            <maml:para>Name, id or actualy termgroup to create the termset in.</maml:para>
+            <maml:para>Name, id or actually termgroup to create the termset in.</maml:para>
           </maml:description>
           <command:parameterValue required="true">Id, Title or TermGroup</command:parameterValue>
         </command:parameter>
@@ -22436,7 +22436,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
       <command:parameter required="true" position="named">
         <maml:name>TermGroup</maml:name>
         <maml:description>
-          <maml:para>Name, id or actualy termgroup to create the termset in.</maml:para>
+          <maml:para>Name, id or actually termgroup to create the termset in.</maml:para>
         </maml:description>
         <command:parameterValue required="true">Id, Title or TermGroup</command:parameterValue>
         <dev:type>
