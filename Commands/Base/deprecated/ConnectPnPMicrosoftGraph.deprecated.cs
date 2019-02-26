@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, HelpMessage = "The app key of the app which gives you access to the Microsoft Graph API.", ParameterSetName = ParameterSet_AAD)]
         public string AppSecret;
 
-        [Parameter(Mandatory = true, HelpMessage = "The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.", ParameterSetName = ParameterSet_AAD)]
+        [Parameter(Mandatory = true, HelpMessage = "The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.", ParameterSetName = ParameterSet_AAD)]
         public string AADDomain;
 
         protected override void ProcessRecord()

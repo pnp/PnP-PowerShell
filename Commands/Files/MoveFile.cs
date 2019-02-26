@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to move the file to. Must include the file name.")]
         public string TargetUrl = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.")]
         public SwitchParameter OverwriteIfAlreadyExists;
 
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]
