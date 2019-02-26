@@ -8196,7 +8196,7 @@ dir</dev:code>
         <command:parameter required="true" position="named">
           <maml:name>AADDomain</maml:name>
           <maml:description>
-            <maml:para>The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.</maml:para>
+            <maml:para>The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.</maml:para>
           </maml:description>
           <command:parameterValue required="true">String</command:parameterValue>
         </command:parameter>
@@ -8206,7 +8206,7 @@ dir</dev:code>
       <command:parameter required="true" position="named">
         <maml:name>AADDomain</maml:name>
         <maml:description>
-          <maml:para>The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.</maml:para>
+          <maml:para>The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.</maml:para>
         </maml:description>
         <command:parameterValue required="true">String</command:parameterValue>
         <dev:type>
