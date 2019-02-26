@@ -32094,7 +32094,7 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
         <command:parameter required="false" position="named">
           <maml:name>Sharing</maml:name>
           <maml:description>
-            <maml:para>Specifies what the sharing capablilites are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</maml:para>
+            <maml:para>Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</maml:para>
           </maml:description>
           <command:parameterValue required="true">Nullable`1</command:parameterValue>
         </command:parameter>
@@ -32193,7 +32193,7 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
       <command:parameter required="false" position="named">
         <maml:name>Sharing</maml:name>
         <maml:description>
-          <maml:para>Specifies what the sharing capablilites are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</maml:para>
+          <maml:para>Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</maml:para>
         </maml:description>
         <command:parameterValue required="false">Nullable`1</command:parameterValue>
         <dev:type>
