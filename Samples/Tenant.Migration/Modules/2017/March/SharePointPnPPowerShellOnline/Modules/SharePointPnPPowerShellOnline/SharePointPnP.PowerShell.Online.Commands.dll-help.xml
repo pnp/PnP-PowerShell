@@ -2324,7 +2324,7 @@ PS:&gt; Add-PnPFieldFromXml -List "Demo List" -FieldXml $xml</dev:code>
         </maml:introduction>
         <dev:code>PS:&gt; Add-PnPFile -Path .\sample.doc -Folder "Shared Documents" -Values @{Modified="1/1/2016"}</dev:code>
         <maml:remarks>
-          <maml:para>This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 1/1/2016.</maml:para>
+          <maml:para>This will upload the file sample.doc to the Shared Documnets folder. After uploading it will set the Modified date to 1/1/2016.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>
@@ -3468,7 +3468,7 @@ Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField"
 
 Yes/No: -Values @{"YesNo" = $false}
 
-Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{"Person" = "user1@domain.com","21"}
+Person/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{"Person" = "user1@domain.com","21"}
 
 Managed Metadata (single value with path to term): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"}
 
@@ -3563,7 +3563,7 @@ Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField"
 
 Yes/No: -Values @{"YesNo" = $false}
 
-Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{"Person" = "user1@domain.com","21"}
+Person/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{"Person" = "user1@domain.com","21"}
 
 Managed Metadata (single value with path to term): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"}
 
@@ -4660,7 +4660,7 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
         <command:parameter required="true" position="named">
           <maml:name>TermSetPath</maml:name>
           <maml:description>
-            <maml:para>The path to the term that this needs to be bound</maml:para>
+            <maml:para>The path to the term that this needs be be bound</maml:para>
           </maml:description>
           <command:parameterValue required="true">String</command:parameterValue>
         </command:parameter>
@@ -4868,7 +4868,7 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
       <command:parameter required="true" position="named">
         <maml:name>TermSetPath</maml:name>
         <maml:description>
-          <maml:para>The path to the term that this needs to be bound</maml:para>
+          <maml:para>The path to the term that this needs be be bound</maml:para>
         </maml:description>
         <command:parameterValue required="true">String</command:parameterValue>
         <dev:type>
@@ -5991,7 +5991,7 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
         <command:parameter required="false" position="named">
           <maml:name>DoNotPublish</maml:name>
           <maml:description>
-            <maml:para>Overrides the default behavior, which is to publish workflow definitions.</maml:para>
+            <maml:para>Overrides the default behaviour, which is to publish workflow definitions.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -6019,7 +6019,7 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
       <command:parameter required="false" position="named">
         <maml:name>DoNotPublish</maml:name>
         <maml:description>
-          <maml:para>Overrides the default behavior, which is to publish workflow definitions.</maml:para>
+          <maml:para>Overrides the default behaviour, which is to publish workflow definitions.</maml:para>
         </maml:description>
         <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -8196,7 +8196,7 @@ dir</dev:code>
         <command:parameter required="true" position="named">
           <maml:name>AADDomain</maml:name>
           <maml:description>
-            <maml:para>The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.</maml:para>
+            <maml:para>The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.</maml:para>
           </maml:description>
           <command:parameterValue required="true">String</command:parameterValue>
         </command:parameter>
@@ -8206,7 +8206,7 @@ dir</dev:code>
       <command:parameter required="true" position="named">
         <maml:name>AADDomain</maml:name>
         <maml:description>
-          <maml:para>The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.</maml:para>
+          <maml:para>The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.</maml:para>
         </maml:description>
         <command:parameterValue required="true">String</command:parameterValue>
         <dev:type>
@@ -8281,7 +8281,7 @@ dir</dev:code>
         <maml:introduction>
           <maml:para />
         </maml:introduction>
-        <dev:code>PS:&gt; Connect-PnPMicrosoftGraph -AppId '&lt;id&gt;' -AppSecret '&lt;secret&gt;' -AADDomain 'contoso.onmicrosoft.com'</dev:code>
+        <dev:code>PS:&gt; Connect-PnPMicrosoftGraph -AppId '&lt;id&gt;' -AppSecret '&lt;secrect&gt;' -AADDomain 'contoso.onmicrosoft.com'</dev:code>
         <maml:remarks>
           <maml:para>Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.</maml:para>
           <maml:para></maml:para>
@@ -8641,7 +8641,7 @@ dir</dev:code>
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -8683,7 +8683,7 @@ dir</dev:code>
       <command:parameter required="false" position="named">
         <maml:name>OverwriteIfAlreadyExists</maml:name>
         <maml:description>
-          <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+          <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
         </maml:description>
         <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -13477,7 +13477,7 @@ PS:&gt; Get-PnPContentType
         </maml:introduction>
         <dev:code>PS:&gt; Get-PnPListItem -List Tasks -Id 1</dev:code>
         <maml:remarks>
-          <maml:para>Retrieves the list item with ID 1 from the Tasks list. This parameter is ignored if the Query parameter is specified.</maml:para>
+          <maml:para>Retrieves the list item with ID 1 from from the Tasks list. This parameter is ignored if the Query parameter is specified.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>
@@ -13493,7 +13493,7 @@ PS:&gt; Get-PnPContentType
         </maml:introduction>
         <dev:code>PS:&gt; Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3</dev:code>
         <maml:remarks>
-          <maml:para>Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists. This parameter is ignored if the Query parameter is specified.</maml:para>
+          <maml:para>Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists. This parameter is ignored if the Query parameter is specified.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>
@@ -15928,7 +15928,7 @@ Apply-PnPProvisioningTemplate -InputInstance $template</dev:code>
         <command:parameter required="false" position="named">
           <maml:name>Type</maml:name>
           <maml:description>
-            <maml:para>The object type of the credential to return from the Credential Manager. Possible values are 'O365', 'OnPrem' or 'PSCredential'</maml:para>
+            <maml:para>The object type of the credential to return from the Credential Manager. Possible valus are 'O365', 'OnPrem' or 'PSCredential'</maml:para>
           </maml:description>
           <command:parameterValue required="true">CredentialType</command:parameterValue>
         </command:parameter>
@@ -15949,7 +15949,7 @@ Apply-PnPProvisioningTemplate -InputInstance $template</dev:code>
       <command:parameter required="false" position="named">
         <maml:name>Type</maml:name>
         <maml:description>
-          <maml:para>The object type of the credential to return from the Credential Manager. Possible values are 'O365', 'OnPrem' or 'PSCredential'</maml:para>
+          <maml:para>The object type of the credential to return from the Credential Manager. Possible valus are 'O365', 'OnPrem' or 'PSCredential'</maml:para>
         </maml:description>
         <command:parameterValue required="false">CredentialType</command:parameterValue>
         <dev:type>
@@ -18906,9 +18906,9 @@ The first data row must contain the Term Set Name, Term Set Description, and LCI
 
 It is recommended that a fixed GUID be used as the termSetId, to allow the term set to be easily updated (so do not pass Guid.Empty).
 
-In contrast to the web interface import, this is not a one-off import but runs synchronization logic allowing updating of an existing Term Set. When synchronizing, any existing terms are matched (with Term Description and Available for Tagging updated as necessary), any new terms are added in the correct place in the hierarchy, and (if synchronizeDeletions is set) any terms not in the imported file are removed.
+In contrast to the web interface import, this is not a one-off import but runs synchronisation logic allowing updating of an existing Term Set. When synchronising, any existing terms are matched (with Term Description and Available for Tagging updated as necessary), any new terms are added in the correct place in the hierarchy, and (if synchroniseDeletions is set) any terms not in the imported file are removed.
 
-The import file also supports an expanded syntax for the Term Set Name and term names (Level 1 Term, Level 2 Term, etc). These columns support values with the format 'Name | GUID', with the name and GUID separated by a pipe character (note that the pipe character is invalid to use within a taxonomy item name). This expanded syntax is not required, but can be used to ensure all terms have fixed IDs.</maml:para>
+The import file also supports an expanded syntax for the Term Set Name and term names (Level 1 Term, Level 2 Term, etc). These columns support values with the format 'Name | GUID', with the name and GUID separated by a pipe character (note that the pipe character is invalid to use within a taxomony item name). This expanded syntax is not required, but can be used to ensure all terms have fixed IDs.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -19727,7 +19727,7 @@ The import file also supports an expanded syntax for the Term Set Name and term 
         </maml:introduction>
         <dev:code>PS:&gt; Load-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions</dev:code>
         <maml:remarks>
-          <maml:para>Loads a PnP file from the file systems using some custom template provider extensions while loading the file.</maml:para>
+          <maml:para>Loads a PnP file from the file systems using some custom template provider extenions while loading the file.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>
@@ -19777,7 +19777,7 @@ The import file also supports an expanded syntax for the Term Set Name and term 
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -19815,7 +19815,7 @@ The import file also supports an expanded syntax for the Term Set Name and term 
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -19850,7 +19850,7 @@ The import file also supports an expanded syntax for the Term Set Name and term 
       <command:parameter required="false" position="named">
         <maml:name>OverwriteIfAlreadyExists</maml:name>
         <maml:description>
-          <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+          <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
         </maml:description>
         <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -22246,7 +22246,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         <command:parameter required="true" position="named">
           <maml:name>TermGroup</maml:name>
           <maml:description>
-            <maml:para>Name, id or actually termgroup to create the termset in.</maml:para>
+            <maml:para>Name, id or actualy termgroup to create the termset in.</maml:para>
           </maml:description>
           <command:parameterValue required="true">Id, Title or TermGroup</command:parameterValue>
         </command:parameter>
@@ -22436,7 +22436,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
       <command:parameter required="true" position="named">
         <maml:name>TermGroup</maml:name>
         <maml:description>
-          <maml:para>Name, id or actually termgroup to create the termset in.</maml:para>
+          <maml:para>Name, id or actualy termgroup to create the termset in.</maml:para>
         </maml:description>
         <command:parameterValue required="true">Id, Title or TermGroup</command:parameterValue>
         <dev:type>
@@ -26430,7 +26430,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If omitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
+            <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -26468,7 +26468,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If omitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
+            <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -26503,7 +26503,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
       <command:parameter required="false" position="named">
         <maml:name>OverwriteIfAlreadyExists</maml:name>
         <maml:description>
-          <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If omitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
+          <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
         </maml:description>
         <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -30196,7 +30196,7 @@ Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField"
 
 Yes/No: -Values @{"YesNoField" = $false}
 
-Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{"PersonField" = "user1@domain.com","21"}
+Person/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{"PersonField" = "user1@domain.com","21"}
 
 Managed Metadata (single value with path to term): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"}
 
@@ -30302,7 +30302,7 @@ Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField"
 
 Yes/No: -Values @{"YesNoField" = $false}
 
-Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{"PersonField" = "user1@domain.com","21"}
+Person/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{"PersonField" = "user1@domain.com","21"}
 
 Managed Metadata (single value with path to term): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"}
 
@@ -32094,7 +32094,7 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
         <command:parameter required="false" position="named">
           <maml:name>Sharing</maml:name>
           <maml:description>
-            <maml:para>Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</maml:para>
+            <maml:para>Specifies what the sharing capablilites are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</maml:para>
           </maml:description>
           <command:parameterValue required="true">Nullable`1</command:parameterValue>
         </command:parameter>
@@ -32136,7 +32136,7 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
         <command:parameter required="false" position="named">
           <maml:name>Owners</maml:name>
           <maml:description>
-            <maml:para>Specifies owners to add as site collection administrators. Can be both users and groups.</maml:para>
+            <maml:para>Specifies owners to add as site collection adminstrators. Can be both users and groups.</maml:para>
           </maml:description>
           <command:parameterValue required="true">List`1</command:parameterValue>
         </command:parameter>
@@ -32182,7 +32182,7 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
       <command:parameter required="false" position="named">
         <maml:name>Owners</maml:name>
         <maml:description>
-          <maml:para>Specifies owners to add as site collection administrators. Can be both users and groups.</maml:para>
+          <maml:para>Specifies owners to add as site collection adminstrators. Can be both users and groups.</maml:para>
         </maml:description>
         <command:parameterValue required="false">List`1</command:parameterValue>
         <dev:type>
@@ -32193,7 +32193,7 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
       <command:parameter required="false" position="named">
         <maml:name>Sharing</maml:name>
         <maml:description>
-          <maml:para>Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</maml:para>
+          <maml:para>Specifies what the sharing capablilites are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</maml:para>
         </maml:description>
         <command:parameterValue required="false">Nullable`1</command:parameterValue>
         <dev:type>
