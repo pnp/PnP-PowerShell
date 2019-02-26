@@ -2324,7 +2324,7 @@ PS:&gt; Add-PnPFieldFromXml -List "Demo List" -FieldXml $xml</dev:code>
         </maml:introduction>
         <dev:code>PS:&gt; Add-PnPFile -Path .\sample.doc -Folder "Shared Documents" -Values @{Modified="1/1/2016"}</dev:code>
         <maml:remarks>
-          <maml:para>This will upload the file sample.doc to the Shared Documnets folder. After uploading it will set the Modified date to 1/1/2016.</maml:para>
+          <maml:para>This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 1/1/2016.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>
