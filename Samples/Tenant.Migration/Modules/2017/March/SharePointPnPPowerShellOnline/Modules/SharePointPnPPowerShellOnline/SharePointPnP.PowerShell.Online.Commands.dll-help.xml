@@ -19727,7 +19727,7 @@ The import file also supports an expanded syntax for the Term Set Name and term 
         </maml:introduction>
         <dev:code>PS:&gt; Load-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions</dev:code>
         <maml:remarks>
-          <maml:para>Loads a PnP file from the file systems using some custom template provider extenions while loading the file.</maml:para>
+          <maml:para>Loads a PnP file from the file systems using some custom template provider extensions while loading the file.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>

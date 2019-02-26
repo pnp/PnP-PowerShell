@@ -23654,7 +23654,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         </maml:introduction>
         <dev:code>PS:&gt; Load-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions</dev:code>
         <maml:remarks>
-          <maml:para>Loads a PnP file from the file systems using some custom template provider extenions while loading the file.</maml:para>
+          <maml:para>Loads a PnP file from the file systems using some custom template provider extensions while loading the file.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>
