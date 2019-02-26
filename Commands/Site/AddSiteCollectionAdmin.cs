@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteCollectionAdmin")]
     [CmdletHelp("Adds one or more users as site collection administrators to the site collection in the current context",
-        DetailedDescription = "This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove exisitng site collection administrators.",
+        DetailedDescription = "This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove existing site collection administrators.",
         Category = CmdletHelpCategory.Sites)]
     [CmdletExample(
         Code = @"PS:> Add-PnPSiteCollectionAdmin -Owners ""user@contoso.onmicrosoft.com""",
