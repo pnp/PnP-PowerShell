@@ -5991,7 +5991,7 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
         <command:parameter required="false" position="named">
           <maml:name>DoNotPublish</maml:name>
           <maml:description>
-            <maml:para>Overrides the default behaviour, which is to publish workflow definitions.</maml:para>
+            <maml:para>Overrides the default behavior, which is to publish workflow definitions.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -6019,7 +6019,7 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
       <command:parameter required="false" position="named">
         <maml:name>DoNotPublish</maml:name>
         <maml:description>
-          <maml:para>Overrides the default behaviour, which is to publish workflow definitions.</maml:para>
+          <maml:para>Overrides the default behavior, which is to publish workflow definitions.</maml:para>
         </maml:description>
         <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         <dev:type>

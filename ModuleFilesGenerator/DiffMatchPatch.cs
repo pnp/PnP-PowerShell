@@ -182,7 +182,7 @@ namespace DiffMatchPatch {
 
   /**
    * Class containing the diff, match and patch methods.
-   * Also Contains the behaviour settings.
+   * Also Contains the behavior settings.
    */
   public class diff_match_patch {
     // Defaults.

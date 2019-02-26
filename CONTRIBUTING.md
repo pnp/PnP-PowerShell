@@ -82,7 +82,7 @@ public class MyCmdlet : SPOWebCmdlet
 #endif
 ```
 
-If only parts of a cmdlet require different behaviour based upon the different version of the SDK, you are recommended to use the #ONPREMISES or other available preprocessor variable throughout your code to exclude or include certain code.
+If only parts of a cmdlet require different behavior based upon the different version of the SDK, you are recommended to use the #ONPREMISES or other available preprocessor variable throughout your code to exclude or include certain code.
 
 ### Cmdlets will have to use common verbs
  
