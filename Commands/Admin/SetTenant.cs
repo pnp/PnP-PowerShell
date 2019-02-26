@@ -32,7 +32,7 @@ Set-PnPTenant -NoAccessRedirectUrl 'http://www.contoso.com'",
         Remarks = @"This example enables the use of special persisted cookie for Open with Explorer.", SortOrder = 3)]
     public class SetTenant : PnPAdminCmdlet
     {
-        const string ParameterSet_COMPATIBILITYLEVEL = "Compabitility Level";
+        const string ParameterSet_COMPATIBILITYLEVEL = "Compatibility Level";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Specifies the lower bound on the compatibility level for new sites.")]
         public int MinCompatibilityLevel;
