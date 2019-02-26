@@ -13996,7 +13996,7 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
         </maml:introduction>
         <dev:code>PS:&gt; Get-PnPListItem -List Tasks -Id 1</dev:code>
         <maml:remarks>
-          <maml:para>Retrieves the list item with ID 1 from from the Tasks list. This parameter is ignored if the Query parameter is specified.</maml:para>
+          <maml:para>Retrieves the list item with ID 1 from the Tasks list. This parameter is ignored if the Query parameter is specified.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>
@@ -14012,7 +14012,7 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
         </maml:introduction>
         <dev:code>PS:&gt; Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3</dev:code>
         <maml:remarks>
-          <maml:para>Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists. This parameter is ignored if the Query parameter is specified.</maml:para>
+          <maml:para>Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists. This parameter is ignored if the Query parameter is specified.</maml:para>
           <maml:para></maml:para>
         </maml:remarks>
         <command:commandLines>
