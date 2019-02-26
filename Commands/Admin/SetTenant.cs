@@ -190,11 +190,11 @@ False(default) - No special cookie is generated and the normal Office 365 sign -
 True - Generates a special cookie that will allow ""Open with Explorer"" to function if the ""Keep Me Signed In"" box is not checked at sign -in.")]
         public bool? UsePersistentCookiesForExplorerView;
 
-        [Parameter(Mandatory = false, HelpMessage = @"When the feature is enabled, all external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingsInvitationList.
+        [Parameter(Mandatory = false, HelpMessage = @"When the feature is enabled, all external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.
 
 The valid values are:
 False (default) - BCC for external sharing is disabled.
-True - All external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingsInvitationList.")]
+True - All external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.")]
         public bool? BccExternalSharingInvitations;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies a list of e-mail addresses to be BCC'd when the BCC for External Sharing feature is enabled.
