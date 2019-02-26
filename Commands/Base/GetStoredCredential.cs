@@ -29,7 +29,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public string Name;
 
 #if !NETSTANDARD2_0
-        [Parameter(Mandatory = false, HelpMessage = "The object type of the credential to return from the Credential Manager. Possible valus are 'O365', 'OnPrem' or 'PSCredential'")]
+        [Parameter(Mandatory = false, HelpMessage = "The object type of the credential to return from the Credential Manager. Possible values are 'O365', 'OnPrem' or 'PSCredential'")]
         public CredentialType Type = CredentialType.O365;
 #endif
 

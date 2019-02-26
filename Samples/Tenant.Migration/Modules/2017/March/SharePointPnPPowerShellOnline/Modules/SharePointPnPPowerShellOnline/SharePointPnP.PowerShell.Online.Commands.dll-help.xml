@@ -15928,7 +15928,7 @@ Apply-PnPProvisioningTemplate -InputInstance $template</dev:code>
         <command:parameter required="false" position="named">
           <maml:name>Type</maml:name>
           <maml:description>
-            <maml:para>The object type of the credential to return from the Credential Manager. Possible valus are 'O365', 'OnPrem' or 'PSCredential'</maml:para>
+            <maml:para>The object type of the credential to return from the Credential Manager. Possible values are 'O365', 'OnPrem' or 'PSCredential'</maml:para>
           </maml:description>
           <command:parameterValue required="true">CredentialType</command:parameterValue>
         </command:parameter>
@@ -15949,7 +15949,7 @@ Apply-PnPProvisioningTemplate -InputInstance $template</dev:code>
       <command:parameter required="false" position="named">
         <maml:name>Type</maml:name>
         <maml:description>
-          <maml:para>The object type of the credential to return from the Credential Manager. Possible valus are 'O365', 'OnPrem' or 'PSCredential'</maml:para>
+          <maml:para>The object type of the credential to return from the Credential Manager. Possible values are 'O365', 'OnPrem' or 'PSCredential'</maml:para>
         </maml:description>
         <command:parameterValue required="false">CredentialType</command:parameterValue>
         <dev:type>
