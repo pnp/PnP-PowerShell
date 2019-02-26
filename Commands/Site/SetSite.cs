@@ -84,7 +84,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Alias("DenyAndAddCustomizePages")]
         public SwitchParameter NoScriptSite;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection adminstrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
         public List<string> Owners;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if comments on site pages are enabled or disabled", ParameterSetName = ParameterSet_PROPERTIES)]

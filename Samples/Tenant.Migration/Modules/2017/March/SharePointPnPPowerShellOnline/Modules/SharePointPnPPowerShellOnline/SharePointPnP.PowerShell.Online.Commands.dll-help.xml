@@ -32136,7 +32136,7 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
         <command:parameter required="false" position="named">
           <maml:name>Owners</maml:name>
           <maml:description>
-            <maml:para>Specifies owners to add as site collection adminstrators. Can be both users and groups.</maml:para>
+            <maml:para>Specifies owners to add as site collection administrators. Can be both users and groups.</maml:para>
           </maml:description>
           <command:parameterValue required="true">List`1</command:parameterValue>
         </command:parameter>
@@ -32182,7 +32182,7 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://github.com/OfficeDev
       <command:parameter required="false" position="named">
         <maml:name>Owners</maml:name>
         <maml:description>
-          <maml:para>Specifies owners to add as site collection adminstrators. Can be both users and groups.</maml:para>
+          <maml:para>Specifies owners to add as site collection administrators. Can be both users and groups.</maml:para>
         </maml:description>
         <command:parameterValue required="false">List`1</command:parameterValue>
         <dev:type>

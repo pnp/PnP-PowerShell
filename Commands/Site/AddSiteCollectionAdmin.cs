@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Remarks = @"This will add all users with their title ending with ""Doe"" as additional site collection owners to the site collection in the current context", SortOrder = 3)]
     public class AddSiteCollectionAdmin : PnPCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to add as site collection adminstrators. They will be added as additional site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.")]
         public List<UserPipeBind> Owners;
 
         protected override void ExecuteCmdlet()
