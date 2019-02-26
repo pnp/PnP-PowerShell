@@ -239,7 +239,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 if (spoDrive == null) return;
 
                 //Save original timeout
-                var orginalItemTimeout = spoDrive.ItemTimeout;
+                var originalItemTimeout = spoDrive.ItemTimeout;
 
                 //Set timeout temporary to 5 minutes
                 spoDrive.ItemTimeout = 1000 * 60 * 5;
@@ -253,7 +253,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, file.ServerRelativeUrl, false));
 
                 //Restore item cache timeout
-                spoDrive.ItemTimeout = orginalItemTimeout;
+                spoDrive.ItemTimeout = originalItemTimeout;
 
                 //Iterate sub folders
                 if (recurse)
@@ -285,7 +285,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 if (spoDrive == null) return;
 
                 //Save original timeout
-                var orginalItemTimeout = spoDrive.ItemTimeout;
+                var originalItemTimeout = spoDrive.ItemTimeout;
 
                 //Set timeout temporary to 5 minutes
                 spoDrive.ItemTimeout = 1000 * 60 * 5;
@@ -316,7 +316,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 }
 
                 //Restore item cache timeout
-                spoDrive.ItemTimeout = orginalItemTimeout;
+                spoDrive.ItemTimeout = originalItemTimeout;
             }
             else
             {
