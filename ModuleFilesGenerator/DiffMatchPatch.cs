@@ -132,9 +132,9 @@ namespace DiffMatchPatch {
     public int length2;
 
     /**
-     * Emulate GNU diff's format.
+     * Emmulate GNU diff's format.
      * Header: @@ -382,8 +481,9 @@
-     * Indices are printed as 1-based, not 0-based.
+     * Indicies are printed as 1-based, not 0-based.
      * @return The GNU diff string.
      */
     public override string ToString() {
@@ -182,7 +182,7 @@ namespace DiffMatchPatch {
 
   /**
    * Class containing the diff, match and patch methods.
-   * Also Contains the behavior settings.
+   * Also Contains the behaviour settings.
    */
   public class diff_match_patch {
     // Defaults.
@@ -628,7 +628,7 @@ namespace DiffMatchPatch {
       string line;
       StringBuilder chars = new StringBuilder();
       // Walk the text, pulling out a Substring for each line.
-      // text.split('\n') would temporarily double our memory footprint.
+      // text.split('\n') would would temporarily double our memory footprint.
       // Modifying text would create many large strings to garbage collect.
       while (lineEnd < text.Length - 1) {
         lineEnd = text.IndexOf('\n', lineStart);
@@ -1190,7 +1190,7 @@ namespace DiffMatchPatch {
             // Upon reaching an equality, check for prior redundancies.
             if (count_delete + count_insert > 1) {
               if (count_delete != 0 && count_insert != 0) {
-                // Factor out any common prefixes.
+                // Factor out any common prefixies.
                 commonlength = this.diff_commonPrefix(text_insert, text_delete);
                 if (commonlength != 0) {
                   if ((pointer - count_delete - count_insert) > 0 &&
@@ -1206,7 +1206,7 @@ namespace DiffMatchPatch {
                   text_insert = text_insert.Substring(commonlength);
                   text_delete = text_delete.Substring(commonlength);
                 }
-                // Factor out any common suffixes.
+                // Factor out any common suffixies.
                 commonlength = this.diff_commonSuffix(text_insert, text_delete);
                 if (commonlength != 0) {
                   diffs[pointer].text = text_insert.Substring(text_insert.Length
@@ -1575,7 +1575,7 @@ namespace DiffMatchPatch {
       // assert (Match_MaxBits == 0 || pattern.Length <= Match_MaxBits)
       //    : "Pattern too long for this application.";
 
-      // Initialize the alphabet.
+      // Initialise the alphabet.
       Dictionary<char, int> s = match_alphabet(pattern);
 
       // Highest score beyond which we give up.
@@ -1595,7 +1595,7 @@ namespace DiffMatchPatch {
         }
       }
 
-      // Initialize the bit arrays.
+      // Initialise the bit arrays.
       int matchmask = 1 << (pattern.Length - 1);
       best_loc = -1;
 
@@ -1687,7 +1687,7 @@ namespace DiffMatchPatch {
     }
 
     /**
-     * Initialize the alphabet for the Bitap algorithm.
+     * Initialise the alphabet for the Bitap algorithm.
      * @param pattern The text to encode.
      * @return Hash of character locations.
      */
