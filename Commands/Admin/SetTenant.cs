@@ -32,7 +32,7 @@ Set-PnPTenant -NoAccessRedirectUrl 'http://www.contoso.com'",
         Remarks = @"This example enables the use of special persisted cookie for Open with Explorer.", SortOrder = 3)]
     public class SetTenant : PnPAdminCmdlet
     {
-        const string ParameterSet_COMPATIBILITYLEVEL = "Compabitility Level";
+        const string ParameterSet_COMPATIBILITYLEVEL = "Compatibility Level";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Specifies the lower bound on the compatibility level for new sites.")]
         public int MinCompatibilityLevel;
@@ -90,7 +90,7 @@ False - The Everyone claim group is hidden from the People Picker.")]
 
         [Parameter(Mandatory = false, HelpMessage = @"Enables the administrator to hide the All Users claim groups in People Picker.
 
-When users share an item with ""All Users (x)"", it is accessible to all organization members in the tenant's Azure Active Directory who have authenticated with via this method. When users share an item with ""All Users (x)"" it is accessible to all organtization members in the tenant that used NTLM to authentication with SharePoint.
+When users share an item with ""All Users (x)"", it is accessible to all organization members in the tenant's Azure Active Directory who have authenticated with via this method. When users share an item with ""All Users (x)"" it is accessible to all organization members in the tenant that used NTLM to authentication with SharePoint.
 
 Note, the All Users(authenticated) group is equivalent to the Everyone claim, and shows as Everyone.To change this, see - ShowEveryoneClaim.
 
@@ -190,11 +190,11 @@ False(default) - No special cookie is generated and the normal Office 365 sign -
 True - Generates a special cookie that will allow ""Open with Explorer"" to function if the ""Keep Me Signed In"" box is not checked at sign -in.")]
         public bool? UsePersistentCookiesForExplorerView;
 
-        [Parameter(Mandatory = false, HelpMessage = @"When the feature is enabled, all external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingsInvitationList.
+        [Parameter(Mandatory = false, HelpMessage = @"When the feature is enabled, all external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.
 
 The valid values are:
 False (default) - BCC for external sharing is disabled.
-True - All external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingsInvitationList.")]
+True - All external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.")]
         public bool? BccExternalSharingInvitations;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies a list of e-mail addresses to be BCC'd when the BCC for External Sharing feature is enabled.
@@ -340,7 +340,7 @@ The values are $true and $false.")]
         [Parameter(Mandatory = false)]
         public bool? NotificationsInSharePointEnabled;
 
-        [Parameter(Mandatory = false, HelpMessage = @"ermits the use of special characters in file and folder names in SharePoint Online and OneDrive for Business document libraries.
+        [Parameter(Mandatory = false, HelpMessage = @"Permits the use of special characters in file and folder names in SharePoint Online and OneDrive for Business document libraries.
 
 Note:
 The only two characters that can be managed at this time are the # and % characters.
@@ -925,7 +925,7 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
                 }
                 catch (PropertyOrFieldNotInitializedException)
                 {
-                    throw new InvalidOperationException("Setting the property FilePickerExternalImageSearchEanbled is not supported by your version of the service");
+                    throw new InvalidOperationException("Setting the property FilePickerExternalImageSearchEnabled is not supported by your version of the service");
                 }
                 isDirty = true;
             }

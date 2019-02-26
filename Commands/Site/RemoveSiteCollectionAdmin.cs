@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Remarks = @"This will remove all existing site collection administrators from the site collection in the current context", SortOrder = 4)]
     public class RemoveSiteCollectionAdmin : PnPCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to remove as site collection adminstrators. Can be both users and groups.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to remove as site collection administrators. Can be both users and groups.")]
         public List<UserPipeBind> Owners;
 
         protected override void ExecuteCmdlet()

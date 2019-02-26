@@ -239,7 +239,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 if (spoDrive == null) return;
 
                 //Save original timeout
-                var orginalItemTimeout = spoDrive.ItemTimeout;
+                var originalItemTimeout = spoDrive.ItemTimeout;
 
                 //Set timeout temporary to 5 minutes
                 spoDrive.ItemTimeout = 1000 * 60 * 5;
@@ -253,7 +253,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 folderAndFiles.OfType<File>().ToList().ForEach(file => WriteItemObject(file, file.ServerRelativeUrl, false));
 
                 //Restore item cache timeout
-                spoDrive.ItemTimeout = orginalItemTimeout;
+                spoDrive.ItemTimeout = originalItemTimeout;
 
                 //Iterate sub folders
                 if (recurse)
@@ -285,7 +285,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 if (spoDrive == null) return;
 
                 //Save original timeout
-                var orginalItemTimeout = spoDrive.ItemTimeout;
+                var originalItemTimeout = spoDrive.ItemTimeout;
 
                 //Set timeout temporary to 5 minutes
                 spoDrive.ItemTimeout = 1000 * 60 * 5;
@@ -293,7 +293,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 //Get data
                 var spoParameters = DynamicParameters as SPOChildItemsParameters;
                 var folderAndFiles = spoParameters != null && spoParameters.Limit != SPOChildItemsParameters.Limits.Default ? GetFolderItems(folder, false, (int)spoParameters.Limit).ToArray() : GetFolderItems(folder).ToArray();
-                var serverRelaitivePath = GetServerRelativePath(path);
+                var serverRelativePath = GetServerRelativePath(path);
 
                 foreach (var subFolder in folderAndFiles.OfType<Folder>().ToList())
                 {
@@ -307,16 +307,16 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                     {
                         name = subFolder.Name;
                     }
-                    WriteItemObject(name, serverRelaitivePath, true);
+                    WriteItemObject(name, serverRelativePath, true);
                 }
 
                 foreach (var file in folderAndFiles.OfType<File>().ToList())
                 {
-                    WriteItemObject(file.Name, serverRelaitivePath, false);
+                    WriteItemObject(file.Name, serverRelativePath, false);
                 }
 
                 //Restore item cache timeout
-                spoDrive.ItemTimeout = orginalItemTimeout;
+                spoDrive.ItemTimeout = originalItemTimeout;
             }
             else
             {
@@ -497,7 +497,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (obj == null)
             {
                 NewItem(path, "File", null);
-                obj = GetFileOrFolder(path, useChache: false);
+                obj = GetFileOrFolder(path, useCache: false);
             }
             if (obj is File)
             {
@@ -550,7 +550,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         #region Helpers
 
         //Get helpers
-        private object GetFileOrFolder(string path, bool throwError = true, bool useChache = true)
+        private object GetFileOrFolder(string path, bool throwError = true, bool useCache = true)
         {
             var spoDrive = GetCurrentDrive(path);
             if (spoDrive == null) return null;
@@ -559,7 +559,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (string.IsNullOrEmpty(serverRelativePath)) return null;
 
             //Try get cached item
-            if (useChache)
+            if (useCache)
             {
                 var fileOrFolder = GetCachedItem(serverRelativePath);
                 if (fileOrFolder != null) return fileOrFolder.Item;

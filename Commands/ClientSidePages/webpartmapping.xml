@@ -552,7 +552,7 @@ uncomment the nodes
         </Properties>
         <Mappings>
           <Mapping Default="true" Name="default">
-            <!-- For now do not support this. Checking customer analysis data showed low usage. Plan B would be be write a third party web part that can do this -->
+            <!-- For now do not support this. Checking customer analysis data showed low usage. Plan B would be to write a third party web part that can do this -->
             <ClientSideText Order="10" Text="The XmlWebPart on the source page reads XML and then uses XSL to produce HTML. This is currently not supported by the page migration engine"/>
           </Mapping>
         </Mappings>

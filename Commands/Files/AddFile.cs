@@ -26,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Add-PnPFile -Path .\sample.doc -Folder ""Shared Documents"" -Values @{Modified=""1/1/2016""}",
-        Remarks = "This will upload the file sample.doc to the Shared Documnets folder. After uploading it will set the Modified date to 1/1/2016.",
+        Remarks = "This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 1/1/2016.",
         SortOrder = 3)]
     [CmdletExample(
         Code = @"PS:> Add-PnPFile -FileName sample.doc -Folder ""Shared Documents"" -Stream $fileStream -Values @{Modified=""1/1/2016""}",
@@ -100,7 +100,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
              "\n\nMulti value lookup (id of lookup values as array 2): -Values @{\"MultiLookupField\" = 1,2}" +
              "\n\nMulti value lookup (id of lookup values as string): -Values @{\"MultiLookupField\" = \"1,2\"}" +
              "\n\nYes/No: -Values @{\"YesNo\" = $false}" +
-             "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, seperate multiple values with a comma): -Values @{\"Person\" = \"user1@domain.com\",\"21\"}" +
+             "\n\nPerson/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{\"Person\" = \"user1@domain.com\",\"21\"}" +
              "\n\nManaged Metadata (single value with path to term): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\"}" +
              "\n\nManaged Metadata (single value with id of term): -Values @{\"MetadataField\" = \"fe40a95b-2144-4fa2-b82a-0b3d0299d818\"} with Id of term" +
              "\n\nManaged Metadata (multiple values with paths to terms): -Values @{\"MetadataField\" = \"CORPORATE|DEPARTMENTS|FINANCE\",\"CORPORATE|DEPARTMENTS|HR\"}" +
