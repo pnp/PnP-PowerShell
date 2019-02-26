@@ -90,7 +90,7 @@ False - The Everyone claim group is hidden from the People Picker.")]
 
         [Parameter(Mandatory = false, HelpMessage = @"Enables the administrator to hide the All Users claim groups in People Picker.
 
-When users share an item with ""All Users (x)"", it is accessible to all organization members in the tenant's Azure Active Directory who have authenticated with via this method. When users share an item with ""All Users (x)"" it is accessible to all organtization members in the tenant that used NTLM to authentication with SharePoint.
+When users share an item with ""All Users (x)"", it is accessible to all organization members in the tenant's Azure Active Directory who have authenticated with via this method. When users share an item with ""All Users (x)"" it is accessible to all organization members in the tenant that used NTLM to authentication with SharePoint.
 
 Note, the All Users(authenticated) group is equivalent to the Everyone claim, and shows as Everyone.To change this, see - ShowEveryoneClaim.
 
