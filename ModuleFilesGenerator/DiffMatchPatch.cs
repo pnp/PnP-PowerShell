@@ -1575,7 +1575,7 @@ namespace DiffMatchPatch {
       // assert (Match_MaxBits == 0 || pattern.Length <= Match_MaxBits)
       //    : "Pattern too long for this application.";
 
-      // Initialise the alphabet.
+      // Initialize the alphabet.
       Dictionary<char, int> s = match_alphabet(pattern);
 
       // Highest score beyond which we give up.
@@ -1595,7 +1595,7 @@ namespace DiffMatchPatch {
         }
       }
 
-      // Initialise the bit arrays.
+      // Initialize the bit arrays.
       int matchmask = 1 << (pattern.Length - 1);
       best_loc = -1;
 
@@ -1687,7 +1687,7 @@ namespace DiffMatchPatch {
     }
 
     /**
-     * Initialise the alphabet for the Bitap algorithm.
+     * Initialize the alphabet for the Bitap algorithm.
      * @param pattern The text to encode.
      * @return Hash of character locations.
      */
