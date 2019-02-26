@@ -628,7 +628,7 @@ namespace DiffMatchPatch {
       string line;
       StringBuilder chars = new StringBuilder();
       // Walk the text, pulling out a Substring for each line.
-      // text.split('\n') would would temporarily double our memory footprint.
+      // text.split('\n') would temporarily double our memory footprint.
       // Modifying text would create many large strings to garbage collect.
       while (lineEnd < text.Length - 1) {
         lineEnd = text.IndexOf('\n', lineStart);
