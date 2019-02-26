@@ -27036,7 +27036,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -27074,7 +27074,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -27131,7 +27131,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
       <command:parameter required="false" position="named">
         <maml:name>OverwriteIfAlreadyExists</maml:name>
         <maml:description>
-          <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+          <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
         </maml:description>
         <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -27274,7 +27274,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -27312,7 +27312,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+            <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -27369,7 +27369,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
       <command:parameter required="false" position="named">
         <maml:name>OverwriteIfAlreadyExists</maml:name>
         <maml:description>
-          <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
+          <maml:para>If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.</maml:para>
         </maml:description>
         <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -27512,7 +27512,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
+            <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If omitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -27550,7 +27550,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
         <command:parameter required="false" position="named">
           <maml:name>OverwriteIfAlreadyExists</maml:name>
           <maml:description>
-            <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
+            <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If omitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
           </maml:description>
           <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         </command:parameter>
@@ -27607,7 +27607,7 @@ PS:&gt; Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers 
       <command:parameter required="false" position="named">
         <maml:name>OverwriteIfAlreadyExists</maml:name>
         <maml:description>
-          <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
+          <maml:para>If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If omitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.</maml:para>
         </maml:description>
         <command:parameterValue required="false">SwitchParameter</command:parameterValue>
         <dev:type>
