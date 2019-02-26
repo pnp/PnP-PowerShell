@@ -497,7 +497,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (obj == null)
             {
                 NewItem(path, "File", null);
-                obj = GetFileOrFolder(path, useChache: false);
+                obj = GetFileOrFolder(path, useCache: false);
             }
             if (obj is File)
             {
@@ -550,7 +550,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         #region Helpers
 
         //Get helpers
-        private object GetFileOrFolder(string path, bool throwError = true, bool useChache = true)
+        private object GetFileOrFolder(string path, bool throwError = true, bool useCache = true)
         {
             var spoDrive = GetCurrentDrive(path);
             if (spoDrive == null) return null;
@@ -559,7 +559,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             if (string.IsNullOrEmpty(serverRelativePath)) return null;
 
             //Try get cached item
-            if (useChache)
+            if (useCache)
             {
                 var fileOrFolder = GetCachedItem(serverRelativePath);
                 if (fileOrFolder != null) return fileOrFolder.Item;

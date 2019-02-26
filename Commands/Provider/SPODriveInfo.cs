@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
     {
         private List<SPODriveCacheItem> _cachedItems;
         private List<SPODriveCacheWeb> _cachedWebs;
-        private const int MaxAllowedItemChacheTimeout = 1000 * 60 * 10; //10 minutes max caching of item object
+        private const int MaxAllowedItemCacheTimeout = 1000 * 60 * 10; //10 minutes max caching of item object
         private const int MaxAllowedWebCacheTimeout = 1000 * 60 * 60; //60 minutes max caching of web object
 
         public Web Web { get; set; }
@@ -54,7 +54,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
         {
             if (_cachedItems == null) return;
             var nowTicks = DateTime.Now.Ticks;
-            var timeout = MaxAllowedItemChacheTimeout < ItemTimeout ? MaxAllowedItemChacheTimeout : ItemTimeout;
+            var timeout = MaxAllowedItemCacheTimeout < ItemTimeout ? MaxAllowedItemCacheTimeout : ItemTimeout;
             _cachedItems.RemoveAll(item => new TimeSpan(nowTicks - item.LastRefresh.Ticks).TotalMilliseconds > timeout);
 
         }
