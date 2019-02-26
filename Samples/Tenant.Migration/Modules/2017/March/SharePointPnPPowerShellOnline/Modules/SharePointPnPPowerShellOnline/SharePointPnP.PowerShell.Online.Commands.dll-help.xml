@@ -8281,7 +8281,7 @@ dir</dev:code>
         <maml:introduction>
           <maml:para />
         </maml:introduction>
-        <dev:code>PS:&gt; Connect-PnPMicrosoftGraph -AppId '&lt;id&gt;' -AppSecret '&lt;secrect&gt;' -AADDomain 'contoso.onmicrosoft.com'</dev:code>
+        <dev:code>PS:&gt; Connect-PnPMicrosoftGraph -AppId '&lt;id&gt;' -AppSecret '&lt;secret&gt;' -AADDomain 'contoso.onmicrosoft.com'</dev:code>
         <maml:remarks>
           <maml:para>Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.</maml:para>
           <maml:para></maml:para>
