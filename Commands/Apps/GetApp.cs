@@ -26,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Get-PnPApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f", 
-        Remarks = @"This willr retrieve the specific app from the app catalog.", 
+        Remarks = @"This will retrieve the specific app from the app catalog.", 
         SortOrder = 3)]
     public class GetApp : PnPCmdlet
     {
