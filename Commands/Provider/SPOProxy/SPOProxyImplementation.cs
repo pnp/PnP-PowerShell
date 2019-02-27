@@ -28,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider.SPOProxy
             sessionState.InvokeCommand.InvokeScript(@"Remove-Item -Path alias:\Move-Item -ErrorAction SilentlyContinue", false, PipelineResultTypes.None, null, null);
         }
 
-        internal static void CopyMoveImlementation(SPOProxyCmdletBase cmdlet)
+        internal static void CopyMoveImplementation(SPOProxyCmdletBase cmdlet)
         {
             //Flag
             var isProcessed = false;

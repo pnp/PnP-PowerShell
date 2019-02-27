@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider.SPOProxy
 
         protected override void ProcessRecord()
         {
-            SPOProxyImplementation.CopyMoveImlementation(this);
+            SPOProxyImplementation.CopyMoveImplementation(this);
         }
     }
 }
