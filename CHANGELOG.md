@@ -11,10 +11,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support to Connect-PnPOnline authenticate to SharePoint Online when Legacy Authentication has been turned off (Set-PnPTenant -LegacyAuthProtocolsEnabled:$false / Set-SPOTenant -LegacyAuthProtocolsEnabled:$false)
 
 ### Changed
+- Many typo fixes in code
 - Apply-PnPTenantTemplate will now list the sites created after applying a tenant template.
 - Fixed an issue with Connect-PnPOnline throwing an exception when authenticating using the -SPOManagementShell parameter.
 
 ### Contributors
+
+- Nick Schonning [nschonni]
 
 ## [3.6.1902.2]
 

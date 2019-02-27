@@ -25,6 +25,12 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return uriParts[0].EndsWith("-admin");
         }
 
+        public static bool IsTenantAdministrationUrl(string url)
+        {
+            return IsTenantAdministrationUrl(new Uri(url));
+        }
+
+        [Obsolete("Please use IsTenantAdministrationUrl(url)")]
         public static bool IsTenantAdministationUrl(string url)
         {
             return IsTenantAdministrationUrl(new Uri(url));
