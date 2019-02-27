@@ -94,7 +94,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                         }
                         if (!isWarmUp)
                         {
-                            long rountTrip = timer.ElapsedMilliseconds;
+                            long roundTrip = timer.ElapsedMilliseconds;
                             long spRequestDuration = 0;
                             if (Mode.Has(MeasureResponseTimeMode.SPRequestDuration) || 
                                 Mode.Has(MeasureResponseTimeMode.Latency))
@@ -108,11 +108,11 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
                             }
                             if (Mode.Has(MeasureResponseTimeMode.RoundTrip))
                             {
-                                measurements[MeasureResponseTimeMode.RoundTrip].Add(rountTrip);
+                                measurements[MeasureResponseTimeMode.RoundTrip].Add(roundTrip);
                             }
                             if(Mode.Has(MeasureResponseTimeMode.Latency))
                             {
-                                measurements[MeasureResponseTimeMode.Latency].Add(rountTrip - spRequestDuration);
+                                measurements[MeasureResponseTimeMode.Latency].Add(roundTrip - spRequestDuration);
                             }
                         }
                         if (response.StatusCode != HttpStatusCode.OK)
