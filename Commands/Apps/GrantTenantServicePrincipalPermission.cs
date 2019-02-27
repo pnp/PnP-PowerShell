@@ -13,12 +13,12 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPTenantServicePrincipalPermission")]
-    [CmdletHelp(@"Explicitely grants a specified permission to the ""SharePoint Online Client"" service principal",
+    [CmdletHelp(@"Explicitly grants a specified permission to the ""SharePoint Online Client"" service principal",
         Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online,
         OutputType = typeof(AppMetadata))]
     [CmdletExample(
         Code = @"PS:> Grant-PnPTenantServicePrincipalPermission -Scope ""Group.Read.All"" -Resource ""Microsoft Graph""",
-        Remarks = @"This will explicitely grant the Group.Read.All permission on the Microsoft Graph resource", SortOrder = 1)]
+        Remarks = @"This will explicitly grant the Group.Read.All permission on the Microsoft Graph resource", SortOrder = 1)]
     public class GrantTenantServicePrincipalPermission : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The scope to grant the permission for")]

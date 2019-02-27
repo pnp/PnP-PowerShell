@@ -196,7 +196,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.27.1806.0]
 ### Added
-- Added Grant-PnPTenantServicePrincipalPermission to explicitely grant a permission on a resource for the tenant.
+- Added Grant-PnPTenantServicePrincipalPermission to explicitly grant a permission on a resource for the tenant.
 
 ### Changed
 - Fixed edge cases where progress sent to PowerShell would be null, causing the provisioning of a template to end prematurely.
