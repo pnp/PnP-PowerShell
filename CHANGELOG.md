@@ -148,7 +148,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Read-PnPProvisioningHierarchy : Reads an existing (file based) provisioning hierarchy into an in-memory instance
 - Save-PnPProvisioningHierarchy : Saves an in-memory provisioning hierarchy to a pnp file
 - Test-PnPProvisioningHierarchy : Tests an in-memory hierarchy if all template references are correct in the site sequence
-- Get-PnPException : Returns the last occured exception that occured while using PowerShell.
+- Get-PnPException : Returns the last occurred exception that occurred while using PowerShell.
 
 ### Changed
 - Updated Set-PnPSite to allow for setting of a logo on modern team site
