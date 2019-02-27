@@ -151,7 +151,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Read-PnPProvisioningHierarchy : Reads an existing (file based) provisioning hierarchy into an in-memory instance
 - Save-PnPProvisioningHierarchy : Saves an in-memory provisioning hierarchy to a pnp file
 - Test-PnPProvisioningHierarchy : Tests an in-memory hierarchy if all template references are correct in the site sequence
-- Get-PnPException : Returns the last occured exception that occured while using PowerShell.
+- Get-PnPException : Returns the last occurred exception that occurred while using PowerShell.
 
 ### Changed
 - Updated Set-PnPSite to allow for setting of a logo on modern team site
@@ -196,7 +196,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.27.1806.0]
 ### Added
-- Added Grant-PnPTenantServicePrincipalPermission to explicitely grant a permission on a resource for the tenant.
+- Added Grant-PnPTenantServicePrincipalPermission to explicitly grant a permission on a resource for the tenant.
 
 ### Changed
 - Fixed edge cases where progress sent to PowerShell would be null, causing the provisioning of a template to end prematurely.
@@ -581,7 +581,7 @@ jensotto
 
 **2015-07-13**
 
-* Added additional functionality for connect-sponline in resolving credentials. If no credentials are specified throught the -Credentials parameter, a query is done against the Windows Credentials Manager to retrieve credentials. First is checked for the full URL of the connect request, e.g. https://yourserver/sites/yoursite. If no credential is found for that entry, a query is done for for https://yourserver/sites. If no credential is found that entry, a query is done for https://yourserver, if no credential is found for that entry a query is done for 'yourserver'. So:
+* Added additional functionality for connect-sponline in resolving credentials. If no credentials are specified throught the -Credentials parameter, a query is done against the Windows Credentials Manager to retrieve credentials. First is checked for the full URL of the connect request, e.g. https://yourserver/sites/yoursite. If no credential is found for that entry, a query is done for https://yourserver/sites. If no credential is found that entry, a query is done for https://yourserver, if no credential is found for that entry a query is done for 'yourserver'. So:
 ```
 Connect-SPOnline -Url https://yourtenant.sharepoint.com/sites/demosite
 ``` 
