@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPException")]
-    [CmdletHelp("Returns the last exception that occured",
+    [CmdletHelp("Returns the last exception that occurred",
         @"Returns the last exception which can be used while debugging PnP Cmdlets",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
