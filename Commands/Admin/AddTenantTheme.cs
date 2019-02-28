@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantTheme")]
     [CmdletHelp("Adds or updates a theme to the tenant.",
-        DetailedDescription = @"Adds or updates atheme to the tenant.",
+        DetailedDescription = @"Adds or updates a theme to the tenant.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
