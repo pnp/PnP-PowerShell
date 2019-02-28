@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Read-PnPTenantTemplate -Path template.pnp",
-       Remarks = "Reads a PnP tenant templatey file from the file system and returns an in-memory instance",
+       Remarks = "Reads a PnP tenant template file from the file system and returns an in-memory instance",
        SortOrder = 1)]
     public class ReadTenantTemplate : PSCmdlet
     {
