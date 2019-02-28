@@ -50,7 +50,7 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
         [Parameter(Mandatory = false, HelpMessage = "The header where the node is located", ParameterSetName = ParameterSet_BYNAME)]
         public string Header;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specifying the All parameter will remove all the nodes from specifed Location.", ParameterSetName = ParameterSet_REMOVEALLNODES)]
+        [Parameter(Mandatory = true, HelpMessage = "Specifying the All parameter will remove all the nodes from specified Location.", ParameterSetName = ParameterSet_REMOVEALLNODES)]
         public SwitchParameter All;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
