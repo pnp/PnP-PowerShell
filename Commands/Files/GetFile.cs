@@ -105,11 +105,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
             {
                 case URLTOPATH:
 
-                    SaveFileToLocal(SelectedWeb, serverRelativeUrl, Path, Filename, (filetosave) =>
+                    SaveFileToLocal(SelectedWeb, serverRelativeUrl, Path, Filename, (fileToSave) =>
                     {
                         if (!Force)
                         {
-                            WriteWarning($"File '{filetosave}' exists already. use the -Force parameter to overwrite the file.");
+                            WriteWarning($"File '{fileToSave}' exists already. use the -Force parameter to overwrite the file.");
                         }
                         return Force;
                     });
