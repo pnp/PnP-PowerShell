@@ -7,7 +7,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Get, "PnPLabel")]
-    [CmdletHelp("Gets the label/tag of the specfied list or library (if applicable)", Category = CmdletHelpCategory.InformationManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
+    [CmdletHelp("Gets the label/tag of the specified list or library (if applicable)", Category = CmdletHelpCategory.InformationManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Get-PnPLabel -List ""Demo List""",
        Remarks = @"This gets the label which is set to a list or a library.", SortOrder = 1)]
