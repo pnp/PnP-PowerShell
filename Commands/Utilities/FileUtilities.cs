@@ -11,9 +11,6 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
     {
         internal static bool IsOpenOfficeFile(Stream stream)
         {
-            bool istrue = false;
-            // SIG 50 4B 03 04 14 00
-
             byte[] bytes = new byte[6];
             stream.Read(bytes, 0, 6);
             var signature = string.Empty;
@@ -21,11 +18,8 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             {
                 signature += b.ToString("X2");
             }
-            if (signature == "504B03041400")
-            {
-                istrue = true;
-            }
-            return istrue;
+            // SIG 50 4B 03 04 14 00
+            return signature == "504B03041400";
         }
     }
 }
