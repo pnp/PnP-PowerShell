@@ -9,10 +9,10 @@ Applies to
 
 - Office 365 Multi-Tenant (MT)
 
-## Prerequisites ##
-	Register an Application
-	Consent to the application
-	PnP PowerShell Commands
+## Necessary Steps ##
+1. Register an Application
+2. Consent to the application
+3. PnP PowerShell Commands
 
 ## GETTING STARTED ##
 The PnP commandlets are using the Microsoft Authentication Library (MSAL) to connect with the Microsoft Graph on the v2 endpoint. Compared to ADAL
@@ -69,7 +69,7 @@ Using the application id and application password from the application registrat
 connect to the Microsoft Graph.
 
 ```PowerShell
-> Connect-PnPMicrosoftGraph -AppId '2994aca5-7ef4-4179-89ff-c1ce18fa052f' -AppSecret 'NvgASDFS4564fas' -AADDomain 'techmikael.onmicrosoft.com'
+> Connect-PnPOnline -AppId '2994aca5-7ef4-4179-89ff-c1ce18fa052f' -AppSecret 'NvgASDFS4564fas' -AADDomain 'techmikael.onmicrosoft.com'
 ```
 
 If all went as expected you should now be able to list all Office 365 Groups in the tenant.

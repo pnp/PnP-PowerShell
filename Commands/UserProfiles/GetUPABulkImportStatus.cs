@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUPABulkImportStatus")]
     [CmdletHelp(@"Get user profile bulk import status.",
-        "Retreieve information about the status of submitted user profile bulk upload jobs.",
+        "Retrieve information about the status of submitted user profile bulk upload jobs.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.UserProfiles)]
     [CmdletExample(

@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Features
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPFeature", SupportsShouldProcess = false)]
     [CmdletHelp("Disables a feature",
-        "Deactives a feature that was active on a site",
+        "Deactivates a feature that was active on a site",
         Category = CmdletHelpCategory.Features)]
     [CmdletExample(
         Code = "PS:> Disable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
