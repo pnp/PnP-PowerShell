@@ -156,7 +156,7 @@ namespace SharePointPnP.PowerShell.Tests
 
 #if !ONPREMISES
         [TestMethod]
-        public void AddAlert_WithDefaultProperties()
+        public void AddAlert_WithDefaultProperties_Test()
         {
             using (var ctx = TestCommon.CreateClientContext())
             {
@@ -214,7 +214,7 @@ namespace SharePointPnP.PowerShell.Tests
 
 #if !ONPREMISES
         [TestMethod]
-        public void AddAlert_WithNonDefaultProperties()
+        public void AddAlert_WithNonDefaultProperties_Test()
         {
             using (var ctx = TestCommon.CreateClientContext())
             {
