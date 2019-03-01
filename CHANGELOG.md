@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Nick Schonning [nschonni]
+- Koen Zomers [KoenZomers]
+- Marvin Dickhaus [Weishaupt]
 
 ## [3.6.1902.2]
 
