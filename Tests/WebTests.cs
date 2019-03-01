@@ -154,6 +154,7 @@ namespace SharePointPnP.PowerShell.Tests
             }
         }
 
+#if !ONPREMISES
         [TestMethod]
         public void AddAlert_WithDefaultProperties()
         {
@@ -209,7 +210,9 @@ namespace SharePointPnP.PowerShell.Tests
                 }
             }
         }
+#endif
 
+#if !ONPREMISES
         [TestMethod]
         public void AddAlert_WithNonDefaultProperties()
         {
@@ -274,5 +277,6 @@ namespace SharePointPnP.PowerShell.Tests
                 }
             }
         }
+#endif
     }
 }
