@@ -2,8 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.SharePoint.Client;
 using System.Management.Automation.Runspaces;
-using System.Collections;
 using System.Linq;
+using SharePointPnP.PowerShell.Commands.Principals;
 
 namespace SharePointPnP.PowerShell.Tests
 {
@@ -181,11 +181,12 @@ namespace SharePointPnP.PowerShell.Tests
                     Assert.AreEqual(randomAlertTitle, alertInfo.Title);
                 }
 
-                // now get actual alert and check properties
+                // get actual alert and check properties
                 ctx.Web.EnsureProperties(w => w.CurrentUser.Alerts);
                 var newAlerts = currentUser.Alerts.Where(a => a.Title == randomAlertTitle);
                 Assert.AreEqual(1, newAlerts.Count(), "Unexpected number of created alerts");
                 var newAlert = newAlerts.First();
+                newAlert.EnsureProperty(a => a.Properties);
                 newAlert.User.EnsureProperties(u => u.LoginName);
                 newAlert.List.EnsureProperties(l => l.Id);
                 ctx.ExecuteQueryRetry();
@@ -199,7 +200,9 @@ namespace SharePointPnP.PowerShell.Tests
                     Assert.AreEqual(AlertType.List, newAlert.AlertType);
                     Assert.AreEqual(currentUser.LoginName, newAlert.User.LoginName);
                     Assert.AreEqual(listId, newAlert.List.Id);
-                    Assert.AreEqual("", newAlert.Filter);
+                    Assert.AreEqual(1, newAlert.Properties.Count, "Unexpected number of properties");
+                    Assert.IsTrue(newAlert.Properties.ContainsKey("filterindex"));
+                    Assert.AreEqual("0", newAlert.Properties["filterindex"]);
                 }
                 finally
                 {
@@ -226,6 +229,9 @@ namespace SharePointPnP.PowerShell.Tests
                 var list = ctx.Web.DefaultDocumentLibrary();
                 list.EnsureProperties(l => l.Id);
                 var listId = list.Id;
+                var currentTime = DateTime.Now;
+                // note: SharePoint rounds the milliseconds away, so use a time without milliseconds for testing
+                var alertTime = new DateTime(currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Minute) ;
 
                 // Execute cmd-let
                 using (var scope = new PSTestScope(true))
@@ -236,14 +242,14 @@ namespace SharePointPnP.PowerShell.Tests
                         new CommandParameter("DeliveryMethod", AlertDeliveryChannel.Email), // cannot use SmS without having Frequency set to "Immediate"
                         new CommandParameter("ChangeType", AlertEventType.DeleteObject),
                         new CommandParameter("Frequency", AlertFrequency.Weekly),
-                        new CommandParameter("Time", new DateTime(2019, 01, 02, 03, 04, 05)),
-                        new CommandParameter("Filter", "1")
+                        new CommandParameter("Time", alertTime),
+                        new CommandParameter("Filter", AlertFilter.SomeoneElseChangesAnItem)
                         );
                     Assert.IsNotNull(results);
                     Assert.IsTrue(results.Count > 0);
                 }
 
-                // now delete alert again
+                // get actual alert and check properties
                 ctx.Web.EnsureProperties(w => w.CurrentUser.Alerts);
                 var newAlerts = currentUser.Alerts.Where(a => a.Title == alertTitle);
                 Assert.AreEqual(1, newAlerts.Count(), "Unexpected number of created alerts");
@@ -263,7 +269,8 @@ namespace SharePointPnP.PowerShell.Tests
                     Assert.AreEqual(AlertType.List, newAlert.AlertType);
                     Assert.AreEqual(currentUser.LoginName, newAlert.User.LoginName);
                     Assert.AreEqual(listId, newAlert.List.Id);
-                    Assert.AreEqual(new DateTime(2019, 01, 02, 03, 04, 05), newAlert.AlertTime);
+                    
+                    Assert.AreEqual(alertTime, newAlert.AlertTime);
                     Assert.AreEqual(1, newAlert.Properties.Count, "Unexpected number of properties");
                     Assert.IsTrue(newAlert.Properties.ContainsKey("filterindex"));
                     Assert.AreEqual("1", newAlert.Properties["filterindex"]);

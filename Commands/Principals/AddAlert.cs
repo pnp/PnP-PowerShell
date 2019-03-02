@@ -7,8 +7,16 @@ using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Lists
+namespace SharePointPnP.PowerShell.Commands.Principals
 {
+    public enum AlertFilter
+    {
+        AnythingChanges = 0,
+        SomeoneElseChangesAnItem = 1,
+        SomeoneElseChangesItemCreatedByMe = 2,
+        SomeoneElseChangesItemLastModifiedByMe = 3
+    }
+
     [Cmdlet(VerbsCommon.Add, "PnPAlert")]
     [CmdletHelp("Adds an alert for a user to a list",
         Category = CmdletHelpCategory.Principals,
@@ -20,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 1)]
     [CmdletExample(
         Code = @"Add-PnPAlert -Title ""Daily summary"" -List ""Demo List"" -Frequency Daily -ChangeType All -Time (Get-Date -Hour 11 -Minute 00 -Second 00)",
-        Remarks = @"Adds a daily alert for the current user at the given time to the ""Demo List"". Note: sometimes timezone offsets are applied to the Time so please verify on your tenant that the alert indeed got the right time.",
+        Remarks = @"Adds a daily alert for the current user at the given time to the ""Demo List"". Note: a timezone offset might be applied so please verify on your tenant that the alert indeed got the right time.",
         SortOrder = 2)]
     [CmdletExample(
         Code = @"Add-PnPAlert -Title ""Alert for user"" -List ""Demo List"" -Identity ""i:0#.f|membership|Alice@contoso.onmicrosoft.com""",
@@ -46,8 +54,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Alert frequency")]
         public AlertFrequency Frequency { get; set; } = AlertFrequency.Immediate;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Alert filter. Note: The values ""0"", ""1"", ""2"" and ""3"" correspond to the menu entries in the SharePoint UI for creating new alerts.")]
-        public string Filter;
+        [Parameter(Mandatory = false, HelpMessage = @"Alert filter")]
+        public AlertFilter Filter { get; set; } = AlertFilter.AnythingChanges;
 
         [Parameter(Mandatory = false, HelpMessage = "Alert time (if frequency is not immediate)")]
         public DateTime Time { get; set; } = DateTime.MinValue;
@@ -121,26 +129,21 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 alert.AlertType = AlertType.List;
                 alert.AlwaysNotify = false;
                 alert.DeliveryChannels = DeliveryMethod;
-                alert.Filter = Filter;
+                var filterValue = Convert.ChangeType(Filter, Filter.GetTypeCode()).ToString();
+                alert.Filter = filterValue;
 
-                if (!string.IsNullOrWhiteSpace(Filter))
+                // setting the value of Filter sometimes does not work (CSOM < Jan 2017, ...?), so we use a known workaround
+                // reference: http://toddbaginski.com/blog/how-to-create-office-365-sharepoint-alerts-with-the-client-side-object-model-csom/
+                var properties = new Dictionary<string, string>()
                 {
-                    if (int.TryParse(Filter, out int filterIndex) && filterIndex >= 0 && filterIndex <= 3)
-                    {
-                        // setting the value of Filter sometimes does not work (CSOM < Jan 2017, ...?), so we use a known workaround
-                        // reference: http://toddbaginski.com/blog/how-to-create-office-365-sharepoint-alerts-with-the-client-side-object-model-csom/
-                        var properties = new Dictionary<string, string>()
-                        {
-                            { "FilterIndex", Filter }
-                            //Send Me an alert when:
-                            // 0 = Anything Changes
-                            // 1 = Someone else changes a document
-                            // 2 = Someone else changes a document created by me
-                            // 3 = Someone else changes a document modified by me
-                        };
-                        alert.Properties = properties;
-                    }
-                }
+                    { "FilterIndex", filterValue }
+                    //Send Me an alert when:
+                    // 0 = Anything Changes
+                    // 1 = Someone else changes a document
+                    // 2 = Someone else changes a document created by me
+                    // 3 = Someone else changes a document modified by me
+                };
+                alert.Properties = properties;
 
                 alert.List = list;
                 alert.Status = AlertStatus.On;
