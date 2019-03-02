@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsData.Publish, "PnPApp")]
     [CmdletHelp("Publishes/Deploys/Trusts an available app in the app catalog",
-        Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online)]
+        Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Publish-PnPApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f", 
         Remarks = @"This will deploy/trust an app into the app catalog. Notice that the app needs to be available in the tenant scoped app catalog", SortOrder = 1)]

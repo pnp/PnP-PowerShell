@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.ALM;
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Add, "PnPApp")]
     [CmdletHelp("Add/uploads an available app to the app catalog",
-        Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online,
+        Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019,
         OutputType = typeof(AppMetadata))]
     [CmdletExample(
         Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg",
