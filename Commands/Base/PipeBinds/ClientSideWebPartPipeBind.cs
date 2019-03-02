@@ -8,29 +8,29 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
     public class ClientSideWebPartPipeBind
     {
-        private readonly Guid _instanceid;
+        private readonly Guid _instanceId;
         private readonly string _title;
 
         public ClientSideWebPartPipeBind(Guid guid)
         {
-            _instanceid = guid;
+            _instanceId = guid;
         }
 
-        public ClientSideWebPartPipeBind(string instanceid)
+        public ClientSideWebPartPipeBind(string instanceId)
         {
-            if (!Guid.TryParse(instanceid, out _instanceid))
+            if (!Guid.TryParse(instanceId, out _instanceId))
             {
-                _title = instanceid;
+                _title = instanceId;
             }
         }
 
-        public Guid InstanceId => _instanceid;
+        public Guid InstanceId => _instanceId;
 
         public string Title => _title;
 
         public ClientSideWebPartPipeBind()
         {
-            _instanceid = Guid.Empty;
+            _instanceId = Guid.Empty;
             _title = string.Empty;
         }
 
@@ -44,7 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             {
                 return page.Controls.Where(c => c.GetType() == typeof(ClientSideWebPart) && ((ClientSideWebPart)c).Title.Equals(_title, StringComparison.InvariantCultureIgnoreCase)).Cast<ClientSideWebPart>().ToList();
             }
-            return page.Controls.Where(c => c.GetType() == typeof(ClientSideWebPart) && c.InstanceId == _instanceid).Cast<ClientSideWebPart>().ToList();
+            return page.Controls.Where(c => c.GetType() == typeof(ClientSideWebPart) && c.InstanceId == _instanceId).Cast<ClientSideWebPart>().ToList();
         }
     }
 }
