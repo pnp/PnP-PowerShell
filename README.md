@@ -10,6 +10,7 @@ This solution contains a library of PowerShell commands that allows you to perfo
 -  Office 365 Dedicated (D)
 -  SharePoint 2013 on-premises
 -  SharePoint 2016 on-premises
+-  SharePoint 2019 on-premises
 
 ### Prerequisites ###
 In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
