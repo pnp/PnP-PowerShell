@@ -153,7 +153,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public void RestoreCachedContext(string url)
         {
-            Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
+            Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
         }
 
         internal void CacheContext()
@@ -167,7 +167,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public ClientContext CloneContext(string url)
         {
-            var context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
+            var context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             if (context == null)
             {
                 context = Context.Clone(url);
