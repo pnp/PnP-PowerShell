@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Many typo fixes in code
 - Apply-PnPTenantTemplate will now list the sites created after applying a tenant template.
 - Fixed an issue with Connect-PnPOnline throwing an exception when authenticating using the -SPOManagementShell parameter.
+- Fixed connection issue with URL's containing spaces - #1250
 
 ### Contributors
 
