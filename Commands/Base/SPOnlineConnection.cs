@@ -176,8 +176,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     context.ExecuteQueryRetry();
                 }
                 catch (Exception ex)
-
                 {
+#if !ONPREMISES && !NETSTANDARD2_0
                     if (ex is WebException || ex is NotSupportedException)
                     {
                         // legacy auth?
@@ -187,8 +187,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     }
                     else
                     {
+#endif
                         throw;
+#if !ONPREMISES && !NETSTANDARD2_0
                     }
+#endif
                 }
                 ContextCache.Add(context);
             }
