@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added support to Connect-PnPOnline authenticate to SharePoint Online when Legacy Authentication has been turned off (Set-PnPTenant -LegacyAuthProtocolsEnabled:$false / Set-SPOTenant -LegacyAuthProtocolsEnabled:$false)
+- Support for cross site page transformation (create modern pages in other site then the one hosting the classic pages) via the TargetWebUrl parameter
+- Support for page transformation mapping parameters (UseCommunityScriptEditor and SummaryLinksToHtml). The first one will use the community script editor as a possible modern target web part, the second one will transform the summarylinks web part to html text instead of the default QuickLinks web part
 
 ### Changed
 - Many typo fixes in code
