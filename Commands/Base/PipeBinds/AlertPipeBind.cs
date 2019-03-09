@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !SP2013 && !SP2016
+using Microsoft.SharePoint.Client;
 using System;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
