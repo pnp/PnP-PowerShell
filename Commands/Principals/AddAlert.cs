@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -6,32 +6,25 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Enums;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
-    public enum AlertFilter
-    {
-        AnythingChanges = 0,
-        SomeoneElseChangesAnItem = 1,
-        SomeoneElseChangesItemCreatedByMe = 2,
-        SomeoneElseChangesItemLastModifiedByMe = 3
-    }
-
     [Cmdlet(VerbsCommon.Add, "PnPAlert")]
     [CmdletHelp("Adds an alert for a user to a list",
         Category = CmdletHelpCategory.Principals,
         OutputType = typeof(AlertCreationInformation),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.alertcreationinformation.aspx")]
+        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.alertcreationinformation.aspx", SupportedPlatform = CmdletSupportedPlatform.SP2019 | CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = @"Add-PnPAlert -List ""Demo List""",
+        Code = @"PS:> Add-PnPAlert -List ""Demo List""",
         Remarks = @"Adds a new alert to the ""Demo List"" for the current user.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"Add-PnPAlert -Title ""Daily summary"" -List ""Demo List"" -Frequency Daily -ChangeType All -Time (Get-Date -Hour 11 -Minute 00 -Second 00)",
+        Code = @"PS:> Add-PnPAlert -Title ""Daily summary"" -List ""Demo List"" -Frequency Daily -ChangeType All -Time (Get-Date -Hour 11 -Minute 00 -Second 00)",
         Remarks = @"Adds a daily alert for the current user at the given time to the ""Demo List"". Note: a timezone offset might be applied so please verify on your tenant that the alert indeed got the right time.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"Add-PnPAlert -Title ""Alert for user"" -List ""Demo List"" -Identity ""i:0#.f|membership|Alice@contoso.onmicrosoft.com""",
+        Code = @"PS:> Add-PnPAlert -Title ""Alert for user"" -List ""Demo List"" -Identity ""i:0#.f|membership|Alice@contoso.onmicrosoft.com""",
         Remarks = @"Adds a new alert for user ""Alice"" to the ""Demo List"". Note: Only site owners and admins are permitted to set alerts for other users.",
         SortOrder = 3)]
     public class AddAlert : PnPWebCmdlet
@@ -40,25 +33,25 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, HelpMessage = "Alert title")]
-        public string Title { get; set; } = "Alert";
+        public string Title = "Alert";
 
         [Parameter(Mandatory = false, HelpMessage = "User to create the alert for (User ID, login name or actual User object). Skip this parameter to create an alert for the current user. Note: Only site owners can create alerts for other users.")]
         public UserPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Alert delivery method")]
-        public AlertDeliveryChannel DeliveryMethod { get; set; } = AlertDeliveryChannel.Email;
+        public AlertDeliveryChannel DeliveryMethod = AlertDeliveryChannel.Email;
 
         [Parameter(Mandatory = false, HelpMessage = "Alert change type")]
-        public AlertEventType ChangeType { get; set; } = AlertEventType.All;
+        public AlertEventType ChangeType = AlertEventType.All;
 
         [Parameter(Mandatory = false, HelpMessage = "Alert frequency")]
-        public AlertFrequency Frequency { get; set; } = AlertFrequency.Immediate;
+        public AlertFrequency Frequency = AlertFrequency.Immediate;
 
         [Parameter(Mandatory = false, HelpMessage = @"Alert filter")]
-        public AlertFilter Filter { get; set; } = AlertFilter.AnythingChanges;
+        public AlertFilter Filter = AlertFilter.AnythingChanges;
 
         [Parameter(Mandatory = false, HelpMessage = "Alert time (if frequency is not immediate)")]
-        public DateTime Time { get; set; } = DateTime.MinValue;
+        public DateTime Time = DateTime.MinValue;
 
         private User GetUserFromPipeBind()
         {
