@@ -158,7 +158,12 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         private void SaveFileToLocal(Web web, string serverRelativeUrl, string localPath, string localFileName = null, Func<string, bool> fileExistsCallBack = null)
         {
+
+#if SP2013 || SP2016
+            var file = web.GetFileByServerRelativeUrl(serverRelativeUrl);
+#else
             var file = web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+#endif
 
             var clientContext = web.Context as ClientContext;
             clientContext.Load(file);
