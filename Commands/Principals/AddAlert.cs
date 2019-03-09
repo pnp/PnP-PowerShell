@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Remarks = @"Adds a daily alert for the current user at the given time to the ""Demo List"". Note: a timezone offset might be applied so please verify on your tenant that the alert indeed got the right time.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPAlert -Title ""Alert for user"" -List ""Demo List"" -Identity ""i:0#.f|membership|Alice@contoso.onmicrosoft.com""",
+        Code = @"PS:> Add-PnPAlert -Title ""Alert for user"" -List ""Demo List"" -User ""i:0#.f|membership|Alice@contoso.onmicrosoft.com""",
         Remarks = @"Adds a new alert for user ""Alice"" to the ""Demo List"". Note: Only site owners and admins are permitted to set alerts for other users.",
         SortOrder = 3)]
     public class AddAlert : PnPWebCmdlet
@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         public string Title = "Alert";
 
         [Parameter(Mandatory = false, HelpMessage = "User to create the alert for (User ID, login name or actual User object). Skip this parameter to create an alert for the current user. Note: Only site owners can create alerts for other users.")]
-        public UserPipeBind Identity;
+        public UserPipeBind User;
 
         [Parameter(Mandatory = false, HelpMessage = "Alert delivery method")]
         public AlertDeliveryChannel DeliveryMethod = AlertDeliveryChannel.Email;
@@ -53,46 +53,6 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false, HelpMessage = "Alert time (if frequency is not immediate)")]
         public DateTime Time = DateTime.MinValue;
 
-        private User GetUserFromPipeBind()
-        {
-            if (Identity == null)
-            {
-                return null;
-            }
-
-            // note: the following code to get the user is copied from Remove-PnPUser - it could be put into a utility class
-            var retrievalExpressions = new Expression<Func<User, object>>[]
-            {
-                u => u.Id,
-                u => u.LoginName,
-                u => u.Email
-            };
-
-            User user = null;
-            if (Identity.User != null)
-            {
-                WriteVerbose($"Received user instance {Identity.Login}");
-                user = Identity.User;
-            }
-            else if (Identity.Id > 0)
-            {
-                WriteVerbose($"Retrieving user by Id {Identity.Id}");
-                user = ClientContext.Web.GetUserById(Identity.Id);
-            }
-            else if (!string.IsNullOrWhiteSpace(Identity.Login))
-            {
-                WriteVerbose($"Retrieving user by LoginName {Identity.Login}");
-                user = ClientContext.Web.SiteUsers.GetByLoginName(Identity.Login);
-            }
-            if (ClientContext.HasPendingRequest)
-            {
-                ClientContext.Load(user, retrievalExpressions);
-                ClientContext.ExecuteQueryRetry();
-            }
-
-            return user;
-        }
-
         protected override void ExecuteCmdlet()
         {
             List list = null;
@@ -105,9 +65,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                 var alert = new AlertCreationInformation();
 
                 User user;
-                if (null != Identity)
+                if (null != User)
                 {
-                    user = GetUserFromPipeBind();
+                    user = User.GetUser(ClientContext);
                     if (user == null)
                     {
                         throw new ArgumentException("Unable to find user", "Identity");
