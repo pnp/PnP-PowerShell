@@ -98,7 +98,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                 if (ClientContext.HasPendingRequest) ClientContext.ExecuteQuery();
                 try
                 {
+#if SP2013 || SP2016
+                    var fi = SelectedWeb.GetFileByServerRelativeUrl(serverRelativeUrl);
+#else
                     var fi = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+#endif
                     var fileStream = fi.OpenBinaryStream();
                     ClientContext.ExecuteQueryRetry();
                     using (var ms = fileStream.Value)

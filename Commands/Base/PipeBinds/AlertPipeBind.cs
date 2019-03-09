@@ -31,3 +31,4 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         }
     }
 }
+#endif
