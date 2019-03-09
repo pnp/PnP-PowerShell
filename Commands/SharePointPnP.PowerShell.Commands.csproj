@@ -620,6 +620,7 @@
     <Compile Include="Model\SPOTheme.cs" />
     <Compile Include="Model\TokenResult.cs" />
     <Compile Include="ClientSidePages\ExportClientSidePage.cs" />
+    <Compile Include="Principals\AddAlert.cs" />
     <Compile Include="Provisioning\Tenant\ApplyTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ReadTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\SaveTenantTemplate.cs" />
