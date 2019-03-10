@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Set, "PnPClientSideWebPart")]
     [CmdletHelp("Set Client-Side Web Part properties",
-        SupportedPlatform = CmdletSupportedPlatform.Online,
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019,
         DetailedDescription = "Sets specific client side web part properties. Notice that the title parameter will only set the -internal- title of web part. The title which is shown in the UI will, if possible, have to be set using the PropertiesJson parameter. Use Get-PnPClientSideComponent to retrieve the instance id and properties of a web part.",
         Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(

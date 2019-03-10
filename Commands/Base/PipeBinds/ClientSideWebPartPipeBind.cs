@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Pages;
 using System;
 using System.Collections.Generic;

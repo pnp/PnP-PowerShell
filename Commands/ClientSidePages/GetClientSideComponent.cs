@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     [Cmdlet(VerbsCommon.Get, "PnPClientSideComponent")]
     [CmdletHelp("Retrieve one or more Client-Side components from a page",
         Category = CmdletHelpCategory.WebParts,
-        SupportedPlatform = CmdletSupportedPlatform.Online)]
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Get-PnPClientSideComponent -Page Home",
         Remarks = @"Returns all controls defined on the given page.", SortOrder = 1)]

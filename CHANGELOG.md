@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.7.1903.0]
 
 ### Added
+- Added support for client side pages on SP2019
+- Added support for ALM cmdlets (Add-PnPApp, Get-PnPApp etc.) on SP2019
 - Added Add-PnPAlert cmdlet to create alerts (SPO and SP2019 only)
 - Added Get-PnPAlert to list alerts (SPO and SP2019 only)
 - Added Remove-PnPAlert to remove alerts (SPO and SP2019 only)
@@ -35,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Nick Schonning [nschonni]
 - Koen Zomers [KoenZomers]
 - Marvin Dickhaus [Weishaupt]
+- Lars Fernhomberg [lafe]
 
 ## [3.6.1902.2]
 
