@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
@@ -9,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Move, "PnPClientSideComponent")]
     [CmdletHelp("Moves a Client-Side Component to a different section/column",
-        SupportedPlatform = CmdletSupportedPlatform.Online,
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019,
         DetailedDescription = "Moves a Client-Side Component to a different location on the page. Notice that the sections and or columns need to be present before moving the component.",
         Category = CmdletHelpCategory.ClientSidePages)]
     [CmdletExample(
