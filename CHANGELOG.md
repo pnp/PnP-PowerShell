@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.8.1904.0] - unreleased 
+
+### Added
+
+### Changed
+
+### Contributors
+
+## [3.7.1903.0]
+
+### Added
+- Added support for client side pages on SP2019
+- Added support for ALM cmdlets (Add-PnPApp, Get-PnPApp etc.) on SP2019
+- Added Add-PnPAlert cmdlet to create alerts (SPO and SP2019 only)
+- Added Get-PnPAlert to list alerts (SPO and SP2019 only)
+- Added Remove-PnPAlert to remove alerts (SPO and SP2019 only)
+- Added support to Connect-PnPOnline authenticate to SharePoint Online when Legacy Authentication has been turned off (Set-PnPTenant -LegacyAuthProtocolsEnabled:$false / Set-SPOTenant -LegacyAuthProtocolsEnabled:$false)
+- Support for cross site page transformation (create modern pages in other site then the one hosting the classic pages) via the TargetWebUrl parameter
+- Support for page transformation mapping parameters (UseCommunityScriptEditor and SummaryLinksToHtml). The first one will use the community script editor as a possible modern target web part, the second one will transform the summarylinks web part to html text instead of the default QuickLinks web part
+
+### Changed
+- Many typo fixes in code
+- Apply-PnPTenantTemplate will now list the sites created after applying a tenant template.
+- Fixed an issue with Connect-PnPOnline throwing an exception when authenticating using the -SPOManagementShell parameter.
+- Fixed connection issue with URL's containing spaces - #1250
+
+### Contributors
+
+- Heinrich Ulbricht [heinrich-ulbricht] 
+- Nick Schonning [nschonni]
+- Koen Zomers [KoenZomers]
+- Marvin Dickhaus [Weishaupt]
+- Lars Fernhomberg [lafe]
+
 ## [3.6.1902.2]
 
 ### Added
@@ -137,7 +171,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Read-PnPProvisioningHierarchy : Reads an existing (file based) provisioning hierarchy into an in-memory instance
 - Save-PnPProvisioningHierarchy : Saves an in-memory provisioning hierarchy to a pnp file
 - Test-PnPProvisioningHierarchy : Tests an in-memory hierarchy if all template references are correct in the site sequence
-- Get-PnPException : Returns the last occured exception that occured while using PowerShell.
+- Get-PnPException : Returns the last occurred exception that occurred while using PowerShell.
 
 ### Changed
 - Updated Set-PnPSite to allow for setting of a logo on modern team site
@@ -182,7 +216,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [2.27.1806.0]
 ### Added
-- Added Grant-PnPTenantServicePrincipalPermission to explicitely grant a permission on a resource for the tenant.
+- Added Grant-PnPTenantServicePrincipalPermission to explicitly grant a permission on a resource for the tenant.
 
 ### Changed
 - Fixed edge cases where progress sent to PowerShell would be null, causing the provisioning of a template to end prematurely.
@@ -567,7 +601,7 @@ jensotto
 
 **2015-07-13**
 
-* Added additional functionality for connect-sponline in resolving credentials. If no credentials are specified throught the -Credentials parameter, a query is done against the Windows Credentials Manager to retrieve credentials. First is checked for the full URL of the connect request, e.g. https://yourserver/sites/yoursite. If no credential is found for that entry, a query is done for for https://yourserver/sites. If no credential is found that entry, a query is done for https://yourserver, if no credential is found for that entry a query is done for 'yourserver'. So:
+* Added additional functionality for connect-sponline in resolving credentials. If no credentials are specified throught the -Credentials parameter, a query is done against the Windows Credentials Manager to retrieve credentials. First is checked for the full URL of the connect request, e.g. https://yourserver/sites/yoursite. If no credential is found for that entry, a query is done for https://yourserver/sites. If no credential is found that entry, a query is done for https://yourserver, if no credential is found for that entry a query is done for 'yourserver'. So:
 ```
 Connect-SPOnline -Url https://yourtenant.sharepoint.com/sites/demosite
 ``` 

@@ -57,7 +57,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 var rsAparams = new RSAParameters { Modulus = rd.ReadBytes(DecodeIntegerSize(rd)) };
 
 
-                // Argh, this is a pain.  From emperical testing it appears to be that RSAParameters doesn't like byte buffers that
+                // Argh, this is a pain.  From empirical testing it appears to be that RSAParameters doesn't like byte buffers that
                 // have their leading zeros removed.  The RFC doesn't address this area that I can see, so it's hard to say that this
                 // is a bug, but it sure would be helpful if it allowed that. So, there's some extra code here that knows what the
                 // sizes of the various components are supposed to be.  Using these sizes we can ensure the buffer sizes are exactly

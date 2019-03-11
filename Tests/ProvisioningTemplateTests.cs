@@ -51,7 +51,7 @@ namespace SharePointPnP.PowerShell.Tests
         }
 
         [TestMethod]
-        public void ValidatNumberOfContentTypes()
+        public void ValidateNumberOfContentTypes()
         {
             using (var scope = new PSTestScope(true))
             {

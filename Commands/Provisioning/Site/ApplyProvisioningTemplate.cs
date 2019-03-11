@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
      Remarks = @"Applies a site template in XML format to the current web.",
      SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Apply-PnPSPnPProvisioningTemplateiteTemplate -Path template.xml -ResourceFolder c:\provisioning\resources",
+     Code = @"PS:> Apply-PnPProvisioningTemplate -Path template.xml -ResourceFolder c:\provisioning\resources",
      Remarks = @"Applies a site template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.",
      SortOrder = 2)]
     [CmdletExample(

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Web;
@@ -152,12 +153,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public void RestoreCachedContext(string url)
         {
-            Context = ContextCache.FirstOrDefault(c => HttpUtility.UrlEncode(c.Url) == HttpUtility.UrlEncode(url));
+            Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
         }
 
         internal void CacheContext()
         {
-            var c = ContextCache.FirstOrDefault(cc => HttpUtility.UrlEncode(cc.Url) == HttpUtility.UrlEncode(Context.Url));
+            var c = ContextCache.FirstOrDefault(cc => new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
             if (c == null)
             {
                 ContextCache.Add(Context);
@@ -166,10 +167,32 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public ClientContext CloneContext(string url)
         {
-            var context = ContextCache.FirstOrDefault(c => HttpUtility.UrlEncode(c.Url) == HttpUtility.UrlEncode(url));
+            var context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             if (context == null)
             {
                 context = Context.Clone(url);
+                try
+                {
+                    context.ExecuteQueryRetry();
+                }
+                catch (Exception ex)
+                {
+#if !ONPREMISES && !NETSTANDARD2_0
+                    if (ex is WebException || ex is NotSupportedException)
+                    {
+                        // legacy auth?
+                        var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+                        context = authManager.GetAzureADCredentialsContext(url.ToString(), CurrentConnection.PSCredential.UserName, CurrentConnection.PSCredential.Password);
+                        context.ExecuteQueryRetry();
+                    }
+                    else
+                    {
+#endif
+                        throw;
+#if !ONPREMISES && !NETSTANDARD2_0
+                    }
+#endif
+                }
                 ContextCache.Add(context);
             }
             Context = context;

@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUPABulkImportStatus")]
     [CmdletHelp(@"Get user profile bulk import status.",
-        "Retreieve information about the status of submitted user profile bulk upload jobs.",
+        "Retrieve information about the status of submitted user profile bulk upload jobs.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.UserProfiles)]
     [CmdletExample(
@@ -67,11 +67,11 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
             {
                 var webUrl = Web.GetWebUrlFromPageUrl(ClientContext, job.LogFolderUri);
                 ClientContext.ExecuteQueryRetry();
-                string relativPath = job.LogFolderUri.Replace(webUrl.Value, "");
+                string relativePath = job.LogFolderUri.Replace(webUrl.Value, "");
                 var webCtx = ClientContext.Clone(webUrl.Value);
-                if (webCtx.Web.DoesFolderExists(relativPath))
+                if (webCtx.Web.DoesFolderExists(relativePath))
                 {
-                    var folder = webCtx.Web.GetFolderByServerRelativeUrl(relativPath);
+                    var folder = webCtx.Web.GetFolderByServerRelativeUrl(relativePath);
                     var files = folder.Files;
                     webCtx.Load(folder);
                     webCtx.Load(files);

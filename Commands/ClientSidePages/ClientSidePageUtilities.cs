@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {

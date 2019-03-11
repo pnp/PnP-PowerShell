@@ -4,31 +4,44 @@
         <name>SharePointPnP.Modernization.Framework</name>
     </assembly>
     <members>
-        <member name="T:SharePointPnP.Modernization.Framework.Cache.CacheManager">
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.AssetTransferredEntity">
             <summary>
-            Caching manager, singleton
+            Model for asset transfer status for references
             </summary>
         </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.Instance">
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.AssetTransferredEntity.SourceAssetUrl">
             <summary>
-            Get's the single cachemanager instance, singleton pattern
+            Source web part URL reference - for checking if transfer occurred before
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetClientSideComponents(OfficeDevPnP.Core.Pages.ClientSidePage)">
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.AssetTransferredEntity.TargetAssetFolderUrl">
             <summary>
-            Get's the clientside components from cache or if needed retrieves and caches them
+            Target web part URL reference - for checking if transfer occurred before
             </summary>
-            <param name="page">Page to grab the components for</param>
-            <returns></returns>
         </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Constants">
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.AssetTransferredEntity.TargetAssetTransferredUrl">
             <summary>
-            Constants used 
+            Store the final URL for the asset that has been transferred
             </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.AudienceEntity">
             <summary>
             Holds information about the defined audiences
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.ListItemPermission">
+            <summary>
+            Class used to temporarily hold list item level permissions that need to be re-applied
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.ListItemPermission.RoleAssignments">
+            <summary>
+            Roles assigned to the list item
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.ListItemPermission.Principals">
+            <summary>
+            Resolved principals used in those roles, kept for performance reasons
             </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.WebPartEntity">
@@ -53,11 +66,13 @@
             Set of native, builtin, functions
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.#ctor(Microsoft.SharePoint.Client.ClientContext)">
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage)">
             <summary>
             Instantiates the base builtin function library
             </summary>
-            <param name="clientContext">ClientContext object for the site holding the page being transformed</param>
+            <param name="pageClientContext">ClientContext object for the site holding the page being transformed</param>
+            <param name="sourceClientContext">The ClientContext for the source </param>
+            <param name="clientSidePage">Reference to the client side page</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.HtmlEncode(System.String)">
             <summary>
@@ -113,12 +128,26 @@
             <param name="text">Wiki html to rewrite</param>
             <returns>Html that's compatible with RTE</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContainsScript(System.String)">
+            <summary>
+            Checks if the provided html contains JavaScript
+            </summary>
+            <param name="content">Html content to check</param>
+            <returns>True is the html contains script, false otherwise</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListSelectorListLibrary(System.Guid,System.String)">
             <summary>
             Selector that returns the base type of the list as input for selecting the correct mapping
             </summary>
             <param name="listId">Id of the list</param>
             <returns>Mapping to be used for the given list</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListCrossSiteCheck(System.Guid)">
+            <summary>
+            Returns the cross site collection save list id.
+            </summary>
+            <param name="listId">Id of the list</param>
+            <returns>Cross site collection safe list id</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListAddServerRelativeUrl(System.Guid)">
             <summary>
@@ -133,6 +162,13 @@
             </summary>
             <param name="listId">Id of the list</param>
             <returns>Web relative url of the list</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListHideToolBar(System.String)">
+            <summary>
+            Checks if an XSLTListView web part has a hidden toolbar
+            </summary>
+            <param name="xmlDefinition">XmlDefinition attribute of the XSLTListViewWebPart</param>
+            <returns>Boolean indicating if the toolbar should be hidden</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListDetectUsedView(System.Guid,System.String)">
             <summary>
@@ -149,12 +185,42 @@
             <param name="serverRelativeImagePath">Server relative path of the image</param>
             <returns>A set of image properties</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnCrossSiteRelativePath(System.String)">
+            <summary>
+            Copy the asset to target site in cross site transformation
+            </summary>
+            <param name="imageLink"></param>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ExtractWebpartProperties(System.String)">
             <summary>
             Extracts the client side web part properties so they can be reused
             </summary>
             <param name="clientSideWebPartHtml">Html defining the client side web part hosted on a classic page</param>
             <returns>Client side web part properties ready for reuse</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentEmbedCrossSiteCheck(System.String)">
+            <summary>
+            Throws an exception when link to .aspx file.
+            </summary>
+            <param name="listId">Link value if set</param>
+            <returns>Unused variable</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.LoadContentFromFile(System.String)">
+            <summary>
+            Loads contents of a file as a string.
+            </summary>
+            <param name="contentLink">Server relative url to the file to load</param>
+            <returns>Text content of the file. Return empty string if file was not found</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentBySearchToHighlightedContentProperties(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Maps content by search web part data into a properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part
+            </summary>
+            <param name="dataProviderJson"></param>
+            <param name="selectedPropertiesJson"></param>
+            <param name="resultsPerPage"></param>
+            <param name="renderTemplateId"></param>
+            <returns>A properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentByQueryToHighlightedContentProperties(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.String)">
             <summary>
@@ -183,7 +249,49 @@
             <param name="itemLimit"></param>
             <param name="displayColumns"></param>
             <param name="dataMappings"></param>
-            <returns>Properties collection for the contentrollup (= Highlighted Content) web part</returns>
+            <returns>A properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.SummaryLinkSelector(System.String)">
+            <summary>
+            Uses the SummaryLinksToQuickLinks mapping property provided via the PageTransformationInformation instance to determine the mapping
+            </summary>
+            <param name="useQuickLinks">The SummaryLinksToQuickLinks mapping property provided via the PageTransformationInformation instance</param>
+            <returns>Whether to transform via the QuickLinks web part or via Text</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextCleanUpSummaryLinks(System.String)">
+            <summary>
+            Rewrites summarylinks web part html to be compliant with the html supported by the client side text part
+            </summary>
+            <param name="text">Original wiki html content</param>
+            <returns>Html compliant with client side text part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.SummaryLinksToQuickLinksProperties(System.String)">
+            <summary>
+            Maps summarylinks web part data into a properties collection and supporting serverProcessedContent nodes for the quicklinks web part
+            </summary>
+            <param name="text">Original wiki html content</param>
+            <returns>Properties collection for the quicklinks web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ScriptEditorSelector(System.String)">
+            <summary>
+            Uses the UseCommunityScriptEditor mapping property provided via the PageTransformationInformation instance to determine the mapping
+            </summary>
+            <param name="useQuickLinks">The UseCommunityScriptEditor mapping property provided via the PageTransformationInformation instance</param>
+            <returns>Whether to transform via the community script editor web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.UserExistsSelector(System.String)">
+            <summary>
+            Checks if the passed value is a user or not
+            </summary>
+            <param name="person">Account of the user</param>
+            <returns>Indication if user is valid or not</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.LookupPerson(System.String)">
+            <summary>
+            Looks up a person from the UserInfo list and returns the needed details
+            </summary>
+            <param name="person">User account to lookup (in i:0#.f|membership|joe@contoso.onmicrosoft.com format)</param>
+            <returns>Information about the found user</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute">
             <summary>
@@ -270,7 +378,7 @@
             Type of the functions/selector class
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.#ctor(OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation)">
             <summary>
             Instantiates the function processor. Also loads the defined add-ons
             </summary>
@@ -278,6 +386,14 @@
             <param name="pageTransformation">Webpart mapping information</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.Process(SharePointPnP.Modernization.Framework.WebPart@,SharePointPnP.Modernization.Framework.Entities.WebPartEntity)">
+            <summary>
+            Executes the defined functions and selectors in the provided web part
+            </summary>
+            <param name="webPartData">Web Part mapping data</param>
+            <param name="webPart">Definition of the web part to be transformed</param>
+            <returns>The ouput of the mapping selector if there was one executed, null otherwise</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.ProcessMappingFunctions(SharePointPnP.Modernization.Framework.WebPart@,SharePointPnP.Modernization.Framework.Entities.WebPartEntity,SharePointPnP.Modernization.Framework.Mapping)">
             <summary>
             Executes the defined functions and selectors in the provided web part
             </summary>
@@ -330,6 +446,859 @@
             <remarks>
             If set to null or not set the default Error Message is returned.
             </remarks>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.AssetTransfer">
+            <summary>
+            Class for operations for transferring the assets over to the target site collection
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Constructor for the asset transfer class
+            </summary>
+            <param name="source">Source connection to SharePoint</param>
+            <param name="target">Target connection to SharePoint</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.TransferAsset(System.String,System.String)">
+            <summary>
+            Main entry point to perform the series of operations to transfer related assets
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.ValidateAssetInSupportedLocation(System.String)">
+            <summary>
+            Checks if the URL is located in a supported location
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.EnsureDestination(System.String)">
+            <summary>
+            Ensure the site assets and page sub-folder exists in the target location
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.EnsureSiteAssetsLibrary">
+            <summary>
+            Create a site assets library
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.CopyAssetToTargetLocation(System.String,System.String,System.Int32)">
+            <summary>
+            Copy the file from the source to the target location
+            </summary>
+            <param name="sourceFileUrl"></param>
+            <param name="targetLocationUrl"></param>
+            <remarks>
+                Based on the documentation: https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/upload-large-files-sample-app-for-sharepoint
+            </remarks>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.StoreAssetTransferred(SharePointPnP.Modernization.Framework.Entities.AssetTransferredEntity)">
+            <summary>
+            Stores an asset transfer reference
+            </summary>
+            <param name="assetTransferReferenceEntity"></param>
+            <param name="update"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.GetAssetTransferredIfExists(SharePointPnP.Modernization.Framework.Entities.AssetTransferredEntity)">
+            <summary>
+            Get asset transfer details if they already exist
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.AssetTransfer.ConvertFileToFolderFriendlyName(System.String)">
+            <summary>
+            Converts the file name into a friendly format
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterChainingOperator.And">
+            <summary>
+            Filter is chained using an And operator
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterChainingOperator.Or">
+            <summary>
+            Filter is chained using an Or operator
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Eq">
+            <summary>
+            Equal to
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Neq">
+            <summary>
+            Not equal to
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Gt">
+            <summary>
+            Greater than
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Geq">
+            <summary>
+            Greater than or equal to
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Lt">
+            <summary>
+            Less than
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Leq">
+            <summary>
+            Less than or equal to
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.BeginsWith">
+            <summary>
+            Begins with
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Contains">
+            <summary>
+            Contains
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.ContainsAny">
+            <summary>
+            Contains any of
+            </summary>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.ContainsAll">
+            <summary>
+            Contains all of
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.ContentByQuerySearchTransformator">
+            <summary>
+            Class used to generate contentrollup (=highlighted content) web part properties coming from either a content by query or content by search web part
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentByQuerySearchTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Instantiates the class
+            </summary>
+            <param name="cc">Client context for the web holding the source page</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentByQuerySearchTransformator.TransformContentBySearchWebPartToHighlightedContent(SharePointPnP.Modernization.Framework.Transform.ContentBySearch)">
+            <summary>
+            Generate contentrollup (=highlighted content) web part properties coming from a content by search web part
+            </summary>
+            <param name="cbs">Properties coming from the content by search web part</param>
+            <returns>Properties for highlighted content web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentByQuerySearchTransformator.TransformContentByQueryWebPartToHighlightedContent(SharePointPnP.Modernization.Framework.Transform.ContentByQuery)">
+            <summary>
+            Generate contentrollup (=highlighted content) web part properties coming from a content by query web part
+            </summary>
+            <param name="cbq">Properties coming from the content by query web part</param>
+            <returns>Properties for highlighted content web part</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.ContentTransformator">
+            <summary>
+            Transforms content from "classic" page to modern client side page
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Instantiates the content transformator
+            </summary>
+            <param name="page">Client side page that will be updates</param>
+            <param name="pageTransformation">Transformation information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentTransformator.Transform(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity})">
+            <summary>
+            Transforms the passed web parts into the loaded client side page
+            </summary>
+            <param name="webParts">List of web parts that need to be transformed</param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.IContentTransformator">
+            <summary>
+            Interface implemented by all content transformators
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.IContentTransformator.Transform(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity})">
+            <summary>
+            Transforms the passed web parts into the loaded client side page
+            </summary>
+            <param name="webParts">List of web parts that need to be transformed</param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.ILayoutTransformator">
+            <summary>
+            Interface implemented by all layout transformators
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.ILayoutTransformator.Transform(SharePointPnP.Modernization.Framework.Pages.PageLayout)">
+            <summary>
+            Transforms a classic wiki/webpart page layout into a modern client side page layout
+            </summary>
+            <param name="layout">Source wiki/webpart page layout</param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.IHtmlTransformator">
+            <summary>
+            Interface implemented by all html transformators
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.IHtmlTransformator.Transform(System.String,System.Boolean)">
+            <summary>
+            Transforms the passed html to be usable by the client side text part
+            </summary>
+            <param name="text">Html to be transformed</param>
+            <param name="usePlaceHolder">Insert placeholders for images and iframe tags</param>
+            <returns>Html that can be used and edited via the client side text part</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.LayoutTransformator">
+            <summary>
+            Transforms the layout of a classic wiki/webpart page into a modern client side page using sections and columns
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.LayoutTransformator.#ctor(OfficeDevPnP.Core.Pages.ClientSidePage)">
+            <summary>
+            Creates a layout transformator instance
+            </summary>
+            <param name="page">Client side page that will be receive the created layout</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.LayoutTransformator.Transform(SharePointPnP.Modernization.Framework.Pages.PageLayout)">
+            <summary>
+            Transforms a classic wiki/webpart page layout into a modern client side page layout
+            </summary>
+            <param name="layout">Source wiki/webpart page layout</param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.ModernizationCenterInformation">
+            <summary>
+            This class defines the page transformation configuration for when there's a ModernizationCenter hooked up
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ModernizationCenterInformation.ModernizationCenterUri">
+            <summary>
+            Url to the customer's modernization center site
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ModernizationCenterInformation.AddPageAcceptBanner">
+            <summary>
+            Add a page accept banner solution on the generated pages
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation">
+            <summary>
+            Information used to configure the page transformation process
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem)">
+            <summary>
+            Instantiates the page transformation class
+            </summary>
+            <param name="sourcePage">Page we want to transform</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem,System.String)">
+            <summary>
+            Instantiates the page transformation class
+            </summary>
+            <param name="sourcePage">Page we want to transform</param>
+            <param name="targetPageName">Name of the target page</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem,System.String,System.Boolean)">
+            <summary>
+            Instantiates the page transformation class
+            </summary>
+            <param name="sourcePage">Page we want to transform</param>
+            <param name="targetPageName">Name of the target page</param>
+            <param name="overwrite">Do we overwrite the target page if it already exists</param>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SourcePage">
+            <summary>
+            Source wiki/webpart page we want to transform
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.Folder">
+            <summary>
+            Folder where the page to transform lives in
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.TargetPageName">
+            <summary>
+            Name for the transformed page
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.TargetPageTakesSourcePageName">
+            <summary>
+            Target page will get the source page name, source page will be renamed. Used in conjunction with SourcePagePrefix
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.Overwrite">
+            <summary>
+            Overwrite the target page if it already exists?
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.TargetPagePrefix">
+            <summary>
+            Prefix used to name the target page
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SourcePagePrefix">
+            <summary>
+            Prefix used to name the source page. Used in conjunction with TargetPageTakesSourcePageName
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.PageHeader">
+            <summary>
+            Configuration of the page header to apply
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.KeepPageSpecificPermissions">
+            <summary>
+            Apply the item level page permissions on to the target page, defaults to true
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.CopyPageMetadata">
+            <summary>
+            Copy the page metadata (if any) to the created modern client side page. Defaults to false
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.ModernizationCenterInformation">
+            <summary>
+            Configuration driven by the presence of a modernization center
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.RemoveEmptySectionsAndColumns">
+            <summary>
+            Removes empty sections and columns to optimize screen real estate
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.HandleWikiImagesAndVideos">
+            <summary>
+            If true images and videos embedded in wiki text will be transformed to actual image/video web parts, 
+            else they'll get a placeholder and will be added as separate web parts at the end of the page
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.ReplaceHomePageWithDefaultHomePage">
+            <summary>
+            If the page to be transformed is the web's home page then replace with stock modern home page instead of transforming it
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.MappingProperties">
+            <summary>
+            Property bag for adding properties that will be exposed to the functions and selectors in the web part mapping file.
+            These properties are used to condition the transformation process.
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.PageTitleOverride">
+            <summary>
+            Custom function callout that can be triggered to provide a tailored page title
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.LayoutTransformatorOverride">
+            <summary>
+            Custom layout transformator to be used for this page
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.ContentTransformatorOverride">
+            <summary>
+            Custom content transformator to be used for this page
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SkipTelemetry">
+            <summary>
+            Disable telemetry: we use telemetry to make this tool better by sending anonymous data, but you're free to disable this
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.PageTransformator">
+            <summary>
+            Transforms a classic wiki/webpart page into a modern client side page
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Creates a page transformator instance with a target destination of a target web e.g. Modern/Communication Site
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="targetClientContext">ClientContext of the site that will receive the modernized page</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="pageTransformationFile">Used page mapping file</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="targetClientContext">ClientContext of the site that will receive the modernized page</param>
+            <param name="pageTransformationFile">Used page mapping file</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,SharePointPnP.Modernization.Framework.PageTransformation)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="pageTransformationModel">Page transformation model</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,SharePointPnP.Modernization.Framework.PageTransformation)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="targetClientContext">ClientContext of the site that will receive the modernized page</param>
+            <param name="pageTransformationModel">Page transformation model</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.Transform(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation)">
+            <summary>
+            Transform the page
+            </summary>
+            <param name="pageTransformationInformation">Information about the page to transform</param>
+            <returns>The path to created modern page</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.SwapPages(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation,SharePointPnP.Modernization.Framework.Entities.ListItemPermission)">
+            <summary>
+            Performs the logic needed to swap a genered Migrated_Page.aspx to Page.aspx and then Page.aspx to Old_Page.aspx
+            </summary>
+            <param name="pageTransformationInformation">Information about the page to transform</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.LoadPageTransformationModel(System.String)">
+            <summary>
+            Loads a page transformation model from file
+            </summary>
+            <param name="pageTransformationFile">File holding the page transformation model</param>
+            <returns>Page transformation model</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.LoadClientObject(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Loads the telemetry and properties for the client object
+            </summary>
+            <param name="clientContext"></param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator">
+            <summary>
+            Transforms the received Html in html that can be displayed and maintained in the modern client side text part
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.Transform(System.String,System.Boolean)">
+            <summary>
+            Transforms the passed html to be usable by the client side text part
+            </summary>
+            <param name="text">Html to be transformed</param>
+            <param name="usePlaceHolder">Insert placeholders for images and iframe tags</param>
+            <returns>Html that can be used and edited via the client side text part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.IsEmptyParagraph(System.String)">
+            <summary>
+            Returns true is the passed html is "empty"
+            </summary>
+            <param name="text">Html to verify</param>
+            <returns>True if considered empty, false otherwise</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.TableStyleCodeToName(System.Int32)">
+            <summary>
+            Map wiki table style to a RTE compatible style
+            </summary>
+            <param name="tableStyleCode">Code used for the wiki table style</param>
+            <returns>RTE compatible table style</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.FontCodeToName(System.Int32)">
+            <summary>
+            Translates SharePoint wiki font size (e.g. ms-rtefontsize-3 means font size 3) to RTE font size name
+            </summary>
+            <param name="fontCode">Wiki font size code</param>
+            <returns>RTE font size name</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.ColorCodeToForegroundColorName(System.Int32)">
+            <summary>
+            Translated SharePoint Wiki foreground color number (ms-rteforecolor-2 means number 2 is used) to RTE compatible color name
+            </summary>
+            <param name="colorCode">Used color number</param>
+            <returns>RTE color string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.ThemeCodeToForegroundColorName(System.Int32)">
+            <summary>
+            Translated SharePoint Wiki foreground theme color number (e.g. ms-rteThemeForeColor-6-1) to RTE compatible color name
+            </summary>
+            <param name="themeCode">Theme color code</param>
+            <returns>RTE color string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.ColorCodeToBackgroundColorName(System.Int32)">
+            <summary>
+            Translated SharePoint Wiki background color number (ms-rtebackcolor-5 means number 5 is used) to RTE compatible color name
+            </summary>
+            <param name="colorCode">Used color number</param>
+            <returns>RTE color string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.DetectBlockQuoteLevelParentContainer(System.Collections.Generic.Dictionary{AngleSharp.Dom.IElement,AngleSharp.Dom.IElement},AngleSharp.Dom.IElement,System.Int32@,AngleSharp.Dom.IElement@,AngleSharp.Dom.IElement@,System.Boolean@,System.Boolean@)">
+            <summary>
+            Recursively loop the blockquote elements until we're at the top level, returns needed information to process:
+            - Level: how many indents where used
+            - TopLevelBlockQuote: what is the top level blockquote that we'll be using as "replacement node"
+            - If there already was a container created to store content at this level then let's return that one
+            - If by walking the blockquote tree we see strike through being used then indicate that
+            - If by walking the blockquote tree we see underline being used then indicate that
+            </summary>
+            <param name="replacementList"></param>
+            <param name="blockQuote"></param>
+            <param name="level"></param>
+            <param name="topLevelBlockQuote"></param>
+            <param name="insertionContainer"></param>
+            <param name="strikeThroughWasUsed"></param>
+            <param name="underLineWasUsed"></param>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.SourceItem">
+            The info of the source item where does the quick link point to.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.Image">
+            The info of the image selected by user.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.FabricReactIcon">
+            The info of the icon selected by user.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.ThumbnailType">
+            Indicate the way that thumbnail is chosen and rendered.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.RawPreviewImageUrl">
+            To store the preview image that doesn't have guid set.
+            If quick link is not targeting a SharePoint item, the image and title will be retrieved from embed service.
+            Also in on-premise environment, the image preview doesn't have guids.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.Id">
+            Unique id of the quick link.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.Title">
+            Title of the quick link.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.Description">
+            Extra description field of the quick link item.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLink.AltText">
+            User customized alt text to place on the image for people with disabilities.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLinkFabricReactIconInfo.IconName">
+            The name of the icon.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.SourceItemInfo.Url">
+            Original url of the quick link.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.SourceItemInfo.Guids">
+            Guids that represent the quick link item.
+            Only SharePoint item has guids. It is "undefined" for external items.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.SourceItemInfo.ItemType">
+            The type of object represented by the quick link. If the type is unknown, it will be considered
+            as QuickLinkType.Link.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.SourceItemInfo.FileExtension">
+            File extension of the file represented by the quick link. Example: ".png". If the object represented
+            by the quick link does not have a file extension or is not a file, this will be null or the empty string.
+            E.g. Some OneNote doesn't have extensions and will need "progId" to identify them.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.SourceItemInfo.ProgId">
+            Identifier of the program used to open this kind of file or folder, if this is a file or folder.
+            E.g. OneNote.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLinkCustomizedImageInfo.Url">
+            The source url of the customized image of the quick link.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLinkCustomizedImageInfo.ImageFit">
+            How image is fit into the container.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.QuickLinkCustomizedImageInfo.Guids">
+            Guids that can be used to load the picture from the micro-service, if specified.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.WaffleLayoutOptions.IconSize">
+            The size of icon displayed on each card.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.WaffleLayoutOptions.OnlyShowThumbnail">
+            Whether only image or icon is displayed in the waffle layout.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ListLayoutOptions.ShowDescription">
+            Whether show the link description text of all link items.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ListLayoutOptions.ShowIcon">
+            Whether show the icons of the link items.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ButtonLayoutOptions.IconPositionType">
+            Whether to have icon and the position of the icon if icon is used. (IconPositionType.NoIcon | IconPositionType.IconToLeft | IconPositionType.IconToTop)
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ButtonLayoutOptions.ButtonTreatment">
+            The display style of the button.
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ButtonLayoutOptions.TextAlignmentVertical">
+            The option is only available when IconPositionType.noIcon or IconPositionType.IconToLeft
+            The text can be either top aligned or center aligned. (ContentAlignment.Top | ContentAlignment.Center)
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ButtonLayoutOptions.TextAlignmentHorizontal">
+            The option is only available when IconPositionType.IconToTop
+            The text can be either left aligned or center aligned. (ContentAlignment.Left | ContentAlignment.Center)
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ButtonLayoutOptions.LinesOfText">
+            Number of lines of text that helps user to make the card more compact. Allowed: LinesOfText.SingleLine | LinesOfText.TwoLines;
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.ButtonLayoutOptions.ShowDescription">
+            Whether show the link description text of all link items.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.ImageFit.center">
+            The image is not scaled. The image is centered and cropped within the content box.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.ImageFit.contain">
+            The image is scaled to maintain its aspect ratio while being fully contained within the frame. The image will
+            be centered horizontally and vertically within the frame. The space in the top and bottom or in the sides of
+            the frame will be empty depending on the difference in aspect ratio between the image and the frame.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.ImageFit.cover">
+            The image is scaled to maintain its aspect ratio while filling the frame. Portions of the image will be cropped from
+            the top and bottom, or from the sides, depending on the difference in aspect ratio between the image and the frame.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.ImageFit.none">
+            Neither the image nor the frame are scaled. If their sizes do not match, the image will either be cropped or the
+            frame will have empty space.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.ImageFit.centerCover">
+            The image will be centered horizontally and vertically within the frame and maintains its aspect ratio. It will
+            behave as ImageFit.center if the image's natural height or width is less than the Image frame's height or width,
+            but if both natural height and width are larger than the frame it will behave as ImageFit.cover.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinkThumbnailSourceType.Image">
+            A user customized image.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinkThumbnailSourceType.FabricReactIcon">
+            A user picked icon from fabric-react icon set.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinkThumbnailSourceType.AutoSelect">
+            The thumbnail of the item is automatically selected according to the layout type and item data.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.LinesOfText.SingleLine">
+            The space of rendering the text is fixed to be one line.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.LinesOfText.TwoLines">
+            The space of rendering the text is fixed to be two lines.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.LinesOfText.TwoLinesAutoCollapse">
+            The maximum space of rendering the text is two lines.
+            But if there is not enough text to fill two lines, the space is dynamic based on the text.
+            I.e. The space could potentially be 0, 1, or 2 lines.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.IconPositionType.NoIcon">
+            No icon is displayed in button card.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.IconPositionType.IconToLeft">
+            Icon is displayed at left side of button card.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.IconPositionType.IconToTop">
+            Icon is displayed at top side of button card.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.IconPositionType.IconOnly">
+            Only icon is displayed, there is no other content.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.ButtonTreatment.None">
+            No button treatment styles.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.ButtonTreatment.Outline">
+            There will be an outline border around the button card.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.ButtonTreatment.FillColor">
+            The background of the button card will be filled with single color.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinksLayout.CompactCard">
+            The compact card layout renderers CompactCard under GridLayout.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinksLayout.FilmStrip">
+            The filmstrip layout renderers TileCard under Carousel layout.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinksLayout.Button">
+            The button layout renders ButtonCard under GridLayout.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinksLayout.List">
+            The list layout renders ButtonCard under GridLayout.
+            The ButtonCard rendered in list layout is pre-configured to be single line text without outline.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinksLayout.Grid">
+            The grid layout renderers TileCard under GridLayout.
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Transform.QuickLinksLayout.Waffle">
+            The waffle layout which renders smaller ButtonCard under GridLayout.
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.QuickLinksTransformator">
+            <summary>
+            Class used to generate quicklinks web part properties
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.QuickLinksTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Instantiates the class
+            </summary>
+            <param name="cc">Client context for the web holding the source page</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.QuickLinksTransformator.Transform(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Transform.SummaryLink})">
+            <summary>
+            Generate quick links web part properties coming from a list of links
+            </summary>
+            <param name="summaryLinks">Links coming from the summarylink web part</param>
+            <returns>Properties for highlighted content web part</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator">
+            <summary>
+            This class is used to rewrite the html coming out of the SummaryLinks web part
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator.Transform(System.String,System.Boolean)">
+            <summary>
+            Transforms the passed summarylinks html to be usable by the client side text part
+            </summary>
+            <param name="text">Summarylinks html to be transformed</param>
+            <returns>Html that can be used and edited via the client side text part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator.GetLinks(System.String)">
+            <summary>
+            Transforms the passed summarylinks html a list of links
+            </summary>
+            <param name="text">Summarylinks html to be transformed</param>
+            <returns>List of links</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.TokenParser">
+            <summary>
+            Resolves tokens by their actual representation
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TokenParser.ReplaceTokens(System.String,SharePointPnP.Modernization.Framework.Entities.WebPartEntity)">
+            <summary>
+            Replaces the tokens in the provided input string with their values
+            </summary>
+            <param name="input">String with tokens</param>
+            <param name="webPartData">Web part information holding all possible tokens for this web part</param>
+            <returns>A string with tokens replaced by actual values</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiTransformatorSimple.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiTransformatorSimple.TransformPlusSplit(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity},System.Boolean)">
+            <summary>
+            Replaces embedded images and iframes with respective "fake" image and video web parts. Depending on the 
+            image/iframe position in the html the wiki text is broken up in multiple wiki text parts intermixed 
+            with image and/or video parts. Later on these web parts will be transformed to client side web parts
+            </summary>
+            <param name="wikiPageWebParts">List of web parts on the page</param>
+            <returns>Updated list of web parts</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Cache.CacheManager">
+            <summary>
+            Caching manager, singleton
+            Important: don't cache SharePoint Client objects as these are tied to a specific client context and hence will fail when there's context switching!
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.Instance">
+            <summary>
+            Get's the single cachemanager instance, singleton pattern
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.AssetsTransfered">
+            <summary>
+            List of assets transferred from source to destination
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetClientSideComponents(OfficeDevPnP.Core.Pages.ClientSidePage)">
+            <summary>
+            Get's the clientside components from cache or if needed retrieves and caches them
+            </summary>
+            <param name="page">Page to grab the components for</param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearClientSideComponents">
+            <summary>
+            Clear the clientside component cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetBaseTemplate(Microsoft.SharePoint.Client.Web)">
+            <summary>
+            Get's the base template that will be used to filter out "OOB" fields
+            </summary>
+            <param name="web">web to operate against</param>
+            <returns>Provisioning template of the base template of STS#0</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearBaseTemplate">
+            <summary>
+            Clear base template cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetFieldsToCopy(Microsoft.SharePoint.Client.Web,Microsoft.SharePoint.Client.List)">
+            <summary>
+            Get the list of fields that need to be copied from cache. If cache is empty the list will be calculated
+            </summary>
+            <param name="web">Web to operate against</param>
+            <param name="pagesLibrary">Pages library instance</param>
+            <returns>List of fields that need to be copied</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearFieldsToCopy">
+            <summary>
+            Clear the fields to copy cache
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Cache.FieldData">
+            <summary>
+            Field data used to transfer information about a field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldName">
+            <summary>
+            Internal name of the field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldId">
+            <summary>
+            Id of the field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldType">
+            <summary>
+            Type of the field
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Constants">
+            <summary>
+            Constants used 
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.KQL.KQLElement">
+            <summary>
+            Element in KQL query
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.KQL.KQLPropertyOperator">
+            <summary>
+            Operators on KQL property filters
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.KQL.KQLFilterType">
+            <summary>
+            KQL filter types
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.KQL.KQLParser">
+            <summary>
+            Class to parse KQL queries
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.KQL.KQLParser.Parse(System.String)">
+            <summary>
+            Parses a KQL query and returns a list of tokens
+            </summary>
+            <param name="searchQuery">Query to parse</param>
+            <returns>List of <see cref="T:SharePointPnP.Modernization.Framework.KQL.KQLElement"/> tokens</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Pages.BasePage">
             <summary>
@@ -449,6 +1418,13 @@
             </summary>
             <returns>Information about the analyzed wiki page</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.IsNestedLayoutsZoneOuter(AngleSharp.Dom.IElement)">
+            <summary>
+            Check if this element is nested in another already processed element...this needs to be skipped to avoid content duplication and possible processing errors
+            </summary>
+            <param name="contentHost">element to check</param>
+            <returns>true if embedded in a already processed element</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.ContainsWebPart(AngleSharp.Dom.Html.IHtmlElement)">
             <summary>
             Does the tree of nodes somewhere contain a web part?
@@ -489,437 +1465,6 @@
             <summary>
             Ensure telemetry data is send to server
             </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterChainingOperator.And">
-            <summary>
-            Filter is chained using an And operator
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterChainingOperator.Or">
-            <summary>
-            Filter is chained using an Or operator
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Eq">
-            <summary>
-            Equal to
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Neq">
-            <summary>
-            Not equal to
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Gt">
-            <summary>
-            Greater than
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Geq">
-            <summary>
-            Greater than or equal to
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Lt">
-            <summary>
-            Less than
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Leq">
-            <summary>
-            Less than or equal to
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.BeginsWith">
-            <summary>
-            Begins with
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.Contains">
-            <summary>
-            Contains
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.ContainsAny">
-            <summary>
-            Contains any of
-            </summary>
-        </member>
-        <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterFieldQueryOperator.ContainsAll">
-            <summary>
-            Contains all of
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.ContentByQuerySearchTransformator">
-            <summary>
-            Class used to generate contentrollup (=highlighted content) web part properties coming from either a content by query or content by search web part
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentByQuerySearchTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext)">
-            <summary>
-            Instantiates the class
-            </summary>
-            <param name="cc">Client context for the web holding the source page</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentByQuerySearchTransformator.TransformContentByQueryWebPartToHighlightedContent(SharePointPnP.Modernization.Framework.Transform.ContentByQuery)">
-            <summary>
-            Generate contentrollup (=highlighted content) web part properties coming from a content by query web part
-            </summary>
-            <param name="cbq">Properties coming from the content by query web part</param>
-            <returns>Properties for highlighted content web part</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.ContentTransformator">
-            <summary>
-            Transforms content from "classic" page to modern client side page
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentTransformator.#ctor(OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation)">
-            <summary>
-            Instantiates the content transformator
-            </summary>
-            <param name="page">Client side page that will be updates</param>
-            <param name="pageTransformation">Transformation information</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentTransformator.Transform(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity})">
-            <summary>
-            Transforms the passed web parts into the loaded client side page
-            </summary>
-            <param name="webParts">List of web parts that need to be transformed</param>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.IContentTransformator">
-            <summary>
-            Interface implemented by all content transformators
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.IContentTransformator.Transform(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity})">
-            <summary>
-            Transforms the passed web parts into the loaded client side page
-            </summary>
-            <param name="webParts">List of web parts that need to be transformed</param>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.ILayoutTransformator">
-            <summary>
-            Interface implemented by all layout transformators
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.ILayoutTransformator.Transform(SharePointPnP.Modernization.Framework.Pages.PageLayout)">
-            <summary>
-            Transforms a classic wiki/webpart page layout into a modern client side page layout
-            </summary>
-            <param name="layout">Source wiki/webpart page layout</param>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.IHtmlTransformator">
-            <summary>
-            Interface implemented by all html transformators
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.IHtmlTransformator.Transform(System.String,System.Boolean)">
-            <summary>
-            Transforms the passed html to be usable by the client side text part
-            </summary>
-            <param name="text">Html to be transformed</param>
-            <param name="usePlaceHolder">Insert placeholders for images and iframe tags</param>
-            <returns>Html that can be used and edited via the client side text part</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.LayoutTransformator">
-            <summary>
-            Transforms the layout of a classic wiki/webpart page into a modern client side page using sections and columns
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.LayoutTransformator.#ctor(OfficeDevPnP.Core.Pages.ClientSidePage)">
-            <summary>
-            Creates a layout transformator instance
-            </summary>
-            <param name="page">Client side page that will be receive the created layout</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.LayoutTransformator.Transform(SharePointPnP.Modernization.Framework.Pages.PageLayout)">
-            <summary>
-            Transforms a classic wiki/webpart page layout into a modern client side page layout
-            </summary>
-            <param name="layout">Source wiki/webpart page layout</param>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.ModernizationCenterInformation">
-            <summary>
-            This class defines the page transformation configuration for when there's a ModernizationCenter hooked up
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.ModernizationCenterInformation.ModernizationCenterUri">
-            <summary>
-            Url to the customer's modernization center site
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.ModernizationCenterInformation.AddPageAcceptBanner">
-            <summary>
-            Add a page accept banner solution on the generated pages
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation">
-            <summary>
-            Information used to configure the page transformation process
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem)">
-            <summary>
-            Instantiates the page transformation class
-            </summary>
-            <param name="sourcePage">Page we want to transform</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem,System.String)">
-            <summary>
-            Instantiates the page transformation class
-            </summary>
-            <param name="sourcePage">Page we want to transform</param>
-            <param name="targetPageName">Name of the target page</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem,System.String,System.Boolean)">
-            <summary>
-            Instantiates the page transformation class
-            </summary>
-            <param name="sourcePage">Page we want to transform</param>
-            <param name="targetPageName">Name of the target page</param>
-            <param name="overwrite">Do we overwrite the target page if it already exists</param>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SourcePage">
-            <summary>
-            Source wiki/webpart page we want to transform
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.TargetPageName">
-            <summary>
-            Name for the transformed page
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.TargetPageTakesSourcePageName">
-            <summary>
-            Target page will get the source page name, source page will be renamed. Used in conjunction with SourcePagePrefix
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.Overwrite">
-            <summary>
-            Overwrite the target page if it already exists?
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.TargetPagePrefix">
-            <summary>
-            Prefix used to name the target page
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SourcePagePrefix">
-            <summary>
-            Prefix used to name the source page. Used in conjunction with TargetPageTakesSourcePageName
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.PageHeader">
-            <summary>
-            Configuration of the page header to apply
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.KeepPageSpecificPermissions">
-            <summary>
-            Apply the item level page permissions on to the target page, defaults to true
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.ModernizationCenterInformation">
-            <summary>
-            Configuration driven by the presence of a modernization center
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.HandleWikiImagesAndVideos">
-            <summary>
-            If true images and videos embedded in wiki text will be transformed to actual image/video web parts, 
-            else they'll get a placeholder and will be added as separate web parts at the end of the page
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.ReplaceHomePageWithDefaultHomePage">
-            <summary>
-            If the page to be transformed is the web's home page then replace with stock modern home page instead of transforming it
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.PageTitleOverride">
-            <summary>
-            Custom function callout that can be triggered to provide a tailored page title
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.LayoutTransformatorOverride">
-            <summary>
-            Custom layout transformator to be used for this page
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.ContentTransformatorOverride">
-            <summary>
-            Custom content transformator to be used for this page
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SkipTelemetry">
-            <summary>
-            Disable telemetry: we use telemetry to make this tool better by sending anonymous data, but you're free to disable this
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.PageTransformator">
-            <summary>
-            Transforms a classic wiki/webpart page into a modern client side page
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext)">
-            <summary>
-            Creates a page transformator instance
-            </summary>
-            <param name="clientContext">ClientContext of the site holding the page</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,System.String)">
-            <summary>
-            Creates a page transformator instance
-            </summary>
-            <param name="clientContext">ClientContext of the site holding the page</param>
-            <param name="pageTransformationFile">Used page mapping file</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,SharePointPnP.Modernization.Framework.PageTransformation)">
-            <summary>
-            Creates a page transformator instance
-            </summary>
-            <param name="clientContext">ClientContext of the site holding the page</param>
-            <param name="pageTransformationModel">Page transformation model</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.Transform(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation)">
-            <summary>
-            Transform the page
-            </summary>
-            <param name="pageTransformationInformation">Information about the page to transform</param>
-            <returns>The path to created modern page</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.SwapPages(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation)">
-            <summary>
-            Performs the logic needed to swap a genered Migrated_Page.aspx to Page.aspx and then Page.aspx to Old_Page.aspx
-            </summary>
-            <param name="pageTransformationInformation">Information about the page to transform</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.LoadPageTransformationModel(System.String)">
-            <summary>
-            Loads a page transformation model from file
-            </summary>
-            <param name="pageTransformationFile">File holding the page transformation model</param>
-            <returns>Page transformation model</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator">
-            <summary>
-            Transforms the received Html in html that can be displayed and maintained in the modern client side text part
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.#ctor">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.Transform(System.String,System.Boolean)">
-            <summary>
-            Transforms the passed html to be usable by the client side text part
-            </summary>
-            <param name="text">Html to be transformed</param>
-            <param name="usePlaceHolder">Insert placeholders for images and iframe tags</param>
-            <returns>Html that can be used and edited via the client side text part</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.IsEmptyParagraph(System.String)">
-            <summary>
-            Returns true is the passed html is "empty"
-            </summary>
-            <param name="text">Html to verify</param>
-            <returns>True if considered empty, false otherwise</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.TableStyleCodeToName(System.Int32)">
-            <summary>
-            Map wiki table style to a RTE compatible style
-            </summary>
-            <param name="tableStyleCode">Code used for the wiki table style</param>
-            <returns>RTE compatible table style</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.FontCodeToName(System.Int32)">
-            <summary>
-            Translates SharePoint wiki font size (e.g. ms-rtefontsize-3 means font size 3) to RTE font size name
-            </summary>
-            <param name="fontCode">Wiki font size code</param>
-            <returns>RTE font size name</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.ColorCodeToForegroundColorName(System.Int32)">
-            <summary>
-            Translated SharePoint Wiki foreground color number (ms-rteforecolor-2 means number 2 is used) to RTE compatible color name
-            </summary>
-            <param name="colorCode">Used color number</param>
-            <returns>RTE color string</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.ThemeCodeToForegroundColorName(System.Int32)">
-            <summary>
-            Translated SharePoint Wiki foreground theme color number (e.g. ms-rteThemeForeColor-6-1) to RTE compatible color name
-            </summary>
-            <param name="themeCode">Theme color code</param>
-            <returns>RTE color string</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.ColorCodeToBackgroundColorName(System.Int32)">
-            <summary>
-            Translated SharePoint Wiki background color number (ms-rtebackcolor-5 means number 5 is used) to RTE compatible color name
-            </summary>
-            <param name="colorCode">Used color number</param>
-            <returns>RTE color string</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.DetectBlockQuoteLevelParentContainer(System.Collections.Generic.Dictionary{AngleSharp.Dom.IElement,AngleSharp.Dom.IElement},AngleSharp.Dom.IElement,System.Int32@,AngleSharp.Dom.IElement@,AngleSharp.Dom.IElement@,System.Boolean@,System.Boolean@)">
-            <summary>
-            Recursively loop the blockquote elements until we're at the top level, returns needed information to process:
-            - Level: how many indents where used
-            - TopLevelBlockQuote: what is the top level blockquote that we'll be using as "replacement node"
-            - If there already was a container created to store content at this level then let's return that one
-            - If by walking the blockquote tree we see strike through being used then indicate that
-            - If by walking the blockquote tree we see underline being used then indicate that
-            </summary>
-            <param name="replacementList"></param>
-            <param name="blockQuote"></param>
-            <param name="level"></param>
-            <param name="topLevelBlockQuote"></param>
-            <param name="insertionContainer"></param>
-            <param name="strikeThroughWasUsed"></param>
-            <param name="underLineWasUsed"></param>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator">
-            <summary>
-            This class is used to rewrite the html coming out of the SummaryLinks web part
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator.#ctor">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator.Transform(System.String,System.Boolean)">
-            <summary>
-            Transforms the passed summarylinks html to be usable by the client side text part
-            </summary>
-            <param name="text">Summarylinks html to be transformed</param>
-            <returns>Html that can be used and edited via the client side text part</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Transform.TokenParser">
-            <summary>
-            Resolves tokens by their actual representation
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.TokenParser.ReplaceTokens(System.String,SharePointPnP.Modernization.Framework.Entities.WebPartEntity)">
-            <summary>
-            Replaces the tokens in the provided input string with their values
-            </summary>
-            <param name="input">String with tokens</param>
-            <param name="webPartData">Web part information holding all possible tokens for this web part</param>
-            <returns>A string with tokens replaced by actual values</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiTransformatorSimple.#ctor">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiTransformatorSimple.TransformPlusSplit(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity},System.Boolean)">
-            <summary>
-            Replaces embedded images and iframes with respective "fake" image and video web parts. Depending on the 
-            image/iframe position in the html the wiki text is broken up in multiple wiki text parts intermixed 
-            with image and/or video parts. Later on these web parts will be transformed to client side web parts
-            </summary>
-            <param name="wikiPageWebParts">List of web parts on the page</param>
-            <returns>Updated list of web parts</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.PageTransformation">
             <remarks/>
@@ -984,6 +1529,12 @@
         <member name="P:SharePointPnP.Modernization.Framework.WebPart.Type">
             <remarks/>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.WebPart.CrossSiteTransformationSupported">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.WebPart.CrossSiteTransformationSupportedSpecified">
+            <remarks/>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Mappings">
             <remarks/>
         </member>
@@ -1006,6 +1557,9 @@
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Mapping.Default">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Mapping.Functions">
             <remarks/>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.ClientSideText">
@@ -2228,12 +2782,13 @@
             Class that deals with site (both site collection and web site) creation, status, retrieval and settings
             </summary>
         </member>
-        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetPages(Microsoft.SharePoint.Client.Web,System.String)">
+        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetPages(Microsoft.SharePoint.Client.Web,System.String,System.String)">
             <summary>
             Returns the site pages from a web, optionally filtered on pagename
             </summary>
             <param name="web">Web to get the pages from</param>
             <param name="pageNameStartsWith">Filter to get all pages starting with</param>
+            <param name="folder"></param>
             <returns>A list of pages (ListItem intances)</returns>
         </member>
         <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetAdmins(Microsoft.SharePoint.Client.Web)">

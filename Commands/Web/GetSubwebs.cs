@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "If provided, only the subsite with the provided Id, GUID or the Web instance will be returned")]
         public WebPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, recursion through all subsites and their childs will take place to return them as well")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, recursion through all subsites and their children will take place to return them as well")]
         public SwitchParameter Recurse;
 
         protected override void ExecuteCmdlet()

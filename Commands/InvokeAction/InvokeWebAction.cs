@@ -156,7 +156,7 @@ namespace SharePointPnP.PowerShell.Commands.InvokeAction
 					Web currentWeb = webs[webIndex];
 					currentWeb.LoadProperties(_webActions.Properties);
 
-					WriteIterationProgress(WebProgressBarId, null, "Couting webs", GetTitle(currentWeb), webIndex, webCount, null, _totalExecutionTimeStopWatch);
+					WriteIterationProgress(WebProgressBarId, null, "Counting webs", GetTitle(currentWeb), webIndex, webCount, null, _totalExecutionTimeStopWatch);
 
 					_result.TotalListCount = currentWeb.Lists.Count;
 					_result.TotalListItemCount = currentWeb.Lists.Sum(item => item.ItemCount);

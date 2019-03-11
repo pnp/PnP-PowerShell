@@ -111,7 +111,7 @@ function Add-PnPModernListWebPart() {
          Add-PnPClientSideWebPart -Page $PageName -DefaultWebPartType List -WebPartProperties $webPartProperties
       }
       catch {
-         Write-Error -Message "Unable to add [$WebPartTitle] web part to the [$PageName] page. Check that that there is a section [$Section] with [$Column] columns"
+         Write-Error -Message "Unable to add [$WebPartTitle] web part to the [$PageName] page. Check that there is a section [$Section] with [$Column] columns"
       }
    }
    Else {
@@ -119,7 +119,7 @@ function Add-PnPModernListWebPart() {
          Add-PnPClientSideWebPart -Page $PageName -DefaultWebPartType List -WebPartProperties $webPartProperties -Section $Section -Column $Column -ErrorAction Stop #-Order $Order
       }
       catch {
-         Write-Error -Message "Unable to add [$WebPartTitle] web part to the [$PageName] page. Check that that there is a section [$Section] with [$Column] columns"
+         Write-Error -Message "Unable to add [$WebPartTitle] web part to the [$PageName] page. Check that there is a section [$Section] with [$Column] columns"
       }
    }
 }

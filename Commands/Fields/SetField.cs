@@ -26,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         SortOrder = 3)]
     public class SetField : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The list object, name or id where to update the field. If omited the field will be updated on the web.")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The list object, name or id where to update the field. If omitted the field will be updated on the web.")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "The field object, internal field name (case sensitive) or field id to update")]

@@ -10,6 +10,7 @@ This solution contains a library of PowerShell commands that allows you to perfo
 -  Office 365 Dedicated (D)
 -  SharePoint 2013 on-premises
 -  SharePoint 2016 on-premises
+-  SharePoint 2019 on-premises
 
 ### Prerequisites ###
 In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
@@ -39,6 +40,7 @@ If you main OS is Windows 10, or if you have [PowerShellGet](https://github.com/
 |**SharePoint Version**|**Command to install**|
 |------------------|------------------|
 |SharePoint Online|```Install-Module SharePointPnPPowerShellOnline ```|
+|SharePoint 2019|```Install-Module SharePointPnPPowerShell2019```|
 |SharePoint 2016|```Install-Module SharePointPnPPowerShell2016```|
 |SharePoint 2013|```Install-Module SharePointPnPPowerShell2013```|
 
@@ -102,7 +104,7 @@ If you want to contribute to this SharePoint Patterns and Practices PowerShell l
 
 ## Building the source code ##
 
-If you have set up up the projects and you are ready to build the source code, make sure to build the SharePointPnP.PowerShellModuleFilesGenerator project first. This project will be executed after every build and it will generate the required PSD1 and XML files with cmdlet documentation in them.
+If you have set up the projects and you are ready to build the source code, make sure to build the SharePointPnP.PowerShellModuleFilesGenerator project first. This project will be executed after every build and it will generate the required PSD1 and XML files with cmdlet documentation in them.
 
 When you build the solution a postbuild script will copy the required files to a folder in your users folder called 
 *C:\Users\\\<YourUserName\>\Documents\WindowsPowerShell\Modules\SharePointPnPPowerShell\<Platform\>*. During build also the help and document files will be generated. If you have a session of PowerShell open in which you have used the PnP Cmdlets, make sure to close this PowerShell session first before you build. You will receive a build error otherwise because it tries to overwrite files that are in use.

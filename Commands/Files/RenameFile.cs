@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, Position = 1, HelpMessage = "File name to rename the file to. Should only be the file name and not include the path to its location. Use Move-PnPFile to move the file to another location.")]
         public string TargetFileName = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If ommitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exist with the provided TargetFileName, it will be overwritten. If omitted, the rename operation will be canceled if a file already exists with the TargetFileName file name.")]
         public SwitchParameter OverwriteIfAlreadyExists;
 
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]

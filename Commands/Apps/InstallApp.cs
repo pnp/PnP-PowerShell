@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.ALM;
 using OfficeDevPnP.Core.Enums;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsLifecycle.Install, "PnPApp")]
     [CmdletHelp("Installs an available app from the app catalog",
-        Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online)]
+        Category = CmdletHelpCategory.Apps, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Install-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
         Remarks = @"This will install an app that is available in the tenant scoped app catalog, specified by the id, to the current site.",

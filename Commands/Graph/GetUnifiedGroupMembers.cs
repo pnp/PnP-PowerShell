@@ -11,7 +11,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPUnifiedGroupMembers")]
-    [CmdletHelp("Gets members of a paricular Office 365 Group (aka Unified Group)",
+    [CmdletHelp("Gets members of a particular Office 365 Group (aka Unified Group)",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(

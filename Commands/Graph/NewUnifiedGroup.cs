@@ -72,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 var candidates = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken,
                     mailNickname: MailNickname,
                     endIndex: 1);
-                // ListUnifiedGroups retreives groups with starts-with, so need another check
+                // ListUnifiedGroups retrieves groups with starts-with, so need another check
                 var existingGroup = candidates.Any(g => g.MailNickname.Equals(MailNickname, StringComparison.CurrentCultureIgnoreCase));
 
                 forceCreation = !existingGroup || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
