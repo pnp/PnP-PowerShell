@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        SortOrder = 1)]
     [CmdletExample(
        Code = @"PS:> Read-PnPProvisioningTemplate -Path template.pnp -TemplateProviderExtensions $extensions",
-       Remarks = "Loads a PnP file from the file system using some custom template provider extenions while loading the file.",
+       Remarks = "Loads a PnP file from the file system using some custom template provider extensions while loading the file.",
        SortOrder = 2)]
     public class ReadProvisioningTemplate : PSCmdlet
     {

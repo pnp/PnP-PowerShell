@@ -12,6 +12,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
+using SharePointPnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
@@ -444,6 +445,8 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
                 if (extension == ".pnp")
                 {
+                    IsolatedStorage.InitializeIsolatedStorage();
+
                     XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
 
                           creationInformation.FileConnector as OpenXMLConnector);

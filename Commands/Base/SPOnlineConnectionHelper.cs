@@ -414,7 +414,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         private static void CleanupCryptoMachineKey(X509Certificate2 certificate)
         {
-            var privateKey = (RSACryptoServiceProvider) certificate.PrivateKey;
+            var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
             string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
             certificate.Reset();
             var path = Environment.GetEnvironmentVariable("ProgramData");
@@ -519,6 +519,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         context.ExecuteQueryRetry();
                     }
+#if !ONPREMISES
+                    catch (NotSupportedException)
+                    {
+                        // legacy auth?
+                        var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+                        context = PnPClientContext.ConvertFrom(authManager.GetAzureADCredentialsContext(url.ToString(), credentials.UserName, credentials.Password));
+                        context.ExecuteQueryRetry();
+                    }
+#endif
                     catch (ClientRequestException)
                     {
                         context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
@@ -696,19 +705,26 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             try
             {
-                var tenant = new Tenant(clientContext);
-                clientContext.ExecuteQueryRetry();
-                return true;
-            }
-            catch (ClientRequestException)
-            {
-                return false;
-            }
-            catch (ServerException)
-            {
-                return false;
-            }
+                using (var clonedContext = clientContext.Clone(clientContext.Url))
+                {
 
+                    var tenant = new Tenant(clonedContext);
+                    clonedContext.ExecuteQueryRetry();
+                    return true;
+                }
+            }
+            catch (ClientRequestException x1)
+            {
+                return false;
+            }
+            catch (ServerException x2)
+            {
+                return false;
+            }
+            catch (WebException x3)
+            {
+                return false;
+            }
         }
 
         private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);

@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     [Cmdlet(VerbsCommon.Add, "PnPClientSideText")]
     [CmdletHelp("Adds a text element to a client-side page.",
         "Adds a new text element to a section on a client-side page.",
-      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Add-PnPClientSideText -Page ""MyPage"" -Text ""Hello World!""",
         Remarks = "Adds the text 'Hello World!' to the Client-Side Page 'MyPage'",

@@ -20,11 +20,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 1)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -Id 1",
-        Remarks = "Retrieves the list item with ID 1 from from the Tasks list",
+        Remarks = "Retrieves the list item with ID 1 from the Tasks list",
         SortOrder = 2)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3",
-        Remarks = "Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists",
+        Remarks = "Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists",
         SortOrder = 3)]
     [CmdletExample(
         Code = "PS:> (Get-PnPListItem -List Tasks -Fields \"Title\",\"GUID\").FieldValues",

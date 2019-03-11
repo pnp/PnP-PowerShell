@@ -49,7 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            // Following code to handle desprecated parameter
+            // Following code to handle deprecated parameter
             if (MyInvocation.BoundParameters.ContainsKey("FromSite"))
             {
                 Scope = CustomActionScope.Site;

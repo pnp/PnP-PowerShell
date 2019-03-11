@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.ClientSidePages;

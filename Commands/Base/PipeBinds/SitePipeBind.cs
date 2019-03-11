@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         {
             if (string.IsNullOrEmpty(url))
             {
-                throw new ArgumentException("Site");
+                throw new ArgumentException(nameof(url));
             }
             if (Guid.TryParse(url, out Guid siteId))
             {
@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                 }
                 catch (UriFormatException)
                 {
-                    throw new ArgumentException("Site");
+                    throw new ArgumentException(nameof(url));
                 }
                 _url = url;
             }
@@ -54,6 +54,5 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         public Microsoft.SharePoint.Client.Site Site => _site;
 
         public Guid Id => _id;
-
     }
 }

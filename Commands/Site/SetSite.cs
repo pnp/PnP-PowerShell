@@ -57,7 +57,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = "Sets the logo if the site is modern team site. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl", ParameterSetName = ParameterSet_PROPERTIES)]
         public string LogoFilePath;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies what the sharing capablilites are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly", ParameterSetName = ParameterSet_PROPERTIES)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly", ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingCapabilities? Sharing = null;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.", ParameterSetName = ParameterSet_PROPERTIES)]
@@ -84,7 +84,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Alias("DenyAndAddCustomizePages")]
         public SwitchParameter NoScriptSite;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection adminstrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
         public List<string> Owners;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if comments on site pages are enabled or disabled", ParameterSetName = ParameterSet_PROPERTIES)]

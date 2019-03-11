@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using System;
+using System.Linq.Expressions;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -39,5 +40,36 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
         public string Login => _login;
 
         public User User => _user;
+
+        public User GetUser(ClientContext context)
+        {
+            // note: the following code to get the user is copied from Remove-PnPUser - it could be put into a utility class
+            var retrievalExpressions = new Expression<Func<User, object>>[]
+            {
+                u => u.Id,
+                u => u.LoginName,
+                u => u.Email
+            };
+
+            User user = null;
+            if (User != null)
+            {
+                user = User;
+            }
+            else if (User.Id > 0)
+            {
+                user = context.Web.GetUserById(User.Id);
+            }
+            else if (!string.IsNullOrWhiteSpace(Login))
+            {
+                user = context.Web.SiteUsers.GetByLoginName(Login);
+            }
+            if (context.HasPendingRequest)
+            {
+                context.Load(user, retrievalExpressions);
+                context.ExecuteQueryRetry();
+            }
+            return user;
+        }
     }
 }

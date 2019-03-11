@@ -399,7 +399,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         public string[] Scopes;
 #endif
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The AAD where the O365 app is registred. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
         public string AADDomain;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Connect with an existing Access Token")]
@@ -519,7 +519,7 @@ Use -PnPO365ManagementShell instead");
 #if !ONPREMISES
             else if (ParameterSetName == ParameterSet_SPOMANAGEMENT)
             {
-                connection = ConnectNativAAD(SPOManagementClientId, SPOManagementRedirectUri);
+                connection = ConnectNativeAAD(SPOManagementClientId, SPOManagementRedirectUri);
             }
             else if (ParameterSetName == ParameterSet_DEVICELOGIN)
             {
@@ -531,7 +531,7 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_NATIVEAAD)
             {
-                connection = ConnectNativAAD(ClientId, RedirectUri);
+                connection = ConnectNativeAAD(ClientId, RedirectUri);
             }
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
@@ -648,7 +648,7 @@ Use -PnPO365ManagementShell instead");
         }
 
 #if !ONPREMISES
-        private SPOnlineConnection ConnectNativAAD(string clientId, string redirectUrl)
+        private SPOnlineConnection ConnectNativeAAD(string clientId, string redirectUrl)
         {
             string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string configFolder = Path.Combine(appDataFolder, "SharePointPnP.PowerShell");
