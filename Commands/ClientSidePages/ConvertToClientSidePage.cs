@@ -8,6 +8,9 @@ using SharePointPnP.PowerShell.Commands.Utilities;
 using System.Reflection;
 using SharePointPnP.Modernization.Framework.Cache;
 using Microsoft.SharePoint.Client;
+using System.Xml.Serialization;
+using SharePointPnP.Modernization.Framework;
+using System.IO;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -31,6 +34,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -CopyPageMetadata",
     Remarks = "Converts a wiki page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
     SortOrder = 4)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
+    Remarks = "Converts a wiki page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
+    SortOrder = 5)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private Assembly modernizationAssembly;
@@ -64,85 +71,116 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Copies the page metadata to the created modern page.")]
         public SwitchParameter CopyPageMetadata = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Uses the community script editor (https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-script-editor) as replacement for the classic script editor web part.")]
+        public SwitchParameter UseCommunityScriptEditor = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "By default summarylinks web parts are replaced by QuickLinks, but you can transform to plain html by setting this switch.")]
+        public SwitchParameter SummaryLinksToHtml = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Url of the target web that will receive the modern page. Defaults to null which means in-place transformation.")]
+        public string TargetWebUrl;
+
         protected override void ExecuteCmdlet()
         {
-            string tempPath = null;
+            //Fix loading of modernization framework
+            FixAssemblyResolving();
 
-            try
+            // Load the page to transform
+            var page = Identity.GetPage(this.ClientContext.Web);
+
+            if (page == null)
             {
-                //Fix loading of modernization framework
-                FixAssemblyResolving();
+                throw new Exception($"Page '{Identity?.Name}' does not exist");
+            }
 
-                // Load the page to transform
-                var page = Identity.GetPage(this.ClientContext.Web);
+            PageTransformation webPartMappingModel = null;
+            if (string.IsNullOrEmpty(this.WebPartMappingFile))
+            {
+                // Load xml mapping data
+                XmlSerializer xmlMapping = new XmlSerializer(typeof(PageTransformation));
 
-                if (page == null)
+                // Load the default one from resources into a model, no need for persisting this file
+                string webpartMappingFileContents = WebPartMappingLoader.LoadFile("SharePointPnP.PowerShell.Commands.ClientSidePages.webpartmapping.xml");
+
+                using (var stream = GenerateStreamFromString(webpartMappingFileContents))
                 {
-                    throw new Exception($"Page '{Identity?.Name}' does not exist");
+                    webPartMappingModel = (PageTransformation)xmlMapping.Deserialize(stream);
                 }
 
-                if (string.IsNullOrEmpty(this.WebPartMappingFile))
+                this.WriteVerbose("Using embedded webpartmapping file (https://github.com/SharePoint/PnP-PowerShell/blob/master/Commands/ClientSidePages/webpartmapping.xml)");
+            }
+
+            // Validate webpartmappingfile
+            if (!string.IsNullOrEmpty(this.WebPartMappingFile))
+            {
+                if (!System.IO.File.Exists(this.WebPartMappingFile))
                 {
-                    // Load the default one from resources
-                    string webpartMappingFileContents = WebPartMappingLoader.LoadFile("SharePointPnP.PowerShell.Commands.ClientSidePages.webpartmapping.xml");
-
-                    // Save the file to a temp location
-                    tempPath = System.IO.Path.GetTempFileName();
-                    System.IO.File.WriteAllText(tempPath, webpartMappingFileContents);
-                    this.WebPartMappingFile = tempPath;
-
-                    this.WriteVerbose("Using embedded webpartmapping file (https://github.com/SharePoint/PnP-PowerShell/blob/master/Commands/ClientSidePages/webpartmapping.xml)");
-                }
-
-                // Validate webpartmappingfile
-                if (!string.IsNullOrEmpty(this.WebPartMappingFile))
-                {
-                    if (!System.IO.File.Exists(this.WebPartMappingFile))
-                    {
-                        throw new Exception($"Provided webpartmapping file {this.WebPartMappingFile} does not exist");
-                    }
-                }
-
-                // Create transformator instance
-                PageTransformator pageTransformator = new PageTransformator(this.ClientContext, this.WebPartMappingFile);
-
-                // Setup Transformation information
-                PageTransformationInformation pti = new PageTransformationInformation(page)
-                {
-                    Overwrite = this.Overwrite,
-                    TargetPageTakesSourcePageName = this.TakeSourcePageName,
-                    ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
-                    KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
-                    CopyPageMetadata = this.CopyPageMetadata,
-                    ModernizationCenterInformation = new ModernizationCenterInformation()
-                    {
-                        AddPageAcceptBanner = this.AddPageAcceptBanner
-                    },
-                };
-
-                // Clear the client side component cache
-                if (this.ClearCache)
-                {
-                    CacheManager.Instance.ClearClientSideComponents();
-                    CacheManager.Instance.ClearFieldsToCopy();
-                    CacheManager.Instance.ClearBaseTemplate();
-                }
-
-                string serverRelativeClientPageUrl = pageTransformator.Transform(pti);
-
-                // Output the server relative url to the newly created page
-                if (!string.IsNullOrEmpty(serverRelativeClientPageUrl))
-                {
-                    WriteObject(serverRelativeClientPageUrl);
+                    throw new Exception($"Provided webpartmapping file {this.WebPartMappingFile} does not exist");
                 }
             }
-            finally
+
+            // Create target client context (when needed)
+            ClientContext targetContext = null;
+            if (!string.IsNullOrEmpty(TargetWebUrl))
             {
-                if (!string.IsNullOrEmpty(tempPath) && System.IO.File.Exists(tempPath))
-                {
-                    System.IO.File.Delete(tempPath);
-                }
+                targetContext = this.ClientContext.Clone(TargetWebUrl);
             }
+
+            // Create transformator instance
+            PageTransformator pageTransformator = null;
+
+            if (!string.IsNullOrEmpty(this.WebPartMappingFile))
+            {
+                // Use web part mapping file
+                pageTransformator = new PageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile);
+            }
+            else
+            {
+                // Use web part mapping model loaded from embedded mapping file
+                pageTransformator = new PageTransformator(this.ClientContext, targetContext, webPartMappingModel);
+            }
+
+            // Setup Transformation information
+            PageTransformationInformation pti = new PageTransformationInformation(page)
+            {
+                Overwrite = this.Overwrite,
+                TargetPageTakesSourcePageName = this.TakeSourcePageName,
+                ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
+                KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
+                CopyPageMetadata = this.CopyPageMetadata,
+                ModernizationCenterInformation = new ModernizationCenterInformation()
+                {
+                    AddPageAcceptBanner = this.AddPageAcceptBanner
+                },
+            };
+
+            // Set mapping properties
+            pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
+            pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
+
+            // Clear the client side component cache
+            if (this.ClearCache)
+            {
+                CacheManager.Instance.ClearAllCaches();
+            }
+
+            string serverRelativeClientPageUrl = pageTransformator.Transform(pti);
+
+            // Output the server relative url to the newly created page
+            if (!string.IsNullOrEmpty(serverRelativeClientPageUrl))
+            {
+                WriteObject(serverRelativeClientPageUrl);
+            }
+        }
+
+        private Stream GenerateStreamFromString(string s)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
 
         private string AssemblyDirectory
@@ -152,7 +190,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 string codeBase = Assembly.GetExecutingAssembly().CodeBase;
                 UriBuilder uri = new UriBuilder(codeBase);
                 string path = Uri.UnescapeDataString(uri.Path);
-                return System.IO.Path.GetDirectoryName(path);
+                return Path.GetDirectoryName(path);
             }
         }
 
@@ -160,9 +198,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         {
             try
             {
-                newtonsoftAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-                sitesCoreAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
-                modernizationAssembly = Assembly.LoadFrom(System.IO.Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
+                newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
+                sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
+                modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             }
             catch { }

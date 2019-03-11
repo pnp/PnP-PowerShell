@@ -32,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
         [Parameter(Mandatory = false, HelpMessage = "Block deletion of items in the library.")]
         public bool BlockDeletion;
 
-        [Parameter(Mandatory = false, HelpMessage = "Block edititing of items in the library.")]
+        [Parameter(Mandatory = false, HelpMessage = "Block editing of items in the library.")]
         public bool BlockEdit;
 
         protected override void ExecuteCmdlet()

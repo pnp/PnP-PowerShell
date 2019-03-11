@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Set, "PnPClientSideText")]
     [CmdletHelp("Set Client-Side Text Component properties",
-        SupportedPlatform = CmdletSupportedPlatform.Online,
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019,
         DetailedDescription = "Sets the rendered text in existing client side text component",
         Category = CmdletHelpCategory.WebParts)]
     [CmdletExample(

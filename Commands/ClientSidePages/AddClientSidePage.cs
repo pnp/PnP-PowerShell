@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -9,15 +9,11 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Add, "PnPClientSidePage")]
     [CmdletHelp("Adds a Client-Side Page",
-      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Add-PnPClientSidePage -Name ""NewPage""",
         Remarks = "Creates a new Client-Side page named 'NewPage'",
         SortOrder = 1)]
-    [CmdletExample(
-        Code = @"PS:> Add-PnPClientSidePage ""NewPage""",
-        Remarks = "Creates a new Client-Side page named 'NewPage'",
-        SortOrder = 2)]
     public class AddClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the name of the page.")]

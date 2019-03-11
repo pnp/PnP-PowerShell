@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Get, "PnPClientSidePage")]
     [CmdletHelp("Gets a Client-Side Page",
-      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
      [CmdletExample(
         Code = @"PS:> Get-PnPClientSidePage -Identity ""MyPage.aspx""",
         Remarks = "Gets the Modern Page (Client-Side) named 'MyPage.aspx' in the current SharePoint site",
