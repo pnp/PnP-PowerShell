@@ -1,7 +1,6 @@
 ﻿#if !SP2013 && !SP2016
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;

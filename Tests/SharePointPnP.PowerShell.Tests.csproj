@@ -353,6 +353,7 @@
     <Compile Include="FilesTest.cs" />
     <Compile Include="InvokeWebActionTest.cs" />
     <Compile Include="ListDataRowProvisioningTemplate.cs" />
+    <Compile Include="PrincipalsTests.cs" />
     <Compile Include="ProvisioningTemplateTests.cs" />
     <Compile Include="WebhookSubscriptionsTests.cs" />
     <Compile Include="DiagnosticTests.cs" />
