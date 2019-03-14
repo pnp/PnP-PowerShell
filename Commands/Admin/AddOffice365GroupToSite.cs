@@ -5,6 +5,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using OfficeDevPnP.Core.Sites;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Admin
 {
@@ -39,8 +40,13 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false, HelpMessage = @"Specifies if the current site home page is kept. Defaults to false.")]
         public SwitchParameter KeepOldHomePage;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified the site will be associated to the hubsite as identified by this id")]
+        public GuidPipeBind HubSiteId;
+
+        [Parameter(Mandatory = false, HelpMessage = "The array UPN values of the group's owners.")]
+        public string[] Owners;
         protected override void ExecuteCmdlet()
-        {
+        {            
             var groupifyInformation = new TeamSiteCollectionGroupifyInformation()
             {
                 Alias = Alias,
@@ -48,8 +54,14 @@ namespace SharePointPnP.PowerShell.Commands.Admin
                 Description = Description,
                 Classification = Classification,
                 IsPublic = IsPublic,
-                KeepOldHomePage = KeepOldHomePage
+                KeepOldHomePage = KeepOldHomePage,
+                Owners = Owners
             };
+
+            if (MyInvocation.BoundParameters.ContainsKey("HubSiteId"))
+            {
+                groupifyInformation.HubSiteId = HubSiteId.Id;
+            }
 
             Tenant.GroupifySite(Url, groupifyInformation);
         }
