@@ -4,6 +4,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -64,6 +65,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "Sets the page header type")]
         public ClientSidePageHeaderType HeaderType;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type.")]
+        public ContentTypePipeBind ContentType;
 
         [Obsolete("This parameter value will be ignored")]
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
@@ -149,6 +153,34 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 else
                 {
                     clientSidePage.DisableComments();
+                }
+            }
+
+            if(MyInvocation.BoundParameters.ContainsKey("ContentType"))
+            {
+                ContentType ct = null;
+                if (ContentType.ContentType == null)
+                {
+                    if (ContentType.Id != null)
+                    {
+                        ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
+                    }
+                    else if (ContentType.Name != null)
+                    {
+                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
+                    }
+                }
+                else
+                {
+                    ct = ContentType.ContentType;
+                }
+                if (ct != null)
+                {
+                    ct.EnsureProperty(w => w.StringId);
+
+                    clientSidePage.PageListItem["ContentTypeId"] = ct.StringId;
+                    clientSidePage.PageListItem.SystemUpdate();
+                    ClientContext.ExecuteQueryRetry();
                 }
             }
 
