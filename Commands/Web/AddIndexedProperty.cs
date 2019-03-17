@@ -1,6 +1,7 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -12,11 +13,25 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = true, Position = 0, HelpMessage = @"Key of the property bag value to be indexed")]
         public string Key;
 
+        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The list object or name where to set the indexed property")]
+        public ListPipeBind List;
+
         protected override void ExecuteCmdlet()
         {
             if (!string.IsNullOrEmpty(Key))
             {
-                SelectedWeb.AddIndexedPropertyBagKey(Key);
+                if (List != null)
+                {
+                    var list = List.GetList(SelectedWeb);
+                    if (list != null)
+                    {
+                        list.AddIndexedPropertyBagKey(Key);
+                    }
+                }
+                else
+                {
+                    SelectedWeb.AddIndexedPropertyBagKey(Key);
+                }
             }
         }
     }
