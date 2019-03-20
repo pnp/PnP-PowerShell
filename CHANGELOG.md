@@ -12,7 +12,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Sync-PnPAppToTeams to synchronize an app from the tenant app catalog to the Microsoft Teams App Catalog
 
 ### Changed
+
 - Added -ContentType parameter to Add-PnPClientSidePage and Set-PnPClientSidePage
+- ConvertTo-PnPClientSidePage: added -Library and -Folder parameters to support modernization of pages living outside of the SitePages folder
 
 ### Contributors
 
