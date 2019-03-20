@@ -28,16 +28,20 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     SortOrder = 2)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -AddPageAcceptBanner",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog.",
+    Remarks = "Converts a wiki page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog",
     SortOrder = 3)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -CopyPageMetadata",
     Remarks = "Converts a wiki page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
     SortOrder = 4)]
     [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Library ""SiteAssets"" -Folder ""Folder1"" -Overwrite",
+    Remarks = "Converts a web part page named 'somepage' living inside the SiteAssets library in a folder named folder1 into a client side page",
+    SortOrder = 5)]
+    [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
     Remarks = "Converts a wiki page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
-    SortOrder = 5)]
+    SortOrder = 6)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private Assembly modernizationAssembly;
@@ -46,6 +50,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page to convert")]
         public PagePipeBind Identity;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the library containing the page. If SitePages then please omit this parameter")]
+        public string Library;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The folder to load the provided page from. If not provided all folders are searched")]
+        public string Folder;
 
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the web part mapping file driving the transformation", ParameterSetName = "WebPartMappingFile")]
         public string WebPartMappingFile;
@@ -86,6 +96,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             FixAssemblyResolving();
 
             // Load the page to transform
+            Identity.Library = this.Library;
+            Identity.Folder = this.Folder;
             var page = Identity.GetPage(this.ClientContext.Web);
 
             if (page == null)
