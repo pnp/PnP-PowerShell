@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added the ability to set the view fields using Set-PnPView -Fields
 - Added the ability to add and removed indexed property keys to lists
 - Added the option to search by title on Get-PnPAlert
 - Added -CreateTeam to New-PnPUnifiedGroup and Set-PnPUnifiedGroup
