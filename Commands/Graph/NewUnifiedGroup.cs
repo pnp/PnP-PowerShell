@@ -56,6 +56,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set.")]
         public string GroupLogoPath;
 
+        [Parameter(Mandatory = false, HelpMessage = "Creates a MS Teams team associated with created group.")]
+        public SwitchParameter CreateTeam;
+
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
@@ -85,14 +88,15 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             if (forceCreation)
             {
                 var group = UnifiedGroupsUtility.CreateUnifiedGroup(
-                    DisplayName,
-                    Description,
-                    MailNickname,
-                    AccessToken,
-                    Owners,
-                    Members,
-                    GroupLogoPath,
-                    IsPrivate);
+                    displayName: DisplayName,
+                    description: Description,
+                    mailNickname: MailNickname,
+                    accessToken: AccessToken,
+                    owners: Owners,
+                    members: Members,
+                    groupLogoPath: GroupLogoPath,
+                    isPrivate: IsPrivate,
+                    createTeam: CreateTeam);
 
                 WriteObject(group);
             }
