@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added a -Kerberos switch to Connect-PnPOnline to facility authentication using Kerberos
 - Added the ability to set the view fields using Set-PnPView -Fields
 - Added the ability to add and removed indexed property keys to lists
 - Added the option to search by title on Get-PnPAlert
@@ -25,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Heinrich Ulbricht [heinrich-ulbricht] 
 - Gautam Sheth [gautamdsheth]
+- Thomas Meckel [tmeckel]
 
 ## [3.7.1903.0]
 
