@@ -16,6 +16,11 @@ This solution contains a library of PowerShell commands that allows you to perfo
 In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
 
 Check out the "Getting Started with the Gallery" section to make sure you have all requirements in place. 
+
+### Latest Release Quick Download
+
+The latest release can be found on [this link](https://github.com/SharePoint/PnP-PowerShell/releases)
+
 ----------
 
 # Commands included #
