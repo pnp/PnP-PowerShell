@@ -6,34 +6,27 @@ This solution contains a library of PowerShell commands that allows you to perfo
 ![SharePoint Patterns and Practices](https://devofficecdn.azureedge.net/media/Default/PnP/sppnp.png)
   
 ### Applies to ###
--  Office 365 Multi Tenant (MT)
--  Office 365 Dedicated (D)
+-  Sharepoint Online (Multi Tenant) - Office 365 Multi Tenant (MT)
+-  Sharepoint Online (Single Tenant) -Office 365 Dedicated (D)
 -  SharePoint 2013 on-premises
 -  SharePoint 2016 on-premises
 -  SharePoint 2019 on-premises
 
 ### Prerequisites ###
 In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
-  
-### Solution ###
-Solution | Author(s)
----------|----------
-SharePointPnP.PowerShell | Erwin van Hunen and countless community contributors
 
-### Disclaimer ###
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
-
-
+Check out the "Getting Started with the Gallery" section to make sure you have all requirements in place. 
 ----------
 
 # Commands included #
 [Navigate here for an overview of all cmdlets and their parameters](Documentation/readme.md)
 
 # Installation #
+There are two ways:
+* Using the [PowerShell Gallery](https://www.powershellgallery.com) **(Recommended)**
+* Alternatively you can download the setup files and install the cmdlets directly.
 
-There are 2 ways to install the cmdlets. We recommend, where possible, to install them from the [PowerShell Gallery](https://www.powershellgallery.com). Check out the "Getting Started with the Gallery" section to make sure you have all requirements in place. Alternatively you can download the setup files and install the cmdlets directly.
-
-## PowerShell Gallery ##
+## Using PowerShell Gallery ##
 
 If you main OS is Windows 10, or if you have [PowerShellGet](https://github.com/powershell/powershellget) installed, you can run the following commands to install the PowerShell cmdlets:
 
@@ -101,6 +94,15 @@ See this [wiki page](https://github.com/OfficeDev/PnP-PowerShell/wiki/How-to-use
 # Contributing #
 
 If you want to contribute to this SharePoint Patterns and Practices PowerShell library, please [proceed here](CONTRIBUTING.md)
+
+### Solution/Authors ###
+Solution | Author(s)
+---------|----------
+SharePointPnP.PowerShell | Erwin van Hunen and countless community contributors
+
+### Disclaimer ###
+**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+
 
 ## Building the source code ##
 
