@@ -17,7 +17,7 @@ using SharePointPnP.PowerShell.Commands.Utilities;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Add, "PnPListItem")]
-    [CmdletHelp("Adds an item to a list",
+    [CmdletHelp("Adds an item to a list with the creation time as the current date and the author name is the one executing the Cmdlet. It cannot be customized".
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx")]
