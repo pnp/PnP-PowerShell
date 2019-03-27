@@ -538,6 +538,9 @@
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Admin\GetHomeSite.cs" />
+    <Compile Include="Admin\RemoveHomeSite.cs" />
+    <Compile Include="Admin\SetHomeSite.cs" />
     <Compile Include="Apps\DenyTenantServicePrincipalPermissionRequest.cs" />
     <Compile Include="Apps\DisableTenantServicePrincipal.cs" />
     <Compile Include="Apps\GrantTenantServicePrincipalPermission.cs" />
