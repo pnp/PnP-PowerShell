@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Gautam Sheth [gautamdsheth]
 - Thomas Meckel [tmeckel]
 - Jose Gabriel Ortega Castro [j0rt3g4]
+- Fabian Seither [fabianseither]
 
 ## [3.7.1903.0]
 
