@@ -17,11 +17,11 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Remove-PnPAlert -Identity 641ac67f-0ce0-4837-874a-743c8f8572a7 -User ""i:0#.f|membership|Alice@contoso.onmicrosoft.com""",
-        Remarks = @"Removes the laert with the specified ID for the user specified",
+        Remarks = @"Removes the alert with the specified ID for the user specified",
         SortOrder = 2)]
     public class RemoveAlert : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "User to remove the alert for (User ID, login name or actual User object). Skip this parameter to usethe current user. Note: Only site owners can remove alerts for other users.")]
+        [Parameter(Mandatory = false, HelpMessage = "User to remove the alert for (User ID, login name or actual User object). Skip this parameter to use the current user. Note: Only site owners can remove alerts for other users.")]
         public UserPipeBind User;
 
         [Parameter(Mandatory = true, HelpMessage = "The alert id, or the actual alert object to remove.")]

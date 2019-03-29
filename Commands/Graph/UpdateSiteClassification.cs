@@ -27,7 +27,7 @@ PS:> Update-PnPSiteClassification -DefaultClassification ""LBI""",
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassification -UsageGuidelinesUrl http://aka.ms/sppnp",
+PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
         Remarks = @"sets the usage guideliness URL to the specified URL.",
         SortOrder = 3)]
     public class UpdateSiteClassification : PnPGraphCmdlet

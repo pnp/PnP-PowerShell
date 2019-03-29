@@ -13,11 +13,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added a -Kerberos switch to Connect-PnPOnline to facility authentication using Kerberos
+- Added the ability to set the view fields using Set-PnPView -Fields
+- Added the ability to add and removed indexed property keys to lists
+- Added the option to search by title on Get-PnPAlert
+- Added -CreateTeam to New-PnPUnifiedGroup and Set-PnPUnifiedGroup
 - Added -ContentType parameter to Add-PnPClientSidePage and Set-PnPClientSidePage
 - ConvertTo-PnPClientSidePage: added -Library and -Folder parameters to support modernization of pages living outside of the SitePages folder
 - ConvertTo-PnPClientSidePage: added -LogType, -LogFolder, -LogSkipFlush and -LogVerbose parameters to support log generation to an md file or SharePoint page
 
 ### Contributors
+
+- Heinrich Ulbricht [heinrich-ulbricht] 
+- Gautam Sheth [gautamdsheth]
+- Thomas Meckel [tmeckel]
+- Jose Gabriel Ortega Castro [j0rt3g4]
+- Fabian Seither [fabianseither]
 
 ## [3.7.1903.0]
 
