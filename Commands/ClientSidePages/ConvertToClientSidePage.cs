@@ -111,6 +111,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Configure logging to include verbose log entries")]
         public SwitchParameter LogVerbose = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Don't publish the created modern page")]
+        public SwitchParameter DontPublish = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Disable comments for the created modern page")]
+        public SwitchParameter DisablePageComments = false;
+
         protected override void ExecuteCmdlet()
         {
             //Fix loading of modernization framework
@@ -191,6 +197,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
                 KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                 CopyPageMetadata = this.CopyPageMetadata,
+                PublishCreatedPage = !this.DontPublish,
+                DisablePageComments = this.DisablePageComments,
                 ModernizationCenterInformation = new ModernizationCenterInformation()
                 {
                     AddPageAcceptBanner = this.AddPageAcceptBanner
