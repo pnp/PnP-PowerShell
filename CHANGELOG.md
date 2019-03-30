@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added Sync-PnPAppToTeams to synchronize an app from the tenant app catalog to the Microsoft Teams App Catalog
+- Added Export-PnPClientSidePageMapping to export the mapping files needed during publishing page transformation
 
 ### Changed
 
