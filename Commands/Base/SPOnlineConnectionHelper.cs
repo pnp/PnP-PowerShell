@@ -563,11 +563,16 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
                 }
             }
+#if SP2013 || SP2016 || SP2019
             var connectionType = ConnectionType.OnPrem;
+#else
+            var connectionType = ConnectionType.O365;
+#endif
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {
                 connectionType = ConnectionType.O365;
             }
+
             if (skipAdminCheck == false)
             {
                 if (IsTenantAdminSite(context))
