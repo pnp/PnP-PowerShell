@@ -289,7 +289,6 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 {
                     Overwrite = this.Overwrite,
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
-                    CopyPageMetadata = this.CopyPageMetadata,
                     PublishCreatedPage = !this.DontPublish,
                     DisablePageComments = this.DisablePageComments,                    
                 };
