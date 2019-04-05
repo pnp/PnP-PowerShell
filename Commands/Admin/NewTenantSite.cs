@@ -1,5 +1,8 @@
 ﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
+#if ONPREMISES
+using OfficeDevPnP.Core.Entities;
+#endif
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System;

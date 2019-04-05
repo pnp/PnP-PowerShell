@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !ONPREMISES
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System.Management.Automation;
@@ -22,3 +23,4 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         }
     }
 }
+#endif
