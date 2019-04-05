@@ -1,10 +1,12 @@
-﻿using System;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
+#if ONPREMISES
 using OfficeDevPnP.Core.Entities;
+#endif
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
+using System;
+using System.Management.Automation;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 
@@ -17,11 +19,11 @@ Online site collection fails if a deleted site with the same URL exists in the R
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
         Code = @"PS:> New-PnPTenantSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Owner user@example.org -TimeZone 4 -Template STS#0",
-        Remarks = @"This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contoso', the timezone 'UTC+01:00',the owner 'user@example.org' and the template used will be STS#0, a TeamSite", 
+        Remarks = @"This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contoso', the timezone 'UTC+01:00',the owner 'user@example.org' and the template used will be STS#0, a TeamSite",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> New-PnPTenantSite -Title Contoso -Url /sites/contososite -Owner user@example.org -TimeZone 4 -Template STS#0",
-        Remarks = @"This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contososite' of which the base part will be picked up from your current connection, the timezone 'UTC+01:00', the owner 'user@example.org' and the template used will be STS#0, a TeamSite", 
+        Remarks = @"This will add a site collection with the title 'Contoso', the url 'https://tenant.sharepoint.com/sites/contososite' of which the base part will be picked up from your current connection, the timezone 'UTC+01:00', the owner 'user@example.org' and the template used will be STS#0, a TeamSite",
         SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "Locale IDs",
@@ -40,7 +42,8 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the full URL of the new site collection. It must be in a valid managed path in the company's site. For example, for company contoso, valid managed paths are https://contoso.sharepoint.com/sites and https://contoso.sharepoint.com/teams.")]
         public string Url;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the description of the new site collection")]
+        [Obsolete("This parameter is currently ignored due to server side API issues when setting this value.")]
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the description of the new site collection. Setting a value for this parameter will override the Wait parameter as we have to set the description after the site has been created.")]
         public string Description = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
@@ -103,11 +106,15 @@ Online site collection fails if a deleted site with the same URL exists in the R
                 entity.UserCodeMaximumLevel = ResourceQuota;
                 entity.UserCodeWarningLevel = ResourceQuotaWarningLevel;
                 entity.Lcid = Lcid;
-
                 Tenant.CreateSiteCollection(entity);
 #else
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
+                if (MyInvocation.BoundParameters.ContainsKey("Description"))
+                {
+                    // We have to fall back to synchronous behaviour as we have to wait for the site to be present in order to set the description.
+                    Wait = true;
+                }
 
                 Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
                     (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid,
