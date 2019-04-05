@@ -43,14 +43,22 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 
         public string Name => this.name;
 
-        internal ListItem GetPage(Web web)
-        {
-            // Get pages library
-            web.EnsureProperty(w => w.ServerRelativeUrl);
-            var listServerRelativeUrl = UrlUtility.Combine(web.ServerRelativeUrl, "sitepages");
-            var sitePagesLibrary = web.GetList(listServerRelativeUrl);
+        public string Library { get; set; }
 
-            if (sitePagesLibrary != null)
+        public string Folder { get; set; }
+
+        internal ListItem GetPage(Web web, string listToLoad)
+        {
+            if (!string.IsNullOrEmpty(this.Library))
+            {
+                listToLoad = this.Library;
+            }
+
+            web.EnsureProperty(w => w.ServerRelativeUrl);
+            var listServerRelativeUrl = UrlUtility.Combine(web.ServerRelativeUrl, listToLoad);
+            var libraryContainingPage = web.GetList(listServerRelativeUrl);
+
+            if (libraryContainingPage != null)
             {
                 CamlQuery query = null;
                 if (!string.IsNullOrEmpty(this.name))
@@ -60,7 +68,13 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                         ViewXml = string.Format(CAMLQueryByExtensionAndName, this.name)
                     };
 
-                    var page = sitePagesLibrary.GetItems(query);
+                    if (!string.IsNullOrEmpty(this.Folder))
+                    {
+                        libraryContainingPage.EnsureProperty(p => p.RootFolder);
+                        query.FolderServerRelativeUrl = $"{libraryContainingPage.RootFolder.ServerRelativeUrl}/{Folder}";
+                    }
+
+                    var page = libraryContainingPage.GetItems(query);
                     web.Context.Load(page);
                     web.Context.ExecuteQueryRetry();
 
@@ -71,6 +85,11 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                 }
             }
 
+            return null;
+        }
+
+        internal ListItem GetPublishingPage(Web web)
+        {
             return null;
         }
 

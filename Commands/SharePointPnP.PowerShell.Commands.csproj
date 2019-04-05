@@ -538,9 +538,13 @@
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Admin\GetHomeSite.cs" />
+    <Compile Include="Admin\RemoveHomeSite.cs" />
+    <Compile Include="Admin\SetHomeSite.cs" />
     <Compile Include="Apps\DenyTenantServicePrincipalPermissionRequest.cs" />
     <Compile Include="Apps\DisableTenantServicePrincipal.cs" />
     <Compile Include="Apps\GrantTenantServicePrincipalPermission.cs" />
+    <Compile Include="Apps\SyncAppToTeams.cs" />
     <Compile Include="Apps\RevokeTenantServicePrincipalPermission.cs" />
     <Compile Include="Apps\GetTenantServicePrincipal.cs" />
     <Compile Include="Apps\EnableTenantServicePrincipal.cs" />
@@ -592,6 +596,8 @@
     <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="ClientSidePages\ClientSidePageTransformatorLogType.cs" />
+    <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
@@ -1090,6 +1096,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ClientSidePages\pagelayoutmapping.xml" />
     <Content Include="Resources\pnp.ico" />
     <EmbeddedResource Include="ClientSidePages\webpartmapping.xml" />
   </ItemGroup>

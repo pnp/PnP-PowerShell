@@ -21,6 +21,10 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         Code = @"PS:> Get-PnPList -Identity ""Tasks"" | Get-PnPView | Set-PnPView -Values @{JSLink=""hierarchytaskslist.js|customrendering.js""}",
         Remarks = @"Updates all views on list ""Tasks"" to use hierarchytaskslist.js and customrendering.js for the JSLink",
         SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPView -List ""Documents"" -Identity ""Corporate Documents"" -Fields ""Title"",""Created""",
+        Remarks = @"Updates the Corporate Documents view on the Documents library to have two fields",
+        SortOrder = 2)]
     public class SetView : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "The Id, Title or Url of the list")]
@@ -29,8 +33,11 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Id, Title or instance of the view")]
         public ViewPipeBind Identity;
 
-        [Parameter(Mandatory = true, HelpMessage = "Hashtable of properties to update on the view. Use the syntax @{property1=\"value\";property2=\"value\"}.")]
+        [Parameter(Mandatory = false, HelpMessage = "Hashtable of properties to update on the view. Use the syntax @{property1=\"value\";property2=\"value\"}.")]
         public Hashtable Values;
+
+        [Parameter(Mandatory = false, HelpMessage = "An array of fields to use in the view. Notice that specifying this value will remove the existing fields")]
+        public string[] Fields;
 
         protected override void ExecuteCmdlet()
         {
@@ -70,35 +77,49 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 throw new PSArgumentException("View provided in the Identity argument could not be found", "Identity");
             }
 
-            bool atLeastOnePropertyChanged = false;
-            foreach (string key in Values.Keys)
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(Values)))
             {
-                var value = Values[key];
+                bool atLeastOnePropertyChanged = false;
+                foreach (string key in Values.Keys)
+                {
+                    var value = Values[key];
 
-                var property = view.GetType().GetProperty(key);
-                if (property == null)
-                {
-                    WriteWarning($"No property '{key}' found on this view. Value will be ignored.");
+                    var property = view.GetType().GetProperty(key);
+                    if (property == null)
+                    {
+                        WriteWarning($"No property '{key}' found on this view. Value will be ignored.");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            property.SetValue(view, value);
+                            atLeastOnePropertyChanged = true;
+                        }
+                        catch (Exception e)
+                        {
+                            WriteWarning($"Setting property '{key}' to '{value}' failed with exception '{e.Message}'. Value will be ignored.");
+                        }
+                    }
                 }
-                else
+
+                if (atLeastOnePropertyChanged)
                 {
-                    try
-                    {
-                        property.SetValue(view, value);
-                        atLeastOnePropertyChanged = true;
-                    }
-                    catch (Exception e)
-                    {
-                        WriteWarning($"Setting property '{key}' to '{value}' failed with exception '{e.Message}'. Value will be ignored.");
-                    }
+                    view.Update();
+                    ClientContext.ExecuteQueryRetry();
                 }
             }
-
-            if (atLeastOnePropertyChanged)
+            if(MyInvocation.BoundParameters.ContainsKey(nameof(Fields)))
             {
+                view.ViewFields.RemoveAll();
+                foreach(var viewField in Fields)
+                {
+                    view.ViewFields.Add(viewField);
+                }
                 view.Update();
                 ClientContext.ExecuteQueryRetry();
             }
+            
         }
     }
 }

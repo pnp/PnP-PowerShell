@@ -83,7 +83,7 @@ PS:> New-PnPUPABulkImportJob -Folder ""Shared Documents"" -Path profiles.json -I
             var o365 = new Office365Tenant(ClientContext);
             var propDictionary = UserProfilePropertyMapping.Cast<DictionaryEntry>().ToDictionary(kvp => (string)kvp.Key, kvp => (string)kvp.Value);
             var url = new Uri(webCtx.Url).GetLeftPart(UriPartial.Authority) + file.ServerRelativeUrl;
-            var id = o365.QueueImportProfileProperties(ImportProfilePropertiesUserIdType.Email, IdProperty, propDictionary, url);
+            var id = o365.QueueImportProfileProperties(IdType, IdProperty, propDictionary, url);
             ClientContext.ExecuteQueryRetry();
 
             var job = o365.GetImportProfilePropertyJob(id.Value);

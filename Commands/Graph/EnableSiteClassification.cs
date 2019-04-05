@@ -21,7 +21,7 @@ PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"" -UsageGuidelinesUrl http://aka.ms/sppnp",
+PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"" -UsageGuidelinesUrl https://aka.ms/sppnp",
         Remarks = @"Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.",
         SortOrder = 2)]
     public class EnableSiteClassification : PnPGraphCmdlet

@@ -563,11 +563,16 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
                 }
             }
+#if SP2013 || SP2016 || SP2019
             var connectionType = ConnectionType.OnPrem;
+#else
+            var connectionType = ConnectionType.O365;
+#endif
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {
                 connectionType = ConnectionType.O365;
             }
+
             if (skipAdminCheck == false)
             {
                 if (IsTenantAdminSite(context))
@@ -581,22 +586,44 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 
 #if !NETSTANDARD2_0
-        internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
+        internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
 
-            var networkCredentials = credentials.GetNetworkCredential();
-
             string adfsHost;
             string adfsRelyingParty;
-            GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
+            OfficeDevPnP.Core.AuthenticationManager.GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
 
             if (string.IsNullOrEmpty(adfsHost) || string.IsNullOrEmpty(adfsRelyingParty))
             {
                 throw new Exception("Cannot retrieve ADFS settings.");
             }
 
-            var context = PnPClientContext.ConvertFrom(authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(), networkCredentials.UserName, networkCredentials.Password, networkCredentials.Domain, adfsHost, adfsRelyingParty), retryCount, retryWait * 1000);
+            PnPClientContext context;
+            if (useKerberos)
+            {
+                context = PnPClientContext.ConvertFrom(authManager.GetADFSKerberosMixedAuthenticationContext(url.ToString(),
+                                adfsHost,
+                                adfsRelyingParty),
+                            retryCount,
+                            retryWait * 1000);
+            }
+            else
+            {
+                if (null == credentials)
+                {
+                    throw new ArgumentNullException(nameof(credentials));
+                }
+                var networkCredentials = credentials.GetNetworkCredential();
+                context = PnPClientContext.ConvertFrom(authManager.GetADFSUserNameMixedAuthenticatedContext(url.ToString(),
+                                networkCredentials.UserName,
+                                networkCredentials.Password,
+                                networkCredentials.Domain,
+                                adfsHost,
+                                adfsRelyingParty),
+                            retryCount,
+                            retryWait * 1000);
+            }
 
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
@@ -670,35 +697,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
             return null;
-        }
-
-        public static void GetAdfsConfigurationFromTargetUri(Uri targetApplicationUri, string loginProviderName, out string adfsHost, out string adfsRelyingParty)
-        {
-            adfsHost = "";
-            adfsRelyingParty = "";
-
-            var trustEndpoint = new Uri(new Uri(targetApplicationUri.GetLeftPart(UriPartial.Authority)), !string.IsNullOrWhiteSpace(loginProviderName) ? $"/_trust/?trust={loginProviderName}" : "/_trust/");
-            var request = (HttpWebRequest)WebRequest.Create(trustEndpoint);
-            request.AllowAutoRedirect = false;
-
-            try
-            {
-                using (var response = request.GetResponse())
-                {
-                    var locationHeader = response.Headers["Location"];
-                    if (locationHeader != null)
-                    {
-                        var redirectUri = new Uri(locationHeader);
-                        Dictionary<string, string> queryParameters = Regex.Matches(redirectUri.Query, "([^?=&]+)(=([^&]*))?").Cast<Match>().ToDictionary(x => x.Groups[1].Value, x => Uri.UnescapeDataString(x.Groups[3].Value));
-                        adfsHost = redirectUri.Host;
-                        adfsRelyingParty = queryParameters["wtrealm"];
-                    }
-                }
-            }
-            catch (WebException ex)
-            {
-                throw new Exception("Endpoint does not use ADFS for authentication.", ex);
-            }
         }
 
         private static bool IsTenantAdminSite(ClientRuntimeContext clientContext)

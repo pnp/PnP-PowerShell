@@ -56,6 +56,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set.")]
         public string GroupLogoPath;
 
+        [Parameter(Mandatory = false, HelpMessage = "Creates a MS Teams team associated with created group.")]
+        public SwitchParameter CreateTeam;
+
         protected override void ExecuteCmdlet()
         {
             UnifiedGroupEntity group = null;
@@ -78,12 +81,20 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     groupLogoStream = new FileStream(GroupLogoPath, FileMode.Open, FileAccess.Read);
                 }
                 bool? isPrivateGroup = null;
-                if(IsPrivate.IsPresent)
+                if (IsPrivate.IsPresent)
                 {
                     isPrivateGroup = IsPrivate.ToBool();
                 }
-                UnifiedGroupsUtility.UpdateUnifiedGroup(group.GroupId, AccessToken, displayName: DisplayName,
-                    description: Description, owners: Owners, members: Members, groupLogo: groupLogoStream, isPrivate: isPrivateGroup);
+                UnifiedGroupsUtility.UpdateUnifiedGroup(
+                    groupId: group.GroupId,
+                    accessToken: AccessToken,
+                    displayName: DisplayName,
+                    description: Description,
+                    owners: Owners,
+                    members: Members,
+                    groupLogo: groupLogoStream,
+                    isPrivate: isPrivateGroup,
+                    createTeam: CreateTeam);
             }
             else
             {
