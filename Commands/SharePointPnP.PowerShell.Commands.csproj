@@ -597,6 +597,7 @@
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
     <Compile Include="ClientSidePages\ClientSidePageTransformatorLogType.cs" />
+    <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
@@ -1095,6 +1096,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ClientSidePages\pagelayoutmapping.xml" />
     <Content Include="Resources\pnp.ico" />
     <EmbeddedResource Include="ClientSidePages\webpartmapping.xml" />
   </ItemGroup>

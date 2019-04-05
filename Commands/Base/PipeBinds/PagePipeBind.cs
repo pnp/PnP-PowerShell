@@ -47,11 +47,8 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 
         public string Folder { get; set; }
 
-        internal ListItem GetPage(Web web)
+        internal ListItem GetPage(Web web, string listToLoad)
         {
-            // Get pages library
-            string listToLoad = "sitepages";
-
             if (!string.IsNullOrEmpty(this.Library))
             {
                 listToLoad = this.Library;
@@ -88,6 +85,11 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                 }
             }
 
+            return null;
+        }
+
+        internal ListItem GetPublishingPage(Web web)
+        {
             return null;
         }
 

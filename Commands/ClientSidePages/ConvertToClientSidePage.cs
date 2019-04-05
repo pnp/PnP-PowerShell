@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 using SharePointPnP.Modernization.Framework;
 using System.IO;
 using SharePointPnP.Modernization.Framework.Telemetry.Observers;
+using SharePointPnP.Modernization.Framework.Publishing;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -36,21 +37,25 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     Remarks = "Converts a wiki page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
     SortOrder = 4)]
     [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
+    Remarks = "Converts a publishing page named 'somepage' to a client side pagein the https://contoso.sharepoint.com/sites/targetmodernsite site",
+    SortOrder = 5)]
+    [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Library ""SiteAssets"" -Folder ""Folder1"" -Overwrite",
     Remarks = "Converts a web part page named 'somepage' living inside the SiteAssets library in a folder named folder1 into a client side page",
-    SortOrder = 5)]
+    SortOrder = 6)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
     Remarks = "Converts a wiki page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
-    SortOrder = 6)]
+    SortOrder = 7)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite",
     Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\temp using verbose logging",
-    SortOrder = 7)]
+    SortOrder = 8)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType SharePoint -LogSkipFlush",
     Remarks = "Converts a web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log",
-    SortOrder = 8)]
+    SortOrder = 9)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private Assembly modernizationAssembly;
@@ -66,7 +71,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The folder to load the provided page from. If not provided all folders are searched")]
         public string Folder;
 
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the web part mapping file driving the transformation", ParameterSetName = "WebPartMappingFile")]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the web part mapping file driving the transformation")]
         public string WebPartMappingFile;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites page if already existing")]
@@ -111,21 +116,50 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Configure logging to include verbose log entries")]
         public SwitchParameter LogVerbose = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Don't publish the created modern page")]
+        public SwitchParameter DontPublish = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Disable comments for the created modern page")]
+        public SwitchParameter DisablePageComments = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "I'm transforming a publishing page")]
+        public SwitchParameter PublishingPage = false;
+
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the page layout mapping file driving the publishing page transformation")]
+        public string PageLayoutMapping;
+
+
         protected override void ExecuteCmdlet()
         {
             //Fix loading of modernization framework
             FixAssemblyResolving();
-
+            
             // Load the page to transform
             Identity.Library = this.Library;
             Identity.Folder = this.Folder;
-            var page = Identity.GetPage(this.ClientContext.Web);
+
+            ListItem page = null;
+            if (this.PublishingPage)
+            {
+                page = Identity.GetPage(this.ClientContext.Web, CacheManager.Instance.GetPublishingPagesLibraryName(this.ClientContext));
+            }
+            else
+            {
+                page = Identity.GetPage(this.ClientContext.Web, "sitepages");
+            }
 
             if (page == null)
             {
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
             }
 
+            // Publishing specific validation
+            if (this.PublishingPage && string.IsNullOrEmpty(this.TargetWebUrl))
+            {
+                throw new Exception($"Publishing page transformation is only supported when transformating into another site collection. Use the -TargetWebUrl to specify a modern target site.");
+            }
+
+            // Load transformation models
             PageTransformation webPartMappingModel = null;
             if (string.IsNullOrEmpty(this.WebPartMappingFile))
             {
@@ -140,7 +174,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     webPartMappingModel = (PageTransformation)xmlMapping.Deserialize(stream);
                 }
 
-                this.WriteVerbose("Using embedded webpartmapping file (https://github.com/SharePoint/PnP-PowerShell/blob/master/Commands/ClientSidePages/webpartmapping.xml)");
+                this.WriteVerbose("Using embedded webpartmapping file. Use Export-PnPClientSidePageMapping to get that file in case you want to base your version of the embedded version.");
             }
 
             // Validate webpartmappingfile
@@ -152,6 +186,11 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
+            if (this.PublishingPage && !string.IsNullOrEmpty(this.PageLayoutMapping) && !System.IO.File.Exists(this.PageLayoutMapping))
+            {
+                throw new Exception($"Provided pagelayout mapping file {this.PageLayoutMapping} does not exist");
+            }
+
             // Create target client context (when needed)
             ClientContext targetContext = null;
             if (!string.IsNullOrEmpty(TargetWebUrl))
@@ -161,45 +200,80 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
             // Create transformator instance
             PageTransformator pageTransformator = null;
+            PublishingPageTransformator publishingPageTransformator = null;
 
             if (!string.IsNullOrEmpty(this.WebPartMappingFile))
             {
-                // Use web part mapping file
-                pageTransformator = new PageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile);
+                // Using custom web part mapping file
+                if (this.PublishingPage)
+                {
+                    if (!string.IsNullOrEmpty(this.PageLayoutMapping))
+                    {
+                        // Using custom page layout mapping file + default one (they're merged together)
+                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, this.PageLayoutMapping);
+                    }
+                    else
+                    {
+                        // Using default page layout mapping file
+                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, null);
+                    }
+                }
+                else
+                {
+                    // Use web part mapping file
+                    pageTransformator = new PageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile);
+                }
             }
             else
             {
-                // Use web part mapping model loaded from embedded mapping file
-                pageTransformator = new PageTransformator(this.ClientContext, targetContext, webPartMappingModel);
+                // Using default web part mapping file
+                if (this.PublishingPage)
+                {
+                    if (!string.IsNullOrEmpty(this.PageLayoutMapping))
+                    {
+                        // Load and validate the custom mapping file
+                        PageLayoutManager pageLayoutManager = new PageLayoutManager(this.ClientContext);
+                        var pageLayoutMappingModel = pageLayoutManager.LoadPageLayoutMappingFile(this.PageLayoutMapping);
+
+                        // Using custom page layout mapping file + default one (they're merged together)
+                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, pageLayoutMappingModel);
+                    }
+                    else
+                    {
+                        // Using default page layout mapping file
+                        publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, null);
+                    }
+                }
+                else
+                {
+                    // Use web part mapping model loaded from embedded mapping file
+                    pageTransformator = new PageTransformator(this.ClientContext, targetContext, webPartMappingModel);
+                }
             }
 
             // Setup logging
             if (this.LogType == ClientSidePageTransformatorLogType.File)
             {
-                pageTransformator.RegisterObserver(new MarkdownObserver(folder:this.LogFolder, includeDebugEntries:this.LogVerbose));
+                if (this.PublishingPage)
+                {
+                    publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeDebugEntries: this.LogVerbose));
+                }
+                else
+                {
+                    pageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeDebugEntries: this.LogVerbose));
+                }
             }
             else if (this.LogType == ClientSidePageTransformatorLogType.SharePoint)
             {
-                pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeDebugEntries: this.LogVerbose));
-            }
-
-            // Setup Transformation information
-            PageTransformationInformation pti = new PageTransformationInformation(page)
-            {
-                Overwrite = this.Overwrite,
-                TargetPageTakesSourcePageName = this.TakeSourcePageName,
-                ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
-                KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
-                CopyPageMetadata = this.CopyPageMetadata,
-                ModernizationCenterInformation = new ModernizationCenterInformation()
+                if (this.PublishingPage)
                 {
-                    AddPageAcceptBanner = this.AddPageAcceptBanner
-                },
-            };
-
-            // Set mapping properties
-            pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
-            pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
+                    publishingPageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeDebugEntries: this.LogVerbose));
+                }
+                else
+                {
+                    pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeDebugEntries: this.LogVerbose));
+                }
+            }
 
             // Clear the client side component cache
             if (this.ClearCache)
@@ -207,14 +281,62 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 CacheManager.Instance.ClearAllCaches();
             }
 
-            string serverRelativeClientPageUrl = pageTransformator.Transform(pti);
+            string serverRelativeClientPageUrl = "";
+            if (this.PublishingPage)
+            {
+                // Setup Transformation information
+                PublishingPageTransformationInformation pti = new PublishingPageTransformationInformation(page)
+                {
+                    Overwrite = this.Overwrite,
+                    KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
+                    PublishCreatedPage = !this.DontPublish,
+                    DisablePageComments = this.DisablePageComments,                    
+                };
+
+                // Set mapping properties
+                pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
+                pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
+
+                serverRelativeClientPageUrl = publishingPageTransformator.Transform(pti);
+            }
+            else
+            {
+                // Setup Transformation information
+                PageTransformationInformation pti = new PageTransformationInformation(page)
+                {
+                    Overwrite = this.Overwrite,
+                    TargetPageTakesSourcePageName = this.TakeSourcePageName,
+                    ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
+                    KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
+                    CopyPageMetadata = this.CopyPageMetadata,
+                    PublishCreatedPage = !this.DontPublish,
+                    DisablePageComments = this.DisablePageComments,
+                    ModernizationCenterInformation = new ModernizationCenterInformation()
+                    {
+                        AddPageAcceptBanner = this.AddPageAcceptBanner
+                    },
+                };
+
+                // Set mapping properties
+                pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
+                pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
+
+                serverRelativeClientPageUrl = pageTransformator.Transform(pti);
+            }
 
             // Flush log
             if (this.LogType != ClientSidePageTransformatorLogType.None)
             {
                 if (!this.LogSkipFlush)
                 {
-                    pageTransformator.FlushObservers();
+                    if (this.PublishingPage)
+                    {
+                        publishingPageTransformator.FlushObservers();
+                    }
+                    else
+                    {
+                        pageTransformator.FlushObservers();
+                    }
                 }
             }
 

@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added Sync-PnPAppToTeams to synchronize an app from the tenant app catalog to the Microsoft Teams App Catalog
+- Added Export-PnPClientSidePageMapping to export the mapping files needed during publishing page transformation
 
 ### Changed
 
@@ -21,6 +22,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added -ContentType parameter to Add-PnPClientSidePage and Set-PnPClientSidePage
 - ConvertTo-PnPClientSidePage: added -Library and -Folder parameters to support modernization of pages living outside of the SitePages folder
 - ConvertTo-PnPClientSidePage: added -LogType, -LogFolder, -LogSkipFlush and -LogVerbose parameters to support log generation to an md file or SharePoint page
+- ConvertTo-PnPClientSidePage: added -DontPublish and -DisablePageComments parameters to control the page publishing and commenting
+- ConvertTo-PnPClientSidePage: added -PublishingPage and -PageLayoutMapping to support publishing page transformation
 
 ### Contributors
 
