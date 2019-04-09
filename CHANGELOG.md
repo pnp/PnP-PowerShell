@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added HeaderLayout and -HeaderEmphasis parameters to Set-PnPWeb
+- Support to specify lcid for Export-PnPTaxonomy for a particular termset
 
 ### Changed
 
