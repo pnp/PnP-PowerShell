@@ -26,6 +26,10 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254",
         Remarks = "Exports the term set with the specified id",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254 -Lcid 1044",
+        Remarks = "Exports the term set with the specified id using Norwegian labels",
+        SortOrder = 4)]
     public class ExportTaxonomy : PnPCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "If specified, will export the specified termset only")]
@@ -46,6 +50,9 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, HelpMessage = "The path delimiter to be used, by default this is '|'")]
         public string Delimiter = "|";
 
+        [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "Specify the language code for the exported terms")]
+        public int Lcid = 0;
+
         [Parameter(Mandatory = false, HelpMessage = "Defaults to Unicode")]
         public Encoding Encoding = Encoding.Unicode;
 
@@ -63,11 +70,11 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                 {
                     var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
                     var termStore = taxSession.TermStores.GetByName(TermStoreName);
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, termStore, Delimiter);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, termStore, Delimiter, Lcid);
                 }
                 else
                 {
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, Delimiter);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, Delimiter, Lcid);
                 }
             }
             else

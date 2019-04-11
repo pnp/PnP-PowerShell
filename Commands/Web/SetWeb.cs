@@ -27,6 +27,12 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public string CustomMasterUrl;
 
+        [Parameter(Mandatory = false)]
+        public HeaderLayoutType HeaderLayout = HeaderLayoutType.Standard;
+
+        [Parameter(Mandatory = false)]
+        public SPVariantThemeType HeaderEmphasis = SPVariantThemeType.None;
+
         protected override void ExecuteCmdlet()
         {
             var dirty = false;
@@ -35,33 +41,43 @@ namespace SharePointPnP.PowerShell.Commands
             {
                 switch (key)
                 {
-                    case "SiteLogoUrl":
+                    case nameof(SiteLogoUrl):
                         SelectedWeb.SiteLogoUrl = SiteLogoUrl;
                         dirty = true;
                         break;
 
-                    case "AlternateCssUrl":
+                    case nameof(AlternateCssUrl):
                         SelectedWeb.AlternateCssUrl = AlternateCssUrl;
                         dirty = true;
                         break;
 
-                    case "Title":
+                    case nameof(Title):
                         SelectedWeb.Title = Title;
                         dirty = true;
                         break;
 
-                    case "Description":
+                    case nameof(Description):
                         SelectedWeb.Description = Description;
                         dirty = true;
                         break;
 
-                    case "MasterUrl":
+                    case nameof(MasterUrl):
                         SelectedWeb.MasterUrl = MasterUrl;
                         dirty = true;
                         break;
 
-                    case "CustomMasterUrl":
+                    case nameof(CustomMasterUrl):
                         SelectedWeb.CustomMasterUrl = CustomMasterUrl;
+                        dirty = true;
+                        break;
+
+                    case nameof(HeaderLayout):
+                        SelectedWeb.HeaderLayout = HeaderLayout;
+                        dirty = true;
+                        break;
+
+                    case nameof(HeaderEmphasis):
+                        SelectedWeb.HeaderEmphasis = HeaderEmphasis;
                         dirty = true;
                         break;
                 }

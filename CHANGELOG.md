@@ -5,11 +5,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.8.1904.0] - unreleased 
+## [3.9.1905.0 - May 2019 Release]
+
+### Added
+
+- Added HeaderLayout and -HeaderEmphasis parameters to Set-PnPWeb
+- Support to specify lcid for Export-PnPTaxonomy for a particular termset
+
+### Changed
+
+
+## [3.8.1904.0]
 
 ### Added
 
 - Added Sync-PnPAppToTeams to synchronize an app from the tenant app catalog to the Microsoft Teams App Catalog
+- Added Export-PnPClientSidePageMapping to export the mapping files needed during publishing page transformation
 
 ### Changed
 
@@ -21,12 +32,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added -ContentType parameter to Add-PnPClientSidePage and Set-PnPClientSidePage
 - ConvertTo-PnPClientSidePage: added -Library and -Folder parameters to support modernization of pages living outside of the SitePages folder
 - ConvertTo-PnPClientSidePage: added -LogType, -LogFolder, -LogSkipFlush and -LogVerbose parameters to support log generation to an md file or SharePoint page
+- ConvertTo-PnPClientSidePage: added -DontPublish and -DisablePageComments parameters to control the page publishing and commenting
+- ConvertTo-PnPClientSidePage: added -PublishingPage and -PageLayoutMapping to support publishing page transformation
 
 ### Contributors
 
 - Heinrich Ulbricht [heinrich-ulbricht] 
 - Gautam Sheth [gautamdsheth]
 - Thomas Meckel [tmeckel]
+- Jose Gabriel Ortega Castro [j0rt3g4]
+- Fabian Seither [fabianseither]
 
 ## [3.7.1903.0]
 

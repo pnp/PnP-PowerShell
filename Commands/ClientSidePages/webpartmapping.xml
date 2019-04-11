@@ -182,7 +182,7 @@ configure the page transformation engine to use the community script editor. You
       <WebPart Type="Microsoft.SharePoint.WebPartPages.ContentEditorWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" CrossSiteTransformationSupported="true">
         <Properties>
           <Property Name="ContentLink" Type="string" Functions="{Temp} = ContentEmbedCrossSiteCheck({ContentLink}); {ServerRelativeContent} = ReturnServerRelativePath({ContentLink}); {FullPath} = Concatenate({Host}, {ServerRelativeContent});{EncodedContentLink} = HtmlEncodeForJson({FullPath})" />
-          <Property Name="Content" Type="string" Functions="{Script} = HtmlEncodeForJson({Content}); {FileContents} = LoadContentFromFile({ContentLink}); {UsePlaceHolders} = ReturnTrue(); {CleanedContents} = TextCleanup({Content},{UsePlaceHolders}); {CleanedFileContents} = TextCleanup({FileContents},{UsePlaceHolders}); {FileContentsEncoded} = HtmlEncodeForJson({FileContents})"/>
+          <Property Name="Content" Type="string" Functions="{Script} = HtmlEncodeForJson({Content}); {FileContents} = LoadContentFromFile({ContentLink}); {UsePlaceHolders} = ReturnFalse(); {CleanedContents} = TextCleanup({Content},{UsePlaceHolders}); {CleanedFileContents} = TextCleanup({FileContents},{UsePlaceHolders}); {FileContentsEncoded} = HtmlEncodeForJson({FileContents})"/>
           <Property Name="PartStorage" Type="string"/>
         </Properties>
         <!-- If a link was used then:
@@ -879,6 +879,21 @@ configure the page transformation engine to use the community script editor. You
           </Mapping>
         </Mappings>
       </WebPart>
+      <!-- User Documents web part -->
+      <WebPart Type="Microsoft.SharePoint.WebPartPages.UserDocsWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" CrossSiteTransformationSupported="true">
+        <Properties>
+          <Property Name="IsIncluded" Type="bool" Functions="{FullPath} = Concatenate({Host}, {Web});{EncodedWeb} = HtmlEncodeForJson({FullPath})"/>
+          <Property Name="Dir" Type="string" Functions="UserDocumentsToHighlightedContentProperties()"/>
+          <Property Name="PartImageSmall" Type="string"/>
+          <Property Name="PartImageLarge" Type="string"/>
+          <Property Name="IsIncludedFilter" Type="bool"/>
+        </Properties>
+        <Mappings>
+          <Mapping Default="true" Name="default">
+            <ClientSideWebPart Type="ContentRollup" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&quot;title&quot;&#58;&quot;{Title}&quot;{SearchablePlainTexts}&#125;,&quot;imageSources&quot;&#58;&#123;{ImageSources}&#125;,&quot;links&quot;&#58;&#123;&quot;baseUrl&quot;&#58;&quot;{EncodedWeb}&quot;{Links}&#125;,&quot;componentDependencies&quot;&#58;&#123;&quot;layoutComponentId&quot;&#58;&quot;cea5863a-b857-46bb-aaf0-ae5f7cb447b6&quot;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;2.2&quot;,&quot;properties&quot;&#58;{JsonProperties}&#125;"/>
+          </Mapping>
+        </Mappings>
+      </WebPart>
       <!-- =========================== UNMAPPED WEBPARTS ========================= -->
       <WebPart Type="Microsoft.Office.Server.Search.WebControls.SearchNavigationWebPart, Microsoft.Office.Server.Search,Version=16.0.0.0,Culture=neutral,PublicKeyToken=71e9bce111e9429c">
         <Properties>
@@ -981,6 +996,20 @@ configure the page transformation engine to use the community script editor. You
         </Properties>
       </WebPart>
       <!-- SharePoint Portal WebControls web parts-->
+      <!-- Site documents web part -->
+      <WebPart Type="Microsoft.SharePoint.Portal.WebControls.SiteDocuments, Microsoft.SharePoint.Portal, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+        <Properties>
+          <Property Name="IsIncluded" Type="bool"/>
+          <Property Name="Dir" Type="string"/>
+          <Property Name="PartImageSmall" Type="string"/>
+          <Property Name="PartImageLarge" Type="string"/>
+          <Property Name="IsIncludedFilter" Type="bool"/>
+          <Property Name="_locDefinition" Type="string"/>
+          <Property Name="UserControlledNavigation" Type="bool"/>
+          <Property Name="ShowMemberships" Type="bool"/>
+          <Property Name="UserTabs" Type="string"/>
+        </Properties>
+      </WebPart>
       <!-- RSS aggregator -->
       <WebPart Type="Microsoft.SharePoint.Portal.WebControls.RSSAggregatorWebPart, Microsoft.SharePoint.Portal, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
         <Properties>
@@ -1020,20 +1049,6 @@ configure the page transformation engine to use the community script editor. You
           <Property Name="PartImageLarge" Type="string"/>
           <Property Name="IsIncludedFilter" Type="bool"/>
           <Property Name="OnlyShowHtmlView" Type="string"/>          
-        </Properties>
-      </WebPart>
-      <!-- Site documents web part -->
-      <WebPart Type="Microsoft.SharePoint.Portal.WebControls.SiteDocuments, Microsoft.SharePoint.Portal, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-        <Properties>
-          <Property Name="IsIncluded" Type="bool"/>
-          <Property Name="Dir" Type="string"/>
-          <Property Name="PartImageSmall" Type="string"/>
-          <Property Name="PartImageLarge" Type="string"/>
-          <Property Name="IsIncludedFilter" Type="bool"/>
-          <Property Name="_locDefinition" Type="string"/>
-          <Property Name="UserControlledNavigation" Type="bool"/>
-          <Property Name="ShowMemberships" Type="bool"/>
-          <Property Name="UserTabs" Type="string"/>
         </Properties>
       </WebPart>
       <!-- Tag cloud web part -->
@@ -1190,16 +1205,6 @@ configure the page transformation engine to use the community script editor. You
           <Property Name="TimelineType" Type="string"/>
         </Properties>
       </WebPart>
-      <!-- User Documents web part -->
-      <WebPart Type="Microsoft.SharePoint.WebPartPages.UserDocsWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-        <Properties>
-          <Property Name="IsIncluded" Type="bool"/>
-          <Property Name="Dir" Type="string"/>
-          <Property Name="PartImageSmall" Type="string"/>
-          <Property Name="PartImageLarge" Type="string"/>
-          <Property Name="IsIncludedFilter" Type="bool"/>
-        </Properties>
-      </WebPart>      
       <!-- Taxonomy term web part -->
       <WebPart Type="Microsoft.SharePoint.Taxonomy.TermProperty, Microsoft.SharePoint.Taxonomy, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
         <Properties>
