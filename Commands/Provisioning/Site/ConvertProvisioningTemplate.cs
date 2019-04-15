@@ -22,8 +22,8 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
      Code = @"PS:> Convert-PnPProvisioningTemplate -Path template.xml -Out newtemplate.xml -ToSchema V201512",
      Remarks = @"Converts a provisioning template to the latest schema using the 201512 schema and outputs the result the newtemplate.xml file.",
      SortOrder = 3)]
-     [CmdletRelatedLink(
-        Text ="Encoding", 
+    [CmdletRelatedLink(
+        Text = "Encoding",
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
     public class ConvertSiteTemplate : PSCmdlet
     {
@@ -111,7 +111,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                         }
                     case XMLPnPSchemaVersion.V201705:
                         {
+#pragma warning disable CS0618 // Type or member is obsolete
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05);
+#pragma warning restore CS0618 // Type or member is obsolete
                             break;
                         }
                     case XMLPnPSchemaVersion.V201801:
@@ -127,6 +129,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                     case XMLPnPSchemaVersion.V201807:
                         {
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_07);
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201903:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03);
                             break;
                         }
                 }
