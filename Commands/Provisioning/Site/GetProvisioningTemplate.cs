@@ -282,7 +282,13 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 if (Out != null)
                 {
                     FileInfo fileInfo = new FileInfo(Out);
-                    var prefix = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(".", StringComparison.Ordinal));
+                    var prefix = fileInfo.Name;
+                    // strip extension, if there is any
+                    var indexOfLastDot = prefix.LastIndexOf(".", StringComparison.Ordinal);
+                    if (indexOfLastDot > -1)
+                    {
+                        prefix = prefix.Substring(0, indexOfLastDot);
+                    }
                     creationInformation.ResourceFilePrefix = prefix;
                 }
 
