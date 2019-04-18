@@ -53,6 +53,12 @@ PS> $children = $node.Children",
                     if (Location == NavigationType.SearchNav)
                     {
                         navigationNodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
+#if !ONPREMISES
+                    }
+                        else if (Location == NavigationType.Footer)
+                    {
+                        navigationNodes = SelectedWeb.LoadFooterNavigation();
+#endif
                     }
                     else
                     {
@@ -82,6 +88,13 @@ PS> $children = $node.Children",
                                 nodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
                                 break;
                             }
+#if !ONPREMISES
+                        case NavigationType.Footer:
+                            {
+                                nodes = SelectedWeb.LoadFooterNavigation();
+                                break;
+                            }
+#endif
                     }
                     ClientContext.Load(nodes);
                     ClientContext.ExecuteQueryRetry();

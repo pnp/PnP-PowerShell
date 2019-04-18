@@ -94,6 +94,12 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                     if (Location == NavigationType.SearchNav)
                     {
                         nodeCollection = SelectedWeb.LoadSearchNavigation();
+#if !ONPREMISES
+                    } else if(Location == NavigationType.Footer)
+                    {
+                        nodeCollection = SelectedWeb.LoadFooterNavigation();
+
+#endif
                     }
                     else
                     {

@@ -27,11 +27,14 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public string CustomMasterUrl;
 
+#if !ONPREMISES
         [Parameter(Mandatory = false)]
         public HeaderLayoutType HeaderLayout = HeaderLayoutType.Standard;
 
         [Parameter(Mandatory = false)]
         public SPVariantThemeType HeaderEmphasis = SPVariantThemeType.None;
+
+#endif
 
         protected override void ExecuteCmdlet()
         {
@@ -70,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands
                         SelectedWeb.CustomMasterUrl = CustomMasterUrl;
                         dirty = true;
                         break;
-
+#if !ONPREMISES
                     case nameof(HeaderLayout):
                         SelectedWeb.HeaderLayout = HeaderLayout;
                         dirty = true;
@@ -80,6 +83,7 @@ namespace SharePointPnP.PowerShell.Commands
                         SelectedWeb.HeaderEmphasis = HeaderEmphasis;
                         dirty = true;
                         break;
+#endif
                 }
             }
 
