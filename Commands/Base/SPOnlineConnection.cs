@@ -46,23 +46,30 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             get
             {
-                if (!string.IsNullOrEmpty(TokenResult.AccessToken) && DateTime.Now > TokenResult.ExpiresOn && !string.IsNullOrEmpty(TokenResult.RefreshToken))
+                if (TokenResult != null)
                 {
-                    // Expired token
-                    var client = new HttpClient();
-                    var uri = new Uri(Url);
-                    var url = $"{uri.Scheme}://{uri.Host}";
-                    var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={TokenResult.RefreshToken}");
-                    body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                    var result = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
-                    var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                    TokenResult.AccessToken = tokens["access_token"];
-                    TokenResult.RefreshToken = tokens["refresh_token"];
-                    TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
+                    if (!string.IsNullOrEmpty(TokenResult.AccessToken) && DateTime.Now > TokenResult.ExpiresOn && !string.IsNullOrEmpty(TokenResult.RefreshToken))
+                    {
+                        // Expired token
+                        var client = new HttpClient();
+                        var uri = new Uri(Url);
+                        var url = $"{uri.Scheme}://{uri.Host}";
+                        var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={TokenResult.RefreshToken}");
+                        body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
+                        client.DefaultRequestHeaders.Accept.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        var result = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+                        var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                        TokenResult.AccessToken = tokens["access_token"];
+                        TokenResult.RefreshToken = tokens["refresh_token"];
+                        TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
+                    }
+                    return TokenResult.AccessToken;
                 }
-                return TokenResult.AccessToken;
+                else
+                {
+                    return null;
+                }
             }
             set
             {
