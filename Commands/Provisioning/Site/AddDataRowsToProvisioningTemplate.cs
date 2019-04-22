@@ -80,11 +80,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                 throw new ApplicationException("List does not exist in the template file!");
             }
 
-            if (string.IsNullOrWhiteSpace(Query))
-            {
-                Query = "<View></View>";
-            }
-
             List spList = List.GetList(SelectedWeb);
             ClientContext.Load(spList, l => l.RootFolder, l => l.HasUniqueRoleAssignments);
             ClientContext.ExecuteQueryRetry();
