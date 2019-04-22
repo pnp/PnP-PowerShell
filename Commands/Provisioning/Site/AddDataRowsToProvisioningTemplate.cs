@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = true, HelpMessage = "The list to query")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list")]
+        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list. Defaults to all items.")]
         public string Query;
 
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
