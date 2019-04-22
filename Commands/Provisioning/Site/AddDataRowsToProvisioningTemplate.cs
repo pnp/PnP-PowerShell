@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = true, HelpMessage = "The list to query")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The CAML query to execute against the list")]
+        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list")]
         public string Query;
 
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
@@ -78,6 +78,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file!");
+            }
+
+            if (string.IsNullOrWhiteSpace(Query))
+            {
+                Query = "<View></View>";
             }
 
             List spList = List.GetList(SelectedWeb);
