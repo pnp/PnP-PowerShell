@@ -7,6 +7,8 @@ using System.Reflection;
 using Microsoft.SharePoint.Client;
 using System.IO;
 using SharePointPnP.Modernization.Framework.Publishing;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.Modernization.Framework.Cache;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -16,9 +18,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     [CmdletExample(Code = @"PS:> Export-PnPClientSidePageMapping -BuiltInPageLayoutMapping -CustomPageLayoutMapping -Folder c:\\temp -Overwrite",
                    Remarks = "Exports the built in page layout mapping and analyzes the current site's page layouts and exports these to files in folder c:\\temp",
                    SortOrder = 1)]
+    [CmdletExample(Code = @"PS:> Export-PnPClientSidePageMapping -CustomPageLayoutMapping -PublishingPage mypage.aspx -Folder c:\\temp -Overwrite",
+                   Remarks = "Analyzes the page layout of page mypage.aspx and exports this to a file in folder c:\\temp",
+                   SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Export-PnPClientSidePageMapping -BuiltInWebPartMapping -Folder c:\\temp -Overwrite",
                    Remarks = "Exports the built in webpart mapping to a file in folder c:\\temp. Use this a starting basis if you want to tailer the web part mapping behavior.",
-                   SortOrder = 2)]
+                   SortOrder = 3)]
     public class ExportClientSidePageMapping : PnPWebCmdlet
     {
         private Assembly modernizationAssembly;
@@ -34,7 +39,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Analyzes the pagelayouts in the current publishing portal and exports them as a pagelayout mapping file")]
         public SwitchParameter CustomPageLayoutMapping = false;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The folder to created the mapping file(s) in")]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the publishing page to export a page layout mapping file for")]
+        public PagePipeBind PublishingPage;
+
+        [Parameter(Mandatory = false, HelpMessage = "The folder to created the mapping file(s) in")]
         public string Folder;
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites existing mapping files")]
@@ -99,8 +107,21 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     throw new Exception("The -CustomPageLayoutMapping parameter only works for publishing sites.");
                 }
 
+                ListItem page = null;
+
+                if (PublishingPage != null)
+                {
+                    page = PublishingPage.GetPage(this.ClientContext.Web, CacheManager.Instance.GetPublishingPagesLibraryName(this.ClientContext));
+                }
+
                 Guid siteId = this.ClientContext.Site.EnsureProperty(p => p.Id);
+                
                 string fileName = $"custompagelayoutmapping-{siteId.ToString()}.xml";
+
+                if (page != null)
+                {
+                    fileName = $"custompagelayoutmapping-{siteId.ToString()}-{page.FieldValues["FileLeafRef"].ToString().ToLower().Replace(".aspx", "")}.xml";
+                }
 
                 if (System.IO.File.Exists(Path.Combine(folderToExportTo, fileName)) && !Overwrite)
                 {
@@ -109,7 +130,14 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 else
                 {
                     var analyzer = new PageLayoutAnalyser(this.ClientContext);
-                    analyzer.AnalyseAll();
+                    if (page != null)
+                    {
+                        analyzer.AnalysePageLayoutFromPublishingPage(page);
+                    }
+                    else
+                    {
+                        analyzer.AnalyseAll();
+                    }
 
                     analyzer.GenerateMappingFile(folderToExportTo, fileName);
                 }
