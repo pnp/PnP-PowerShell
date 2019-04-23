@@ -42,6 +42,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the publishing page to export a page layout mapping file for")]
         public PagePipeBind PublishingPage;
 
+        [Parameter(Mandatory = false, HelpMessage = "Set this flag if you also want to analyze the OOB page layouts...typically these are covered via the default mapping, but if you've updated these page layouts you might want to analyze them again")]
+        public SwitchParameter AnalyzeOOBPageLayouts = false;
+
         [Parameter(Mandatory = false, HelpMessage = "The folder to created the mapping file(s) in")]
         public string Folder;
 
@@ -136,7 +139,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     }
                     else
                     {
-                        analyzer.AnalyseAll();
+                        analyzer.AnalyseAll(!this.AnalyzeOOBPageLayouts);
                     }
 
                     analyzer.GenerateMappingFile(folderToExportTo, fileName);
