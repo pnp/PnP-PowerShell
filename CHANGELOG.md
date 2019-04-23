@@ -9,9 +9,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added HeaderLayout and -HeaderEmphasis parameters to Set-PnPWeb
+- Added -HeaderLayout and -HeaderEmphasis parameters to Set-PnPWeb
 - Support to specify lcid for Export-PnPTaxonomy for a particular termset
 - Added support in the Navigation cmdlets to manage the site footer on modern sites.
+- Added Invoke-PnPSPRestMethod cmdlet to execute REST requests towards a SharePoint site.
 
 ### Changed
 

@@ -13,6 +13,13 @@ using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using SharePointPnP.PowerShell.Commands.Components;
 using System.Collections.Generic;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Commands.Base;
+using System.Threading.Tasks;
+using OfficeDevPnP.Core;
+using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Security;
+using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
@@ -101,9 +108,6 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.", ParameterSetName = "Instance")]
         public ProvisioningTemplate InputInstance;
-
-        [Parameter(Mandatory = false, ParameterSetName = "Gallery")]
-        public Guid GalleryTemplateId;
 
         protected override void ExecuteCmdlet()
         {
@@ -200,14 +204,8 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             else
             {
-                if (MyInvocation.BoundParameters.ContainsKey("GalleryTemplateId"))
-                {
-                    provisioningTemplate = GalleryHelper.GetTemplate(GalleryTemplateId);
-                }
-                else
-                {
-                    provisioningTemplate = InputInstance;
-                }
+                provisioningTemplate = InputInstance;
+
                 if (ResourceFolder != null)
                 {
                     var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
@@ -351,11 +349,66 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             applyingInformation.ProvisionContentTypesToSubWebs = ProvisionContentTypesToSubWebs;
             applyingInformation.ProvisionFieldsToSubWebs = ProvisionFieldsToSubWebs;
 
-            SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
+#if !ONPREMISES
+            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+             {
+                 // Get Azure AD Token
+                 if (AccessToken != null)
+                 {
+                     // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                     return Task.FromResult(AccessToken);
+                 }
+                 else if (SPOnlineConnection.CurrentConnection.PSCredential != null)
+                 {
+                     // Using normal credentials
+                     return Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                 }
+                 else
+                 {
+                     // No token...
+                     return null;
+                 }
+             }))
+            {
+#endif
+                SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
+#if !ONPREMISES
+            }
+#endif
 
             WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
         }
 
-     
+        private string AccessToken
+        {
+            get
+            {
+                if (SPOnlineConnection.AuthenticationResult != null)
+                {
+                    if (SPOnlineConnection.AuthenticationResult.ExpiresOn < DateTimeOffset.Now)
+                    {
+                        WriteWarning(Properties.Resources.MicrosoftGraphOAuthAccessTokenExpired);
+                        SPOnlineConnection.AuthenticationResult = null;
+                        return null;
+                    }
+                    else
+                    {
+#if !NETSTANDARD2_0
+                        return (SPOnlineConnection.AuthenticationResult.Token);
+#else
+                        return SPOnlineConnection.AuthenticationResult.AccessToken;
+#endif
+                    }
+                }
+                else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)
+                {
+                    return SPOnlineConnection.CurrentConnection.AccessToken;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }
