@@ -539,6 +539,7 @@
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
+    <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
     <Compile Include="Apps\DenyTenantServicePrincipalPermissionRequest.cs" />
@@ -596,9 +597,11 @@
     <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="Base\TokenHandling.cs" />
     <Compile Include="ClientSidePages\ClientSidePageTransformatorLogType.cs" />
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
+    <Compile Include="Enums\HttpRequestMethod.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
