@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- ConvertTo-PnPClientSidePage: modernize the first page in case there's multiple pages matching the provided pattern (parameters identity, folder and library)
+
 ### Deprecated
 - Removed support for the Template Gallery as the gallery itself is not online anymore.
 

@@ -78,8 +78,9 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                     web.Context.Load(page);
                     web.Context.ExecuteQueryRetry();
 
-                    if (page.Count == 1)
+                    if (page.Count >= 1)
                     {
+                        // Return the first match
                         return page[0];
                     }
                 }
