@@ -128,6 +128,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the page layout mapping file driving the publishing page transformation")]
         public string PageLayoutMapping;
 
+        [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies to publishing page transformation)")]
+        public string PublishingTargetPageName = "";
 
         protected override void ExecuteCmdlet()
         {
@@ -290,7 +292,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     Overwrite = this.Overwrite,
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     PublishCreatedPage = !this.DontPublish,
-                    DisablePageComments = this.DisablePageComments,                    
+                    DisablePageComments = this.DisablePageComments,     
+                    TargetPageName = this.PublishingTargetPageName
                 };
 
                 // Set mapping properties
