@@ -327,7 +327,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 * Invite guest users to the organization
 * Read and write all groups
 * Read and write directory data
-* Access the directory as you
 * Read and write identity providers
 * Access the directory as you")]
         public SwitchParameter PnPO365ManagementShell;
@@ -344,7 +343,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 * Invite guest users to the organization
 * Read and write all groups
 * Read and write directory data
-* Access the directory as you
 * Read and write identity providers
 * Access the directory as you
 ")]
