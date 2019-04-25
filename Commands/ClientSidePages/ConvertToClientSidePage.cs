@@ -89,6 +89,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "By default the item level permissions on a page are copied to the created client side page. Use this switch to prevent the copy")]
         public SwitchParameter SkipItemLevelPermissionCopyToClientSidePage = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "If transforming cross site then by default urls in html and summarylinks are rewritten for the target site. Set this flag to prevent that")]
+        public SwitchParameter SkipUrlRewriting = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Clears the cache. Can be needed if you've installed a new web part to the site and want to use that in a custom webpartmapping file. Restarting your PS session has the same effect")]
         public SwitchParameter ClearCache = false;
 
@@ -293,7 +296,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     PublishCreatedPage = !this.DontPublish,
                     DisablePageComments = this.DisablePageComments,     
-                    TargetPageName = this.PublishingTargetPageName
+                    TargetPageName = this.PublishingTargetPageName,
+                    SkipUrlRewrite = this.SkipUrlRewriting
                 };
 
                 // Set mapping properties
@@ -314,6 +318,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     CopyPageMetadata = this.CopyPageMetadata,
                     PublishCreatedPage = !this.DontPublish,
                     DisablePageComments = this.DisablePageComments,
+                    SkipUrlRewrite = this.SkipUrlRewriting,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
