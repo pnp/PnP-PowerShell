@@ -31,7 +31,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        SortOrder = 4)]
     [CmdletExample(
        Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -Owners demo@contoso.com",
-       Remarks = "Adds demo@contoso.com as an additional owner to the group.",
+       Remarks = "Sets demo@contoso.com as owner of the group.",
        SortOrder = 5)]
     public class SetUnifiedGroup : PnPGraphCmdlet
     {
