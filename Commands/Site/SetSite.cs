@@ -108,6 +108,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public uint? LocaleId;
 
+        [Obsolete("NewUrl is deprecated")]
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the new URL for this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public string NewUrl;
 
@@ -285,11 +286,11 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     siteProperties.Lcid = LocaleId.Value;
                     executeQueryRequired = true;
                 }
-                if (!string.IsNullOrEmpty(NewUrl))
-                {
-                    siteProperties.NewUrl = NewUrl;
-                    executeQueryRequired = true;
-                }
+                //if (!string.IsNullOrEmpty(NewUrl))
+                //{
+                //    siteProperties.NewUrl = NewUrl;
+                //    executeQueryRequired = true;
+                //}
                 if (RestrictedToGeo.HasValue)
                 {
                     siteProperties.RestrictedToRegion = RestrictedToGeo.Value;
