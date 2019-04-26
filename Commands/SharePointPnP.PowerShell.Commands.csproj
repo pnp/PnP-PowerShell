@@ -602,6 +602,7 @@
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
     <Compile Include="Enums\HttpRequestMethod.cs" />
+    <Compile Include="Enums\InitializationType.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
