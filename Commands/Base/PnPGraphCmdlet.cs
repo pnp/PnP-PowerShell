@@ -46,6 +46,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 else
                 {
+#if !ONPREMISES
                     var token = TokenHandler.AcquireToken("https://graph.microsoft.com", null);
                     if (!string.IsNullOrEmpty(token))
                     {
@@ -57,6 +58,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(Resources.NoAzureADAccessToken), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
                         return null;
                     }
+#else
+                    return null;
+#endif
                 }
             }
         }
