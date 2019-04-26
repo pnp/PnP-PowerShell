@@ -108,7 +108,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public uint? LocaleId;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the new URL for this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public string NewUrl;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the Geo/Region restrictions of this site.", ParameterSetName = ParameterSet_PROPERTIES)]
