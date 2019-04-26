@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
     [CmdletExample(
         Code = @"PS:> Get-PnPSite -Includes RootWeb,ServerRelativeUrl",
         Remarks = "Gets the current site specifying to include RootWeb and ServerRelativeUrl properties. For the full list of properties see https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee538579(v%3doffice.15)",
-        SortOrder = 2]
+        SortOrder = 2)]
         
     public class GetSite : PnPRetrievalsCmdlet<Microsoft.SharePoint.Client.Site>
     {
