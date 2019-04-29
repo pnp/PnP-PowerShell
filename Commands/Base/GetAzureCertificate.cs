@@ -47,7 +47,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
                 CertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, CertificatePath);
             }
 
-            var certificate = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable);
+            var certificate = new X509Certificate2(CertificatePath, CertificatePassword, (X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.EphemeralKeySet));
             var rawCert = certificate.GetRawCertData();
             var base64Cert = Convert.ToBase64String(rawCert);
             var rawCertHash = certificate.GetCertHash();
