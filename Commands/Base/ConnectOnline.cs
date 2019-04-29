@@ -245,19 +245,19 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #endif
         public int RetryWait = 1;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The request timeout. Default is 180000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The request timeout. Default is 180000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The request timeout. Default is 1800000")]
 #if !ONPREMISES
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The request timeout. Default is 180000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The request timeout. Default is 180000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The request timeout. Default is 180000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The request timeout. Default is 180000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "The request timeout. Default is 1800000")]
 #endif
 #if ONPREMISES
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "The request timeout. Default is 180000")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_PFX, HelpMessage = "The request timeout. Default is 180000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_PFX, HelpMessage = "The request timeout. Default is 1800000")]
 #endif
         public int RequestTimeout = 1800000;
 
