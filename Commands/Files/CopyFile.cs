@@ -12,7 +12,7 @@ using File = Microsoft.SharePoint.Client.File;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true, DefaultParameterSetName = "SOURCEURL")]
-    [CmdletHelp("Copies a file or folder to a different location",
+    [CmdletHelp("Copies a file or folder to a different location, currently there is a 200MB file size limit for the file to be copied.",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
         Remarks = "Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it won't perform the copy.",
