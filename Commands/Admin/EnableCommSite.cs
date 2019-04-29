@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands
     [Cmdlet(VerbsLifecycle.Enable, "PnPCommSite")]
     [CmdletHelp("Enable communication site on the root site of a tenant",
         @"The Enable-PnPCommSite cmdlet converts the root site of a tenant to be a communication site. This action is not reversible.",
-        Category = CmdletHelpCategory.TenantAdmin)]
+        Category = CmdletHelpCategory.TenantAdmin, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Enable-PnPCommSite",
         Remarks = @"This will convert the root site collection to become a communication site",
