@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Updated documentation
 - ConvertTo-PnPClientSidePage: modernize the first page in case there's multiple pages matching the provided pattern (parameters identity, folder and library)
 - ConvertTo-PnPClientSidePage: added parameter `-PublishingTargetPageName` parameter that allows one to override the name of the target publishing page. This is needed for some pages like default.aspx
 - Export-PnPClientSidePageMapping: added parameter `-PublishingPage` to scope the page layout analysis to the page layout of the provided file
