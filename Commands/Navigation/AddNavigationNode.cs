@@ -95,10 +95,10 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                     {
                         nodeCollection = SelectedWeb.LoadSearchNavigation();
 #if !ONPREMISES
-                    } else if(Location == NavigationType.Footer)
+                    }
+                    else if (Location == NavigationType.Footer)
                     {
                         nodeCollection = SelectedWeb.LoadFooterNavigation();
-
 #endif
                     }
                     else
@@ -106,16 +106,23 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                         nodeCollection = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
                         ClientContext.Load(nodeCollection);
                     }
-                    var addedNode = nodeCollection.Add(new NavigationNodeCreationInformation()
+                    if (nodeCollection != null)
                     {
-                        Title = Title,
-                        Url = Url,
-                        IsExternal = External.IsPresent,
-                        AsLastNode = !First.IsPresent
-                    });
-                    ClientContext.Load(addedNode);
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(addedNode);
+                        var addedNode = nodeCollection.Add(new NavigationNodeCreationInformation()
+                        {
+                            Title = Title,
+                            Url = Url,
+                            IsExternal = External.IsPresent,
+                            AsLastNode = !First.IsPresent
+                        });
+                        ClientContext.Load(addedNode);
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(addedNode);
+                    }
+                    else
+                    {
+                        throw new Exception("Navigation Node Collection is null");
+                    }
                 }
 #pragma warning restore CS0618 // Type or member is obsolete
             }
