@@ -28,6 +28,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Deprecated
 - Removed support for the Template Gallery as the gallery itself is not online anymore.
 
+### Contributors
+- Heinrich Ulbricht [heinrich-ulbricht] 
+- Andres Mariano Gorzelany [get-itips]
+
 ## [3.8.1904.0]
 
 ### Added
