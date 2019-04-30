@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Export-PnPClientSidePageMapping: added parameter `-PublishingPage` to scope the page layout analysis to the page layout of the provided file
 - Export-PnPClientSidePageMapping: added parameter `-AnalyzeOOBPageLayouts` to allow analysis of OOB page layouts. By default OOB page layouts will be skipped
 - Export-PnPClientSidePageMapping: added parameter `-SkipUrlRewrite` to prevent URL rewriting in cross site transformation scenarios
+- Fix to allow setting list property bag values on NoScript sites
 
 ### Deprecated
 - Removed support for the Template Gallery as the gallery itself is not online anymore.

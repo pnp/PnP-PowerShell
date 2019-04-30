@@ -41,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (SelectedWeb.IsNoScriptSite())
+            if (SelectedWeb.IsNoScriptSite() && string.IsNullOrWhiteSpace(Folder))
             {
                 ThrowTerminatingError(new ErrorRecord(new Exception("Site has NoScript enabled, and setting property bag values is not supported"), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
                 return;
