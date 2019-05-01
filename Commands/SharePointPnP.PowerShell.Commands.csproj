@@ -540,6 +540,9 @@
     <Compile Include="Admin\AddTenantTheme.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
     <Compile Include="Admin\EnableCommSite.cs" />
+    <Compile Include="Admin\GetOrgNewsSite.cs" />
+    <Compile Include="Admin\RemoveOrgNewsSite.cs" />
+    <Compile Include="Admin\SetOrgNewsSite.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
