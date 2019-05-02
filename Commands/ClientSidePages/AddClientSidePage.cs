@@ -68,9 +68,16 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             // Create a page that persists immediately
             clientSidePage = SelectedWeb.AddClientSidePage(name);
             clientSidePage.LayoutType = LayoutType;
-            clientSidePage.Save(name);
+            if (PromoteAs == ClientSidePagePromoteType.Template)
+            {
+                clientSidePage.SaveAsTemplate(name);
+            }
+            else
+            {
+                clientSidePage.Save(name);
+            }
 
-            if(MyInvocation.BoundParameters.ContainsKey("ContentType"))
+            if (MyInvocation.BoundParameters.ContainsKey("ContentType"))
             {
                 ContentType ct = null;
                 if (ContentType.ContentType == null)
