@@ -20,9 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Updated documentation
 - ConvertTo-PnPClientSidePage: modernize the first page in case there's multiple pages matching the provided pattern (parameters identity, folder and library)
 - ConvertTo-PnPClientSidePage: added parameter `-PublishingTargetPageName` parameter that allows one to override the name of the target publishing page. This is needed for some pages like default.aspx
+- ConvertTo-PnPClientSidePage: added parameter `-SkipUrlRewrite` to prevent URL rewriting in cross site transformation scenarios
 - Export-PnPClientSidePageMapping: added parameter `-PublishingPage` to scope the page layout analysis to the page layout of the provided file
 - Export-PnPClientSidePageMapping: added parameter `-AnalyzeOOBPageLayouts` to allow analysis of OOB page layouts. By default OOB page layouts will be skipped
-- Export-PnPClientSidePageMapping: added parameter `-SkipUrlRewrite` to prevent URL rewriting in cross site transformation scenarios
 
 ### Deprecated
 - Removed support for the Template Gallery as the gallery itself is not online anymore.
