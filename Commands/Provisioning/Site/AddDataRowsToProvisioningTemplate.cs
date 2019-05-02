@@ -255,6 +255,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                         return string.Join(",", multipleUserValue.Select(lv => GetLoginName(web,lv.LookupId)));
                     }
                     throw new Exception("Invalid data in field");
+                case FieldType.MultiChoice:
+                    var multipleChoiceValue = rawValue as string[];
+                    if (multipleChoiceValue != null)
+                    {
+                        return string.Join(";#", multipleChoiceValue);
+                    }
+                    return Convert.ToString(rawValue);
                 default:
                     return Convert.ToString(rawValue);
             }
