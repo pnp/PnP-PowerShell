@@ -55,7 +55,7 @@ PS> $children = $node.Children",
                         navigationNodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
 #if !ONPREMISES
                     }
-                        else if (Location == NavigationType.Footer)
+                    else if (Location == NavigationType.Footer)
                     {
                         navigationNodes = SelectedWeb.LoadFooterNavigation();
 #endif
@@ -64,9 +64,12 @@ PS> $children = $node.Children",
                     {
                         navigationNodes = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
                     }
-                    var nodesCollection = ClientContext.LoadQuery(navigationNodes);
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(GetTree(nodesCollection, 0));
+                    if (navigationNodes != null)
+                    {
+                        var nodesCollection = ClientContext.LoadQuery(navigationNodes);
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(GetTree(nodesCollection, 0));
+                    }
                 }
                 else
                 {
@@ -96,9 +99,12 @@ PS> $children = $node.Children",
                             }
 #endif
                     }
-                    ClientContext.Load(nodes);
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(nodes, true);
+                    if (nodes != null)
+                    {
+                        ClientContext.Load(nodes);
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(nodes, true);
+                    }
                 }
             }
             if (MyInvocation.BoundParameters.ContainsKey("Id"))
