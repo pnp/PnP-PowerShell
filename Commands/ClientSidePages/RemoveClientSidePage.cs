@@ -15,9 +15,13 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         Remarks = "Removes the Client-Side page named 'MyPage.aspx'",
         SortOrder = 1)]
     [CmdletExample(
+        Code = @"PS:> Remove-PnPClientSidePage -Identity ""Templates/MyPageTemplate""",
+        Remarks = "Removes the specified Client-Side page which is located in the Templates folder of the Site Pages library.",
+        SortOrder = 2)]
+    [CmdletExample(
         Code = @"PS:> Remove-PnPClientSidePage $page",
         Remarks = "Removes the specified Client-Side page which is contained in the $page variable.",
-        SortOrder = 2)]
+        SortOrder = 3)]
     public class RemoveClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page")]

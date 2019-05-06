@@ -128,7 +128,13 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
-            clientSidePage.Save(name);
+            if (PromoteAs == ClientSidePagePromoteType.Template)
+            {
+                clientSidePage.SaveAsTemplate(name);
+            } else
+            {
+                clientSidePage.Save(name);
+            }
 
             // If a specific promote type is specified, promote the page as Home or Article or ...
             switch (PromoteAs)

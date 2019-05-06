@@ -5,10 +5,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.10.1906.0 - June 2019 Release]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Contributors
+
 ## [3.9.1905.0 - May 2019 Release]
 
 ### Added
 
+- Added Template as a possible PromoteAs value for a Add-PnPClientSidePage and Set-PnPClientSidePage
 - Added -HeaderLayout and -HeaderEmphasis parameters to Set-PnPWeb
 - Support to specify lcid for Export-PnPTaxonomy for a particular termset
 - Added support in the Navigation cmdlets to manage the site footer on modern sites.
