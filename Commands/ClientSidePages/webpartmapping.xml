@@ -790,10 +790,11 @@ configure the page transformation engine to use the community script editor. You
         <Properties>
           <!-- Contains the html representation of the links -->
           <Property Name="SummaryLinkStore" Type="string" Functions="{FullPath} = Concatenate({Host}, {Web});{EncodedWeb} = HtmlEncodeForJson({FullPath});"/>
+          <Property Name="ChromeType" Type="integer"/>
           <Property Name="Xsl" Type="string"/>
         </Properties>
         <Mappings Selector="SummaryLinkSelector({SummaryLinksToQuickLinks})">
-          <Mapping Name="UseText" Default="true" Functions="{CleanedText} = TextCleanUpSummaryLinks({SummaryLinkStore})">
+          <Mapping Name="UseText" Default="true" Functions="{CleanedText} = TextCleanUpSummaryLinks({SummaryLinkStore},{ChromeType},{Title})">
             <!-- Summary links html is tranformed to html that be presented using the text editor -->
             <ClientSideText Order="10" Text="{CleanedText}"/>
           </Mapping>
