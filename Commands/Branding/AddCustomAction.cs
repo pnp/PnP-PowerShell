@@ -32,13 +32,13 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         private const string ParameterSet_DEFAULT = "Default";
         private const string ParameterSet_CLIENTSIDECOMPONENTID = "Client Side Component Id";
         [Parameter(Mandatory = true, HelpMessage = "The name of the custom action", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The name of the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Name = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The title of the custom action", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The title of the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Title = string.Empty;
@@ -50,7 +50,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         public string Group = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The actual location where this custom action need to be added like 'CommandUI.Ribbon'", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The actual location where this custom action need to be added like 'CommandUI.Ribbon'", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Location = string.Empty;
