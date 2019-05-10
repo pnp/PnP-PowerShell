@@ -24,6 +24,46 @@
             Store the final URL for the asset that has been transferred
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.#ctor">
+            <summary>
+            Constructor for transformation report
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.SourcePage">
+            <summary>
+            Source Page
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.ReportDate">
+            <summary>
+            Date report generated
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.Warnings">
+            <summary>
+            List of warnings raised
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.Errors">
+            <summary>
+            List of errors raised
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.CriticalErrors">
+            <summary>
+            List of critical application error
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.PageLogsOrdered">
+            <summary>
+            Page Logs ordered
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.TransformationVerboseSummary">
+            <summary>
+            Logs that contain summary data for verbose logging
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.AudienceEntity">
             <summary>
             Holds information about the defined audiences
@@ -68,6 +108,23 @@
             <param name="value">original string</param>
             <param name="comparedWith">string to compare with</param>
             <param name="stringComparison">optional comparison mode</param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.PrependIfNotNull(System.String,System.String)">
+            <summary>
+            Prepends string to another including null checking
+            </summary>
+            <param name="value"></param>
+            <param name="prependString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.StripRelativeUrlSectionString(System.String)">
+            <summary>
+            Removes a relative section of by string where context not available
+            </summary>
+            <param name="value"></param>
+            <param name="seperator"></param>
+            <param name="instanceFrom"></param>
             <returns></returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.Layouts.PageLayoutHeaderFieldEntity">
@@ -115,7 +172,7 @@
             List of field controls in page to ignore in mappings
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.#ctor(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates the base builtin function library
             </summary>
@@ -128,6 +185,12 @@
             Returns an empty string
             </summary>
             <returns>Empty string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.StaticString(System.String)">
+            <summary>
+            Returns an the (static) string provided as input
+            </summary>
+            <returns>String provided as input</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.ToImageUrl(System.String)">
             <summary>
@@ -142,6 +205,27 @@
             </summary>
             <param name="htmlImage">PublishingPageImage</param>
             <returns>Image alternate text</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.ToImageAnchor(System.String)">
+            <summary>
+            Returns the image anchor url of a Publishing Image field value
+            </summary>
+            <param name="htmlImage">Publishing Image field value</param>
+            <returns>Image anchor url</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.ToImageCaption(System.String)">
+            <summary>
+            Returns the image caption of a Publishing Html image caption field
+            </summary>
+            <param name="htmlField">Publishing Html image caption field value</param>
+            <returns>Image caption</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.ToPreviewImageUrl(System.String)">
+            <summary>
+            Returns a page preview image url
+            </summary>
+            <param name="image">A publishing image field value or a string containing a server relative image path</param>
+            <returns>A formatted preview image url</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingLayoutTransformator">
             <summary>
@@ -203,10 +287,11 @@
             <param name="sourceContext">This should be the context of the source web</param>
             <param name="logObservers">List of log observers</param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutAnalyser.AnalyseAll">
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutAnalyser.AnalyseAll(System.Boolean)">
             <summary>
             Main entry point into the class to analyse the page layouts
             </summary>
+            <param name="skipOOBPageLayouts">Skip OOB page layouts</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutAnalyser.AnalysePageLayout(Microsoft.SharePoint.Client.ListItem)">
             <summary>
@@ -421,6 +506,12 @@
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartZone.Column">
             <remarks/>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartZone.Order">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartZone.OrderSpecified">
+            <remarks/>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.WebPartProperty">
             <remarks/>
         </member>
@@ -445,10 +536,19 @@
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartField.TargetWebPart">
             <remarks/>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartField.FieldId">
+            <remarks/>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartField.Row">
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartField.Column">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartField.Order">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartField.OrderSpecified">
             <remarks/>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.MetaDataField">
@@ -632,6 +732,11 @@
             Value of the parameter
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.IsStatic">
+            <summary>
+            Is this a static, hard coded, value. Eg 'my hardcoded string'
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition">
             <summary>
             Definition of a function or selector
@@ -687,7 +792,7 @@
             Set of native, builtin, functions
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.#ctor(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates the base builtin function library
             </summary>
@@ -734,6 +839,12 @@
             </summary>
             <param name="path"></param>
             <returns>File name</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.StaticString(System.String)">
+            <summary>
+            Returns an the (static) string provided as input
+            </summary>
+            <returns>String provided as input</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextSelector(System.String)">
             <summary>
@@ -889,7 +1000,7 @@
             <param name="useQuickLinks">The SummaryLinksToQuickLinks mapping property provided via the PageTransformationInformation instance</param>
             <returns>Whether to transform via the QuickLinks web part or via Text</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextCleanUpSummaryLinks(System.String)">
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextCleanUpSummaryLinks(System.String,System.Int32,System.String)">
             <summary>
             Rewrites summarylinks web part html to be compliant with the html supported by the client side text part
             </summary>
@@ -934,7 +1045,7 @@
             Class that executes functions and selectors defined in the mapping 
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates the function processor. Also loads the defined add-ons
             </summary>
@@ -1088,6 +1199,21 @@
             Page that's being transformed
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Telemetry.LogEntry.Significance">
+            <summary>
+            Extra significance of the entry for the logs
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Telemetry.LogEntry.IsCriticalException">
+            <summary>
+            Marks this error as a critical exception that prevents transformation
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Telemetry.LogEntrySignificance">
+            <summary>
+            Specfies to the loggers that a specific entry has significance.
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers.ToYesNoString(System.Boolean)">
             <summary>
             Converts boolean value to Yes/No string
@@ -1181,7 +1307,7 @@
             Markdown observer intended for end-user output
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.#ctor(System.String,System.String,System.Boolean)">
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.#ctor(System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
             Constructor for specifying to include debug entries
             </summary>
@@ -1220,15 +1346,22 @@
             </summary>
             <param name="pageId">Id of the page</param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.GenerateReport(System.Boolean)">
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.GenerateReportWithSummaryAtTop(System.Boolean)">
             <summary>
             Generates a markdown based report based on the logs
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.GenerateReportForPage(System.Text.StringBuilder,System.Collections.Generic.IEnumerable{System.Tuple{SharePointPnP.Modernization.Framework.Telemetry.LogLevel,SharePointPnP.Modernization.Framework.Telemetry.LogEntry}},System.Boolean)">
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.GenerateIssueSummaryReport(System.Text.StringBuilder,System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis})">
             <summary>
-            Generates a markdown based report based on the logs
+            Generate a summary report
+            </summary>
+            <param name="report"></param>
+            <param name="summeries"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.AnalyseLogsForReport(System.Collections.Generic.List{System.Tuple{SharePointPnP.Modernization.Framework.Telemetry.LogLevel,SharePointPnP.Modernization.Framework.Telemetry.LogEntry}},System.String)">
+            <summary>
+            Analyses logs and extracts key information for reports
             </summary>
             <returns></returns>
         </member>
@@ -1242,7 +1375,7 @@
             Writes an MD log file to a folder (default = Transformation-Reports) inside the sitepages library
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownToSharePointObserver.#ctor(Microsoft.SharePoint.Client.ClientContext,System.String,System.String,System.Boolean)">
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownToSharePointObserver.#ctor(Microsoft.SharePoint.Client.ClientContext,System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
             Constructor to save a markdown report to SharePoint Modern Site Assets library
             </summary>
@@ -1260,6 +1393,13 @@
             <summary>
             Write the report to SharePoint
             </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownToSharePointObserver.GetMarkdownJsonProperties(System.String)">
+            <summary>
+            Construct a markdown web part properties
+            </summary>
+            <param name="report"></param>
+            <returns></returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.PageTelemetry.#ctor(System.String)">
             <summary>
@@ -1397,13 +1537,13 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.BaseTransform.LogError(System.String,System.String,System.Exception,System.Boolean)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BaseTransform.LogError(System.String,System.String,System.Exception,System.Boolean,System.Boolean)">
             <summary>
             Notifies the observers of error messages
             </summary>
             <param name="logEntry">The message.</param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.BaseTransform.LogInfo(System.String,System.String)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BaseTransform.LogInfo(System.String,System.String,SharePointPnP.Modernization.Framework.Telemetry.LogEntrySignificance)">
             <summary>
             Notifies the observers of info messages
             </summary>
@@ -1488,6 +1628,11 @@
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.DisablePageComments">
             <summary>
             Disable page comments on the created page
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SkipUrlRewrite">
+            <summary>
+            Skip URL rewriting
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.PageTitleOverride">
@@ -1607,7 +1752,7 @@
             Transforms content from "classic" page to modern client side page
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.ContentTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates the content transformator
             </summary>
@@ -2136,12 +2281,17 @@
             <param name="webPartData">Web part information holding all possible tokens for this web part</param>
             <returns>A string with tokens replaced by actual values</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiTransformatorSimple.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.WikiHtmlTransformator">
+            <summary>
+            Translates wiki text parts in to a list of real and fake web parts
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiHtmlTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Default constructor
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiTransformatorSimple.TransformPlusSplit(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity},System.Boolean)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiHtmlTransformator.TransformPlusSplit(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity},System.Boolean)">
             <summary>
             Replaces embedded images and iframes with respective "fake" image and video web parts. Depending on the 
             image/iframe position in the html the wiki text is broken up in multiple wiki text parts intermixed 
@@ -2339,14 +2489,14 @@
             Analyzes a publishing page
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates a publishing page object
             </summary>
             <param name="page">ListItem holding the page to analyze</param>
             <param name="pageTransformation">Page transformation information</param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates a publishing page object
             </summary>
