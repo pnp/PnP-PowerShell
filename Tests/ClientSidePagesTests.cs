@@ -25,6 +25,8 @@ namespace SharePointPnP.PowerShell.Tests
         public const string PageNotExistingTestName = "PageNotExisting.aspx";
         public const string PageAddSectionTestName = "PageAddSection.aspx";
         public const string PageAddWebPartTestName = "PageAddWebPart.aspx";
+        public const string ClassicPageTestNewName = "table_1.aspx";
+        public const string ClassicWikiPagesLibName = "WikiPages_table_1";
 
         private void CleanupPageIfExists(ClientContext ctx, string pageName)
         {
@@ -35,6 +37,38 @@ namespace SharePointPnP.PowerShell.Tests
                 p.Delete();
             }
             catch (Exception) { }
+        }
+
+        private void CleanupListIfExists(ClientContext ctx, string listTitle)
+        {
+            var list = ctx.Web.GetListByTitle(listTitle);
+            if (list != null)
+            {
+                list.DeleteObject();
+                ctx.ExecuteQueryRetry();
+            }
+        }
+
+        private void CreateWikiPagesLib(ClientContext ctx, string listTitle)
+        {
+            var info = new ListCreationInformation();
+            var templates = ctx.Web.ListTemplates;
+            ctx.Load(templates);
+            ctx.ExecuteQueryRetry();
+            info.ListTemplate = templates.First(t => t.InternalName == "webpagelib");
+            info.Title = listTitle;
+            info.Description = "Created by PnP unit tests";
+            var list = ctx.Web.Lists.Add(info);
+            ctx.ExecuteQueryRetry();
+        }
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            using (var ctx = TestCommon.CreateClientContext())
+            {
+                CreateWikiPagesLib(ctx, ClassicWikiPagesLibName);
+            }
         }
 
         [TestCleanup]
@@ -54,18 +88,25 @@ namespace SharePointPnP.PowerShell.Tests
                 CleanupPageIfExists(ctx, PageSet2TestName);
                 CleanupPageIfExists(ctx, PageAddSectionTestName);
                 CleanupPageIfExists(ctx, PageAddWebPartTestName);
+
+                CleanupListIfExists(ctx, ClassicWikiPagesLibName);
             }
         }
 
         [TestMethod]
-        public void ConvertPageTest()
+        public void ConvertBasicWikiPageTest()
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("ConvertTo-PnPClientSidePage",
-                    new CommandParameter("Identity", "table_1.aspx"), new CommandParameter("Overwrite", true));
+                using (var ctx = TestCommon.CreateClientContext())
+                {
+                    ctx.Web.AddWikiPage(ClassicWikiPagesLibName, ClassicPageTestNewName);
+                }
 
-                var page = results[0].BaseObject as ClientSidePage;
+                var results = scope.ExecuteCommand("ConvertTo-PnPClientSidePage",
+                    new CommandParameter("Identity", ClassicPageTestNewName), new CommandParameter("Library", ClassicWikiPagesLibName), new CommandParameter("Overwrite", true));
+
+                Assert.AreEqual(0, results.Count, "Wiki pages suddenly can be transformed. Great! Adjust this assertion to check for one result.");
             }
         }
 

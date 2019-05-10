@@ -29,7 +29,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         WriteWarning(Resources.MicrosoftGraphOAuthAccessTokenExpired);
                         SPOnlineConnection.AuthenticationResult = null;
-                        return (null);
+                        return null;
                     }
                     else
                     {
@@ -46,8 +46,21 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(Resources.NoAzureADAccessToken), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
-                    return (null);
+#if !ONPREMISES
+                    var token = TokenHandler.AcquireToken("https://graph.microsoft.com", null);
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        SPOnlineConnection.CurrentConnection.AccessToken = token;
+                        return token;
+                    }
+                    else
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(Resources.NoAzureADAccessToken), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
+                        return null;
+                    }
+#else
+                    return null;
+#endif
                 }
             }
         }
@@ -96,21 +109,21 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
 #if !NETSTANDARD2_0
 
-            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
-            {
-                if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))
-                {
-                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
-                }
-            }
-            else
-            {
-                if (SPOnlineConnection.AuthenticationResult == null ||
-                String.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.Token))
-                {
-                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
-                }
-            }
+            //if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
+            //{
+            //    if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))
+            //    {
+            //        throw new InvalidOperationException(Resources.NoAzureADAccessToken);
+            //    }
+            //}
+            //else
+            //{
+            //    if (SPOnlineConnection.AuthenticationResult == null ||
+            //    String.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.Token))
+            //    {
+            //        throw new InvalidOperationException(Resources.NoAzureADAccessToken);
+            //    }
+            //}
 #else
             if (SPOnlineConnection.CurrentConnection != null && (SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin || SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.AccessToken))
             {

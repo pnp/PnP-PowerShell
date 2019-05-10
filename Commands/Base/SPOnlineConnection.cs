@@ -30,6 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public static TokenResult TokenResult { get; set; }
         public static SPOnlineConnection CurrentConnection { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
+        public InitializationType InitializationType { get; protected set; }
         public int MinimalHealthScore { get; protected set; }
         public int RetryCount { get; protected set; }
         public int RetryWait { get; protected set; }
@@ -46,38 +47,60 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             get
             {
-                if (!string.IsNullOrEmpty(TokenResult.AccessToken) && DateTime.Now > TokenResult.ExpiresOn && !string.IsNullOrEmpty(TokenResult.RefreshToken))
+                if (TokenResult != null)
                 {
-                    // Expired token
-                    var client = new HttpClient();
-                    var uri = new Uri(Url);
-                    var url = $"{uri.Scheme}://{uri.Host}";
-                    var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={TokenResult.RefreshToken}");
-                    body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                    var result = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
-                    var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                    TokenResult.AccessToken = tokens["access_token"];
-                    TokenResult.RefreshToken = tokens["refresh_token"];
-                    TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
+                    if (!string.IsNullOrEmpty(TokenResult.AccessToken) && DateTime.Now > TokenResult.ExpiresOn && !string.IsNullOrEmpty(TokenResult.RefreshToken))
+                    {
+                        // Expired token
+                        var client = new HttpClient();
+                        var uri = new Uri(Url);
+                        var url = $"{uri.Scheme}://{uri.Host}";
+                        var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={TokenResult.RefreshToken}");
+                        body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
+                        client.DefaultRequestHeaders.Accept.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        var result = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+                        var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                        TokenResult.AccessToken = tokens["access_token"];
+                        TokenResult.RefreshToken = tokens["refresh_token"];
+                        TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
+                    }
+                    return TokenResult.AccessToken;
                 }
-                return TokenResult.AccessToken;
+                else
+                {
+                    return null;
+                }
             }
             set
             {
-                if (TokenResult != null)
+                if (!string.IsNullOrEmpty(value))
                 {
-                    TokenResult.AccessToken = value;
+                    var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(value);
+
+                    if (TokenResult != null)
+                    {
+                        TokenResult.AccessToken = value;
+                        TokenResult.ExpiresOn = jwtToken.ValidTo.ToLocalTime();
+                    }
+                    else
+                    {
+
+                        TokenResult = new TokenResult()
+                        {
+                            AccessToken = value,
+                            ExpiresOn = jwtToken.ValidTo.ToLocalTime()
+                        };
+                    }
                 }
             }
         }
 
-        public SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry)
+        internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
-                InitializeTelemetry(context, host);
+                InitializeTelemetry(context, host, initializationType);
             }
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
@@ -97,11 +120,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ConnectionMethod = ConnectionMethod.Credentials;
         }
 
-        public SPOnlineConnection(ClientContext context, TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry)
+        internal SPOnlineConnection(ClientContext context, TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
-                InitializeTelemetry(context, host);
+                InitializeTelemetry(context, host, initializationType);
             }
 
             if (context == null)
@@ -128,11 +151,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 
 
-        public SPOnlineConnection(TokenResult tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry)
+        internal SPOnlineConnection(TokenResult tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
-                InitializeTelemetry(null, host);
+                InitializeTelemetry(null, host, initializationType);
             }
             TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
@@ -151,7 +174,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             e.WebRequestExecutor.WebRequest.UserAgent = userAgent;
         }
 
-        public void RestoreCachedContext(string url)
+        internal void RestoreCachedContext(string url)
         {
             Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
         }
@@ -165,7 +188,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
-        public ClientContext CloneContext(string url)
+        internal ClientContext CloneContext(string url)
         {
             var context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             if (context == null)
@@ -209,7 +232,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ContextCache.Clear();
         }
 
-        internal void InitializeTelemetry(ClientContext context, PSHost host)
+        internal void InitializeTelemetry(ClientContext context, PSHost host, InitializationType initializationType)
         {
 
             var enableTelemetry = false;
@@ -270,23 +293,24 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
                 TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
                 TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-                TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
-                TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
-
+                TelemetryClient.Context.GlobalProperties.Add("ServerLibraryVersion", serverLibraryVersion);
+                TelemetryClient.Context.GlobalProperties.Add("ServerVersion", serverVersion);
+                TelemetryClient.Context.GlobalProperties.Add("ConnectionMethod", initializationType.ToString());
                 var coreAssembly = Assembly.GetExecutingAssembly();
 
-                TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+                TelemetryClient.Context.GlobalProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
 #if SP2013
-            TelemetryClient.Context.Properties.Add("Platform", "SP2013");
+            TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2013");
 #elif SP2016
-            TelemetryClient.Context.Properties.Add("Platform", "SP2016");
+            TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2016");
 #elif SP2019
-            TelemetryClient.Context.Properties.Add("Platform", "SP2019");
+            TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2019");
 #else
-                TelemetryClient.Context.Properties.Add("Platform", "SPO");
+                TelemetryClient.Context.GlobalProperties.Add("Platform", "SPO");
 #endif
                 TelemetryClient.TrackEvent("Connect-PnPOnline");
             }
         }
     }
 }
+

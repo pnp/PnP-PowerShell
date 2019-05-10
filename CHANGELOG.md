@@ -5,7 +5,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.8.1904.0] - unreleased 
+## [3.10.1906.0 - June 2019 Release]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Contributors
+
+## [3.9.1905.0 - May 2019 Release]
+
+### Added
+
+- Added Template as a possible PromoteAs value for a Add-PnPClientSidePage and Set-PnPClientSidePage
+- Added -HeaderLayout and -HeaderEmphasis parameters to Set-PnPWeb
+- Support to specify lcid for Export-PnPTaxonomy for a particular termset
+- Added support in the Navigation cmdlets to manage the site footer on modern sites.
+- Added Invoke-PnPSPRestMethod cmdlet to execute REST requests towards a SharePoint site.
+- Added Enable-PnPCommSite cmdlet to convert the root site collection of a tenant into a communication site.
+
+### Changed
+
+- Updated documentation
+- ConvertTo-PnPClientSidePage: modernize the first page in case there's multiple pages matching the provided pattern (parameters identity, folder and library)
+- ConvertTo-PnPClientSidePage: added parameter `-PublishingTargetPageName` parameter that allows one to override the name of the target publishing page. This is needed for some pages like default.aspx
+- ConvertTo-PnPClientSidePage: added parameter `-SkipUrlRewrite` to prevent URL rewriting in cross site transformation scenarios
+- Export-PnPClientSidePageMapping: added parameter `-PublishingPage` to scope the page layout analysis to the page layout of the provided file
+- Export-PnPClientSidePageMapping: added parameter `-AnalyzeOOBPageLayouts` to allow analysis of OOB page layouts. By default OOB page layouts will be skipped
+- Fix to allow setting list property bag values on NoScript sites
+
+### Deprecated
+- Removed support for the Template Gallery as the gallery itself is not online anymore.
+
+### Contributors
+- Heinrich Ulbricht [heinrich-ulbricht] 
+- Andres Mariano Gorzelany [get-itips]
+
+## [3.8.1904.0]
 
 ### Added
 

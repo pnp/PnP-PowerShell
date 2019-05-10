@@ -479,8 +479,8 @@
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SharePointPnP.IdentityModel.Extensions, Version=1.2.4.0, Culture=neutral, PublicKeyToken=5e633289e95c321a, processorArchitecture=MSIL">
       <HintPath>..\packages\SharePointPnP.IdentityModel.Extensions.1.2.4\lib\net45\SharePointPnP.IdentityModel.Extensions.dll</HintPath>
@@ -539,6 +539,8 @@
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
+    <Compile Include="Admin\EnableCommSite.cs" />
+    <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
     <Compile Include="Apps\DenyTenantServicePrincipalPermissionRequest.cs" />
@@ -596,9 +598,12 @@
     <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="Base\TokenHandling.cs" />
     <Compile Include="ClientSidePages\ClientSidePageTransformatorLogType.cs" />
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
+    <Compile Include="Enums\HttpRequestMethod.cs" />
+    <Compile Include="Enums\InitializationType.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
@@ -769,7 +774,6 @@
     <Compile Include="Base\ConnectOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
     <Compile Include="Base\SetTraceLog.cs" />
-    <Compile Include="Components\GalleryHelper.cs" />
     <Compile Include="Enums\TargetPlatform.cs" />
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
@@ -832,11 +836,9 @@
     <Compile Include="Provisioning\Site\AddFileToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Site\ReadProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Site\NewProvisioningTemplate.cs" />
-    <Compile Include="Components\PnPTemplatesGalleryResultItem.cs" />
     <Compile Include="Components\ProvisioningTemplateInformation.cs" />
     <Compile Include="Provisioning\Site\RemoveFileFromProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Site\SaveProvisioningTemplate.cs" />
-    <Compile Include="Provisioning\Site\GetProvisioningTemplateFromGallery.cs" />
     <Compile Include="Provisioning\Site\SetProvisioningTemplateMetadata.cs" />
     <Compile Include="Provisioning\Site\ConvertFolderToProvisioningTemplate.cs" />
     <Compile Include="Branding\DisableResponsiveUI.cs" />
@@ -948,7 +950,6 @@
     <Compile Include="Taxonomy\ImportTermSet.cs" />
     <Compile Include="UserProfiles\SetUserProfileProperty.cs" />
     <Compile Include="Utilities\DynamicLinq.cs" />
-    <Compile Include="Utilities\HttpHelper.cs" />
     <Compile Include="Utilities\ListItemHelper.cs" />
     <Compile Include="Webhooks\RemoveWebhookSubscription.cs" />
     <Compile Include="Webhooks\SetWebhookSubscription.cs" />

@@ -22,6 +22,8 @@
         <Field Name="PublishingPageImage" TargetWebPart="SharePointPnP.Modernization.WikiImagePart" Row="1" Column="1">
           <Property Name="ImageUrl" Type="string" Functions="ToImageUrl({PublishingPageImage})" />
           <Property Name="AlternativeText" Type="string" Functions="ToImageAltText({PublishingPageImage})" />
+          <Property Name="Anchor" Type="string" Functions="ToImageAnchor({PublishingPageImage})" />
+          <Property Name="Caption" Type="string" Functions="ToImageCaption({PublishingImageCaption})" />
         </Field>
         <Field Name="PublishingPageContent" TargetWebPart="SharePointPnP.Modernization.WikiTextPart" Row="1" Column="2">
           <Property Name="Text" Type="string" />
@@ -81,6 +83,8 @@
                 e.g <img alt="" src="/sites/devportal/PublishingImages/page-travel-instructions.jpg?RenditionID=2" style="BORDER: 0px solid; "> to /sites/devportal/PublishingImages/page-travel-instructions.jpg -->
           <Property Name="ImageUrl" Type="string" Functions="ToImageUrl({PublishingPageImage})"/>
           <Property Name="AlternativeText" Type="string" Functions="ToImageAltText({PublishingPageImage})" />
+          <Property Name="Anchor" Type="string" Functions="ToImageAnchor({PublishingPageImage})" />
+          <Property Name="Caption" Type="string" Functions="ToImageCaption({PublishingImageCaption})" />
         </Field>
         <Field Name="PublishingPageContent" TargetWebPart="SharePointPnP.Modernization.WikiTextPart" Row="1" Column="2">
           <!-- No function specified, means the content of the PublishingPageContent field will be assigned to the value of the first listed web part property -->
@@ -105,6 +109,8 @@
                 e.g <img alt="" src="/sites/devportal/PublishingImages/page-travel-instructions.jpg?RenditionID=2" style="BORDER: 0px solid; "> to /sites/devportal/PublishingImages/page-travel-instructions.jpg -->
           <Property Name="ImageUrl" Type="string" Functions="ToImageUrl({PublishingPageImage})"/>
           <Property Name="AlternativeText" Type="string" Functions="ToImageAltText({PublishingPageImage})" />
+          <Property Name="Anchor" Type="string" Functions="ToImageAnchor({PublishingPageImage})" />
+          <Property Name="Caption" Type="string" Functions="ToImageCaption({PublishingImageCaption})" />
         </Field>
         <Field Name="PublishingPageContent" TargetWebPart="SharePointPnP.Modernization.WikiTextPart" Row="1" Column="1">
           <!-- No function specified, means the content of the PublishingPageContent field will be assigned to the value of the first listed web part property -->
@@ -190,6 +196,8 @@
         <Field Name="PublishingPageImage" TargetWebPart="SharePointPnP.Modernization.WikiImagePart" Row="1" Column="1">
           <Property Name="ImageUrl" Type="string" Functions="ToImageUrl({PublishingPageImage})" />
           <Property Name="AlternativeText" Type="string" Functions="ToImageAltText({PublishingPageImage})" />
+          <Property Name="Anchor" Type="string" Functions="ToImageAnchor({PublishingPageImage})" />
+          <Property Name="Caption" Type="string" Functions="ToImageCaption({PublishingImageCaption})" />
         </Field>
         <Field Name="SummaryLinks" TargetWebPart="Microsoft.SharePoint.Publishing.WebControls.SummaryLinkWebPart, Microsoft.SharePoint.Publishing, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" Row="2" Column="1">
           <Property Name="SummaryLinkStore" Type="string" />

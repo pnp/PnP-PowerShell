@@ -126,7 +126,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
             }
             else
             {
-#if !ONPREMISES
+#if !SP2013 && !SP2016
                 ca = new CustomActionEntity()
                 {
                     Name = Name,

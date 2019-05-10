@@ -89,6 +89,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "By default the item level permissions on a page are copied to the created client side page. Use this switch to prevent the copy")]
         public SwitchParameter SkipItemLevelPermissionCopyToClientSidePage = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "If transforming cross site then by default urls in html and summarylinks are rewritten for the target site. Set this flag to prevent that")]
+        public SwitchParameter SkipUrlRewriting = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Clears the cache. Can be needed if you've installed a new web part to the site and want to use that in a custom webpartmapping file. Restarting your PS session has the same effect")]
         public SwitchParameter ClearCache = false;
 
@@ -128,6 +131,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the page layout mapping file driving the publishing page transformation")]
         public string PageLayoutMapping;
 
+        [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies to publishing page transformation)")]
+        public string PublishingTargetPageName = "";
 
         protected override void ExecuteCmdlet()
         {
@@ -256,22 +261,22 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             {
                 if (this.PublishingPage)
                 {
-                    publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeDebugEntries: this.LogVerbose));
+                    publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose:this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
                 else
                 {
-                    pageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeDebugEntries: this.LogVerbose));
+                    pageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
             }
             else if (this.LogType == ClientSidePageTransformatorLogType.SharePoint)
             {
                 if (this.PublishingPage)
                 {
-                    publishingPageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeDebugEntries: this.LogVerbose));
+                    publishingPageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
                 else
                 {
-                    pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeDebugEntries: this.LogVerbose));
+                    pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
             }
 
@@ -290,7 +295,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     Overwrite = this.Overwrite,
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     PublishCreatedPage = !this.DontPublish,
-                    DisablePageComments = this.DisablePageComments,                    
+                    DisablePageComments = this.DisablePageComments,     
+                    TargetPageName = this.PublishingTargetPageName,
+                    SkipUrlRewrite = this.SkipUrlRewriting
                 };
 
                 // Set mapping properties
@@ -311,6 +318,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     CopyPageMetadata = this.CopyPageMetadata,
                     PublishCreatedPage = !this.DontPublish,
                     DisablePageComments = this.DisablePageComments,
+                    SkipUrlRewrite = this.SkipUrlRewriting,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner

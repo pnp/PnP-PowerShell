@@ -67,11 +67,12 @@ configure the page transformation engine to use the community script editor. You
           -->
           <Property Name="ImageUrl" Type="string" Functions="{ServerRelativeFileName} = ReturnCrossSiteRelativePath({ImageUrl});ImageLookup({ServerRelativeFileName});{FileName} = ReturnFileName({ImageUrl})"/>
           <Property Name="AlternativeText" Type="string"/>
+          <Property Name="Anchor" Type="string"/>
         </Properties>
         <Mappings>
           <Mapping Default="true" Name="default">
             <!-- Let's replace the images embedded in the wiki text with image web parts -->
-            <ClientSideWebPart Type="Image" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&quot;captionText&quot;&#58;&quot;&quot;&#125;,&quot;imageSources&quot;&#58;&#123;&quot;imageSource&quot;&#58;&quot;{ServerRelativeFileName}&quot;&#125;,&quot;links&quot;&#58;&#123;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;1.8&quot;,&quot;properties&quot;&#58;&#123;&quot;imageSourceType&quot;&#58;2,&quot;altText&quot;&#58;&quot;{AlternativeText}&quot;,&quot;fileName&quot;&#58;&quot;{FileName}&quot;,&quot;siteId&quot;&#58;&quot;{SiteId}&quot;,&quot;webId&quot;&#58;&quot;{webId}&quot;,&quot;listId&quot;&#58;&quot;{ImageListId}&quot;,&quot;uniqueId&quot;&#58;&quot;{ImageUniqueId}&quot;,&quot;useParallax&quot;&#58;false&#125;&#125;"/>
+            <ClientSideWebPart Type="Image" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&quot;captionText&quot;&#58;&quot;{Caption}&quot;&#125;,&quot;imageSources&quot;&#58;&#123;&quot;imageSource&quot;&#58;&quot;{ServerRelativeFileName}&quot;&#125;,&quot;links&quot;&#58;&#123;&quot;linkUrl&quot;&#58;&quot;{Anchor}&quot;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;1.8&quot;,&quot;properties&quot;&#58;&#123;&quot;imageSourceType&quot;&#58;2,&quot;altText&quot;&#58;&quot;{AlternativeText}&quot;,&quot;fileName&quot;&#58;&quot;{FileName}&quot;,&quot;siteId&quot;&#58;&quot;{SiteId}&quot;,&quot;webId&quot;&#58;&quot;{webId}&quot;,&quot;listId&quot;&#58;&quot;{ImageListId}&quot;,&quot;uniqueId&quot;&#58;&quot;{ImageUniqueId}&quot;,&quot;useParallax&quot;&#58;false&#125;&#125;"/>
           </Mapping> 
         </Mappings>
       </WebPart>
@@ -183,6 +184,7 @@ configure the page transformation engine to use the community script editor. You
         <Properties>
           <Property Name="ContentLink" Type="string" Functions="{Temp} = ContentEmbedCrossSiteCheck({ContentLink}); {ServerRelativeContent} = ReturnServerRelativePath({ContentLink}); {FullPath} = Concatenate({Host}, {ServerRelativeContent});{EncodedContentLink} = HtmlEncodeForJson({FullPath})" />
           <Property Name="Content" Type="string" Functions="{Script} = HtmlEncodeForJson({Content}); {FileContents} = LoadContentFromFile({ContentLink}); {UsePlaceHolders} = ReturnFalse(); {CleanedContents} = TextCleanup({Content},{UsePlaceHolders}); {CleanedFileContents} = TextCleanup({FileContents},{UsePlaceHolders}); {FileContentsEncoded} = HtmlEncodeForJson({FileContents})"/>
+          <Property Name="ChromeType" Type="integer"/>
           <Property Name="PartStorage" Type="string"/>
         </Properties>
         <!-- If a link was used then:
@@ -788,10 +790,11 @@ configure the page transformation engine to use the community script editor. You
         <Properties>
           <!-- Contains the html representation of the links -->
           <Property Name="SummaryLinkStore" Type="string" Functions="{FullPath} = Concatenate({Host}, {Web});{EncodedWeb} = HtmlEncodeForJson({FullPath});"/>
+          <Property Name="ChromeType" Type="integer"/>
           <Property Name="Xsl" Type="string"/>
         </Properties>
         <Mappings Selector="SummaryLinkSelector({SummaryLinksToQuickLinks})">
-          <Mapping Name="UseText" Default="true" Functions="{CleanedText} = TextCleanUpSummaryLinks({SummaryLinkStore})">
+          <Mapping Name="UseText" Default="true" Functions="{CleanedText} = TextCleanUpSummaryLinks({SummaryLinkStore},{ChromeType},{Title})">
             <!-- Summary links html is tranformed to html that be presented using the text editor -->
             <ClientSideText Order="10" Text="{CleanedText}"/>
           </Mapping>
