@@ -240,7 +240,13 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                             {
                                 var field = fields.FirstOrDefault(f => f.InternalName == itemValue.Key as string || f.Title == itemValue.Key as string);
                                 var taxField = context.CastTo<TaxonomyField>(field);
-                                taxField.SetFieldValueByValueCollection(item, itemValue.Value as TaxonomyFieldValueCollection);
+                                if (itemValue.Value is TaxonomyFieldValueCollection)
+                                {
+                                    taxField.SetFieldValueByValueCollection(item, itemValue.Value as TaxonomyFieldValueCollection);
+                                } else
+                                {
+                                    taxField.SetFieldValueByValue(item, itemValue.Value as TaxonomyFieldValue);
+                                }
                                 break;
                             }
                         case "TaxonomyFieldType":
