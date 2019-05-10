@@ -74,21 +74,24 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             set
             {
-                var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(value);
-
-                if (TokenResult != null)
+                if (!string.IsNullOrEmpty(value))
                 {
-                    TokenResult.AccessToken = value;
-                    TokenResult.ExpiresOn = jwtToken.ValidTo.ToLocalTime();
-                }
-                else
-                {
+                    var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(value);
 
-                    TokenResult = new TokenResult()
+                    if (TokenResult != null)
                     {
-                        AccessToken = value,
-                        ExpiresOn = jwtToken.ValidTo.ToLocalTime()
-                    };
+                        TokenResult.AccessToken = value;
+                        TokenResult.ExpiresOn = jwtToken.ValidTo.ToLocalTime();
+                    }
+                    else
+                    {
+
+                        TokenResult = new TokenResult()
+                        {
+                            AccessToken = value,
+                            ExpiresOn = jwtToken.ValidTo.ToLocalTime()
+                        };
+                    }
                 }
             }
         }

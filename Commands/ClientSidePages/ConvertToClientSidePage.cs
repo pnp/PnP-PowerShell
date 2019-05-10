@@ -261,22 +261,22 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             {
                 if (this.PublishingPage)
                 {
-                    publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeDebugEntries: this.LogVerbose));
+                    publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose:this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
                 else
                 {
-                    pageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeDebugEntries: this.LogVerbose));
+                    pageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
             }
             else if (this.LogType == ClientSidePageTransformatorLogType.SharePoint)
             {
                 if (this.PublishingPage)
                 {
-                    publishingPageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeDebugEntries: this.LogVerbose));
+                    publishingPageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
                 else
                 {
-                    pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeDebugEntries: this.LogVerbose));
+                    pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
             }
 
