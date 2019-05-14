@@ -6,7 +6,6 @@ using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Enums;
 using System;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
@@ -15,7 +14,6 @@ using OfficeDevPnP.Core;
 using OfficeDevPnP.Core.Utilities;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -386,19 +384,40 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
+        internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant,
+            string thumbprint, int minimalHealthScore,
+            int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host,
+            bool disableTelemetry, bool skipAdminCheck = false,
+            AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        {
+            X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(thumbprint);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait,  requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate);
+        }
+
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
 
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate);
+        }
+
+        private static SPOnlineConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant,
+            int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
+            bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
+        {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-            var clientContext = authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment);
+            var clientContext =
+                authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate,
+                    azureEnvironment);
             var context = PnPClientContext.ConvertFrom(clientContext, retryCount, retryWait * 1000);
+            context.RequestTimeout = requestTimeout;
             var connectionType = ConnectionType.OnPrem;
             if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
             {
                 connectionType = ConnectionType.O365;
             }
+
             if (skipAdminCheck == false)
             {
                 if (IsTenantAdminSite(context))
@@ -409,7 +428,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             CleanupCryptoMachineKey(certificate);
 
-            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
+                url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
             return spoConnection;
         }

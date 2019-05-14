@@ -21,8 +21,8 @@ Certificate contains the PEM encoded certificate.
 PrivateKey contains the PEM encoded private key of the certificate.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> New-PnPAzureCertificate",
-        Remarks = @"This will generate a default self-signed certificate named ""pnp.contoso.com"" valid for 10 years.",
+        Code = @"PS:> New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer",
+        Remarks = @"This will generate a default self-signed certificate named ""pnp.contoso.com"" valid for 10 years and output a pfx and cer file.",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> New-PnPAzureCertificate -CommonName ""My Certificate"" -ValidYears 30 ",
@@ -48,8 +48,15 @@ PrivateKey contains the PEM encoded private key of the certificate.",
         [Parameter(Mandatory = false, HelpMessage = "Organizational Unit Name (eg, section)", Position = 5)]
         public string OrganizationUnit = string.Empty;
 
+        [Obsolete("Use OutPfx parameter")]
         [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.pfx)", Position = 6)]
         public string Out;
+
+        [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.pfx)", Position = 6)]
+        public string OutPfx;
+
+        [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.cer)", Position = 6)]
+        public string OutCert;
 
         [Parameter(Mandatory = false, HelpMessage = "Number of years until expiration (default is 10, max is 30)", Position = 7)]
         public int ValidYears = 10;
@@ -80,12 +87,26 @@ PrivateKey contains the PEM encoded private key of the certificate.",
 
             if (!string.IsNullOrWhiteSpace(Out))
             {
-                if (!Path.IsPathRooted(Out))
+                OutPfx = Out;
+            }
+            if (!string.IsNullOrWhiteSpace(OutPfx))
+            {
+                if (!Path.IsPathRooted(OutPfx))
                 {
-                    Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
+                    OutPfx = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutPfx);
                 }
                 byte[] certData = certificate.Export(X509ContentType.Pfx, CertificatePassword);
-                File.WriteAllBytes(Out, certData);
+                File.WriteAllBytes(OutPfx, certData);
+            }
+
+            if (!string.IsNullOrWhiteSpace(OutCert))
+            {
+                if (!Path.IsPathRooted(OutCert))
+                {
+                    OutCert = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutCert);
+                }
+                byte[] certData = certificate.Export(X509ContentType.Cert);
+                File.WriteAllBytes(OutCert, certData);
             }
 
             var rawCert = certificate.GetRawCertData();
