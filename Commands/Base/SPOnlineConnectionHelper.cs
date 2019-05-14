@@ -409,7 +409,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             CleanupCryptoMachineKey(certificate);
 
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
+            spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
+            return spoConnection;
         }
 
         private static void CleanupCryptoMachineKey(X509Certificate2 certificate)
