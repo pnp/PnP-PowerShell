@@ -430,7 +430,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
-            spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
+            spoConnection.ConnectionMethod = ConnectionMethon.AzureADAppOnly;
             return spoConnection;
         }
 
