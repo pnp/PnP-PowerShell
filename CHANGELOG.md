@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.10.1906.0 - June 2019 Release]
+## [3.10.1905.1 - May 2019 Intermediate Release]
 
 ### Added
 
 ### Changed
+- Updated core provisioning engine to handle a server side issue.
 - Added support for certificte thumbprint login with ADAL and updated connection sample
 - Added support for outputting .cer file from New-PnPAzureCertificate
 
