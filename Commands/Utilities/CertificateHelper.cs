@@ -83,6 +83,36 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return sb.ToString();
         }
 
+        internal static X509Certificate2 GetCertificatFromStore(string thumbprint)
+        {
+            List<StoreLocation> locations = new List<StoreLocation>
+            {
+                StoreLocation.CurrentUser,
+                StoreLocation.LocalMachine
+            };
+
+            foreach (var location in locations)
+            {
+                X509Store store = new X509Store("My", location);
+                try
+                {
+                    store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+                    X509Certificate2Collection certificates = store.Certificates.Find(
+                        X509FindType.FindByThumbprint, thumbprint, false);
+                    if (certificates.Count == 1)
+                    {
+                        return certificates[0];
+                    }
+                }
+                finally
+                {
+                    store.Close();
+                }
+            }
+
+            return null;
+        }
+
         internal static X509Certificate2 GetCertificateFromPEMstring(string publicCert, string privateKey, string password)
         {
             if (string.IsNullOrWhiteSpace(password)) password = "";

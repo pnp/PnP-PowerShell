@@ -21,14 +21,12 @@ The PnP commandlets can use the Active Directory Authentication Library (ADAL) t
 
 You are now ready to configure the Azure AD Application for invoking SharePoint Online with an App Only access token. In order to do that, you have to create and configure a self-signed X.509 certificate, which will be used to authenticate your Application against Azure AD, while requesting the App Only access token. 
 
-First of all, you have to create the self-signed X.509 Certificate, which can be created using the `New-PnPAzureCertificate` commandlet.
-
-You may also add the `-Out` parameter if you want to save the certificate as a local .pfx file.
+First of all, you have to create the self-signed X.509 Certificate, which can be created using the `New-PnPAzureCertificate` or `New-SelfSignedCertificate` commandlet. This tutorial uses `New-PnPAzureCertificate` for ease of use.
 
 Create a self signed certificate using `New-PnPAzureCertificate` (output truncated for readability):
 
 ```PowerShell
-$cert = New-PnPAzureCertificate
+$cert = New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer
 $cert
 
 Subject        : CN=pnp.contoso.com
@@ -46,11 +44,12 @@ KeyCredentials :
 Certificate    : -----BEGIN CERTIFICATE-----MIICv...iqzrk=-----END CERTIFICATE-----
 PrivateKey     : -----BEGIN RSA PRIVATE KEY-----MIIEp...4W6g==-----END
                  RSA PRIVATE KEY-----
+.\pnp.pfx #Install certificate
 ```
 
->For further details about the `New-PnPAzureCertificate` syntax and command line parameters you can read the documentation with `Get-Help New-PnPAzureCertificate -Detailed`. If you have an existing .pfx file you can get the PEM values and key credential manifest settings using `Get-PnPAzureCertificate`.
+For the last line which installs the certificate pick either *Current User* or *Local Machine* and *Automatically select the certificate store based on the type of certificate*. This will place the certificate in the *my* store.
 
-Both the certificate and the private key is outputted as PEM encoded strings. This is useful in automation where you can store the values as environmental variables or as strings in Azure Keyvault, instead of bundling the actual .pfx file itself.
+>For further details about the `New-PnPAzureCertificate` syntax and command line parameters you can read the documentation with `Get-Help New-PnPAzureCertificate -Detailed`.
 
 ## Azure Active Directory Application registration
 In order to connect to SharePoint Online using app-only permissions you have to **register an application in Azure Active Directory** linked to your Office 365 tenant. In order to do that, open Azure Active Directory Admin portal (https://aad.portal.azure.com) using the account of a user member of the Tenant Global Admins group.
@@ -68,84 +67,56 @@ your tenant. Click the "New application registraion" button in the upper left pa
 
 ![Azure AD - Add an Application - First Step](./Fig-03-Azure-AD-Add-Application-Step-01.png)
 
-Provide a **name** for your application (we suggest to name it "SharePoint PnP CSOM Access"), select the option **"Web app / API"**, and fill in the **"Sign-on URL"** with the with a valid **URL**, for example _https://&lt;tenant&gt;.sharepoint.com/pnpcsom_. The URL does not have to exist, but it has to be valid. Click create when done.
+Provide a **name** for your application (we suggest to name it "SharePoint PnP CSOM Access"), select the option **"Web"**. Click *Register* when done.
 
-The newly created app registration will now be listed in your "App Registrations" list.
-Open it and then click into settings and then Properties.  You should now be at the following screen: 
+You should now be at the following screen: 
 
 ![Azure AD - Add an Application - Third Step](./Fig-04-Azure-AD-Add-Application-Step-02.png)
 
 Please make sure you :
-- Copy the **Application ID** value as you'll need it later in the `ClientId` parameter when connecting to SharePoint Online.
+- Copy the **Application (client) ID** value as you'll need it later in the `ClientId` parameter when connecting to SharePoint Online.
 
-Now, you should go back to the settings blade. Go into **Keys** where you'll create a Client Secret (used for app-only authentication). In order to do that, add a new security key (selecting 1 year, 2 years or never expires for key duration). Press the "Save" button in the lower part of the screen to generate the key value. After saving, you will see the key value. **Copy it in a safe place**, because you will not see it anymore.
-
->This key is not really needed when accessing SharePoint Online via CSOM, but if you access other API's using the same ADAL application you will need it. For example if you are creating Office 365 Groups using PnP PowerShell.
-
-![Azure AD - Create a client Secret](./Fig-05-Azure-AD-Add-AplicationSecret.png)
-
-Now click on "Required Permissions", and click on the "Add" button, a new blade will appear.
+Now click on "API Permissions" in the left menu, click on the "Add a permission" button, and pick SahrePoint in the pane which appears.
 
 ![Azure AD - Application - Required Permissions ](./Fig-06-Azure-AD-App-Config-02.png)
 
 You need to configure the following permissions in order to get access to all resources:
 * Office 365 SharePoint Online (**Application Permission**)
-  * **Have full control of all site collections**
-  * **Read and write managed metadata**
-  * **Read and write user profiles**
+  * **Sites.FullControl.All**
+  * **TermStore.ReadWrite.All**
+  * **User.ReadWriteAll**
 
-  You may of course opt in with less access as well. For further details, see the following figure.
+  You may of course opt in with less access as well.
 
 ![Azure AD - Application Configuration - Permissions Blade](./Fig-07-Azure-AD-App-Config-03.png)
 
-The "Application Permissions" are those granted to the application when running as App Only. The other set of permissions, called "Delegated Permissions", defines the permissions granted to the application when running under a specific user's account delegation (using an app and user access token, from an OAuth 2.0 perspective).
+The "Application permissions" are those granted to the application when running as App Only. The other set of permissions, called "Delegated permissions", defines the permissions granted to the application when running under a specific user's account delegation (using an app and user access token, from an OAuth 2.0 perspective).
 
-Click the Grant Permission button on the 'Required Permissions' tab in order make the permissions effective. If you forget this, you will not be able to connect to SharePoint Online using the ADAL application.
+Click the *Add permission* button when done and then clik the **Grant admin consent for &lt;tenant&gt;** button in order make the permissions effective. If you forget this last step, you will not be able to connect to SharePoint Online using the ADAL application.
 
 <a name="apponlyazuread"></a>
-### Update Azure AD Application manifest
+### Upload your client certificate
 
-From your generated certificate copy the key credentials which are to be added to the manifest of your ADAL application.
-
-
-```PowerShell
-$cert.KeyCredentials | clip
-```
-
-Go back to the Azure AD Application that you created in the previous step and click the **"Manifest"** button at the top of the blade, then click **Edit'**.
+In order to update the manifest you need to upload the client certificate you generated in the beginning. Pick *Certificates & secrets* and *Upload certificate* where you upload `pnp.cer` previously generated (If you have an existing certificate in your certificate store you have to export a .cer file manually).
 
 ![Azure AD - Application Configuration - Manifest](./Fig-08-Azure-AD-App-Config-04.png)
 
-Search for the **keyCredentials** property and replace it with the snippet you generated before, this will be similar to as seen on the figure above:
-
-```JSON
-  "keyCredentials": [
-    {
-      "customKeyIdentifier": "<base64CertHash>",
-      "keyId": "<KeyId>",
-      "type": "AsymmetricX509Cert",
-      "usage": "Verify",
-      "value":  "<base64Cert>"
-     }
-  ],
-```
-
-Click **Save** when you complete this step.
+Please make sure you :
+- Copy the **THUMBPRINT** value as you'll need it later in the `Thumbprint` parameter when connecting to SharePoint Online.
 
 ## Test the application using PnP
 Using the application id and application password from the application registration you can
 connect to the SharePoint Online using:
 
 ```PowerShell
-> Connect-PnPOnline -PEMCertificate $cert.Certificate -PEMPrivateKey $cert.PrivateKey -Tenant contoso.onmicrosoft.com -ClientId e3b084e2-5b69-44ef-8bac-0592abfd123f -Url https://contoso.sharepoint.com
+> Connect-PnPOnline -Tenant contoso.onmicrosoft.com -ClientId 68b3527b-cf40-4284-acb2-854cafcdbac4 -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA -Url https://contoso.sharepoint.com
 
 ```
 
-If you opted to save the certificate as a .pfx file you can connect using:
+You can also connect using the .pfx directly if you did not install it using:
 
 ```PowerShell
-> Connect-PnPOnline -CertificatePath .\mycert.pfx -Tenant contoso.onmicrosoft.com -ClientId e3b084e2-5b69-44ef-8bac-0
-592abfd123f -Url https://contoso.sharepoint.com 
+> Connect-PnPOnline -CertificatePath c:\absolute-path\to\pnp.pfx -Tenant contoso.onmicrosoft.com -ClientId 68b3527b-cf40-4284-acb2-854cafcdbac4 -Url https://contoso.sharepoint.com 
 ```
 
 If all went as expected you should now be able get data from your site.
@@ -188,6 +159,7 @@ Mikael Svenson (Puzzlepart)
 Version  | Date | Comments
 ---------| -----| --------
 1.0  | Feb 23 2018 | Initial release
+2.0  | May 14 2019 | Updated to use new ADAL registration and upload of cer file
 
 ## **Disclaimer** 
 THIS CODE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
