@@ -10,8 +10,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Added support for certificte thumbprint login with ADAL and updated connection sample
+- Added support for outputting .cer file from New-PnPAzureCertificate
 
 ### Deprecated
+- Out parameter for New-PnPAzureCertificate replaced with OutPfx
 
 ### Contributors
 
