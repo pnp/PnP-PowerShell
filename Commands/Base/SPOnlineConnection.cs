@@ -35,6 +35,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public int RetryCount { get; protected set; }
         public int RetryWait { get; protected set; }
         public PSCredential PSCredential { get; protected set; }
+        public string ClientId { get; protected set; }
+        public string ClientSecret { get; protected set; }
 
         public TelemetryClient TelemetryClient { get; set; }
 
@@ -94,6 +96,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     }
                 }
             }
+        }
+
+        internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
+            : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        {
+            this.ClientId = clientId;
+            this.ClientSecret = clientSecret;
         }
 
         internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
