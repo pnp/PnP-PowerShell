@@ -13,6 +13,7 @@ using SharePointPnP.Modernization.Framework;
 using System.IO;
 using SharePointPnP.Modernization.Framework.Telemetry.Observers;
 using SharePointPnP.Modernization.Framework.Publishing;
+using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -134,6 +135,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies to publishing page transformation)")]
         public string PublishingTargetPageName = "";
 
+        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
+        public SPOnlineConnection TargetConnection = null;
+
         protected override void ExecuteCmdlet()
         {
             //Fix loading of modernization framework
@@ -159,7 +163,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
 
             // Publishing specific validation
-            if (this.PublishingPage && string.IsNullOrEmpty(this.TargetWebUrl))
+            if (this.PublishingPage && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
             {
                 throw new Exception($"Publishing page transformation is only supported when transformating into another site collection. Use the -TargetWebUrl to specify a modern target site.");
             }
@@ -198,10 +202,18 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
             // Create target client context (when needed)
             ClientContext targetContext = null;
-            if (!string.IsNullOrEmpty(TargetWebUrl))
+            if (TargetConnection == null)
             {
-                targetContext = this.ClientContext.Clone(TargetWebUrl);
+                if (!string.IsNullOrEmpty(TargetWebUrl))
+                {
+                    targetContext = this.ClientContext.Clone(TargetWebUrl);
+                }
             }
+            else
+            {
+                targetContext = TargetConnection.Context;
+            }
+
 
             // Create transformator instance
             PageTransformator pageTransformator = null;
