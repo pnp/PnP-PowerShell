@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.9.1905.3 - May 2019 Intermediate Release 3]
+
+### Changed
+- Updatd core provisioning to handle token issue during extraction and reintroduced content type fieldlink reordering in the engine.
+
 ## [3.9.1905.2 - May 2019 Intermediate Release 2]
 
 ### Changed
