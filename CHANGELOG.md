@@ -7,15 +7,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Changed
-- Cleanup private key only for file or pem based certificate login (#2101)
-
-## [3.10.1906.0 - Unreleased]
-
 ### Added
 
 ### Changed
 
+- Cleanup private key only for file or pem based certificate login (#2101)
 - ConvertTo-PnPClientSidePage: Added support to transform web part pages that live outside of a library (so in the root of the site)
 
 ## [3.9.1905.3 - May 2019 Intermediate Release 3]
