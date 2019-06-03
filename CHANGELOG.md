@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.9.1905.3 - May 2019 Intermediate Release 3]
 
 ### Changed
-- Updatd core provisioning to handle token issue during extraction and reintroduced content type fieldlink reordering in the engine.
+- Updated core provisioning to handle token issue during extraction and reintroduced content type fieldlink reordering in the engine.
 
 ## [3.9.1905.2 - May 2019 Intermediate Release 2]
 
@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Updated core provisioning engine to handle a server side issue.
-- Added support for certificte thumbprint login with ADAL and updated connection sample
+- Added support for certificate thumbprint login with ADAL and updated connection sample
 - Added support for outputting .cer file from New-PnPAzureCertificate
 
 ### Deprecated

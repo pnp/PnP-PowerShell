@@ -123,6 +123,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified hidden lists will be included in the template")]
         public SwitchParameter IncludeHiddenLists;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified all client side pages will be included")]
+        public SwitchParameter IncludeAllClientSidePages;
+
         [Parameter(Mandatory = false, HelpMessage = "During extraction the version of the server will be checked for certain actions. If you specify this switch, this check will be skipped.")]
         public SwitchParameter SkipVersionCheck;
 
@@ -259,6 +262,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
             creationInformation.IncludeHiddenLists = IncludeHiddenLists;
+            creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
             creationInformation.SkipVersionCheck = SkipVersionCheck;
             if (ContentTypeGroups != null)
             {
