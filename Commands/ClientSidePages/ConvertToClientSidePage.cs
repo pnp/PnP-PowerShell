@@ -45,19 +45,24 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     Remarks = "Converts a web part page named 'somepage' living inside the SiteAssets library in a folder named folder1 into a client side page",
     SortOrder = 6)]
     [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Folder ""<root>"" -Overwrite",
+    Remarks = "Converts a web part page named 'somepage' living inside the root of the site collection (so outside of a library)",
+    SortOrder = 7)]
+    [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
     Remarks = "Converts a wiki page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
-    SortOrder = 7)]
+    SortOrder = 8)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite",
     Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\temp using verbose logging",
-    SortOrder = 8)]
+    SortOrder = 9)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType SharePoint -LogSkipFlush",
     Remarks = "Converts a web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log",
-    SortOrder = 9)]
+    SortOrder = 10)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
+        private static string rootFolder = "<root>";
         private Assembly modernizationAssembly;
         private Assembly sitesCoreAssembly;
         private Assembly newtonsoftAssembly;
@@ -150,10 +155,13 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
             else
             {
-                page = Identity.GetPage(this.ClientContext.Web, "sitepages");
+                if (!this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    page = Identity.GetPage(this.ClientContext.Web, "sitepages");
+                }
             }
 
-            if (page == null)
+            if (page == null && !this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
             }
@@ -308,9 +316,20 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
             else
             {
+                Microsoft.SharePoint.Client.File fileToModernize = null;
+                if (this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    // Load the page file from the site root folder
+                    var webServerRelativeUrl = this.ClientContext.Web.EnsureProperty(p => p.ServerRelativeUrl);
+                    fileToModernize = this.ClientContext.Web.GetFileByServerRelativeUrl($"{webServerRelativeUrl}/{this.Identity.Name}");
+                    this.ClientContext.Load(fileToModernize);
+                    this.ClientContext.ExecuteQueryRetry();
+                }
+
                 // Setup Transformation information
                 PageTransformationInformation pti = new PageTransformationInformation(page)
                 {
+                    SourceFile = fileToModernize,
                     Overwrite = this.Overwrite,
                     TargetPageTakesSourcePageName = this.TakeSourcePageName,
                     ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
