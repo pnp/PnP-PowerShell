@@ -245,7 +245,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     if (!string.IsNullOrEmpty(this.PageLayoutMapping))
                     {
                         // Load and validate the custom mapping file
-                        PageLayoutManager pageLayoutManager = new PageLayoutManager(this.ClientContext);
+                        PageLayoutManager pageLayoutManager = new PageLayoutManager();
                         var pageLayoutMappingModel = pageLayoutManager.LoadPageLayoutMappingFile(this.PageLayoutMapping);
 
                         // Using custom page layout mapping file + default one (they're merged together)
