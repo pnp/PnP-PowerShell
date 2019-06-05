@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         protected override void ExecuteCmdlet()
         {
             //Fix loading of modernization framework
-            //FixAssemblyResolving();
+            FixLocalAssemblyResolving();
 
             // Get last used transformator instance from cache
             var transformator = CacheManager.Instance.GetLastUsedTransformator();
@@ -34,45 +34,40 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
         }
 
-        //private string AssemblyDirectory
-        //{
-        //    get
-        //    {
-        //        string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-        //        UriBuilder uri = new UriBuilder(codeBase);
-        //        string path = Uri.UnescapeDataString(uri.Path);
-        //        return Path.GetDirectoryName(path);
-        //    }
-        //}
+        private string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
 
-        //private void FixAssemblyResolving()
-        //{
-        //    try
-        //    {
-        //        newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-        //        sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
-        //        modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
-        //        AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-        //    }
-        //    catch { }
-        //}
+        private void FixLocalAssemblyResolving()
+        {
+            try
+            {
+                sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
+                modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_LocalAssemblyResolve;
+            }
+            catch { }
+        }
 
-        //private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        //{
-        //    if (args.Name.StartsWith("OfficeDevPnP.Core"))
-        //    {
-        //        return sitesCoreAssembly;
-        //    }
-        //    if (args.Name.StartsWith("Newtonsoft.Json"))
-        //    {
-        //        return newtonsoftAssembly;
-        //    }
-        //    if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
-        //    {
-        //        return modernizationAssembly;
-        //    }
-        //    return null;
-        //}
+        private Assembly CurrentDomain_LocalAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (args.Name.StartsWith("OfficeDevPnP.Core"))
+            {
+                return sitesCoreAssembly;
+            }
+            if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
+            {
+                return modernizationAssembly;
+            }
+            return null;
+        }
 
     }
 }
