@@ -270,7 +270,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
             creationInformation.IncludeHiddenLists = IncludeHiddenLists;
+#if !SP2013 && !SP2016
             creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
+#endif
             creationInformation.SkipVersionCheck = SkipVersionCheck;
             if (ContentTypeGroups != null)
             {
