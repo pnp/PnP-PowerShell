@@ -90,8 +90,16 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
             if (isOpenOfficeFile)
             {
-                provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
-                templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+                var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
+                if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
+                {
+                    templateFileName = openXmlConnector.Info.Properties.TemplateFileName;
+                }
+                else
+                {
+                    templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+                }
             }
             else
             {

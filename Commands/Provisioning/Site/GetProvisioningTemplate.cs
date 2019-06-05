@@ -80,7 +80,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, excluding content types provisioned through content type syndication (content type hub), in order to prevent provisioning errors if the target also provision the content type using syndication.",
         SortOrder = 13)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ListsToExtract ""Title of List One"",""ID of List Two"",""Title of List Three""",
+        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ListsToExtract ""Title of List One"",""95c4efd6-08f4-4c67-94ae-49d696ba1298"",""Title of List Three""",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, including only the lists specified by title or ID.",
         SortOrder = 14)]
     [CmdletRelatedLink(
