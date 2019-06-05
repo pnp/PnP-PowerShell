@@ -70,7 +70,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         private static string rootFolder = "<root>";
         private Assembly modernizationAssembly;
         private Assembly sitesCoreAssembly;
-        private Assembly newtonsoftAssembly;
+       // private Assembly newtonsoftAssembly;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page to convert")]
         public PagePipeBind Identity;
@@ -150,7 +150,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         protected override void ExecuteCmdlet()
         {
             //Fix loading of modernization framework
-            FixAssemblyResolving();
+            //FixAssemblyResolving();
             
             // Load the page to transform
             Identity.Library = this.Library;
@@ -400,45 +400,45 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             return stream;
         }
 
-        private string AssemblyDirectory
-        {
-            get
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
-        }
+        //private string AssemblyDirectory
+        //{
+        //    get
+        //    {
+        //        string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+        //        UriBuilder uri = new UriBuilder(codeBase);
+        //        string path = Uri.UnescapeDataString(uri.Path);
+        //        return Path.GetDirectoryName(path);
+        //    }
+        //}
 
-        private void FixAssemblyResolving()
-        {
-            try
-            {
-                newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-                sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
-                modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
-                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            }
-            catch { }
-        }
+        //private void FixAssemblyResolving()
+        //{
+        //    try
+        //    {
+        //        newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
+        //        sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
+        //        modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
+        //        AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        //    }
+        //    catch { }
+        //}
 
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            if (args.Name.StartsWith("OfficeDevPnP.Core"))
-            {
-                return sitesCoreAssembly;
-            }
-            if (args.Name.StartsWith("Newtonsoft.Json"))
-            {
-                return newtonsoftAssembly;
-            }
-            if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
-            {
-                return modernizationAssembly;
-            }
-            return null;
-        }
+        //private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        //{
+        //    if (args.Name.StartsWith("OfficeDevPnP.Core"))
+        //    {
+        //        return sitesCoreAssembly;
+        //    }
+        //    if (args.Name.StartsWith("Newtonsoft.Json"))
+        //    {
+        //        return newtonsoftAssembly;
+        //    }
+        //    if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
+        //    {
+        //        return modernizationAssembly;
+        //    }
+        //    return null;
+        //}
     }
 }
 #endif
