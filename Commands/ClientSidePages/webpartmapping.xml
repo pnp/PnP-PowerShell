@@ -92,6 +92,17 @@ configure the page transformation engine to use the community script editor. You
           </Mapping>
         </Mappings>
       </WebPart>
+      <!-- Fake page properties web part, used to embed the modern page properties web part on a page -->
+      <WebPart Type="SharePointPnP.Modernization.PageProperties" CrossSiteTransformationSupported="true">
+        <Properties>
+          <Property Name="SelectedFields" Type="string"/>
+        </Properties>
+        <Mappings>
+          <Mapping Default="true" Name="default">
+            <ClientSideWebPart Type="PageFields" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&#125;,&quot;imageSources&quot;&#58;&#123;&#125;,&quot;links&quot;&#58;&#123;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;1.0&quot;,&quot;properties&quot;&#58;&#123;&quot;title&quot;&#58;&quot;&quot;,&quot;selectedFieldIds&quot;&#58;[{SelectedFields}],&quot;availableFields&quot;&#58;[]&#125;&#125;"/>
+          </Mapping>
+        </Mappings>
+      </WebPart>      
       <!-- Fake pageheader web part, used to embed a page acceptance web part -->
       <WebPart Type="SharePointPnP.Modernization.PageAcceptanceBanner" CrossSiteTransformationSupported="true">
         <Properties>
