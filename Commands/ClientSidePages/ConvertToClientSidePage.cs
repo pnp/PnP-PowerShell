@@ -163,7 +163,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
             else
             {
-                if (!this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
+                if (this.Folder == null || !this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
                 {
                     page = Identity.GetPage(this.ClientContext.Web, "sitepages");
                 }
@@ -333,7 +333,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             else
             {
                 Microsoft.SharePoint.Client.File fileToModernize = null;
-                if (this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
+                if (this.Folder != null && this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
                 {
                     // Load the page file from the site root folder
                     var webServerRelativeUrl = this.ClientContext.Web.EnsureProperty(p => p.ServerRelativeUrl);

@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Save-PnPClientSidePageConversionLog: use this cmdlet to save the pending page transformation logs. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPClientSidePage cmdlet.
+
 ### Changed
 
 - Cleanup private key only for file or pem based certificate login (#2101)
