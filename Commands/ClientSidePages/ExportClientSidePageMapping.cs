@@ -28,7 +28,6 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     {
         private Assembly modernizationAssembly;
         private Assembly sitesCoreAssembly;
-        private Assembly newtonsoftAssembly;
 
         [Parameter(Mandatory = false, HelpMessage = "Exports the builtin web part mapping file")]
         public SwitchParameter BuiltInWebPartMapping = false;
@@ -54,7 +53,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         protected override void ExecuteCmdlet()
         {
             //Fix loading of modernization framework
-            FixAssemblyResolving();
+            FixLocalAssemblyResolving();
 
             // Configure folder to export
             string folderToExportTo = Environment.CurrentDirectory;
@@ -158,27 +157,22 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
         }
 
-        private void FixAssemblyResolving()
+        private void FixLocalAssemblyResolving()
         {
             try
             {
-                newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
                 sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
                 modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
-                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_LocalAssemblyResolve;
             }
             catch { }
         }
 
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        private Assembly CurrentDomain_LocalAssemblyResolve(object sender, ResolveEventArgs args)
         {
             if (args.Name.StartsWith("OfficeDevPnP.Core"))
             {
                 return sitesCoreAssembly;
-            }
-            if (args.Name.StartsWith("Newtonsoft.Json"))
-            {
-                return newtonsoftAssembly;
             }
             if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
             {

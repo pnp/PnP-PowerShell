@@ -8,7 +8,7 @@ using System;
 namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPListItemAsRecord")]
-    [CmdletHelp("Declares a list item as a record",
+    [CmdletHelp("Declares a list item as a record, for more information, see https://docs.microsoft.com/sharepoint/governance/records-management-in-sharepoint-server",
         Category = CmdletHelpCategory.RecordsManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Set-PnPListItemAsRecord -List ""Documents"" -Identity 4",

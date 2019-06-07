@@ -13,7 +13,9 @@ This solution contains a library of PowerShell commands that allows you to perfo
 -  SharePoint 2019 on-premises
 
 ### Prerequisites ###
-In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
+In order to generate the Cmdlet help you need to have Windows Management Framework installed.
+
+If it is not [pre-installed on your operating system](https://docs.microsoft.com/powershell/wmf/overview#wmf-availability-across-windows-operating-systems), you can find installation instructions in the [WMF release notes.](https://docs.microsoft.com/powershell/wmf/overview#wmf-release-notes)
   
 ### Solution ###
 Solution | Author(s)

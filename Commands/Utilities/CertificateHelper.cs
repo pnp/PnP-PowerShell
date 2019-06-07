@@ -127,6 +127,20 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return certificate;
         }
 
+        internal static X509Certificate2 GetCertificateFromPath(string certificatePath, SecureString certificatePassword)
+        {
+            var certFile = System.IO.File.OpenRead(certificatePath);
+            var certificateBytes = new byte[certFile.Length];
+            certFile.Read(certificateBytes, 0, (int)certFile.Length);
+            var certificate = new X509Certificate2(
+                certificateBytes,
+                certificatePassword,
+                X509KeyStorageFlags.Exportable |
+                X509KeyStorageFlags.MachineKeySet |
+                X509KeyStorageFlags.PersistKeySet);
+            return certificate;
+        }
+
         #region certificate manipulation
         private static void EncodeLength(BinaryWriter stream, int length)
         {
