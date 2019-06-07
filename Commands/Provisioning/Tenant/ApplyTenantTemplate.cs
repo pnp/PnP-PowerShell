@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet("Apply", "PnPTenantTemplate", SupportsShouldProcess = true)]
     [Alias("Apply-PnPProvisioningHierarchy")]
-    [CmdletHelp("Applies a tenant template to the current tenant.",
+    [CmdletHelp("Applies a tenant template to the current tenant. You must be a SharePoint Online global administrator to run the cmdlet.",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Apply-PnPTenantTemplate -Path myfile.pnp",
