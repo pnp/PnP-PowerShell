@@ -101,6 +101,20 @@
             </summary>
             <returns>Json serialized string of this web part instance</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Extensions.FileFolderExtensions.GetFileByServerRelativeUrlAsString(Microsoft.SharePoint.Client.Web,System.String)">
+            <summary>
+            Returns a file as string
+            </summary>
+            <param name="web">The Web to process</param>
+            <param name="serverRelativeUrl">The server relative URL to the file</param>
+            <returns>The file contents as a string</returns>
+            <remarks>#
+            
+                Based on https://github.com/SharePoint/PnP-Sites-Core/blob/master/Core/OfficeDevPnP.Core/Extensions/FileFolderExtensions.cs
+                Modified to force onpremises support
+                
+            </remarks>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.ContainsIgnoringCasing(System.String,System.String,System.StringComparison)">
             <summary>
             Determines if a string exists in another string regardless of casing
@@ -125,6 +139,13 @@
             <param name="value"></param>
             <param name="seperator"></param>
             <param name="instanceFrom"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.GetBaseUrl(System.String)">
+            <summary>
+            Gets base url from string
+            </summary>
+            <param name="sourceSite"></param>
             <returns></returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.Layouts.PageLayoutHeaderFieldEntity">
@@ -350,6 +371,21 @@
             <param name="content">web part value</param>
             <returns></returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutAnalyser.LoadContentTypeFields(System.String)">
+            <summary>
+            Loads the content type fields
+            </summary>
+            <param name="contentTypeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutAnalyser.CleanExtractedWebPartFields(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Publishing.WebPartField},Microsoft.SharePoint.Client.FieldCollection)">
+            <summary>
+            Perform cleanup of web part fields
+            </summary>
+            <param name="webPartFields">List of extracted web parts</param>
+            <param name="spFields">Collection of fields</param>
+            <returns></returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutAnalyser.ExtractPageHeaderFromPageLayoutAssociatedContentType(Microsoft.SharePoint.Client.FieldCollection)">
             <summary>
             Sets the page layout header field defaults
@@ -361,17 +397,7 @@
             <summary>
             Ensures that we have context of the source site collection
             </summary>
-            <param name="context"></param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutAnalyser.GetPropertyBagValue``1(Microsoft.SharePoint.Client.Web,System.String,``0)">
-            <summary>
-            Gets property bag value
-            </summary>
-            <typeparam name="T">Cast to type of</typeparam>
-            <param name="web">Current Web</param>
-            <param name="key">KeyValue Pair - Key</param>
-            <param name="defaultValue">Default Value</param>
-            <returns></returns>
+            <param name="context">Connection to SharePoint</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutAnalyser.CastToEnum``1(System.String)">
             <summary>
@@ -386,18 +412,11 @@
             Class used to manage SharePoint Publishing page layouts
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutManager.#ctor(Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutManager.#ctor(System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Constructs the page layout manager class
             </summary>
-            <param name="source">Client context of the source web</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutManager.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
-            <summary>
-            Constructs the page layout manager class
-            </summary>
-            <param name="source">Client context of the source web</param>
-            <param name="target">Client context for the target web</param>
+            <param name="logObservers">Currently in use log observers</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutManager.LoadPageLayoutMappingFile(System.String)">
             <summary>
@@ -561,6 +580,42 @@
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaDataField.Functions">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaDataField.ShowInPageProperties">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaDataField.ShowInPagePropertiesSpecified">
+            <remarks/>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.MetaData">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.Field">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.ShowPageProperties">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.ShowPagePropertiesSpecified">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.PagePropertiesRow">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.PagePropertiesRowSpecified">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.PagePropertiesColumn">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.PagePropertiesColumnSpecified">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.PagePropertiesOrder">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.MetaData.PagePropertiesOrderSpecified">
             <remarks/>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.HeaderField">
@@ -1365,6 +1420,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.GetBaseUrl(System.Tuple{SharePointPnP.Modernization.Framework.Telemetry.LogLevel,SharePointPnP.Modernization.Framework.Telemetry.LogEntry})">
+            <summary>
+            Gets base url for report
+            </summary>
+            <param name="sourceSite"></param>
+            <returns></returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.Flush">
             <summary>
             Output the report when flush is called
@@ -1505,6 +1567,13 @@
             </summary>
             <param name="clientContext"></param>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.EnsureItemLevelPermissionsContextsSupported(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation)">
+            <summary>
+            Ensures that the contexts are the same for the feature to be supported
+            </summary>
+            <param name="baseTransformationInformation">Transformation Information</param>
+            <remarks>Will disable feature if not supported</remarks>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.BaseTransform">
             <summary>
             Base logging implementation
@@ -1581,6 +1650,11 @@
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SourcePage">
             <summary>
             Source wiki/webpart page we want to transform
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SourceFile">
+            <summary>
+            File to convert - used for web part pages living outside a library as these pages do not have an associated list item
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.Folder">
@@ -2425,11 +2499,12 @@
             Base class for the page analyzers
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Constructs the base page class instance
             </summary>
             <param name="page">page ListItem</param>
+            <param name="pageFile">page File</param>
             <param name="pageTransformation">page transformation model to use for extraction or transformation</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.GetType(System.String)">
@@ -2514,11 +2589,12 @@
             Analyzes a web part page
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation)">
             <summary>
             Instantiates a web part page object
             </summary>
             <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageFile">File holding the page (for pages living outside of a library)</param>
             <param name="pageTransformation">Page transformation information</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.Analyze(System.Boolean)">
