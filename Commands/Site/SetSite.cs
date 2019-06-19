@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Remarks = "Enables Microsoft Flow for this site",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPSite -SiteLogoPath c:\images\mylogo.png",
+        Code = @"PS:> Set-PnPSite -LogoFilePath c:\images\mylogo.png",
         Remarks = "Sets the logo if the site is a modern team site",
         SortOrder = 4)]
     public class SetSite : PnPCmdlet
