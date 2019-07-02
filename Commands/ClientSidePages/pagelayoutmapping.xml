@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PublishingPageTransformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.dev.office.com/PnP/2019/03/PublishingPageTransformationSchema">
+<PublishingPageTransformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.dev.office.com/PnP/2019/03/PublishingPageTransformationSchema" Version="1.0.1907.0">
   <PageLayouts>
     <!-- WelcomeLinks -->
     <PageLayout Name="WelcomeLinks" AssociatedContentType="" PageLayoutTemplate="AutoDetect" PageHeader="Custom">
