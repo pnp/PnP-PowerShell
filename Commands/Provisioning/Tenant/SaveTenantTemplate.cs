@@ -133,7 +133,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             }
             foreach (var template in Template.Templates)
             {
-                if(template.WebSettings != null && template.WebSettings.SiteLogo != null)
+                if(template.WebSettings != null && !String.IsNullOrEmpty(template.WebSettings.SiteLogo))
                 {
                     // is it a file?
                     var isFile = false;

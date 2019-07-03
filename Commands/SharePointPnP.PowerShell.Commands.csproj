@@ -637,6 +637,7 @@
     <Compile Include="Principals\RemoveAlert.cs" />
     <Compile Include="Principals\GetAlert.cs" />
     <Compile Include="Principals\AddAlert.cs" />
+    <Compile Include="Provisioning\Site\ExportListToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ApplyTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ReadTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\SaveTenantTemplate.cs" />

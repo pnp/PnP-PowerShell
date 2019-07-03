@@ -64,6 +64,21 @@
             Logs that contain summary data for verbose logging
             </summary>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.UrlMapping">
+            <summary>
+            Url map entry
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UrlMapping.SourceUrl">
+            <summary>
+            Url to be replaced
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UrlMapping.TargetUrl">
+            <summary>
+            Url replacement value
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.AudienceEntity">
             <summary>
             Holds information about the defined audiences
@@ -248,6 +263,14 @@
             <param name="image">A publishing image field value or a string containing a server relative image path</param>
             <returns>A formatted preview image url</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor.ResolveFunctionToken(System.String,System.String)">
+            <summary>
+            Replaces instances of the NameAttributeToken with the provided PropertyName
+            </summary>
+            <param name="functions">A string value containing the function definition</param>
+            <param name="propertyName">The property to replace it with</param>
+            <returns>The newly formatted function value.</returns>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingLayoutTransformator">
             <summary>
             Specific layout transformator for the 'AutoDetect' layout option for publishing pages
@@ -264,6 +287,11 @@
             Information used to configure the publishing page transformation process
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformationInformation.#ctor">
+            <summary>
+            For internal use only
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem)">
             <summary>
             Instantiates the page transformation class
@@ -276,6 +304,20 @@
             </summary>
             <param name="sourcePage">Page we want to transform</param>
             <param name="overwrite">Do we overwrite the target page if it already exists</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformationInformation.GetFirstNonEmptyFieldName(System.String[])">
+            <summary>
+            Given a collection of field names will return the first one which contains a value which is not null or empty.
+            </summary>
+            <param name="fieldNames">A array of Internal field names to check</param>
+            <returns>An Internal field name</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformationInformation.IsFieldUsed(System.String)">
+            <summary>
+            Checks if a field is in use
+            </summary>
+            <param name="fieldName">Internal field name</param>
+            <returns>True or False</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformator">
             <summary>
@@ -447,6 +489,9 @@
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation.PageLayouts">
             <remarks/>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation.Version">
+            <remarks/>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.AddOn">
             <remarks/>
         </member>
@@ -510,7 +555,28 @@
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.FixedWebPart.OrderSpecified">
             <remarks/>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.WebPartOccurrence">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartOccurrence.Type">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartOccurrence.Row">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartOccurrence.Column">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartOccurrence.Order">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartOccurrence.OrderSpecified">
+            <remarks/>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.WebPartZone">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartZone.WebPartZoneLayout">
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.WebPartZone.ZoneIndex">
@@ -1062,7 +1128,7 @@
             <param name="text">Original wiki html content</param>
             <returns>Html compliant with client side text part</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.SummaryLinksToQuickLinksProperties(System.String)">
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.SummaryLinksToQuickLinksProperties(System.String,System.String)">
             <summary>
             Maps summarylinks web part data into a properties collection and supporting serverProcessedContent nodes for the quicklinks web part
             </summary>
@@ -1567,9 +1633,9 @@
             </summary>
             <param name="clientContext"></param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.EnsureItemLevelPermissionsContextsSupported(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.CrossFarmTransformationValidation(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation)">
             <summary>
-            Ensures that the contexts are the same for the feature to be supported
+            Validates settings when doing a cross farm transformation
             </summary>
             <param name="baseTransformationInformation">Transformation Information</param>
             <remarks>Will disable feature if not supported</remarks>
@@ -1657,11 +1723,6 @@
             File to convert - used for web part pages living outside a library as these pages do not have an associated list item
             </summary>
         </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.Folder">
-            <summary>
-            Folder where the page to transform lives in
-            </summary>
-        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.Overwrite">
             <summary>
             Overwrite the target page if it already exists?
@@ -1709,6 +1770,11 @@
             Skip URL rewriting
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.UrlMappingFile">
+            <summary>
+            Url to an URL mapping file
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.PageTitleOverride">
             <summary>
             Custom function callout that can be triggered to provide a tailored page title
@@ -1727,6 +1793,26 @@
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SkipTelemetry">
             <summary>
             Disable telemetry: we use telemetry to make this tool better by sending anonymous data, but you're free to disable this
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.Folder">
+            <summary>
+            Folder where the page to transform lives in
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.IsCrossFarmTransformation">
+            <summary>
+            Indicates if this transformation spans farms (on-prem to online tenant, online tenant A to online tenant B)
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SourceVersion">
+            <summary>
+            SharePoint version of the source 
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.TargetVersion">
+            <summary>
+            SharePoint version of the target 
             </summary>
         </member>
         <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterChainingOperator.And">
@@ -2305,17 +2391,18 @@
             Class used to generate quicklinks web part properties
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.QuickLinksTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.QuickLinksTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates the class
             </summary>
             <param name="cc">Client context for the web holding the source page</param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.QuickLinksTransformator.Transform(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Transform.SummaryLink})">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.QuickLinksTransformator.Transform(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Transform.SummaryLink},System.String)">
             <summary>
             Generate quick links web part properties coming from a list of links
             </summary>
             <param name="summaryLinks">Links coming from the summarylink web part</param>
+            <param name="quickLinksJsonProperties">Json properties blob for QuickLinks web part tailoring</param>
             <returns>Properties for highlighted content web part</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator">
@@ -2584,6 +2671,12 @@
             </summary>
             <returns>Information about the analyzed publishing page</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.GetWebPartsForScanner">
+            <summary>
+            Analyses a publishing page for scanner usage
+            </summary>
+            <returns>Information about the analyzed publishing page</returns>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Pages.WebPartPage">
             <summary>
             Analyzes a web part page
@@ -2659,6 +2752,18 @@
             <param name="doc">html object</param>
             <returns>Layout of the wiki page</returns>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Utilities.FileManager">
+            <summary>
+            Class that's responsible for loading (mapping) files
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Utilities.FileManager.LoadUrlMappingFile(System.String)">
+            <summary>
+            Loads a URL mapping file
+            </summary>
+            <param name="mappingFile">Path to the mapping file</param>
+            <returns>A collection of URLMapping objects</returns>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.PageTransformation">
             <remarks/>
         </member>
@@ -2669,6 +2774,9 @@
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.PageTransformation.WebParts">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.PageTransformation.Version">
             <remarks/>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.BaseWebPart">
