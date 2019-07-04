@@ -46,6 +46,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         public
             SwitchParameter BreakRoleInheritance;
 
+        [Parameter(Mandatory = false, HelpMessage = "If used the security inheritance is reset for this list (inherited from parent)")]
+        public
+            SwitchParameter ResetRoleInheritance;
+        
         [Parameter(Mandatory = false, HelpMessage = "If used the roles are copied from the parent web")]
         public
             SwitchParameter CopyRoleAssignments;
@@ -111,6 +115,12 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 if (BreakRoleInheritance)
                 {
                     list.BreakRoleInheritance(CopyRoleAssignments, ClearSubscopes);
+                    isDirty = true;
+                }
+
+                if ((list.HasUniqueRoleAssignments) && (ResetRoleInheritance))
+                {
+                    list.ResetRoleInheritance();
                     isDirty = true;
                 }
 
