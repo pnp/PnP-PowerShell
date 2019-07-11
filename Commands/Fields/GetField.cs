@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -145,6 +146,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                     }
                     ClientContext.Load(field, RetrievalExpressions);
                     ClientContext.ExecuteQueryRetry();
+                    
                     switch (field.FieldTypeKind)
                     {
                         case FieldType.DateTime:
@@ -207,6 +209,15 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                             {
                                 WriteObject(ClientContext.CastTo<FieldNumber>(field));
                                 break;
+                            }
+                        case FieldType.Invalid:
+                            {
+                                if (field.TypeAsString.StartsWith("TaxonomyFieldType"))
+                                {
+                                    WriteObject(ClientContext.CastTo<TaxonomyField>(field));
+                                    break;
+                                }
+                                goto default;
                             }
                         default:
                             {
