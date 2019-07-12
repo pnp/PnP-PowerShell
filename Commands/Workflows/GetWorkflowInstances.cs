@@ -23,13 +23,31 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
 
     public class GetWorkflowInstance : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The List for which workflow instances should be retrieved", Position = 0)]
-        public ListPipeBind List;
-
-        [Parameter(Mandatory = true, HelpMessage = "The List Item for which workflow instances should be retrieved", Position = 1) ]
-        public ListItemPipeBind ListItem;
+        private const string ParameterSet_BYLISTITEM = "By List and ListItem";
+        private const string ParameterSet_BYSUBSCRIPTION = "By WorkflowSubscription";
 
         protected override void ExecuteCmdlet()
+        {
+            switch (ParameterSetName)
+            {
+                case ParameterSet_BYLISTITEM:
+                    ExecuteCmdletByListItem();
+                    break;
+                case ParameterSet_BYSUBSCRIPTION:
+                    ExecuteCmdletBySubscription();
+                    break;
+                default:
+                    throw new NotImplementedException($"{nameof(ParameterSetName)}: {ParameterSetName}");
+            }
+        }
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYLISTITEM, HelpMessage = "The List for which workflow instances should be retrieved", Position = 0)]
+        public ListPipeBind List;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYLISTITEM, HelpMessage = "The List Item for which workflow instances should be retrieved", Position = 1)]
+        public ListItemPipeBind ListItem;
+
+        private void ExecuteCmdletByListItem()
         {
             List list = null;
             ListItem listitem = null;
@@ -67,7 +85,20 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
             ClientContext.ExecuteQueryRetry();
             WriteObject(workflows, true);
         }
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYSUBSCRIPTION, HelpMessage = "The workflow subscription for which workflow instances should be retrieved", Position = 0, ValueFromPipeline = true)]
+        public WorkflowSubscriptionPipeBind WorkflowSubscription;
+
+        private void ExecuteCmdletBySubscription()
+        {
+            var workflowSubscription = WorkflowSubscription.Subscription;
+            if (workflowSubscription == null)
+            {
+                throw new PSArgumentException($"No workflow subscription found for '{WorkflowSubscription}'", nameof(WorkflowSubscription));
+            }
+
+            var workflows = workflowSubscription.GetInstances();
+            WriteObject(workflows, true);
+        }
     }
-
-
 }
