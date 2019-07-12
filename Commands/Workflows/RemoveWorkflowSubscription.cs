@@ -25,22 +25,9 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
 
         protected override void ExecuteCmdlet()
         {
-            if (Identity.Subscription != null)
-            {
-                Identity.Subscription.Delete();
-            }
-            else if (Identity.Id != Guid.Empty)
-            {
-                var subscription = SelectedWeb.GetWorkflowSubscription(Identity.Id);
-                if (subscription != null)
-                    subscription.Delete();
-            }
-            else if (!string.IsNullOrEmpty(Identity.Name))
-            {
-                var subscription = SelectedWeb.GetWorkflowSubscription(Identity.Name);
-                if (subscription != null)
-                    subscription.Delete();
-            }
+            var identity = Identity.GetWorkflowSubscription(SelectedWeb)
+                ?? throw new PSArgumentException($"No workflow subscription found for '{Identity}'", nameof(Identity));
+            identity.Delete();
         }
     }
 

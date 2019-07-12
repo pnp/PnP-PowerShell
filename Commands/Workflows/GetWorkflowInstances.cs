@@ -20,6 +20,10 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         Code = @"PS:> Get-PnPWorkflowInstance -List ""My Library"" -ListItem 2",
         Remarks = @"Retrieves workflow instances running against the provided item with 2 in the list ""My Library""",
         SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPWorkflowSubscription | Get-PnPWorkflowInstance",
+        Remarks = @"Retrieves workflow instances from all subscriptions.",
+        SortOrder = 3)]
 
     public class GetWorkflowInstance : PnPWebCmdlet
     {
@@ -91,7 +95,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
 
         private void ExecuteCmdletBySubscription()
         {
-            var workflowSubscription = WorkflowSubscription.Subscription;
+            var workflowSubscription = WorkflowSubscription.GetWorkflowSubscription(SelectedWeb);
             if (workflowSubscription == null)
             {
                 throw new PSArgumentException($"No workflow subscription found for '{WorkflowSubscription}'", nameof(WorkflowSubscription));
