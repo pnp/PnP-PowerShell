@@ -97,7 +97,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             {
                 var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
                 provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
-                if (openXmlConnector.Info?.Properties?.TemplateFileName != null)
+                if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
                 {
                     templateFileName = openXmlConnector.Info.Properties.TemplateFileName;
                 }

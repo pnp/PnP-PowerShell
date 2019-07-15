@@ -16,7 +16,7 @@ configure the page transformation engine to use the community script editor. You
 - Using the needed switch in PnP PowerShell
 -->
 
-<PageTransformation xmlns="http://schemas.dev.office.com/PnP/2018/01/PageTransformationSchema">
+<PageTransformation xmlns="http://schemas.dev.office.com/PnP/2018/01/PageTransformationSchema" Version="1.0.1907.0">
     <!-- Information that applies to all web parts listed in this file -->
     <BaseWebPart>
       <Properties>
@@ -92,6 +92,17 @@ configure the page transformation engine to use the community script editor. You
           </Mapping>
         </Mappings>
       </WebPart>
+      <!-- Fake page properties web part, used to embed the modern page properties web part on a page -->
+      <WebPart Type="SharePointPnP.Modernization.PageProperties" CrossSiteTransformationSupported="true">
+        <Properties>
+          <Property Name="SelectedFields" Type="string"/>
+        </Properties>
+        <Mappings>
+          <Mapping Default="true" Name="default">
+            <ClientSideWebPart Type="PageFields" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&#125;,&quot;imageSources&quot;&#58;&#123;&#125;,&quot;links&quot;&#58;&#123;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;1.0&quot;,&quot;properties&quot;&#58;&#123;&quot;title&quot;&#58;&quot;&quot;,&quot;selectedFieldIds&quot;&#58;[{SelectedFields}],&quot;availableFields&quot;&#58;[]&#125;&#125;"/>
+          </Mapping>
+        </Mappings>
+      </WebPart>      
       <!-- Fake pageheader web part, used to embed a page acceptance web part -->
       <WebPart Type="SharePointPnP.Modernization.PageAcceptanceBanner" CrossSiteTransformationSupported="true">
         <Properties>
@@ -792,13 +803,14 @@ configure the page transformation engine to use the community script editor. You
           <Property Name="SummaryLinkStore" Type="string" Functions="{FullPath} = Concatenate({Host}, {Web});{EncodedWeb} = HtmlEncodeForJson({FullPath});"/>
           <Property Name="ChromeType" Type="integer"/>
           <Property Name="Xsl" Type="string"/>
+          <Property Name="QuickLinksJsonProperties" Type="string"/>
         </Properties>
         <Mappings Selector="SummaryLinkSelector({SummaryLinksToQuickLinks})">
           <Mapping Name="UseText" Default="true" Functions="{CleanedText} = TextCleanUpSummaryLinks({SummaryLinkStore},{ChromeType},{Title})">
             <!-- Summary links html is tranformed to html that be presented using the text editor -->
             <ClientSideText Order="10" Text="{CleanedText}"/>
           </Mapping>
-          <Mapping Name="UseQuickLinks" Default="false" Functions="SummaryLinksToQuickLinksProperties({SummaryLinkStore})">
+          <Mapping Name="UseQuickLinks" Default="false" Functions="SummaryLinksToQuickLinksProperties({SummaryLinkStore},{QuickLinksJsonProperties})">
             <!-- Summary links html is tranformed to the quicklinks web part -->
             <ClientSideWebPart Type="QuickLinks" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&quot;title&quot;&#58;&quot;{Title}&quot;{SearchablePlainTexts}&#125;,&quot;imageSources&quot;&#58;&#123;{ImageSources}&#125;,&quot;links&quot;&#58;&#123;&quot;baseUrl&quot;&#58;&quot;{EncodedWeb}&quot;{Links}&#125;,&quot;componentDependencies&quot;&#58;&#123;&quot;layoutComponentId&quot;&#58;&quot;706e33c8-af37-4e7b-9d22-6e5694d92a6f&quot;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;2.1&quot;,&quot;properties&quot;&#58;{JsonProperties}&#125;"/>
           </Mapping>          

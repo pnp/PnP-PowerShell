@@ -13,6 +13,7 @@ using SharePointPnP.Modernization.Framework;
 using System.IO;
 using SharePointPnP.Modernization.Framework.Telemetry.Observers;
 using SharePointPnP.Modernization.Framework.Publishing;
+using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -38,29 +39,38 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     SortOrder = 4)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
-    Remarks = "Converts a publishing page named 'somepage' to a client side pagein the https://contoso.sharepoint.com/sites/targetmodernsite site",
+    Remarks = "Converts a publishing page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
     SortOrder = 5)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target",
+    Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in one environment (on-premises, tenant A) and create in another online location (tenant B)",
+    SortOrder = 6)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Library ""SiteAssets"" -Folder ""Folder1"" -Overwrite",
     Remarks = "Converts a web part page named 'somepage' living inside the SiteAssets library in a folder named folder1 into a client side page",
-    SortOrder = 6)]
+    SortOrder = 7)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Folder ""<root>"" -Overwrite",
+    Remarks = "Converts a web part page named 'somepage' living inside the root of the site collection (so outside of a library)",
+    SortOrder = 8)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
     Remarks = "Converts a wiki page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
-    SortOrder = 7)]
+    SortOrder = 9)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite",
     Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\temp using verbose logging",
-    SortOrder = 8)]
+    SortOrder = 10)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType SharePoint -LogSkipFlush",
     Remarks = "Converts a web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log",
-    SortOrder = 9)]
+    SortOrder = 11)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
+        private static string rootFolder = "<root>";
         private Assembly modernizationAssembly;
         private Assembly sitesCoreAssembly;
-        private Assembly newtonsoftAssembly;
+       // private Assembly newtonsoftAssembly;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page to convert")]
         public PagePipeBind Identity;
@@ -91,6 +101,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "If transforming cross site then by default urls in html and summarylinks are rewritten for the target site. Set this flag to prevent that")]
         public SwitchParameter SkipUrlRewriting = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "File holding custom URL mapping definitions")]
+        public string UrlMappingFile = "";
 
         [Parameter(Mandatory = false, HelpMessage = "Clears the cache. Can be needed if you've installed a new web part to the site and want to use that in a custom webpartmapping file. Restarting your PS session has the same effect")]
         public SwitchParameter ClearCache = false;
@@ -134,10 +147,13 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies to publishing page transformation)")]
         public string PublishingTargetPageName = "";
 
+        [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
+        public SPOnlineConnection TargetConnection = null;
+
         protected override void ExecuteCmdlet()
         {
             //Fix loading of modernization framework
-            FixAssemblyResolving();
+            FixLocalAssemblyResolving();
             
             // Load the page to transform
             Identity.Library = this.Library;
@@ -150,16 +166,19 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
             else
             {
-                page = Identity.GetPage(this.ClientContext.Web, "sitepages");
+                if (this.Folder == null || !this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    page = Identity.GetPage(this.ClientContext.Web, "sitepages");
+                }
             }
 
-            if (page == null)
+            if (page == null && !this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
             }
 
             // Publishing specific validation
-            if (this.PublishingPage && string.IsNullOrEmpty(this.TargetWebUrl))
+            if (this.PublishingPage && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
             {
                 throw new Exception($"Publishing page transformation is only supported when transformating into another site collection. Use the -TargetWebUrl to specify a modern target site.");
             }
@@ -198,10 +217,18 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
             // Create target client context (when needed)
             ClientContext targetContext = null;
-            if (!string.IsNullOrEmpty(TargetWebUrl))
+            if (TargetConnection == null)
             {
-                targetContext = this.ClientContext.Clone(TargetWebUrl);
+                if (!string.IsNullOrEmpty(TargetWebUrl))
+                {
+                    targetContext = this.ClientContext.Clone(TargetWebUrl);
+                }
             }
+            else
+            {
+                targetContext = TargetConnection.Context;
+            }
+
 
             // Create transformator instance
             PageTransformator pageTransformator = null;
@@ -237,7 +264,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     if (!string.IsNullOrEmpty(this.PageLayoutMapping))
                     {
                         // Load and validate the custom mapping file
-                        PageLayoutManager pageLayoutManager = new PageLayoutManager(this.ClientContext);
+                        PageLayoutManager pageLayoutManager = new PageLayoutManager();
                         var pageLayoutMappingModel = pageLayoutManager.LoadPageLayoutMappingFile(this.PageLayoutMapping);
 
                         // Using custom page layout mapping file + default one (they're merged together)
@@ -297,7 +324,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     PublishCreatedPage = !this.DontPublish,
                     DisablePageComments = this.DisablePageComments,     
                     TargetPageName = this.PublishingTargetPageName,
-                    SkipUrlRewrite = this.SkipUrlRewriting
+                    SkipUrlRewrite = this.SkipUrlRewriting,
+                    UrlMappingFile = this.UrlMappingFile,
                 };
 
                 // Set mapping properties
@@ -308,9 +336,20 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
             else
             {
+                Microsoft.SharePoint.Client.File fileToModernize = null;
+                if (this.Folder != null && this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    // Load the page file from the site root folder
+                    var webServerRelativeUrl = this.ClientContext.Web.EnsureProperty(p => p.ServerRelativeUrl);
+                    fileToModernize = this.ClientContext.Web.GetFileByServerRelativeUrl($"{webServerRelativeUrl}/{this.Identity.Name}");
+                    this.ClientContext.Load(fileToModernize);
+                    this.ClientContext.ExecuteQueryRetry();
+                }
+
                 // Setup Transformation information
                 PageTransformationInformation pti = new PageTransformationInformation(page)
                 {
+                    SourceFile = fileToModernize,
                     Overwrite = this.Overwrite,
                     TargetPageTakesSourcePageName = this.TakeSourcePageName,
                     ReplaceHomePageWithDefaultHomePage = this.ReplaceHomePageWithDefault,
@@ -319,6 +358,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     PublishCreatedPage = !this.DontPublish,
                     DisablePageComments = this.DisablePageComments,
                     SkipUrlRewrite = this.SkipUrlRewriting,
+                    UrlMappingFile = this.UrlMappingFile,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
@@ -376,27 +416,22 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
         }
 
-        private void FixAssemblyResolving()
+        private void FixLocalAssemblyResolving()
         {
             try
             {
-                newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
                 sitesCoreAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "OfficeDevPnP.Core.dll"));
                 modernizationAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "SharePointPnP.Modernization.Framework.dll"));
-                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_LocalAssemblyResolve;
             }
             catch { }
         }
 
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        private Assembly CurrentDomain_LocalAssemblyResolve(object sender, ResolveEventArgs args)
         {
             if (args.Name.StartsWith("OfficeDevPnP.Core"))
             {
                 return sitesCoreAssembly;
-            }
-            if (args.Name.StartsWith("Newtonsoft.Json"))
-            {
-                return newtonsoftAssembly;
             }
             if (args.Name.StartsWith("SharePointPnP.Modernization.Framework"))
             {

@@ -5,10 +5,47 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.11.1907.0]
+
+### Added
+
+- Added Export-PnPListToProvisioningTemplate cmdlet to export one or more lists to a provisioning template skipping all other artifacts.
+
+### Changed
+
+- ConvertTo-PnPClientSidePage: Added support for specifying a custom URL mapping file (UrlMappingFile parameter)
+- Get-PnPField: Return managed metadata fields as TaxonomyField instead of generic Field (#2130)
+
+### Contributors
+
+
+## [3.10.1906.0]
+
+### Added
+
+- Several bugfixes
+- Save-PnPClientSidePageConversionLog: use this cmdlet to save the pending page transformation logs. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPClientSidePage cmdlet.
+
+### Changed
+
+- Updated documentation for several cmdlets
+- Cleanup private key only for file or pem based certificate login (#2101)
+- ConvertTo-PnPClientSidePage: Added support to transform web part pages that live outside of a library (so in the root of the site)
+- ConvertTo-PnPClientSidePage: Added support to specify the target site as a connection using the TargetConnection parameter. This allows to read a page in one environment (on-premises, tenant A) and create in another online location (tenant B). (#2098)
+
+### Contributors
+
+- Paul Bullock [pkbullock]
+- Andres Mariano Gorzelany [get-itips]
+- Koen Zomers [KoenZomers]
+- Giacomo Pozzoni [jackpoz]
+- Tom Resing [tomresing]
+
 ## [3.9.1905.3 - May 2019 Intermediate Release 3]
 
 ### Changed
-- Updatd core provisioning to handle token issue during extraction and reintroduced content type fieldlink reordering in the engine.
+
+- Updated core provisioning to handle token issue during extraction and reintroduced content type fieldlink reordering in the engine.
 
 ## [3.9.1905.2 - May 2019 Intermediate Release 2]
 
@@ -21,7 +58,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Updated core provisioning engine to handle a server side issue.
-- Added support for certificte thumbprint login with ADAL and updated connection sample
+- Added support for certificate thumbprint login with ADAL and updated connection sample
 - Added support for outputting .cer file from New-PnPAzureCertificate
 
 ### Deprecated

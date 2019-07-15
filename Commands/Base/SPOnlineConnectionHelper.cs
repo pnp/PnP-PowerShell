@@ -365,23 +365,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificatePath, certificatePassword, azureEnvironment), retryCount, retryWait * 1000);
-            var connectionType = ConnectionType.OnPrem;
-            if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
-            {
-                connectionType = ConnectionType.O365;
-            }
-            if (skipAdminCheck == false)
-            {
-                if (IsTenantAdminSite(context))
-                {
-                    connectionType = ConnectionType.TenantAdmin;
-                }
-            }
-            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
-            spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
-            return spoConnection;
+            X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(certificatePath, certificatePassword);
+
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount,
+                retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment,
+                certificate, true);
         }
 
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant,
@@ -391,7 +379,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
             AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(thumbprint);
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait,  requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate);
+
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
         }
 
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePEM, string privateKeyPEM, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
@@ -399,12 +388,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
             string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, true);
         }
 
         private static SPOnlineConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant,
             int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
-            bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
+            bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
             var clientContext =
@@ -426,11 +415,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
 
-            CleanupCryptoMachineKey(certificate);
+            if (certificateFromFile)
+            {
+                CleanupCryptoMachineKey(certificate);
+            }
 
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
+
             return spoConnection;
         }
 

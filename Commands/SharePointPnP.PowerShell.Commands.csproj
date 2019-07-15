@@ -601,6 +601,7 @@
     <Compile Include="Base\TokenHandling.cs" />
     <Compile Include="ClientSidePages\ClientSidePageTransformatorLogType.cs" />
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
+    <Compile Include="ClientSidePages\SaveClientSidePageConversionLog.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
     <Compile Include="Enums\HttpRequestMethod.cs" />
     <Compile Include="Enums\InitializationType.cs" />
@@ -636,6 +637,7 @@
     <Compile Include="Principals\RemoveAlert.cs" />
     <Compile Include="Principals\GetAlert.cs" />
     <Compile Include="Principals\AddAlert.cs" />
+    <Compile Include="Provisioning\Site\ExportListToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ApplyTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ReadTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\SaveTenantTemplate.cs" />

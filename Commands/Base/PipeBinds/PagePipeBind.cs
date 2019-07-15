@@ -88,12 +88,6 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 
             return null;
         }
-
-        internal ListItem GetPublishingPage(Web web)
-        {
-            return null;
-        }
-
     }
 }
 #endif

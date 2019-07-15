@@ -13,6 +13,7 @@ using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using System.Collections.Generic;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
@@ -78,6 +79,10 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ExcludeContentTypesFromSyndication",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, excluding content types provisioned through content type syndication (content type hub), in order to prevent provisioning errors if the target also provision the content type using syndication.",
         SortOrder = 13)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ListsToExtract ""Title of List One"",""95c4efd6-08f4-4c67-94ae-49d696ba1298"",""Title of List Three""",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web, including only the lists specified by title or ID.",
+        SortOrder = 14)]
     [CmdletRelatedLink(
         Text = "Encoding",
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
@@ -122,6 +127,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         [Parameter(Mandatory = false, HelpMessage = "If specified hidden lists will be included in the template")]
         public SwitchParameter IncludeHiddenLists;
+
+        [Parameter(Mandatory = false, HelpMessage = "If specified all client side pages will be included")]
+        public SwitchParameter IncludeAllClientSidePages;
 
         [Parameter(Mandatory = false, HelpMessage = "During extraction the version of the server will be checked for certain actions. If you specify this switch, this check will be skipped.")]
         public SwitchParameter SkipVersionCheck;
@@ -172,6 +180,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
         [Parameter(Mandatory = false, HelpMessage = "Specify whether or not content types issued from a content hub should be exported. By default, these content types are included.")]
         public SwitchParameter ExcludeContentTypesFromSyndication;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specify the lists to extract, either providing their ID or their Title.")]
+        public List<string> ListsToExtract;
 
         protected override void ExecuteCmdlet()
         {
@@ -259,6 +270,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
             creationInformation.IncludeHiddenLists = IncludeHiddenLists;
+#if !SP2013 && !SP2016
+            creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
+#endif
             creationInformation.SkipVersionCheck = SkipVersionCheck;
             if (ContentTypeGroups != null)
             {
@@ -266,7 +280,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             }
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
-            if(extension == ".pnp")
+            if (extension == ".pnp")
             {
                 // if file is of pnp format, persist all files
                 creationInformation.PersistBrandingFiles = true;
@@ -311,11 +325,11 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 #pragma warning restore CS0618 // Type or member is obsolete
 
             creationInformation.ProgressDelegate = (message, step, total) =>
-                {
-                    var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
+            {
+                var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
 
-                    WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = percentage });
-                };
+                WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = percentage });
+            };
             creationInformation.MessagesDelegate = (message, type) =>
             {
                 switch (type)
@@ -381,6 +395,11 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
             }
 
             creationInformation.IncludeContentTypesFromSyndication = !ExcludeContentTypesFromSyndication.ToBool();
+
+            if (ListsToExtract != null && ListsToExtract.Count > 0)
+            {
+                creationInformation.ListsToExtract.AddRange(ListsToExtract);
+            }
 
             var template = SelectedWeb.GetProvisioningTemplate(creationInformation);
 
@@ -464,7 +483,6 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                     IsolatedStorage.InitializeIsolatedStorage();
 
                     XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-
                           creationInformation.FileConnector as OpenXMLConnector);
                     var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 

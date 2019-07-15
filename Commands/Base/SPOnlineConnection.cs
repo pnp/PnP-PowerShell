@@ -201,7 +201,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 catch (Exception ex)
                 {
 #if !ONPREMISES && !NETSTANDARD2_0
-                    if (ex is WebException || ex is NotSupportedException)
+                    if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
                     {
                         // legacy auth?
                         var authManager = new OfficeDevPnP.Core.AuthenticationManager();
