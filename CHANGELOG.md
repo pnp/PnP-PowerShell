@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - ConvertTo-PnPClientSidePage: Added support for specifying a custom URL mapping file (UrlMappingFile parameter)
 - Get-PnPField: Return managed metadata fields as TaxonomyField instead of generic Field (#2130)
+- Submit-PnPSearchQuery: Added alias Invoke-PnPSearchQuery for semantic aligning the verbs (#2168)
 
 ### Contributors
 

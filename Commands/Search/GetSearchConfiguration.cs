@@ -156,6 +156,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
  */
             int p;
             if (!int.TryParse(pid, out p)) return pid;
+            if (p <= 1000000000) return pid;
 
             var autoMpNum = pid.Substring(pid.Length - 2);
             var mpName = pid;
