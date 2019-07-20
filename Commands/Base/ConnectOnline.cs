@@ -92,8 +92,8 @@ PS:> dir",
 #if !ONPREMISES
 #if !NETSTANDARD2_0
     [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -Scopes $arrayOfScopes",
-       Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes",
+       Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\"",
+       Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://docs.microsoft.com/en-us/graph/permissions-reference",
        SortOrder = 13)]
 #endif
 #endif
