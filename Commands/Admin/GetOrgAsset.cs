@@ -1,0 +1,30 @@
+﻿#if !ONPREMISES
+using Microsoft.SharePoint.Client;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
+using System.Management.Automation;
+
+namespace SharePointPnP.PowerShell.Commands.Admin
+{
+    [Cmdlet(VerbsCommon.Get, "PnPOrgAsset")]
+    [CmdletHelp("Returns the list of all the configured organizational asset libraries",
+     SupportedPlatform = CmdletSupportedPlatform.Online,
+     Category = CmdletHelpCategory.TenantAdmin)]
+    [CmdletExample(
+     Code = @"PS:> Get-PnPOrgAsset",
+     Remarks = @"Returns the list of all the configured organizational asset sites", SortOrder = 1)]
+    [CmdletExample(
+     Code = @"PS:> (Get-PnPOrgAsset)[0].OrgAssetsLibraries[0].LibraryUrl.DecodedUrl",
+     Remarks = @"Returns the server relative url of the first document library which has been flagged as organizational asset library, i.e. ""sites/branding/logos""", SortOrder = 2)]
+    //
+    public class GetOrgAsset : PnPAdminCmdlet
+    {
+        protected override void ExecuteCmdlet()
+        {
+            var results = Tenant.GetOrgAssets();
+            ClientContext.ExecuteQueryRetry();
+            WriteObject(results.Value, true);
+        }
+    }
+}
+#endif

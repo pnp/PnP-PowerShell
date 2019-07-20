@@ -536,10 +536,13 @@
   <ItemGroup>
     <Compile Include="Admin\AddHubSiteAssociation.cs" />
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
+    <Compile Include="Admin\AddOrgAsset.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Admin\RemoveOrgAsset.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
     <Compile Include="Admin\EnableCommSite.cs" />
+    <Compile Include="Admin\GetOrgAsset.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
