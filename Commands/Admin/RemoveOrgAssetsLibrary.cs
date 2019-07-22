@@ -13,28 +13,28 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPOrgAssetsLibrary -DocumentLibraryUrl ""sites/branding/logos""",
+        Code = @"PS:> Remove-PnPOrgAssetsLibrary -LibraryUrl ""sites/branding/logos""",
         Remarks = @"This example removes the document library with the url ""logos"" residing in the sitecollection with the url ""sites/branding/logos"" from the list with organizational assets keeping it as an Office 365 CDN source", SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPOrgAssetsLibrary -DocumentLibraryUrl ""sites/branding/logos"" -RemoveAsCdnSource $true",
+        Code = @"PS:> Remove-PnPOrgAssetsLibrary -LibraryUrl ""sites/branding/logos"" -ShouldRemoveFromCdn $true",
         Remarks = @"This example removes the document library with the url ""logos"" residing in the sitecollection with the url ""sites/branding/logos"" from the list with organizational assets also removing it as a Public Office 365 CDN source", SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPOrgAssetsLibrary -DocumentLibraryUrl ""sites/branding/logos"" -RemoveAsCdnSource $true -CdnType Private",
+        Code = @"PS:> Remove-PnPOrgAssetsLibrary -LibraryUrl ""sites/branding/logos"" -ShouldRemoveFromCdn $true -CdnType Private",
         Remarks = @"This example removes the document library with the url ""logos"" residing in the sitecollection with the url ""sites/branding/logos"" from the list with organizational assets also removing it as a Private Office 365 CDN source", SortOrder = 3)]
     public class RemoveOrgAssetsLibrary : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = @"The server relative url of the document library flagged as organizational asset which you want to remove, i.e. ""sites/branding/logos""")]
-        public string DocumentLibraryUrl;
+        public string LibraryUrl;
 
         [Parameter(Mandatory = false, HelpMessage = @"Boolean indicating if the document library that will no longer be flagged as an organizational asset also needs to be removed as an Office 365 CDN source")]
-        public bool RemoveAsCdnSource = false;
+        public bool ShouldRemoveFromCdn = false;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Indicates what type of Cdn source the document library that will no longer be flagged as an organizational asset was of")]
+        [Parameter(Mandatory = false, HelpMessage = @"Indicates what type of Office 365 CDN source the document library that will no longer be flagged as an organizational asset was of")]
         public SPOTenantCdnType CdnType = SPOTenantCdnType.Public;
 
         protected override void ExecuteCmdlet()
         {
-            Tenant.RemoveFromOrgAssetsAndCdn(RemoveAsCdnSource, CdnType, DocumentLibraryUrl);
+            Tenant.RemoveFromOrgAssetsAndCdn(ShouldRemoveFromCdn, CdnType, LibraryUrl);
             ClientContext.ExecuteQueryRetry();
         }
     }
