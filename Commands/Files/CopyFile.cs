@@ -146,17 +146,17 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 folder.EnsureProperties(f => f.Name, f => f.Exists);
                 srcIsFolder = folder.Exists;
 #else
-            folder.EnsureProperties(f => f.Name);
-            bool srcIsFolder;
-            try
-            {
-                folder.EnsureProperties(f => f.ItemCount); //Using ItemCount as marker if this is a file or folder
-                srcIsFolder = true;
-            }
-            catch
-            {
-                srcIsFolder = false;
-            }
+                folder.EnsureProperties(f => f.Name);
+
+                try
+                {
+                    folder.EnsureProperties(f => f.ItemCount); //Using ItemCount as marker if this is a file or folder
+                    srcIsFolder = true;
+                }
+                catch
+                {
+                    srcIsFolder = false;
+                }
 
 #endif
             }
