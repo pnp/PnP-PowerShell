@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.12.1908.0]
+
+### Added
+
+### Changed
+
+Save-PnPProvisioningTemplate, if saving an instance to a PnP file, will now store referenced files etc in the PnP file.
+
+### Contributos
 ## [3.11.1907.0]
 
 ### Added
