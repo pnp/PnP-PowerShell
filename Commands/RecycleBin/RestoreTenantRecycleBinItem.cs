@@ -11,13 +11,13 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
     [Cmdlet(VerbsData.Restore, "PnPTenantRecycleBinItem")]
     [CmdletHelp("Restores a site collection from the tenant scoped recycle bin",
         SupportedPlatform = CmdletSupportedPlatform.Online,
-        DetailedDescription = @"The Reset-PnPTenantRecycleBinItem cmdlet allows a site collection that has been deleted and still exists in the tenant recycle bin to be restored to its original location.", 
+        DetailedDescription = @"The Restore-PnPTenantRecycleBinItem cmdlet allows a site collection that has been deleted and still exists in the tenant recycle bin to be restored to its original location.", 
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Reset-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso",
+        Code = @"PS:> Restore-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso",
         Remarks = @"This will restore the deleted site collection with the url 'https://tenant.sharepoint.com/sites/contoso' to its original location", SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Reset-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso -Wait",
+        Code = @"PS:> Restore-PnPTenantRecycleBinItem -Url https://tenant.sharepoint.com/sites/contoso -Wait",
         Remarks = @"This will restore the deleted site collection with the url 'https://tenant.sharepoint.com/sites/contoso' to its original location and will wait with executing further PowerShell commands until the site collection restore has completed", SortOrder = 2)]
     public class RestoreTenantRecycleBinItem : PnPAdminCmdlet
     {

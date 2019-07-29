@@ -577,6 +577,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
                 }
+                else
+                {
+                    // If current credentials should be used, use the DefaultNetworkCredentials of the CredentialCache. This has the same effect
+                    // as using "UseDefaultCredentials" in a HttpClient.
+                    context.Credentials = CredentialCache.DefaultNetworkCredentials;
+                }
             }
 #if SP2013 || SP2016 || SP2019
             var connectionType = ConnectionType.OnPrem;

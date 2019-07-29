@@ -12,60 +12,89 @@ namespace SharePointPnP.PowerShell.Tests
     [TestClass]
     public class FilesTests
     {
-        private string site1Id;
-        private string site2Id;
-        private string site1Url;
-        private string site2Url;
+        private string _site1Id;
+        private string _site2Id;
+        private string _site1Url;
+        private string _site2Url;
+        private string _site1RelativeUrl;
+        private string _site2RelativeUrl;
 
-        private const string targetLibraryRelativeUrl = "/sites/dev/Shared%20Documents";
-        private const string targetLibraryName = "Documents";
-        private const string targetLibraryDesc = "Documents library for Files testing";
-        private const string targetFileName = "Testfile.txt";
-        private const string targetFileContents = "Some random file contents";
-        private const string targetCopyFolderName = "CopyDestination";
-        private const string targetFileNameWithAmpersand = "Test & file.txt";
-        private const string targetSite2LibraryRelativeUrl = "/sites/dev2/Shared%20Documents";
+
+        private string Site1RelativeFolderUrl
+        {
+            get
+            {
+#if ONPREMISES
+                return $"{_site1RelativeUrl}/Shared%20Documents";
+#else
+                return $"{_site1RelativeUrl}/Shared Documents";
+#endif
+            }
+        }
+
+        private string Site2RelativeFolderUrl
+        {
+            get
+            {
+#if ONPREMISES
+                return $"{_site2RelativeUrl}/Shared%20Documents";
+#else
+                return $"{_site2RelativeUrl}/Shared Documents";
+#endif
+            }
+        }
+
+        private const string TargetFileName = "Testfile.txt";
+        private const string TargetFileContents = "Some random file contents";
+        private const string TargetCopyFolderName = "CopyDestination";
+        private const string TargetFileNameWithAmpersand = "Test & file.txt";
 
         [TestInitialize]
         public void Initialize()
         {
             using (var ctx = TestCommon.CreateClientContext())
             {
-                site1Id = Guid.NewGuid().ToString();
-                site2Id = Guid.NewGuid().ToString();
+                _site1Id = Guid.NewGuid().ToString();
+                _site2Id = Guid.NewGuid().ToString();
 
-                site1Url = $"{TestCommon.GetTenantRootUrl(ctx)}/sites/PNPPS_Test_{site1Id}";
-                site2Url = $"{TestCommon.GetTenantRootUrl(ctx)}/sites/PNPPS_Test_{site2Id}";
+                _site1RelativeUrl = $"/sites/PNPPS_Test_{_site1Id}";
+                _site2RelativeUrl = $"/sites/PNPPS_Test_{_site2Id}";
+
+                _site1Url = $"{TestCommon.GetTenantRootUrl(ctx)}{_site1RelativeUrl}";
+                _site2Url = $"{TestCommon.GetTenantRootUrl(ctx)}{_site2RelativeUrl}";
+
 
                 using (var site1Ctx = OfficeDevPnP.Core.Sites.SiteCollection.CreateAsync(ctx, new OfficeDevPnP.Core.Sites.CommunicationSiteCollectionCreationInformation()
                 {
-                    Url = site1Url,
+                    Url = _site1Url,
                     Lcid = 1033,
                     Title = "PnP PowerShell File Copy Test Site 1"
                 }).GetAwaiter().GetResult())
                 {
-                    site1Ctx.Web.EnsureProperty(w => w.ServerRelativeUrl);
-                    Folder folder = site1Ctx.Web.GetFolderByServerRelativeUrl($"{site1Ctx.Web.ServerRelativeUrl}/Shared%20Documents");
+                    Folder folder = site1Ctx.Web.GetFolderByServerRelativeUrl(Site1RelativeFolderUrl);
+
                     FileCreationInformation fci = new FileCreationInformation
                     {
-                        Content = System.Text.Encoding.ASCII.GetBytes(targetFileContents),
-                        Url = targetFileName,
+                        Content = System.Text.Encoding.ASCII.GetBytes(TargetFileContents),
+                        Url = TargetFileName,
                         Overwrite = true
                     };
                     File fileToUpload = folder.Files.Add(fci);
                     site1Ctx.Load(fileToUpload);
-                    fci.Url = targetFileNameWithAmpersand;
+
+                    fci.Url = TargetFileNameWithAmpersand;
                     fci.Overwrite = true;
                     fileToUpload = folder.Files.Add(fci);
                     site1Ctx.Load(fileToUpload);
+
                     site1Ctx.ExecuteQueryRetry();
 
-                    folder.EnsureFolder(targetCopyFolderName);
+                    folder.EnsureFolder(TargetCopyFolderName);
 
                 }
                 OfficeDevPnP.Core.Sites.SiteCollection.CreateAsync(ctx, new OfficeDevPnP.Core.Sites.CommunicationSiteCollectionCreationInformation()
                 {
-                    Url = site2Url,
+                    Url = _site2Url,
                     Lcid = 1033,
                     Title = "PnP PowerShell File Copy Test Site 2"
                 }).GetAwaiter().GetResult();
@@ -80,23 +109,23 @@ namespace SharePointPnP.PowerShell.Tests
             using (var ctx = TestCommon.CreateTenantClientContext())
             {
                 Tenant tenant = new Tenant(ctx);
-                tenant.DeleteSiteCollection(site1Url, false);
-                tenant.DeleteSiteCollection(site2Url, false);
+                tenant.DeleteSiteCollection(_site1Url, false);
+                tenant.DeleteSiteCollection(_site2Url, false);
             }
         }
 
         [TestMethod]
         public void GetFile_AsListItem_Test()
         {
-            using (var scope = new PSTestScope(site1Url, true))
+            using (var scope = new PSTestScope(_site1Url, true))
             {
-                var siteRelativeFolderUrl = $"/sites/PNPPS_Test_{site1Id}/Shared%20Documents";
+                var siteRelativeFileUrl = $"{Site1RelativeFolderUrl}/{TargetFileName}";
 
                 var values = new Hashtable();
                 values.Add("Title", "Test");
                 //Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsFile",
                 var results = scope.ExecuteCommand("Get-PnPFile",
-                    new CommandParameter("Url", $"{siteRelativeFolderUrl}/{targetFileName}"),
+                    new CommandParameter("Url", siteRelativeFileUrl),
                     new CommandParameter("AsListItem"));
 
                 Assert.IsTrue(results.Any());
@@ -108,28 +137,57 @@ namespace SharePointPnP.PowerShell.Tests
         [TestMethod]
         public void GetFile_AsFile_Test()
         {
-            using (var scope = new PSTestScope(site1Url, true))
+            using (var scope = new PSTestScope(_site1Url, true))
             {
-                var siteRelativeFolderUrl = $"/sites/PNPPS_Test_{site1Id}/Shared%20Documents";
+                var siteRelativeFileUrl = $"{Site1RelativeFolderUrl}/{TargetFileName}";
 
                 var results = scope.ExecuteCommand("Get-PnPFile",
-                    new CommandParameter("Url", $"{siteRelativeFolderUrl}/{targetFileName}"),
+                    new CommandParameter("Url", siteRelativeFileUrl),
                     new CommandParameter("AsFile"));
+                
+                Assert.IsFalse(results.Any());
+            }
+        }
+
+        [TestMethod]
+        public void GetFile_AsObject_Test()
+        {
+            using (var scope = new PSTestScope(_site1Url, true))
+            {
+                var siteRelativeFileUrl = $"{Site1RelativeFolderUrl}/{TargetFileName}";
+
+                var results = scope.ExecuteCommand("Get-PnPFile",
+                    new CommandParameter("Url", siteRelativeFileUrl));
+                
+                Assert.IsTrue(results.Any());
+                Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Microsoft.SharePoint.Client.File));
+            }
+        }
+
+        [TestMethod]
+        public void GetFile_AsString_Test()
+        {
+            using (var scope = new PSTestScope(_site1Url, true))
+            {
+                var siteRelateFileUrl = $"{Site1RelativeFolderUrl}/{TargetFileName}";
+
+                var results = scope.ExecuteCommand("Get-PnPFile",
+                    new CommandParameter("Url", siteRelateFileUrl),
+                    new CommandParameter("AsString"));
 
                 Assert.IsTrue(results.Any());
-
-                Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Microsoft.SharePoint.Client.File));
+                Assert.IsTrue(results[0].ToString() == "Some random file contents");
             }
         }
 
         [TestMethod]
         public void CopyFileTest()
         {
-            using (var scope = new PSTestScope(site1Url, true))
+            using (var scope = new PSTestScope(_site1Url, true))
             {
-                var sourceUrl = $"/sites/PNPPS_Test_{site1Id}/Shared%20Documents/{targetFileName}";
-
-                var destinationUrl = $"/sites/PNPPS_Test_{site1Id}/Shared%20Documents/{targetCopyFolderName}";
+                var sourceUrl = $"{Site1RelativeFolderUrl}/{TargetFileName}";
+                var destinationUrl = $"{Site1RelativeFolderUrl}/{TargetCopyFolderName}";
+                var destinationFileUrl = $"{destinationUrl}/{TargetFileName}";
 
                 var results = scope.ExecuteCommand("Copy-PnPFile",
                     new CommandParameter("SourceUrl", sourceUrl),
@@ -137,9 +195,9 @@ namespace SharePointPnP.PowerShell.Tests
                     new CommandParameter("Force"));
 
 
-                using (var ctx = TestCommon.CreateClientContext(site1Url))
+                using (var ctx = TestCommon.CreateClientContext(_site1Url))
                 {
-                    File initialFile = ctx.Web.GetFileByServerRelativeUrl(destinationUrl);
+                    File initialFile = ctx.Web.GetFileByServerRelativeUrl(destinationFileUrl);
                     ctx.Load(initialFile);
                     ctx.ExecuteQueryRetry();
                     if (!initialFile.Exists)
@@ -153,19 +211,20 @@ namespace SharePointPnP.PowerShell.Tests
         [TestMethod]
         public void CopyFile_WithAmpersand_Test()
         {
-            using (var scope = new PSTestScope(site1Url, true))
+            using (var scope = new PSTestScope(_site1Url, true))
             {
-                var sourceUrl = $"/sites/PNPPS_Test_{site1Id}/Shared%20Documents/{targetFileNameWithAmpersand}";
-                var destinationUrl = $"/sites/PNPPS_Test_{site1Id}/Shared%20Documents/{targetCopyFolderName}";
+                var sourceUrl = $"{Site1RelativeFolderUrl}/{TargetFileNameWithAmpersand}";
+                var destinationUrl = $"{Site1RelativeFolderUrl}/{TargetCopyFolderName}";
+                var destinationFileUrl = $"{destinationUrl}/{TargetFileNameWithAmpersand}";
 
                 var results = scope.ExecuteCommand("Copy-PnPFile",
                     new CommandParameter("SourceUrl", sourceUrl),
                     new CommandParameter("TargetUrl", destinationUrl),
                     new CommandParameter("Force"));
 
-                using (var ctx = TestCommon.CreateClientContext(site1Url))
+                using (var ctx = TestCommon.CreateClientContext(_site1Url))
                 {
-                    File initialFile = ctx.Web.GetFileByServerRelativeUrl(destinationUrl);
+                    File initialFile = ctx.Web.GetFileByServerRelativeUrl(destinationFileUrl);
                     ctx.Load(initialFile);
                     ctx.ExecuteQueryRetry();
                     if (!initialFile.Exists)
@@ -179,17 +238,18 @@ namespace SharePointPnP.PowerShell.Tests
         [TestMethod]
         public void CopyFile_BetweenSiteCollections_Test()
         {
-            using (var scope = new PSTestScope(site1Url, true))
+            using (var scope = new PSTestScope(_site1Url, true))
             {
-                var sourceUrl = $"/sites/PNPPS_Test_{site1Id}/Shared%20Documents/{targetFileName}";
-                var destinationFolderUrl = $"/sites/PNPPS_Test_{site2Id}/Shared%20Documents";
-                string destinationFileUrl = $"/sites/PNPPS_Test_{site2Id}/Shared%20Documents/{targetFileName}";
+                var sourceUrl = $"{Site1RelativeFolderUrl}/{TargetFileName}";
+                var destinationFolderUrl = $"{Site2RelativeFolderUrl}";
+                string destinationFileUrl = $"{destinationFolderUrl}/{TargetFileName}";
+
                 var results = scope.ExecuteCommand("Copy-PnPFile",
                     new CommandParameter("SourceUrl", sourceUrl),
                     new CommandParameter("TargetUrl", destinationFolderUrl),
                     new CommandParameter("Force"));
 
-                using (var ctx = TestCommon.CreateClientContext(site2Url))
+                using (var ctx = TestCommon.CreateClientContext(_site2Url))
                 {
                     File initialFile = ctx.Web.GetFileByServerRelativeUrl(destinationFileUrl);
                     ctx.Load(initialFile);
@@ -205,17 +265,18 @@ namespace SharePointPnP.PowerShell.Tests
         [TestMethod]
         public void CopyFile_BetweenSiteCollectionsWithAmpersand_Test()
         {
-            using (var scope = new PSTestScope(site1Url, true))
+            using (var scope = new PSTestScope(_site1Url, true))
             {
-                var sourceUrl = $"/sites/PNPPS_Test_{site1Id}/Shared%20Documents/{targetFileNameWithAmpersand}";
-                var destinationFolderUrl = $"/sites/PNPPS_Test_{site2Id}/Shared%20Documents";
-                string destinationFileUrl = $"/sites/PNPPS_Test_{site2Id}/Shared%20Documents/{targetFileNameWithAmpersand}";
+                var sourceUrl = $"{Site1RelativeFolderUrl}/{TargetFileNameWithAmpersand}";
+                var destinationFolderUrl = $"{Site2RelativeFolderUrl}";
+                string destinationFileUrl = $"{destinationFolderUrl}/{TargetFileNameWithAmpersand}";
+
                 var results = scope.ExecuteCommand("Copy-PnPFile",
                     new CommandParameter("SourceUrl", sourceUrl),
                     new CommandParameter("TargetUrl", destinationFolderUrl),
                     new CommandParameter("Force"));
 
-                using (var ctx = TestCommon.CreateClientContext(site2Url))
+                using (var ctx = TestCommon.CreateClientContext(_site2Url))
                 {
                     File initialFile = ctx.Web.GetFileByServerRelativeUrl(destinationFileUrl);
                     ctx.Load(initialFile);

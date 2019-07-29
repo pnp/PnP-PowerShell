@@ -79,6 +79,28 @@
             Url replacement value
             </summary>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties">
+            <summary>
+            Entity to describe a web part on a wiki or webpart page called from web services
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.TypeShort">
+            <summary>
+            Shortened web part type name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity">
+            <summary>
+            Entity to describe a web part on a wiki or webpart page called from web services
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity.TypeShort">
+            <summary>
+            Shortened web part type name
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.AudienceEntity">
             <summary>
             Holds information about the defined audiences
@@ -162,6 +184,287 @@
             </summary>
             <param name="sourceSite"></param>
             <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.GetTypeShort(System.String)">
+            <summary>
+            Get type in short form
+            </summary>
+            <param name="typeValue"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Pages.PublishingPageOnPremises">
+            <summary>
+            Analyzes a publishing page
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPageOnPremises.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Instantiates a publishing page object
+            </summary>
+            <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageTransformation">Page transformation information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPageOnPremises.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Instantiates a publishing page object
+            </summary>
+            <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageTransformation">Page transformation information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPageOnPremises.Analyze(SharePointPnP.Modernization.Framework.Publishing.PageLayout)">
+            <summary>
+            Analyses a publishing page
+            </summary>
+            <returns>Information about the analyzed publishing page</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPageOnPremises.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation)">
+            <summary>
+            Instantiates a web part page object for on-premises environments
+            </summary>
+            <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageFile">File holding the page (for pages living outside of a library)</param>
+            <param name="pageTransformation">Page transformation information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPageOnPremises.Analyze(System.Boolean)">
+            <summary>
+            Analyses a webpart page from on-premises environment
+            </summary>
+            <param name="includeTitleBarWebPart"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPageOnPremises.GetLayoutFromWebServices(System.String)">
+            <summary>
+            Gets and parses the layout from the web services URL
+            </summary>
+            <param name="webPartPageUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Pages.BasePage">
+            <summary>
+            Base class for the page analyzers
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Constructs the base page class instance
+            </summary>
+            <param name="page">page ListItem</param>
+            <param name="pageFile">page File</param>
+            <param name="pageTransformation">page transformation model to use for extraction or transformation</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.GetType(System.String)">
+            <summary>
+            Get's the type of the web part
+            </summary>
+            <param name="webPartXml">Web part xml to analyze</param>
+            <returns>Type of the web part as fully qualified name</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.LoadWebPartsInWikiContentFromServer(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity},Microsoft.SharePoint.Client.File,System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Pages.BasePage.WebPartPlaceHolder})">
+            <summary>
+            Load Web Parts from Wiki Content page on Online Server
+            </summary>
+            <param name="webparts"></param>
+            <param name="wikiPage"></param>
+            <param name="webPartsToRetrieve"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.LoadWebPartsInWikiContentFromOnPremisesServer(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity},Microsoft.SharePoint.Client.File,System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Pages.BasePage.WebPartPlaceHolder})">
+            <summary>
+            Load Web Parts from Wiki Content page on On-Premises Server
+            </summary>
+            <param name="webparts"></param>
+            <param name="wikiPage"></param>
+            <param name="webPartsToRetrieve"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.CreateWikiTextPart(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Stores text content as a fake web part
+            </summary>
+            <param name="wikiTextPartContent">Text to store</param>
+            <param name="row">Row of the fake web part</param>
+            <param name="col">Column of the fake web part</param>
+            <param name="order">Order inside the row/column</param>
+            <returns>A web part entity to add to the collection</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ContainsWebPart(AngleSharp.Dom.Html.IHtmlElement)">
+            <summary>
+            Does the tree of nodes somewhere contain a web part?
+            </summary>
+            <param name="element">Html content to analyze</param>
+            <returns>True if it contains a web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.StripWebPart(AngleSharp.Dom.Html.IHtmlElement)">
+            <summary>
+            Strips the div holding the web part from the html
+            </summary>
+            <param name="element">Html element holding one or more web part divs</param>
+            <returns>Cleaned html with a placeholder for the web part div</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.GetTypeFromProperties(System.Collections.Generic.Dictionary{System.String,System.Object},System.Boolean)">
+            <summary>
+            Get's the type of the web part by detecting if from the available properties
+            </summary>
+            <param name="properties">Web part properties to analyze</param>
+            <returns>Type of the web part as fully qualified name</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.Properties(System.Collections.Generic.Dictionary{System.String,System.Object},System.String,System.String)">
+            <summary>
+            Checks the PageTransformation XML data to know which properties need to be kept for the given web part and collects their values
+            </summary>
+            <param name="properties">Properties collection retrieved when we loaded the web part</param>
+            <param name="webPartType">Type of the web part</param>
+            <param name="webPartXml">Web part XML</param>
+            <returns>Collection of the requested property/value pairs</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ExtractWebPartDocumentViaWebServicesFromPage(System.String)">
+            <summary>
+            Call SharePoint Web Services to extract web part properties not exposed by CSOM
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ExportWebPartXmlWorkaround(System.String,System.String)">
+            <summary>
+            Exports Web Part XML via an older workround
+            </summary>
+            <param name="pageUrl"></param>
+            <param name="webPartGuid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.LoadPublishingPageFromWebServices(System.String)">
+            <summary>
+            Loads and Parses Web Part Page from Web Services
+            </summary>
+            <param name="fullUrl"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ExtractWebPartPrefixesFromNamespaces(AngleSharp.Dom.Html.IHtmlDocument)">
+            <summary>
+            Gets the tag prefixes from the document
+            </summary>
+            <param name="webPartPage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.LoadWebPartPropertiesFromWebServices(System.String)">
+            <summary>
+            Loads Web Part Properties from web services
+            </summary>
+            <param name="pageUrl">Server Relative Page Url</param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ExtractWebPartPropertiesViaWebServicesFromPage(System.String)">
+            <summary>
+            Call SharePoint Web Services to extract web part properties not exposed by CSOM
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Pages.PageLayout">
+            <summary>
+            Possible layouts used by wiki or webpart pages
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Pages.PublishingPage">
+            <summary>
+            Analyzes a publishing page
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Instantiates a publishing page object
+            </summary>
+            <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageTransformation">Page transformation information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Instantiates a publishing page object
+            </summary>
+            <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageTransformation">Page transformation information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.Analyze(SharePointPnP.Modernization.Framework.Publishing.PageLayout)">
+            <summary>
+            Analyses a publishing page
+            </summary>
+            <returns>Information about the analyzed publishing page</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.GetWebPartsForScanner">
+            <summary>
+            Analyses a publishing page for scanner usage
+            </summary>
+            <returns>Information about the analyzed publishing page</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Pages.WebPartPage">
+            <summary>
+            Analyzes a web part page
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation)">
+            <summary>
+            Instantiates a web part page object
+            </summary>
+            <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageFile">File holding the page (for pages living outside of a library)</param>
+            <param name="pageTransformation">Page transformation information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.Analyze(System.Boolean)">
+            <summary>
+            Analyses a webpart page
+            </summary>
+            <param name="includeTitleBarWebPart">Include the TitleBar web part</param>
+            <returns>Information about the analyzed webpart page</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.GetColumn(System.String,SharePointPnP.Modernization.Framework.Pages.PageLayout)">
+            <summary>
+            Translates the given zone value and page layout to a column number
+            </summary>
+            <param name="zoneId">Web part zone id</param>
+            <param name="layout">Layout of the web part page</param>
+            <returns>Column value</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.GetRow(System.String,SharePointPnP.Modernization.Framework.Pages.PageLayout)">
+            <summary>
+            Translates the given zone value and page layout to a row number
+            </summary>
+            <param name="zoneId">Web part zone id</param>
+            <param name="layout">Layout of the web part page</param>
+            <returns>Row value</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.GetLayout(Microsoft.SharePoint.Client.PropertyValues)">
+            <summary>
+            Determines the used web part page layout
+            </summary>
+            <param name="pageProperties">Properties of the web part page file</param>
+            <returns>Used layout</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Pages.WikiPage">
+            <summary>
+            Analyzes a wiki page
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation)">
+            <summary>
+            Instantiates a wiki page object
+            </summary>
+            <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageTransformation">Page transformation information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.Analyze">
+            <summary>
+            Analyses a wiki page
+            </summary>
+            <returns>Information about the analyzed wiki page</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.IsNestedLayoutsZoneOuter(AngleSharp.Dom.IElement)">
+            <summary>
+            Check if this element is nested in another already processed element...this needs to be skipped to avoid content duplication and possible processing errors
+            </summary>
+            <param name="contentHost">element to check</param>
+            <returns>true if embedded in a already processed element</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.GetLayout(AngleSharp.Dom.Html.IHtmlDocument)">
+            <summary>
+            Analyzes the wiki page to determine which layout was used
+            </summary>
+            <param name="doc">html object</param>
+            <returns>Layout of the wiki page</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.Layouts.PageLayoutHeaderFieldEntity">
             <summary>
@@ -1627,7 +1930,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.LoadClientObject(Microsoft.SharePoint.Client.ClientContext)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.LoadClientObject(Microsoft.SharePoint.Client.ClientContext,System.Boolean)">
             <summary>
             Loads the telemetry and properties for the client object
             </summary>
@@ -1707,6 +2010,13 @@
             Sets the page name of the page being transformed
             </summary>
             <param name="pageId">Name of the page being transformed</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BaseTransform.GetVersion(Microsoft.SharePoint.Client.ClientRuntimeContext)">
+            <summary>
+            Gets the version of SharePoint
+            </summary>
+            <param name="clientContext"></param>
+            <returns></returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation">
             <summary>
@@ -2472,6 +2782,11 @@
             Get's the single cachemanager instance, singleton pattern
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.SharepointVersions">
+            <summary>
+            List of URLs and SharePoint Versions
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.AssetsTransfered">
             <summary>
             List of assets transferred from source to destination
@@ -2529,6 +2844,11 @@
             <param name="resource">Key of the resource (e.g. $Resources:core,ScriptEditorWebPartDescription;) </param>
             <returns>Translated string</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearSharePointVersions">
+            <summary>
+            Clears Cached SharePoint versions
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Cache.FieldData">
             <summary>
             Field data used to transfer information about a field
@@ -2580,177 +2900,6 @@
             </summary>
             <param name="searchQuery">Query to parse</param>
             <returns>List of <see cref="T:SharePointPnP.Modernization.Framework.KQL.KQLElement"/> tokens</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Pages.BasePage">
-            <summary>
-            Base class for the page analyzers
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
-            <summary>
-            Constructs the base page class instance
-            </summary>
-            <param name="page">page ListItem</param>
-            <param name="pageFile">page File</param>
-            <param name="pageTransformation">page transformation model to use for extraction or transformation</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.GetType(System.String)">
-            <summary>
-            Get's the type of the web part
-            </summary>
-            <param name="webPartXml">Web part xml to analyze</param>
-            <returns>Type of the web part as fully qualified name</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.CreateWikiTextPart(System.String,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Stores text content as a fake web part
-            </summary>
-            <param name="wikiTextPartContent">Text to store</param>
-            <param name="row">Row of the fake web part</param>
-            <param name="col">Column of the fake web part</param>
-            <param name="order">Order inside the row/column</param>
-            <returns>A web part entity to add to the collection</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ContainsWebPart(AngleSharp.Dom.Html.IHtmlElement)">
-            <summary>
-            Does the tree of nodes somewhere contain a web part?
-            </summary>
-            <param name="element">Html content to analyze</param>
-            <returns>True if it contains a web part</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.StripWebPart(AngleSharp.Dom.Html.IHtmlElement)">
-            <summary>
-            Strips the div holding the web part from the html
-            </summary>
-            <param name="element">Html element holding one or more web part divs</param>
-            <returns>Cleaned html with a placeholder for the web part div</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.GetTypeFromProperties(Microsoft.SharePoint.Client.PropertyValues)">
-            <summary>
-            Get's the type of the web part by detecting if from the available properties
-            </summary>
-            <param name="properties">Web part properties to analyze</param>
-            <returns>Type of the web part as fully qualified name</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.Properties(Microsoft.SharePoint.Client.PropertyValues,System.String,System.String)">
-            <summary>
-            Checks the PageTransformation XML data to know which properties need to be kept for the given web part and collects their values
-            </summary>
-            <param name="properties">Properties collection retrieved when we loaded the web part</param>
-            <param name="webPartType">Type of the web part</param>
-            <param name="webPartXml">Web part XML</param>
-            <returns>Collection of the requested property/value pairs</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Pages.PageLayout">
-            <summary>
-            Possible layouts used by wiki or webpart pages
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Pages.PublishingPage">
-            <summary>
-            Analyzes a publishing page
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
-            <summary>
-            Instantiates a publishing page object
-            </summary>
-            <param name="page">ListItem holding the page to analyze</param>
-            <param name="pageTransformation">Page transformation information</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
-            <summary>
-            Instantiates a publishing page object
-            </summary>
-            <param name="page">ListItem holding the page to analyze</param>
-            <param name="pageTransformation">Page transformation information</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.Analyze(SharePointPnP.Modernization.Framework.Publishing.PageLayout)">
-            <summary>
-            Analyses a publishing page
-            </summary>
-            <returns>Information about the analyzed publishing page</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.PublishingPage.GetWebPartsForScanner">
-            <summary>
-            Analyses a publishing page for scanner usage
-            </summary>
-            <returns>Information about the analyzed publishing page</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Pages.WebPartPage">
-            <summary>
-            Analyzes a web part page
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation)">
-            <summary>
-            Instantiates a web part page object
-            </summary>
-            <param name="page">ListItem holding the page to analyze</param>
-            <param name="pageFile">File holding the page (for pages living outside of a library)</param>
-            <param name="pageTransformation">Page transformation information</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.Analyze(System.Boolean)">
-            <summary>
-            Analyses a webpart page
-            </summary>
-            <param name="includeTitleBarWebPart">Include the TitleBar web part</param>
-            <returns>Information about the analyzed webpart page</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.GetColumn(System.String,SharePointPnP.Modernization.Framework.Pages.PageLayout)">
-            <summary>
-            Translates the given zone value and page layout to a column number
-            </summary>
-            <param name="zoneId">Web part zone id</param>
-            <param name="layout">Layout of the web part page</param>
-            <returns>Column value</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.GetRow(System.String,SharePointPnP.Modernization.Framework.Pages.PageLayout)">
-            <summary>
-            Translates the given zone value and page layout to a row number
-            </summary>
-            <param name="zoneId">Web part zone id</param>
-            <param name="layout">Layout of the web part page</param>
-            <returns>Row value</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.GetLayout(Microsoft.SharePoint.Client.PropertyValues)">
-            <summary>
-            Determines the used web part page layout
-            </summary>
-            <param name="pageProperties">Properties of the web part page file</param>
-            <returns>Used layout</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Pages.WikiPage">
-            <summary>
-            Analyzes a wiki page
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation)">
-            <summary>
-            Instantiates a wiki page object
-            </summary>
-            <param name="page">ListItem holding the page to analyze</param>
-            <param name="pageTransformation">Page transformation information</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.Analyze">
-            <summary>
-            Analyses a wiki page
-            </summary>
-            <returns>Information about the analyzed wiki page</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.IsNestedLayoutsZoneOuter(AngleSharp.Dom.IElement)">
-            <summary>
-            Check if this element is nested in another already processed element...this needs to be skipped to avoid content duplication and possible processing errors
-            </summary>
-            <param name="contentHost">element to check</param>
-            <returns>true if embedded in a already processed element</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.GetLayout(AngleSharp.Dom.Html.IHtmlDocument)">
-            <summary>
-            Analyzes the wiki page to determine which layout was used
-            </summary>
-            <param name="doc">html object</param>
-            <returns>Layout of the wiki page</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Utilities.FileManager">
             <summary>
@@ -4159,6 +4308,28 @@
             </summary>
             <param name="web">web to use for the resolving</param>
             <returns>Loginname for the "Everyone Except External Users" claim</returns>
+        </member>
+        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetUrl(Microsoft.SharePoint.Client.Web)">
+            <summary>
+            Method to bypass missing property in SharePoint 2010
+            </summary>
+            <param name="web"></param>
+            <remarks>Only required on source contexts</remarks>
+            <returns>Url</returns>
+        </member>
+        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetPagesLibraryId(Microsoft.SharePoint.Client.Web)">
+            <summary>
+            Get Pages Library ID for the Web
+            </summary>
+            <param name="web"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetSitePagesLibrary(Microsoft.SharePoint.Client.Web)">
+            <summary>
+            Gets site pages library from web
+            </summary>
+            <param name="web"></param>
+            <returns></returns>
         </member>
         <member name="T:AngleSharp.Dom.AngleSharpExtensions">
             <summary>
