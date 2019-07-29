@@ -113,6 +113,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
                 if (PublishingPage != null)
                 {
+                    this.ClientContext.Web.EnsureProperty(p => p.ServerRelativeUrl);
                     page = PublishingPage.GetPage(this.ClientContext.Web, CacheManager.Instance.GetPublishingPagesLibraryName(this.ClientContext));
                 }
 
