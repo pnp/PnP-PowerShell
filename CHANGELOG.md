@@ -8,12 +8,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.12.1908.0]
 
 ### Added
+- Documentation updates
+- Added a TemplateId parameter to Apply-PnPProvisioningTemplate to allow to apply a specific template in case multiple templates exist in a single file.
 
 ### Changed
 
-Save-PnPProvisioningTemplate, if saving an instance to a PnP file, will now store referenced files etc in the PnP file.
+- Fixed bug in Set-PnPListItem when using SystemUpdate and setting a content type.
+- Grant-PnPTenantServicePrincipalPermission now handles multi-language environments where the Tenant App Catalog is in a different language than English.
+- Save-PnPProvisioningTemplate, if saving an instance to a PnP file, will now store referenced files etc in the PnP file.
 
-### Contributos
+### Contributors
+
+- Koen Zomers [KoenZomers]
+- Gautam Sheth [gautamdsheth]
+- Andres Mariano Gorzelany [get-itips]
+
 ## [3.11.1907.0]
 
 ### Added
