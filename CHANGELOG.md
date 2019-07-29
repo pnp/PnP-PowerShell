@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.12.1908.0]
 
 ### Added
+- Added -ResetRoleInheritance to Set-PnPList
 - Documentation updates
 - Added a TemplateId parameter to Apply-PnPProvisioningTemplate to allow to apply a specific template in case multiple templates exist in a single file.
 
@@ -19,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Chris O'Connor [kachihro]
 - Koen Zomers [KoenZomers]
 - Gautam Sheth [gautamdsheth]
 - Andres Mariano Gorzelany [get-itips]
