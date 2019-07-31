@@ -100,9 +100,20 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     if (ct != null)
                     {
                         ct.EnsureProperty(w => w.StringId);
-
                         item["ContentTypeId"] = ct.StringId;
+#if !ONPREMISES
+                        if (SystemUpdate.IsPresent)
+                        {
+                            item.SystemUpdate();
+                        }
+                        else
+                        {
+                            item.Update();
+                        }
+#else
                         item.Update();
+                        
+#endif                        
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
@@ -110,7 +121,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 {
 #if !ONPREMISES
                     var updateType = ListItemUpdateType.Update;
-                    if(SystemUpdate.IsPresent)
+                    if (SystemUpdate.IsPresent)
                     {
                         updateType = ListItemUpdateType.SystemUpdate;
                     }
@@ -118,7 +129,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                       {
                           WriteWarning(warning);
                       },
-                      (terminatingErrorMessage,terminatingErrorCode) =>
+                      (terminatingErrorMessage, terminatingErrorCode) =>
                       {
                           ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
                       }
