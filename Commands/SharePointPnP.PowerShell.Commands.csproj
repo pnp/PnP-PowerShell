@@ -608,6 +608,9 @@
     <Compile Include="Enums\ListItemUpdateType.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
+    <Compile Include="Graph\GetDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\RemoveDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\RestoreDeletedUnifiedGroup.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
