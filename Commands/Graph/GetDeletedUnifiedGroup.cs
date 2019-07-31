@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         Remarks = "Retrieves all deleted Office 365 Groups",
         SortOrder = 1)]
     [CmdletExample(
-        Code = "PS:> Get-PnPDeletedUnifiedGroup -Identity $groupId",
+        Code = "PS:> Get-PnPDeletedUnifiedGroup -Identity 38b32e13-e900-4d95-b860-fb52bc07ca7f",
         Remarks = "Retrieves a specific deleted Office 365 Group based on its ID",
         SortOrder = 2)]
 

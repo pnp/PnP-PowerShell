@@ -12,11 +12,12 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = "PS:> Restore-PnPDeletedUnifiedGroup -Identity $groupId",
+        Code = "PS:> Restore-PnPDeletedUnifiedGroup -Identity 38b32e13-e900-4d95-b860-fb52bc07ca7f",
         Remarks = "Restores a deleted Office 365 Group based on its ID",
         SortOrder = 1)]
     [CmdletExample(
-        Code = "PS:> Restore-PnPDeletedUnifiedGroup -Identity $group",
+        Code = @"PS:> $group = Get-PnPDeletedUnifiedGroup -Identity 38b32e13-e900-4d95-b860-fb52bc07ca7f
+PS:> Restore-PnPDeletedUnifiedGroup -Identity $group",
         Remarks = "Restores the provided deleted Office 365 Group",
         SortOrder = 2)]
 
