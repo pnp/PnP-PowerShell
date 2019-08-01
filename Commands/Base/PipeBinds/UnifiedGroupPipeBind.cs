@@ -1,10 +1,7 @@
 ﻿using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.Core.Framework.Graph;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -65,6 +62,22 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                     group = groups.FirstOrDefault();
                 }
             }
+            return group;
+        }
+
+        public UnifiedGroupEntity GetDeletedGroup(string accessToken)
+        {
+            UnifiedGroupEntity group = null;
+
+            if (Group != null)
+            {
+                group = UnifiedGroupsUtility.GetDeletedUnifiedGroup(Group.GroupId, accessToken);
+            }
+            else if (!string.IsNullOrEmpty(GroupId))
+            {
+                group = UnifiedGroupsUtility.GetDeletedUnifiedGroup(GroupId, accessToken);
+            }
+
             return group;
         }
     }
