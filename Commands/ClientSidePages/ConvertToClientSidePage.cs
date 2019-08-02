@@ -102,6 +102,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "If transforming cross site then by default urls in html and summarylinks are rewritten for the target site. Set this flag to prevent that")]
         public SwitchParameter SkipUrlRewriting = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Set this flag to prevent the default URL rewriting while you still want to do URL rewriting using a custom URL mapping file")]
+        public SwitchParameter SkipDefaultUrlRewriting = false;
+
         [Parameter(Mandatory = false, HelpMessage = "File holding custom URL mapping definitions")]
         public string UrlMappingFile = "";
 
@@ -325,6 +328,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     DisablePageComments = this.DisablePageComments,     
                     TargetPageName = this.PublishingTargetPageName,
                     SkipUrlRewrite = this.SkipUrlRewriting,
+                    SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
                 };
 
@@ -358,6 +362,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     PublishCreatedPage = !this.DontPublish,
                     DisablePageComments = this.DisablePageComments,
                     SkipUrlRewrite = this.SkipUrlRewriting,
+                    SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {

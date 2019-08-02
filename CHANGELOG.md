@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Added
+
+### Changed
+
+- ConvertTo-PnPClientSidePage: Added support for skipping the default URL rewriting while still applying any custom URL rewriting if specified (SkipDefaultUrlRewriting parameter)
+
+### Contributors
+
 ## [3.12.1908.0]
 
 ### Added
