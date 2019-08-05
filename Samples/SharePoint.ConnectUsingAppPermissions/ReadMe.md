@@ -44,10 +44,11 @@ KeyCredentials :
 Certificate    : -----BEGIN CERTIFICATE-----MIICv...iqzrk=-----END CERTIFICATE-----
 PrivateKey     : -----BEGIN RSA PRIVATE KEY-----MIIEp...4W6g==-----END
                  RSA PRIVATE KEY-----
+
 Import-PfxCertificate -Exportable -CertStoreLocation Cert:\LocalMachine\My -FilePath .\pnp.pfx #Install certificate
 ```
 
-For the last line which installs the certificate pick either *Current User* or *Local Machine*.
+The last line installs the certificate to *Local Machine*. You may install to *Current User* if you prefer.
 
 >For further details about the `New-PnPAzureCertificate` syntax and command line parameters you can read the documentation with `Get-Help New-PnPAzureCertificate -Detailed`.
 
