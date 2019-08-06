@@ -196,7 +196,13 @@ namespace SharePointPnP.PowerShell.Commands.Search
             entry.LogLevel =
                 (LogLevel)Enum.Parse(typeof(LogLevel), dictionary["ErrorLevel"].ToString());
 
+
             entry.Status = dictionary["StatusMessage"] + "";
+            entry.Status += dictionary["ErrorDesc"] + "";
+            if (!string.IsNullOrWhiteSpace(entry.Status))
+            {
+                entry.LogLevel = LogLevel.Warning;
+            }
             return entry;
         }
         #endregion
