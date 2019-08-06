@@ -487,6 +487,10 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "The IssuerID under which the certificate has been registered in SharePoint as a Trusted Security Token issuer to use for the High Trust connection. Uses the ClientID if not specified.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_PFX, HelpMessage = "The IssuerID under which the CER counterpart of the PFX has been registered in SharePoint as a Trusted Security Token issuer to use for the High Trust connection. Uses the ClientID if not specified.")]
         public string HighTrustCertificateIssuerId;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "Name of the user (login name) on whose behalf to create the access token")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_PFX, HelpMessage = "Name of the user (login name) on whose behalf to create the access token")]
+        public string UserName;
 #endif
 
         protected override void ProcessRecord()
@@ -622,11 +626,11 @@ Use -PnPO365ManagementShell instead");
 #if ONPREMISES
             else if (ParameterSetName == ParameterSet_HIGHTRUST_CERT)
             {
-                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url, ClientId, HighTrustCertificate, HighTrustCertificateIssuerId ?? ClientId, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck);
+                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url, ClientId, HighTrustCertificate, HighTrustCertificateIssuerId ?? ClientId, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, UserName);
             }
             else if (ParameterSetName == ParameterSet_HIGHTRUST_PFX)
             {
-                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url, ClientId, HighTrustCertificatePath, HighTrustCertificatePassword, HighTrustCertificateIssuerId ?? ClientId, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck);
+                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url, ClientId, HighTrustCertificatePath, HighTrustCertificatePassword, HighTrustCertificateIssuerId ?? ClientId, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, UserName);
             }
 #endif
             else
