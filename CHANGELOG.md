@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - ConvertTo-PnPClientSidePage: Added support for skipping the default URL rewriting while still applying any custom URL rewriting if specified (SkipDefaultUrlRewriting parameter)
+- Get-PnPSearchCrawlLog: Added switch to show raw crawl log data, as data can change in the back-end. Fixed to show log message.
 
 ### Contributors
 
