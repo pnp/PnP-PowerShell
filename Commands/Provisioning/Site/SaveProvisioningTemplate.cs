@@ -24,7 +24,8 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
     public class SaveProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
-        public ProvisioningTemplate InputInstance;
+        [Alias("InputInstance")]
+        public ProvisioningTemplate Template;
 
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
         public string Out;
@@ -88,12 +89,80 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                       Out, fileSystemConnector);
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
-                provider.SaveAs(InputInstance, templateFileName, formatter, TemplateProviderExtensions);
+                provider.SaveAs(Template, templateFileName, formatter, TemplateProviderExtensions);
+                ProcessFiles(Out, fileSystemConnector, provider.Connector);
             }
             else
             {
                 XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(outPath, "");
-                provider.SaveAs(InputInstance, Out, formatter, TemplateProviderExtensions);
+                provider.SaveAs(Template, Out, formatter, TemplateProviderExtensions);
+            }
+        }
+
+        private void ProcessFiles(string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        {
+            var templateFile = ReadProvisioningTemplate.LoadProvisioningTemplateFromFile(templateFileName, null);
+            if (Template.Tenant?.AppCatalog != null)
+            {
+                foreach (var app in Template.Tenant.AppCatalog.Packages)
+                {
+                    WriteObject($"Processing {app.Src}");
+                    AddFile(app.Src, templateFile, fileSystemConnector, connector);
+                }
+            }
+            if (Template.Tenant?.SiteScripts != null)
+            {
+                foreach (var siteScript in Template.Tenant.SiteScripts)
+                {
+                    WriteObject($"Processing {siteScript.JsonFilePath}");
+                    AddFile(siteScript.JsonFilePath, templateFile, fileSystemConnector, connector);
+                }
+            }
+            if (Template.Localizations != null && Template.Localizations.Any())
+            {
+                foreach (var location in Template.Localizations)
+                {
+                    WriteObject($"Processing {location.ResourceFile}");
+                    AddFile(location.ResourceFile, templateFile, fileSystemConnector, connector);
+                }
+            }
+
+            if (Template.WebSettings != null && !String.IsNullOrEmpty(Template.WebSettings.SiteLogo))
+            {
+                // is it a file?
+                var isFile = false;
+                using (var fileStream = fileSystemConnector.GetFileStream(Template.WebSettings.SiteLogo))
+                {
+                    isFile = fileStream != null;
+                }
+                if (isFile)
+                {
+                    WriteObject($"Processing {Template.WebSettings.SiteLogo}");
+                    AddFile(Template.WebSettings.SiteLogo, templateFile, fileSystemConnector, connector);
+                }
+            }
+            if (Template.Files.Any())
+            {
+                foreach (var file in Template.Files)
+                {
+                    WriteObject($"Processing {file.Src}");
+                    AddFile(file.Src, templateFile, fileSystemConnector, connector);
+                }
+            }
+
+            if (templateFile.Connector is ICommitableFileConnector)
+            {
+                ((ICommitableFileConnector)templateFile.Connector).Commit();
+            }
+        }
+
+        private void AddFile(string sourceName, ProvisioningTemplate provisioningTemplate, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        {
+            using (var fs = fileSystemConnector.GetFileStream(sourceName))
+            {
+                var fileName = sourceName.IndexOf("\\") > 0 ? sourceName.Substring(sourceName.LastIndexOf("\\") + 1) : sourceName;
+                var folderName = sourceName.IndexOf("\\") > 0 ? sourceName.Substring(0, sourceName.LastIndexOf("\\")) : "";
+                provisioningTemplate.Connector.SaveFileStream(fileName, folderName, fs);
             }
         }
     }

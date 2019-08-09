@@ -1,6 +1,7 @@
 ﻿#if !SP2013 && !SP2016
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
+using SharePointPnP.Modernization.Framework.Transform;
 using SharePointPnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Linq;
@@ -56,7 +57,16 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 
             web.EnsureProperty(w => w.ServerRelativeUrl);
             var listServerRelativeUrl = UrlUtility.Combine(web.ServerRelativeUrl, listToLoad);
-            var libraryContainingPage = web.GetList(listServerRelativeUrl);
+
+            List libraryContainingPage = null;
+            if (BaseTransform.GetVersion(web.Context) == SPVersion.SP2010)
+            {
+                libraryContainingPage = web.GetListByName(listToLoad);
+            }
+            else
+            {
+                libraryContainingPage = web.GetList(listServerRelativeUrl);
+            }
 
             if (libraryContainingPage != null)
             {

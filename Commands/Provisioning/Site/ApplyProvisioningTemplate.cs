@@ -63,6 +63,10 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
      Code = @"PS:> Apply-PnPProvisioningTemplate -Path .\ -InputInstance $template",
      Remarks = @"Applies a site template from an in-memory instance of a ProvisioningTemplate type of the PnP Core Component, reading the supporting files, if any, from the current (.\) path. The syntax can be used together with any other supported parameters.",
      SortOrder = 8)]
+    [CmdletExample(
+     Code = @"PS:> Apply-PnPProvisioningTemplate -Path .\template.xml -TemplateId ""MyTemplate""",
+     Remarks = @"Applies the ProvisioningTemplate with the ID ""MyTemplate"" located in the template definition file template.xml.",
+     SortOrder = 9)]
 
     public class ApplyProvisioningTemplate : PnPWebCmdlet
     {
@@ -72,6 +76,9 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning template.", ParameterSetName = "Path")]
         public string Path;
+
+        [Parameter(Mandatory = false, HelpMessage = "ID of the template to use from the xml file containing the provisioning template. If not specified and multiple ProvisioningTemplate elements exist, the last one will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public string TemplateId;
 
         [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ResourceFolder;
@@ -183,7 +190,15 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                         throw new NotSupportedException("Only .pnp package files are supported from a SharePoint library");
                     }
                 }
-                provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
+
+                if (MyInvocation.BoundParameters.ContainsKey(nameof(TemplateId)))
+                {
+                    provisioningTemplate = provider.GetTemplate(templateFileName, TemplateId, null, TemplateProviderExtensions);
+                }
+                else
+                {
+                    provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
+                }
 
                 if (provisioningTemplate == null)
                 {
