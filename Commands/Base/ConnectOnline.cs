@@ -118,6 +118,21 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         Remarks = @"Connect to an on-premises SharePoint environment using a high trust certificate stored in a .PFX file.",
         SortOrder = 15)]
 #endif
+#if !ONPREMISES
+    [CmdletExample(
+       Code = "PS:> Connect-PnPOnline -ClientId <id> -CertificatePath 'c:\\mycertificate.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'",
+       Remarks = "Connects using an Azure Active Directory registered appliation using a locally available certificate containing a private key. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.",
+       SortOrder = 16)]
+    [CmdletExample(
+       Code = "PS:> Connect-PnPOnline -ClientId <id> -CertificateBase64Encoded 'xxxx' -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'",
+       Remarks = "Connects using an Azure Active Directory registered appliation using a certificate containing a private key encoded in base 64 such as received in an Azure Function when using Azure KeyVault. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.",
+       SortOrder = 17)]
+    [CmdletExample(
+       Code = "PS:> Connect-PnPOnline -ClientId <id> -Certificate $cert -CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force) -Url https://contoso.sharepoint.com -Tenant 'contoso.onmicrosoft.com'",
+       Remarks = "Connects using an Azure Active Directory registered appliation using a certificate instance containing a private key. See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.",
+       SortOrder = 18)]
+
+#endif
     public class ConnectOnline : PSCmdlet
     {
         private const string ParameterSet_MAIN = "Main";
@@ -378,13 +393,13 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com")]
         public string Tenant;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Path to the certificate (*.pfx)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Path to the certificate containing the private key (*.pfx)")]
         public string CertificatePath;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Base64 Encoded X509Certificate2 containing the private key to authenticate the requests to SharePoint Online such as retrieved in Azure Functions from Azure KeyVault")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Base64 Encoded X509Certificate2 certificate containing the private key to authenticate the requests to SharePoint Online such as retrieved in Azure Functions from Azure KeyVault")]
         public string CertificateBase64Encoded;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "X509Certificate2 containing the private key to authenticate the requests to SharePoint Online")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "X509Certificate2 reference containing the private key to authenticate the requests to SharePoint Online")]
         public System.Security.Cryptography.X509Certificates.X509Certificate2 Certificate;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Password to the certificate (*.pfx)")]
@@ -583,7 +598,7 @@ Use -PnPO365ManagementShell instead");
                     connection = SPOnlineConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, CertificateBase64Encoded);
                 } else
                 {
-                    throw new Exception();
+                    throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
                 }
 #else
                 throw new NotImplementedException();
