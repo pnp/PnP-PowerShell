@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #endif
                     }
                 }
-                else if (SPOnlineConnection.CurrentConnection.AccessToken != null)
+                else if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.AccessToken != null)
                 {
                     return SPOnlineConnection.CurrentConnection.AccessToken;
                 }
