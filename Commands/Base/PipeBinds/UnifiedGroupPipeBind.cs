@@ -1,10 +1,7 @@
 ﻿using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.Core.Framework.Graph;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {

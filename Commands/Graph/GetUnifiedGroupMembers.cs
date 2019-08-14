@@ -4,7 +4,6 @@ using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 
