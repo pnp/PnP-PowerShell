@@ -114,7 +114,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url, tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.HighTrust);
+            return new SPOnlineConnection(context,
+                connectionType,
+                minimalHealthScore,
+                retryCount,
+                retryWait,
+                null,
+                url,
+                tenantAdminUrl,
+                PnPPSVersionTag,
+                host,
+                disableTelemetry,
+                InitializationType.HighTrust);
         }
 #endif
 #endif
