@@ -220,7 +220,8 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
             entry.Status = dictionary["StatusMessage"] + "";
             entry.Status += dictionary["ErrorDesc"] + "";
-            if (!string.IsNullOrWhiteSpace(entry.Status))
+            var errorCode = int.Parse(dictionary["ErrorCode"]+"");
+            if (!string.IsNullOrWhiteSpace(entry.Status) || errorCode != 0)
             {
                 entry.LogLevel = LogLevel.Warning;
             }
