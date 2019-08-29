@@ -160,10 +160,12 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
                             };
                         }
 
+                        fieldCI.AdditionalChildNodes = new List<KeyValuePair<string, string>>()
+                        {
+                            new KeyValuePair<string, string>("Formula", calculatedFieldParameters.Formula)
+                        };
+
                         f = list.CreateField<FieldCalculated>(fieldCI);
-                        ((FieldCalculated)f).Formula = calculatedFieldParameters.Formula;
-                        f.Update();
-                        ClientContext.ExecuteQueryRetry();
                     }
                     else
                     {
