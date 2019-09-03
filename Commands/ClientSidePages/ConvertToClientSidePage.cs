@@ -114,6 +114,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Copies the page metadata to the created modern page")]
         public SwitchParameter CopyPageMetadata = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "When an image lives inside a table/list then it's also created as separate image web part underneath that table/list when this switch is set (was default behaviour up until the September 2019 release)")]
+        public SwitchParameter AddTableListImageAsImageWebPart = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Uses the community script editor (https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-script-editor) as replacement for the classic script editor web part")]
         public SwitchParameter UseCommunityScriptEditor = false;
 
@@ -330,6 +333,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
+                    AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
                 };
 
                 // Set mapping properties
@@ -364,6 +368,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
+                    AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
