@@ -38,12 +38,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Folder ""projects/europe""",
         Remarks = @"Adds a new list item to the ""Demo List"". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.",
         SortOrder = 3)]
-#if !ONPREMISES
     [CmdletExample(
         Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Label ""Public""",
         Remarks = @"Adds a new list item to the ""Demo List"". Sets the retention label to ""Public"" if it exists on the site.",
         SortOrder = 4)]
-#endif
     public class AddListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
