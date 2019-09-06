@@ -38,6 +38,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Folder ""projects/europe""",
         Remarks = @"Adds a new list item to the ""Demo List"". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Label ""Public""",
+        Remarks = @"Adds a new list item to the ""Demo List"". Sets the retention label to ""Public"" if it exists on the site.",
+        SortOrder = 4)]
     public class AddListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
@@ -70,6 +74,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false, HelpMessage = @"The list relative URL of a folder. E.g. ""MyFolder"" for a folder located in the root of the list, or ""MyFolder/SubFolder"" for a folder located in the MyFolder folder which is located in the root of the list.")]
         public string Folder;
+
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "The name of the retention label.")]
+        public String Label;
+#endif
 
         protected override void ExecuteCmdlet()
         {
@@ -132,6 +141,25 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                             ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
                         });
                 }
+
+#if !ONPREMISES
+                if (!String.IsNullOrEmpty(Label))
+                {
+                    IList<Microsoft.SharePoint.Client.CompliancePolicy.ComplianceTag> tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+                    ClientContext.ExecuteQueryRetry();
+
+                    var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
+
+                    if (tag != null)
+                    {
+                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock);
+                    }
+                    else
+                    {
+                        WriteWarning("Can not find compliance tag with value: " + Label);
+                    }
+                }
+#endif
 
                 item.Update();
                 ClientContext.Load(item);
