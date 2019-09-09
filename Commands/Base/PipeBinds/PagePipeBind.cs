@@ -1,4 +1,4 @@
-﻿#if !SP2013 && !SP2016
+﻿#if !SP2013 && !SP2016 && !SP2019
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.Modernization.Framework.Transform;
