@@ -261,8 +261,8 @@ configure the page transformation engine to use the community script editor. You
         </Mappings>
       </WebPart>
       <!-- Modern ClientSide Web Part -->
-      <WebPart Type="Microsoft.SharePoint.WebPartPages.ClientSideWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" CrossSiteTransformationSupported="false">
-        <!-- No cross site support as this requires the app to be installed + the app can depend on assets that live in the source site, which is not something we can detect -->
+      <WebPart Type="Microsoft.SharePoint.WebPartPages.ClientSideWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" CrossSiteTransformationSupported="true">
+        <!-- Note: the app can depend on assets that live in the source site, which is not something we can detect -->
         <Properties>
           <Property Name="ClientSideWebPartId" Type="guid" />
           <Property Name="ClientSideWebPartData" Type="string" Functions="{JsonProperties} = ExtractWebpartProperties({ClientSideWebPartData})"/>
@@ -274,8 +274,8 @@ configure the page transformation engine to use the community script editor. You
         </Mappings>
       </WebPart>
       <!-- Add-In part (App Part) -->
-      <WebPart Type="Microsoft.SharePoint.WebPartPages.ClientWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" CrossSiteTransformationSupported="false">
-        <!-- No cross site support as this requires the add-in to be installed + the add-in can depend on assets that live in the source site, which is not something we can detect -->
+      <WebPart Type="Microsoft.SharePoint.WebPartPages.ClientWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" CrossSiteTransformationSupported="true">
+        <!-- Note: the add-in can depend on assets that live in the source site, which is not something we can detect -->
         <Properties>
           <Property Name="FeatureId" Type="guid"/>
           <Property Name="ProductWebId" Type="guid"/>
