@@ -192,6 +192,13 @@
             <param name="typeValue"></param>
             <returns></returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.InferClassNameFromNameSpace(System.String)">
+            <summary>
+            Gets classname from type
+            </summary>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Pages.PublishingPageOnPremises">
             <summary>
             Analyzes a publishing page
@@ -776,6 +783,14 @@
             </summary>
             <returns>A <see cref="T:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation"/> instance.</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutManager.GetPageLayoutMappingModel(SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation,Microsoft.SharePoint.Client.ListItem)">
+            <summary>
+            Load to PageLayout that will be used to transform the given page
+            </summary>
+            <param name="publishingPageTransformation">Publishing page transformation data to get the correct page layout mapping from</param>
+            <param name="page">Page for which we're looking for a mapping</param>
+            <returns>The page layout mapping that will be used for the passed page</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PageLayoutManager.GenerateStreamFromString(System.String)">
             <summary>
             Transforms a string into a stream
@@ -1075,6 +1090,9 @@
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.Name">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.AlsoAppliesTo">
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.AssociatedContentType">
@@ -2059,6 +2077,11 @@
             else they'll get a placeholder and will be added as separate web parts at the end of the page
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.AddTableListImageAsImageWebPart">
+            <summary>
+            When an image lives inside a table (or list) then also add it as a separate image web part
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.MappingProperties">
             <summary>
             Property bag for adding properties that will be exposed to the functions and selectors in the web part mapping file.
@@ -2078,6 +2101,11 @@
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SkipUrlRewrite">
             <summary>
             Skip URL rewriting
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SkipDefaultUrlRewrite">
+            <summary>
+            Skip default URL rewriting, custom URL rewriting using a URL mapping file is still handled
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.UrlMappingFile">
@@ -2762,7 +2790,7 @@
             Default constructor
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiHtmlTransformator.TransformPlusSplit(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity},System.Boolean)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.WikiHtmlTransformator.TransformPlusSplit(System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity},System.Boolean,System.Boolean)">
             <summary>
             Replaces embedded images and iframes with respective "fake" image and video web parts. Depending on the 
             image/iframe position in the html the wiki text is broken up in multiple wiki text parts intermixed 
@@ -4327,6 +4355,13 @@
         <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetSitePagesLibrary(Microsoft.SharePoint.Client.Web)">
             <summary>
             Gets site pages library from web
+            </summary>
+            <param name="web"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetListByName(Microsoft.SharePoint.Client.Web,System.String)">
+            <summary>
+            Gets list from web in an SP2010 compatible fashion
             </summary>
             <param name="web"></param>
             <returns></returns>
