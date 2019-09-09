@@ -355,6 +355,7 @@
     <Compile Include="ListDataRowProvisioningTemplate.cs" />
     <Compile Include="PrincipalsTests.cs" />
     <Compile Include="ProvisioningTemplateTests.cs" />
+    <Compile Include="GraphTests.cs" />
     <Compile Include="WebhookSubscriptionsTests.cs" />
     <Compile Include="DiagnosticTests.cs" />
     <Compile Include="WebTests.cs" />

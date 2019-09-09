@@ -102,6 +102,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "If transforming cross site then by default urls in html and summarylinks are rewritten for the target site. Set this flag to prevent that")]
         public SwitchParameter SkipUrlRewriting = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Set this flag to prevent the default URL rewriting while you still want to do URL rewriting using a custom URL mapping file")]
+        public SwitchParameter SkipDefaultUrlRewriting = false;
+
         [Parameter(Mandatory = false, HelpMessage = "File holding custom URL mapping definitions")]
         public string UrlMappingFile = "";
 
@@ -110,6 +113,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "Copies the page metadata to the created modern page")]
         public SwitchParameter CopyPageMetadata = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "When an image lives inside a table/list then it's also created as separate image web part underneath that table/list when this switch is set (was default behaviour up until the September 2019 release)")]
+        public SwitchParameter AddTableListImageAsImageWebPart = false;
 
         [Parameter(Mandatory = false, HelpMessage = "Uses the community script editor (https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-script-editor) as replacement for the classic script editor web part")]
         public SwitchParameter UseCommunityScriptEditor = false;
@@ -162,7 +168,6 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             ListItem page = null;
             if (this.PublishingPage)
             {
-                this.ClientContext.Web.EnsureProperty(p => p.ServerRelativeUrl);
                 page = Identity.GetPage(this.ClientContext.Web, CacheManager.Instance.GetPublishingPagesLibraryName(this.ClientContext));
             }
             else
@@ -326,7 +331,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     DisablePageComments = this.DisablePageComments,     
                     TargetPageName = this.PublishingTargetPageName,
                     SkipUrlRewrite = this.SkipUrlRewriting,
+                    SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
+                    AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
                 };
 
                 // Set mapping properties
@@ -359,7 +366,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     PublishCreatedPage = !this.DontPublish,
                     DisablePageComments = this.DisablePageComments,
                     SkipUrlRewrite = this.SkipUrlRewriting,
+                    SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
+                    AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
