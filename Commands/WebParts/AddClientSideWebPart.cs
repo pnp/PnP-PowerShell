@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
     [Cmdlet(VerbsCommon.Add, "PnPClientSideWebPart")]
     [CmdletHelp("Adds a Client-Side Web Part to a client-side page",
         "Adds a client-side web part to an existing client-side page.",
-      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Add-PnPClientSideWebPart -Page ""MyPage"" -DefaultWebPartType BingMap",
         Remarks = "Adds a built-in Client-Side component 'BingMap' to the page called 'MyPage'",
