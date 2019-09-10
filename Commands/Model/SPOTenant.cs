@@ -36,6 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
             this.requireAcceptingAccountMatchInvitedAccount = tenant.RequireAcceptingAccountMatchInvitedAccount;
             this.provisionSharedWithEveryoneFolder = tenant.ProvisionSharedWithEveryoneFolder;
             this.signInAccelerationDomain = tenant.SignInAccelerationDomain;
+            this.disabledWebPartIds = tenant.DisabledWebPartIds;
             try
             {
                 this.enableGuestSignInAcceleration = tenant.EnableGuestSignInAcceleration;
@@ -468,6 +469,8 @@ namespace SharePointPnP.PowerShell.Commands.Model
 
         public int EmailAttestationReAuthDays => emailAttestationReAuthDays;
 
+        public Guid[] DisabledWebPartIds => disabledWebPartIds;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -595,6 +598,8 @@ namespace SharePointPnP.PowerShell.Commands.Model
         private bool emailAttestationRequired;
 
         private int emailAttestationReAuthDays;
+
+        private Guid[] disabledWebPartIds;
     }
 }
 #endif
