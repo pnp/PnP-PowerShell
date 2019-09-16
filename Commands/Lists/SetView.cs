@@ -24,7 +24,11 @@ namespace SharePointPnP.PowerShell.Commands.Fields
     [CmdletExample(
         Code = @"PS:> Set-PnPView -List ""Documents"" -Identity ""Corporate Documents"" -Fields ""Title"",""Created""",
         Remarks = @"Updates the Corporate Documents view on the Documents library to have two fields",
-        SortOrder = 2)]
+        SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPView -List ""Documents"" -Identity ""Corporate Documents"" -Fields ""Title"",""Created"" -Aggregations ""<FieldRef Name='Title' Type='COUNT'/>""",
+        Remarks = @"Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field",
+        SortOrder = 4)]
     public class SetView : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "The Id, Title or Url of the list")]
@@ -38,6 +42,9 @@ namespace SharePointPnP.PowerShell.Commands.Fields
 
         [Parameter(Mandatory = false, HelpMessage = "An array of fields to use in the view. Notice that specifying this value will remove the existing fields")]
         public string[] Fields;
+
+        [Parameter(Mandatory = false, HelpMessage = "A valid XMl fragment containing one or more Aggregations")]
+        public string Aggregations;
 
         protected override void ExecuteCmdlet()
         {
@@ -119,7 +126,14 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 view.Update();
                 ClientContext.ExecuteQueryRetry();
             }
-            
+            if(Aggregations != null)
+            {
+                view.Aggregations = Aggregations;
+                view.Update();
+                ClientContext.Load(view);
+                ClientContext.ExecuteQueryRetry();
+            }
+            WriteObject(view);
         }
     }
 }

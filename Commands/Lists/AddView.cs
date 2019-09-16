@@ -17,7 +17,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [CmdletExample(
         Code = @"Add-PnPView -List ""Demo List"" -Title ""Demo View"" -Fields ""Title"",""Address"" -Paged",
         Remarks = @"Adds a view named ""Demo view"" to the ""Demo List"" list and makes sure there's paging on this view.",        
-        SortOrder = 2)]        
+        SortOrder = 2)]
+    [CmdletExample(
+        Code = @"Add-PnPView -List ""Demo List"" -Title ""Demo View"" -Fields ""Title"",""Address"" -Aggregations ""<FieldRef Name='Title' Type='COUNT'/>""",
+        Remarks = @"Adds a view named ""Demo view"" to the ""Demo List"" list and sets the totals (aggregations) to Count on the Title field.",
+        SortOrder = 3)]
     public class AddView : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]
@@ -45,7 +49,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         public SwitchParameter SetAsDefault;
         
         [Parameter(Mandatory = false, HelpMessage = "If specified, the view will have paging.")]
-        public SwitchParameter Paged;        
+        public SwitchParameter Paged;
+
+        [Parameter(Mandatory = false, HelpMessage = "A valid XMl fragment containing one or more Aggregations")]
+        public string Aggregations;
 
         protected override void ExecuteCmdlet()
         {
@@ -54,6 +61,13 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             {
                 var view = list.CreateView(Title, ViewType, Fields, RowLimit, SetAsDefault, Query, Personal, Paged);
 
+                if(Aggregations != null)
+                {
+                    view.Aggregations = Aggregations;
+                    view.Update();
+                    list.Context.Load(view);
+                    list.Context.ExecuteQueryRetry();
+                }
                 WriteObject(view);
             }
         }
