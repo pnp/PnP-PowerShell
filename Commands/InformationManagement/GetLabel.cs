@@ -7,10 +7,10 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Get, "PnPLabel")]
-    [CmdletHelp("Gets the label/tag of the specified list or library (if applicable)", Category = CmdletHelpCategory.InformationManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
+    [CmdletHelp("Gets the Office 365 retention label/tag of the specified list or library (if applicable)", Category = CmdletHelpCategory.InformationManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Get-PnPLabel -List ""Demo List""",
-       Remarks = @"This gets the label which is set to a list or a library.", SortOrder = 1)]
+       Remarks = @"This gets the Office 365 retention label which is set to a list or a library.", SortOrder = 1)]
 
     public class GetListComplianceTag : PnPWebCmdlet
     {
