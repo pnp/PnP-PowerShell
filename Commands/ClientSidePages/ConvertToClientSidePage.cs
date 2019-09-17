@@ -141,6 +141,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Don't publish the created modern page")]
         public SwitchParameter DontPublish = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Keep the author, editor, created and modified information from the source page (when source page lives in SPO)")]
+        public SwitchParameter KeepPageCreationModificationInformation = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Post the created, and published, modern page as news")]
+        public SwitchParameter PostAsNews = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Disable comments for the created modern page")]
         public SwitchParameter DisablePageComments = false;
 
@@ -328,6 +334,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     Overwrite = this.Overwrite,
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     PublishCreatedPage = !this.DontPublish,
+                    KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
+                    PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,     
                     TargetPageName = this.PublishingTargetPageName,
                     SkipUrlRewrite = this.SkipUrlRewriting,
@@ -364,6 +372,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     CopyPageMetadata = this.CopyPageMetadata,
                     PublishCreatedPage = !this.DontPublish,
+                    KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
+                    PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
