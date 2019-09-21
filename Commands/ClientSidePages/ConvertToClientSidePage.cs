@@ -153,6 +153,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "I'm transforming a publishing page")]
         public SwitchParameter PublishingPage = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "I'm transforming a blog page")]
+        public SwitchParameter BlogPage = false;
+
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the page layout mapping file driving the publishing page transformation")]
         public string PageLayoutMapping;
 
@@ -170,11 +173,24 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             // Load the page to transform
             Identity.Library = this.Library;
             Identity.Folder = this.Folder;
+            Identity.BlogPage = this.BlogPage;
+
+            if (this.PublishingPage && this.BlogPage)
+            {
+                throw new Exception($"The page is either a blog page or a publishing page or not of them...setting both PublishingPage and BlogPage to true is not valid.");
+            }
 
             ListItem page = null;
             if (this.PublishingPage)
             {
                 page = Identity.GetPage(this.ClientContext.Web, CacheManager.Instance.GetPublishingPagesLibraryName(this.ClientContext));
+            }
+            else if (this.BlogPage)
+            {
+                // Blogs don't live in other libraries or sub folders
+                Identity.Library = null;
+                Identity.Folder = null;
+                page = Identity.GetPage(this.ClientContext.Web, CacheManager.Instance.GetBlogListName(this.ClientContext));
             }
             else
             {
