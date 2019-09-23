@@ -23,6 +23,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         Code = @"PS:> Add-PnPClientSidePage -Name ""NewPageTemplate"" -PromoteAs Template",
         Remarks = "Creates a new Client-Side page named 'NewPage' and saves as a template to the site.",
         SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPClientSidePage -Name ""Folder/NewPage""",
+        Remarks = "Creates a new Client-Side page named 'NewPage' under 'Folder' folder and saves as a template to the site.",
+        SortOrder = 3)]        
     public class AddClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the name of the page.")]
