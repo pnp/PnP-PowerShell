@@ -140,7 +140,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
                     if (Logging)
                     {
-                        analyzer.RegisterObserver(new ConsoleObserver(true)); //Includes verbose logging
+                        analyzer.RegisterObserver(new ConsoleObserver(false));
                     }
 
                     if (page != null)
