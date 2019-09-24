@@ -12,8 +12,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - ConvertTo-PnPClientSidePage: Added support for keeping the source page Author, Editor, Created and Modified page properties (only when source page lives in SPO) (KeepPageCreationModificationInformation parameter)
 - ConvertTo-PnPClientSidePage: Added support for posting the created page as news (PostAsNews parameter)
 - ConvertTo-PnPClientSidePage: Added support for modernizing blog pages (BlogPage parameter)
+- Export-ClientSidePageMappings: Added logging support (#2272)
 
 ### Changed
+
+### Contributors
+
+- Paul Bullock [pkbullock]
 
 ## [3.13.1909.0]
 
