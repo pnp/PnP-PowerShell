@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Files
@@ -31,9 +32,15 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Url = "https://github.com/OfficeDev/PnP-PowerShell/blob/master/Documentation/EnsureSPOFolder.md")]
     public class GetFolder : PnPWebRetrievalsCmdlet<Folder>
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Site or server relative URL of the folder to retrieve. In the case of a server relative url, make sure that the url starts with the managed path as the current web.")]
+        private const string ParameterSet_FOLDERSINLIST = "Folders In List";
+        private const string ParameterSet_FOLDERBYURL = "Folder By Url";
+
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Site or server relative URL of the folder to retrieve. In the case of a server relative url, make sure that the url starts with the managed path as the current web.", ParameterSetName = ParameterSet_FOLDERBYURL)]
         [Alias("RelativeUrl")]
         public string Url;
+
+        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Site or server relative URL of the folder to retrieve. In the case of a server relative url, make sure that the url starts with the managed path as the current web.", ParameterSetName = ParameterSet_FOLDERSINLIST)]
+        public ListPipeBind List;
 
         protected override void ExecuteCmdlet()
         {
@@ -42,19 +49,37 @@ namespace SharePointPnP.PowerShell.Commands.Files
 #else
             DefaultRetrievalExpressions = new Expression<Func<Folder, object>>[] { f => f.ServerRelativeUrl, f => f.Name, f => f.ItemCount };
 #endif
-            var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-            if (!Url.StartsWith(webServerRelativeUrl, StringComparison.OrdinalIgnoreCase))
+            if (List != null)
             {
-                Url = UrlUtility.Combine(webServerRelativeUrl, Url);
-            }
-#if ONPREMISES
-            var folder = SelectedWeb.GetFolderByServerRelativeUrl(Url);
-#else
-            var folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
-#endif
-            folder.EnsureProperties(RetrievalExpressions);
+                var list = List.GetList(SelectedWeb);
+                CamlQuery query = CamlQuery.CreateAllItemsQuery();
+                do
+                {
+                    var listItems = list.GetItems(query);
+                    ClientContext.Load(listItems, item => item.Include(i => i.Folder));
+                    ClientContext.ExecuteQueryRetry();
 
-            WriteObject(folder);
+                    WriteObject(listItems, true);
+
+                    query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+                } while (query.ListItemCollectionPosition != null);                
+            }
+            else
+            {
+                var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                if (!Url.StartsWith(webServerRelativeUrl, StringComparison.OrdinalIgnoreCase))
+                {
+                    Url = UrlUtility.Combine(webServerRelativeUrl, Url);
+                }
+#if ONPREMISES
+                var folder = SelectedWeb.GetFolderByServerRelativeUrl(Url);
+#else
+                var folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
+#endif
+                folder.EnsureProperties(RetrievalExpressions);
+
+                WriteObject(folder);
+            }
         }
     }
 }
