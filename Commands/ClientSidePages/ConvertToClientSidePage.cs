@@ -144,6 +144,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Keep the author, editor, created and modified information from the source page (when source page lives in SPO)")]
         public SwitchParameter KeepPageCreationModificationInformation = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Set's the author of the source page as author in the modern page header (when source page lives in SPO)")]
+        public SwitchParameter SetAuthorInPageHeader = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Post the created, and published, modern page as news")]
         public SwitchParameter PostAsNews = false;
 
@@ -389,6 +392,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     CopyPageMetadata = this.CopyPageMetadata,
                     PublishCreatedPage = !this.DontPublish,
                     KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
+                    SetAuthorInPageHeader = this.SetAuthorInPageHeader,
                     PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,
                     SkipUrlRewrite = this.SkipUrlRewriting,
