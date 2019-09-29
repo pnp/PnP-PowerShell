@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using File = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolder")]
     [CmdletHelp("Return a folder object", Category = CmdletHelpCategory.Files,
-        DetailedDescription = "Retrieves a folder if it exists. Use Ensure-PnPFolder to create the folder if it does not exist.",
+        DetailedDescription = "Retrieves a folder if it exists or all folders inside a provided list or library. Use Ensure-PnPFolder to create the folder if it does not exist.",
         OutputType = typeof(Folder),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.folder.aspx")]
     [CmdletExample(
@@ -25,7 +22,12 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletExample(
         Code = @"PS:> Get-PnPFolder -Url ""/sites/demo/Shared Documents""",
         Remarks = "Returns the folder called 'Shared Documents' which is located in the root of the current web",
-        SortOrder = 1
+        SortOrder = 2
+        )]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPFolder -List ""Shared Documents""",
+        Remarks = "Returns the folder(s) residing inside a folder called 'Shared Documents'",
+        SortOrder = 3
         )]
     [CmdletRelatedLink(
         Text = "Ensure-PnPFolder",
@@ -39,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Alias("RelativeUrl")]
         public string Url;
 
-        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Site or server relative URL of the folder to retrieve. In the case of a server relative url, make sure that the url starts with the managed path as the current web.", ParameterSetName = ParameterSet_FOLDERSINLIST)]
+        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Name, ID or instance of a list or document library to retrieve the folders residing in it for.", ParameterSetName = ParameterSet_FOLDERSINLIST)]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()
@@ -51,15 +53,27 @@ namespace SharePointPnP.PowerShell.Commands.Files
 #endif
             if (List != null)
             {
+                // Gets the provided list
                 var list = List.GetList(SelectedWeb);
-                CamlQuery query = CamlQuery.CreateAllItemsQuery();
+
+                // Query for all folders in the list
+                CamlQuery query = CamlQuery.CreateAllFoldersQuery();
                 do
                 {
-                    var listItems = list.GetItems(query);
-                    ClientContext.Load(listItems, item => item.Include(i => i.Folder));
+                    // Execute the query. It will retrieve all properties of the folders. Refraining to using the RetrievalExpressions would cause a tremendous increased load on SharePoint as it would have to execute a query per list item which would be less efficient, especially on lists with many folders, than just getting all properties directly
+                    ListItemCollection listItems = list.GetItems(query);
+                    ClientContext.Load(listItems, item => item.Include(t => t.Folder), item => item.ListItemCollectionPosition);
                     ClientContext.ExecuteQueryRetry();
 
-                    WriteObject(listItems, true);
+                    // Take all the folders from the resulting list items and put them in a list to return
+                    var folders = new List<Folder>(listItems.Count);
+                    foreach(ListItem listItem in listItems)
+                    {
+                        var folder = listItem.Folder;
+                        folders.Add(folder);
+                    }
+
+                    WriteObject(folders, true);
 
                     query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
                 } while (query.ListItemCollectionPosition != null);                
