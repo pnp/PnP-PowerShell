@@ -38,6 +38,8 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(SelectedWeb);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{Identity}'", "Identity");
             var retrievalExpressions = new Expression<Func<List, object>>[] {
                 l => l.ItemCount,
                 l => l.HasUniqueRoleAssignments,
