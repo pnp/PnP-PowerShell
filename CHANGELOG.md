@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.14.1910.0]
+
+### Added
+
+### Changed
+- Added -ThumbnailUrl parameter to Set-PnPClientSidePage
+
+### Contributors
 ## [3.13.1909.0]
 
 ### Added
