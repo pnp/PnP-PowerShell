@@ -343,7 +343,13 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-            return ReadTenantTemplate.LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions);
+            if (System.IO.File.Exists(Path))
+            {
+                return ReadTenantTemplate.LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions);
+            } else
+            {
+                throw new FileNotFoundException($"File {Path} does not exist.");
+            }
         }
     }
 }
