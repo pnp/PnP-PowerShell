@@ -4,6 +4,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Properties;
+using System;
 using System.IO;
 using System.Management.Automation;
 
@@ -60,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         private void ExtractTemplate(string dirName, string fileName)
         {
             var outputTemplate = new ProvisioningTemplate();
-
+            outputTemplate.Id = Guid.NewGuid().ToString("N");
             var helper = new OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers.Utilities.ClientSidePageContentsHelper();
 
             var ci = new OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers.ProvisioningTemplateCreationInformation(SelectedWeb);
