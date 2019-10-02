@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Added -ThumbnailUrl parameter to Set-PnPClientSidePage
 - ConvertTo-PnPClientSidePage: AddTableListImageAsImageWebPart default set to true to align with similar change in the page transformation framework
+- ConvertTo-PnPClientSidePage: moved log flushing to finally block to ensure it happens in case of something unexpected
 
 ### Contributors
 

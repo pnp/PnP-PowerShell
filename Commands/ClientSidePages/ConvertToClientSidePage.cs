@@ -367,7 +367,18 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
                 pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
 
-                serverRelativeClientPageUrl = publishingPageTransformator.Transform(pti);
+                try
+                {
+                    serverRelativeClientPageUrl = publishingPageTransformator.Transform(pti);
+                }
+                finally
+                {
+                    // Flush log
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && !this.LogSkipFlush)
+                    {
+                        publishingPageTransformator.FlushObservers();
+                    }
+                }
             }
             else
             {
@@ -409,19 +420,14 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
                 pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
 
-                serverRelativeClientPageUrl = pageTransformator.Transform(pti);
-            }
-
-            // Flush log
-            if (this.LogType != ClientSidePageTransformatorLogType.None)
-            {
-                if (!this.LogSkipFlush)
+                try
                 {
-                    if (this.PublishingPage)
-                    {
-                        publishingPageTransformator.FlushObservers();
-                    }
-                    else
+                    serverRelativeClientPageUrl = pageTransformator.Transform(pti);
+                }
+                finally
+                {
+                    // Flush log
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && !this.LogSkipFlush)
                     {
                         pageTransformator.FlushObservers();
                     }
