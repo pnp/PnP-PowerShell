@@ -622,6 +622,7 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
             {
+#if NETSTANDARD2_0
                 var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
                 var aud = jwtToken.Audiences.FirstOrDefault();
                 var url = Url;
@@ -629,6 +630,7 @@ Use -PnPO365ManagementShell instead");
                 {
                     url = aud;
                 }
+#endif
                 if (url.ToLower() == "https://graph.microsoft.com")
                 {
                     connection = ConnectGraphDeviceLogin(AccessToken);

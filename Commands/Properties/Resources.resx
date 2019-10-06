@@ -312,6 +312,9 @@
   <data name="RemoveSiteDesignTask" xml:space="preserve">
     <value>Remove site design task?</value>
   </data>
+  <data name="NoTenantAdminUrlSpecified" xml:space="preserve">
+    <value>No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter</value>
+  </data>
   <data name="SiteNotFound" xml:space="preserve">
     <value>The provided site could not be found</value>
   </data>

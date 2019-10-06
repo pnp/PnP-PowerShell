@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -319,6 +319,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string NoContextPresent {
             get {
                 return ResourceManager.GetString("NoContextPresent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter.
+        /// </summary>
+        internal static string NoTenantAdminUrlSpecified {
+            get {
+                return ResourceManager.GetString("NoTenantAdminUrlSpecified", resourceCulture);
             }
         }
         

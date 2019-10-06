@@ -61,9 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-#if !ONPREMISES
-            context.DisableReturnValueCache = true;
-#elif SP2016 || SP2019
+#if !SP2013
             context.DisableReturnValueCache = true;
 #endif
             var connectionType = ConnectionType.OnPrem;
@@ -103,7 +101,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-#if SP2016 || SP2019
+#if !SP2013
             context.DisableReturnValueCache = true;
 #endif
             var connectionType = ConnectionType.OnPrem;
@@ -482,10 +480,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 context.Delay = retryWait * 1000;
                 context.ApplicationName = Properties.Resources.ApplicationName;
                 context.RequestTimeout = requestTimeout;
-#if !ONPREMISES
+#if !SP2013
                 context.DisableReturnValueCache = true;
-#elif SP2016 || SP2019
-            context.DisableReturnValueCache = true;
 #endif
                 var connectionType = ConnectionType.OnPrem;
                 if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
@@ -514,9 +510,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
             context.ApplicationName = Properties.Resources.ApplicationName;
-#if !ONPREMISES
-            context.DisableReturnValueCache = true;
-#elif SP2016 || SP2019
+#if !SP2013
             context.DisableReturnValueCache = true;
 #endif
             context.RequestTimeout = requestTimeout;
@@ -656,9 +650,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-#if !ONPREMISES
-            context.DisableReturnValueCache = true;
-#elif SP2016 || SP2019
+#if !SP2013
             context.DisableReturnValueCache = true;
 #endif
 

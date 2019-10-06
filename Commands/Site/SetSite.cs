@@ -1,10 +1,10 @@
-﻿#if !ONPREMISES
-using Microsoft.Online.SharePoint.TenantAdministration;
+﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
 using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
@@ -41,8 +41,8 @@ namespace SharePointPnP.PowerShell.Commands.Site
 
 #if !ONPREMISES
         private const string ParameterSet_LOCKSTATE = "Set Lock State";
-        private const string ParameterSet_PROPERTIES = "Set Properties";
 #endif
+        private const string ParameterSet_PROPERTIES = "Set Properties";
 
         [Parameter(Mandatory = false)]
         [Alias("Url")]
@@ -51,6 +51,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = "The classification to set", ParameterSetName = ParameterSet_PROPERTIES)]
         public string Classification;
 
+#if !ONPREMISES
         [Parameter(Mandatory = false, HelpMessage = "Disables Microsoft Flow for this site", ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? DisableFlows;
 
@@ -76,6 +77,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, HelpMessage = "Sets the lockstate of a site", ParameterSetName = ParameterSet_LOCKSTATE)]
         public SiteLockState? LockState;
+#endif
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if the site administrator can upgrade the site collection", ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? AllowSelfServiceUpgrade = null;
@@ -87,6 +89,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
         public List<string> Owners;
 
+#if !ONPREMISES
         [Parameter(Mandatory = false, HelpMessage = "Specifies if comments on site pages are enabled or disabled", ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? CommentsOnSitePagesDisabled;
 
@@ -104,10 +107,12 @@ namespace SharePointPnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies to prevent non-owners from inviting new users to the site", ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter DisableSharingForNonOwners;
+#endif
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public uint? LocaleId;
 
+#if !ONPREMISES
         [Obsolete("NewUrl is deprecated")]
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the new URL for this site collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public string NewUrl;
@@ -120,6 +125,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, HelpMessage = "Wait for the operation to complete", ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
+#endif
 
         protected override void ExecuteCmdlet()
         {
@@ -136,12 +142,14 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 siteUrl = context.Url;
             }
 
-
+#if !SP2013 && !SP2016
             if (MyInvocation.BoundParameters.ContainsKey("Classification"))
             {
                 site.Classification = Classification;
                 executeQueryRequired = true;
             }
+#endif
+#if !ONPREMISES
             if (MyInvocation.BoundParameters.ContainsKey("LogoFilePath"))
             {
                 var webTemplate = ClientContext.Web.EnsureProperty(w => w.WebTemplate);
@@ -183,6 +191,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     throw new System.Exception("Not an Office365 group enabled site.");
                 }
             }
+#endif
             if (executeQueryRequired)
             {
                 context.ExecuteQueryRetry();
@@ -190,19 +199,32 @@ namespace SharePointPnP.PowerShell.Commands.Site
 
             if (IsTenantProperty())
             {
+#if ONPREMISES
+                if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.TenantAdminUrl))
+                {
+                    throw new InvalidOperationException(Properties.Resources.NoTenantAdminUrlSpecified);
+                }
+
+                var tenantAdminUrl = SPOnlineConnection.CurrentConnection.TenantAdminUrl;
+#else
                 var tenantAdminUrl = UrlUtilities.GetTenantAdministrationUrl(context.Url);
+#endif
                 context = context.Clone(tenantAdminUrl);
 
                 executeQueryRequired = false;
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
                 Tenant tenant = new Tenant(context);
                 var siteProperties = tenant.GetSitePropertiesByUrl(siteUrl, false);
+
+#if !ONPREMISES
                 if (LockState.HasValue)
                 {
                     tenant.SetSiteLockState(siteUrl, LockState.Value, Wait, Wait ? timeoutFunction : null);
                     WriteWarning("You changed the lockstate of this site. This change is not guaranteed to be effective immediately. Please wait a few minutes for this to take effect.");
                 }
-
+#endif
+#if !SP2013 && !SP2016 && !SP2019
+//TODO: This can be enabled for onpremises when necessary changes has been done in OfficeDevPnP.Core
                 if (Owners != null && Owners.Count > 0)
                 {
                     var admins = new List<UserEntity>();
@@ -213,6 +235,8 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     }
                     tenant.AddAdministrators(admins, new Uri(siteUrl));
                 }
+#endif
+#if !ONPREMISES
                 if (Sharing.HasValue)
                 {
                     siteProperties.SharingCapability = Sharing.Value;
@@ -239,6 +263,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     siteProperties.UserCodeMaximumLevel = UserCodeMaximumLevel.Value;
                     executeQueryRequired = true;
                 }
+#endif
 #pragma warning restore CS0618 // Type or member is obsolete
 
                 if (AllowSelfServiceUpgrade.HasValue)
@@ -251,6 +276,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     siteProperties.DenyAddAndCustomizePages = (NoScriptSite == true ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled);
                     executeQueryRequired = true;
                 }
+#if !ONPREMISES
                 if (CommentsOnSitePagesDisabled.HasValue)
                 {
                     siteProperties.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled.Value;
@@ -281,6 +307,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     siteProperties.DisableFlows = DisableFlows.Value ? FlowsPolicy.Disabled : FlowsPolicy.NotDisabled;
                     executeQueryRequired = true;
                 }
+#endif
                 if (LocaleId.HasValue)
                 {
                     siteProperties.Lcid = LocaleId.Value;
@@ -291,6 +318,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 //    siteProperties.NewUrl = NewUrl;
                 //    executeQueryRequired = true;
                 //}
+#if !ONPREMISES
                 if (RestrictedToGeo.HasValue)
                 {
                     siteProperties.RestrictedToRegion = RestrictedToGeo.Value;
@@ -301,12 +329,14 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     siteProperties.SocialBarOnSitePagesDisabled = SocialBarOnSitePagesDisabled.Value;
                     executeQueryRequired = true;
                 }
+#endif
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
                     tenant.Context.ExecuteQueryRetry();
                 }
 
+#if !ONPREMISES
                 if (DisableSharingForNonOwners.IsPresent)
                 {
                     Office365Tenant office365Tenant = new Office365Tenant(context);
@@ -315,6 +345,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     office365Tenant.DisableSharingForNonOwnersOfSite(siteUrl);
                     context.ExecuteQuery();
                 }
+#endif
             }
         }
 
@@ -327,8 +358,15 @@ namespace SharePointPnP.PowerShell.Commands.Site
             return Stopping;
         }
 
-        private bool IsTenantProperty() => LockState.HasValue ||
+        private bool IsTenantProperty() =>
+#if !ONPREMISES
+                LockState.HasValue ||
+#endif
+#if !SP2013 && !SP2016 && !SP2019
+//TODO: This can be enabled for onpremises when necessary changes has been done in OfficeDevPnP.Core
                 (Owners != null && Owners.Count > 0) ||
+#endif
+#if !ONPREMISES
                 Sharing.HasValue ||
                 StorageMaximumLevel.HasValue ||
                 StorageWarningLevel.HasValue ||
@@ -336,18 +374,20 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 UserCodeMaximumLevel.HasValue ||
                 UserCodeWarningLevel.HasValue ||
 #pragma warning restore CS0618 // Type or member is obsolete
+#endif
                 AllowSelfServiceUpgrade.HasValue ||
                 NoScriptSite.HasValue ||
+#if !ONPREMISES
                 CommentsOnSitePagesDisabled.HasValue ||
                 DefaultLinkPermission.HasValue ||
                 DefaultSharingLinkType.HasValue ||
                 DisableAppViews.HasValue ||
                 DisableFlows.HasValue ||
                 DisableSharingForNonOwners.IsPresent ||
-                LocaleId.HasValue ||
                 !string.IsNullOrEmpty(NewUrl) ||
                 RestrictedToGeo.HasValue ||
-                SocialBarOnSitePagesDisabled.HasValue;
+                SocialBarOnSitePagesDisabled.HasValue ||
+#endif
+                LocaleId.HasValue;
     }
 }
-#endif
