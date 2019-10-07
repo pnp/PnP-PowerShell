@@ -33,15 +33,15 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 1/1/2016.",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFile -FileName sample.doc -Folder ""Shared Documents"" -ContentType ""Document"" -Values @{Modified=""1/1/2016""}",
+        Code = @"PS:> Add-PnPFile -Path sample.doc -Folder ""Shared Documents"" -ContentType ""Document"" -Values @{Modified=""1/1/2016""}",
         Remarks = "This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 1/1/2016.",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFile -FileName sample.docx -Folder ""Documents"" -Values @{Modified=""1/1/2016""; Created=""1/1/2017""; Editor=23}",
+        Code = @"PS:> Add-PnPFile -Path sample.docx -Folder ""Documents"" -Values @{Modified=""1/1/2016""; Created=""1/1/2017""; Editor=23}",
         Remarks = "This will add a file sample.docx to the Documents folder and will set the Modified date to 1/1/2016, Created date to 1/1/2017 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.",
         SortOrder = 6)]
     [CmdletExample(
-        Code = @"PS:> Add-PnPFile -FileName sample.docx -Folder ""Documents"" -NewFileName ""differentname.docx""",
+        Code = @"PS:> Add-PnPFile -Path sample.docx -Folder ""Documents"" -NewFileName ""differentname.docx""",
         Remarks = "This will upload a local file sample.docx to the Documents folder giving it the filename differentname.docx on SharePoint",
         SortOrder = 7)]
 
