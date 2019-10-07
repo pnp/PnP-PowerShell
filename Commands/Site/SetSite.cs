@@ -223,8 +223,6 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     WriteWarning("You changed the lockstate of this site. This change is not guaranteed to be effective immediately. Please wait a few minutes for this to take effect.");
                 }
 #endif
-#if !SP2013 && !SP2016 && !SP2019
-//TODO: This can be enabled for onpremises when necessary changes has been done in OfficeDevPnP.Core
                 if (Owners != null && Owners.Count > 0)
                 {
                     var admins = new List<UserEntity>();
@@ -235,7 +233,6 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     }
                     tenant.AddAdministrators(admins, new Uri(siteUrl));
                 }
-#endif
 #if !ONPREMISES
                 if (Sharing.HasValue)
                 {
@@ -362,10 +359,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
 #if !ONPREMISES
                 LockState.HasValue ||
 #endif
-#if !SP2013 && !SP2016 && !SP2019
-//TODO: This can be enabled for onpremises when necessary changes has been done in OfficeDevPnP.Core
                 (Owners != null && Owners.Count > 0) ||
-#endif
 #if !ONPREMISES
                 Sharing.HasValue ||
                 StorageMaximumLevel.HasValue ||
