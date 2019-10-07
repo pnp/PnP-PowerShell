@@ -14,6 +14,8 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System.Collections.Generic;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
@@ -184,8 +186,16 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "Specify the lists to extract, either providing their ID or their Title.")]
         public List<string> ListsToExtract;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
+        public ProvisioningConfigurationPipeBind Configuration;
+
         protected override void ExecuteCmdlet()
         {
+            ExtractConfiguration extractConfiguration = null;
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
+            {
+                extractConfiguration = OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration.ExtractConfiguration.FromString(Configuration.GetContents(SessionState.Path.CurrentFileSystemLocation.Path));
+            }
 #if !SP2013
             if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
@@ -202,25 +212,32 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 {
                     if (Force || ShouldContinue(string.Format(Resources.File0ExistsOverwrite, Out), Resources.Confirm))
                     {
-                        ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                        ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
                     }
                 }
                 else
                 {
-                    ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                    ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
                 }
             }
             else
             {
-                ExtractTemplate(Schema, SessionState.Path.CurrentFileSystemLocation.Path, null);
+                ExtractTemplate(Schema, SessionState.Path.CurrentFileSystemLocation.Path, null, extractConfiguration);
             }
         }
 
-        private void ExtractTemplate(XMLPnPSchemaVersion schema, string path, string packageName)
+        private void ExtractTemplate(XMLPnPSchemaVersion schema, string path, string packageName, ExtractConfiguration configuration)
         {
             SelectedWeb.EnsureProperty(w => w.Url);
-
-            var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
+            ProvisioningTemplateCreationInformation creationInformation = null;
+            if (configuration != null)
+            {
+                creationInformation = configuration.ToCreationInformation(SelectedWeb);
+            }
+            else
+            {
+                creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
+            }
 
             if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
             {
@@ -262,19 +279,31 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 creationInformation.FileConnector = fileSystemConnector;
             }
 #pragma warning disable 618
-            creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(PersistBrandingFiles)) || MyInvocation.BoundParameters.ContainsKey(nameof(PersistComposedLookFiles)))
+            {
+                creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
+            }
 #pragma warning restore 618
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
-            creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(IncludeSiteGroups)))
+            {
+                creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+            }
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
-            creationInformation.IncludeHiddenLists = IncludeHiddenLists;
+            if(MyInvocation.BoundParameters.ContainsKey(nameof(IncludeHiddenLists)))
+            {
+                creationInformation.IncludeHiddenLists = IncludeHiddenLists;
+            }
 #if !SP2013 && !SP2016
-            creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(IncludeAllClientSidePages)))
+            {
+                creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
+            }
 #endif
             creationInformation.SkipVersionCheck = SkipVersionCheck;
-            if (ContentTypeGroups != null)
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(ContentTypeGroups)) && ContentTypeGroups != null)
             {
                 creationInformation.ContentTypeGroupsToInclude = ContentTypeGroups.ToList();
             }
@@ -394,7 +423,10 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 }
             }
 
-            creationInformation.IncludeContentTypesFromSyndication = !ExcludeContentTypesFromSyndication.ToBool();
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(ExcludeContentTypesFromSyndication)))
+            {
+                creationInformation.IncludeContentTypesFromSyndication = !ExcludeContentTypesFromSyndication.ToBool();
+            }
 
             if (ListsToExtract != null && ListsToExtract.Count > 0)
             {
@@ -474,6 +506,11 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                     case XMLPnPSchemaVersion.V201903:
                         {
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03);
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V201909:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_09);
                             break;
                         }
                 }
