@@ -32,6 +32,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         protected override void ExecuteCmdlet()
         {
             var clientSidePage = Page.GetPage(ClientContext);
+            if (clientSidePage == null)
+                throw new PSArgumentException($"Page '{Page}' does not exist", "List");
 
             if (Component == null)
             {
