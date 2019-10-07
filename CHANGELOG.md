@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Add-PnPClientSideWebPart now also works for SP2019
+- Added -List parameter to Get-PnPFolder to retrieve all folders in a list
 - Added owner paramter to New-PnPSite when create Communications site
 - Fixed issues after static code analysis
 - Added -ThumbnailUrl parameter to Set-PnPClientSidePage
@@ -26,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Garry Trinder [garrytrinder]
 - Koen Zomers [KoenZomers]
 - Gautam Sheth [gautamdsheth]
 - Giacomo Pozzoni [jackpoz]
