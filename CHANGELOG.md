@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [3.14.1910.0]
 
 ### Added
 
+- Added Set-PnPFolderPermission to set specific folder permissions
 - ConvertTo-PnPClientSidePage: Added support for keeping the source page Author, (Editor), Created and Modified page properties (only when source page lives in SPO) (KeepPageCreationModificationInformation parameter)
 - ConvertTo-PnPClientSidePage: Added support for posting the created page as news (PostAsNews parameter)
 - ConvertTo-PnPClientSidePage: Added support for modernizing blog pages (BlogPage parameter)
@@ -17,12 +18,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added owner paramter to New-PnPSite when create Communications site
+- Fixed issues after static code analysis
 - Added -ThumbnailUrl parameter to Set-PnPClientSidePage
 - ConvertTo-PnPClientSidePage: AddTableListImageAsImageWebPart default set to true to align with similar change in the page transformation framework
 - ConvertTo-PnPClientSidePage: moved log flushing to finally block to ensure it happens in case of something unexpected
 
 ### Contributors
 
+- Koen Zomers [KoenZomers]
+- Gautam Sheth [gautamdsheth]
+- Giacomo Pozzoni [jackpoz]
 - Paul Bullock [pkbullock]
 
 ## [3.13.1909.0]
