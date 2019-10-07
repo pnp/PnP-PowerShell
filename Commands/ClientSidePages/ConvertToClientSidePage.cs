@@ -59,7 +59,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     SortOrder = 9)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite",
-    Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\temp using verbose logging",
+    Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\\temp using verbose logging",
     SortOrder = 10)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType SharePoint -LogSkipFlush",
