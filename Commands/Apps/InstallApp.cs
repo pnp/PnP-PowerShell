@@ -21,11 +21,11 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         Remarks = @"This will install an app that is available in the site collection scoped app catalog, specified by the id, to the current site.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPAvailableApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe | Install-PnPApp",
+        Code = @"PS:> Get-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe | Install-PnPApp",
         Remarks = @"This will install the given app from the tenant scoped app catalog into the site.",
         SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPAvailableApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site | Install-PnPApp",
+        Code = @"PS:> Get-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site | Install-PnPApp",
         Remarks = @"This will install the given app from the site collection scoped app catalog into the site.",
         SortOrder = 4)]
     public class InstallApp : PnPCmdlet
