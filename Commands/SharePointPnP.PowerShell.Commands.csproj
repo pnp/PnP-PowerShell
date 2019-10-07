@@ -584,6 +584,7 @@
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
     <Compile Include="Base\PipeBinds\AlertPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ProvisioningConfigurationPipeBind.cs" />
     <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
