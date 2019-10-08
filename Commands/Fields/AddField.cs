@@ -113,6 +113,8 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
             if (List != null)
             {
                 var list = List.GetList(SelectedWeb);
+                if (list == null)
+                    throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
                 Field f;
                 if (ParameterSetName != ParameterSet_ADDFIELDREFERENCETOLIST)
                 {

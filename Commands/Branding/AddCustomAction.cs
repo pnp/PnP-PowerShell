@@ -19,7 +19,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
     Remarks = @"Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice: escape quotes in CommandUIExtension.",
     SortOrder = 1)]
     [CmdletExample(Code = @"Add-PnPCustomAction -Title ""CollabFooter"" -Name ""CollabFooter"" -Location ""ClientSideExtension.ApplicationCustomizer"" -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties ""{`""sourceTermSet`"":`""PnP-CollabFooter-SharedLinks`"",`""personalItemsStorageProperty`"":`""PnP-CollabFooter-MyLinks`""}",
-    Remarks = @"Adds a new application customizer to the site. This requires that an SPFX solution has been deployed containing the application customizer specified.",
+    Remarks = @"Adds a new application customizer to the site. This requires that an SPFX solution has been deployed containing the application customizer specified. Be sure to run Install-PnPApp before trying this cmdlet on a site.",
     SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "UserCustomAction",

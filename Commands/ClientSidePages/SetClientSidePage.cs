@@ -69,6 +69,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type.")]
         public ContentTypePipeBind ContentType;
 
+        [Parameter(Mandatory = false, HelpMessage = "Thumbnail Url")]
+        public string ThumbnailUrl;
+
         [Obsolete("This parameter value will be ignored")]
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
         public string PublishMessage = string.Empty;
@@ -104,6 +107,11 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             if (Title != null)
             {
                 clientSidePage.PageTitle = Title;
+            }
+
+            if(ThumbnailUrl != null)
+            {
+                clientSidePage.ThumbnailUrl = ThumbnailUrl;
             }
 
             if (MyInvocation.BoundParameters.ContainsKey("HeaderType"))

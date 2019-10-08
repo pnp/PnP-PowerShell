@@ -59,7 +59,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     SortOrder = 9)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite",
-    Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\temp using verbose logging",
+    Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\\temp using verbose logging",
     SortOrder = 10)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType SharePoint -LogSkipFlush",
@@ -114,8 +114,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Copies the page metadata to the created modern page")]
         public SwitchParameter CopyPageMetadata = false;
 
-        [Parameter(Mandatory = false, HelpMessage = "When an image lives inside a table/list then it's also created as separate image web part underneath that table/list when this switch is set (was default behaviour up until the September 2019 release)")]
-        public SwitchParameter AddTableListImageAsImageWebPart = false;
+        [Parameter(Mandatory = false, HelpMessage = "When an image lives inside a table/list then it's also created as separate image web part underneath that table/list by default. Use this switch set to $false to change that")]
+        public SwitchParameter AddTableListImageAsImageWebPart = true;
 
         [Parameter(Mandatory = false, HelpMessage = "Uses the community script editor (https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-script-editor) as replacement for the classic script editor web part")]
         public SwitchParameter UseCommunityScriptEditor = false;
@@ -141,11 +141,23 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Don't publish the created modern page")]
         public SwitchParameter DontPublish = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Keep the author, editor, created and modified information from the source page (when source page lives in SPO)")]
+        public SwitchParameter KeepPageCreationModificationInformation = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Set's the author of the source page as author in the modern page header (when source page lives in SPO)")]
+        public SwitchParameter SetAuthorInPageHeader = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Post the created, and published, modern page as news")]
+        public SwitchParameter PostAsNews = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Disable comments for the created modern page")]
         public SwitchParameter DisablePageComments = false;
 
         [Parameter(Mandatory = false, HelpMessage = "I'm transforming a publishing page")]
         public SwitchParameter PublishingPage = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "I'm transforming a blog page")]
+        public SwitchParameter BlogPage = false;
 
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the page layout mapping file driving the publishing page transformation")]
         public string PageLayoutMapping;
@@ -164,11 +176,24 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             // Load the page to transform
             Identity.Library = this.Library;
             Identity.Folder = this.Folder;
+            Identity.BlogPage = this.BlogPage;
+
+            if (this.PublishingPage && this.BlogPage)
+            {
+                throw new Exception($"The page is either a blog page or a publishing page or not of them...setting both PublishingPage and BlogPage to true is not valid.");
+            }
 
             ListItem page = null;
             if (this.PublishingPage)
             {
                 page = Identity.GetPage(this.ClientContext.Web, CacheManager.Instance.GetPublishingPagesLibraryName(this.ClientContext));
+            }
+            else if (this.BlogPage)
+            {
+                // Blogs don't live in other libraries or sub folders
+                Identity.Library = null;
+                Identity.Folder = null;
+                page = Identity.GetPage(this.ClientContext.Web, CacheManager.Instance.GetBlogListName(this.ClientContext));
             }
             else
             {
@@ -328,6 +353,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     Overwrite = this.Overwrite,
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     PublishCreatedPage = !this.DontPublish,
+                    KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
+                    PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,     
                     TargetPageName = this.PublishingTargetPageName,
                     SkipUrlRewrite = this.SkipUrlRewriting,
@@ -340,7 +367,18 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
                 pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
 
-                serverRelativeClientPageUrl = publishingPageTransformator.Transform(pti);
+                try
+                {
+                    serverRelativeClientPageUrl = publishingPageTransformator.Transform(pti);
+                }
+                finally
+                {
+                    // Flush log
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && !this.LogSkipFlush)
+                    {
+                        publishingPageTransformator.FlushObservers();
+                    }
+                }
             }
             else
             {
@@ -364,6 +402,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     CopyPageMetadata = this.CopyPageMetadata,
                     PublishCreatedPage = !this.DontPublish,
+                    KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
+                    SetAuthorInPageHeader = this.SetAuthorInPageHeader,
+                    PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
@@ -379,19 +420,14 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
                 pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
 
-                serverRelativeClientPageUrl = pageTransformator.Transform(pti);
-            }
-
-            // Flush log
-            if (this.LogType != ClientSidePageTransformatorLogType.None)
-            {
-                if (!this.LogSkipFlush)
+                try
                 {
-                    if (this.PublishingPage)
-                    {
-                        publishingPageTransformator.FlushObservers();
-                    }
-                    else
+                    serverRelativeClientPageUrl = pageTransformator.Transform(pti);
+                }
+                finally
+                {
+                    // Flush log
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && !this.LogSkipFlush)
                     {
                         pageTransformator.FlushObservers();
                     }

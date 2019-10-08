@@ -584,6 +584,7 @@
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
     <Compile Include="Base\PipeBinds\AlertPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ProvisioningConfigurationPipeBind.cs" />
     <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
@@ -614,6 +615,7 @@
     <Compile Include="InformationManagement\GetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
+    <Compile Include="Files\SetFolderPermission.cs" />
     <Compile Include="Model\PnPException.cs" />
     <Compile Include="Model\ProvisionedSite.cs" />
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />

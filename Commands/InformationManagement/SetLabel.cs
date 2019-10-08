@@ -41,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
             if (list != null)
             {
                 var listUrl = list.RootFolder.ServerRelativeUrl;
-                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, Label, SyncToItems, BlockEdit, BlockDeletion);
+                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetListComplianceTag(ClientContext, listUrl, Label, BlockDeletion, BlockEdit, SyncToItems);
 
                 try
                 {

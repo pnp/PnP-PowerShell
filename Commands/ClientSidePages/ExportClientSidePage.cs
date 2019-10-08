@@ -1,9 +1,12 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
+using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Properties;
+using System;
 using System.IO;
 using System.Management.Automation;
 
@@ -30,8 +33,17 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         [Parameter(Mandatory = false, HelpMessage = "Specify to override the question to overwrite a file if it already exists.")]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
+        public ProvisioningConfigurationPipeBind Configuration;
+
         protected override void ProcessRecord()
         {
+            ExtractConfiguration extractConfiguration = null;
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
+            {
+                extractConfiguration = OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration.ExtractConfiguration.FromString(Configuration.GetContents(SessionState.Path.CurrentFileSystemLocation.Path));
+            }
+
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))
@@ -42,29 +54,39 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 {
                     if (Force || ShouldContinue(string.Format(Resources.File0ExistsOverwrite, Out), Resources.Confirm))
                     {
-                        ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                        ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
                     }
                 }
                 else
                 {
-                    ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                    ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
                 }
             }
             else
             {
-                ExtractTemplate(null, null);
+                ExtractTemplate(null, null, extractConfiguration);
             }
         }
 
 
-        private void ExtractTemplate(string dirName, string fileName)
+        private void ExtractTemplate(string dirName, string fileName, ExtractConfiguration configuration)
         {
             var outputTemplate = new ProvisioningTemplate();
-
+            outputTemplate.Id = Guid.NewGuid().ToString("N");
             var helper = new OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers.Utilities.ClientSidePageContentsHelper();
-
-            var ci = new OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers.ProvisioningTemplateCreationInformation(SelectedWeb);
-            ci.PersistBrandingFiles = PersistBrandingFiles;
+            ProvisioningTemplateCreationInformation ci = null;
+            if (configuration != null)
+            {
+                ci = configuration.ToCreationInformation(SelectedWeb);
+            }
+            else
+            {
+                ci = new ProvisioningTemplateCreationInformation(SelectedWeb);
+            }
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(PersistBrandingFiles)))
+            {
+                ci.PersistBrandingFiles = PersistBrandingFiles;
+            }
             if (!string.IsNullOrEmpty(dirName))
             {
                 var fileSystemConnector = new FileSystemConnector(dirName, "");

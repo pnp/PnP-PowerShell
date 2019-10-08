@@ -165,7 +165,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             RetryCount = retryCount;
             RetryWait = retryWait;
             PnPVersionTag = pnpVersionTag;
-            ConnectionMethod = ConnectionMethod;
+            ConnectionMethod = connectionMethod;
         }
 
 

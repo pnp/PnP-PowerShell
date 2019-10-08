@@ -37,6 +37,8 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
             if (List != null)
             {
                 var list = List.GetList(SelectedWeb);
+                if (list == null)
+                    throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
                 if (string.IsNullOrEmpty(Name))
                 {

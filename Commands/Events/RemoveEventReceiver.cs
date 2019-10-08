@@ -47,6 +47,8 @@ namespace SharePointPnP.PowerShell.Commands.Events
             if (ParameterSetName == "List")
             {
                 var list = List.GetList(SelectedWeb);
+                if (list == null)
+                    throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
                 if (MyInvocation.BoundParameters.ContainsKey("Identity"))
                 {

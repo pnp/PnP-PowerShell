@@ -63,6 +63,8 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
                 else
                 {
                     List list = List.GetList(SelectedWeb);
+                    if (list == null)
+                        throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
                     ClientContext.ExecuteQueryRetry();
 
@@ -111,6 +113,8 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
                 else
                 {
                     List list = List.GetList(SelectedWeb);
+                    if (list == null)
+                        throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
                     var cts = ClientContext.LoadQuery(list.ContentTypes.Include(ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group));
                     ClientContext.ExecuteQueryRetry();
                     WriteObject(cts, true);

@@ -16,7 +16,7 @@ configure the page transformation engine to use the community script editor. You
 - Using the needed switch in PnP PowerShell
 -->
 
-<PageTransformation xmlns="http://schemas.dev.office.com/PnP/2018/01/PageTransformationSchema" Version="1.0.1909.0">
+<PageTransformation xmlns="http://schemas.dev.office.com/PnP/2018/01/PageTransformationSchema" Version="1.0.1910.0">
     <!-- Information that applies to all web parts listed in this file -->
     <BaseWebPart>
       <Properties>
@@ -185,8 +185,8 @@ configure the page transformation engine to use the community script editor. You
         </Properties>
         <Mappings>
           <Mapping Name="default" Default="true">
-            <!-- News reel is not the perfect mapping, currently there's no OOB replacement for showing the site feed data -->
-            <ClientSideWebPart Type="NewsReel" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&quot;title&quot;&#58;&quot;&quot;&#125;,&quot;imageSources&quot;&#58;&#123;&#125;,&quot;links&quot;&#58;&#123;&quot;baseUrl&quot;&#58;&quot;{EncodedHostUrl}{Web}&quot;&#125;,&quot;componentDependencies&quot;&#58;&#123;&quot;layoutComponentId&quot;&#58;&quot;a2752e70-c076-41bf-a42e-1d955b449fbc&quot;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;1.0&quot;,&quot;properties&quot;&#58;&#123;&quot;layoutId&quot;&#58;&quot;FeaturedNews&quot;,&quot;newsDataSourceProp&quot;&#58;1,&quot;dataProviderId&quot;&#58;&quot;viewCounts&quot;,&quot;newsSiteList&quot;&#58;[],&quot;renderItemsSliderValue&quot;&#58;4,&quot;showThumbnails&quot;&#58;true,&quot;showAuthorDates&quot;&#58;true,&quot;showViewCounts&quot;&#58;true,&quot;webId&quot;&#58;&quot;{WebId}&quot;,&quot;siteId&quot;&#58;&quot;{SiteId}&quot;,&quot;propsLastEdited&quot;&#58;&quot;2018-04-27T15&#58;23&#58;15.635Z&quot;,&quot;templateId&quot;&#58;&quot;FeaturedNews&quot;&#125;&#125;"/>
+            <!-- News is not the perfect mapping, currently there's no OOB replacement for showing the site feed data -->
+            <ClientSideWebPart Type="News" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&#125;,&quot;imageSources&quot;&#58;&#123;&#125;,&quot;links&quot;&#58;&#123;&quot;baseUrl&quot;&#58;&quot;{EncodedHostUrl}{Web}&quot;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;1.11&quot;,&quot;properties&quot;&#58;&#123;&quot;showChrome&quot;&#58;true,&quot;carouselSettings&quot;&#58;&#123;&quot;autoplay&quot;&#58;false,&quot;autoplaySpeed&quot;&#58;5,&quot;dots&quot;&#58;true,&quot;lazyLoad&quot;&#58;true&#125;,&quot;showNewsMetadata&quot;&#58;&#123;&quot;showSocialActions&quot;&#58;true,&quot;showAuthor&quot;&#58;true,&quot;showDate&quot;&#58;true&#125;,&quot;layoutId&quot;&#58;&quot;GridNews&quot;,&quot;prefetchCount&quot;&#58;4,&quot;filters&quot;&#58;[&#123;&quot;filterType&quot;&#58;1,&quot;value&quot;&#58;&quot;&quot;,&quot;values&quot;&#58;[]&#125;],&quot;newsDataSourceProp&quot;&#58;1,&quot;dataProviderId&quot;&#58;&quot;news&quot;,&quot;newsSiteList&quot;&#58;[],&quot;renderItemsSliderValue&quot;&#58;4,&quot;webId&quot;&#58;&quot;{WebId}&quot;,&quot;siteId&quot;&#58;&quot;{SiteId}&quot;&#125;&#125;"/>
           </Mapping>
         </Mappings>
       </WebPart>
