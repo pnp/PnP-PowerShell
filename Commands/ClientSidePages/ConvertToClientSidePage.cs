@@ -337,6 +337,17 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
             }
+            else if (this.LogType == ClientSidePageTransformatorLogType.Console)
+            {
+                if (this.PublishingPage)
+                {
+                    publishingPageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
+                }
+                else
+                {
+                    pageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
+                }
+            }
 
             // Clear the client side component cache
             if (this.ClearCache)
@@ -374,7 +385,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 finally
                 {
                     // Flush log
-                    if (this.LogType != ClientSidePageTransformatorLogType.None && !this.LogSkipFlush)
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
                     {
                         publishingPageTransformator.FlushObservers();
                     }
@@ -427,7 +438,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 finally
                 {
                     // Flush log
-                    if (this.LogType != ClientSidePageTransformatorLogType.None && !this.LogSkipFlush)
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
                     {
                         pageTransformator.FlushObservers();
                     }

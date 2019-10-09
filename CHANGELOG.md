@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Added
+
+- ConvertTo-PnPClientSidePage: Added support for logging to console via `-LogType Console`
+
+### Changed
+
+### Contributors
+
 ## [3.14.1910.0]
 
 ### Added
