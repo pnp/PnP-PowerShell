@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - ConvertTo-PnPClientSidePage: Added support for logging to console via `-LogType Console`
+- Copy-PnPFile: Fixes (#2300)
 
 ### Changed
 
