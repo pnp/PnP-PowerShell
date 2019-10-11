@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - ConvertTo-PnPClientSidePage: Added support for logging to console via `-LogType Console`
+- ConvertTo-PnPClientSidePage: Added support for controlling the target page name is any cross site transformation (so wiki, web part, blog in addition the already existing option for publishing pages) via the `-TargetPageName` parameter
 
 ### Changed
 

@@ -169,6 +169,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies to publishing page transformation)")]
         public string PublishingTargetPageName = "";
 
+        [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies when doing cross site page transformation)")]
+        public string TargetPageName = "";
+
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
         public SPOnlineConnection TargetConnection = null;
 
@@ -249,6 +252,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             {
                 throw new Exception($"Provided pagelayout mapping file {this.PageLayoutMapping} does not exist");
             }
+
+            bool crossSiteTransformation = TargetConnection != null || !string.IsNullOrEmpty(TargetWebUrl);
 
             // Create target client context (when needed)
             ClientContext targetContext = null;
@@ -371,7 +376,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
                     PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,     
-                    TargetPageName = this.PublishingTargetPageName,
+                    TargetPageName = !string.IsNullOrEmpty(this.PublishingTargetPageName) ? this.PublishingTargetPageName : this.TargetPageName,
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
@@ -421,6 +426,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     SetAuthorInPageHeader = this.SetAuthorInPageHeader,
                     PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,
+                    TargetPageName = crossSiteTransformation ? this.TargetPageName : "",
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
