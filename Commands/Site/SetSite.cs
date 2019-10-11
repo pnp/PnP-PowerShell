@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
     [Cmdlet(VerbsCommon.Set, "PnPSite")]
     [CmdletHelp("Sets Site Collection properties.",
         Category = CmdletHelpCategory.Sites,
-        SupportedPlatform = CmdletSupportedPlatform.Online)]
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
         Code = @"PS:> Set-PnPSite -Classification ""HBI""",
         Remarks = "Sets the current site classification to HBI",
@@ -24,6 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Set-PnPSite -Classification $null",
         Remarks = "Unsets the current site classification",
         SortOrder = 1)]
+#if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Set-PnPSite -DisableFlows",
         Remarks = "Disables Microsoft Flow for this site, and also hides the Flow button from the ribbon",
@@ -36,6 +37,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Set-PnPSite -LogoFilePath c:\images\mylogo.png",
         Remarks = "Sets the logo if the site is a modern team site",
         SortOrder = 4)]
+#endif
     public class SetSite : PnPCmdlet
     {
 
@@ -200,12 +202,16 @@ namespace SharePointPnP.PowerShell.Commands.Site
             if (IsTenantProperty())
             {
 #if ONPREMISES
-                if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.TenantAdminUrl))
+                //Assume that the current connection is to the tenant administration site
+                var tenantAdminUrl = ClientContext.Url;
+                if (!string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.TenantAdminUrl))
+                {
+                    tenantAdminUrl = SPOnlineConnection.CurrentConnection.TenantAdminUrl;
+                }
+                else if (string.IsNullOrEmpty(Identity))
                 {
                     throw new InvalidOperationException(Properties.Resources.NoTenantAdminUrlSpecified);
                 }
-
-                var tenantAdminUrl = SPOnlineConnection.CurrentConnection.TenantAdminUrl;
 #else
                 var tenantAdminUrl = UrlUtilities.GetTenantAdministrationUrl(context.Url);
 #endif
