@@ -202,13 +202,16 @@ namespace SharePointPnP.PowerShell.Commands.Site
             if (IsTenantProperty())
             {
 #if ONPREMISES
-                //Assume that the current connection is to the tenant administration site
-                var tenantAdminUrl = ClientContext.Url;
+                string tenantAdminUrl;
                 if (!string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.TenantAdminUrl))
                 {
                     tenantAdminUrl = SPOnlineConnection.CurrentConnection.TenantAdminUrl;
                 }
-                else if (string.IsNullOrEmpty(Identity))
+                else if (SPOnlineConnection.CurrentConnection.ConnectionType == Enums.ConnectionType.TenantAdmin)
+                {
+                    tenantAdminUrl = ClientContext.Url;
+                }
+                else
                 {
                     throw new InvalidOperationException(Properties.Resources.NoTenantAdminUrlSpecified);
                 }
