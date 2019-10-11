@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿//#if !ONPREMISES
 using System;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantManagement;
@@ -18,14 +18,16 @@ namespace SharePointPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Set, "PnPTenantSite")]
     [CmdletHelp(@"Set site information.",
         "Sets site properties for existing sites.",
-        SupportedPlatform = CmdletSupportedPlatform.Online,
+        SupportedPlatform = CmdletSupportedPlatform.All,
         Category = CmdletHelpCategory.TenantAdmin)]
+#if !ONPREMISES
     [CmdletExample(
       Code = @"PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com -Title ""Contoso Website"" -Sharing Disabled",
       Remarks = @"This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website' and disable sharing on this site collection.", SortOrder = 1)]
     [CmdletExample(
       Code = @"PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com -Title ""Contoso Website"" -StorageWarningLevel 8000 -StorageMaximumLevel 10000",
       Remarks = @"This will set the title of the site collection with the URL 'https://contoso.sharepoint.com' to 'Contoso Website', set the storage warning level to 8GB and set the storage maximum level to 10GB.", SortOrder = 2)]
+#endif
     [CmdletExample(
       Code = @"PS:> Set-PnPTenantSite -Url https://contoso.sharepoint.com/sites/sales -Owners ""user@contoso.onmicrosoft.com""",
       Remarks = @"This will add user@contoso.onmicrosoft.com as an additional site collection owner at 'https://contoso.sharepoint.com/sites/sales'.", SortOrder = 3)]
@@ -46,16 +48,23 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Specifies the title of the site", ParameterSetName = ParameterSet_PROPERTIES)]
         public string Title;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly", ParameterSetName = ParameterSet_PROPERTIES)]
-        [Alias("Sharing")]
-        public SharingCapabilities SharingCapability;
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft (https://go.microsoft.com/fwlink/p/?LinkId=242911).", ParameterSetName = ParameterSet_PROPERTIES)]
+        public uint LocaleId;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies if the site administrator can upgrade the site collection", ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter AllowSelfServiceUpgrade;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
+        public List<string> Owners;
 
         [Parameter(Mandatory = false, HelpMessage = "Determines whether the Add And Customize Pages right is denied on the site collection. For more information about permission levels, see User permissions and permission levels in SharePoint.", ParameterSetName = ParameterSet_PROPERTIES)]
         [Alias("NoScriptSite")]
         public SwitchParameter DenyAddAndCustomizePages;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft (https://go.microsoft.com/fwlink/p/?LinkId=242911).", ParameterSetName = ParameterSet_PROPERTIES)]
-        public uint LocaleId;
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly", ParameterSetName = ParameterSet_PROPERTIES)]
+        [Alias("Sharing")]
+        public SharingCapabilities SharingCapability;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.", ParameterSetName = ParameterSet_PROPERTIES)]
         public long StorageMaximumLevel;
@@ -70,12 +79,6 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Specifies the warning level for the resource quota. This value must not exceed the value set for the UserCodeMaximumLevel parameter", ParameterSetName = ParameterSet_PROPERTIES)]
         [Obsolete("Sandboxed solutions are obsolete")]
         public double UserCodeWarningLevel;
-
-        [Parameter(Mandatory = false, HelpMessage = "Specifies if the site administrator can upgrade the site collection", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SwitchParameter AllowSelfServiceUpgrade;
-
-        [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
-        public List<string> Owners;
 
         [Parameter(Mandatory = false, HelpMessage = "Sets the lockstate of a site", ParameterSetName = ParameterSet_LOCKSTATE)]
         public SiteLockState? LockState;
@@ -112,8 +115,12 @@ namespace SharePointPnP.PowerShell.Commands
 
         [Parameter(Mandatory = false, HelpMessage = "Wait for the operation to complete")]
         public SwitchParameter Wait;
+#endif
         protected override void ExecuteCmdlet()
         {
+#if ONPREMISES
+            SetSiteProperties();
+#else
             Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
             if (LockState.HasValue)
@@ -121,132 +128,154 @@ namespace SharePointPnP.PowerShell.Commands
                 Tenant.SetSiteLockState(Url, LockState.Value, Wait, Wait ? timeoutFunction : null);
                 WriteWarning("You changed the lockstate of a site. This change is not guaranteed to be effective immediately. Please wait a few minutes for this to take effect.");
             }
-
             if (!LockState.HasValue)
             {
-                var props = GetSiteProperties(Url);
-                var updateRequired = false;
-                if (ParameterSpecified(nameof(SharingAllowedDomainList)))
-                {
-                    props.SharingAllowedDomainList = SharingAllowedDomainList;
-                    updateRequired = true;
-                }
-                if (ParameterSpecified(nameof(SharingBlockedDomainList)))
-                {
-                    props.SharingBlockedDomainList = SharingBlockedDomainList;
-                    updateRequired = true;
-                }
-                if (ParameterSpecified(nameof(SharingDomainRestrictionMode)))
-                {
-                    props.SharingDomainRestrictionMode = SharingDomainRestrictionMode;
-                    updateRequired = true;
-                }
-                if (ParameterSpecified(nameof(LocaleId)))
-                {
-                    props.Lcid = LocaleId;
-                    updateRequired = true;
-                }
-                if(ParameterSpecified(nameof(DenyAddAndCustomizePages)))
-                {
-                    props.DenyAddAndCustomizePages = DenyAddAndCustomizePages ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled;
-                    updateRequired = true;
-                }
+                SetSiteProperties(timeoutFunction);
+            }
+#endif
+        }
+
+#if ONPREMISES
+        private void SetSiteProperties()
+#else
+        private void SetSiteProperties(Func<TenantOperationMessage, bool> timeoutFunction)
+#endif
+        {
+            var props = GetSiteProperties(Url);
+            var updateRequired = false;
+
+            if (ParameterSpecified(nameof(Title)))
+            {
+                props.Title = Title;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(DenyAddAndCustomizePages)))
+            {
+                props.DenyAddAndCustomizePages = DenyAddAndCustomizePages ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(LocaleId)))
+            {
+                props.Lcid = LocaleId;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(AllowSelfServiceUpgrade)))
+            {
+                props.AllowSelfServiceUpgrade = AllowSelfServiceUpgrade;
+                updateRequired = true;
+            }
+
+#if !ONPREMISES
+            if (ParameterSpecified(nameof(SharingAllowedDomainList)))
+            {
+                props.SharingAllowedDomainList = SharingAllowedDomainList;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(SharingBlockedDomainList)))
+            {
+                props.SharingBlockedDomainList = SharingBlockedDomainList;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(SharingDomainRestrictionMode)))
+            {
+                props.SharingDomainRestrictionMode = SharingDomainRestrictionMode;
+                updateRequired = true;
+            }
 #pragma warning disable CS0618 // Type or member is obsolete
-                if (ParameterSpecified(nameof(UserCodeMaximumLevel)))
-                {
-                    props.UserCodeMaximumLevel = UserCodeMaximumLevel;
-                    updateRequired = true;
-                }
-                if (ParameterSpecified(nameof(UserCodeWarningLevel)))
-                {
-                    props.UserCodeWarningLevel = UserCodeWarningLevel;
-                    updateRequired = true;
-                }
+            if (ParameterSpecified(nameof(UserCodeMaximumLevel)))
+            {
+                props.UserCodeMaximumLevel = UserCodeMaximumLevel;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(UserCodeWarningLevel)))
+            {
+                props.UserCodeWarningLevel = UserCodeWarningLevel;
+                updateRequired = true;
+            }
 #pragma warning restore CS0618 // Type or member is obsolete
-                if(ParameterSpecified(nameof(StorageMaximumLevel)))
-                {
-                    props.StorageMaximumLevel = StorageMaximumLevel;
-                    updateRequired = true;
-                }
-                if(ParameterSpecified(nameof(StorageWarningLevel)))
-                {
-                    props.StorageWarningLevel = StorageWarningLevel;
-                    updateRequired = true;
-                }
-                if(ParameterSpecified(nameof(SharingCapability)))
-                {
-                    props.SharingCapability = SharingCapability;
-                    updateRequired = true;
-                }
-                if(ParameterSpecified(nameof(DefaultLinkPermission)))
-                {
-                    props.DefaultLinkPermission = DefaultLinkPermission;
-                    updateRequired = true;
-                }
-                if(ParameterSpecified(nameof(DefaultSharingLinkType)))
-                {
-                    props.DefaultSharingLinkType = DefaultSharingLinkType;
-                    updateRequired = true;
-                }
+            if (ParameterSpecified(nameof(StorageMaximumLevel)))
+            {
+                props.StorageMaximumLevel = StorageMaximumLevel;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(StorageWarningLevel)))
+            {
+                props.StorageWarningLevel = StorageWarningLevel;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(SharingCapability)))
+            {
+                props.SharingCapability = SharingCapability;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(DefaultLinkPermission)))
+            {
+                props.DefaultLinkPermission = DefaultLinkPermission;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(DefaultSharingLinkType)))
+            {
+                props.DefaultSharingLinkType = DefaultSharingLinkType;
+                updateRequired = true;
+            }
 
-                if(ParameterSpecified(nameof(BlockDownloadOfNonViewableFiles)))
-                {
-                    props.AllowDownloadingNonWebViewableFiles = !BlockDownloadOfNonViewableFiles;
-                    updateRequired = true;
-                }
+            if (ParameterSpecified(nameof(BlockDownloadOfNonViewableFiles)))
+            {
+                props.AllowDownloadingNonWebViewableFiles = !BlockDownloadOfNonViewableFiles;
+                updateRequired = true;
+            }
 
-                if(ParameterSpecified(nameof(Title)))
-                {
-                    props.Title = Title;
-                    updateRequired = true;
-                }
+            if (ParameterSpecified(nameof(CommentsOnSitePagesDisabled)))
+            {
+                props.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled;
+                updateRequired = true;
+            }
 
-                if(ParameterSpecified(nameof(CommentsOnSitePagesDisabled)))
-                {
-                    props.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled;
-                    updateRequired = true;
-                }
+            if (ParameterSpecified(nameof(DisableAppViews)))
+            {
+                props.DisableAppViews = DisableAppViews;
+                updateRequired = true;
+            }
 
-                if(ParameterSpecified(nameof(DisableAppViews)))
-                {
-                    props.DisableAppViews = DisableAppViews;
-                    updateRequired = true;
-                }
+            if (ParameterSpecified(nameof(DisableCompanyWideSharingLinks)))
+            {
+                props.DisableCompanyWideSharingLinks = DisableCompanyWideSharingLinks;
+                updateRequired = true;
+            }
 
-                if(ParameterSpecified(nameof(DisableCompanyWideSharingLinks)))
-                {
-                    props.DisableCompanyWideSharingLinks = DisableCompanyWideSharingLinks;
-                    updateRequired = true;
-                }
+            if (ParameterSpecified(nameof(DisableFlows)))
+            {
+                props.DisableFlows = DisableFlows;
+                updateRequired = true;
+            }
+#endif
 
-                if(ParameterSpecified(nameof(DisableFlows)))
-                {
-                    props.DisableFlows = DisableFlows;
-                    updateRequired = true;
-                }
+            if (updateRequired)
+            {
+                var op = props.Update();
+                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+                ClientContext.ExecuteQueryRetry();
 
-                if (updateRequired)
+#if !ONPREMISES
+                if (Wait)
                 {
-                    var op = props.Update();
-                    ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                    ClientContext.ExecuteQueryRetry();
-
-                    if(Wait)
-                    {
-                        WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
-                    }
+                    WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
                 }
+#endif
+            }
 
-                if (Owners != null && Owners.Count > 0)
+            if (Owners != null && Owners.Count > 0)
+            {
+                var admins = new List<UserEntity>();
+                foreach (var owner in Owners)
                 {
-                    var admins = new List<UserEntity>();
-                    foreach (var owner in Owners)
-                    {
-                        var userEntity = new UserEntity { LoginName = owner };
-                        admins.Add(userEntity);
-                    }
-                    Tenant.AddAdministrators(admins, new Uri(Url));
+                    var userEntity = new UserEntity { LoginName = owner };
+                    admins.Add(userEntity);
                 }
+                Tenant.AddAdministrators(admins, new Uri(Url));
             }
         }
 
@@ -255,6 +284,7 @@ namespace SharePointPnP.PowerShell.Commands
             return Tenant.GetSitePropertiesByUrl(url, true);
         }
 
+#if !ONPREMISES
         private bool TimeoutFunction(TenantOperationMessage message)
         {
             if (message == TenantOperationMessage.SettingSiteProperties || message == TenantOperationMessage.SettingSiteLockState)
@@ -292,7 +322,6 @@ namespace SharePointPnP.PowerShell.Commands
             }
             return succeeded;
         }
-
+#endif
     }
 }
-#endif
