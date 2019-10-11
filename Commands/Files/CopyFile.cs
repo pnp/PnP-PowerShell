@@ -128,6 +128,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 file = _sourceContext.Web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(SourceUrl));
 #endif
                 file.EnsureProperties(f => f.Name, f => f.Exists);
+                isFile = file.Exists;
             }
             catch
             {
@@ -168,17 +169,17 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
                 _targetContext = ClientContext.Clone(targetWebUri.AbsoluteUri);
                 var dstWeb = _targetContext.Web;
-                dstWeb.EnsureProperty(s => s.Url);
+                dstWeb.EnsureProperties(s => s.Url, s => s.ServerRelativeUrl);
                 if (srcWeb.Url == dstWeb.Url)
                 {
                     try
                     {
-                        var targetFile = UrlUtility.Combine(TargetUrl, file.Name);
+                        var targetFile = UrlUtility.Combine(TargetUrl, file?.Name);
                         // If src/dst are on the same Web, then try using CopyTo - backwards compability
 #if ONPREMISES
-                        file.CopyTo(targetFile, OverwriteIfAlreadyExists);
+                        file?.CopyTo(targetFile, OverwriteIfAlreadyExists);
 #else
-                        file.CopyToUsingPath(ResourcePath.FromDecodedUrl(targetFile), OverwriteIfAlreadyExists);
+                        file?.CopyToUsingPath(ResourcePath.FromDecodedUrl(targetFile), OverwriteIfAlreadyExists);
 #endif
                         _sourceContext.ExecuteQueryRetry();
                         return;
@@ -196,11 +197,15 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 bool targetFolderExists = false;
                 try
                 {
+#if ONPREMISES
                     targetFolder = _targetContext.Web.GetFolderByServerRelativeUrl(TargetUrl);
+#else
+                    targetFolder = _targetContext.Web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(TargetUrl));
+#endif
 #if !SP2013
                     targetFolder.EnsureProperties(f => f.Name, f => f.Exists);
                     if (!targetFolder.Exists) throw new Exception("TargetUrl is an existing file, not folder");
-                     targetFolderExists = true;
+                    targetFolderExists = true;
 #else
                     targetFolder.EnsureProperties(f => f.Name);
                     try
@@ -226,8 +231,12 @@ namespace SharePointPnP.PowerShell.Commands.Files
                     foreach (List targetList in lists)
                     {
                         if (!TargetUrl.StartsWith(targetList.RootFolder.ServerRelativeUrl, StringComparison.InvariantCultureIgnoreCase)) continue;
-                        fileOrFolderName = Regex.Replace(TargetUrl, targetList.RootFolder.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
-                        targetFolder = srcIsFolder ? targetList.RootFolder.EnsureFolder(fileOrFolderName) : targetList.RootFolder;
+                        fileOrFolderName = Regex.Replace(TargetUrl, _targetContext.Web.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
+                        targetFolder = srcIsFolder
+                            ? _targetContext.Web.EnsureFolderPath(fileOrFolderName)
+                            : targetList.RootFolder;
+                        //fileOrFolderName = Regex.Replace(TargetUrl, targetList.RootFolder.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
+                        //targetFolder = srcIsFolder ? targetList.RootFolder.EnsureFolder(fileOrFolderName) : targetList.RootFolder;
                         break;
                     }
                 }
@@ -310,7 +319,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
             {
                 throw new ArgumentException("Filename is required");
             }
-         
+
             // Create the file
             var newFileInfo = new FileCreationInformation()
             {
