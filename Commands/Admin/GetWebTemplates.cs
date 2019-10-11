@@ -1,5 +1,4 @@
-﻿#if !ONPREMISES
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Base;
 using System.Management.Automation;
@@ -10,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletHelp(@"Returns the available web templates.", 
         "Will list all available templates one can use to create a classic site.",
         Category = CmdletHelpCategory.TenantAdmin,
-        SupportedPlatform = CmdletSupportedPlatform.Online,
+        SupportedPlatform = CmdletSupportedPlatform.All,
         OutputType =typeof(Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.spotenantwebtemplatecollection.aspx")]
     [CmdletExample(Code = @"PS:> Get-PnPWebTemplates", SortOrder = 1)]
@@ -31,4 +30,3 @@ namespace SharePointPnP.PowerShell.Commands
         }
     }
 }
-#endif
