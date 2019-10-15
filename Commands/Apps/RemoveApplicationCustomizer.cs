@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿#if !SP2013 && !SP2016
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -97,3 +98,4 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         }
     }
 }
+#endif
