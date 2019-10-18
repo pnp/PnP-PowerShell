@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Added
+
+- ConvertTo-PnPClientSidePage: Added support for logging to console via `-LogType Console`
+- Copy-PnPFile: Fixes (#2300)
+- ConvertTo-PnPClientSidePage: Added support for controlling the target page name is any cross site transformation (so wiki, web part, blog in addition the already existing option for publishing pages) via the `-TargetPageName` parameter
+
+### Changed
+
+### Contributors
+
 ## [3.14.1910.0]
 
 ### Added

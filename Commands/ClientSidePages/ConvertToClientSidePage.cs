@@ -23,19 +23,19 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page",
     SortOrder = 1)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -WebPartMappingFile c:\contoso\webpartmapping.xml",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page using a custom provided mapping file",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page using a custom provided mapping file",
     SortOrder = 2)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -AddPageAcceptBanner",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog",
     SortOrder = 3)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -CopyPageMetadata",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
     SortOrder = 4)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
@@ -55,16 +55,20 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     SortOrder = 8)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
     SortOrder = 9)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite",
-    Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\\temp using verbose logging",
+    Remarks = "Converts a wiki/web part page named 'somepage' and creates a log file in c:\\temp using verbose logging",
     SortOrder = 10)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType SharePoint -LogSkipFlush",
-    Remarks = "Converts a web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log",
+    Remarks = "Converts a wiki/web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log",
     SortOrder = 11)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""My post title"" -BlogPage -LogType Console -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
+    Remarks = "Converts a blog page with a title starting with 'my post title' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
+    SortOrder = 12)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
@@ -165,6 +169,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies to publishing page transformation)")]
         public string PublishingTargetPageName = "";
 
+        [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies when doing cross site page transformation)")]
+        public string TargetPageName = "";
+
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
         public SPOnlineConnection TargetConnection = null;
 
@@ -245,6 +252,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             {
                 throw new Exception($"Provided pagelayout mapping file {this.PageLayoutMapping} does not exist");
             }
+
+            bool crossSiteTransformation = TargetConnection != null || !string.IsNullOrEmpty(TargetWebUrl);
 
             // Create target client context (when needed)
             ClientContext targetContext = null;
@@ -337,6 +346,17 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
             }
+            else if (this.LogType == ClientSidePageTransformatorLogType.Console)
+            {
+                if (this.PublishingPage)
+                {
+                    publishingPageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
+                }
+                else
+                {
+                    pageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
+                }
+            }
 
             // Clear the client side component cache
             if (this.ClearCache)
@@ -356,7 +376,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
                     PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,     
-                    TargetPageName = this.PublishingTargetPageName,
+                    TargetPageName = !string.IsNullOrEmpty(this.PublishingTargetPageName) ? this.PublishingTargetPageName : this.TargetPageName,
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
@@ -374,7 +394,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 finally
                 {
                     // Flush log
-                    if (this.LogType != ClientSidePageTransformatorLogType.None && !this.LogSkipFlush)
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
                     {
                         publishingPageTransformator.FlushObservers();
                     }
@@ -406,6 +426,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     SetAuthorInPageHeader = this.SetAuthorInPageHeader,
                     PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,
+                    TargetPageName = crossSiteTransformation ? this.TargetPageName : "",
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
@@ -427,7 +448,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 finally
                 {
                     // Flush log
-                    if (this.LogType != ClientSidePageTransformatorLogType.None && !this.LogSkipFlush)
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
                     {
                         pageTransformator.FlushObservers();
                     }

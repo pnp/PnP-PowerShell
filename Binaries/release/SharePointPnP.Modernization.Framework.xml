@@ -453,7 +453,7 @@
             <param name="page">ListItem holding the page to analyze</param>
             <param name="pageTransformation">Page transformation information</param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.Analyze">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.Analyze(System.Boolean)">
             <summary>
             Analyses a wiki page
             </summary>
@@ -1677,6 +1677,13 @@
             <param name="pti">PageTransformationInformation object</param>
             <returns></returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers.DisplaySharePointVersion(SharePointPnP.Modernization.Framework.Transform.SPVersion)">
+            <summary>
+            Display version for SharePoint
+            </summary>
+            <param name="version"></param>
+            <returns></returns>
+        </member>
         <member name="F:SharePointPnP.Modernization.Framework.Telemetry.LogLevel.Debug">
             <summary>
             Debug Log Level
@@ -2029,6 +2036,13 @@
             </summary>
             <param name="pageId">Name of the page being transformed</param>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BaseTransform.GetExactVersion(Microsoft.SharePoint.Client.ClientRuntimeContext)">
+            <summary>
+            Gets exact version of SharePoint
+            </summary>
+            <param name="clientContext"></param>
+            <returns></returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Transform.BaseTransform.GetVersion(Microsoft.SharePoint.Client.ClientRuntimeContext)">
             <summary>
             Gets the version of SharePoint
@@ -2088,9 +2102,19 @@
             These properties are used to condition the transformation process.
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.KeepPageCreationModificationInformation">
+            <summary>
+            Set this property in case you want to retain the page's Author/Editor/Created/Modified fields. Note that a page publish will always set Editor/Modified
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.PublishCreatedPage">
             <summary>
             Should the created page be immediately published (default = true)
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.PostAsNews">
+            <summary>
+            Post the created page as news
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.DisablePageComments">
@@ -2143,14 +2167,29 @@
             Indicates if this transformation spans farms (on-prem to online tenant, online tenant A to online tenant B)
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.IsCrossSiteTransformation">
+            <summary>
+            Indicates if the transformation spans site collections or whether it's an in-place page transformation
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SourceVersion">
             <summary>
             SharePoint version of the source 
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SourceVersionNumber">
+            <summary>
+            SharePoint version number of the source 
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.TargetVersion">
             <summary>
             SharePoint version of the target 
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.TargetVersionNumber">
+            <summary>
+            SharePoint version number of the target 
             </summary>
         </member>
         <member name="F:SharePointPnP.Modernization.Framework.Transform.FilterChainingOperator.And">
@@ -2379,6 +2418,11 @@
         <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.PageHeader">
             <summary>
             Configuration of the page header to apply
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SetAuthorInPageHeader">
+            <summary>
+            Sets the page author in the page header similar to the original page author
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.ModernizationCenterInformation">
@@ -2815,6 +2859,16 @@
             List of URLs and SharePoint Versions
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.ExactSharepointVersions">
+            <summary>
+            List of URLs and Exact SharePoint Versions
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.AADTenantId">
+            <summary>
+            AADTenantID's used
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.AssetsTransfered">
             <summary>
             List of assets transferred from source to destination
@@ -2844,12 +2898,12 @@
             Clear base template cache
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetFieldsToCopy(Microsoft.SharePoint.Client.Web,Microsoft.SharePoint.Client.List)">
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetFieldsToCopy(Microsoft.SharePoint.Client.Web,Microsoft.SharePoint.Client.List,System.String)">
             <summary>
             Get the list of fields that need to be copied from cache. If cache is empty the list will be calculated
             </summary>
             <param name="web">Web to operate against</param>
-            <param name="pagesLibrary">Pages library instance</param>
+            <param name="sourceLibrary">Pages library instance</param>
             <returns>List of fields that need to be copied</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearFieldsToCopy">
@@ -2863,6 +2917,13 @@
             </summary>
             <param name="context">Context of the site</param>
             <returns>Translated name of the pages library</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetBlogListName(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Get translation for the blog list name
+            </summary>
+            <param name="context">Context of the site</param>
+            <returns>Translated name of the blog list</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetResourceString(Microsoft.SharePoint.Client.ClientContext,System.String)">
             <summary>
@@ -3098,6 +3159,9 @@
             <remarks/>
         </member>
         <member name="F:SharePointPnP.Modernization.Framework.ClientSideWebPartType.NewsReel">
+            <remarks/>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.ClientSideWebPartType.News">
             <remarks/>
         </member>
         <member name="F:SharePointPnP.Modernization.Framework.ClientSideWebPartType.PowerBIReportEmbed">
@@ -4290,6 +4354,16 @@
             <param name="web">Web to get the pages from</param>
             <param name="webRelativeListName">Web relative URL of the list (e.g. SiteAssets)</param>
             <param name="pageNameStartsWith">Filter to get all pages starting with</param>
+            <param name="folder">Folder to search in</param>
+            <returns>A list of pages (ListItem intances)</returns>
+        </member>
+        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetBlogsFromList(Microsoft.SharePoint.Client.Web,System.String,System.String,System.String)">
+            <summary>
+            Returns the blogs from a web, optionally filtered on blog name
+            </summary>
+            <param name="web">Web to get the blogs from</param>
+            <param name="webRelativeListName">Web relative URL of the blog list (e.g. Posts)</param>
+            <param name="pageNameStartsWith">Filter to get all blogs starting with</param>
             <param name="folder">Folder to search in</param>
             <returns>A list of pages (ListItem intances)</returns>
         </member>
