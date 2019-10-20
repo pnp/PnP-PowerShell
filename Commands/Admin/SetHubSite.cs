@@ -12,8 +12,8 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Title ""My New Title""", 
-        Remarks = "Sets the title of the hubsite", 
+        Code = @"PS:> Set-PnPHubSite -Identity https://tenant.sharepoint.com/sites/myhubsite -Title ""My New Title""",
+        Remarks = "Sets the title of the hubsite",
         SortOrder = 1)]
     public class SetHubSite : PnPAdminCmdlet
     {
@@ -32,6 +32,12 @@ namespace SharePointPnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public GuidPipeBind SiteDesignId;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter HideNameInNavigation { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter RequiresJoinApproval { get; set; }
 
         protected override void ExecuteCmdlet()
         {
@@ -52,6 +58,14 @@ namespace SharePointPnP.PowerShell.Commands.Admin
             if (MyInvocation.BoundParameters.ContainsKey("SiteDesignId"))
             {
                 hubSiteProperties.SiteDesignId = this.SiteDesignId.Id;
+            }
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(HideNameInNavigation)))
+            {
+                hubSiteProperties.HideNameInNavigation = HideNameInNavigation.ToBool();
+            }
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(RequiresJoinApproval)))
+            {
+                hubSiteProperties.RequiresJoinApproval = RequiresJoinApproval.ToBool();
             }
             hubSiteProperties.Update();
             ClientContext.ExecuteQueryRetry();
