@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            var hubSiteProperties = base.Tenant.GetHubSitePropertiesByUrl(this.Identity.Url);
+            var hubSiteProperties = Identity.GetHubSite(Tenant);
             ClientContext.Load(hubSiteProperties);
             if (MyInvocation.BoundParameters.ContainsKey("Title"))
             {
