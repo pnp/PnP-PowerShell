@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Enums;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
@@ -10,6 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     {
         private Tenant _tenant;
         private Uri _baseUri;
+        internal ClientContext WebContext { get; set; }
 
         public Tenant Tenant
         {
@@ -38,6 +40,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 throw new InvalidOperationException(Resources.NoConnection);
             }
+
+            WebContext = SPOnlineConnection.CurrentConnection.Context;
 
             SPOnlineConnection.CurrentConnection.CacheContext();
 
