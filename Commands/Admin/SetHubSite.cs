@@ -34,10 +34,10 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         public GuidPipeBind SiteDesignId;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter HideNameInNavigation { get; set; }
+        public SwitchParameter HideNameInNavigation;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter RequiresJoinApproval { get; set; }
+        public SwitchParameter RequiresJoinApproval;
 
         protected override void ExecuteCmdlet()
         {
