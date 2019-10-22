@@ -76,7 +76,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     _baseUri =
                        new Uri(
-                           $"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}.{string.Join(".", uriParts.Skip(1))}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
+                           $"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}{(uriParts.Length > 1 ? $".{string.Join(".", uriParts.Skip(1))}" : string.Empty )}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
 
                 }
             }
