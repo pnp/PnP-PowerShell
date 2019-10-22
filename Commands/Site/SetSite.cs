@@ -52,7 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         public string Classification;
 
         [Parameter(Mandatory = false, HelpMessage = "Disables Microsoft Flow for this site", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SwitchParameter DisableFlows;
+        public SwitchParameter? DisableFlows;
 
         [Parameter(Mandatory = false, HelpMessage = "Sets the logo if the site is modern team site. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl", ParameterSetName = ParameterSet_PROPERTIES)]
         public string LogoFilePath;
@@ -82,13 +82,13 @@ namespace SharePointPnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if a site allows custom script or not. See https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f for more information.", ParameterSetName = ParameterSet_PROPERTIES)]
         [Alias("DenyAndAddCustomizePages")]
-        public SwitchParameter NoScriptSite;
+        public SwitchParameter? NoScriptSite;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
         public List<string> Owners;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if comments on site pages are enabled or disabled", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SwitchParameter CommentsOnSitePagesDisabled;
+        public SwitchParameter? CommentsOnSitePagesDisabled;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the default link permission for the site collection. None - Respect the organization default link permission. View - Sets the default link permission for the site to ""view"" permissions. Edit - Sets the default link permission for the site to ""edit"" permissions", ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingPermissionType? DefaultLinkPermission;
@@ -116,7 +116,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         public RestrictedToRegion? RestrictedToGeo;
 
         [Parameter(Mandatory = false, HelpMessage = @"Disables or enables the Social Bar for Site Collection.", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SwitchParameter SocialBarOnSitePagesDisabled;
+        public SwitchParameter? SocialBarOnSitePagesDisabled;
 
         [Parameter(Mandatory = false, HelpMessage = "Wait for the operation to complete", ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
@@ -246,14 +246,14 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     siteProperties.AllowSelfServiceUpgrade = AllowSelfServiceUpgrade.Value;
                     executeQueryRequired = true;
                 }
-                if (NoScriptSite.IsPresent)
+                if (NoScriptSite.HasValue)
                 {
                     siteProperties.DenyAddAndCustomizePages = (NoScriptSite == true ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled);
                     executeQueryRequired = true;
                 }
-                if (CommentsOnSitePagesDisabled.IsPresent)
+                if (CommentsOnSitePagesDisabled.HasValue)
                 {
-                    siteProperties.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled;
+                    siteProperties.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled.Value;
                     executeQueryRequired = true;
                 }
                 if (DefaultLinkPermission.HasValue)
@@ -276,9 +276,9 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     siteProperties.DisableCompanyWideSharingLinks = DisableCompanyWideSharingLinks.Value;
                     executeQueryRequired = true;
                 }
-                if (DisableFlows.IsPresent)
+                if (DisableFlows.HasValue)
                 {
-                    siteProperties.DisableFlows = DisableFlows ? FlowsPolicy.Disabled : FlowsPolicy.NotDisabled;
+                    siteProperties.DisableFlows = DisableFlows.Value ? FlowsPolicy.Disabled : FlowsPolicy.NotDisabled;
                     executeQueryRequired = true;
                 }
                 if (LocaleId.HasValue)
@@ -296,9 +296,9 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     siteProperties.RestrictedToRegion = RestrictedToGeo.Value;
                     executeQueryRequired = true;
                 }
-                if (SocialBarOnSitePagesDisabled.IsPresent)
+                if (SocialBarOnSitePagesDisabled.HasValue)
                 {
-                    siteProperties.SocialBarOnSitePagesDisabled = SocialBarOnSitePagesDisabled;
+                    siteProperties.SocialBarOnSitePagesDisabled = SocialBarOnSitePagesDisabled.Value;
                     executeQueryRequired = true;
                 }
                 if (executeQueryRequired)
@@ -337,17 +337,17 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 UserCodeWarningLevel.HasValue ||
 #pragma warning restore CS0618 // Type or member is obsolete
                 AllowSelfServiceUpgrade.HasValue ||
-                NoScriptSite.IsPresent ||
-                CommentsOnSitePagesDisabled.IsPresent ||
+                NoScriptSite.HasValue ||
+                CommentsOnSitePagesDisabled.HasValue ||
                 DefaultLinkPermission.HasValue ||
                 DefaultSharingLinkType.HasValue ||
                 DisableAppViews.HasValue ||
-                DisableFlows.IsPresent ||
+                DisableFlows.HasValue ||
                 DisableSharingForNonOwners.IsPresent ||
                 LocaleId.HasValue ||
                 !string.IsNullOrEmpty(NewUrl) ||
                 RestrictedToGeo.HasValue ||
-                SocialBarOnSitePagesDisabled.IsPresent;
+                SocialBarOnSitePagesDisabled.HasValue;
     }
 }
 #endif
