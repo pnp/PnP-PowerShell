@@ -45,6 +45,12 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false, HelpMessage = "GUID of the SharePoint Site Design which should be applied when a site joins the hub site")]
         public GuidPipeBind SiteDesignId;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter HideNameInNavigation;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter RequiresJoinApproval;
+
         protected override void ExecuteCmdlet()
         {
             var hubSiteProperties = Identity.GetHubSite(Tenant);
@@ -64,6 +70,14 @@ namespace SharePointPnP.PowerShell.Commands.Admin
             if (MyInvocation.BoundParameters.ContainsKey("SiteDesignId"))
             {
                 hubSiteProperties.SiteDesignId = SiteDesignId.Id;
+            }
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(HideNameInNavigation)))
+            {
+                hubSiteProperties.HideNameInNavigation = HideNameInNavigation.ToBool();
+            }
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(RequiresJoinApproval)))
+            {
+                hubSiteProperties.RequiresJoinApproval = RequiresJoinApproval.ToBool();
             }
             hubSiteProperties.Update();
             ClientContext.ExecuteQueryRetry();
