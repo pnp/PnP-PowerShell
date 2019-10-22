@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Fixes issue where site design was not being applied when using New-PnPSite
 - Fixed incorrect usage of SwitchParameter in Set-PnPSite cmdlet
-
+- Fixed issue when connecting to single level domain URLs
 ### Contributors
 
 - Gautam Sheth [gautamdsheth]
