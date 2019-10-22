@@ -130,7 +130,7 @@ namespace SharePointPnP.PowerShell.Commands
                 {
                     creationInformation.HubSiteId = HubSiteId.Id;
                 }
-                if (ParameterSetName == "CommunicationCustomInDesign")
+                if (ParameterSetName == ParameterSet_COMMUNICATIONCUSTOMDESIGN)
                 {
                     creationInformation.SiteDesignId = _communicationSiteParameters.SiteDesignId.Id;
                 }
