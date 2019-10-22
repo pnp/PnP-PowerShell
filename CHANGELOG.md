@@ -9,12 +9,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added additional properties to Set-PnPHubSite
 - Added Get-PnPHubSiteChild cmdlet to list all child sites of a hubsite
 
 ### Changed
 
 ### Contributors
 
+- Gautam Sheth [gautamdsheth]
 - Koen Zomers [KoenZomers]
 
 ## [3.14.1910.1]
