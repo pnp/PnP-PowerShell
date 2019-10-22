@@ -2490,7 +2490,7 @@
             <param name="pageTransformationInformation">Information about the page to transform</param>
             <returns>The path to the created modern page</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.SwapPages(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation,SharePointPnP.Modernization.Framework.Entities.ListItemPermission)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.SwapPages(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation)">
             <summary>
             Performs the logic needed to swap a genered Migrated_Page.aspx to Page.aspx and then Page.aspx to Old_Page.aspx
             </summary>
@@ -4264,6 +4264,13 @@
             </summary>
             <param name="item">Page list item</param>
             <returns>Last modified by user/account</returns>
+        </member>
+        <member name="M:Microsoft.SharePoint.Client.ListItemExtensions.LastPublishedDateTime(Microsoft.SharePoint.Client.ListItem)">
+            <summary>
+            Get's the blog last published date time
+            </summary>
+            <param name="item">Page list item</param>
+            <returns>DateTime of the last modification</returns>
         </member>
         <member name="M:Microsoft.SharePoint.Client.ListItemExtensions.PageLayoutFile(Microsoft.SharePoint.Client.ListItem)">
             <summary>
