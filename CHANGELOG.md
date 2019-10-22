@@ -14,10 +14,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Fixes issue where site design was not being applied when using New-PnPSite
+
 ### Contributors
 
 - Gautam Sheth [gautamdsheth]
 - Koen Zomers [KoenZomers]
+- Laurens Hoogendoorn [laurens1984]
 
 ## [3.14.1910.1]
 
