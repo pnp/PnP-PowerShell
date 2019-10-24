@@ -9,8 +9,30 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added additional properties to Set-PnPHubSite
+- Added Get-PnPHubSiteChild cmdlet to list all child sites of a hubsite
+
+### Changed
+
+- Fixes issue where site design was not being applied when using New-PnPSite
+- Fixed incorrect usage of SwitchParameter in Set-PnPSite cmdlet
+- Fixed issue when connecting to single level domain URLs
+- Disabled TimeZone as mandatory parameter for New-PnPTenantSite when using an on-premises version of PnP PowerShell
+
+### Contributors
+
+- Gautam Sheth [gautamdsheth]
+- Koen Zomers [KoenZomers]
+- Laurens Hoogendoorn [laurens1984]
+- Jens Otto Hatlevold [jensotto]
+
+## [3.14.1910.1]
+
+### Added
+
 - ConvertTo-PnPClientSidePage: Added support for logging to console via `-LogType Console`
 - Copy-PnPFile: Fixes (#2300)
+- ConvertTo-PnPClientSidePage: Added support for controlling the target page name is any cross site transformation (so wiki, web part, blog in addition the already existing option for publishing pages) via the `-TargetPageName` parameter
 
 ### Changed
 
@@ -29,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Several documentation fixes
 - Add-PnPClientSideWebPart now also works for SP2019
 - Added -List parameter to Get-PnPFolder to retrieve all folders in a list
 - Added owner paramter to New-PnPSite when create Communications site
@@ -39,11 +62,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Aleksandr SaPozhkov [shurick81]
 - Garry Trinder [garrytrinder]
 - Koen Zomers [KoenZomers]
 - Gautam Sheth [gautamdsheth]
 - Giacomo Pozzoni [jackpoz]
 - Paul Bullock [pkbullock]
+- Andres Mariano Gorzelany [get-itips]
 
 ## [3.13.1909.0]
 

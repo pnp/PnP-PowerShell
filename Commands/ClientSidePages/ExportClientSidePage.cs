@@ -72,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         private void ExtractTemplate(string dirName, string fileName, ExtractConfiguration configuration)
         {
             var outputTemplate = new ProvisioningTemplate();
-            outputTemplate.Id = Guid.NewGuid().ToString("N");
+            outputTemplate.Id = $"TEMPLATE-{Guid.NewGuid():N}".ToUpper();
             var helper = new OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers.Utilities.ClientSidePageContentsHelper();
             ProvisioningTemplateCreationInformation ci = null;
             if (configuration != null)

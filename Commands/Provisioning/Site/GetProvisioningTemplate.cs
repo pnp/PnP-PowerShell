@@ -358,6 +358,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
 
                 WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = percentage });
+                WriteProgress(new ProgressRecord(1, " ", " ") { RecordType = ProgressRecordType.Completed });
             };
             creationInformation.MessagesDelegate = (message, type) =>
             {
