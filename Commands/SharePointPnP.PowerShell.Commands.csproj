@@ -664,8 +664,10 @@
     <Compile Include="RecordsManagement\GetInPlaceRecordsManagement.cs" />
     <Compile Include="RecordsManagement\SetListRecordDeclaration.cs" />
     <Compile Include="Search\GetSearchCrawlLog.cs" />
+    <Compile Include="Search\GetSearchSettings.cs" />
     <Compile Include="Search\SetSearchSettings.cs" />
     <Compile Include="Enums\SearchSettingsScope.cs" />
+    <Compile Include="Search\ExportSearchHistory.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignTask.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignRunStatus.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignRun.cs" />

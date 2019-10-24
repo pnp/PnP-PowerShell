@@ -9,27 +9,58 @@ namespace SharePointPnP.PowerShell.Commands.Search
     [Cmdlet(VerbsCommon.Set, "PnPSearchSettings")]
     [CmdletHelp("Sets search settings for a site",
         Category = CmdletHelpCategory.Search, SupportedPlatform = CmdletSupportedPlatform.Online)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPSearchSettings -SearchBoxInNavBar Hidden -Scope Site",
+        Remarks = "Hide the suite bar search box on all pages in the site collection",
+        SortOrder = 1)]
+
+    [CmdletExample(
+        Code = @"PS:> Set-PnPSearchSettings -SearchBoxInNavBar Hidden -Scope Web",
+        Remarks = "Hide the suite bar search box on all pages in the current site",
+        SortOrder = 2)]
+
+    [CmdletExample(
+        Code = @"PS:> Set-PnPSearchSettings -SearchPageUrl ""https://contoso.sharepoint.com/sites/mysearch/SitePages/search.aspx""",
+        Remarks = "Redirect the suite bar search box in the site to a custom URL",
+        SortOrder = 3)]
+
+    [CmdletExample(
+        Code = @"PS:> Set-PnPSearchSettings -SearchPageUrl ""https://contoso.sharepoint.com/sites/mysearch/SitePages/search.aspx"" -Scope Site",
+        Remarks = "Redirect classic search to a custom URL",
+        SortOrder = 4)]
+
+    [CmdletExample(
+        Code = @"PS:> Set-PnPSearchSettings -SearchScope Tenant",
+        Remarks = "Set default behavior of the suite bar search box to show tenant wide results instead of site or hub scoped results",
+        SortOrder = 5)]
+
+    [CmdletExample(
+        Code = @"PS:> Set-PnPSearchSettings -SearchScope Hub",
+        Remarks = "Set default behavior of the suite bar search box to show hub results instead of site results on an associated hub site",
+        SortOrder = 6)]
 
     public class SetSearchSettings : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public SearchBoxInNavBarType? SearchBoxInNavBar = SearchBoxInNavBarType.AllPages;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets,
+            HelpMessage = "Set the scope of which the suite bar search box shows. Possible values: Inherit, AllPages, ModernOnly, Hidden")]
+        public SearchBoxInNavBarType? SearchBoxInNavBar;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets,
+            HelpMessage = "Set the URL where the search box should redirect to.")]
         public string SearchPageUrl;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public SearchScopeType SearchScope = SearchScopeType.DefaultScope;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets,
+            HelpMessage = "Set the search scope of the suite bar search box. Possible values: DefaultScope, Tenant, Hub, Site")]
+        public SearchScopeType? SearchScope;
 
-        [Parameter(Mandatory = true, HelpMessage = @"Scope to apply the setting")]
-        public SearchSettingsScope Scope = SearchSettingsScope.Site;
+        [Parameter(Mandatory = true, HelpMessage = @"Scope to apply the setting to. Possible values: Web (default), Site\r\n\r\nFor a root site, the scope does not matter.")]
+        public SearchSettingsScope Scope = SearchSettingsScope.Web;
 
         protected override void ExecuteCmdlet()
         {
+            ClientContext.Web.EnsureProperty(w => w.SearchScope);
             if (this.Scope == SearchSettingsScope.Site)
             {
-                ClientContext.Site.RootWeb.EnsureProperty(w => w.SearchScope);
-
                 if (this.SearchBoxInNavBar.HasValue)
                 {
                     ClientContext.Site.SearchBoxInNavBar = this.SearchBoxInNavBar.Value;
@@ -37,11 +68,10 @@ namespace SharePointPnP.PowerShell.Commands.Search
                 if (!string.IsNullOrWhiteSpace(SearchPageUrl))
                 {
                     ClientContext.Web.SetSiteCollectionSearchCenterUrl(SearchPageUrl);
-                    ClientContext.Web.Update();
                 }
-                if (ClientContext.Site.RootWeb.SearchScope != SearchScope)
+                if (SearchScope.HasValue && ClientContext.Site.RootWeb.SearchScope != SearchScope.Value)
                 {
-                    ClientContext.Site.RootWeb.SearchScope = SearchScope;
+                    ClientContext.Site.RootWeb.SearchScope = SearchScope.Value;
                     ClientContext.Site.RootWeb.Update();
                 }
             }
@@ -50,17 +80,15 @@ namespace SharePointPnP.PowerShell.Commands.Search
                 if (this.SearchBoxInNavBar.HasValue)
                 {
                     ClientContext.Web.SearchBoxInNavBar = this.SearchBoxInNavBar.Value;
-                    ClientContext.Web.Update();
                 }
                 if (!string.IsNullOrWhiteSpace(SearchPageUrl))
                 {
                     ClientContext.Web.SetWebSearchCenterUrl(SearchPageUrl);
                     ClientContext.Web.Update();
-                }
-                ClientContext.Web.EnsureProperty(w => w.SearchScope);
-                if (ClientContext.Web.SearchScope != SearchScope)
+                }                
+                if (SearchScope.HasValue && ClientContext.Web.SearchScope != SearchScope.Value)
                 {
-                    ClientContext.Web.SearchScope = SearchScope;
+                    ClientContext.Web.SearchScope = SearchScope.Value;
                     ClientContext.Web.Update();
                 }
             }
