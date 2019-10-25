@@ -187,14 +187,14 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         public List<string> ListsToExtract;
 
         [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
-        public ProvisioningConfigurationPipeBind Configuration;
+        public ExtractConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()
         {
             ExtractConfiguration extractConfiguration = null;
             if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
             {
-                extractConfiguration = OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration.ExtractConfiguration.FromString(Configuration.GetContents(SessionState.Path.CurrentFileSystemLocation.Path));
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
             }
 #if !SP2013
             if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)

@@ -34,14 +34,14 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
-        public ProvisioningConfigurationPipeBind Configuration;
+        public ExtractConfigurationPipeBind Configuration;
 
         protected override void ProcessRecord()
         {
             ExtractConfiguration extractConfiguration = null;
             if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
             {
-                extractConfiguration = OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration.ExtractConfiguration.FromString(Configuration.GetContents(SessionState.Path.CurrentFileSystemLocation.Path));
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
             }
 
             if (!string.IsNullOrEmpty(Out))

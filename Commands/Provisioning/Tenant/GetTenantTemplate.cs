@@ -47,7 +47,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 
         [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.", ParameterSetName = PARAMETERSET_ASFILE)]
         [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.", ParameterSetName = PARAMETERSET_ASOBJECT)]
-        public ProvisioningConfigurationPipeBind Configuration;
+        public ExtractConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()
         {
@@ -55,7 +55,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             ExtractConfiguration extractConfiguration = null;
             if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
             {
-                extractConfiguration = OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration.ExtractConfiguration.FromString(Configuration.GetContents(SessionState.Path.CurrentFileSystemLocation.Path));
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
                 if(!string.IsNullOrEmpty(SiteUrl))
                 {
                     if(extractConfiguration.Tenant.Sequence == null)
