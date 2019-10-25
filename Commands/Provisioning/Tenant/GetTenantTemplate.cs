@@ -1,101 +1,116 @@
 ﻿#if !ONPREMISES
 using System;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
-using System.Collections;
-using SharePointPnP.PowerShell.Commands.Utilities;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
 using SharePointPnP.PowerShell.Commands.Base;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Generates a provisioning tenant template from a site",
+    [CmdletHelp("Generates a provisioning tenant template from a site. If the site is a hubsite any connected site will be included.",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-       Code = @"PS:> Get-PnPTemplateTemplate -Out template.pnp",
-       Remarks = "Extracts a provisioning template in Office Open XML from the current web.",
+       Code = @"PS:> Get-PnPTenantTemplate -Out tenanttemplate.xml",
+       Remarks = "Extracts a tenant template",
        SortOrder = 1)]
     public class GetTenantTemplate : PnPAdminCmdlet
     {
+        const string PARAMETERSET_ASFILE = "Extract a template to a file";
+        const string PARAMETERSET_ASOBJECT = "Extract a template as an object";
+
         private ProgressRecord mainProgressRecord = new ProgressRecord(0, "Processing", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ASOBJECT)]
         public string SiteUrl;
 
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path")]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path", ParameterSetName = PARAMETERSET_ASFILE)]
         public string Out;
 
-        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.")]
+        [Parameter(Mandatory = false, HelpMessage = "Overwrites the output file if it exists.", ParameterSetName = PARAMETERSET_ASFILE)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "Returns the template as an in-memory object, which is an instance of the ProvisioningTemplate type of the PnP Core Component. It cannot be used together with the -Out parameter.")]
-        public SwitchParameter OutputInstance;
+        [Parameter(Mandatory = true, HelpMessage = "Returns the template as an in-memory object, which is an instance of the ProvisioningHierarchy type of the PnP Core Component. It cannot be used together with the -Out parameter.", ParameterSetName = PARAMETERSET_ASOBJECT)]
+        public SwitchParameter AsInstance;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.", ParameterSetName = PARAMETERSET_ASFILE)]
+        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.", ParameterSetName = PARAMETERSET_ASOBJECT)]
         public ProvisioningConfigurationPipeBind Configuration;
 
         protected override void ExecuteCmdlet()
         {
-            using (var siteContext = Tenant.Context.Clone(SiteUrl))
-            {
-                if (siteContext.Web.IsSubSite())
-                {
-                    WriteError(new ErrorRecord(new ArgumentException("You can only run this cmdlet on a root site"), "NOTROOTSITE", ErrorCategory.InvalidType, this));
-                    return;
-                }
-                siteContext.Web.EnsureProperties(w => w.WebTemplate, w => w.Configuration);
-                if (siteContext.Web.WebTemplate != "GROUP" && siteContext.Web.WebTemplate != "SITEPAGEPUBLISHING")
-                {
-                    WriteError(new ErrorRecord(new ArgumentException("You can only run this cmdlet on a Team Site (GROUP#0) or a Communication Site (SITEPAGEPUBLSHING#0) site"), "SITECANNOTBECLASSIC", ErrorCategory.InvalidType, this));
-                    return;
-                }
-            }
+            
             ExtractConfiguration extractConfiguration = null;
             if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
             {
                 extractConfiguration = OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration.ExtractConfiguration.FromString(Configuration.GetContents(SessionState.Path.CurrentFileSystemLocation.Path));
+                if(!string.IsNullOrEmpty(SiteUrl))
+                {
+                    if(extractConfiguration.Tenant.Sequence == null)
+                    {
+                        extractConfiguration.Tenant.Sequence = new OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration.Tenant.Sequence.ExtractSequenceConfiguration();
+                    }
+                    extractConfiguration.Tenant.Sequence.SiteUrls.Add(SiteUrl);
+                }
             }
 
-
-            if (!string.IsNullOrEmpty(Out))
+            if (ParameterSetName == PARAMETERSET_ASFILE)
             {
+                ProvisioningHierarchy tenantTemplate = null;
+
                 if (!Path.IsPathRooted(Out))
                 {
                     Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
                 }
+                if(Out.ToLower().EndsWith(".pnp"))
+                {
+                    WriteWarning("This cmdlet does not save a tenant template as a PnP file.");
+                }
+                var fileInfo = new FileInfo(Out);
+                var fileSystemConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+
+                extractConfiguration.FileConnector = fileSystemConnector;
+
+                var proceed = false;
                 if (File.Exists(Out))
                 {
                     if (Force || ShouldContinue(string.Format(Resources.File0ExistsOverwrite, Out), Resources.Confirm))
                     {
-                        ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
+                        proceed = true;
                     }
                 }
                 else
                 {
-                    ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
+                    proceed = true;
+                }
+
+                if (proceed)
+                {
+                    tenantTemplate = ExtractTemplate(extractConfiguration);
+
+                    XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(fileInfo.DirectoryName, "");
+                    provider.SaveAs(tenantTemplate, Out);
                 }
             }
             else
             {
-                ExtractTemplate(SessionState.Path.CurrentFileSystemLocation.Path, null, extractConfiguration);
+                WriteObject(ExtractTemplate(extractConfiguration));
             }
         }
 
-        private void ExtractTemplate(string path, string packageName, ExtractConfiguration configuration)
+        private ProvisioningHierarchy ExtractTemplate(ExtractConfiguration configuration)
         {
             configuration.ProgressAction = (message, step, total) =>
             {
@@ -155,10 +170,62 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                         }
                 }
             };
-            var tenantTemplate = Tenant.GetTenantTemplate(SiteUrl, configuration);
-            XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(path, "");
-            provider.SaveAs(tenantTemplate, Path.Combine(path, packageName));
+            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
+            {
+                // Get Azure AD Token
+                if (AccessToken != null)
+                {
+                    // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                    return Task.FromResult(AccessToken);
+                }
+                else if (SPOnlineConnection.CurrentConnection.PSCredential != null)
+                {
+                    // Using normal credentials
+                    return Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                }
+                else
+                {
+                    // No token...
+                    return null;
+                }
+            }))
+            {
+                return Tenant.GetTenantTemplate(configuration);
+            }
+        }
+
+        private string AccessToken
+        {
+            get
+            {
+                if (SPOnlineConnection.AuthenticationResult != null)
+                {
+                    if (SPOnlineConnection.AuthenticationResult.ExpiresOn < DateTimeOffset.Now)
+                    {
+                        WriteWarning(Properties.Resources.MicrosoftGraphOAuthAccessTokenExpired);
+                        SPOnlineConnection.AuthenticationResult = null;
+                        return null;
+                    }
+                    else
+                    {
+#if !NETSTANDARD2_0
+                        return (SPOnlineConnection.AuthenticationResult.Token);
+#else
+                        return SPOnlineConnection.AuthenticationResult.AccessToken;
+#endif
+                    }
+                }
+                else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)
+                {
+                    return SPOnlineConnection.CurrentConnection.AccessToken;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
     }
+
 }
 #endif
