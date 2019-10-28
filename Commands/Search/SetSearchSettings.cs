@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Category = CmdletHelpCategory.Search, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Set-PnPSearchSettings -SearchBoxInNavBar Hidden -Scope Site",
-        Remarks = "Hide the suite bar search box on all pages in the site collection",
+        Remarks = "Hide the suite bar search box on all pages and sites in the site collection",
         SortOrder = 1)]
 
     [CmdletExample(
