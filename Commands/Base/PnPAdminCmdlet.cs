@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Enums;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 

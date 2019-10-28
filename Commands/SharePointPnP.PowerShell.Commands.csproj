@@ -585,7 +585,7 @@
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
     <Compile Include="Base\PipeBinds\AlertPipeBind.cs" />
-    <Compile Include="Base\PipeBinds\ProvisioningConfigurationPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ExtractConfigurationPipeBind.cs" />
     <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
@@ -646,6 +646,7 @@
     <Compile Include="Principals\AddAlert.cs" />
     <Compile Include="Provisioning\Site\ExportListToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ApplyTenantTemplate.cs" />
+    <Compile Include="Provisioning\Tenant\GetTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ReadTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\SaveTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\TestTenantTemplate.cs" />
