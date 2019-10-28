@@ -13,7 +13,6 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Remarks = "Retrieve search settings for the site",
         SortOrder = 1)]
 
-   
     public class GetSearchSettings : PnPWebCmdlet
     {
         protected override void ExecuteCmdlet()
@@ -23,14 +22,13 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
             string siteUrl = ClientContext.Web.GetSiteCollectionSearchCenterUrl();
             string webUrl = ClientContext.Web.GetWebSearchCenterUrl();
-            ClientContext.ExecuteQueryRetry();
 
             PSObject res = new PSObject();
             res.Properties.Add(new PSNoteProperty("Classic Search Center URL", siteUrl));
             res.Properties.Add(new PSNoteProperty("Redirect search URL", webUrl));
             res.Properties.Add(new PSNoteProperty("Site Search Scope", ClientContext.Web.SearchScope));
-            res.Properties.Add(new PSNoteProperty("Site collection search box visibility", ClientContext.Web.SearchBoxInNavBar));
-            res.Properties.Add(new PSNoteProperty("Site search box visibility", ClientContext.Site.SearchBoxInNavBar));
+            res.Properties.Add(new PSNoteProperty("Site collection search box visibility", ClientContext.Site.SearchBoxInNavBar));
+            res.Properties.Add(new PSNoteProperty("Site search box visibility", ClientContext.Web.SearchBoxInNavBar));
             WriteObject(res);
         }
     }
