@@ -112,14 +112,14 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 
         private ProvisioningHierarchy ExtractTemplate(ExtractConfiguration configuration)
         {
-            configuration.ProgressAction = (message, step, total) =>
+            configuration.ProgressDelegate = (message, step, total) =>
             {
                 var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
 
                 WriteProgress(new ProgressRecord(0, $"Extracting Tenant Template", message) { PercentComplete = percentage });
                 WriteProgress(new ProgressRecord(1, " ", " ") { RecordType = ProgressRecordType.Completed });
             };
-            configuration.MessageAction = (message, type) =>
+            configuration.MessagesDelegate = (message, type) =>
             {
                 switch (type)
                 {
