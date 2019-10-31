@@ -12,7 +12,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate")]
-    [Alias("Read-PnPProvisioningHierarchy")]
     [CmdletHelp("Loads/Reads a PnP tenant template from the file system and returns an in-memory instance of this template.",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -29,11 +28,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "read-pnpprovisioninghierarchy")
-            {
-                WriteWarning("Read-PnPProvisioningHierarchy has been deprecated. Use Read-PnPTenantTemplate instead.");
-            }
-
             if (!System.IO.Path.IsPathRooted(Path))
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);

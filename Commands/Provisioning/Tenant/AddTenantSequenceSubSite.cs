@@ -8,7 +8,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantSequenceSubSite", SupportsShouldProcess = true)]
-    [Alias("Add-PnPPnPProvisioningSubSite")]
     [CmdletHelp("Adds a tenant sequence sub site object to a tenant sequence site object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -25,11 +24,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "add-pnpprovisioningsubsite")
-            {
-                WriteWarning("Add-PnPProvisioningSubSite has been deprecated. Use Add-PnPTenantSequenceSubSite instead.");
-            }
-
             if (Site.Sites.Cast<TeamNoGroupSubSite>().FirstOrDefault(s => s.Url == SubSite.Url) == null)
             {
                 Site.Sites.Add(SubSite);

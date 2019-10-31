@@ -18,11 +18,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
     public class AddProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The template to add to the tenant template")]
-        [Alias("Template")]
         public ProvisioningTemplate SiteTemplate;
 
         [Parameter(Mandatory = true, HelpMessage = "The tenant template to add the template to", ValueFromPipeline = true)]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy TenantTemplate;
 
         protected override void ProcessRecord()

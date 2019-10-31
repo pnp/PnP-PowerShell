@@ -48,7 +48,6 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         public string Path;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OBJECT)]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy Template;
 
         [Parameter(Mandatory = false)]

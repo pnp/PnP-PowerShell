@@ -15,7 +15,6 @@ using System.Security.Policy;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsData.Save, "PnPTenantTemplate")]
-    [Alias("Save-PnPProvisioningHierarchy")]
     [CmdletHelp("Saves a PnP provisioning hierarchy to the file system",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -25,7 +24,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
     public class SaveTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Allows you to provide an in-memory instance of a Tenant Template. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy Template;
 
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
@@ -36,10 +34,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "save-pnpprovisioninghierarchy")
-            {
-                WriteWarning("Save-PnPProvisioningHierarchy has been deprecated. Use Save-PnPTenantTemplate instead.");
-            }
             // Determine the output file name and path
             string outFileName = Path.GetFileName(Out);
 

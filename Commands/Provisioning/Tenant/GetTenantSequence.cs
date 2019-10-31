@@ -8,7 +8,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantSequence", SupportsShouldProcess = true)]
-    [Alias("Get-PnPProvisioningSequence")]
     [CmdletHelp("Returns one ore more provisioning sequence object(s) from a tenant template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
@@ -28,11 +27,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public ProvisioningSequencePipeBind Identity;
         protected override void ProcessRecord()
         {
-
-            if (MyInvocation.InvocationName.ToLower() == "get-pnpprovisioningsequence")
-            {
-                WriteWarning("Get-PnPProvisioningSequence has been deprecated. Use Get-PnPTenantSequence instead.");
-            }
             if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
                 WriteObject(Template.Sequences, true);
