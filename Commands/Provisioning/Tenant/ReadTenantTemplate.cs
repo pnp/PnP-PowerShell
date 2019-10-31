@@ -38,10 +38,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             {
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
-            WriteObject(LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions));
+            WriteObject(LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions, (e) =>
+            {
+                WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+            }));
         }
 
-        internal static ProvisioningHierarchy LoadProvisioningHierarchyFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions)
+        internal static ProvisioningHierarchy LoadProvisioningHierarchyFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
             // Prepare the File Connector
             string templateFileName = System.IO.Path.GetFileName(templatePath);
@@ -81,12 +84,28 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             else
             {
                 provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
-            } 
+            }
 
-            ProvisioningHierarchy provisioningHierarchy = provider.GetHierarchy(templateFileName);
-            provisioningHierarchy.Connector = provider.Connector;
-            // Return the result
-            return provisioningHierarchy;
+            try
+            {
+                ProvisioningHierarchy provisioningHierarchy = provider.GetHierarchy(templateFileName);
+                provisioningHierarchy.Connector = provider.Connector;
+                return provisioningHierarchy;
+            }
+            catch (ApplicationException ex)
+            {
+                if(ex.InnerException is AggregateException)
+                {
+                    if (exceptionHandler != null)
+                    {
+                        foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
+                        {
+                            exceptionHandler(exception);
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }

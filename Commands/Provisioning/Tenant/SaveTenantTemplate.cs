@@ -109,7 +109,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         internal static void ProcessFiles(ProvisioningHierarchy tenantTemplate, string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector, Action<string> progress)
         {
-            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null);
+            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null, null);
             if (tenantTemplate.Tenant?.AppCatalog != null)
             {
                 foreach (var app in tenantTemplate.Tenant.AppCatalog.Packages)
@@ -136,7 +136,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             }
             foreach (var template in tenantTemplate.Templates)
             {
-                if(template.WebSettings != null && !String.IsNullOrEmpty(template.WebSettings.SiteLogo))
+                if (template.WebSettings != null && !String.IsNullOrEmpty(template.WebSettings.SiteLogo))
                 {
                     // is it a file?
                     var isFile = false;
@@ -164,16 +164,16 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 }
                 if (template.Lists.Any())
                 {
-                    foreach(var list in template.Lists)
+                    foreach (var list in template.Lists)
                     {
-                        if(list.DataRows.Any())
+                        if (list.DataRows.Any())
                         {
-                            foreach(var dataRow in list.DataRows)
+                            foreach (var dataRow in list.DataRows)
                             {
-                                if(dataRow.Attachments.Any())
+                                if (dataRow.Attachments.Any())
                                 {
                                     progress("List attachments");
-                                    foreach(var attachment in dataRow.Attachments)
+                                    foreach (var attachment in dataRow.Attachments)
                                     {
                                         AddFile(attachment.Src, templateFile, fileSystemConnector, connector);
                                     }
