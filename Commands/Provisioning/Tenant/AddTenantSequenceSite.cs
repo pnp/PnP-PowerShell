@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Add-PnPTenantSequenceSite -Site $myteamsite -Sequence $mysequence",
-       Remarks = "Adds an existing site object to an existing hierarchy sequence",
+       Remarks = "Adds an existing site object to an existing template sequence",
         SortOrder = 1)]
     public class AddTenantSequenceSite : PSCmdlet
     {

@@ -12,11 +12,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Add-PnPTenantSequence -Template $mytemplate -Sequence $mysequence",
-       Remarks = "Adds an existing sequence object to an existing hierarchy object",
+       Remarks = "Adds an existing sequence object to an existing template object",
        SortOrder = 1)]
     [CmdletExample(
        Code = @"PS:> New-PnPTenantSequence -Id ""MySequence"" | Add-PnPTenantSequence -Template $template",
-       Remarks = "Creates a new instance of a provisioning sequence object and sets the Id to the value specified, then the sequence is added to an existing hierarchy object",
+       Remarks = "Creates a new instance of a provisioning sequence object and sets the Id to the value specified, then the sequence is added to an existing template object",
        SortOrder = 2)]
     public class AddTenantSequence : PSCmdlet
     {

@@ -44,7 +44,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning hierarchy.", ParameterSetName = ParameterSet_PATH)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the tenant template.", ParameterSetName = ParameterSet_PATH)]
         public string Path;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OBJECT)]
@@ -68,7 +68,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the hierarchy by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the tenant template by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Parameters;
 
         [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)", ParameterSetName = ParameterAttribute.AllParameterSets)]

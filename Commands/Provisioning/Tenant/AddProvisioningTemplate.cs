@@ -29,7 +29,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             {
                 TenantTemplate.Templates.Add(SiteTemplate);
             } else { 
-                WriteError(new ErrorRecord(new Exception($"Template with ID {SiteTemplate.Id} already exists in hierarchy"), "DUPLICATETEMPLATE", ErrorCategory.InvalidData, SiteTemplate));
+                WriteError(new ErrorRecord(new Exception($"Template with ID {SiteTemplate.Id} already exists in template"), "DUPLICATETEMPLATE", ErrorCategory.InvalidData, SiteTemplate));
             }
         }
     }

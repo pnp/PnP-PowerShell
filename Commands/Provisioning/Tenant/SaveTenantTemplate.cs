@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
     [CmdletHelp("Saves a PnP provisioning hierarchy to the file system",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Save-PnPTenantTemplate -Template $template -Out .\hierarchy.pnp",
+       Code = @"PS:> Save-PnPTenantTemplate -Template $template -Out .\tenanttemplate.pnp",
        Remarks = "Saves a PnP tenant template to the file system",
        SortOrder = 1)]
     public class SaveTenantTemplate : PSCmdlet
