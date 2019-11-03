@@ -15,17 +15,15 @@ using System.Security.Policy;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsData.Save, "PnPTenantTemplate")]
-    [Alias("Save-PnPProvisioningHierarchy")]
     [CmdletHelp("Saves a PnP provisioning hierarchy to the file system",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Save-PnPTenantTemplate -Template $template -Out .\hierarchy.pnp",
+       Code = @"PS:> Save-PnPTenantTemplate -Template $template -Out .\tenanttemplate.pnp",
        Remarks = "Saves a PnP tenant template to the file system",
        SortOrder = 1)]
     public class SaveTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Allows you to provide an in-memory instance of a Tenant Template. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy Template;
 
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
@@ -36,10 +34,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "save-pnpprovisioninghierarchy")
-            {
-                WriteWarning("Save-PnPProvisioningHierarchy has been deprecated. Use Save-PnPTenantTemplate instead.");
-            }
             // Determine the output file name and path
             string outFileName = Path.GetFileName(Out);
 
@@ -109,7 +103,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         internal static void ProcessFiles(ProvisioningHierarchy tenantTemplate, string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector, Action<string> progress)
         {
-            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null);
+            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null, null);
             if (tenantTemplate.Tenant?.AppCatalog != null)
             {
                 foreach (var app in tenantTemplate.Tenant.AppCatalog.Packages)
@@ -136,7 +130,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             }
             foreach (var template in tenantTemplate.Templates)
             {
-                if(template.WebSettings != null && !String.IsNullOrEmpty(template.WebSettings.SiteLogo))
+                if (template.WebSettings != null && !String.IsNullOrEmpty(template.WebSettings.SiteLogo))
                 {
                     // is it a file?
                     var isFile = false;
@@ -164,16 +158,16 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 }
                 if (template.Lists.Any())
                 {
-                    foreach(var list in template.Lists)
+                    foreach (var list in template.Lists)
                     {
-                        if(list.DataRows.Any())
+                        if (list.DataRows.Any())
                         {
-                            foreach(var dataRow in list.DataRows)
+                            foreach (var dataRow in list.DataRows)
                             {
-                                if(dataRow.Attachments.Any())
+                                if (dataRow.Attachments.Any())
                                 {
                                     progress("List attachments");
-                                    foreach(var attachment in dataRow.Attachments)
+                                    foreach (var attachment in dataRow.Attachments)
                                     {
                                         AddFile(attachment.Src, templateFile, fileSystemConnector, connector);
                                     }

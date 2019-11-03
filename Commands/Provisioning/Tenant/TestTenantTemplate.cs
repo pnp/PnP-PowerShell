@@ -9,7 +9,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsDiagnostic.Test, "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [Alias("Test-PnPProvisioningHierarchy")]
     [CmdletHelp("Tests a tenant template for invalid references",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
@@ -19,15 +18,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
     public class TestTenantTemplate : PnPCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The in-memory template to test", ParameterSetName = ParameterAttribute.AllParameterSets)]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy Template;
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.InvocationName.ToLower() == "test-pnpprovisioninghierarchy")
-            {
-                WriteWarning("Test-PnPProvisioningHierarchy has been deprecated. Use Test-PnPTenantTemplate instead.");
-            }
             List<string> issues = new List<string>();
             foreach(var sequence in Template.Sequences)
             {

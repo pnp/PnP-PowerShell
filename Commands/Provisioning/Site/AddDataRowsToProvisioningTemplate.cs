@@ -66,7 +66,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 
             var template = ReadProvisioningTemplate
                     .LoadProvisioningTemplateFromFile(Path,
-                    TemplateProviderExtensions);
+                    TemplateProviderExtensions, (e) =>
+                    {
+                        WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                    });
 
             if (template == null)
             {
