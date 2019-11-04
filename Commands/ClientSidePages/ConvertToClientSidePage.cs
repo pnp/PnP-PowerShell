@@ -69,6 +69,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""My post title"" -BlogPage -LogType Console -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
     Remarks = "Converts a blog page with a title starting with 'my post title' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
     SortOrder = 12)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target -UserMappingFile c:\\temp\user_mapping_file.csv",
+    Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locatios including using specific user mappings between the two environments.",
+    SortOrder = 13)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
@@ -174,6 +178,15 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
         public SPOnlineConnection TargetConnection = null;
+
+        [Parameter(Mandatory = false, HelpMessage = "Disables user mapping during transformation")]
+        public SwitchParameter SkipUserMapping;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies a user mapping file")]
+        public string UserMappingFile = "";
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies a LDAP connection string e.g. LDAP://OU=Users,DC=Contoso,DC=local")]
+        public string LDAPConnectionString = "";
 
         protected override void ExecuteCmdlet()
         {
@@ -381,6 +394,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
                     AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
+                    SkipUserMapping = this.SkipUserMapping,
+                    UserMappingFile = this.UserMappingFile,
+                    LDAPConnectionString = this.LDAPConnectionString
                 };
 
                 // Set mapping properties
@@ -435,6 +451,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
                     },
+                    SkipUserMapping = this.SkipUserMapping,
+                    UserMappingFile = this.UserMappingFile,
+                    LDAPConnectionString = this.LDAPConnectionString
                 };
 
                 // Set mapping properties
