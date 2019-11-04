@@ -16,7 +16,7 @@ configure the page transformation engine to use the community script editor. You
 - Using the needed switch in PnP PowerShell
 -->
 
-<PageTransformation xmlns="http://schemas.dev.office.com/PnP/2018/01/PageTransformationSchema" Version="1.0.1910.0">
+<PageTransformation xmlns="http://schemas.dev.office.com/PnP/2018/01/PageTransformationSchema" Version="1.0.1911.0">
     <!-- Information that applies to all web parts listed in this file -->
     <BaseWebPart>
       <Properties>
@@ -67,7 +67,7 @@ configure the page transformation engine to use the community script editor. You
           -->
           <Property Name="ImageUrl" Type="string" Functions="{ServerRelativeFileName} = ReturnCrossSiteRelativePath({ImageUrl});ImageLookup({ServerRelativeFileName});{FileName} = ReturnFileName({ImageUrl})"/>
           <Property Name="AlternativeText" Type="string"/>
-          <Property Name="Anchor" Type="string"/>
+          <Property Name="Anchor" Type="string" Functions="ImageAnchorUrlRewrite({Anchor},{ImageUrl},{ServerRelativeFileName})"/>
         </Properties>
         <Mappings>
           <Mapping Default="true" Name="default">
