@@ -179,8 +179,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
         public SPOnlineConnection TargetConnection = null;
 
-        [Parameter(Mandatory = false, HelpMessage = "Enables user mapping for SharePoint Online to SharePoint Online transformations")]
-        public SwitchParameter OnlineOnlyUserMapping;
+        [Parameter(Mandatory = false, HelpMessage = "Disables user mapping during transformation")]
+        public SwitchParameter SkipUserMapping;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies a user mapping file")]
         public string UserMappingFile = "";
@@ -394,7 +394,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
                     AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
-                    SPOToSPOUserMapping = this.OnlineOnlyUserMapping,
+                    SkipUserMapping = this.SkipUserMapping,
                     UserMappingFile = this.UserMappingFile,
                     LDAPConnectionString = this.LDAPConnectionString
                 };
@@ -451,7 +451,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
                     },
-                    SPOToSPOUserMapping = this.OnlineOnlyUserMapping,
+                    SkipUserMapping = this.SkipUserMapping,
                     UserMappingFile = this.UserMappingFile,
                     LDAPConnectionString = this.LDAPConnectionString
                 };
