@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Added additional properties to Set-PnPHubSite
 - Added Get-PnPHubSiteChild cmdlet to list all child sites of a hubsite
+- ConvertTo-PnPClientSidePage: Added support for user mapping via `-UserMappingFile, `-LDAPConnectionString` and `-SkipUserMapping` parameters  #2340
+- ConvertTo-PnPClientSidePage: Added support for defining the target folder of a transformed page via `-TargetPageFolder`
 
 ### Changed
 
@@ -26,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Koen Zomers [KoenZomers]
 - Laurens Hoogendoorn [laurens1984]
 - Jens Otto Hatlevold [jensotto]
+- Paul Bullock [pkbullock]
 
 ## [3.14.1910.1]
 
