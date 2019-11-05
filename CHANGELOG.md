@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Get-PnPHubSiteChild cmdlet to list all child sites of a hubsite
 - ConvertTo-PnPClientSidePage: Added support for user mapping via `-UserMappingFile, `-LDAPConnectionString` and `-SkipUserMapping` parameters  #2340
 - ConvertTo-PnPClientSidePage: Added support for defining the target folder of a transformed page via `-TargetPageFolder`
+- Added Get-PnPSearchSettings to retreive current search settings for a site
+- Added Set-PnPSearchSettings to set search related settings on a site
 
 ### Changed
 
