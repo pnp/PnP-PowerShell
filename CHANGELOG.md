@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added Request-PnPAccessToken to retrieve an OAuth2 access token using the password grant.
 - Added additional properties to Set-PnPHubSite
 - Added Get-PnPHubSiteChild cmdlet to list all child sites of a hubsite
 
