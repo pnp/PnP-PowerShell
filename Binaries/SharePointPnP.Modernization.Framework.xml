@@ -24,6 +24,26 @@
             Store the final URL for the asset that has been transferred
             </summary>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.ResolvedUser">
+            <summary>
+            Class used to cache a user that was resolved via EnsureUser
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.ResolvedUser.LoginName">
+            <summary>
+            Loginname of the user
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.ResolvedUser.Id">
+            <summary>
+            Id of the user
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis">
+            <summary>
+            Transformation analysis report
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.#ctor">
             <summary>
             Constructor for transformation report
@@ -31,12 +51,57 @@
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.SourcePage">
             <summary>
-            Source Page
+            Source page name
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.SourceSite">
+            <summary>
+            Source site
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.TargetPage">
+            <summary>
+            Target page name
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.TargetSite">
+            <summary>
+            Target site
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.ReportDate">
             <summary>
             Date report generated
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.BaseSourceUrl">
+            <summary>
+            Base source url
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.BaseTargetUrl">
+            <summary>
+            Base target url
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.TransformationDuration">
+            <summary>
+            Duration of the page tranformation
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.IsFirstAnalysis">
+            <summary>
+            Indication if this was the first transformation report added
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.PageId">
+            <summary>
+            ID used to group entries by transformed page
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.AssetsTransferred">
+            <summary>
+            Log entries for the transferred assets
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.Warnings">
@@ -64,6 +129,16 @@
             Logs that contain summary data for verbose logging
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.TransformationVerboseDetails">
+            <summary>
+            Logs that contain verbose details of this transformation
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis.TransformationSettings">
+            <summary>
+            List containting the applied transformation settings
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.UrlMapping">
             <summary>
             Url map entry
@@ -79,31 +154,158 @@
             Url replacement value
             </summary>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.UserEntity">
+            <summary>
+            Class to hold information about a given user
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UserEntity.Id">
+            <summary>
+            Id of the user
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UserEntity.Upn">
+            <summary>
+            Upn of the user
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UserEntity.Name">
+            <summary>
+            Name of the user
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UserEntity.Role">
+            <summary>
+            Role of the user
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UserEntity.LoginName">
+            <summary>
+            Loginname of the user
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Entities.UserMappingEntity">
+            <summary>
+            Class to hold a mapping between a user in the source site and a user in the target site
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UserMappingEntity.SourceUser">
+            <summary>
+            Source user reference
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.UserMappingEntity.TargetUser">
+            <summary>
+            Target user reference
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties">
             <summary>
             Entity to describe a web part on a wiki or webpart page called from web services
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.Type">
+            <summary>
+            Type of the web part
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.Id">
+            <summary>
+            Id of the web part
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.ControlId">
+            <summary>
+            Control id of the web part
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.Properties">
+            <summary>
+            Dictionary with web part properties
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.ZoneId">
+            <summary>
+            Zone id of the web part
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.TypeShort">
             <summary>
-            Shortened web part type name
+            Returns the shortened web part type name
             </summary>
-            <returns></returns>
+            <returns>Shortened web part type name</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartProperties.PropertiesAsStringObjectDictionary">
+            <summary>
+            Returns Dictionary with web part properties as string,object 
+            </summary>
+            <returns>Dictionary with web part properties as string,object</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity">
             <summary>
             Entity to describe a web part on a wiki or webpart page called from web services
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity.Type">
+            <summary>
+            Type of the web part
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity.Id">
+            <summary>
+            Id of the web part
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity.Properties">
+            <summary>
+            Dictionary with web part properties
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity.TypeShort">
             <summary>
-            Shortened web part type name
+            Returns the shortened web part type name
             </summary>
-            <returns></returns>
+            <returns>Shortened web part type name</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.WebServiceWebPartEntity.PropertiesAsStringObjectDictionary">
+            <summary>
+            Returns Dictionary with web part properties as string,object 
+            </summary>
+            <returns>Dictionary with web part properties as string,object</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.AudienceEntity">
             <summary>
-            Holds information about the defined audiences
+            Holds information about the defined audiences (used by modernization scanner)
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.AudienceEntity.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.AudienceEntity.GlobalAudiences">
+            <summary>
+            List of defined global audiences
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.AudienceEntity.SecurityGroups">
+            <summary>
+            List of security group based audiences
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.AudienceEntity.SharePointGroups">
+            <summary>
+            List of SharePoint group based audiences
             </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.ListItemPermission">
@@ -126,11 +328,76 @@
             Entity to describe a web part on a wiki or webpart page
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Type">
+            <summary>
+            Web part type
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Id">
+            <summary>
+            Web part id
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.ServerControlId">
+            <summary>
+            Web part server control id
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.ZoneId">
+            <summary>
+            Web part zone id
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Hidden">
+            <summary>
+            Is this a visible web part or not
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.IsClosed">
+            <summary>
+            Is this web part closed or not
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Title">
+            <summary>
+            Title of the web part
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Row">
+            <summary>
+            Web part position: row
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Column">
+            <summary>
+            Web part position: column
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Order">
+            <summary>
+             Web part position: order
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.ZoneIndex">
+            <summary>
+            Web part position: zone index
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Properties">
+            <summary>
+            Dictionary with web part properties
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.TypeShort">
             <summary>
-            Shortened web part type name
+            Returns the shortened web part type name
             </summary>
-            <returns></returns>
+            <returns>Shortened web part type name</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Entities.WebPartEntity.Json">
             <summary>
@@ -151,6 +418,11 @@
                 Modified to force onpremises support
                 
             </remarks>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Extensions.StringExtensions">
+            <summary>
+            Class holding extension methods on the System.string class
+            </summary>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.ContainsIgnoringCasing(System.String,System.String,System.StringComparison)">
             <summary>
@@ -199,6 +471,20 @@
             <param name="typeName"></param>
             <returns></returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.Replace(System.String,System.String,System.String,System.StringComparison)">
+            <summary>
+            Returns a new string in which all occurrences of a specified string in the current instance are replaced with another 
+            specified string according the type of search to use for the specified string.
+            Copied from https://stackoverflow.com/questions/6275980/string-replace-ignoring-case
+            </summary>
+            <param name="str">The string performing the replace method.</param>
+            <param name="oldValue">The string to be replaced.</param>
+            <param name="newValue">The string replace all occurrences of <paramref name="oldValue"/>. 
+            If value is equal to <c>null</c>, than all occurrences of <paramref name="oldValue"/> will be removed from the <paramref name="str"/>.</param>
+            <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
+            <returns>A string that is equivalent to the current string except that all instances of <paramref name="oldValue"/> are replaced with <paramref name="newValue"/>. 
+            If <paramref name="oldValue"/> is not found in the current instance, the method returns the current instance unchanged.</returns>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Pages.PublishingPageOnPremises">
             <summary>
             Analyzes a publishing page
@@ -223,6 +509,11 @@
             Analyses a publishing page
             </summary>
             <returns>Information about the analyzed publishing page</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Pages.WebPartPageOnPremises">
+            <summary>
+            Analyzes a web part page for SP2010 to SP2016 on-premises SharePoint
+            </summary>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPageOnPremises.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation)">
             <summary>
@@ -536,6 +827,7 @@
             <summary>
             Returns an the (static) string provided as input
             </summary>
+            <param name="staticString">Static string that will be returned</param>
             <returns>String provided as input</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.ToImageUrl(System.String)">
@@ -573,6 +865,39 @@
             <param name="image">A publishing image field value or a string containing a server relative image path</param>
             <returns>A formatted preview image url</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.ToAuthors(System.String)">
+            <summary>
+            Looks up user information for passed user id
+            </summary>
+            <param name="userId">The id (int) of a user</param>
+            <returns>A formatted json blob describing the user's details</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor">
+            <summary>
+            Function processor for publishing page transformation
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor.FieldType">
+            <summary>
+            Field types
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor.NameAttributeToken">
+            <summary>
+            Name token
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="page">Page to operate on</param>
+            <param name="sourceClientContext">Clientcontext of the source site</param>
+            <param name="targetClientContext">Clientcontext of the target site</param>
+            <param name="publishingPageTransformation">Publishing page layout mapping</param>
+            <param name="baseTransformationInformation">Page transformation information</param>
+            <param name="logObservers">Connected loggers</param>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor.ResolveFunctionToken(System.String,System.String)">
             <summary>
             Replaces instances of the NameAttributeToken with the provided PropertyName
@@ -581,16 +906,52 @@
             <param name="propertyName">The property to replace it with</param>
             <returns>The newly formatted function value.</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor.Process(System.String,System.String,SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor.FieldType)">
+            <summary>
+            Executes a function and returns results
+            </summary>
+            <param name="functions">Function to process</param>
+            <param name="propertyName">Field/property the function runs on</param>
+            <param name="propertyType">Type of the field/property the function will run on</param>
+            <returns>Function output</returns>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingLayoutTransformator">
             <summary>
             Specific layout transformator for the 'AutoDetect' layout option for publishing pages
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingLayoutTransformator.#ctor(OfficeDevPnP.Core.Pages.ClientSidePage,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingLayoutTransformator.#ctor(OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.Publishing.PageLayout,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Creates a layout transformator instance
             </summary>
             <param name="page">Client side page that will be receive the created layout</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingLayoutTransformator.Transform(System.Tuple{SharePointPnP.Modernization.Framework.Pages.PageLayout,System.Collections.Generic.List{SharePointPnP.Modernization.Framework.Entities.WebPartEntity}})">
+            <summary>
+            Builds the layout (sections) of the modern page
+            </summary>
+            <param name="pageData">Information about the source page</param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingMetadataTransformator">
+            <summary>
+            Class responsible for handling the metadata copying of publishing pages
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingMetadataTransformator.Transform">
+            <summary>
+            Process the metadata copying (as defined in the used page layout mapping)
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingPageHeaderTransformator">
+            <summary>
+            Class that will handle the configuration of the modern page header when transforming publishing pages
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingPageHeaderTransformator.TransformHeader(OfficeDevPnP.Core.Pages.ClientSidePage@)">
+            <summary>
+            Builds the header for the modern page
+            </summary>
+            <param name="targetPage">Modern page instance</param>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformationInformation">
             <summary>
@@ -1071,7 +1432,46 @@
         <member name="F:SharePointPnP.Modernization.Framework.Publishing.HeaderAlignment.Center">
             <remarks/>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.Section">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.Section.Row">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.Section.Emphasis">
+            <remarks/>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.BackgroundEmphasis">
+            <remarks/>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Publishing.BackgroundEmphasis.None">
+            <remarks/>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Publishing.BackgroundEmphasis.Neutral">
+            <remarks/>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Publishing.BackgroundEmphasis.Soft">
+            <remarks/>
+        </member>
+        <member name="F:SharePointPnP.Modernization.Framework.Publishing.BackgroundEmphasis.Strong">
+            <remarks/>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Publishing.SectionEmphasis">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.SectionEmphasis.Section">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.SectionEmphasis.VerticalColumnEmphasis">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.SectionEmphasis.VerticalColumnEmphasisSpecified">
+            <remarks/>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.PageLayout">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.SectionEmphasis">
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.Header">
@@ -1099,6 +1499,12 @@
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.PageLayoutTemplate">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.IncludeVerticalColumn">
+            <remarks/>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.IncludeVerticalColumnSpecified">
             <remarks/>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Publishing.PageLayout.PageHeader">
@@ -1148,6 +1554,11 @@
         </member>
         <member name="F:SharePointPnP.Modernization.Framework.Publishing.PageLayoutPageHeader.Custom">
             <remarks/>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor">
+            <summary>
+            Base class for function processors
+            </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionType">
             <summary>
@@ -1228,6 +1639,24 @@
             <summary>
             Type of the functions/selector class
             </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException">
+            <summary>
+            Exception class thrown when a SharePoint object (e.g. list) is not available at the target site
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException.#ctor(System.String)">
+            <summary>
+            Throws a NotAvailableAtTargetException message
+            </summary>
+            <param name="message">Error message</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException.#ctor(System.String,System.Exception)">
+            <summary>
+            Throws a NotAvailableAtTargetException message
+            </summary>
+            <param name="message">Error message</param>
+            <param name="innerException">Inner exception object</param>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Functions.BuiltIn">
             <summary>
@@ -1365,6 +1794,15 @@
             </summary>
             <param name="imageLink"></param>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ImageAnchorUrlRewrite(System.String,System.String,System.String)">
+            <summary>
+            Rewrite the image anchor tag url
+            </summary>
+            <param name="anchor">Original anchor tag fetched from the source image</param>
+            <param name="originalImageUrl">Original image url</param>
+            <param name="newImageUrl">New image url</param>
+            <returns>The url after url rewrite. If the anchor and original image url were the same then the anchor will be set to the new image url</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ExtractWebpartProperties(System.String)">
             <summary>
             Extracts the client side web part properties so they can be reused
@@ -1482,6 +1920,51 @@
             Base attribute to document a function or selector
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute.Description">
+            <summary>
+            Description of the function
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute.Example">
+            <summary>
+            Function example
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.FunctionDocumentationAttribute">
+            <summary>
+            Function documentation attribute class
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.SelectorDocumentationAttribute">
+            <summary>
+            Selector documentation attribute class
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute">
+            <summary>
+            Base parameter to document a function/selector parameter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute.Name">
+            <summary>
+            Name of the parameter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute.Description">
+            <summary>
+            Parameter description
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.InputDocumentationAttribute">
+            <summary>
+            Input parameter documentation attribute
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.OutputDocumentationAttribute">
+            <summary>
+            Output parameter documentation attribute
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor">
             <summary>
             Class that executes functions and selectors defined in the mapping 
@@ -1555,6 +2038,16 @@
             <remarks>
             If set to null or not set the default Error Message is returned.
             </remarks>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Telemetry.LogStrings">
+            <summary>
+            Class holding strings used in log messages
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Telemetry.ILogObserver">
+            <summary>
+            Interface that needs to be implemented by any logger
+            </summary>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.ILogObserver.Info(SharePointPnP.Modernization.Framework.Telemetry.LogEntry)">
             <summary>
@@ -1656,33 +2149,43 @@
             Specfies to the loggers that a specific entry has significance.
             </summary>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers">
+            <summary>
+            Class with extension methods that are used to help with logging
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers.ToYesNoString(System.Boolean)">
             <summary>
             Converts boolean value to Yes/No string
             </summary>
-            <param name="value"></param>
-            <returns></returns>
+            <param name="value">Boolean value</param>
+            <returns>Yes or No</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers.FormatAsFriendlyTitle(System.String)">
             <summary>
             Formats a string that has the format ThisIsAClassName and formats in a friendly way
             </summary>
-            <param name="value"></param>
-            <returns></returns>
+            <param name="value">string value</param>
+            <returns>Friendly string value</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers.DetailSettingsAsLogEntries(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation)">
             <summary>
             Use reflection to read the object properties and detail the values
             </summary>
             <param name="pti">PageTransformationInformation object</param>
-            <returns></returns>
+            <returns>List of log records</returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers.DisplaySharePointVersion(SharePointPnP.Modernization.Framework.Transform.SPVersion)">
             <summary>
             Display version for SharePoint
             </summary>
-            <param name="version"></param>
-            <returns></returns>
+            <param name="version">SharePoint version</param>
+            <returns>SharePoint version in string format</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Telemetry.LogLevel">
+            <summary>
+            Availabe logging levels
+            </summary>
         </member>
         <member name="F:SharePointPnP.Modernization.Framework.Telemetry.LogLevel.Debug">
             <summary>
@@ -1702,6 +2205,11 @@
         <member name="F:SharePointPnP.Modernization.Framework.Telemetry.LogLevel.Information">
             <summary>
             Information Log Level
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Telemetry.Observers.ConsoleObserver">
+            <summary>
+            Logger that logs to the console output
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "P:SharePointPnP.Modernization.Framework.Telemetry.Observers.ConsoleObserver.Logs" -->
@@ -1745,7 +2253,7 @@
             </summary>
             <param name="pageName">Id of the page</param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.ConsoleObserver.Write(System.String)">
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.ConsoleObserver.Write(System.String,System.ConsoleColor)">
             <summary>
             Cental method to output to console
             </summary>
@@ -1857,10 +2365,30 @@
             <param name="report"></param>
             <returns></returns>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Telemetry.PageTelemetry">
+            <summary>
+            Class handling telemetry
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.PageTelemetry.#ctor(System.String)">
             <summary>
             Instantiates the telemetry client
             </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.PageTelemetry.LogTransformationDone(System.TimeSpan,System.String,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation)">
+            <summary>
+            Sends a transformation done event
+            </summary>
+            <param name="duration">Duration of the page transformation</param>
+            <param name="pageType">Type of page that was transformed</param>
+            <param name="baseTransformationInformation">Information about the transformation</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.PageTelemetry.LogError(System.Exception,System.String)">
+            <summary>
+            Logs a page transformation error
+            </summary>
+            <param name="ex">Exception object</param>
+            <param name="location">Location that generated this error</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.PageTelemetry.Flush">
             <summary>
@@ -1967,6 +2495,13 @@
             </summary>
             <param name="baseTransformationInformation">Transformation Information</param>
             <remarks>Will disable feature if not supported</remarks>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.InitializeUserMapping(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation)">
+            <summary>
+            Loads the User Mapping Files
+            </summary>
+            <param name="baseTransformationInformation"></param>
+            <param name="sourceClientContext"></param>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.BaseTransform">
             <summary>
@@ -2075,6 +2610,11 @@
             Name for the transformed page
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.TargetPageFolder">
+            <summary>
+            Target page folder
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.KeepPageSpecificPermissions">
             <summary>
             Apply the item level page permissions on to the target page, defaults to true
@@ -2136,6 +2676,24 @@
             <summary>
             Url to an URL mapping file
             </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SkipUserMapping">
+            <summary>
+            Don't perform user mapping
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.UserMappingFile">
+            <summary>
+            User Mapping file
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.LDAPConnectionString">
+            <summary>
+            Searches for users within a specific LDAP Connection String, if not specified domain LDAP will be calculated
+            </summary>
+            <example>
+            LDAP://OU=Test,DC=ALPHADELTA,DC=LOCAL
+            </example>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.PageTitleOverride">
             <summary>
@@ -2435,6 +2993,16 @@
             If the page to be transformed is the web's home page then replace with stock modern home page instead of transforming it
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SetDefaultTargetPagePrefix">
+            <summary>
+            Set's default target page prefix
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation.SetDefaultSourcePagePrefix">
+            <summary>
+            Set's default source page prefix
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.PageTransformator">
             <summary>
             Transforms a classic wiki/webpart page into a modern client side page
@@ -2490,7 +3058,7 @@
             <param name="pageTransformationInformation">Information about the page to transform</param>
             <returns>The path to the created modern page</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.SwapPages(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.PageTransformator.SwapPages(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation,System.String)">
             <summary>
             Performs the logic needed to swap a genered Migrated_Page.aspx to Page.aspx and then Page.aspx to Old_Page.aspx
             </summary>
@@ -2787,6 +3355,11 @@
             <param name="quickLinksJsonProperties">Json properties blob for QuickLinks web part tailoring</param>
             <returns>Properties for highlighted content web part</returns>
         </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.SPVersion">
+            <summary>
+            Enum listing the SharePoint versions as used by the transformation engine
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.SummaryLinksHtmlTransformator">
             <summary>
             This class is used to rewrite the html coming out of the SummaryLinks web part
@@ -2823,6 +3396,142 @@
             <param name="input">String with tokens</param>
             <param name="webPartData">Web part information holding all possible tokens for this web part</param>
             <returns>A string with tokens replaced by actual values</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.UrlTransformator">
+            <summary>
+            Class responsible for transforming source page urls to target page urls via url rewriting
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UrlTransformator.#ctor(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="baseTransformationInformation">Page transformation information object</param>
+            <param name="sourceContext">ClientContext of the source page</param>
+            <param name="targetContext">ClientContext of the target page</param>
+            <param name="logObservers">Connected loggers</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UrlTransformator.Transform(System.String)">
+            <summary>
+            Rewrites the url inside the passed input string
+            </summary>
+            <param name="input">String to url rewrite</param>
+            <returns>Url rewritten string</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.UserTransformator">
+            <summary>
+            Class that handles the transformation of users 
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.UserTransformator.IsUserMappingSpecified">
+            <summary>
+            Determine if the user transforming according to mapped file
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.UserTransformator.ShouldMapUsers">
+            <summary>
+            Determines if we should attempt to map users
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.#ctor(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            User Transformator constructor
+            </summary>
+            <param name="baseTransformationInformation">Transformation configuration settings</param>
+            <param name="sourceContext">Source Context</param>
+            <param name="targetContext">Target Context</param>
+            <param name="logObservers">Connected loggers</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.RemapPrincipal(System.String)">
+            <summary>
+            Remap principal to target principal
+            </summary>
+            <param name="principal"></param>
+            <returns>Principal for the target site</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.RemapPrincipal(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.FieldUserValue)">
+            <summary>
+            Remap principal to target principal
+            </summary>
+            <param name="context">ClientContext of the source web</param>
+            <param name="userField">User field value object</param>
+            <returns>Mapped principal that works on the target site</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.IsExecutingTransformOnDomain">
+            <summary>
+            Determine if the transform is running on a computer on the domain
+            </summary>
+            <returns>True if the executing machine is domain joined</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.EnsureValidUserExists(System.String)">
+                    /// <summary>
+                    /// Gets a default UPN in the event that destination does not find user
+                    /// </summary>
+                    /// <returns></returns>
+                    internal string DefaultUPN()
+                    {
+                        // The current transforming user is the default user for the target
+                        using (var clonedTargetContext = _targetContext.Clone(_targetContext.Web.GetUrl()))
+                        {
+                            var user = clonedTargetContext.Web.CurrentUser;
+                            clonedTargetContext.Load(user);
+                            clonedTargetContext.ExecuteQueryRetry();
+                            
+                            // TODO: Consider caching
+                            return StripUserPrefixTokenAndDomain(user.LoginName);
+                        }
+                    }
+            <summary>
+            Ensures the current user exists on the target site
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.GetFriendlyComputerDomain">
+            <summary>
+            Gets the transform executing domain
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.GetLDAPConnectionString">
+            <summary>
+            Get LDAP Connection string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.SearchSourceDomainForUPN(SharePointPnP.Modernization.Framework.Transform.AccountType,System.String)">
+            <summary>
+            Search the source domain for a UPN
+            </summary>
+            <param name="accountType"></param>
+            <param name="samAccountName"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.GetProperty(System.DirectoryServices.SearchResult,System.String)">
+            <summary>
+            Get a property from resulting AD query
+            </summary>
+            <param name="searchResult"></param>
+            <param name="PropertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.ResolveFriendlyDomainToLdapDomain(System.String)">
+            <summary>
+            Resolves friendly domain name to Fully Qualified Domain Name
+            </summary>
+            <param name="friendlyDomainName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.UserTransformator.StripUserPrefixTokenAndDomain(System.String)">
+            <summary>
+            Strip User Prefix Token And Domain
+            </summary>
+            <param name="principal"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.AccountType">
+            <summary>
+            Simple class for value for account type
+            </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.WikiHtmlTransformator">
             <summary>
@@ -2906,6 +3615,15 @@
             <param name="sourceLibrary">Pages library instance</param>
             <returns>List of fields that need to be copied</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetPublishingContentTypeField(Microsoft.SharePoint.Client.List,System.String,System.String)">
+            <summary>
+            Get field information of a content type field
+            </summary>
+            <param name="pagesLibrary">Pages library list</param>
+            <param name="contentTypeId">ID of the content type</param>
+            <param name="fieldName">Name of the field to get information from</param>
+            <returns>FieldData object holding field information</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearFieldsToCopy">
             <summary>
             Clear the fields to copy cache
@@ -2933,10 +3651,87 @@
             <param name="resource">Key of the resource (e.g. $Resources:core,ScriptEditorWebPartDescription;) </param>
             <returns>Translated string</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetPageLayoutMapping(Microsoft.SharePoint.Client.ListItem)">
+            <summary>
+            Generate pagelayout mapping file for given publishing page
+            </summary>
+            <param name="page">Publishing page</param>
+            <returns>Page layout mapping model</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearAllCaches">
+            <summary>
+            Clear all the caches
+            </summary>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearSharePointVersions">
             <summary>
             Clears Cached SharePoint versions
             </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.MappedUsers">
+            <summary>
+            Mapped users
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetEnsuredUser(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Run and cache the output value of EnsureUser for a given user
+            </summary>
+            <param name="context">ClientContext to operate on</param>
+            <param name="userValue">User name of user to ensure</param>
+            <returns>ResolvedUser instance holding information about the ensured user</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserFromUserList(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Lookup a user from the site's user list based upon the user's upn
+            </summary>
+            <param name="context">Context of the web holding the user list</param>
+            <param name="userUpn">Upn of the user to fetch</param>
+            <returns>A UserEntity instance holding information about the user</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserFromUserList(Microsoft.SharePoint.Client.ClientContext,System.Int32)">
+            <summary>
+            Lookup a user from the site's user list based upon the user's id
+            </summary>
+            <param name="context">Context of the web holding the user list</param>
+            <param name="userListId">Id of the user to fetch</param>
+            <returns>A UserEntity instance holding information about the user</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetContentTypeId(Microsoft.SharePoint.Client.List,System.String)">
+            <summary>
+            Get's the ID of a contenttype
+            </summary>
+            <param name="pagesLibrary">Pages library holding the content type</param>
+            <param name="contentTypeName">Name of the content type</param>
+            <returns>ID of the content type</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetLastUsedTransformator(SharePointPnP.Modernization.Framework.Transform.BasePageTransformator)">
+            <summary>
+            Caches the last used page transformator instance, needed to postpone log writing when transforming multiple pages
+            </summary>
+            <param name="transformator"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetLastUsedTransformator">
+            <summary>
+            Gets the last used page transformator instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUrlMapping(System.String,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Returns a list of url mappings
+            </summary>
+            <param name="urlMappingFile">File with url mappings</param>
+            <param name="logObservers">Attached list of log observers</param>
+            <returns>List of url mappings</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserMapping(System.String,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Gets the list of user mappings, if first time file will be laoded
+            </summary>
+            <param name="userMappingFile">File with the user mappings</param>
+            <param name="logObservers">Attached list of log observers</param>
+            <returns>List of user mappings</returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Cache.FieldData">
             <summary>
@@ -2968,6 +3763,31 @@
             Element in KQL query
             </summary>
         </member>
+        <member name="P:SharePointPnP.Modernization.Framework.KQL.KQLElement.Filter">
+            <summary>
+            Filter attribute name
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.KQL.KQLElement.Value">
+            <summary>
+            Value of the filter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.KQL.KQLElement.Type">
+            <summary>
+            Type of filter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.KQL.KQLElement.Operator">
+            <summary>
+            Filter operator
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.KQL.KQLElement.Group">
+            <summary>
+            Filter group
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.KQL.KQLPropertyOperator">
             <summary>
             Operators on KQL property filters
@@ -2995,12 +3815,25 @@
             Class that's responsible for loading (mapping) files
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Utilities.FileManager.#ctor(System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="logObservers">Connected loggers</param>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Utilities.FileManager.LoadUrlMappingFile(System.String)">
             <summary>
             Loads a URL mapping file
             </summary>
             <param name="mappingFile">Path to the mapping file</param>
             <returns>A collection of URLMapping objects</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Utilities.FileManager.LoadUserMappingFile(System.String)">
+            <summary>
+            Load User Mapping File
+            </summary>
+            <param name="mappingFile"></param>
+            <returns></returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.PageTransformation">
             <remarks/>
@@ -4333,6 +5166,11 @@
             <param name="fieldName">Name of the field to check</param>
             <returns></returns>
         </member>
+        <member name="T:Microsoft.SharePoint.Client.SiteExtensions">
+            <summary>
+            Class holding extension methods for the Microsoft.SharePoint.Client.Site object
+            </summary>
+        </member>
         <member name="M:Microsoft.SharePoint.Client.SiteExtensions.GetAllSubSites(Microsoft.SharePoint.Client.Site)">
             <summary>
             Gets all sub sites for a given site
@@ -4342,7 +5180,7 @@
         </member>
         <member name="T:Microsoft.SharePoint.Client.WebExtensions">
             <summary>
-            Class that deals with site (both site collection and web site) creation, status, retrieval and settings
+            Class holding extension methods for the Microsoft.SharePoint.Client.Web object
             </summary>
         </member>
         <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetPages(Microsoft.SharePoint.Client.Web,System.String,System.String)">
@@ -4422,30 +5260,38 @@
             <summary>
             Method to bypass missing property in SharePoint 2010
             </summary>
-            <param name="web"></param>
+            <param name="web">Web to operate on</param>
             <remarks>Only required on source contexts</remarks>
-            <returns>Url</returns>
+            <returns>web url</returns>
         </member>
         <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetPagesLibraryId(Microsoft.SharePoint.Client.Web)">
             <summary>
             Get Pages Library ID for the Web
             </summary>
-            <param name="web"></param>
-            <returns></returns>
+            <param name="web">Web to operate on</param>
+            <returns>ID of the pages library</returns>
         </member>
         <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetSitePagesLibrary(Microsoft.SharePoint.Client.Web)">
             <summary>
             Gets site pages library from web
             </summary>
-            <param name="web"></param>
-            <returns></returns>
+            <param name="web">Web to operate on</param>
+            <returns>Site pages library instance</returns>
+        </member>
+        <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetPostsLibrary(Microsoft.SharePoint.Client.Web)">
+            <summary>
+            Gets blog post library in an SP2010 compatible fashion
+            </summary>
+            <param name="web">Web to operate on</param>
+            <returns>Blog post library</returns>
         </member>
         <member name="M:Microsoft.SharePoint.Client.WebExtensions.GetListByName(Microsoft.SharePoint.Client.Web,System.String)">
             <summary>
             Gets list from web in an SP2010 compatible fashion
             </summary>
-            <param name="web"></param>
-            <returns></returns>
+            <param name="web">Web to operate on</param>
+            <param name="listName">List to lookup</param>
+            <returns>List instance</returns>
         </member>
         <member name="T:AngleSharp.Dom.AngleSharpExtensions">
             <summary>
