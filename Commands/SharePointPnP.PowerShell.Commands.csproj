@@ -540,6 +540,7 @@
     <Compile Include="Admin\AddTenantTheme.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
     <Compile Include="Admin\EnableCommSite.cs" />
+    <Compile Include="Admin\GetHubSiteChild.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
@@ -584,7 +585,8 @@
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
     <Compile Include="Base\PipeBinds\AlertPipeBind.cs" />
-    <Compile Include="Base\PipeBinds\ProvisioningConfigurationPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ApplyConfigurationPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ExtractConfigurationPipeBind.cs" />
     <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
@@ -599,6 +601,7 @@
     <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="Base\RequestAccessToken.cs" />
     <Compile Include="Base\TokenHandling.cs" />
     <Compile Include="ClientSidePages\ClientSidePageTransformatorLogType.cs" />
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
@@ -607,6 +610,7 @@
     <Compile Include="Enums\HttpRequestMethod.cs" />
     <Compile Include="Enums\InitializationType.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
+    <Compile Include="Enums\SearchBoxInNavBar.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
     <Compile Include="Graph\GetDeletedUnifiedGroup.cs" />
@@ -644,6 +648,7 @@
     <Compile Include="Principals\AddAlert.cs" />
     <Compile Include="Provisioning\Site\ExportListToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ApplyTenantTemplate.cs" />
+    <Compile Include="Provisioning\Tenant\GetTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ReadTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\SaveTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\TestTenantTemplate.cs" />
@@ -663,6 +668,9 @@
     <Compile Include="RecordsManagement\GetInPlaceRecordsManagement.cs" />
     <Compile Include="RecordsManagement\SetListRecordDeclaration.cs" />
     <Compile Include="Search\GetSearchCrawlLog.cs" />
+    <Compile Include="Search\GetSearchSettings.cs" />
+    <Compile Include="Search\SetSearchSettings.cs" />
+    <Compile Include="Enums\SearchSettingsScope.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignTask.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignRunStatus.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignRun.cs" />

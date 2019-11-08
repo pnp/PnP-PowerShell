@@ -612,18 +612,28 @@ Use -PnPO365ManagementShell instead");
             {
                 var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
                 var aud = jwtToken.Audiences.FirstOrDefault();
+                var url = Url;
                 if (aud != null)
                 {
-                    Url = aud;
+                    url = aud;
                 }
-                if (Url.ToLower() == "https://graph.microsoft.com")
+                if (url.ToLower() == "https://graph.microsoft.com")
                 {
                     connection = ConnectGraphDeviceLogin(AccessToken);
                 }
                 else
                 {
+                    Uri uri = null;
+                    try
+                    {
+                        uri = new Uri(url);
+                    }
+                    catch
+                    {
+                        uri = new Uri(Url);
+                    }
                     //#if !NETSTANDARD2_0
-                    connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(new Uri(Url), AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+                    connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(uri, AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
                     //#else
                     //throw new NotImplementedException();
                     //#endif

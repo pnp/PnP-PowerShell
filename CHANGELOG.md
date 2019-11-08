@@ -5,13 +5,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [3.15.1911.0]
 
 ### Added
 
+- Added Request-PnPAccessToken to retrieve an OAuth2 access token using the password grant.
+- Added additional properties to Set-PnPHubSite
+- Added Get-PnPHubSiteChild cmdlet to list all child sites of a hubsite
+- ConvertTo-PnPClientSidePage: Added support for user mapping via `-UserMappingFile, `-LDAPConnectionString` and `-SkipUserMapping` parameters  #2340
+- ConvertTo-PnPClientSidePage: Added support for defining the target folder of a transformed page via `-TargetPageFolder`
+- Added Get-PnPSearchSettings to retreive current search settings for a site
+- Added Set-PnPSearchSettings to set search related settings on a site
+
 ### Changed
 
+- Cmdlets related to provisioning and tenant templates now output more detailed error information in case of a schema issue.
+- Fixes issue where site design was not being applied when using New-PnPSite
+- Fixed incorrect usage of SwitchParameter in Set-PnPSite cmdlet
+- Fixed issue when connecting to single level domain URLs
+- Disabled TimeZone as mandatory parameter for New-PnPTenantSite when using an on-premises version of PnP PowerShell
+
 ### Contributors
+
+- Gautam Sheth [gautamdsheth]
+- Koen Zomers [KoenZomers]
+- Laurens Hoogendoorn [laurens1984]
+- Jens Otto Hatlevold [jensotto]
+- Paul Bullock [pkbullock]
 
 ## [3.14.1910.1]
 

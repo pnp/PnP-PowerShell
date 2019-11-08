@@ -33,13 +33,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     foreach (ErrorRecord exception in exceptions)
                     {
-                        output.Add(new PnPException() { Message = exception.Exception.Message, Stacktrace = exception.Exception.StackTrace, ScriptLineNumber = exception.InvocationInfo.ScriptLineNumber, InvocationInfo = exception.InvocationInfo });
+                        output.Add(new PnPException() { Message = exception.Exception.Message, Stacktrace = exception.Exception.StackTrace, ScriptLineNumber = exception.InvocationInfo.ScriptLineNumber, InvocationInfo = exception.InvocationInfo, Exception = exception.Exception });
                     }
                 }
                 else
                 {
                     var exception = (ErrorRecord)exceptions[0];
-                    output.Add(new PnPException() { Message = exception.Exception.Message, Stacktrace = exception.Exception.StackTrace, ScriptLineNumber = exception.InvocationInfo.ScriptLineNumber, InvocationInfo = exception.InvocationInfo });
+                    output.Add(new PnPException() { Message = exception.Exception.Message, Stacktrace = exception.Exception.StackTrace, ScriptLineNumber = exception.InvocationInfo.ScriptLineNumber, InvocationInfo = exception.InvocationInfo, Exception = exception.Exception });
                 }
                 WriteObject(output, true);
             }

@@ -629,6 +629,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The provided site could not be found.
+        /// </summary>
+        internal static string SiteNotFound {
+            get {
+                return ResourceManager.GetString("SiteNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uninstall app {0}?.
         /// </summary>
         internal static string UninstallApp0 {
