@@ -542,6 +542,7 @@
     <Compile Include="Admin\EnableCommSite.cs" />
     <Compile Include="Admin\GetHubSiteChild.cs" />
     <Compile Include="Admin\GetTenantId.cs" />
+    <Compile Include="Base\BasePSCmdlet.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
