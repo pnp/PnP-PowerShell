@@ -13,11 +13,8 @@ using System.IO;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    public class PnPCmdlet : PSCmdlet
+    public class PnPCmdlet : BasePSCmdlet
     {
-        private Assembly newtonsoftAssembly;
-
-
         public ClientContext ClientContext => Connection?.Context ?? SPOnlineConnection.CurrentConnection.Context;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
@@ -27,8 +24,6 @@ namespace SharePointPnP.PowerShell.Commands
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-
-            FixAssemblyResolving();
 
             if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.TelemetryClient != null)
             {
@@ -125,41 +120,7 @@ namespace SharePointPnP.PowerShell.Commands
                 WriteError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
             }
         }
-
-        private void FixAssemblyResolving()
-        {
-            newtonsoftAssembly = System.Reflection.Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-            System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-        }
-
-        private string AssemblyDirectory
-        {
-            get
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
-        }
-
-        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-
-            if (args.Name.StartsWith("Newtonsoft.Json"))
-            {
-                return newtonsoftAssembly;
-            }
-            foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-            {
-                if (assembly.FullName == args.Name)
-                {
-                    return assembly;
-                }
-            }
-            return null;
-        }
+        
         protected override void EndProcessing()
         {
             base.EndProcessing();
