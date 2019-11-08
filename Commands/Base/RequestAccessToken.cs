@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿#if !ONPREMISES
+using Newtonsoft.Json.Linq;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
@@ -194,3 +195,4 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
     }
 }
+#endif
