@@ -31,6 +31,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "Returns all files in the folder SitePages which is located in the root of the current web",
         SortOrder = 4
         )]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPFolderItem -FolderSiteRelativeUrl ""SitePages"" -Recursive",
+        Remarks = "Returns all files and folders, including contents of any subfolders, in the folder SitePages which is located in the root of the current web",
+        SortOrder = 5
+        )]
     public class GetFolderItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage ="The site relative folder to retrieve")]
@@ -43,7 +48,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, HelpMessage = "Optional name of the item to retrieve")]
         public string ItemName = string.Empty;
 
-        protected override void ExecuteCmdlet()
+        [Parameter(Mandatory = false, Position = 4, HelpMessage = "A switch parameter to include contents of all subfolders in the specified folder")]
+        public SwitchParameter Recursive;
+
+        private IEnumerable<object> GetContents(string FolderSiteRelativeUrl)
         {
             string serverRelativeUrl = null;
             if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
@@ -65,10 +73,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 files = ClientContext.LoadQuery(targetFolder.Files).OrderBy(f => f.Name);
                 if (!string.IsNullOrEmpty(ItemName))
                 {
-                    files = files.Where(f=>f.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase));
+                    files = files.Where(f => f.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase));
                 }
             }
-            if (ItemType == "Folder" || ItemType == "All")
+            if (ItemType == "Folder" || ItemType == "All" || Recursive)
             {
                 folders = ClientContext.LoadQuery(targetFolder.Folders).OrderBy(f => f.Name);
                 if (!string.IsNullOrEmpty(ItemName))
@@ -77,20 +85,38 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 }
             }
             ClientContext.ExecuteQueryRetry();
-
+            
+            IEnumerable<object> folderContent = null;
             switch (ItemType)
             {
                 case "All":
-                    var foldersAndFiles = folders.Concat<object>(files);
-                    WriteObject(foldersAndFiles, true);
+                    folderContent = folders.Concat<object>(files);                    
                     break;
                 case "Folder":
-                    WriteObject(folders, true);
+                    folderContent = folders;
                     break;
                 default:
-                    WriteObject(files, true);
+                    folderContent = files;
                     break;
             }
+            
+            if(Recursive && folders.Count() > 0)
+            {
+                foreach(var folder in folders)
+                {
+                    var relativeUrl = folder.ServerRelativeUrl.Replace(SelectedWeb.ServerRelativeUrl, "");
+                    var subFolderContents = GetContents(relativeUrl);
+                    folderContent = folderContent.Concat<object>(subFolderContents);
+                }                
+            }
+
+            return folderContent;
+        }
+
+        protected override void ExecuteCmdlet()
+        {
+            var contents = GetContents(FolderSiteRelativeUrl);
+            WriteObject(contents, true);
         }
     }
 }
