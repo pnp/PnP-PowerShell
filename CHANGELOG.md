@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Fixes issue with App Only with certificate and context cloning. Now Apply-PnPTenantTemplate works as expected.
+- Added CorrelationId and TimeStampUtc to output of Get-PnPException which can help in analyzing ULS entries.
+
 ### Contributors
 
 ## [3.15.1911.0]
