@@ -117,6 +117,8 @@ namespace SharePointPnP.PowerShell.Commands
             catch (Exception ex)
             {
                 SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
+                ex.Data.Add("CorrelationId", SPOnlineConnection.CurrentConnection.Context.TraceCorrelationId);
+                ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
                 WriteError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
             }
         }
