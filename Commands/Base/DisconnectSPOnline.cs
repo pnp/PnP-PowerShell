@@ -22,6 +22,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
+            if(SPOnlineConnection.CurrentConnection.CertFile != null)
+            {
+                SPOnlineConnectionHelper.CleanupCryptoMachineKey(SPOnlineConnection.CurrentConnection.CertFile);
+                SPOnlineConnection.CurrentConnection.CertFile = null;
+            }
             var success = false;
             if (Connection != null)
             {
