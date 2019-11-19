@@ -179,6 +179,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Folder to create the target page in (will be used in conjunction with auto-generated folders that ensure page name uniqueness)")]
         public string TargetPageFolder = "";
 
+        [Parameter(Mandatory = false, HelpMessage = "When setting a target page folder then the target page folder overrides possibly default folder path (e.g. in the source page lived in a folder) instead of being appended to it")]
+        public SwitchParameter TargetPageFolderOverridesDefaultFolder = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
         public SPOnlineConnection TargetConnection = null;
 
@@ -391,7 +394,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     PublishCreatedPage = !this.DontPublish,
                     KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
                     PostAsNews = this.PostAsNews,
-                    DisablePageComments = this.DisablePageComments,     
+                    DisablePageComments = this.DisablePageComments,
                     TargetPageName = !string.IsNullOrEmpty(this.PublishingTargetPageName) ? this.PublishingTargetPageName : this.TargetPageName,
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
@@ -401,6 +404,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     UserMappingFile = this.UserMappingFile,
                     LDAPConnectionString = this.LDAPConnectionString,
                     TargetPageFolder = this.TargetPageFolder,
+                    TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
                 };
 
                 // Set mapping properties
@@ -455,6 +459,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     UserMappingFile = this.UserMappingFile,
                     LDAPConnectionString = this.LDAPConnectionString,
                     TargetPageFolder = this.TargetPageFolder,
+                    TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
