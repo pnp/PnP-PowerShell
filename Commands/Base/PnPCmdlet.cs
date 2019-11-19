@@ -119,7 +119,13 @@ namespace SharePointPnP.PowerShell.Commands
                 SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
                 ex.Data.Add("CorrelationId", SPOnlineConnection.CurrentConnection.Context.TraceCorrelationId);
                 ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
-                WriteError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
+                var errorDetails = new ErrorDetails(ex.Message);
+                
+                errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
+                var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
+                errorRecord.ErrorDetails = errorDetails;
+
+                WriteError(errorRecord);
             }
         }
         
