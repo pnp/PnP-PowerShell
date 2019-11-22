@@ -68,7 +68,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         public string CommandUIExtension = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "The identifier of the object associated with the custom action.", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = false, HelpMessage = "The identifier of the object associated with the custom action.", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string RegistrationId = string.Empty;
@@ -77,13 +77,13 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         public PermissionKind[] Rights;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the type of object associated with the custom action", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = false, HelpMessage = "Specifies the type of object associated with the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public UserCustomActionRegistrationType RegistrationType;
 
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public CustomActionScope Scope = CustomActionScope.Web;
