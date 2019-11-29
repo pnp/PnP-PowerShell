@@ -9,13 +9,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added -Wait parameter to New-PnPSite which will wait until the site creation process has been completely finished and all artifacts are present.
 - Add-PnPTeamsTeam: new cmdlet that creates a Teams team for the current, Office 365 group connected, site collection
 - Added Get-PnPTenantId to retrieve the current tenant id.
 - ConvertTo-PnPClientSidePage: Added support for enforcing the specified target page folder via `-TargetPageFolderOverridesDefaultFolder`
 
 ### Changed
 
+- Added -SharingAllowedDomainList, -SharingBlockedDomainList and -SharingDomainRestrictionMode to Set-PnPTenantSite
+- Added -Wait parameter to New-PnPSite which will wait until the site creation process has been completely finished and all artifacts are present.
 - Fixes issue with App Only with certificate and context cloning. Now Apply-PnPTenantTemplate works as expected.
 - Added CorrelationId and TimeStampUtc to output of Get-PnPException which can help in analyzing ULS entries.
 

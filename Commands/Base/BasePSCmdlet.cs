@@ -58,5 +58,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             return null;
         }
+
+        public bool ParameterSpecified(string parameterName)
+        {
+            return MyInvocation.BoundParameters.ContainsKey(parameterName);
+        }
     }
 }
