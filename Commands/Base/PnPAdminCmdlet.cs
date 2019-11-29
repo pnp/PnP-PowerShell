@@ -84,6 +84,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void EndProcessing()
         {
+            base.EndProcessing();
             SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
         }
     }

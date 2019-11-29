@@ -14,5 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
         public int ScriptLineNumber;
         public InvocationInfo InvocationInfo;
         public Exception Exception;
+        public string CorrelationId;
+        public DateTime TimeStampUtc;
     }
 }

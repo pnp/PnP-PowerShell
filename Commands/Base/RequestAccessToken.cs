@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     Connect-PnPOnline -AccessToken $token",
        Remarks = "Returns the access token using the specified client id and the specified scopes while using the credentials and tenanturl specified to authentication against Azure AD",
        SortOrder = 5)]
-    public class RequestAccessToken : PSCmdlet
+    public class RequestAccessToken : BasePSCmdlet
     {
 
         [Parameter(Mandatory = false, HelpMessage = "The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell")]
@@ -63,13 +63,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false, HelpMessage = "Optional tenant URL to use when retrieving the access token. The Url should be in the shape of https://yourtenant.sharepoint.com. See examples for more info.")]
         public string TenantUrl;
-
-        private Assembly newtonsoftAssembly;
-
-        protected override void BeginProcessing()
-        {
-            FixAssemblyResolving();
-        }
 
         protected override void ProcessRecord()
         {
@@ -157,41 +150,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 WriteObject(accessToken);
             }
 
-        }
-
-        private void FixAssemblyResolving()
-        {
-            newtonsoftAssembly = System.Reflection.Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-            System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-        }
-
-        private string AssemblyDirectory
-        {
-            get
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
-        }
-
-        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-
-            if (args.Name.StartsWith("Newtonsoft.Json"))
-            {
-                return newtonsoftAssembly;
-            }
-            foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-            {
-                if (assembly.FullName == args.Name)
-                {
-                    return assembly;
-                }
-            }
-            return null;
         }
     }
 }

@@ -4,6 +4,101 @@
         <name>SharePointPnP.Modernization.Framework</name>
     </assembly>
     <members>
+        <member name="T:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation">
+            <summary>
+            Information to initiate the transformation of a Delve blog page
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation.#ctor">
+            <summary>
+            For internal use only
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem)">
+            <summary>
+            Instantiates the page transformation class
+            </summary>
+            <param name="sourcePage">Page we want to transform</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation.#ctor(Microsoft.SharePoint.Client.ListItem,System.Boolean)">
+            <summary>
+            Instantiates the page transformation class
+            </summary>
+            <param name="sourcePage">Page we want to transform</param>
+            <param name="overwrite">Do we overwrite the target page if it already exists</param>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation.SetAuthorInPageHeader">
+            <summary>
+            Sets the page author in the page header similar to the original page author
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation.KeepSubTitle">
+            <summary>
+            Converts the sub title of a Delve blog page as modern page topic header
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator">
+            <summary>
+            Transformator that convers a Delve blog page into a modern client side page
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Creates a page transformator instance with a target destination of a target web e.g. Modern/Communication Site
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="targetClientContext">ClientContext of the site that will receive the modernized page</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="pageTransformationFile">Used page mapping file</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="targetClientContext">ClientContext of the site that will receive the modernized page</param>
+            <param name="pageTransformationFile">Used page mapping file</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,SharePointPnP.Modernization.Framework.PageTransformation)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="pageTransformationModel">Page transformation model</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator.#ctor(Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,SharePointPnP.Modernization.Framework.PageTransformation)">
+            <summary>
+            Creates a page transformator instance
+            </summary>
+            <param name="sourceClientContext">ClientContext of the site holding the page</param>
+            <param name="targetClientContext">ClientContext of the site that will receive the modernized page</param>
+            <param name="pageTransformationModel">Page transformation model</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator.Transform(SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation)">
+            <summary>
+            Transform the page
+            </summary>
+            <param name="pageTransformationInformation">Information about the page to transform</param>
+            <returns>The path to the created modern page</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformator.DetailSettingsAsLogEntries(SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation)">
+            <summary>
+            Use reflection to read the object properties and detail the values
+            </summary>
+            <param name="pti">PageTransformationInformation object</param>
+            <returns></returns>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.AssetTransferredEntity">
             <summary>
             Model for asset transfer status for references
@@ -496,6 +591,21 @@
             <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
             <returns>A string that is equivalent to the current string except that all instances of <paramref name="oldValue"/> are replaced with <paramref name="newValue"/>. 
             If <paramref name="oldValue"/> is not found in the current instance, the method returns the current instance unchanged.</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Extensions.StringExtensions.CleanForJSON(System.String)">
+            <summary>
+            Prepares a string for json inclusion
+            Copied from https://stackoverflow.com/questions/1242118/how-to-escape-json-string
+            </summary>
+            <param name="s">string to prepare</param>
+            <returns>json ready string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.DelvePage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation)">
+            <summary>
+            Instantiates a web part page object
+            </summary>
+            <param name="page">ListItem holding the page to analyze</param>
+            <param name="pageTransformation">Page transformation information</param>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Pages.PublishingPageOnPremises">
             <summary>
@@ -2180,7 +2290,7 @@
             <param name="value">string value</param>
             <returns>Friendly string value</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers.DetailSettingsAsLogEntries(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.LogHelpers.DetailSettingsAsLogEntries(SharePointPnP.Modernization.Framework.Transform.PageTransformationInformation,System.String)">
             <summary>
             Use reflection to read the object properties and detail the values
             </summary>
@@ -2625,6 +2735,11 @@
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.TargetPageFolder">
             <summary>
             Target page folder
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.TargetPageFolderOverridesDefaultFolder">
+            <summary>
+            When a target page folder is set, it overwrites the potentially default folder path (e.g. if the source page lived in a folder then that folder is in the default folder path)
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.KeepPageSpecificPermissions">
@@ -3689,6 +3804,11 @@
             Clears Cached SharePoint versions
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearGeneratedPageLayoutMappings">
+            <summary>
+            Clears the cache of generated page layout mappings
+            </summary>
+        </member>
         <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.MappedUsers">
             <summary>
             Mapped users
@@ -3830,6 +3950,11 @@
             </summary>
             <param name="searchQuery">Query to parse</param>
             <returns>List of <see cref="T:SharePointPnP.Modernization.Framework.KQL.KQLElement"/> tokens</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Utilities.CookieManager">
+            <summary>
+            Handles the "intercepting" of auth cookies that might have been added on the clientcontext object
+            </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Utilities.FileManager">
             <summary>
@@ -4120,6 +4245,18 @@
             <summary>
             Use reflection to read the object fields in a list of strings
             </summary>
+        </member>
+        <member name="T:System.Net.HttpWebRequestExtensions">
+            <summary>
+            HttpWebRequest extension methods
+            </summary>
+        </member>
+        <member name="M:System.Net.HttpWebRequestExtensions.AddAuthenticationData(System.Net.HttpWebRequest,Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Grabs authenticaiton data from the passed client context and attaches that to the http request
+            </summary>
+            <param name="httpWebRequest">http request to update</param>
+            <param name="cc">ClientContext object to grab authentication data from</param>
         </member>
         <member name="T:CamlBuilder.FieldReference">
             <summary>
