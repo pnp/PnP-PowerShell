@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [3.16.1912.0]
 
 ### Added
 
+- Added -Wait parameter to New-PnPSite which will wait until the site creation process has been completely finished and all artifacts are present.
 - Add-PnPTeamsTeam: new cmdlet that creates a Teams team for the current, Office 365 group connected, site collection
 - Added Get-PnPTenantId to retrieve the current tenant id.
 - ConvertTo-PnPClientSidePage: Added support for enforcing the specified target page folder via `-TargetPageFolderOverridesDefaultFolder`
