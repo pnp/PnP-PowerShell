@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - ConvertTo-PnPClientSidePage: Added support for enforcing the specified target page folder via `-TargetPageFolderOverridesDefaultFolder`
 - ConvertTo-PnPClientSidePage: Added support for Delve blog page modernization via the `-DelveBlogPage` and `-DelveKeepSubTitle ` parameters
 
-### Changed
+### Changed 
 
 - Fixes issue with App Only with certificate and context cloning. Now Apply-PnPTenantTemplate works as expected.
 - Added CorrelationId and TimeStampUtc to output of Get-PnPException which can help in analyzing ULS entries.
