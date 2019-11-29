@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - ConvertTo-PnPClientSidePage: Added support for enforcing the specified target page folder via `-TargetPageFolderOverridesDefaultFolder`
 - ConvertTo-PnPClientSidePage: Added support for Delve blog page modernization via the `-DelveBlogPage` and `-DelveKeepSubTitle ` parameters
 
-### Changed
+### Changed 
 
 - Added various additional switches and options to Set-PnPTenantSite
 - Added -Wait parameter to New-PnPSite which will wait until the site creation process has been completely finished and all artifacts are present.
