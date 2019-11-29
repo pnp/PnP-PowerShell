@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [3.16.1912.0]
 
 ### Added
 
@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed 
 
+- Added -SharingAllowedDomainList, -SharingBlockedDomainList and -SharingDomainRestrictionMode to Set-PnPTenantSite
+- Added -Wait parameter to New-PnPSite which will wait until the site creation process has been completely finished and all artifacts are present.
 - Fixes issue with App Only with certificate and context cloning. Now Apply-PnPTenantTemplate works as expected.
 - Added CorrelationId and TimeStampUtc to output of Get-PnPException which can help in analyzing ULS entries.
 - ConvertTo-PnPClientSidePage: The `-Identity` parameter now also accepts the item id as value to find a page
