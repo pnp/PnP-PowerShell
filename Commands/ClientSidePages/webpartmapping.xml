@@ -16,7 +16,7 @@ configure the page transformation engine to use the community script editor. You
 - Using the needed switch in PnP PowerShell
 -->
 
-<PageTransformation xmlns="http://schemas.dev.office.com/PnP/2018/01/PageTransformationSchema" Version="1.0.1911.0">
+<PageTransformation xmlns="http://schemas.dev.office.com/PnP/2018/01/PageTransformationSchema" Version="1.0.1912.0">
     <!-- Information that applies to all web parts listed in this file -->
     <BaseWebPart>
       <Properties>
@@ -92,6 +92,17 @@ configure the page transformation engine to use the community script editor. You
           </Mapping>
         </Mappings>
       </WebPart>
+      <WebPart Type="SharePointPnP.Modernization.WikiEmbedPart" CrossSiteTransformationSupported="true">
+        <Properties>
+          <Property Name="DocumentUrl" Type="string" Functions="{ServerRelativeMediaSource} = ReturnServerRelativePath({DocumentUrl}); {FullPath} = Concatenate({Host}, {ServerRelativeMediaSource});{FileName} = ReturnFileName({ServerRelativeMediaSource}); DocumentEmbedLookup({ServerRelativeMediaSource})"/>
+          <Property Name="Whatever" Type="bool" Functions="{EncodedFullPath} = HtmlEncodeForJson({FullPath}); {EncodedAuthor} = HtmlEncodeForJson({DocumentAuthor}); {EncodedHost} = HtmlEncodeForJson({Host})"/>
+        </Properties>
+        <Mappings>
+          <Mapping Name="default" Default="true">
+            <ClientSideWebPart Type="DocumentEmbed" Order="10" JsonControlData="&#123;&quot;serverProcessedContent&quot;&#58;&#123;&quot;htmlStrings&quot;&#58;&#123;&#125;,&quot;searchablePlainTexts&quot;&#58;&#123;&quot;annotation&quot;&#58;&quot;&quot;,&quot;title&quot;&#58;&quot;{FileName}&quot;&#125;,&quot;imageSources&quot;&#58;&#123;&#125;,&quot;links&quot;&#58;&#123;&quot;serverRelativeUrl&quot;&#58;&quot;{ServerRelativeMediaSource}&quot;,&quot;wopiurl&quot;&#58;&quot;{EncodedHost}{DocumentWeb}/_layouts/15/WopiFrame.aspx?sourcedoc=&#123;{DocumentUniqueId}&#125;&amp;action=interactivepreview&quot;&#125;&#125;,&quot;dataVersion&quot;&#58;&quot;1.1&quot;,&quot;properties&quot;&#58;&#123;&quot;authorName&quot;&#58;&quot;{DocumentAuthorName}&quot;,&quot;chartitem&quot;&#58;&quot;&quot;,&quot;endrange&quot;&#58;&quot;&quot;,&quot;excelSettingsType&quot;&#58;&quot;&quot;,&quot;file&quot;&#58;&quot;{EncodedFullPath}&quot;,&quot;listId&quot;&#58;&quot;{DocumentListId}&quot;,&quot;modifiedAt&quot;&#58;&quot;&quot;,&quot;photoUrl&quot;&#58;&quot;/_layouts/15/userphoto.aspx?size=S&amp;accountname={EncodedAuthor}&quot;,&quot;rangeitem&quot;&#58;&quot;&quot;,&quot;siteId&quot;&#58;&quot;{SiteId}&quot;,&quot;startPage&quot;&#58;1,&quot;startrange&quot;&#58;&quot;&quot;,&quot;tableitem&quot;&#58;&quot;&quot;,&quot;uniqueId&quot;&#58;&quot;{DocumentUniqueId}&quot;,&quot;wdallowinteractivity&quot;&#58;true,&quot;wdhidegridlines&quot;&#58;true,&quot;wdhideheaders&quot;&#58;true,&quot;webId&quot;&#58;&quot;{WebId}&quot;&#125;&#125;"/>
+          </Mapping>
+        </Mappings>
+      </WebPart>      
       <!-- Fake page properties web part, used to embed the modern page properties web part on a page -->
       <WebPart Type="SharePointPnP.Modernization.PageProperties" CrossSiteTransformationSupported="true">
         <Properties>
