@@ -33,6 +33,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
             if (Identity != null)
             {
                 var item = Identity.GetListItem(list);

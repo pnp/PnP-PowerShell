@@ -56,9 +56,9 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             {
                 user = User;
             }
-            else if (User.Id > 0)
+            else if (Id > 0)
             {
-                user = context.Web.GetUserById(User.Id);
+                user = context.Web.GetUserById(Id);
             }
             else if (!string.IsNullOrWhiteSpace(Login))
             {

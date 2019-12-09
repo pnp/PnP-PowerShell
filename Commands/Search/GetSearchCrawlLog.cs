@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
     }
 
     [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog", DefaultParameterSetName = "Xml")]
-    [CmdletHelp("Returns entries from the SharePoint search crawl log",
+    [CmdletHelp("Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.Search)]
     [CmdletExample(
@@ -60,8 +60,12 @@ namespace SharePointPnP.PowerShell.Commands.Search
         SortOrder = 5)]
     [CmdletExample(
         Code = @"PS:> Get-PnPSearchCrawlLog -EndDate (Get-Date).AddDays(-100)",
-        Remarks = @"Returns the last 100 crawl log entries for site content up until 100 days ago.",
+        Remarks = @"Returns the last 100 crawl log entries up until 100 days ago.",
         SortOrder = 6)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPSearchCrawlLog -RowFilter 3 -RawFormat",
+        Remarks = @"Returns the last 3 crawl log entries showing the raw crawl log data.",
+        SortOrder = 7)]
     public class GetSearchCrawlLog : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Filter what log entries to return (All, Success, Warning, Error). Defaults to All")]
@@ -81,6 +85,9 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
         [Parameter(Mandatory = false, HelpMessage = "End date to stop getting entries from. Default to current time.")]
         public DateTime EndDate = DateTime.UtcNow.AddDays(1);
+
+        [Parameter(Mandatory = false, HelpMessage = "Show raw crawl log data")]
+        public SwitchParameter RawFormat;
 
         private const int MaxRows = 100000;
 
@@ -121,35 +128,49 @@ namespace SharePointPnP.PowerShell.Commands.Search
                 var logEntries = crawlLog.GetCrawledUrls(false, RowLimit, Filter, true, contentSourceId, (int)LogLevel, -1, StartDate, EndDate);
                 ClientContext.ExecuteQueryRetry();
 
-                var entries = new List<CrawlEntry>(logEntries.Value.Rows.Count);
-                foreach (var dictionary in logEntries.Value.Rows)
+                if (RawFormat)
                 {
-                    var entry = MapCrawlLogEntry(dictionary);
-                    if (string.IsNullOrWhiteSpace(postFilter))
+                    var entries = new List<object>();
+                    foreach (var dictionary in logEntries.Value.Rows)
                     {
-                        entries.Add(entry);
+                        string url = HttpUtility.UrlDecode(dictionary["FullUrl"].ToString());
+                        if (ContentSource == ContentSource.UserProfiles && contentSourceId == -1)
+                        {                            
+                            if (!url.Contains(":443/person")) continue;
+                        }
+                        if (string.IsNullOrWhiteSpace(postFilter) || url.Contains(postFilter))
+                        {
+                            entries.Add(ConvertToPSObject(dictionary));
+                        }
                     }
-                    else if (entry.Url.Contains(postFilter))
-                    {
-                        entries.Add(entry);
-                    }
+                    WriteObject(entries.Take(origLimit));
                 }
-
-                if (ContentSource == ContentSource.UserProfiles && contentSourceId == -1)
+                else
                 {
-                    // Crawling has changed and uses one content source
-                    // Need to apply post-filter to pull out profile entries only
-                    entries =
-                        entries.Where(e => HttpUtility.UrlDecode(e.Url.ToString()).ToLower().Contains(":443/person"))
-                            .ToList();
+                    var entries = new List<CrawlEntry>(logEntries.Value.Rows.Count);
+                    foreach (var dictionary in logEntries.Value.Rows)
+                    {
+                        var entry = MapCrawlLogEntry(dictionary);
+                        if (string.IsNullOrWhiteSpace(postFilter) || entry.Url.Contains(postFilter))
+                        {
+                            entries.Add(entry);
+                        }
+                    }
+
+                    if (ContentSource == ContentSource.UserProfiles && contentSourceId == -1)
+                    {
+                        // Crawling has changed and uses one content source
+                        // Need to apply post-filter to pull out profile entries only
+                        entries =
+                            entries.Where(e => HttpUtility.UrlDecode(e.Url.ToString()).ToLower().Contains(":443/person"))
+                                .ToList();
+                    }
+                    WriteObject(entries.Take(origLimit).OrderByDescending(i => i.CrawlTime).ToList());
                 }
-
-
-                WriteObject(entries.Take(origLimit).OrderByDescending(i => i.CrawlTime).ToList());
             }
             catch (Exception e)
             {
-                WriteError(new ErrorRecord(new Exception("Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/TA_searchadministration.aspx"), e.Message, ErrorCategory.AuthenticationError, null));
+                WriteError(new ErrorRecord(new Exception("Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx"), e.Message, ErrorCategory.AuthenticationError, null));
             }
         }
 
@@ -196,8 +217,28 @@ namespace SharePointPnP.PowerShell.Commands.Search
             entry.LogLevel =
                 (LogLevel)Enum.Parse(typeof(LogLevel), dictionary["ErrorLevel"].ToString());
 
+
             entry.Status = dictionary["StatusMessage"] + "";
+            entry.Status += dictionary["ErrorDesc"] + "";
+            var errorCode = int.Parse(dictionary["ErrorCode"]+"");
+            if (!string.IsNullOrWhiteSpace(entry.Status) || errorCode != 0)
+            {
+                entry.LogLevel = LogLevel.Warning;
+            }
             return entry;
+        }
+
+        private object ConvertToPSObject(IDictionary<string, object> r)
+        {
+            PSObject res = new PSObject();
+            if (r != null)
+            {
+                foreach (var kvp in r)
+                {
+                    res.Properties.Add(new PSNoteProperty(kvp.Key, kvp.Value));
+                }
+            }
+            return res;
         }
         #endregion
     }

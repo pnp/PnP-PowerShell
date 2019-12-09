@@ -30,6 +30,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = @"Set-PnPListItem -List ""Demo List"" -Identity $item -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
         Remarks = @"Sets fields value in the list item which has been retrieved by for instance Get-PnPListItem. It sets the content type of the item to ""Company"" and it sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"Set-PnPListItem -List ""Demo List"" -Identity 1 -Label ""Public""",
+        Remarks = @"Sets the retention label in the list item with ID 1 in the ""Demo List"".",
+        SortOrder = 4)]
     public class SetListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
@@ -66,6 +70,9 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 #if !ONPREMISES
         [Parameter(Mandatory = false, HelpMessage = "Update the item without creating a new version.")]
         public SwitchParameter SystemUpdate;
+
+        [Parameter(Mandatory = false, HelpMessage = "The name of the retention label.")]
+        public String Label;
 #endif
 
         protected override void ExecuteCmdlet()
@@ -100,9 +107,20 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     if (ct != null)
                     {
                         ct.EnsureProperty(w => w.StringId);
-
                         item["ContentTypeId"] = ct.StringId;
+#if !ONPREMISES
+                        if (SystemUpdate.IsPresent)
+                        {
+                            item.SystemUpdate();
+                        }
+                        else
+                        {
+                            item.Update();
+                        }
+#else
                         item.Update();
+                        
+#endif                        
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
@@ -110,7 +128,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 {
 #if !ONPREMISES
                     var updateType = ListItemUpdateType.Update;
-                    if(SystemUpdate.IsPresent)
+                    if (SystemUpdate.IsPresent)
                     {
                         updateType = ListItemUpdateType.SystemUpdate;
                     }
@@ -118,7 +136,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                       {
                           WriteWarning(warning);
                       },
-                      (terminatingErrorMessage,terminatingErrorCode) =>
+                      (terminatingErrorMessage, terminatingErrorCode) =>
                       {
                           ThrowTerminatingError(new ErrorRecord(new Exception(terminatingErrorMessage), terminatingErrorCode, ErrorCategory.InvalidData, this));
                       }
@@ -135,6 +153,31 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                       );
 #endif
                 }
+#if !ONPREMISES
+                if (!String.IsNullOrEmpty(Label))
+                {
+                    IList<Microsoft.SharePoint.Client.CompliancePolicy.ComplianceTag> tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+                    ClientContext.ExecuteQueryRetry();
+
+                    var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
+
+                    if(tag != null)
+                    {
+                        try
+                        {
+                            item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock);
+                            ClientContext.ExecuteQueryRetry();
+                        }
+                        catch (System.Exception error)
+                        {
+                            WriteWarning(error.Message.ToString());
+                        }
+                    } else
+                    {
+                        WriteWarning("Can not find compliance tag with value: " + Label);
+                    }
+                }
+#endif
                 WriteObject(item);
             }
         }

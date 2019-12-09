@@ -56,30 +56,53 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                         {
                             Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                         }
-                        WriteObject(LoadProvisioningTemplateFromFile(Path, TemplateProviderExtensions));
+                        WriteObject(LoadProvisioningTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
+                        {
+                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                        }));
                         break;
                     }
                 case ParameterSet_XML:
                     {
-                        WriteObject(LoadProvisioningTemplateFromString(Xml, TemplateProviderExtensions));
+                        WriteObject(LoadProvisioningTemplateFromString(Xml, TemplateProviderExtensions, (e) =>
+                        {
+                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                        }));
                         break;
                     }
             }
         }
 
-        internal static ProvisioningTemplate LoadProvisioningTemplateFromString(string xml, ITemplateProviderExtension[] templateProviderExtensions)
+        internal static ProvisioningTemplate LoadProvisioningTemplateFromString(string xml, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
             var formatter = new XMLPnPSchemaFormatter();
 
             XMLTemplateProvider provider = new XMLStreamTemplateProvider();
 
-            // Get the XML document from a File Stream
-            Stream stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
-
-            return provider.GetTemplate(stream);
+            try
+            {
+                using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
+                {
+                    return provider.GetTemplate(stream, templateProviderExtensions);
+                }
+            }
+            catch (ApplicationException ex)
+            {
+                if (ex.InnerException is AggregateException)
+                {
+                    if (exceptionHandler != null)
+                    {
+                        foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
+                        {
+                            exceptionHandler(exception);
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
-        internal static ProvisioningTemplate LoadProvisioningTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions)
+        internal static ProvisioningTemplate LoadProvisioningTemplateFromFile(string templatePath, ITemplateProviderExtension[] templateProviderExtensions, Action<Exception> exceptionHandler)
         {
             // Prepare the File Connector
             string templateFileName = System.IO.Path.GetFileName(templatePath);
@@ -110,11 +133,26 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             {
                 provider = new XMLFileSystemTemplateProvider(fileConnector.Parameters[FileConnectorBase.CONNECTIONSTRING] + "", "");
             }
-            ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
-            provisioningTemplate.Connector = provider.Connector;
-
-            // Return the result
-            return provisioningTemplate;
+            try
+            {
+                ProvisioningTemplate provisioningTemplate = provider.GetTemplate(templateFileName, templateProviderExtensions);
+                provisioningTemplate.Connector = provider.Connector;
+                return provisioningTemplate;
+            }
+            catch (ApplicationException ex)
+            {
+                if (ex.InnerException is AggregateException)
+                {
+                    if (exceptionHandler != null)
+                    {
+                        foreach (var exception in ((AggregateException)ex.InnerException).InnerExceptions)
+                        {
+                            exceptionHandler(exception);
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }

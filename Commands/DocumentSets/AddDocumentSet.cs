@@ -29,6 +29,8 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
             list.EnsureProperties(l => l.RootFolder, l => l.ContentTypes);
 
             // Try getting the content type from the Web

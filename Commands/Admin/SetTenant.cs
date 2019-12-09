@@ -402,6 +402,9 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
         [Parameter(Mandatory = false, HelpMessage = "Defines if the default themes are visible or hidden")]
         public bool? HideDefaultThemes;
 
+        [Parameter(Mandatory = false, HelpMessage = "Guids of out of the box modern web part id's to hide")]
+        public Guid[] DisabledWebPartIds;
+
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
@@ -956,6 +959,11 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
             if(HideDefaultThemes.HasValue)
             {
                 Tenant.HideDefaultThemes = HideDefaultThemes.Value;
+                isDirty = true;
+            }
+            if (DisabledWebPartIds != null)
+            {
+                Tenant.DisabledWebPartIds = DisabledWebPartIds;
                 isDirty = true;
             }
             if (isDirty)

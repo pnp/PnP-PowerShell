@@ -9,6 +9,7 @@ using System.IO;
 using SharePointPnP.Modernization.Framework.Publishing;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.Modernization.Framework.Cache;
+using SharePointPnP.Modernization.Framework.Telemetry.Observers;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -49,6 +50,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "Overwrites existing mapping files")]
         public SwitchParameter Overwrite = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Outputs analyser logging to the console")]
+        public SwitchParameter Logging = false;
+
 
         protected override void ExecuteCmdlet()
         {
@@ -132,6 +137,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 else
                 {
                     var analyzer = new PageLayoutAnalyser(this.ClientContext);
+
+                    if (Logging)
+                    {
+                        analyzer.RegisterObserver(new ConsoleObserver(false));
+                    }
+
                     if (page != null)
                     {
                         analyzer.AnalysePageLayoutFromPublishingPage(page);

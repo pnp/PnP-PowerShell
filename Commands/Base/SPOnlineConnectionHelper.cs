@@ -415,19 +415,24 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
 
-            if (certificateFromFile)
-            {
-                CleanupCryptoMachineKey(certificate);
-            }
+            //if (certificateFromFile)
+            //{
+            //    // we keep track of the 
+            //    CleanupCryptoMachineKey(certificate);
+            //}
 
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
-
+            if (certificateFromFile)
+            {
+                spoConnection.CertFile = certificate;
+            }
             return spoConnection;
+
         }
 
-        private static void CleanupCryptoMachineKey(X509Certificate2 certificate)
+        internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
         {
             var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
             string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
@@ -576,6 +581,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (credentials != null)
                 {
                     context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
+                }
+                else
+                {
+                    // If current credentials should be used, use the DefaultNetworkCredentials of the CredentialCache. This has the same effect
+                    // as using "UseDefaultCredentials" in a HttpClient.
+                    context.Credentials = CredentialCache.DefaultNetworkCredentials;
                 }
             }
 #if SP2013 || SP2016 || SP2019

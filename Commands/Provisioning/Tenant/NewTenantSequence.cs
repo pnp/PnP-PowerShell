@@ -7,7 +7,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequence", SupportsShouldProcess = true)]
-    [Alias("New-PnPProvisioningSequence")]
     [CmdletHelp("Creates a new tenant sequence object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -24,11 +23,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public string Id;
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningsequence")
-            {
-                WriteWarning("New-PnPProvisioningSequence has been deprecated. Use New-PnPTenantSequence instead.");
-            }
-
             var result = new ProvisioningSequence();
             if (this.MyInvocation.BoundParameters.ContainsKey("Id"))
             {

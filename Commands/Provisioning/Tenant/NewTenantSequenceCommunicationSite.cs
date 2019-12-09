@@ -7,7 +7,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceCommunicationSite", SupportsShouldProcess = true)]
-    [Alias("New-PnPProvisioningCommunicationSite")]
     [CmdletHelp("Creates a communication site object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -48,11 +47,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningcommunicationsite")
-            {
-                WriteWarning("New-PnPProvisioningCommunicationSite has been deprecated. Use New-PnPTenantSequenceCommunicationSite instead.");
-            }
-
             var site = new CommunicationSiteCollection
             {
                 Url = Url,

@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Remarks = "Returns the user with Id 23 from the User Information List of the current site collection",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPUser -Identity i:0#.f|membership|user@tenant.onmicrosoft.com",
+        Code = @"PS:> Get-PnPUser -Identity ""i:0#.f|membership|user@tenant.onmicrosoft.com""",
         Remarks = "Returns the user with LoginName i:0#.f|membership|user@tenant.onmicrosoft.com from the User Information List of the current site collection",
         SortOrder = 3)]
     [CmdletExample(
