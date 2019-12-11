@@ -56,6 +56,9 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         public string Location = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.", ParameterSetName = ParameterSet_DEFAULT)]
+#if !SP2013 && !SP2016
+        [Parameter(Mandatory = false, HelpMessage = "Optional activation sequence order for the extensions. Used if multiple extensions are activated on a same scope.", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
+#endif
         public int Sequence = 0;
 
         [Parameter(Mandatory = false, HelpMessage = "The URL, URI or ECMAScript (JScript, JavaScript) function associated with the action", ParameterSetName = ParameterSet_DEFAULT)]
@@ -132,6 +135,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
                     Name = Name,
                     Title = Title,
                     Location = Location,
+                    Sequence = Sequence,
                     ClientSideComponentId = ClientSideComponentId.Id,
                     ClientSideComponentProperties = ClientSideComponentProperties
                 };
