@@ -55,7 +55,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Remarks = @"Returns the last 100 crawl log entries for user profiles with the term ""mikael"" in the user principal name.",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog -ContentSource Sites LogLevel Error -RowLimit 10",
+        Code = @"PS:> Get-PnPSearchCrawlLog -ContentSource Sites -LogLevel Error -RowLimit 10",
         Remarks = @"Returns the last 10 crawl log entries with a state of Error for site content.",
         SortOrder = 5)]
     [CmdletExample(
