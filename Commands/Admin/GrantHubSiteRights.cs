@@ -28,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            base.Tenant.GrantHubSiteRights(Identity.Url, Principals, Rights);
+            base.Tenant.GrantHubSiteRights(Identity.Url ?? Identity.GetHubSite(Tenant).SiteUrl, Principals, Rights);
             ClientContext.ExecuteQueryRetry();
         }
     }

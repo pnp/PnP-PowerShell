@@ -2,10 +2,12 @@
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
+using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Model;
 using System;
 using System.Collections;
@@ -18,7 +20,6 @@ using System.Threading.Tasks;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet("Apply", "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [Alias("Apply-PnPProvisioningHierarchy")]
     [CmdletHelp("Applies a tenant template to the current tenant. You must be a SharePoint Online global administrator to run the cmdlet.",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -43,11 +44,10 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning hierarchy.", ParameterSetName = ParameterSet_PATH)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the tenant template.", ParameterSetName = ParameterSet_PATH)]
         public string Path;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OBJECT)]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy Template;
 
         [Parameter(Mandatory = false)]
@@ -68,7 +68,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while applying a template.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ITemplateProviderExtension[] TemplateProviderExtensions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the hierarchy by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the tenant template by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Parameters;
 
         [Parameter(Mandatory = false, HelpMessage = "Specify this parameter if you want to overwrite and/or create properties that are known to be system entries (starting with vti_, dlc_, etc.)", ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -86,17 +86,21 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
         [Parameter(Mandatory = false, HelpMessage = "Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template")]
         public SwitchParameter ClearNavigation;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public ApplyConfigurationPipeBind Configuration;
+
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.InvocationName.ToLower() == "apply-pnpprovisioninghierarchy")
-            {
-                WriteWarning("Apply-PnPProvisioningHierarchy has been deprecated. Use Apply-PnPTenantTemplate instead.");
-            }
 
             var sitesProvisioned = new List<ProvisionedSite>();
-            var applyingInformation = new ProvisioningTemplateApplyingInformation();
+            var configuration = new ApplyConfiguration();
+            if (MyInvocation.BoundParameters.ContainsKey("Configuration"))
+            {
+                configuration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+            }
 
-            applyingInformation.SiteProvisionedDelegate = (title, url) =>
+
+            configuration.SiteProvisionedDelegate = (title, url) =>
             {
                 if (sitesProvisioned.FirstOrDefault(s => s.Url == url) == null)
                 {
@@ -106,7 +110,27 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
             if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
             {
-                applyingInformation.HandlersToProcess = Handlers;
+                if (!Handlers.Has(Handlers.All))
+                {
+                    foreach (var enumValue in (Handlers[])Enum.GetValues(typeof(Handlers)))
+                    {
+                        if (Handlers.Has(enumValue))
+                        {
+                            if (enumValue == Handlers.TermGroups)
+                            {
+                                configuration.Handlers.Add(ConfigurationHandler.Taxonomy);
+                            }
+                            else if (enumValue == Handlers.PageContents)
+                            {
+                                configuration.Handlers.Add(ConfigurationHandler.Pages);
+                            }
+                            else if (Enum.TryParse<ConfigurationHandler>(enumValue.ToString(), out ConfigurationHandler configHandler))
+                            {
+                                configuration.Handlers.Add(configHandler);
+                            }
+                        }
+                    }
+                }
             }
             if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
             {
@@ -114,18 +138,30 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 {
                     if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
                     {
-                        Handlers = Handlers | handler;
+                        if (handler == Handlers.TermGroups)
+                        {
+                            if (configuration.Handlers.Contains(ConfigurationHandler.Taxonomy))
+                            {
+                                configuration.Handlers.Remove(ConfigurationHandler.Taxonomy);
+                            }
+                            else if (Enum.TryParse<ConfigurationHandler>(handler.ToString(), out ConfigurationHandler configHandler))
+                            {
+                                if (configuration.Handlers.Contains(configHandler))
+                                {
+                                    configuration.Handlers.Remove(configHandler);
+                                }
+                            }
+                        }
                     }
                 }
-                applyingInformation.HandlersToProcess = Handlers;
             }
 
             if (ExtensibilityHandlers != null)
             {
-                applyingInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList();
+                configuration.Extensibility.Handlers = ExtensibilityHandlers.ToList();
             }
 
-            applyingInformation.ProgressDelegate = (message, step, total) =>
+            configuration.ProgressDelegate = (message, step, total) =>
             {
                 if (message != null)
                 {
@@ -140,7 +176,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
             var warningsShown = new List<string>();
 
-            applyingInformation.MessagesDelegate = (message, type) =>
+            configuration.MessagesDelegate = (message, type) =>
             {
                 switch (type)
                 {
@@ -200,11 +236,11 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 }
             };
 
-            applyingInformation.OverwriteSystemPropertyBagValues = OverwriteSystemPropertyBagValues;
-            applyingInformation.IgnoreDuplicateDataRowErrors = IgnoreDuplicateDataRowErrors;
-            applyingInformation.ClearNavigation = ClearNavigation;
-            applyingInformation.ProvisionContentTypesToSubWebs = ProvisionContentTypesToSubWebs;
-            applyingInformation.ProvisionFieldsToSubWebs = ProvisionFieldsToSubWebs;
+            configuration.PropertyBag.OverwriteSystemValues = OverwriteSystemPropertyBagValues;
+            configuration.Lists.IgnoreDuplicateDataRowErrors = IgnoreDuplicateDataRowErrors;
+            configuration.Navigation.ClearNavigation = ClearNavigation;
+            configuration.ContentTypes.ProvisionContentTypesToSubWebs = ProvisionContentTypesToSubWebs;
+            configuration.Fields.ProvisionFieldsToSubWebs = ProvisionFieldsToSubWebs;
 
             ProvisioningHierarchy hierarchyToApply = null;
 
@@ -281,7 +317,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 #endif
                 if (!string.IsNullOrEmpty(SequenceId))
                 {
-                    Tenant.ApplyProvisionHierarchy(hierarchyToApply, SequenceId, applyingInformation);
+                    Tenant.ApplyTenantTemplate(hierarchyToApply, SequenceId, configuration);
                 }
                 else
                 {
@@ -289,12 +325,12 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                     {
                         foreach (var sequence in hierarchyToApply.Sequences)
                         {
-                            Tenant.ApplyProvisionHierarchy(hierarchyToApply, sequence.ID, applyingInformation);
+                            Tenant.ApplyTenantTemplate(hierarchyToApply, sequence.ID, configuration);
                         }
                     }
                     else
                     {
-                        Tenant.ApplyProvisionHierarchy(hierarchyToApply, null, applyingInformation);
+                        Tenant.ApplyTenantTemplate(hierarchyToApply, null, configuration);
                     }
                 }
 #if !ONPREMISES
@@ -345,8 +381,12 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
             }
             if (System.IO.File.Exists(Path))
             {
-                return ReadTenantTemplate.LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions);
-            } else
+                return ReadTenantTemplate.LoadProvisioningHierarchyFromFile(Path, TemplateProviderExtensions, (e) =>
+                 {
+                     WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                 });
+            }
+            else
             {
                 throw new FileNotFoundException($"File {Path} does not exist.");
             }

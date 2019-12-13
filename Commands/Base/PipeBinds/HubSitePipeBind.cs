@@ -2,56 +2,107 @@
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using System;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class HubSitePipeBind
     {
-        private readonly Guid _id;
-        private readonly string _url;
-        private readonly Microsoft.SharePoint.Client.Site _site;
+        /// <summary>
+        /// Unique identifier of the hub site
+        /// </summary>
+        public Guid Id { get; }
+
+        /// <summary>
+        /// Url of the hub site
+        /// </summary>
+        public string Url { get; }
+
+        /// <summary>
+        /// Site collection instance representing the hub site
+        /// </summary>
+        public Microsoft.SharePoint.Client.Site Site { get; }
+
+        /// <summary>
+        /// HubSiteProperties of the hub site
+        /// </summary>
+        private HubSiteProperties _hubSiteProperties;
 
         public HubSitePipeBind()
         {
-            _id = Guid.Empty;
-            _url = string.Empty;
-            _site = null;
+            Id = Guid.Empty;
+            Url = string.Empty;
+            Site = null;
         }
 
-        public HubSitePipeBind(string url)
+        /// <summary>
+        /// Creates a new HubSitePipeBind based on the Url of a hub site or dhe Id of a hub site
+        /// </summary>
+        /// <param name="identity">Url or Id of a hub site</param>
+        public HubSitePipeBind(string identity)
         {
-            if (string.IsNullOrEmpty(url))
+            if (string.IsNullOrEmpty(identity))
             {
-                throw new ArgumentException("Url");
+                throw new ArgumentException(nameof(Url));
             }
-            Uri uri;
-            try
+            if (Guid.TryParse(identity, out Guid hubSiteId))
             {
-                uri = new Uri(url);
+                Id = hubSiteId;
             }
-            catch (UriFormatException)
+            else
             {
-                throw new ArgumentException("Url");
+                Uri uri;
+                try
+                {
+                    uri = new Uri(identity);
+                }
+                catch (UriFormatException)
+                {
+                    throw new ArgumentException(nameof(Url));
+                }
+                Url = identity;
             }
-            _url = url;
         }
 
         public HubSitePipeBind(Microsoft.SharePoint.Client.Site site)
         {
-            site.EnsureProperties(s => s.Url);
-            _url = site.Url;
-            _site = site;
+            site.EnsureProperties(s => s.Url, s => s.Id);
+            Id = site.Id;
+            Url = site.Url;
+            Site = site;
         }
 
         public HubSitePipeBind(HubSiteProperties properties)
         {
-            _url = properties.SiteUrl;
+            Id = properties.ID;
+            Url = properties.SiteUrl;
+            _hubSiteProperties = properties;
         }
 
-        public string Url => _url;
-
-        public Microsoft.SharePoint.Client.Site Site => _site;
-        
+        /// <summary>
+        /// Gets the HubSiteProperties of the Hub site in this pipebind
+        /// </summary>
+        /// <param name="tenant">Tenant instance to use to retrieve the HubSiteProperties of the Hub in this pipe bind</param>
+        /// <exception cref="Exception">Thrown when the HubSiteProperties cannot be retrieved</exception>
+        /// <returns>HubSiteProperties of the Hub site in this pipebind</returns>
+        public HubSiteProperties GetHubSite(Tenant tenant)
+        {
+            if(_hubSiteProperties != null)
+            {
+                return _hubSiteProperties;
+            }
+            else if(Id != Guid.Empty)
+            {
+                _hubSiteProperties = tenant.GetHubSitePropertiesById(Id);
+                return _hubSiteProperties;
+            }
+            else if(Url != null)
+            {
+                _hubSiteProperties = tenant.GetHubSitePropertiesByUrl(Url);
+                return _hubSiteProperties;
+            }
+            throw new Exception(Resources.SiteNotFound);
+        }
     }
 }
 #endif

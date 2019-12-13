@@ -88,7 +88,8 @@ namespace SharePointPnP.PowerShell.Commands
         private CommunicationSiteParameters _communicationSiteParameters;
         private TeamSiteParameters _teamSiteParameters;
 
-
+        [Parameter(Mandatory = false, HelpMessage = "If specified the cmdlet will wait until the site has been fully created and all site artifacts have been provisioned by SharePoint. Notice that this can take a while.")]
+        public SwitchParameter Wait;
 
         public object GetDynamicParameters()
         {
@@ -130,7 +131,7 @@ namespace SharePointPnP.PowerShell.Commands
                 {
                     creationInformation.HubSiteId = HubSiteId.Id;
                 }
-                if (ParameterSetName == "CommunicationCustomInDesign")
+                if (ParameterSetName == ParameterSet_COMMUNICATIONCUSTOMDESIGN)
                 {
                     creationInformation.SiteDesignId = _communicationSiteParameters.SiteDesignId.Id;
                 }
@@ -139,7 +140,7 @@ namespace SharePointPnP.PowerShell.Commands
                     creationInformation.SiteDesign = _communicationSiteParameters.SiteDesign;
                 }
                 creationInformation.Owner = _communicationSiteParameters.Owner;
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation);
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation,noWait:!Wait);
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
@@ -159,7 +160,7 @@ namespace SharePointPnP.PowerShell.Commands
                 }
                 creationInformation.Owners = _teamSiteParameters.Owners;
 
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation);
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait:!Wait);
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);

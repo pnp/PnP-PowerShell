@@ -1,5 +1,6 @@
 ﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Model;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -33,13 +34,34 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     foreach (ErrorRecord exception in exceptions)
                     {
-                        output.Add(new PnPException() { Message = exception.Exception.Message, Stacktrace = exception.Exception.StackTrace, ScriptLineNumber = exception.InvocationInfo.ScriptLineNumber, InvocationInfo = exception.InvocationInfo });
+
+                        var correlationId = string.Empty;
+                        if (exception.Exception.Data.Contains("CorrelationId"))
+                        {
+                            correlationId = exception.Exception.Data["CorrelationId"].ToString();
+                        }
+                        var timeStampUtc = DateTime.MinValue;
+                        if (exception.Exception.Data.Contains("TimeStampUtc"))
+                        {
+                            timeStampUtc = (DateTime)exception.Exception.Data["TimeStampUtc"];
+                        }
+                        output.Add(new PnPException() { CorrelationId = correlationId, TimeStampUtc = timeStampUtc, Message = exception.Exception.Message, Stacktrace = exception.Exception.StackTrace, ScriptLineNumber = exception.InvocationInfo.ScriptLineNumber, InvocationInfo = exception.InvocationInfo, Exception = exception.Exception });
                     }
                 }
                 else
                 {
                     var exception = (ErrorRecord)exceptions[0];
-                    output.Add(new PnPException() { Message = exception.Exception.Message, Stacktrace = exception.Exception.StackTrace, ScriptLineNumber = exception.InvocationInfo.ScriptLineNumber, InvocationInfo = exception.InvocationInfo });
+                    var correlationId = string.Empty;
+                    if (exception.Exception.Data.Contains("CorrelationId"))
+                    {
+                        correlationId = exception.Exception.Data["CorrelationId"].ToString();
+                    }
+                    var timeStampUtc = DateTime.MinValue;
+                    if (exception.Exception.Data.Contains("TimeStampUtc"))
+                    {
+                        timeStampUtc = (DateTime)exception.Exception.Data["TimeStampUtc"];
+                    }
+                    output.Add(new PnPException() { CorrelationId = correlationId, TimeStampUtc = timeStampUtc, Message = exception.Exception.Message, Stacktrace = exception.Exception.StackTrace, ScriptLineNumber = exception.InvocationInfo.ScriptLineNumber, InvocationInfo = exception.InvocationInfo, Exception = exception.Exception });
                 }
                 WriteObject(output, true);
             }

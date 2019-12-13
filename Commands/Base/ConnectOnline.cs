@@ -502,6 +502,17 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         protected override void ProcessRecord()
         {
+            try
+            {
+                Connect();
+            } catch (Exception ex)
+            {
+                ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
+                throw ex;
+            }
+        }
+        protected void Connect()
+        {
             var latestVersion = SPOnlineConnectionHelper.GetLatestVersion();
             if (!string.IsNullOrEmpty(latestVersion))
             {
@@ -577,6 +588,7 @@ Use -PnPO365ManagementShell instead");
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
 #if !NETSTANDARD2_0
+                WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
                 connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
                 throw new NotImplementedException();
@@ -612,18 +624,28 @@ Use -PnPO365ManagementShell instead");
             {
                 var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
                 var aud = jwtToken.Audiences.FirstOrDefault();
+                var url = Url;
                 if (aud != null)
                 {
-                    Url = aud;
+                    url = aud;
                 }
-                if (Url.ToLower() == "https://graph.microsoft.com")
+                if (url.ToLower() == "https://graph.microsoft.com")
                 {
                     connection = ConnectGraphDeviceLogin(AccessToken);
                 }
                 else
                 {
+                    Uri uri = null;
+                    try
+                    {
+                        uri = new Uri(url);
+                    }
+                    catch
+                    {
+                        uri = new Uri(Url);
+                    }
                     //#if !NETSTANDARD2_0
-                    connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(new Uri(Url), AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+                    connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(uri, AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
                     //#else
                     //throw new NotImplementedException();
                     //#endif

@@ -8,6 +8,10 @@ using SharePointPnP.PowerShell.Commands.Base;
 using System.Collections.Generic;
 using OfficeDevPnP.Core;
 using OfficeDevPnP.Core.Entities;
+using Microsoft.Online.SharePoint.TenantAdministration;
+using System.Net;
+using System.Threading;
+using OfficeDevPnP.Core.Diagnostics;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -43,22 +47,32 @@ namespace SharePointPnP.PowerShell.Commands
         public string Title;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SharingCapabilities? Sharing = null;
+        [Alias("Sharing")]
+        public SharingCapabilities SharingCapability;
+
+        [Parameter(Mandatory = false, HelpMessage = "Determines whether the Add And Customize Pages right is denied on the site collection. For more information about permission levels, see User permissions and permission levels in SharePoint.", ParameterSetName = ParameterSet_PROPERTIES)]
+        [Alias("NoScriptSite")]
+        public SwitchParameter DenyAddAndCustomizePages;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft (https://go.microsoft.com/fwlink/p/?LinkId=242911).", ParameterSetName = ParameterSet_PROPERTIES)]
+        public uint LocaleId;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the storage quota for this site collection in megabytes. This value must not exceed the company's available quota.", ParameterSetName = ParameterSet_PROPERTIES)]
-        public long? StorageMaximumLevel = null;
+        public long StorageMaximumLevel;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the warning level for the storage quota in megabytes. This value must not exceed the values set for the StorageMaximumLevel parameter", ParameterSetName = ParameterSet_PROPERTIES)]
-        public long? StorageWarningLevel = null;
+        public long StorageWarningLevel;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.", ParameterSetName = ParameterSet_PROPERTIES)]
-        public double? UserCodeMaximumLevel = null;
+        [Obsolete("Sandboxed solutions are obsolete")]
+        public double UserCodeMaximumLevel;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the warning level for the resource quota. This value must not exceed the value set for the UserCodeMaximumLevel parameter", ParameterSetName = ParameterSet_PROPERTIES)]
-        public double? UserCodeWarningLevel = null;
+        [Obsolete("Sandboxed solutions are obsolete")]
+        public double UserCodeWarningLevel;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if the site administrator can upgrade the site collection", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SwitchParameter? AllowSelfServiceUpgrade = null;
+        public SwitchParameter AllowSelfServiceUpgrade;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.", ParameterSetName = ParameterSet_PROPERTIES)]
         public List<string> Owners;
@@ -66,14 +80,35 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Sets the lockstate of a site", ParameterSetName = ParameterSet_LOCKSTATE)]
         public SiteLockState? LockState;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies if a site allows custom script or not. See https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f for more information.", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SwitchParameter? NoScriptSite;
-
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the default link permission for the site collection. None - Respect the organization default link permission. View - Sets the default link permission for the site to ""view"" permissions. Edit - Sets the default link permission for the site to ""edit"" permissions", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SharingPermissionType? DefaultLinkPermission;
+        public SharingPermissionType DefaultLinkPermission;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the default link type for the site collection. None - Respect the organization default sharing link type. AnonymousAccess - Sets the default sharing link for this site to an Anonymous Access or Anyone link. Internal - Sets the default sharing link for this site to the ""organization"" link or company shareable link. Direct - Sets the default sharing link for this site to the ""Specific people"" link", ParameterSetName = ParameterSet_PROPERTIES)]
-        public SharingLinkType? DefaultSharingLinkType;
+        public SharingLinkType DefaultSharingLinkType;
+
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, ""contoso.com fabrikam.com"".", ParameterSetName = ParameterSet_PROPERTIES)]
+        public string SharingAllowedDomainList;
+
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies a list of email domains that is blocked for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, ""contoso.com fabrikam.com"".", ParameterSetName = ParameterSet_PROPERTIES)]
+        public string SharingBlockedDomainList;
+
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies if non web viewable files can be downloaded.", ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter BlockDownloadOfNonViewableFiles;
+
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the external sharing mode for domains.", ParameterSetName = ParameterSet_PROPERTIES)]
+        public SharingDomainRestrictionModes SharingDomainRestrictionMode = SharingDomainRestrictionModes.None;
+
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies if comments on site pages are enabled", ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter CommentsOnSitePagesDisabled;
+
+        [Parameter(Mandatory = false, HelpMessage = @"-", ParameterSetName = ParameterSet_PROPERTIES)]
+        public AppViewsPolicy DisableAppViews;
+
+        [Parameter(Mandatory = false, HelpMessage = @"-", ParameterSetName = ParameterSet_PROPERTIES)]
+        public CompanyWideSharingLinksPolicy DisableCompanyWideSharingLinks;
+
+        [Parameter(Mandatory = false, HelpMessage = @"-", ParameterSetName = ParameterSet_PROPERTIES)]
+        public FlowsPolicy DisableFlows;
 
         [Parameter(Mandatory = false, HelpMessage = "Wait for the operation to complete")]
         public SwitchParameter Wait;
@@ -89,18 +124,118 @@ namespace SharePointPnP.PowerShell.Commands
 
             if (!LockState.HasValue)
             {
-                Tenant.SetSiteProperties(Url, title: Title,
-                    sharingCapability: Sharing,
-                    storageMaximumLevel: StorageMaximumLevel,
-                    storageWarningLevel: StorageWarningLevel,
-                    allowSelfServiceUpgrade: AllowSelfServiceUpgrade,
-                    userCodeMaximumLevel: UserCodeMaximumLevel,
-                    userCodeWarningLevel: UserCodeWarningLevel,
-                    noScriptSite: NoScriptSite,
-                    defaultLinkPermission: DefaultLinkPermission,
-                    defaultSharingLinkType: DefaultSharingLinkType,
-                    wait: Wait, timeoutFunction: Wait ? timeoutFunction : null
-                    );
+                var props = GetSiteProperties(Url);
+                var updateRequired = false;
+                if (ParameterSpecified(nameof(SharingAllowedDomainList)))
+                {
+                    props.SharingAllowedDomainList = SharingAllowedDomainList;
+                    updateRequired = true;
+                }
+                if (ParameterSpecified(nameof(SharingBlockedDomainList)))
+                {
+                    props.SharingBlockedDomainList = SharingBlockedDomainList;
+                    updateRequired = true;
+                }
+                if (ParameterSpecified(nameof(SharingDomainRestrictionMode)))
+                {
+                    props.SharingDomainRestrictionMode = SharingDomainRestrictionMode;
+                    updateRequired = true;
+                }
+                if (ParameterSpecified(nameof(LocaleId)))
+                {
+                    props.Lcid = LocaleId;
+                    updateRequired = true;
+                }
+                if(ParameterSpecified(nameof(DenyAddAndCustomizePages)))
+                {
+                    props.DenyAddAndCustomizePages = DenyAddAndCustomizePages ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled;
+                    updateRequired = true;
+                }
+#pragma warning disable CS0618 // Type or member is obsolete
+                if (ParameterSpecified(nameof(UserCodeMaximumLevel)))
+                {
+                    props.UserCodeMaximumLevel = UserCodeMaximumLevel;
+                    updateRequired = true;
+                }
+                if (ParameterSpecified(nameof(UserCodeWarningLevel)))
+                {
+                    props.UserCodeWarningLevel = UserCodeWarningLevel;
+                    updateRequired = true;
+                }
+#pragma warning restore CS0618 // Type or member is obsolete
+                if(ParameterSpecified(nameof(StorageMaximumLevel)))
+                {
+                    props.StorageMaximumLevel = StorageMaximumLevel;
+                    updateRequired = true;
+                }
+                if(ParameterSpecified(nameof(StorageWarningLevel)))
+                {
+                    props.StorageWarningLevel = StorageWarningLevel;
+                    updateRequired = true;
+                }
+                if(ParameterSpecified(nameof(SharingCapability)))
+                {
+                    props.SharingCapability = SharingCapability;
+                    updateRequired = true;
+                }
+                if(ParameterSpecified(nameof(DefaultLinkPermission)))
+                {
+                    props.DefaultLinkPermission = DefaultLinkPermission;
+                    updateRequired = true;
+                }
+                if(ParameterSpecified(nameof(DefaultSharingLinkType)))
+                {
+                    props.DefaultSharingLinkType = DefaultSharingLinkType;
+                    updateRequired = true;
+                }
+
+                if(ParameterSpecified(nameof(BlockDownloadOfNonViewableFiles)))
+                {
+                    props.AllowDownloadingNonWebViewableFiles = !BlockDownloadOfNonViewableFiles;
+                    updateRequired = true;
+                }
+
+                if(ParameterSpecified(nameof(Title)))
+                {
+                    props.Title = Title;
+                    updateRequired = true;
+                }
+
+                if(ParameterSpecified(nameof(CommentsOnSitePagesDisabled)))
+                {
+                    props.CommentsOnSitePagesDisabled = CommentsOnSitePagesDisabled;
+                    updateRequired = true;
+                }
+
+                if(ParameterSpecified(nameof(DisableAppViews)))
+                {
+                    props.DisableAppViews = DisableAppViews;
+                    updateRequired = true;
+                }
+
+                if(ParameterSpecified(nameof(DisableCompanyWideSharingLinks)))
+                {
+                    props.DisableCompanyWideSharingLinks = DisableCompanyWideSharingLinks;
+                    updateRequired = true;
+                }
+
+                if(ParameterSpecified(nameof(DisableFlows)))
+                {
+                    props.DisableFlows = DisableFlows;
+                    updateRequired = true;
+                }
+
+                if (updateRequired)
+                {
+                    var op = props.Update();
+                    ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+                    ClientContext.ExecuteQueryRetry();
+
+                    if(Wait)
+                    {
+                        WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
+                    }
+                }
 
                 if (Owners != null && Owners.Count > 0)
                 {
@@ -115,6 +250,11 @@ namespace SharePointPnP.PowerShell.Commands
             }
         }
 
+        private SiteProperties GetSiteProperties(string url)
+        {
+            return Tenant.GetSitePropertiesByUrl(url, true);
+        }
+
         private bool TimeoutFunction(TenantOperationMessage message)
         {
             if (message == TenantOperationMessage.SettingSiteProperties || message == TenantOperationMessage.SettingSiteLockState)
@@ -122,6 +262,35 @@ namespace SharePointPnP.PowerShell.Commands
                 Host.UI.Write(".");
             }
             return Stopping;
+        }
+
+        private bool WaitForIsComplete(ClientContext context, SpoOperation op, Func<TenantOperationMessage, bool> timeoutFunction = null, TenantOperationMessage operationMessage = TenantOperationMessage.None)
+        {
+            bool succeeded = true;
+            while (!op.IsComplete)
+            {
+                if (timeoutFunction != null && timeoutFunction(operationMessage))
+                {
+                    succeeded = false;
+                    break;
+                }
+                Thread.Sleep(op.PollingInterval);
+
+                op.RefreshLoad();
+                if (!op.IsComplete)
+                {
+                    try
+                    {
+                        context.ExecuteQueryRetry();
+                    }
+                    catch (WebException)
+                    {
+                        // Context connection gets closed after action completed.
+                        // Calling ExecuteQuery again returns an error which can be ignored
+                    }
+                }
+            }
+            return succeeded;
         }
 
     }

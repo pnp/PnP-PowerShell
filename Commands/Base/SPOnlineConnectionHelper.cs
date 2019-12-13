@@ -415,19 +415,24 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
 
-            if (certificateFromFile)
-            {
-                CleanupCryptoMachineKey(certificate);
-            }
+            //if (certificateFromFile)
+            //{
+            //    // we keep track of the 
+            //    CleanupCryptoMachineKey(certificate);
+            //}
 
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
-
+            if (certificateFromFile)
+            {
+                spoConnection.CertFile = certificate;
+            }
             return spoConnection;
+
         }
 
-        private static void CleanupCryptoMachineKey(X509Certificate2 certificate)
+        internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
         {
             var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
             string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;

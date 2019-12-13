@@ -19,11 +19,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
     [CmdletHelp("Exports one or more lists to provisioning template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-        Code = @"PS:> Export-PnPProvisioningTemplate -Out template.xml -List ""Documents""",
+        Code = @"PS:> Export-PnPListToProvisioningTemplate -Out template.xml -List ""Documents""",
         Remarks = "Extracts a list to a new provisioning template including the list specified by title or ID.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Export-PnPProvisioningTemplate -Out template.pnp -List ""Documents"",""Events""",
+        Code = @"PS:> Export-PnPListToProvisioningTemplate -Out template.pnp -List ""Documents"",""Events""",
         Remarks = "Extracts a list to a new provisioning template Office Open XML file, including the lists specified by title or ID.",
         SortOrder = 2)]
     public class ExportListToProvisioningTemplate : PnPWebCmdlet

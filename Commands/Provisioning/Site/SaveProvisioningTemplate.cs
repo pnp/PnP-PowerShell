@@ -101,7 +101,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         private void ProcessFiles(string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
         {
-            var templateFile = ReadProvisioningTemplate.LoadProvisioningTemplateFromFile(templateFileName, null);
+            var templateFile = ReadProvisioningTemplate.LoadProvisioningTemplateFromFile(templateFileName, null, (e) =>
+            {
+                WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+            });
             if (Template.Tenant?.AppCatalog != null)
             {
                 foreach (var app in Template.Tenant.AppCatalog.Packages)
