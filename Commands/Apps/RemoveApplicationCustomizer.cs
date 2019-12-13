@@ -13,7 +13,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     [Cmdlet(VerbsCommon.Remove, "PnPApplicationCustomizer", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
     [CmdletHelp("Removes a SharePoint Framework client side extension application customizer",
         "Removes a SharePoint Framework client side extension application customizer by removing a user custom action from a web or sitecollection",
-        Category = CmdletHelpCategory.Apps)]
+        Category = CmdletHelpCategory.Apps,
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(Code = @"PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", 
                    Remarks = @"Removes the custom action representing the client side extension registration with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.", 
                    SortOrder = 1)]
@@ -31,8 +32,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = true, HelpMessage = "The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be removed", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
         public GuidPipeBind ClientSideComponentId;
 
-        [Parameter(Mandatory = false, HelpMessage = "Define if the CustomAction representing the client side extension registration is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection.")]
-        public CustomActionScope Scope = CustomActionScope.Web;
+        [Parameter(Mandatory = false, HelpMessage = "Define if the CustomAction representing the client side extension registration is to be found at the web or site collection scope. Specify All to allow deletion from either web or site collection (default).")]
+        public CustomActionScope Scope = CustomActionScope.All;
 
         [Parameter(Mandatory = false, HelpMessage = "Use the -Force flag to bypass the confirmation question")]
         public SwitchParameter Force;

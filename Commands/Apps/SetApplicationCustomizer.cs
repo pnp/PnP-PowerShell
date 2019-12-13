@@ -12,7 +12,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     [Cmdlet(VerbsCommon.Set, "PnPApplicationCustomizer", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
     [CmdletHelp("Updates a SharePoint Framework client side extension application customizer",
         "Updates a SharePoint Framework client side extension application customizer by updating its custom action. Only the properties that will be provided will be updated. Others will remain as they are.",
-        Category = CmdletHelpCategory.Apps)]
+        Category = CmdletHelpCategory.Apps,
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(Code = @"PS:> Set-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", 
                    Remarks = @"Updates the custom action representing the client side extension registration with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.", 
                    SortOrder = 1)]

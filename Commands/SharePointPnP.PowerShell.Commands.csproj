@@ -541,6 +541,7 @@
     <Compile Include="Admin\GetHomeSite.cs" />
     <Compile Include="Admin\EnableCommSite.cs" />
     <Compile Include="Apps\AddApplicationCustomizer.cs" />
+    <Compile Include="Apps\GetApplicationCustomizer.cs" />
     <Compile Include="Apps\SetApplicationCustomizer.cs" />
     <Compile Include="Apps\RemoveApplicationCustomizer.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />

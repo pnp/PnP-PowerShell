@@ -11,7 +11,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     [Cmdlet(VerbsCommon.Add, "PnPApplicationCustomizer")]
     [CmdletHelp("Adds a SharePoint Framework client side extension application customizer",
         "Adds a SharePoint Framework client side extension application customizer by registering a user custom action to a web or sitecollection",
-        Category = CmdletHelpCategory.Apps)]
+        Category = CmdletHelpCategory.Apps,
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(Code = @"Add-PnPApplicationCustomizer -Title ""CollabFooter"" -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties ""{`""sourceTermSet`"":`""PnP-CollabFooter-SharedLinks`"",`""personalItemsStorageProperty`"":`""PnP-CollabFooter-MyLinks`""}",
     Remarks = @"Adds a new application customizer to the current web. This requires that a SharePoint Framework solution has been deployed containing the application customizer specified in its manifest. Be sure to run Install-PnPApp before trying this cmdlet on a site.",
     SortOrder = 1)]
