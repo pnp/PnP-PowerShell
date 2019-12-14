@@ -6,7 +6,6 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Extensions;
 
 namespace SharePointPnP.PowerShell.Commands.RecycleBin
 {
@@ -14,7 +13,8 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
     [CmdletHelp("Returns the items in the recycle bin from the context",
         Category = CmdletHelpCategory.RecycleBin,
         OutputType = typeof(RecycleBinItem),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.recyclebinitem.aspx")]
+        SupportedPlatform = CmdletSupportedPlatform.All,
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee541897(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Get-PnPRecycleBinItem",
         Remarks = "Returns all items in both the first and the second stage recycle bins in the current site collection",
