@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - When using commands that utilize the Graph API but not being connected to one of the Graph API Connect-PnPOnline methods, it would throw a NullReferenceException. It will now throw a cleaner exception indicating you should connect with the Graph API first. [PR2395](https://github.com/SharePoint/PnP-PowerShell/pull/2395)
 - Fixed an issue where using Get-PnPUser -WithRightsAssigned would not return the proper users with actually having access to that site [PR1685](https://github.com/SharePoint/PnP-PowerShell/pull/1685)
 - Fixed an issue when using ConvertTo-PnPClientSidePage to convert Delve Blog posts that it would throw a nullreference exception in some scenarios [PR2411](https://github.com/SharePoint/PnP-PowerShell/pull/2411)
+- Fixed an issue using `Add-PnPDataRowsToProvisioningTemp` to add data from a list containing a multi choice to a PnP Provisioning Template where the data would be shown as `System.String[]` instead of the actual data [PR2064](https://github.com/SharePoint/PnP-PowerShell/pull/2064)
 
 ### Contributors
 - Koen Zomers [koenzomers]
@@ -32,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Rene Modery [modery]
 - Krystian Niepsuj [MrDoNotBreak]
 - Piotr Siatka [siata13]
+- Heinrich Ulbricht [heinrich-ulbricht]
 
 ## [3.16.1912.0]
 
