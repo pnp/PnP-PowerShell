@@ -7,7 +7,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPLabel")]
-    [CmdletHelp("Sets a label/tag on the specified list or library", Category = CmdletHelpCategory.InformationManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
+    [CmdletHelp("Sets a label/tag on the specified list or library. Use Reset-PnPLabel to remove the label again.", Category = CmdletHelpCategory.InformationManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Set-PnPLabel  -List ""Demo List"" -Label ""Project Documentation""",
        Remarks = @"This sets an O365 label on the specified list or library. ", SortOrder = 1)]
