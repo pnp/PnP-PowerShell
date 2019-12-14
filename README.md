@@ -6,11 +6,10 @@ This solution contains a library of PowerShell commands that allows you to perfo
 ![SharePoint Patterns and Practices](https://devofficecdn.azureedge.net/media/Default/PnP/sppnp.png)
   
 ### Applies to ###
--  Sharepoint Online (Multi Tenant) - Office 365 Multi Tenant (MT)
--  Sharepoint Online (Single Tenant) -Office 365 Dedicated (D)
--  SharePoint 2013 on-premises
--  SharePoint 2016 on-premises
+-  Sharepoint Online (Multi Tenant & Dedicated)
 -  SharePoint 2019 on-premises
+-  SharePoint 2016 on-premises
+-  SharePoint 2013 on-premises
 
 ### Prerequisites ###
 In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
@@ -45,7 +44,7 @@ If you main OS is Windows 10, or if you have [PowerShellGet](https://github.com/
 
 In order to install the cmdlets when you get this error specify the -SkipPublisherCheck switch with the Install-Module cmdlet, e.g. ```Install-Module SharePointPnPPowerShellOnline -SkipPublisherCheck -AllowClobber```
 
-## 2. Downloading the Files directly.
+## 2. Downloading the Files directly
 
 You can download the setup files from the [releases](https://github.com/officedev/pnp-powershell/releases) section of the PnP PowerShell repository. These files will up be updated on a monthly basis. Run the install and restart any open instances of PowerShell to use the cmdlets.
 
@@ -83,7 +82,7 @@ Connect-PnPOnline –Url https://yoursite.sharepoint.com –UseWebLogin
 To view all cmdlets, enter:
 
 ```powershell
-Get-Command -Module *PnP*
+Get-Command -Module SharePointPnPPowerShell*
 ```
 
 At the following links you will find a few videos on how to get started with the cmdlets:
