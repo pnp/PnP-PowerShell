@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added option to use Connect-PnPOnline with a base64 encoded private key for use in i.e. PnP PowerShell within an Azure Function v1 and an option to provide a certificate reference for use in i.e. Azure Function v2 [PR2201](https://github.com/SharePoint/PnP-PowerShell/pull/2201)
 - Added option to use Connect-PnPOnline with a public key certificate for use in i.e. Azure Runbooks [PR2292](https://github.com/SharePoint/PnP-PowerShell/pull/2292)
 - Added option -RowLimit to Get-PnPRecycleBinItem to avoid getting throttled on full recycle bins [PR2393](https://github.com/SharePoint/PnP-PowerShell/pull/2393)
+- Added `-WriteToConsole` option to `Set-PnPTraceLog` to allow writing trace listener output from the PnP Templating commands to both the console and to a file. Doesn't work for .NET Core. [PR2161](https://github.com/SharePoint/PnP-PowerShell/pull/2161)
 
 ### Changed 
 
@@ -30,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - Rene Modery [Rene Modery]
 - Krystian Niepsuj [MrDoNotBreak]
+- Piotr Siatka [siata13]
 
 ## [3.16.1912.0]
 
