@@ -26,14 +26,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed an issue using `Add-PnPDataRowsToProvisioningTemp` to add data from a list containing a multi choice to a PnP Provisioning Template where the data would be shown as `System.String[]` instead of the actual data [PR2064](https://github.com/SharePoint/PnP-PowerShell/pull/2064)
 
 ### Contributors
-- Koen Zomers [koenzomers]
-- Robin Meure [robinmeure]
-- Michael Rees Pullen [mrpullen]
-- Giacomo Pozzoni [jackpoz]
-- Rene Modery [modery]
-- Krystian Niepsuj [MrDoNotBreak]
-- Piotr Siatka [siata13]
-- Heinrich Ulbricht [heinrich-ulbricht]
+- Koen Zomers \[[koenzomers](https://github.com/koenzomers)\]
+- Robin Meure \[[robinmeure](https://github.com/robinmeure)\]
+- Michael Rees Pullen \[[mrpullen](https://github.com/mrpullen)\]
+- Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
+- Rene Modery \[[modery](https://github.com/modery)\]
+- Krystian Niepsuj \[[MrDoNotBreak](https://github.com/MrDoNotBreak)\]
+- Piotr Siatka \[[siata13](https://github.com/siata13)\]
+- Heinrich Ulbricht \[[heinrich-ulbricht](https://github.com/heinrich-ulbricht)\]
 
 ## [3.16.1912.0]
 
