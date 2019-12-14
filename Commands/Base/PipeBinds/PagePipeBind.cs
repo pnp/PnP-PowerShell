@@ -139,14 +139,14 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                         {
                             query = new CamlQuery
                             {
-                                ViewXml = string.Format(CAMLQueryForBlogByTitle, this.name)
+                                ViewXml = string.Format(CAMLQueryForBlogByTitle, System.Text.Encodings.Web.HtmlEncoder.Default.Encode(this.name))
                             };
                         }
                         else
                         {
                             query = new CamlQuery
                             {
-                                ViewXml = string.Format(CAMLQueryByExtensionAndName, this.name)
+                                ViewXml = string.Format(CAMLQueryByExtensionAndName, System.Text.Encodings.Web.HtmlEncoder.Default.Encode(this.name))
                             };
                         }
 
