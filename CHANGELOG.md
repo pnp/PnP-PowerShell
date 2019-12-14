@@ -29,7 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Robin Meure [robinmeure]
 - Michael Rees Pullen [mrpullen]
 - Giacomo Pozzoni [jackpoz]
-- Rene Modery [Rene Modery]
+- Rene Modery [modery]
 - Krystian Niepsuj [MrDoNotBreak]
 - Piotr Siatka [siata13]
 
