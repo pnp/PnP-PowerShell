@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.17.2001.0] (not yet released)
+
+### Added
+- Add/Remove/Set/Get-PnPApplicationCustomizer commands to allow working with SharePoint Framework Application Customizer Extensions [PR2312](https://github.com/SharePoint/PnP-PowerShell/pull/2312)
+- Ability to pipe in a result from Get-PnPFolder to Get-PnPFolderItem using the -Identity parameter [PR2279](https://github.com/SharePoint/PnP-PowerShell/pull/2279)
+- Added ability to pipe Get-PnPUnifiedGroup to Get-PnPUnifiedGroupOwners and Get-PnPUnifiedGroupMembers [PR2208](https://github.com/SharePoint/PnP-PowerShell/pull/2208)
+- Added permissions required for each of the \*-PnPUnifiedGroup\* commands in the Azure Active Directory App Registration to the help text of the commands [PR2205](https://github.com/SharePoint/PnP-PowerShell/pull/2205)
+- Added option to use Connect-PnPOnline with a base64 encoded private key for use in i.e. PnP PowerShell within an Azure Function v1 and an option to provide a certificate reference for use in i.e. Azure Function v2 [PR2201](https://github.com/SharePoint/PnP-PowerShell/pull/2201)
+- Added option to use Connect-PnPOnline with a public key certificate for use in i.e. Azure Runbooks [PR2292](https://github.com/SharePoint/PnP-PowerShell/pull/2292)
+- Added option -RowLimit to Get-PnPRecycleBinItem to avoid getting throttled on full recycle bins [PR2393](https://github.com/SharePoint/PnP-PowerShell/pull/2393)
+- Added `-WriteToConsole` option to `Set-PnPTraceLog` to allow writing trace listener output from the PnP Templating commands to both the console and to a file. Doesn't work for .NET Core. [PR2161](https://github.com/SharePoint/PnP-PowerShell/pull/2161)
+- Added `Reset-PnPLabel` command to allow removal of an Office 365 Retention Label from a list [PR2233](https://github.com/SharePoint/PnP-PowerShell/pull/2233)
+
+### Changed 
+
+- Fixes issues with connections not properly closing under some conditions when using Disconnect-PnPOnline [PR2207](https://github.com/SharePoint/PnP-PowerShell/pull/2207)
+- When using commands that utilize the Graph API but not being connected to one of the Graph API Connect-PnPOnline methods, it would throw a NullReferenceException. It will now throw a cleaner exception indicating you should connect with the Graph API first. [PR2395](https://github.com/SharePoint/PnP-PowerShell/pull/2395)
+- Fixed an issue where using Get-PnPUser -WithRightsAssigned would not return the proper users with actually having access to that site [PR1685](https://github.com/SharePoint/PnP-PowerShell/pull/1685)
+- Fixed an issue when using ConvertTo-PnPClientSidePage to convert Delve Blog posts that it would throw a nullreference exception in some scenarios [PR2411](https://github.com/SharePoint/PnP-PowerShell/pull/2411)
+- Fixed an issue using `Add-PnPDataRowsToProvisioningTemp` to add data from a list containing a multi choice to a PnP Provisioning Template where the data would be shown as `System.String[]` instead of the actual data [PR2064](https://github.com/SharePoint/PnP-PowerShell/pull/2064)
+
+### Contributors
+- Koen Zomers \[[koenzomers](https://github.com/koenzomers)\]
+- Robin Meure \[[robinmeure](https://github.com/robinmeure)\]
+- Michael Rees Pullen \[[mrpullen](https://github.com/mrpullen)\]
+- Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
+- Rene Modery \[[modery](https://github.com/modery)\]
+- Krystian Niepsuj \[[MrDoNotBreak](https://github.com/MrDoNotBreak)\]
+- Piotr Siatka \[[siata13](https://github.com/siata13)\]
+- Heinrich Ulbricht \[[heinrich-ulbricht](https://github.com/heinrich-ulbricht)\]
+- Dan Cecil \[[danielcecil](https://github.com/danielcecil)\]
+
 ## [3.16.1912.0]
 
 ### Added
