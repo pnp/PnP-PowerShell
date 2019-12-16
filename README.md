@@ -15,7 +15,7 @@ This solution contains a library of PowerShell commands that allows you to perfo
 ### Prerequisites ###
 In order to generate the Cmdlet help you need to have Windows Management Framework installed.
 
-If it is not [pre-installed on your operating system](https://docs.microsoft.com/powershell/wmf/overview#wmf-availability-across-windows-operating-systems), you can find installation instructions in the [WMF release notes.](https://docs.microsoft.com/powershell/wmf/overview#wmf-release-notes)
+If it is not [pre-installed on your operating system](https://docs.microsoft.com/powershell/scripting/wmf/overview#wmf-availability-across-windows-operating-systems), you can find installation instructions in the [WMF release notes.](https://docs.microsoft.com/powershell/scripting/wmf/overview#wmf-release-notes)
   
 ### Solution ###
 Solution | Author(s)
