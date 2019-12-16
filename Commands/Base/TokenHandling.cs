@@ -9,8 +9,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
     {
         internal static string AcquireToken(string resource, string scope = null)
         {
-            if (SPOnlineConnection.CurrentConnection == null)
-                return null;
+            if(SPOnlineConnection.CurrentConnection == null)
+            {
+                return null;            
+            }
 
             var tenantId = TenantExtensions.GetTenantIdByUrl(SPOnlineConnection.CurrentConnection.Url);
 
