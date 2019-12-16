@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        SortOrder = 2)]
     public class GetUnifiedGroupOwners : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The Identity of the Office 365 Group.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Office 365 Group.")]
         public UnifiedGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
