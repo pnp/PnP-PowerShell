@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
        Code = @"PS:> Reset-PnPLabel  -List ""Demo List"" -SyncToItems $true",
        Remarks = @"This resets an O365 label on the specified list or library to None and resets the label on all the items in the list and library except Folders and where the label has been manually or previously automatically assigned", SortOrder = 2)]
 
-    public class ResetListComplianceTag : PnPWebCmdlet
+    public class ResetLabel : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list")]
         public ListPipeBind List;
