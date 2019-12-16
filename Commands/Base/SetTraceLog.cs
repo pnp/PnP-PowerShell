@@ -33,6 +33,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The path and filename of the file to write the trace log to.")]
         public string LogFile;
 
+        [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "Turn on console trace output.")]
+        public SwitchParameter WriteToConsole;
+
         [Parameter(Mandatory = false, ParameterSetName = "On", HelpMessage = "The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.")]
         public OfficeDevPnP.Core.Diagnostics.LogLevel Level = OfficeDevPnP.Core.Diagnostics.LogLevel.Information;
 
@@ -48,76 +51,74 @@ namespace SharePointPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = "Off", HelpMessage = "Turn off tracing to log file.")]
         public SwitchParameter Off;
 
-        private const string Listenername = "PNPPOWERSHELLTRACELISTENER";
+        private const string FileListenername = "PNPPOWERSHELLFILETRACELISTENER";
+        private const string ConsoleListenername = "PNPPOWERSHELLCONSOLETRACELISTENER";
         protected override void ProcessRecord()
         {
 
             if (ParameterSetName == "On")
             {
-                var existingListener = Trace.Listeners[Listenername];
+                // Setup Console Listener if Console switch has been specified or No file LogFile parameter has been set
+                if (WriteToConsole.IsPresent || string.IsNullOrEmpty(LogFile))
+                {
+                    RemoveListener(ConsoleListenername);
+#if !NETSTANDARD2_0
+                    ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
+                    consoleListener.Name = ConsoleListenername;
+                    Trace.Listeners.Add(consoleListener);
+                    OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
+#else
+                    WriteWarning("Console logging not supported");
+#endif
+                }
+
+                // Setup File Listener
+                if (!string.IsNullOrEmpty(LogFile))
+                {
+                    RemoveListener(FileListenername);
+
+                    if (!System.IO.Path.IsPathRooted(LogFile))
+                    {
+                        LogFile = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogFile);
+                    }
+                    // Create DelimitedListTraceListener in case Delimiter parameter has been specified, if not create TextWritterTraceListener
+                    TraceListener listener = !string.IsNullOrEmpty(Delimiter) ?
+                        new DelimitedListTraceListener(LogFile) { Delimiter = Delimiter, TraceOutputOptions = TraceOptions.DateTime } :
+                        new TextWriterTraceListener(LogFile);
+
+                    listener.Name = FileListenername;
+                    Trace.Listeners.Add(listener);
+                    OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
+                }
+
+                Trace.AutoFlush = AutoFlush;
+                Trace.IndentSize = IndentSize;
+            }
+            else
+            {
+                Trace.Flush();
+                RemoveListener(ConsoleListenername);
+                RemoveListener(FileListenername);
+            }
+        }
+
+        private void RemoveListener(string listenerName)
+        {
+            try
+            {
+                var existingListener = Trace.Listeners[listenerName];
                 if (existingListener != null)
                 {
                     existingListener.Flush();
                     existingListener.Close();
                     Trace.Listeners.Remove(existingListener);
                 }
-
-                if (!string.IsNullOrEmpty(LogFile))
-                {
-                    if (!System.IO.Path.IsPathRooted(LogFile))
-                    {
-                        LogFile = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogFile);
-                    }
-                    if (!string.IsNullOrEmpty(Delimiter))
-                    {
-                        DelimitedListTraceListener delimitedListener = new DelimitedListTraceListener(LogFile)
-                        {
-                            Delimiter = Delimiter,
-                            TraceOutputOptions = TraceOptions.DateTime,
-                            Name = Listenername
-                        };
-                        Trace.Listeners.Add(delimitedListener);
-                        OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
-                    }
-                    else
-                    {
-                        TextWriterTraceListener listener = new TextWriterTraceListener(LogFile);
-                        listener.Name = Listenername;
-                        Trace.Listeners.Add(listener);
-                        OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
-                    }
-                }
-                else
-                {
-#if !NETSTANDARD2_0
-                    ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
-                    consoleListener.Name = Listenername;
-                    Trace.Listeners.Add(consoleListener);
-                    OfficeDevPnP.Core.Diagnostics.Log.LogLevel = Level;
-#else   
-                    WriteWarning("Console logging not supported");
-#endif
-                }
-                Trace.AutoFlush = AutoFlush;
-                Trace.IndentSize = IndentSize;
             }
-            else
+            catch (Exception)
             {
-                try
-                {
-                    Trace.Flush();
-                    var traceListener = Trace.Listeners[Listenername];
-                    if (traceListener != null)
-                    {
-                        traceListener.Close();
-                        Trace.Listeners.Remove(Listenername);
-                    }
-                }
-                catch (Exception)
-                {
-                    // ignored
-                }
+                // ignored
             }
+            
         }
     }
 }
