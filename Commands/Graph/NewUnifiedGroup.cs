@@ -1,20 +1,15 @@
-﻿using OfficeDevPnP.Core.Entities;
-using OfficeDevPnP.Core.Framework.Graph;
-using OfficeDevPnP.Core.Utilities;
+﻿using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Properties;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPUnifiedGroup")]
-    [CmdletHelp("Creates a new Office 365 Group (aka Unified Group)",
+    [CmdletHelp("Creates a new Office 365 Group (aka Unified Group). Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(

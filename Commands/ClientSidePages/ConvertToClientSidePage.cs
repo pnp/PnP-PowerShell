@@ -250,7 +250,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
-            if (page == null && !this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
+            if (page == null && (Folder == null || !this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
             }

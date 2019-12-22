@@ -672,7 +672,43 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.ADFS);
-            spoConnection.ConnectionMethod = Model.ConnectionMethod.ADFS;
+            spoConnection.ConnectionMethod = ConnectionMethod.ADFS;
+            return spoConnection;
+        }
+
+        internal static SPOnlineConnection InstantiateAdfsCertificateConnection(Uri url, string serialNumber, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
+        {
+            var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+
+            string adfsHost;
+            string adfsRelyingParty;
+            OfficeDevPnP.Core.AuthenticationManager.GetAdfsConfigurationFromTargetUri(url, loginProviderName, out adfsHost, out adfsRelyingParty);
+
+            if (string.IsNullOrEmpty(adfsHost) || string.IsNullOrEmpty(adfsRelyingParty))
+            {
+                throw new Exception("Cannot retrieve ADFS settings.");
+            }
+
+            var context = authManager.GetADFSCertificateMixedAuthenticationContext(url.ToString(), serialNumber, adfsHost, adfsRelyingParty);
+
+            context.ApplicationName = Properties.Resources.ApplicationName;
+            context.RequestTimeout = requestTimeout;
+#if !ONPREMISES
+            context.DisableReturnValueCache = true;
+#elif SP2016 || SP2019
+            context.DisableReturnValueCache = true;
+#endif
+            var connectionType = ConnectionType.OnPrem;
+
+            if (skipAdminCheck == false)
+            {
+                if (IsTenantAdminSite(context))
+                {
+                    connectionType = ConnectionType.TenantAdmin;
+                }
+            }
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.ADFS);
+            spoConnection.ConnectionMethod = ConnectionMethod.ADFS;
             return spoConnection;
         }
 #endif

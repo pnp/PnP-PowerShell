@@ -6,6 +6,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
@@ -145,10 +146,28 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
                     }
                     else if (Type == FieldType.Calculated)
                     {
+                        // Either set the ResultType as input parameter or set it to the default Text
+                        if (!string.IsNullOrEmpty(calculatedFieldParameters.ResultType))
+                        {
+                            fieldCI.AdditionalAttributes = new List<KeyValuePair<string, string>>()
+                            {
+                                new KeyValuePair<string, string>("ResultType", calculatedFieldParameters.ResultType)
+                            };
+                        }
+                        else
+                        {
+                            fieldCI.AdditionalAttributes = new List<KeyValuePair<string, string>>()
+                            {
+                                new KeyValuePair<string, string>("ResultType", "Text")
+                            };
+                        }
+
+                        fieldCI.AdditionalChildNodes = new List<KeyValuePair<string, string>>()
+                        {
+                            new KeyValuePair<string, string>("Formula", calculatedFieldParameters.Formula)
+                        };
+
                         f = list.CreateField<FieldCalculated>(fieldCI);
-                        ((FieldCalculated)f).Formula = calculatedFieldParameters.Formula;
-                        f.Update();
-                        ClientContext.ExecuteQueryRetry();
                     }
                     else
                     {
@@ -343,6 +362,9 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
         {
             [Parameter(Mandatory = true)]
             public string Formula;
+
+            [Parameter(Mandatory = false)]
+            public string ResultType;
         }
 
     }
