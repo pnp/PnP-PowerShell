@@ -14,9 +14,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Bumped to .Net 4.6.1 as minimal .Net runtime version
+- Changed the way properties are being set in Set-PnPField to support setting field specific properties such as the Lookup list on a Lookup field [PR2212](https://github.com/SharePoint/PnP-PowerShell/pull/2212)
 
 ### Contributors
 - Gautam Sheth \[[gautamdsheth](https://github.com/gautamdsheth)\]
+- Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
 
 ## [3.16.1912.0]
 
