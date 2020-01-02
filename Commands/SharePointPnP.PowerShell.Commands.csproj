@@ -550,7 +550,7 @@
     <Compile Include="Apps\RemoveApplicationCustomizer.cs" />
     <Compile Include="Admin\GetOrgNewsSite.cs" />
     <Compile Include="Admin\RemoveOrgNewsSite.cs" />
-    <Compile Include="Admin\SetOrgNewsSite.cs" />
+    <Compile Include="Admin\AddOrgNewsSite.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
