@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online [PR2060](https://github.com/SharePoint/PnP-PowerShell/pull/2060)
+- Add/Remove/Get-PnPOrgAssetsLibrary commands to set document libraries as organizational asset sources on SharePoint Online [PR2179](https://github.com/SharePoint/PnP-PowerShell/pull/2179)
 
 ### Changed
 
