@@ -7,7 +7,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSubSite", SupportsShouldProcess = true)]
-    [Alias("New-PnPProvisioningTeamNoGroupSubSite")]
     [CmdletHelp("Creates a team site subsite with no Office 365 group object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -43,11 +42,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningteamnogroupsubsite")
-            {
-                WriteWarning("New-PnPProvisioningTeamNoGroupSubSite has been deprecated. Use New-PnPTenantSequenceTeamNoGroupSubSite instead.");
-            }
-
             var site = new TeamNoGroupSubSite()
             {
                 Url = Url,

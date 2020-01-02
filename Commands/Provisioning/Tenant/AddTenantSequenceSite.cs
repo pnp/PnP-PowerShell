@@ -7,12 +7,11 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantSequenceSite", SupportsShouldProcess = true)]
-    [Alias("Add-PnPProvisioningSite")]
     [CmdletHelp("Adds a existing tenant sequence site object to a tenant template",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Add-PnPTenantSequenceSite -Site $myteamsite -Sequence $mysequence",
-       Remarks = "Adds an existing site object to an existing hierarchy sequence",
+       Remarks = "Adds an existing site object to an existing template sequence",
         SortOrder = 1)]
     public class AddTenantSequenceSite : PSCmdlet
     {
@@ -24,10 +23,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "add-pnpprovisioningsite")
-            {
-                WriteWarning("Add-PnPProvisioningSite has been deprecated. Use Add-PnPTenantSequenceSite instead.");
-            }
             Sequence.SiteCollections.Add(Site.Site);
             WriteObject(Sequence);
         }

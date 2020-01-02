@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
     <AssemblyName>SharePointPnP.PowerShell.Online.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -136,6 +136,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>
@@ -542,6 +543,13 @@
     <Compile Include="Admin\RemoveOrgAssetsLibrary.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
     <Compile Include="Admin\EnableCommSite.cs" />
+    <Compile Include="Admin\GetHubSiteChild.cs" />
+    <Compile Include="Admin\GetTenantId.cs" />
+    <Compile Include="Base\BasePSCmdlet.cs" />
+    <Compile Include="Apps\AddApplicationCustomizer.cs" />
+    <Compile Include="Apps\GetApplicationCustomizer.cs" />
+    <Compile Include="Apps\SetApplicationCustomizer.cs" />
+    <Compile Include="Apps\RemoveApplicationCustomizer.cs" />
     <Compile Include="Admin\GetOrgAssetsLibrary.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
@@ -587,6 +595,8 @@
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
     <Compile Include="Base\PipeBinds\AlertPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ApplyConfigurationPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ExtractConfigurationPipeBind.cs" />
     <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
@@ -601,6 +611,7 @@
     <Compile Include="Base\PipeBinds\SitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteScriptPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
+    <Compile Include="Base\RequestAccessToken.cs" />
     <Compile Include="Base\TokenHandling.cs" />
     <Compile Include="ClientSidePages\ClientSidePageTransformatorLogType.cs" />
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
@@ -609,11 +620,16 @@
     <Compile Include="Enums\HttpRequestMethod.cs" />
     <Compile Include="Enums\InitializationType.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
+    <Compile Include="Enums\SearchBoxInNavBar.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
+    <Compile Include="Graph\GetDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\RemoveDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\RestoreDeletedUnifiedGroup.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
+    <Compile Include="Files\SetFolderPermission.cs" />
     <Compile Include="Model\PnPException.cs" />
     <Compile Include="Model\ProvisionedSite.cs" />
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
@@ -642,6 +658,7 @@
     <Compile Include="Principals\AddAlert.cs" />
     <Compile Include="Provisioning\Site\ExportListToProvisioningTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ApplyTenantTemplate.cs" />
+    <Compile Include="Provisioning\Tenant\GetTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\ReadTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\SaveTenantTemplate.cs" />
     <Compile Include="Provisioning\Tenant\TestTenantTemplate.cs" />
@@ -661,6 +678,9 @@
     <Compile Include="RecordsManagement\GetInPlaceRecordsManagement.cs" />
     <Compile Include="RecordsManagement\SetListRecordDeclaration.cs" />
     <Compile Include="Search\GetSearchCrawlLog.cs" />
+    <Compile Include="Search\GetSearchSettings.cs" />
+    <Compile Include="Search\SetSearchSettings.cs" />
+    <Compile Include="Enums\SearchSettingsScope.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignTask.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignRunStatus.cs" />
     <Compile Include="SiteDesigns\GetSiteDesignRun.cs" />
@@ -746,8 +766,6 @@
     <Compile Include="Base\GetProperty.cs" />
     <Compile Include="Base\GetAuthenticationRealm.cs" />
     <Compile Include="Base\Constants.cs" />
-    <Compile Include="Base\deprecated\GetAzureADManifestKeyCredentials.deprecated.cs" />
-    <Compile Include="Base\deprecated\ConnectPnPMicrosoftGraph.deprecated.cs" />
     <Compile Include="Base\PipeBinds\DocumentSetPipeBind.cs" />
     <Compile Include="Base\PipeBinds\FeaturePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ListItemPipeBind.cs" />
@@ -798,6 +816,7 @@
     <Compile Include="ClientSidePages\SetClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
     <Compile Include="Site\AddRoleDefinition.cs" />
+    <Compile Include="Site\AddTeamsTeam.cs" />
     <Compile Include="Site\GetRoleDefinition.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />

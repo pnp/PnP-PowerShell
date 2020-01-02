@@ -8,7 +8,6 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantSequenceSite", SupportsShouldProcess = true)]
-    [Alias("Get-PnPProvisioningSite")]
     [CmdletHelp("Returns one ore more sites from a tenant template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
@@ -28,11 +27,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public ProvisioningSitePipeBind Identity;
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "get-pnpprovisioningsite")
-            {
-                WriteWarning("Get-PnPProvisioningSite has been deprecated. Use Get-PnPTenantSequenceSite instead.");
-            }
-
             if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
             {
                 WriteObject(Sequence.SiteCollections, true);

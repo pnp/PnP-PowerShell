@@ -31,30 +31,37 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         {
             var packageName = $"pnp-temporary-request-{System.Guid.NewGuid()}";
             var appCatalog = Tenant.GetAppCatalog();
-            using (var appCatalogContext = ClientContext.Clone(appCatalog))
+            if (appCatalog != null)
             {
-                var list = appCatalogContext.Web.Lists.GetByTitle("Web Api Permission Requests");
-                var itemCI = new ListItemCreationInformation();
-                var item = list.AddItem(itemCI);
-                item["_ows_PackageName"] = packageName;
-                item["_ows_PackageVersion"] = "0.0.0.0";
-                item["_ows_Scope"] = Scope;
-                item["_ows_ResourceId"] = Resource;
-                item.Update();
-                appCatalogContext.ExecuteQueryRetry();
-            }
+                using (var appCatalogContext = ClientContext.Clone(appCatalog))
+                {
+                    var list = appCatalogContext.Web.GetListByUrl("Lists/WebApiPermissionRequests");
+                    var itemCI = new ListItemCreationInformation();
+                    var item = list.AddItem(itemCI);
+                    item["_ows_PackageName"] = packageName;
+                    item["_ows_PackageVersion"] = "0.0.0.0";
+                    item["_ows_Scope"] = Scope;
+                    item["_ows_ResourceId"] = Resource;
+                    item.Update();
+                    appCatalogContext.ExecuteQueryRetry();
+                }
 
-            var servicePrincipal = new SPOWebAppServicePrincipal(ClientContext);
-            var requests = ClientContext.LoadQuery(servicePrincipal.PermissionRequests.Where(r => r.PackageName == packageName));
-            ClientContext.ExecuteQueryRetry();
-            if (requests.Any())
-            {
-                var newRequest = requests.First();
-                var request = servicePrincipal.PermissionRequests.GetById(newRequest.Id);
-                var grant = request.Approve();
-                ClientContext.Load(grant);
+                var servicePrincipal = new SPOWebAppServicePrincipal(ClientContext);
+                var requests = ClientContext.LoadQuery(servicePrincipal.PermissionRequests.Where(r => r.PackageName == packageName));
                 ClientContext.ExecuteQueryRetry();
-                WriteObject(new TenantServicePrincipalPermissionGrant(grant));
+                if (requests.Any())
+                {
+                    var newRequest = requests.First();
+                    var request = servicePrincipal.PermissionRequests.GetById(newRequest.Id);
+                    var grant = request.Approve();
+                    ClientContext.Load(grant);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(new TenantServicePrincipalPermissionGrant(grant));
+                }
+            }
+            else
+            {
+                WriteWarning("Tenant app catalog is not available. You must create the tenant app catalog before executing this command");
             }
         }
     }

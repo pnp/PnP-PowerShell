@@ -13,6 +13,7 @@ using System.Net;
 using System.Reflection;
 using System.Security;
 using File = System.IO.File;
+using System.Security.Cryptography.X509Certificates;
 #if NETSTANDARD2_0
 using System.IdentityModel.Tokens.Jwt;
 #endif
@@ -51,72 +52,86 @@ Make sure to check the SPOManagement, PnPO365ManagementShell and AccessToken par
         Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs",
         Remarks = @"This will prompt for username and password and creates a context using ADFS to authenticate.",
         SortOrder = 5)]
+#if !NETSTANDARD2_0
+    [CmdletExample(
+        Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -UseAdfsCert",
+        Remarks = @"This will enable you to select a certificate to create a context using ADFS to authenticate.",
+        SortOrder = 6)]
+#endif
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -CreateDrive
 PS:> cd SPO:\\
 PS:> dir",
         Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It will also create a SPO:\\ drive you can use to navigate around the site",
-        SortOrder = 6)]
+        SortOrder = 7)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://yourserver -Credentials (Get-Credential) -AuthenticationMode FormsAuthentication",
         Remarks = @"This will prompt you for credentials and creates a context for the other PowerShell commands to use. It assumes your server is configured for Forms Based Authentication (FBA)",
-        SortOrder = 7)]
+        SortOrder = 8)]
 #if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -AppId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -AppSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany",
         Remarks = @"This will authenticate you to the German Azure environment using the German Azure endpoints for authentication",
-        SortOrder = 8)]
+        SortOrder = 9)]
 #endif
 #if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -SPOManagementShell",
         Remarks = @"This will authenticate you using the SharePoint Online Management Shell application",
-        SortOrder = 9)]
+        SortOrder = 10)]
 #endif
 #if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPO365ManagementShell",
         Remarks = @"This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.",
-        SortOrder = 10)]
+        SortOrder = 11)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -PnPO365ManagementShell -LaunchBrowser",
         Remarks = @"This will authenticate you using the PnP O365 Management Shell Multi-Tenant application. A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.",
-        SortOrder = 11)]
+        SortOrder = 12)]
 #endif
 #if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -AccessToken $myaccesstoken",
         Remarks = @"This will authenticate you using the provided access token",
-        SortOrder = 12)]
+        SortOrder = 13)]
 #endif
 #if !ONPREMISES
 #if !NETSTANDARD2_0
     [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -Scopes $arrayOfScopes",
-       Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://graph.microsoft.io/en-us/docs/authorization/permission_scopes",
-       SortOrder = 13)]
+       Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\"",
+       Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://docs.microsoft.com/en-us/graph/permissions-reference",
+       SortOrder = 14)]
 #endif
 #endif
 #if !ONPREMISES
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -AppId '<id>' -AppSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'",
        Remarks = "Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.",
-       SortOrder = 14)]
+       SortOrder = 15)]
     [CmdletExample(
-        Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -PEMCertificate <PEM string> -PEMPrivateKey <PEM string>",
+        Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -CertificatePath c:\\absolute-path\\to\\pnp.pfx -CertificatePassword <if needed>",
         Remarks = "Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.",
-        SortOrder = 15)]
+        SortOrder = 16)]
+    [CmdletExample(
+        Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA",
+        Remarks = "Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.",
+        SortOrder = 17)]
+    [CmdletExample(
+        Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -PEMCertificate <PEM string> -PEMPrivateKey <PEM string> -CertificatePassword <if needed>",
+        Remarks = "Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.",
+        SortOrder = 18)]
 #endif
 #if ONPREMISES
     [CmdletExample(
         Code = @"PS:> certutil.exe -csp 'Microsoft Enhanced RSA and AES Cryptographic Provider' -v -p 'password' -importpfx -user c:\HighTrust.pfx NoRoot
 PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertificate (Get-Item Cert:\CurrentUser\My\<thumbprint>)",
         Remarks = @"Connect to an on-premises SharePoint environment using a high trust certificate, stored in the Personal certificate store of the current user.",
-        SortOrder = 14)]
+        SortOrder = 15)]
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url https://yourserver -ClientId 763d5e60-b57e-426e-8e87-b7258f7f8188 -HighTrustCertificatePath c:\HighTrust.pfx -HighTrustCertificatePassword 'password' -HighTrustCertificateIssuerId 6b9534d8-c2c1-49d6-9f4b-cd415620bca8",
         Remarks = @"Connect to an on-premises SharePoint environment using a high trust certificate stored in a .PFX file.",
-        SortOrder = 15)]
+        SortOrder = 16)]
 #endif
     public class ConnectOnline : PSCmdlet
     {
@@ -186,7 +201,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #endif
         public string Url;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Windows Credential Manager for the correct credentials.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Generic Credentials section of the Windows Credentials in the Windows Credential Manager for the correct credentials.")]
         public CredentialPipeBind Credentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect with the current user credentials")]
@@ -194,6 +209,9 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect to your on-premises SharePoint farm using ADFS")]
         public SwitchParameter UseAdfs;
+
+        [Parameter(Mandatory = false, ParameterSetName = "Main", HelpMessage = "If you want to connect to your SharePoint farm using ADFS with Certificate Authentication")]
+        public SwitchParameter UseAdfsCert;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Authenticate using Kerberos to an on-premises ADFS instance.")]
         public SwitchParameter Kerberos;
@@ -463,7 +481,10 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHWITHSCOPE, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]        
 #endif
 #if ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
@@ -490,6 +511,17 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #endif
 
         protected override void ProcessRecord()
+        {
+            try
+            {
+                Connect();
+            } catch (Exception ex)
+            {
+                ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
+                throw ex;
+            }
+        }
+        protected void Connect()
         {
             var latestVersion = SPOnlineConnectionHelper.GetLatestVersion();
             if (!string.IsNullOrEmpty(latestVersion))
@@ -546,6 +578,22 @@ Use -PnPO365ManagementShell instead");
                 throw new NotImplementedException();
 #endif
             }
+#if !NETSTANDARD2_0
+            else if (UseAdfsCert)
+            {
+                // Modal Dialog to enable a user to select a certificate to use to authenticate against ADFS
+                X509Store store = new X509Store("MY", StoreLocation.CurrentUser);
+                store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+                var certs = X509Certificate2UI.SelectFromCollection(store.Certificates, "Select ADFS User Certificate", "Selec the certificate to use to authenticate to ADFS", X509SelectionFlag.SingleSelection);
+
+                if (certs[0] != null)
+                {
+                    var serialNumber = certs[0].SerialNumber;
+
+                    SPOnlineConnection.CurrentConnection = SPOnlineConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                }
+            }
+#endif
 #if !ONPREMISES
             else if (ParameterSetName == ParameterSet_SPOMANAGEMENT)
             {
@@ -566,6 +614,7 @@ Use -PnPO365ManagementShell instead");
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
 #if !NETSTANDARD2_0
+                WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
                 connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
                 throw new NotImplementedException();
@@ -601,18 +650,28 @@ Use -PnPO365ManagementShell instead");
             {
                 var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
                 var aud = jwtToken.Audiences.FirstOrDefault();
+                var url = Url;
                 if (aud != null)
                 {
-                    Url = aud;
+                    url = aud;
                 }
-                if (Url.ToLower() == "https://graph.microsoft.com")
+                if (url.ToLower() == "https://graph.microsoft.com")
                 {
                     connection = ConnectGraphDeviceLogin(AccessToken);
                 }
                 else
                 {
+                    Uri uri = null;
+                    try
+                    {
+                        uri = new Uri(url);
+                    }
+                    catch
+                    {
+                        uri = new Uri(Url);
+                    }
                     //#if !NETSTANDARD2_0
-                    connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(new Uri(Url), AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+                    connection = SPOnlineConnectionHelper.InitiateAccessTokenConnection(uri, AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
                     //#else
                     //throw new NotImplementedException();
                     //#endif

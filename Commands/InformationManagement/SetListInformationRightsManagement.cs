@@ -74,6 +74,8 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb, l => l.InformationRightsManagementSettings, l => l.IrmEnabled, l => l.IrmExpire, l => l.IrmReject);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
             if (list.IrmEnabled == false && !Enable.HasValue)
             {

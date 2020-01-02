@@ -15,17 +15,15 @@ using System.Security.Policy;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsData.Save, "PnPTenantTemplate")]
-    [Alias("Save-PnPProvisioningHierarchy")]
     [CmdletHelp("Saves a PnP provisioning hierarchy to the file system",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Save-PnPTenantTemplate -Template $template -Out .\hierarchy.pnp",
+       Code = @"PS:> Save-PnPTenantTemplate -Template $template -Out .\tenanttemplate.pnp",
        Remarks = "Saves a PnP tenant template to the file system",
        SortOrder = 1)]
     public class SaveTenantTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Allows you to provide an in-memory instance of a Tenant Template. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy Template;
 
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
@@ -36,10 +34,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "save-pnpprovisioninghierarchy")
-            {
-                WriteWarning("Save-PnPProvisioningHierarchy has been deprecated. Use Save-PnPTenantTemplate instead.");
-            }
             // Determine the output file name and path
             string outFileName = Path.GetFileName(Out);
 
@@ -95,7 +89,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                       Out, fileSystemConnector, templateFileName: templateFileName);
                 WriteObject("Processing template");
                 provider.SaveAs(Template, templateFileName);
-                ProcessFiles(Out, fileSystemConnector, provider.Connector);
+                ProcessFiles(Template, Out, fileSystemConnector, provider.Connector, (message) =>
+                {
+                    WriteObject(message);
+                });
             }
             else
             {
@@ -104,46 +101,50 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             }
         }
 
-        private void ProcessFiles(string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        internal static void ProcessFiles(ProvisioningHierarchy tenantTemplate, string templateFileName, FileConnectorBase fileSystemConnector, FileConnectorBase connector, Action<string> progress)
         {
-            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null);
-            if (Template.Tenant?.AppCatalog != null)
+            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null, null);
+            if (tenantTemplate.Tenant?.AppCatalog != null)
             {
-                foreach (var app in Template.Tenant.AppCatalog.Packages)
+                foreach (var app in tenantTemplate.Tenant.AppCatalog.Packages)
                 {
-                    WriteObject($"Processing {app.Src}");
+                    progress($"Processing {app.Src}");
                     AddFile(app.Src, templateFile, fileSystemConnector, connector);
                 }
             }
-            if (Template.Tenant?.SiteScripts != null)
+            if (tenantTemplate.Tenant?.SiteScripts != null)
             {
-                foreach (var siteScript in Template.Tenant.SiteScripts)
+                foreach (var siteScript in tenantTemplate.Tenant.SiteScripts)
                 {
-                    WriteObject($"Processing {siteScript.JsonFilePath}");
+                    progress($"Processing {siteScript.JsonFilePath}");
                     AddFile(siteScript.JsonFilePath, templateFile, fileSystemConnector, connector);
                 }
             }
-            if (Template.Localizations != null && Template.Localizations.Any())
+            if (tenantTemplate.Localizations != null && tenantTemplate.Localizations.Any())
             {
-                foreach (var location in Template.Localizations)
+                foreach (var location in tenantTemplate.Localizations)
                 {
-                    WriteObject($"Processing {location.ResourceFile}");
+                    progress($"Processing {location.ResourceFile}");
                     AddFile(location.ResourceFile, templateFile, fileSystemConnector, connector);
                 }
             }
-            foreach (var template in Template.Templates)
+            foreach (var template in tenantTemplate.Templates)
             {
-                if(template.WebSettings != null && !String.IsNullOrEmpty(template.WebSettings.SiteLogo))
+                if (template.WebSettings != null && !String.IsNullOrEmpty(template.WebSettings.SiteLogo))
                 {
                     // is it a file?
                     var isFile = false;
-                    using (var fileStream = fileSystemConnector.GetFileStream(template.WebSettings.SiteLogo))
+                    try
                     {
-                        isFile = fileStream != null;
+                        using (var fileStream = fileSystemConnector.GetFileStream(template.WebSettings.SiteLogo))
+                        {
+                            isFile = fileStream != null;
+                        }
                     }
+                    catch { }
                     if (isFile)
                     {
-                        WriteObject($"Processing {template.WebSettings.SiteLogo}");
+                        progress($"Processing {template.WebSettings.SiteLogo}");
                         AddFile(template.WebSettings.SiteLogo, templateFile, fileSystemConnector, connector);
                     }
                 }
@@ -151,8 +152,28 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 {
                     foreach (var file in template.Files)
                     {
-                        WriteObject($"Processing {file.Src}");
+                        progress($"Processing {file.Src}");
                         AddFile(file.Src, templateFile, fileSystemConnector, connector);
+                    }
+                }
+                if (template.Lists.Any())
+                {
+                    foreach (var list in template.Lists)
+                    {
+                        if (list.DataRows.Any())
+                        {
+                            foreach (var dataRow in list.DataRows)
+                            {
+                                if (dataRow.Attachments.Any())
+                                {
+                                    progress("List attachments");
+                                    foreach (var attachment in dataRow.Attachments)
+                                    {
+                                        AddFile(attachment.Src, templateFile, fileSystemConnector, connector);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -162,7 +183,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             }
         }
 
-        private void AddFile(string sourceName, ProvisioningHierarchy hierarchy, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
+        private static void AddFile(string sourceName, ProvisioningHierarchy hierarchy, FileConnectorBase fileSystemConnector, FileConnectorBase connector)
         {
             using (var fs = fileSystemConnector.GetFileStream(sourceName))
             {

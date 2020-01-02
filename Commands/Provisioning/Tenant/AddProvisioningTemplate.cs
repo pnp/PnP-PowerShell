@@ -18,11 +18,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
     public class AddProvisioningTemplate : PSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The template to add to the tenant template")]
-        [Alias("Template")]
         public ProvisioningTemplate SiteTemplate;
 
         [Parameter(Mandatory = true, HelpMessage = "The tenant template to add the template to", ValueFromPipeline = true)]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy TenantTemplate;
 
         protected override void ProcessRecord()
@@ -31,7 +29,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             {
                 TenantTemplate.Templates.Add(SiteTemplate);
             } else { 
-                WriteError(new ErrorRecord(new Exception($"Template with ID {SiteTemplate.Id} already exists in hierarchy"), "DUPLICATETEMPLATE", ErrorCategory.InvalidData, SiteTemplate));
+                WriteError(new ErrorRecord(new Exception($"Template with ID {SiteTemplate.Id} already exists in template"), "DUPLICATETEMPLATE", ErrorCategory.InvalidData, SiteTemplate));
             }
         }
     }

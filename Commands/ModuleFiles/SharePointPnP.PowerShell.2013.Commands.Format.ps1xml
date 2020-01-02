@@ -1316,6 +1316,12 @@
           <ListEntry>
             <ListItems>
               <ListItem>
+                <PropertyName>CorrelationId</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>TimeStampUtc</PropertyName>
+              </ListItem>
+              <ListItem>
                 <PropertyName>Message</PropertyName>
               </ListItem>
               <ListItem>

@@ -12,6 +12,8 @@ using System.Management.Automation.Host;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 
 namespace SharePointPnP.PowerShell.Commands.Base
@@ -41,6 +43,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public string Url { get; protected set; }
 
         public string TenantAdminUrl { get; protected set; }
+
+        public X509Certificate2 CertFile { get; internal set; }
 
         public ClientContext Context { get; set; }
         internal string AccessToken
@@ -95,6 +99,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
         }
+
 
         internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
@@ -165,7 +170,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             RetryCount = retryCount;
             RetryWait = retryWait;
             PnPVersionTag = pnpVersionTag;
-            ConnectionMethod = ConnectionMethod;
+            ConnectionMethod = connectionMethod;
         }
 
 

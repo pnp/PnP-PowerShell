@@ -22,11 +22,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice'",
-       Remarks = "Adds datarows to a list in an in-memory PnP Provisioning Template",
+       Remarks = "Adds datarows from the provided list to the PnP Provisioning Template at the provided location",
        SortOrder = 1)]
     [CmdletExample(
        Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice' -IncludeSecurity",
-      Remarks = "Adds datarows to a list in an in-memory PnP Provisioning Template",
+      Remarks = "Adds datarows from the provided list to the PnP Provisioning Template at the provided location",
        SortOrder = 2)]
     public class AddDataRowsToProvisioningTemplate : PnPWebCmdlet
     {
@@ -66,7 +66,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 
             var template = ReadProvisioningTemplate
                     .LoadProvisioningTemplateFromFile(Path,
-                    TemplateProviderExtensions);
+                    TemplateProviderExtensions, (e) =>
+                    {
+                        WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                    });
 
             if (template == null)
             {
@@ -255,6 +258,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                         return string.Join(",", multipleUserValue.Select(lv => GetLoginName(web,lv.LookupId)));
                     }
                     throw new Exception("Invalid data in field");
+                case FieldType.MultiChoice:
+                    var multipleChoiceValue = rawValue as string[];
+                    if (multipleChoiceValue != null)
+                    {
+                        return string.Join(";#", multipleChoiceValue);
+                    }
+                    return Convert.ToString(rawValue);
                 default:
                     return Convert.ToString(rawValue);
             }

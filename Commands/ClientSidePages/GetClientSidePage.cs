@@ -21,6 +21,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         Code = @"PS:> Get-PnPClientSidePage ""Templates/MyPageTemplate""",
         Remarks = "Gets the Modern Page (Client-Side) named 'MyPageTemplate.aspx' from the templates folder of the Page Library in the current SharePoint site",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPClientSidePage -Identity ""MyPage.aspx"" -Web (Get-PnPWeb -Identity ""Subsite1"")",
+        Remarks = "Gets the Modern Page (Client-Side) named 'MyPage.aspx' from the subsite named 'Subsite1'",
+        SortOrder = 4)]
     public class GetClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page")]
@@ -28,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         protected override void ExecuteCmdlet()
         {
-            var clientSidePage = Identity.GetPage(ClientContext);
+            var clientSidePage = Identity.GetPage((Microsoft.SharePoint.Client.ClientContext)SelectedWeb.Context);
 
             if (clientSidePage == null)
                 throw new Exception($"Page '{Identity?.Name}' does not exist");

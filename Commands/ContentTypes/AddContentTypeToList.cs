@@ -27,6 +27,8 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
         {
             ContentType ct = null;
             List list = List.GetList(SelectedWeb);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
             if (ContentType.ContentType == null)
             {
