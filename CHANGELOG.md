@@ -8,10 +8,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online [PR2060](https://github.com/SharePoint/PnP-PowerShell/pull/2060)
 
 ### Changed
 
 - Bumped to .Net 4.6.1 as minimal .Net runtime version
+
+### Contributors
+- Gautam Sheth \[[gautamdsheth](https://github.com/gautamdsheth)\]
 
 ## [3.16.1912.0]
 
