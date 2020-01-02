@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
      Code = @"PS:> Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos",
      Remarks = @"Adds the document library with the url ""logos"" located in the sitecollection at ""https://yourtenant.sharepoint.com/sites/branding"" as an organizational asset not specifying a thumbnail image for it and enabling the document library as a public Office 365 CDN source", SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:> Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -ThumbnailUrl https://yourtenant.sharepoint.com/sites/branding/thumbnail.jpg",
+     Code = @"PS:> Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -ThumbnailUrl https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg",
      Remarks = @"Adds the document library with the url ""logos"" located in the sitecollection at ""https://yourtenant.sharepoint.com/sites/branding"" as an organizational asset specifying the thumbnail image ""thumbnail.jpg"" residing in the same document library for it and enabling the document library as a public Office 365 CDN source", SortOrder = 2)]
     [CmdletExample(
      Code = @"PS:> Add-PnPOrgAssetsLibrary -LibraryUrl https://yourtenant.sharepoint.com/sites/branding/logos -CdnType Private",
