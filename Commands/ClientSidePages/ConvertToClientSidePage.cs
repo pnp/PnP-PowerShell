@@ -271,17 +271,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             PageTransformation webPartMappingModel = null;
             if (string.IsNullOrEmpty(this.WebPartMappingFile))
             {
-                // Load xml mapping data
-                XmlSerializer xmlMapping = new XmlSerializer(typeof(PageTransformation));
-
-                // Load the default one from resources into a model, no need for persisting this file
-                string webpartMappingFileContents = WebPartMappingLoader.LoadFile("SharePointPnP.PowerShell.Commands.ClientSidePages.webpartmapping.xml");
-
-                using (var stream = GenerateStreamFromString(webpartMappingFileContents))
-                {
-                    webPartMappingModel = (PageTransformation)xmlMapping.Deserialize(stream);
-                }
-
+                webPartMappingModel = PageTransformator.LoadDefaultWebPartMapping();
                 this.WriteVerbose("Using embedded webpartmapping file. Use Export-PnPClientSidePageMapping to get that file in case you want to base your version of the embedded version.");
             }
 
