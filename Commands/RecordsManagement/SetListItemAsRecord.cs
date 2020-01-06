@@ -8,7 +8,7 @@ using System;
 namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPListItemAsRecord")]
-    [CmdletHelp("Declares a list item as a record",
+    [CmdletHelp("Declares a list item as a record, for more information, see https://docs.microsoft.com/sharepoint/governance/records-management-in-sharepoint-server",
         Category = CmdletHelpCategory.RecordsManagement, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Set-PnPListItemAsRecord -List ""Documents"" -Identity 4",
@@ -32,6 +32,8 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
             var item = Identity.GetListItem(list);
 

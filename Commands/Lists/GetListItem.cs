@@ -20,11 +20,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         SortOrder = 1)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -Id 1",
-        Remarks = "Retrieves the list item with ID 1 from from the Tasks list",
+        Remarks = "Retrieves the list item with ID 1 from the Tasks list",
         SortOrder = 2)]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks -UniqueId bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3",
-        Remarks = "Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from from the tasks lists",
+        Remarks = "Retrieves the list item with unique id bd6c5b3b-d960-4ee7-a02c-85dc6cd78cc3 from the tasks lists",
         SortOrder = 3)]
     [CmdletExample(
         Code = "PS:> (Get-PnPListItem -List Tasks -Fields \"Title\",\"GUID\").FieldValues",
@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         private const string ParameterSet_BYUNIQUEID = "By Unique Id";
         private const string ParameterSet_BYQUERY = "By Query";
         private const string ParameterSet_ALLITEMS = "All Items";
-        [Parameter(Mandatory = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The list to query", Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, HelpMessage = "The ID of the item to retrieve", ParameterSetName = ParameterSet_BYID)]
@@ -76,6 +76,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 		protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
             if (HasId())
             {

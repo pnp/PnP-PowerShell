@@ -26,8 +26,8 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
     [CmdletExample(Code = @"PS:> Remove-PnPNavigationNode -Title Home -Location TopNavigationBar -Force",
         Remarks = "Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web.",
         SortOrder = 4)]
-    [CmdletExample(Code = @"PS:> Remove-PnPNavigationNode -Location QuickLaunch -All",
-        Remarks = "Will remove all the navigation nodes from the quick launch bar in the current web.",
+    [CmdletExample(Code = @"PS:> Get-PnPNavigationNode -Location QuickLaunch | Remove-PnPNavigationNode -Force",
+        Remarks = "Will remove all the navigation nodes from the quick launch bar without prompting for a confirmation in the current web.",
         SortOrder = 5)]
     public class RemoveNavigationNode : PnPWebCmdlet
     {
@@ -50,7 +50,7 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
         [Parameter(Mandatory = false, HelpMessage = "The header where the node is located", ParameterSetName = ParameterSet_BYNAME)]
         public string Header;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specifying the All parameter will remove all the nodes from specifed Location.", ParameterSetName = ParameterSet_REMOVEALLNODES)]
+        [Parameter(Mandatory = true, HelpMessage = "Specifying the All parameter will remove all the nodes from specified Location.", ParameterSetName = ParameterSet_REMOVEALLNODES)]
         public SwitchParameter All;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]

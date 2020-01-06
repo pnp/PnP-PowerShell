@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Enums;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
@@ -75,7 +76,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     _baseUri =
                        new Uri(
-                           $"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}.{string.Join(".", uriParts.Skip(1))}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
+                           $"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}{(uriParts.Length > 1 ? $".{string.Join(".", uriParts.Skip(1))}" : string.Empty )}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
 
                 }
             }
@@ -83,6 +84,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void EndProcessing()
         {
+            base.EndProcessing();
             SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
         }
     }

@@ -7,7 +7,7 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPJavaScriptLink")]
-    [CmdletHelp("Adds a link to a JavaScript file to a web or sitecollection",
+    [CmdletHelp("Adds a link to a JavaScript file to a web or sitecollection, valid only for SharePoint classic site experience.",
         "Creates a custom action that refers to a JavaScript file",
         Category = CmdletHelpCategory.Branding)]
     [CmdletExample(Code = "PS:> Add-PnPJavaScriptLink -Name jQuery -Url https://code.jquery.com/jquery.min.js -Sequence 9999 -Scope Site",
@@ -38,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            // Following code to handle desprecated parameter
+            // Following code to handle deprecated parameter
             CustomActionScope setScope;
 
             if (MyInvocation.BoundParameters.ContainsKey("SiteScoped"))

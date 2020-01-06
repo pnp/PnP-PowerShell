@@ -31,7 +31,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, HelpMessage = "The locale id to use for the term set. Defaults to the current locale id.")]
         public int Lcid = CultureInfo.CurrentCulture.LCID;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name, id or actualy termgroup to create the termset in.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name, id or actually termgroup to create the termset in.")]
         public TermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = false, HelpMessage = "An e-mail address for term suggestion and feedback. If left blank the suggestion feature will be disabled.")]

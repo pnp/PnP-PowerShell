@@ -1,15 +1,16 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Set, "PnPClientSidePage")]
     [CmdletHelp("Sets parameters of a Client-Side Page",
-      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -LayoutType Home -Title ""My Page""",
         Remarks = "Updates the properties of the Client-Side page named 'MyPage'",
@@ -22,8 +23,25 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -CommentsEnabled:$false",
         Remarks = "Disables the comments on the Client-Side page named 'MyPage'",
         SortOrder = 3)]
-    public class SetClientSidePage : PnPWebCmdlet
+    [CmdletExample(
+        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -HeaderType Default",
+        Remarks = "Sets the header of the page to the default header",
+        SortOrder = 4)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -HeaderType None",
+        Remarks = "Removes the header of the page",
+        SortOrder = 5)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPClientSidePage -Identity ""MyPage"" -HeaderType Custom -ServerRelativeImageUrl ""/sites/demo1/assets/myimage.png"" -TranslateX 10.5 -TranslateY 11.0",
+        Remarks = "Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified",
+        SortOrder = 6)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "ServerRelativeImageUrl", HelpMessage = "The URL of the image to show in the header", ParameterSetName = ParameterSet_CUSTOMHEADER)]
+    [CmdletAdditionalParameter(ParameterType = typeof(double), ParameterName = "TranslateX", HelpMessage = "A value defining how to translate the image on the x-axis", ParameterSetName = ParameterSet_CUSTOMHEADER)]
+    [CmdletAdditionalParameter(ParameterType = typeof(double), ParameterName = "TranslateY", HelpMessage = "A value defining how to translate the image on the y-axis", ParameterSetName = ParameterSet_CUSTOMHEADER)]
+    public class SetClientSidePage : PnPWebCmdlet, IDynamicParameters
     {
+        const string ParameterSet_CUSTOMHEADER = "Custom Header";
+
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name/identity of the page")]
         public ClientSidePagePipeBind Identity;
 
@@ -45,9 +63,30 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Publishes the page once it is saved.")]
         public SwitchParameter Publish;
 
+        [Parameter(Mandatory = false, HelpMessage = "Sets the page header type")]
+        public ClientSidePageHeaderType HeaderType;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type.")]
+        public ContentTypePipeBind ContentType;
+
+        [Parameter(Mandatory = false, HelpMessage = "Thumbnail Url")]
+        public string ThumbnailUrl;
+
         [Obsolete("This parameter value will be ignored")]
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
         public string PublishMessage = string.Empty;
+
+        private CustomHeaderDynamicParameters customHeaderParameters;
+
+        public object GetDynamicParameters()
+        {
+            if (HeaderType == ClientSidePageHeaderType.Custom)
+            {
+                customHeaderParameters = new CustomHeaderDynamicParameters();
+                return customHeaderParameters;
+            }
+            return null;
+        }
 
         protected override void ExecuteCmdlet()
         {
@@ -70,7 +109,40 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 clientSidePage.PageTitle = Title;
             }
 
-            clientSidePage.Save(name);
+            if(ThumbnailUrl != null)
+            {
+                clientSidePage.ThumbnailUrl = ThumbnailUrl;
+            }
+
+            if (MyInvocation.BoundParameters.ContainsKey("HeaderType"))
+            {
+                switch (HeaderType)
+                {
+                    case ClientSidePageHeaderType.Default:
+                        {
+                            clientSidePage.SetDefaultPageHeader();
+                            break;
+                        }
+                    case ClientSidePageHeaderType.Custom:
+                        {
+                            clientSidePage.SetCustomPageHeader(customHeaderParameters.ServerRelativeImageUrl, customHeaderParameters.TranslateX, customHeaderParameters.TranslateY);
+                            break;
+                        }
+                    case ClientSidePageHeaderType.None:
+                        {
+                            clientSidePage.RemovePageHeader();
+                            break;
+                        }
+                }
+            }
+
+            if (PromoteAs == ClientSidePagePromoteType.Template)
+            {
+                clientSidePage.SaveAsTemplate(name);
+            } else
+            {
+                clientSidePage.Save(name);
+            }
 
             // If a specific promote type is specified, promote the page as Home or Article or ...
             switch (PromoteAs)
@@ -98,12 +170,52 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
+            if(MyInvocation.BoundParameters.ContainsKey("ContentType"))
+            {
+                ContentType ct = null;
+                if (ContentType.ContentType == null)
+                {
+                    if (ContentType.Id != null)
+                    {
+                        ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
+                    }
+                    else if (ContentType.Name != null)
+                    {
+                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
+                    }
+                }
+                else
+                {
+                    ct = ContentType.ContentType;
+                }
+                if (ct != null)
+                {
+                    ct.EnsureProperty(w => w.StringId);
+
+                    clientSidePage.PageListItem["ContentTypeId"] = ct.StringId;
+                    clientSidePage.PageListItem.SystemUpdate();
+                    ClientContext.ExecuteQueryRetry();
+                }
+            }
+
             if (Publish)
             {
                 clientSidePage.Publish();
             }
 
             WriteObject(clientSidePage);
+        }
+
+        public class CustomHeaderDynamicParameters
+        {
+            [Parameter(Mandatory = true)]
+            public string ServerRelativeImageUrl { get; set; }
+
+            [Parameter(Mandatory = false)]
+            public double TranslateX { get; set; } = 0.0;
+
+            [Parameter(Mandatory = false)]
+            public double TranslateY { get; set; } = 0.0;
         }
     }
 }

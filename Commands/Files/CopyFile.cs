@@ -12,7 +12,7 @@ using File = Microsoft.SharePoint.Client.File;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true, DefaultParameterSetName = "SOURCEURL")]
-    [CmdletHelp("Copies a file or folder to a different location",
+    [CmdletHelp("Copies a file or folder to a different location, currently there is a 200MB file size limit for the file to be copied.",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
         Remarks = "Copies a file named company.docx located in a document library called Documents in the current site to the site collection otherproject. If a file named company.docx already exists, it won't perform the copy.",
@@ -77,7 +77,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to copy the file or folder to.")]
         public string TargetUrl = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the copy operation will be canceled if the file already exists at the TargetUrl location.")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.")]
         public SwitchParameter OverwriteIfAlreadyExists;
 
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]
@@ -114,26 +114,53 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 _sourceContext = ClientContext.Clone(sourceWebUri);
             }
 
-            File file = _sourceContext.Web.GetFileByServerRelativeUrl(SourceUrl);
-            Folder folder = _sourceContext.Web.GetFolderByServerRelativeUrl(SourceUrl);
-            file.EnsureProperties(f => f.Name, f => f.Exists);
-#if !SP2013
-            folder.EnsureProperties(f => f.Name, f => f.Exists);
-            bool srcIsFolder = folder.Exists;
-#else
-            folder.EnsureProperties(f => f.Name);
-            bool srcIsFolder;
+            bool isFile = true;
+            bool srcIsFolder = false;
+
+            File file = null;
+            Folder folder = null;
+
             try
             {
-                folder.EnsureProperties(f => f.ItemCount); //Using ItemCount as marker if this is a file or folder
-                srcIsFolder = true;
+#if ONPREMISES
+                file = _sourceContext.Web.GetFileByServerRelativeUrl(SourceUrl);
+#else
+                file = _sourceContext.Web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(SourceUrl));
+#endif
+                file.EnsureProperties(f => f.Name, f => f.Exists);
+                isFile = file.Exists;
             }
             catch
             {
-                srcIsFolder = false;
+                isFile = false;
             }
 
+            if (!isFile)
+            {
+#if ONPREMISES
+                folder = _sourceContext.Web.GetFolderByServerRelativeUrl(SourceUrl);
+#else
+                folder = _sourceContext.Web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(SourceUrl));
 #endif
+
+#if !SP2013
+                folder.EnsureProperties(f => f.Name, f => f.Exists);
+                srcIsFolder = folder.Exists;
+#else
+                folder.EnsureProperties(f => f.Name);
+
+                try
+                {
+                    folder.EnsureProperties(f => f.ItemCount); //Using ItemCount as marker if this is a file or folder
+                    srcIsFolder = true;
+                }
+                catch
+                {
+                    srcIsFolder = false;
+                }
+
+#endif
+            }
 
             if (Force || ShouldContinue(string.Format(Resources.CopyFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
             {
@@ -142,14 +169,18 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
                 _targetContext = ClientContext.Clone(targetWebUri.AbsoluteUri);
                 var dstWeb = _targetContext.Web;
-                dstWeb.EnsureProperty(s => s.Url);
+                dstWeb.EnsureProperties(s => s.Url, s => s.ServerRelativeUrl);
                 if (srcWeb.Url == dstWeb.Url)
                 {
                     try
                     {
-                        var targetFile = UrlUtility.Combine(TargetUrl, file.Name);
+                        var targetFile = UrlUtility.Combine(TargetUrl, file?.Name);
                         // If src/dst are on the same Web, then try using CopyTo - backwards compability
-                        file.CopyTo(targetFile, OverwriteIfAlreadyExists);
+#if ONPREMISES
+                        file?.CopyTo(targetFile, OverwriteIfAlreadyExists);
+#else
+                        file?.CopyToUsingPath(ResourcePath.FromDecodedUrl(targetFile), OverwriteIfAlreadyExists);
+#endif
                         _sourceContext.ExecuteQueryRetry();
                         return;
                     }
@@ -166,11 +197,15 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 bool targetFolderExists = false;
                 try
                 {
+#if ONPREMISES
                     targetFolder = _targetContext.Web.GetFolderByServerRelativeUrl(TargetUrl);
+#else
+                    targetFolder = _targetContext.Web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(TargetUrl));
+#endif
 #if !SP2013
                     targetFolder.EnsureProperties(f => f.Name, f => f.Exists);
                     if (!targetFolder.Exists) throw new Exception("TargetUrl is an existing file, not folder");
-                     targetFolderExists = true;
+                    targetFolderExists = true;
 #else
                     targetFolder.EnsureProperties(f => f.Name);
                     try
@@ -196,8 +231,12 @@ namespace SharePointPnP.PowerShell.Commands.Files
                     foreach (List targetList in lists)
                     {
                         if (!TargetUrl.StartsWith(targetList.RootFolder.ServerRelativeUrl, StringComparison.InvariantCultureIgnoreCase)) continue;
-                        fileOrFolderName = Regex.Replace(TargetUrl, targetList.RootFolder.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
-                        targetFolder = srcIsFolder ? targetList.RootFolder.EnsureFolder(fileOrFolderName) : targetList.RootFolder;
+                        fileOrFolderName = Regex.Replace(TargetUrl, _targetContext.Web.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
+                        targetFolder = srcIsFolder
+                            ? _targetContext.Web.EnsureFolderPath(fileOrFolderName)
+                            : targetList.RootFolder;
+                        //fileOrFolderName = Regex.Replace(TargetUrl, targetList.RootFolder.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
+                        //targetFolder = srcIsFolder ? targetList.RootFolder.EnsureFolder(fileOrFolderName) : targetList.RootFolder;
                         break;
                     }
                 }
@@ -255,9 +294,45 @@ namespace SharePointPnP.PowerShell.Commands.Files
         {
             var binaryStream = srcFile.OpenBinaryStream();
             _sourceContext.ExecuteQueryRetry();
-            if (string.IsNullOrWhiteSpace(filename)) filename = srcFile.Name;
-            targetFolder.UploadFile(filename, binaryStream.Value, OverwriteIfAlreadyExists);
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                filename = srcFile.Name;
+            }
+            this.UploadFileWithSpecialCharacters(targetFolder, filename, binaryStream.Value, OverwriteIfAlreadyExists);
             _targetContext.ExecuteQueryRetry();
+        }
+
+
+        private File UploadFileWithSpecialCharacters(Folder folder, string fileName, System.IO.Stream stream, bool overwriteIfExists)
+        {
+            if (fileName == null)
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentException("Filename is required");
+            }
+
+            // Create the file
+            var newFileInfo = new FileCreationInformation()
+            {
+                ContentStream = stream,
+                Url = fileName,
+                Overwrite = overwriteIfExists
+            };
+
+            var file = folder.Files.Add(newFileInfo);
+            folder.Context.Load(file);
+            folder.Context.ExecuteQueryRetry();
+
+            return file;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         None = 0,
         HomePage = 1,
         NewsArticle = 2,
+        Template = 3
     }
 }
 #endif

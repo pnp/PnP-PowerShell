@@ -9,10 +9,11 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    public class PnPCmdlet : PSCmdlet
+    public class PnPCmdlet : BasePSCmdlet
     {
         public ClientContext ClientContext => Connection?.Context ?? SPOnlineConnection.CurrentConnection.Context;
 
@@ -31,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands
 
             if (MyInvocation.InvocationName.ToUpper().IndexOf("-SPO", StringComparison.Ordinal) > -1)
             {
-                WriteWarning($"PnP Cmdlets starting with the SPO Prefix will be deprecated in the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
+                WriteWarning($"PnP Cmdlets starting with the SPO Prefix have been deprecated since the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
             }
             if (SPOnlineConnection.CurrentConnection == null && Connection == null)
             {
@@ -116,10 +117,18 @@ namespace SharePointPnP.PowerShell.Commands
             catch (Exception ex)
             {
                 SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
-                WriteError(new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null));
+                ex.Data.Add("CorrelationId", SPOnlineConnection.CurrentConnection.Context.TraceCorrelationId);
+                ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
+                var errorDetails = new ErrorDetails(ex.Message);
+                
+                errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
+                var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
+                errorRecord.ErrorDetails = errorDetails;
+
+                WriteError(errorRecord);
             }
         }
-
+        
         protected override void EndProcessing()
         {
             base.EndProcessing();

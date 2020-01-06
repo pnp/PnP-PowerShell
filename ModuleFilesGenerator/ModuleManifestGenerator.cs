@@ -49,6 +49,12 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                         spVersion = "2016";
                         break;
                     }
+                case "debug19":
+                case "release19":
+                    {
+                        spVersion = "2019";
+                        break;
+                    }
             }
 #endif
             // Generate PSM1 file
@@ -101,7 +107,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
     PrivateData = @{{
         PSData = @{{
             ProjectUri = 'https://aka.ms/sppnp'
-            IconUri = 'https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/master/Commands/Resources/pnp.ico'
+            IconUri = 'https://raw.githubusercontent.com/pnp/media/master/optimized/pnp-projects/blue/png/pnp-powershell-300.png'
         }}
     }}
 }}";
@@ -123,7 +129,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
     PrivateData = @{{
         PSData = @{{
             ProjectUri = 'https://aka.ms/sppnp'
-            IconUri = 'https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/master/Commands/Resources/pnp.ico'
+            IconUri = 'https://raw.githubusercontent.com/pnp/media/master/optimized/pnp-projects/blue/png/pnp-powershell-300.png'
         }}
     }}
 }}";

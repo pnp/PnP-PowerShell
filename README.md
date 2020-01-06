@@ -10,9 +10,12 @@ This solution contains a library of PowerShell commands that allows you to perfo
 -  Office 365 Dedicated (D)
 -  SharePoint 2013 on-premises
 -  SharePoint 2016 on-premises
+-  SharePoint 2019 on-premises
 
 ### Prerequisites ###
-In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
+In order to generate the Cmdlet help you need to have Windows Management Framework installed.
+
+If it is not [pre-installed on your operating system](https://docs.microsoft.com/powershell/wmf/overview#wmf-availability-across-windows-operating-systems), you can find installation instructions in the [WMF release notes.](https://docs.microsoft.com/powershell/wmf/overview#wmf-release-notes)
   
 ### Solution ###
 Solution | Author(s)
@@ -39,6 +42,7 @@ If you main OS is Windows 10, or if you have [PowerShellGet](https://github.com/
 |**SharePoint Version**|**Command to install**|
 |------------------|------------------|
 |SharePoint Online|```Install-Module SharePointPnPPowerShellOnline ```|
+|SharePoint 2019|```Install-Module SharePointPnPPowerShell2019```|
 |SharePoint 2016|```Install-Module SharePointPnPPowerShell2016```|
 |SharePoint 2013|```Install-Module SharePointPnPPowerShell2013```|
 
@@ -75,6 +79,12 @@ To use the library you first need to connect to your tenant:
 Connect-PnPOnline –Url https://yoursite.sharepoint.com –Credentials (Get-Credential)
 ```
 
+Or if you have Multi Factor Authentication enabled or if you are using a federated identity provider like AD FS, instead use:
+
+```powershell
+Connect-PnPOnline –Url https://yoursite.sharepoint.com –UseWebLogin
+```
+
 To view all cmdlets, enter:
 
 ```powershell
@@ -96,7 +106,7 @@ If you want to contribute to this SharePoint Patterns and Practices PowerShell l
 
 ## Building the source code ##
 
-If you have set up up the projects and you are ready to build the source code, make sure to build the SharePointPnP.PowerShellModuleFilesGenerator project first. This project will be executed after every build and it will generate the required PSD1 and XML files with cmdlet documentation in them.
+If you have set up the projects and you are ready to build the source code, make sure to build the SharePointPnP.PowerShellModuleFilesGenerator project first. This project will be executed after every build and it will generate the required PSD1 and XML files with cmdlet documentation in them.
 
 When you build the solution a postbuild script will copy the required files to a folder in your users folder called 
 *C:\Users\\\<YourUserName\>\Documents\WindowsPowerShell\Modules\SharePointPnPPowerShell\<Platform\>*. During build also the help and document files will be generated. If you have a session of PowerShell open in which you have used the PnP Cmdlets, make sure to close this PowerShell session first before you build. You will receive a build error otherwise because it tries to overwrite files that are in use.

@@ -29,7 +29,7 @@ if (!(Get-command -Module PowerShellGet).count -gt 0)
     $URL = $Request.GetResponse()
     $Filename = $URL.ResponseUri.OriginalString.Split("/")[-1]
     $url.close()
-    $WC = New-Object System.Net.WebClient
+    $WC = New-Object -TypeName System.Net.WebClient
     $WC.DownloadFile($version,"$env:TEMP\$Filename")
     $WC.Dispose()
 

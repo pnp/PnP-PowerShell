@@ -83,16 +83,61 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return sb.ToString();
         }
 
-        internal static X509Certificate2 GetCertificateFromPEMstring(string publicCert, string privateKey)
+        internal static X509Certificate2 GetCertificatFromStore(string thumbprint)
         {
+            List<StoreLocation> locations = new List<StoreLocation>
+            {
+                StoreLocation.CurrentUser,
+                StoreLocation.LocalMachine
+            };
+
+            foreach (var location in locations)
+            {
+                X509Store store = new X509Store("My", location);
+                try
+                {
+                    store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+                    X509Certificate2Collection certificates = store.Certificates.Find(
+                        X509FindType.FindByThumbprint, thumbprint, false);
+                    if (certificates.Count == 1)
+                    {
+                        return certificates[0];
+                    }
+                }
+                finally
+                {
+                    store.Close();
+                }
+            }
+
+            return null;
+        }
+
+        internal static X509Certificate2 GetCertificateFromPEMstring(string publicCert, string privateKey, string password)
+        {
+            if (string.IsNullOrWhiteSpace(password)) password = "";
             var certBuffer = GetBytesFromPEM(publicCert, PemStringType.Certificate);
             var keyBuffer = GetBytesFromPEM(privateKey, PemStringType.RsaPrivateKey);
 
-            var certificate = new X509Certificate2(certBuffer);
+            var certificate = new X509Certificate2(certBuffer, password, X509KeyStorageFlags.MachineKeySet);
 
             var prov = CertificateCrypto.DecodeRsaPrivateKey(keyBuffer);
             certificate.PrivateKey = prov;
 
+            return certificate;
+        }
+
+        internal static X509Certificate2 GetCertificateFromPath(string certificatePath, SecureString certificatePassword)
+        {
+            var certFile = System.IO.File.OpenRead(certificatePath);
+            var certificateBytes = new byte[certFile.Length];
+            certFile.Read(certificateBytes, 0, (int)certFile.Length);
+            var certificate = new X509Certificate2(
+                certificateBytes,
+                certificatePassword,
+                X509KeyStorageFlags.Exportable |
+                X509KeyStorageFlags.MachineKeySet |
+                X509KeyStorageFlags.PersistKeySet);
             return certificate;
         }
 

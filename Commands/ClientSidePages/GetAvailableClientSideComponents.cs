@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Get, "PnPAvailableClientSideComponents")]
     [CmdletHelp("Gets the available client side components on a particular page",
-      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Get-PnPAvailableClientSideComponents -Page ""MyPage.aspx""",
         Remarks = "Gets the list of available client side components on the page 'MyPage.aspx'",
@@ -32,6 +32,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         protected override void ExecuteCmdlet()
         {
             var clientSidePage = Page.GetPage(ClientContext);
+            if (clientSidePage == null)
+                throw new PSArgumentException($"Page '{Page}' does not exist", "List");
 
             if (Component == null)
             {

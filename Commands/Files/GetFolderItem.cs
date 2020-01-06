@@ -5,6 +5,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Files
@@ -31,10 +32,21 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Remarks = "Returns all files in the folder SitePages which is located in the root of the current web",
         SortOrder = 4
         )]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPFolderItem -Identity (Get-PnPFolder ""Shared Documents"")",
+        Remarks = "Returns the contents of the folder passed in through the folder instance using the Identity parameter",
+        SortOrder = 5
+        )]
     public class GetFolderItem : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage ="The site relative folder to retrieve")]
+        private const string ParameterSet_FOLDERSBYPIPE = "Folder via pipebind";
+        private const string ParameterSet_FOLDERBYURL = "Folder via url";
+
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The site relative URL of the folder to retrieve", ParameterSetName = ParameterSet_FOLDERBYURL)]
         public string FolderSiteRelativeUrl;
+
+        [Parameter(Mandatory = false, Position = 0, HelpMessage = "A folder instance to the folder to retrieve", ParameterSetName = ParameterSet_FOLDERSBYPIPE)]
+        public FolderPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "The type of contents to retrieve, either File, Folder or All (default)")]
         [ValidateSet("Folder", "File", "All")]
@@ -45,14 +57,27 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            string serverRelativeUrl = null;
-            if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
+            Folder targetFolder = null;
+            if (ParameterSetName == ParameterSet_FOLDERSBYPIPE && Identity != null)
             {
-                var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
+                targetFolder = Identity.GetFolder(SelectedWeb);
+            }
+            else
+            {
+                string serverRelativeUrl = null;
+                if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
+                {
+                    var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                    serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
+                }
+
+#if ONPREMISES
+                targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? SelectedWeb.RootFolder : SelectedWeb.GetFolderByServerRelativeUrl(serverRelativeUrl);
+#else
+                targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? SelectedWeb.RootFolder : SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+#endif
             }
 
-            var targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? SelectedWeb.RootFolder : SelectedWeb.GetFolderByServerRelativeUrl(serverRelativeUrl);
             IEnumerable<File> files = null;
             IEnumerable<Folder> folders = null;
 

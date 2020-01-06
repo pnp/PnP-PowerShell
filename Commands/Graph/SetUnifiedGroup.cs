@@ -5,13 +5,12 @@ using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPUnifiedGroup")]
-    [CmdletHelp("Sets Office 365 Group (aka Unified Group) properties",
+    [CmdletHelp("Sets Office 365 Group (aka Unified Group) properties. Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -32,7 +31,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        SortOrder = 4)]
     [CmdletExample(
        Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -Owners demo@contoso.com",
-       Remarks = "Adds demo@contoso.com as an additional owner to the group.",
+       Remarks = "Sets demo@contoso.com as owner of the group.",
        SortOrder = 5)]
     public class SetUnifiedGroup : PnPGraphCmdlet
     {
@@ -57,6 +56,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set.")]
         public string GroupLogoPath;
 
+        [Parameter(Mandatory = false, HelpMessage = "Creates a MS Teams team associated with created group.")]
+        public SwitchParameter CreateTeam;
+
         protected override void ExecuteCmdlet()
         {
             UnifiedGroupEntity group = null;
@@ -78,10 +80,23 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     }
                     groupLogoStream = new FileStream(GroupLogoPath, FileMode.Open, FileAccess.Read);
                 }
-
-                UnifiedGroupsUtility.UpdateUnifiedGroup(group.GroupId, AccessToken, displayName: DisplayName,
-                    description: Description, owners: Owners, members: Members, groupLogo: groupLogoStream, isPrivate: IsPrivate);
-            } else
+                bool? isPrivateGroup = null;
+                if (IsPrivate.IsPresent)
+                {
+                    isPrivateGroup = IsPrivate.ToBool();
+                }
+                UnifiedGroupsUtility.UpdateUnifiedGroup(
+                    groupId: group.GroupId,
+                    accessToken: AccessToken,
+                    displayName: DisplayName,
+                    description: Description,
+                    owners: Owners,
+                    members: Members,
+                    groupLogo: groupLogoStream,
+                    isPrivate: isPrivateGroup,
+                    createTeam: CreateTeam);
+            }
+            else
             {
                 WriteError(new ErrorRecord(new Exception("Group not found"), "GROUPNOTFOUND", ErrorCategory.ObjectNotFound, this));
             }

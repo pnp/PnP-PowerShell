@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
     [Cmdlet(VerbsCommon.Get, "PnPUser")]
     [CmdletHelp("Returns site users of current web",
         Category = CmdletHelpCategory.Principals,
-        DetailedDescription = "This command will return all the users that exist in the current site collection its User Information List",
+        DetailedDescription = "This command will return all users that exist in the current site collection's User Information List",
         OutputType = typeof(User),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx")]
     [CmdletExample(
@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Remarks = "Returns the user with Id 23 from the User Information List of the current site collection",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPUser -Identity i:0#.f|membership|user@tenant.onmicrosoft.com",
+        Code = @"PS:> Get-PnPUser -Identity ""i:0#.f|membership|user@tenant.onmicrosoft.com""",
         Remarks = "Returns the user with LoginName i:0#.f|membership|user@tenant.onmicrosoft.com from the User Information List of the current site collection",
         SortOrder = 3)]
     [CmdletExample(
@@ -84,13 +84,13 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                     var usersWithDirectPermissions = SelectedWeb.SiteUsers.Where(u => SelectedWeb.RoleAssignments.Any(ra => ra.Member.LoginName == u.LoginName));
 
                     // Get all the users contained in SharePoint Groups
-                    SelectedWeb.Context.Load(SelectedWeb.SiteGroups, sg => sg.Include(u => u.Users.Include(retrievalExpressions)));
+                    SelectedWeb.Context.Load(SelectedWeb.SiteGroups, sg => sg.Include(u => u.Users.Include(retrievalExpressions), u => u.LoginName));
                     SelectedWeb.Context.ExecuteQueryRetry();
 
+                    // Get all SharePoint groups that have been assigned access
                     var usersWithGroupPermissions = new List<User>();
-                    foreach (var group in SelectedWeb.SiteGroups)
+                    foreach (var group in SelectedWeb.SiteGroups.Where(g => SelectedWeb.RoleAssignments.Any(ra => ra.Member.LoginName == g.LoginName)))
                     {
-                        // If they're in a SharePoint Group, they always have some kind of access rights, so add them all
                         usersWithGroupPermissions.AddRange(group.Users);
                     }
 

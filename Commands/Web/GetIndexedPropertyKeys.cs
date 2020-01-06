@@ -1,6 +1,7 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -9,10 +10,25 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.Webs)]
     public class GetIndexedProperties : PnPWebCmdlet
     {
+        [Parameter(Mandatory = false, ValueFromPipeline = true, HelpMessage = "The list object or name from where to get the indexed properties")]
+        public ListPipeBind List;
+
         protected override void ExecuteCmdlet()
         {
-            var keys = SelectedWeb.GetIndexedPropertyBagKeys();
-            WriteObject(keys);
+            if (List != null)
+            {
+                var list = List.GetList(SelectedWeb);
+                if (list != null)
+                {
+                    var keys = list.GetIndexedPropertyBagKeys();
+                    WriteObject(keys);
+                }
+            }
+            else
+            {
+                var keys = SelectedWeb.GetIndexedPropertyBagKeys();
+                WriteObject(keys);
+            }
         }
     }
 }

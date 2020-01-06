@@ -8,7 +8,7 @@ using System.Linq;
 namespace SharePointPnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAdmin")]
-    [CmdletHelp("Returns the current site collection administrators of the site colleciton in the current context",
+    [CmdletHelp("Returns the current site collection administrators of the site collection in the current context",
         DetailedDescription = "This command will return all current site collection administrators of the site collection in the current context",
         Category = CmdletHelpCategory.Sites)]
     [CmdletExample(

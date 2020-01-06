@@ -1,7 +1,10 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System;
+using System.IO;
+using System.Management.Automation;
+using File = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
@@ -61,7 +64,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM, HelpMessage = "Returns the file as a listitem showing all its properties")]
         public SwitchParameter AsListItem;
 
-        [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM, HelpMessage = "If provided in combination with -AsListItem, a Sytem.ArgumentException will be thrown if the file specified in the -Url argument does not exist. Otherwise it will return nothing instead.")]
+        [Parameter(Mandatory = false, ParameterSetName = URLASLISTITEM, HelpMessage = "If provided in combination with -AsListItem, a System.ArgumentException will be thrown if the file specified in the -Url argument does not exist. Otherwise it will return nothing instead.")]
         public SwitchParameter ThrowExceptionIfFileNotFound;
 
         [Parameter(Mandatory = false, ParameterSetName = URLASSTRING, HelpMessage = "Retrieve the file contents as a string")]
@@ -101,18 +104,22 @@ namespace SharePointPnP.PowerShell.Commands.Files
             switch (ParameterSetName)
             {
                 case URLTOPATH:
-                    SelectedWeb.SaveFileToLocal(serverRelativeUrl, Path, Filename, (filetosave) =>
+
+                    SaveFileToLocal(SelectedWeb, serverRelativeUrl, Path, Filename, (fileToSave) =>
                     {
                         if (!Force)
                         {
-                            WriteWarning($"File '{filetosave}' exists already. use the -Force parameter to overwrite the file.");
+                            WriteWarning($"File '{fileToSave}' exists already. use the -Force parameter to overwrite the file.");
                         }
                         return Force;
                     });
                     break;
                 case URLASFILEOBJECT:
+#if ONPREMISES
                     file = SelectedWeb.GetFileByServerRelativeUrl(serverRelativeUrl);
-
+#else
+                    file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+#endif
                     ClientContext.Load(file, f => f.Author, f => f.Length,
                         f => f.ModifiedBy, f => f.Name, f => f.TimeCreated,
                         f => f.TimeLastModified, f => f.Title);
@@ -122,7 +129,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
                     WriteObject(file);
                     break;
                 case URLASLISTITEM:
+#if ONPREMISES
                     file = SelectedWeb.GetFileByServerRelativeUrl(serverRelativeUrl);
+#else
+                    file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+#endif
 
                     ClientContext.Load(file, f => f.Exists, f => f.ListItemAllFields);
 
@@ -143,6 +154,45 @@ namespace SharePointPnP.PowerShell.Commands.Files
                     WriteObject(SelectedWeb.GetFileAsString(serverRelativeUrl));
                     break;
             }
+        }
+
+        private void SaveFileToLocal(Web web, string serverRelativeUrl, string localPath, string localFileName = null, Func<string, bool> fileExistsCallBack = null)
+        {
+
+#if SP2013 || SP2016
+            var file = web.GetFileByServerRelativeUrl(serverRelativeUrl);
+#else
+            var file = web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+#endif
+
+            var clientContext = web.Context as ClientContext;
+            clientContext.Load(file);
+            clientContext.ExecuteQueryRetry();
+
+            ClientResult<Stream> stream = file.OpenBinaryStream();
+            clientContext.ExecuteQueryRetry();
+
+            var fileOut = System.IO.Path.Combine(localPath, !string.IsNullOrEmpty(localFileName) ? localFileName : file.Name);
+
+            if (!System.IO.File.Exists(fileOut) || (fileExistsCallBack != null && fileExistsCallBack(fileOut)))
+            {
+                using (Stream fileStream = new FileStream(fileOut, FileMode.Create))
+                {
+                    CopyStream(stream.Value, fileStream);
+                }
+            }
+        }
+
+        private void CopyStream(Stream source, Stream destination)
+        {
+            byte[] buffer = new byte[32768];
+            int bytesRead;
+
+            do
+            {
+                bytesRead = source.Read(buffer, 0, buffer.Length);
+                destination.Write(buffer, 0, bytesRead);
+            } while (bytesRead != 0);
         }
     }
 }

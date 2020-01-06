@@ -573,12 +573,12 @@ namespace SharePointPnP.PowerShell.Tests
 
                 Assert.IsTrue(listItemTitles.Count == 2, "Wrong count on listItems");
 
-                Assert.IsFalse(listItemTitles.Contains("Test1-1"), "Test1-1 should not exsist");
+                Assert.IsFalse(listItemTitles.Contains("Test1-1"), "Test1-1 should not exist");
                 Assert.IsTrue(listItemTitles.Contains("Test1-2"), "Test1-2 is missing");
 
-                Assert.IsFalse(listItemTitles.Contains("Test2-1"), "Test2-1 should not exsist");
+                Assert.IsFalse(listItemTitles.Contains("Test2-1"), "Test2-1 should not exist");
                 Assert.IsTrue(listItemTitles.Contains("Test2-2"), "Test2-2 is missing");
-                Assert.IsFalse(listItemTitles.Contains("Test2-3"), "Test2-3 should not exsist");
+                Assert.IsFalse(listItemTitles.Contains("Test2-3"), "Test2-3 should not exist");
 
                 InvokeWebActionResult result = results.Last().BaseObject as InvokeWebActionResult;
 

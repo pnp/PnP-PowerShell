@@ -6,6 +6,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
 {
@@ -27,7 +28,7 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Choices", HelpMessage = "Specify choices, only valid if the field type is Choice", ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Formula", HelpMessage = "Specify the formula. Only available if the field type is Calculated", ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Formula", HelpMessage = "Specify the formula. Only avialable if the field type is Calculated", ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Formula", HelpMessage = "Specify the formula. Only available if the field type is Calculated", ParameterSetName = ParameterSet_ADDFIELDTOWEB)]
     public class AddField : PnPWebCmdlet, IDynamicParameters
     {
         const string ParameterSet_ADDFIELDTOLIST = "Add field to list";
@@ -50,8 +51,8 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The internal name of the field")]
         public string InternalName;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The type of the field like Choice, Note, MultiChoice")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The type of the field like Choice, Note, MultiChoice. For a complete list of field types visit https://docs.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The type of the field like Choice, Note, MultiChoice. For a complete list of field types visit https://docs.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype")]
         public FieldType Type;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The ID of the field, must be unique")]
@@ -113,6 +114,8 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
             if (List != null)
             {
                 var list = List.GetList(SelectedWeb);
+                if (list == null)
+                    throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
                 Field f;
                 if (ParameterSetName != ParameterSet_ADDFIELDREFERENCETOLIST)
                 {
@@ -143,10 +146,28 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
                     }
                     else if (Type == FieldType.Calculated)
                     {
+                        // Either set the ResultType as input parameter or set it to the default Text
+                        if (!string.IsNullOrEmpty(calculatedFieldParameters.ResultType))
+                        {
+                            fieldCI.AdditionalAttributes = new List<KeyValuePair<string, string>>()
+                            {
+                                new KeyValuePair<string, string>("ResultType", calculatedFieldParameters.ResultType)
+                            };
+                        }
+                        else
+                        {
+                            fieldCI.AdditionalAttributes = new List<KeyValuePair<string, string>>()
+                            {
+                                new KeyValuePair<string, string>("ResultType", "Text")
+                            };
+                        }
+
+                        fieldCI.AdditionalChildNodes = new List<KeyValuePair<string, string>>()
+                        {
+                            new KeyValuePair<string, string>("Formula", calculatedFieldParameters.Formula)
+                        };
+
                         f = list.CreateField<FieldCalculated>(fieldCI);
-                        ((FieldCalculated)f).Formula = calculatedFieldParameters.Formula;
-                        f.Update();
-                        ClientContext.ExecuteQueryRetry();
                     }
                     else
                     {
@@ -341,6 +362,9 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
         {
             [Parameter(Mandatory = true)]
             public string Formula;
+
+            [Parameter(Mandatory = false)]
+            public string ResultType;
         }
 
     }

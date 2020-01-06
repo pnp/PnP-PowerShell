@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
     [Cmdlet(VerbsCommon.Add, "PnPClientSideWebPart")]
     [CmdletHelp("Adds a Client-Side Web Part to a client-side page",
         "Adds a client-side web part to an existing client-side page.",
-      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Add-PnPClientSideWebPart -Page ""MyPage"" -DefaultWebPartType BingMap",
         Remarks = "Adds a built-in Client-Side component 'BingMap' to the page called 'MyPage'",
@@ -25,42 +25,42 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
         SortOrder = 4)]
     public class AddClientSideWebPart : PnPWebCmdlet
     {
-        private const string ParameterSet_DEFAULTBUILTIN = "Default with built-in webpart";
-        private const string ParameterSet_DEFAULT3RDPARTY = "Default with 3rd party webpart";
-        private const string ParameterSet_POSITIONED3RDPARTY = "Positioned with 3rd party webpart";
-        private const string ParameterSet_POSITIONEDBUILTIN = "Positioned with built-in webpart";
+        private const string ParameterSet_DEFAULTBUILTIN = "Default with built-in web part";
+        private const string ParameterSet_DEFAULT3RDPARTY = "Default with 3rd party web part";
+        private const string ParameterSet_POSITIONED3RDPARTY = "Positioned with 3rd party web part";
+        private const string ParameterSet_POSITIONEDBUILTIN = "Positioned with built-in web part";
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page.", ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page.", ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page.", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The name of the page.", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
         public ClientSidePagePipeBind Page;
 
-        [Parameter(Mandatory = true, HelpMessage = "Defines a default WebPart type to insert.", ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
-        [Parameter(Mandatory = true, HelpMessage = "Defines a default WebPart type to insert.", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
+        [Parameter(Mandatory = true, HelpMessage = "Defines a default web part type to insert.", ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
+        [Parameter(Mandatory = true, HelpMessage = "Defines a default web part type to insert.", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
         public DefaultClientSideWebParts DefaultWebPartType;
 
         [Parameter(Mandatory = true, HelpMessage = "Specifies the component instance or Id to add.", ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
         [Parameter(Mandatory = true, HelpMessage = "Specifies the component instance or Id to add.", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
         public ClientSideComponentPipeBind Component;
 
-        [Parameter(Mandatory = false, HelpMessage = @"The properties of the WebPart", ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
-        [Parameter(Mandatory = false, HelpMessage = @"The properties of the WebPart", ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
-        [Parameter(Mandatory = false, HelpMessage = @"The properties of the WebPart", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
-        [Parameter(Mandatory = false, HelpMessage = @"The properties of the WebPart", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
+        [Parameter(Mandatory = false, HelpMessage = @"The properties of the web part", ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
+        [Parameter(Mandatory = false, HelpMessage = @"The properties of the web part", ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
+        [Parameter(Mandatory = false, HelpMessage = @"The properties of the web part", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
+        [Parameter(Mandatory = false, HelpMessage = @"The properties of the web part", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
         public PropertyBagPipeBind WebPartProperties;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the WebPart control. (Default = 1)", ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
-        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the WebPart control. (Default = 1)", ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
-        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the WebPart control. (Default = 1)", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
-        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the WebPart control. (Default = 1)", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
+        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the web part control. (Default = 1)", ParameterSetName = ParameterSet_DEFAULTBUILTIN)]
+        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the web part control. (Default = 1)", ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
+        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the web part control. (Default = 1)", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
+        [Parameter(Mandatory = false, HelpMessage = "Sets the order of the web part control. (Default = 1)", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
         public int Order = 1;
 
-        [Parameter(Mandatory = true, HelpMessage = "Sets the section where to insert the WebPart control.", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
-        [Parameter(Mandatory = true, HelpMessage = "Sets the section where to insert the WebPart control.", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
+        [Parameter(Mandatory = true, HelpMessage = "Sets the section where to insert the web part control.", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
+        [Parameter(Mandatory = true, HelpMessage = "Sets the section where to insert the web part control.", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
         public int Section;
 
-        [Parameter(Mandatory = true, HelpMessage = "Sets the column where to insert the WebPart control.", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
-        [Parameter(Mandatory = true, HelpMessage = "Sets the column where to insert the WebPart control.", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
+        [Parameter(Mandatory = true, HelpMessage = "Sets the column where to insert the web part control.", ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
+        [Parameter(Mandatory = true, HelpMessage = "Sets the column where to insert the web part control.", ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
         public int Column;
 
         protected override void ExecuteCmdlet()

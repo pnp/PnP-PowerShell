@@ -10,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
     [CmdletHelp("Permanently deletes all or a specific recycle bin item",
         Category = CmdletHelpCategory.RecycleBin)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPRecycleBinItems | ? FileLeafName -like ""*.docx"" | Clear-PnpRecycleBinItem",
+        Code = @"PS:> Get-PnPRecycleBinItem | ? FileLeafName -like ""*.docx"" | Clear-PnpRecycleBinItem",
         Remarks = "Permanently deletes all the items in the first and second stage recycle bins of which the file names have the .docx extension",
         SortOrder = 1)]
     [CmdletExample(

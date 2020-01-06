@@ -8,7 +8,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Set, "PnPListItemPermission", DefaultParameterSetName = "User")]
-    [CmdletHelp("Sets list item permissions",
+    [CmdletHelp("Sets list item permissions. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.",
         Category = CmdletHelpCategory.Lists)]
     [CmdletExample(
         Code = "PS:> Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute'",
@@ -55,6 +55,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "Inherit permissions from the list, removing unique permissions", ParameterSetName = "Inherit")]
         public SwitchParameter InheritPermissions;
 
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "Update the item permissions without creating a new version or triggering MS Flow.")]
+        public SwitchParameter SystemUpdate;
+#endif
+
         protected override void ExecuteCmdlet()
         {
             List list = null;
@@ -82,7 +87,18 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                         item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
                     }
 
+#if !ONPREMISES
+                    if (SystemUpdate.IsPresent)
+                    {
+                        item.SystemUpdate();
+                    }
+                    else
+                    {
+                        item.Update();
+                    }
+#else
                     item.Update();
+#endif
                     ClientContext.ExecuteQueryRetry();
                     if (ParameterSetName == "Inherit")
                     {

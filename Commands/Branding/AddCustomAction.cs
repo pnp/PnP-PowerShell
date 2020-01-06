@@ -19,7 +19,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
     Remarks = @"Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice: escape quotes in CommandUIExtension.",
     SortOrder = 1)]
     [CmdletExample(Code = @"Add-PnPCustomAction -Title ""CollabFooter"" -Name ""CollabFooter"" -Location ""ClientSideExtension.ApplicationCustomizer"" -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties ""{`""sourceTermSet`"":`""PnP-CollabFooter-SharedLinks`"",`""personalItemsStorageProperty`"":`""PnP-CollabFooter-MyLinks`""}",
-    Remarks = @"Adds a new application customizer to the site. This requires that an SPFX solution has been deployed containing the application customizer specified.",
+    Remarks = @"Adds a new application customizer to the site. This requires that an SPFX solution has been deployed containing the application customizer specified. Be sure to run Install-PnPApp before trying this cmdlet on a site.",
     SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "UserCustomAction",
@@ -32,13 +32,13 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         private const string ParameterSet_DEFAULT = "Default";
         private const string ParameterSet_CLIENTSIDECOMPONENTID = "Client Side Component Id";
         [Parameter(Mandatory = true, HelpMessage = "The name of the custom action", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The name of the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Name = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The title of the custom action", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The title of the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Title = string.Empty;
@@ -50,7 +50,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         public string Group = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The actual location where this custom action need to be added like 'CommandUI.Ribbon'", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The actual location where this custom action need to be added like 'CommandUI.Ribbon'", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Location = string.Empty;
@@ -87,7 +87,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public CustomActionScope Scope = CustomActionScope.Web;
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The Client Side Component Id of the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
         public GuidPipeBind ClientSideComponentId;
 
@@ -126,7 +126,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
             }
             else
             {
-#if !ONPREMISES
+#if !SP2013 && !SP2016
                 ca = new CustomActionEntity()
                 {
                     Name = Name,

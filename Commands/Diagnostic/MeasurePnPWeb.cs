@@ -12,15 +12,15 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
 {
     [Cmdlet(VerbsDiagnostic.Measure, "PnPWeb")]
     [CmdletHelp("Returns statistics on the web object",
-        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2016,
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2016 | CmdletSupportedPlatform.SP2019,
         Category = CmdletHelpCategory.Diagnostic)]
     [CmdletExample(
         Code = @"PS:> Measure-PnPWeb",
         Remarks = @"Gets statistics on the current web",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Measure-PnPList $web -Recursive",
-        Remarks = @"Gets statistics on the chosen including all sub webs",
+        Code = @"PS:> Measure-PnPWeb $web -Recursive",
+        Remarks = @"Gets statistics on the provided web including all its subwebs",
         SortOrder = 2)]
 
     public class MeasurePnPWeb : PnPCmdlet

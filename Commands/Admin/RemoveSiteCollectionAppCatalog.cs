@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPOffice365GroupToSite -Url ""https://contoso.sharepoint.com/sites/FinanceTeamsite""",
+        Code = @"PS:> Remove-PnPSiteCollectionAppCatalog -Site ""https://contoso.sharepoint.com/sites/FinanceTeamsite""",
         Remarks = @"This will remove a SiteCollection app catalog from the specified site", SortOrder = 1)]
     public class RemoveSiteCollectionAppCatalog: PnPAdminCmdlet
     {

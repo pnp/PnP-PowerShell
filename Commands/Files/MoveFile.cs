@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to move the file to. Must include the file name.")]
         public string TargetUrl = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If ommitted, the move operation will be canceled if the file already exists at the TargetUrl location.")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.")]
         public SwitchParameter OverwriteIfAlreadyExists;
 
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]
@@ -49,7 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
             }
-
+#if ONPREMISES
             var file = SelectedWeb.GetFileByServerRelativeUrl(ServerRelativeUrl);
 
             ClientContext.Load(file, f => f.Name);
@@ -61,6 +61,19 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
                 ClientContext.ExecuteQueryRetry();
             }
+#else
+            var file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
+
+            ClientContext.Load(file, f => f.Name);
+            ClientContext.ExecuteQueryRetry();
+
+            if (Force || ShouldContinue(string.Format(Resources.MoveFile0To1, ServerRelativeUrl, TargetUrl), Resources.Confirm))
+            {
+                file.MoveToUsingPath(ResourcePath.FromDecodedUrl(TargetUrl), OverwriteIfAlreadyExists ? MoveOperations.Overwrite : MoveOperations.None);
+
+                ClientContext.ExecuteQueryRetry();
+            }
+#endif
         }
     }
 }
