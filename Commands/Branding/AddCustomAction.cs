@@ -4,8 +4,6 @@ using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using Newtonsoft.Json;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
@@ -94,6 +92,11 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the custom action. Specify values as a json string : \"{Property1 : 'Value1', Property2: 'Value2'}\"", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
         public string ClientSideComponentProperties;
 #endif
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "The Client Side Host Properties of the custom action. Specify values as a json string : \"{'preAllocatedApplicationCustomizerTopHeight': '50', 'preAllocatedApplicationCustomizerBottomHeight': '50'}\"", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
+        public string ClientSideHostProperties;
+#endif
+
         protected override void ExecuteCmdlet()
         {
             var permissions = new BasePermissions();
@@ -133,7 +136,10 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
                     Title = Title,
                     Location = Location,
                     ClientSideComponentId = ClientSideComponentId.Id,
-                    ClientSideComponentProperties = ClientSideComponentProperties
+                    ClientSideComponentProperties = ClientSideComponentProperties,
+#if !ONPREMISES
+                    ClientSideHostProperties = ClientSideHostProperties
+#endif
                 };
 
                 if (MyInvocation.BoundParameters.ContainsKey("RegistrationId"))
