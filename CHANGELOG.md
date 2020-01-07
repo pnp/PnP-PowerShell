@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Bumped to .Net 4.6.1 as minimal .Net runtime version
 - Changed the way properties are being set in Set-PnPField to support setting field specific properties such as the Lookup list on a Lookup field [PR2212](https://github.com/SharePoint/PnP-PowerShell/pull/2212)
+- Fixed an issue where using Apply-PnPProvisioningTemplate -InputInstance $instance would throw a connectionString error if being executed from the root of a drive, i.e. c:\ or d:\ [PR2433](https://github.com/SharePoint/PnP-PowerShell/pull/2433)
 
 ### Contributors
 - Gautam Sheth \[[gautamdsheth](https://github.com/gautamdsheth)\]
