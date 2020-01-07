@@ -83,8 +83,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
             if (extension == ".pnp")
             {
+#if !NETSTANDARD2_1
                 IsolatedStorage.InitializeIsolatedStorage();
-
+#endif
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                       Out, fileSystemConnector);
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";

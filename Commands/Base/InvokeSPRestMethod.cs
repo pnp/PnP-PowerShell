@@ -13,7 +13,9 @@ using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+#if !NETSTANDARD2_1
 using System.Web.Script.Serialization;
+#endif
 
 namespace SharePointPnP.PowerShell.Commands.Admin
 {
@@ -123,7 +125,11 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
                         var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                         if (responseString != null)
                         {
+#if NETSTANDARD2_1
+                            WriteObject(System.Text.Json.JsonSerializer.Deserialize<object>(responseString));
+#else
                             WriteObject(new JavaScriptSerializer().DeserializeObject(responseString));
+#endif
                         }
                     }
                     else

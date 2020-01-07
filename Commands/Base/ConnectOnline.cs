@@ -14,7 +14,7 @@ using System.Reflection;
 using System.Security;
 using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
-#if NETSTANDARD2_0
+#if NETSTANDARD2_1
 using System.IdentityModel.Tokens.Jwt;
 #endif
 #if !ONPREMISES
@@ -52,7 +52,7 @@ Make sure to check the SPOManagement, PnPO365ManagementShell and AccessToken par
         Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs",
         Remarks = @"This will prompt for username and password and creates a context using ADFS to authenticate.",
         SortOrder = 5)]
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -UseAdfsCert",
         Remarks = @"This will enable you to select a certificate to create a context using ADFS to authenticate.",
@@ -97,7 +97,7 @@ PS:> dir",
         SortOrder = 13)]
 #endif
 #if !ONPREMISES
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\"",
        Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://docs.microsoft.com/en-us/graph/permissions-reference",
@@ -147,7 +147,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP O365 Management Shell / DeviceLogin";
         private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Office 365 Management Shell to the Microsoft Graph";
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
         private const string ParameterSet_GRAPHWITHSCOPE = "Microsoft Graph using Scopes";
 #endif
         private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
@@ -422,7 +422,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
@@ -482,7 +482,9 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
+#if !NETSTANDARD2_1
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHWITHSCOPE, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
+#endif
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]        
 #endif
@@ -545,7 +547,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
             else if (UseWebLogin)
             {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                 connection = SPOnlineConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
 #else
                 WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework.
@@ -561,7 +563,7 @@ Use -PnPO365ManagementShell instead");
                         creds = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
                     }
                 }
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                 connection = SPOnlineConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
                     Kerberos,
                     creds,
@@ -578,7 +580,7 @@ Use -PnPO365ManagementShell instead");
                 throw new NotImplementedException();
 #endif
             }
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
             else if (UseAdfsCert)
             {
                 // Modal Dialog to enable a user to select a certificate to use to authenticate against ADFS
@@ -613,7 +615,7 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                 WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
                 connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
@@ -622,7 +624,7 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_APPONLYAADPEM)
             {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                 connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
                 throw new NotImplementedException();
@@ -630,13 +632,13 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_APPONLYAADThumb)
             {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                 connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
                 throw new NotImplementedException();
 #endif
             }
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
             else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
             {
                 ConnectGraphScopes();
@@ -701,7 +703,7 @@ Use -PnPO365ManagementShell instead");
                 connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, NoTelemetry, SkipTenantAdminCheck, AuthenticationMode);
             }
 #if !ONPREMISES
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
             if (MyInvocation.BoundParameters.ContainsKey("Scopes") && ParameterSetName != ParameterSet_GRAPHWITHSCOPE)
             {
                 ConnectGraphScopes();
@@ -759,7 +761,7 @@ Use -PnPO365ManagementShell instead");
                     File.Delete(configFile);
                 }
             }
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
             return SPOnlineConnectionHelper.InitiateAzureADNativeApplicationConnection(
                 new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
                 RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
@@ -768,7 +770,7 @@ Use -PnPO365ManagementShell instead");
 #endif
         }
 
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
         private void ConnectGraphScopes()
         {
             var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
@@ -867,7 +869,7 @@ Use -PnPO365ManagementShell instead");
         {
             var appCredentials = new ClientCredential(AppSecret);
             var authority = new Uri(GraphAADLogin, AADDomain).AbsoluteUri;
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
             var clientApplication = new ConfidentialClientApplication(authority, AppId, RedirectUri, appCredentials, null);
             var authenticationResult = clientApplication.AcquireTokenForClient(GraphDefaultScope, null).GetAwaiter().GetResult();
             SPOnlineConnection.AuthenticationResult = authenticationResult;

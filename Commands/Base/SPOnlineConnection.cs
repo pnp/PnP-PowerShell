@@ -205,7 +205,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
-#if !ONPREMISES && !NETSTANDARD2_0
+#if !ONPREMISES && !NETSTANDARD2_1
                     if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
                     {
                         // legacy auth?
@@ -217,7 +217,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
 #endif
                         throw;
-#if !ONPREMISES && !NETSTANDARD2_0
+#if !ONPREMISES && !NETSTANDARD2_1
                     }
 #endif
                 }
@@ -298,12 +298,22 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
                 TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
                 TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+#if !NETSTANDARD2_1
                 TelemetryClient.Context.GlobalProperties.Add("ServerLibraryVersion", serverLibraryVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ServerVersion", serverVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ConnectionMethod", initializationType.ToString());
+#else
+                TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
+                TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
+                TelemetryClient.Context.Properties.Add("ConnectionMethod", initializationType.ToString());
+#endif
                 var coreAssembly = Assembly.GetExecutingAssembly();
-
+#if !NETSTANDARD2_1
                 TelemetryClient.Context.GlobalProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+#else
+                TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+#endif
+
 #if SP2013
             TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2013");
 #elif SP2016
@@ -311,7 +321,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #elif SP2019
             TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2019");
 #else
+#if !NETSTANDARD2_1
                 TelemetryClient.Context.GlobalProperties.Add("Platform", "SPO");
+#else
+                TelemetryClient.Context.Properties.Add("Platform", "SPO");
+#endif
 #endif
                 TelemetryClient.TrackEvent("Connect-PnPOnline");
             }

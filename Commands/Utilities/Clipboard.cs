@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
     {
         public static void Copy(string val)
         {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
             System.Windows.Forms.Clipboard.SetText(val);
 #else
             var tempfile = System.IO.Path.GetTempFileName();

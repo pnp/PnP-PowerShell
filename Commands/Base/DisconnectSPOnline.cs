@@ -25,11 +25,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #if !ONPREMISES
             if(SPOnlineConnection.CurrentConnection.CertFile != null)
             {
+#if !NETSTANDARD2_1
                 SPOnlineConnectionHelper.CleanupCryptoMachineKey(SPOnlineConnection.CurrentConnection.CertFile);
+#endif
                 SPOnlineConnection.CurrentConnection.CertFile = null;
             }
 #endif
-            var success = false;
+                var success = false;
             if (Connection != null)
             {
                 success = DisconnectProvidedService(Connection);
@@ -47,7 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if (provider != null)
             {
                 //ImplementingAssembly was introduced in Windows PowerShell 5.0.
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.ImplementingAssembly.FullName == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
 #else
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.Name == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
