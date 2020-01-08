@@ -11,7 +11,7 @@ using File = Microsoft.SharePoint.Client.File;
 namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolderItem")]
-    [CmdletHelp("List content in folder", Category = CmdletHelpCategory.Files)]
+    [CmdletHelp("List content in folder", Category = CmdletHelpCategory.Files, SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
         Code = @"PS:> Get-PnPFolderItem -FolderSiteRelativeUrl ""SitePages""",
         Remarks = "Returns the contents of the folder SitePages which is located in the root of the current web",
