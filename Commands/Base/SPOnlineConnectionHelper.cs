@@ -246,20 +246,19 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 messageCallback(returnData["message"]);
 
-
                 var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
 
                 if (tokenResult != null)
                 {
                     progressCallback("Token received");
                     spoConnection = new SPOnlineConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
+                    spoConnection.ConnectionMethod = ConnectionMethod.GraphDeviceLogin;
                 }
                 else
                 {
                     progressCallback("No token received.");
                 }
-            }
-            spoConnection.ConnectionMethod = ConnectionMethod.GraphDeviceLogin;
+            }            
             return spoConnection;
         }
 
