@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 - Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online [PR2060](https://github.com/SharePoint/PnP-PowerShell/pull/2060)
 - Add/Remove/Get-PnPOrgAssetsLibrary commands to set document libraries as organizational asset sources on SharePoint Online [PR2179](https://github.com/SharePoint/PnP-PowerShell/pull/2179)
+- `-Recursive` option to `Get-PnPFolderItem` to allow retrieving all files and folders recursively [PR2362](https://github.com/SharePoint/PnP-PowerShell/pull/2362)
 
 ### Changed
 
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 - Gautam Sheth \[[gautamdsheth](https://github.com/gautamdsheth)\]
 - Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
+- Will Holland \[[willholland](https://github.com/willholland)\]
 
 ## [3.16.1912.0]
 
