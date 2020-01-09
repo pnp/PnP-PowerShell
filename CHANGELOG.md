@@ -5,20 +5,42 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [3.17.2001.0]
 
 ### Added
-- Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online [PR2060](https://github.com/SharePoint/PnP-PowerShell/pull/2060)
-- Add/Remove/Get-PnPOrgAssetsLibrary commands to set document libraries as organizational asset sources on SharePoint Online [PR2179](https://github.com/SharePoint/PnP-PowerShell/pull/2179)
-- `-Recursive` option to `Get-PnPFolderItem` to allow retrieving all files and folders recursively [PR2362](https://github.com/SharePoint/PnP-PowerShell/pull/2362)
+- Add/Remove/Set/Get-PnPApplicationCustomizer commands to allow working with SharePoint Framework Application Customizer Extensions
+- Ability to pipe in a result from Get-PnPFolder to Get-PnPFolderItem using the -Identity parameter
+- Added ability to pipe Get-PnPUnifiedGroup to Get-PnPUnifiedGroupOwners and Get-PnPUnifiedGroupMembers
+- Added permissions required for each of the \*-PnPUnifiedGroup\* commands in the Azure Active Directory App Registration to the help text of the commands
+- Added option to use Connect-PnPOnline with a base64 encoded private key for use in i.e. PnP PowerShell within an Azure Function v1 and an option to provide a certificate reference for use in i.e. Azure Function v2
+- Added option to use Connect-PnPOnline with a public key certificate for use in i.e. Azure Runbooks
+- Added option -RowLimit to Get-PnPRecycleBinItem to avoid getting throttled on full recycle bins
+- Added `-WriteToConsole` option to `Set-PnPTraceLog` to allow writing trace listener output from the PnP Templating commands to both the console and to a file. Doesn't work for .NET Core.
+- Added `Reset-PnPLabel` command to allow removal of an Office 365 Retention Label from a list
+- Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online
+- Add/Remove/Get-PnPOrgAssetsLibrary commands to set document libraries as organizational asset sources on SharePoint Online
+- `-Recursive` option to `Get-PnPFolderItem` to allow retrieving all files and folders recursively
+### Changed 
 
-### Changed
-
+- Fixes issues with connections not properly closing under some conditions when using Disconnect-PnPOnline
+- When using commands that utilize the Graph API but not being connected to one of the Graph API Connect-PnPOnline methods, it would throw a NullReferenceException. It will now throw a cleaner exception indicating you should connect with the Graph API first.
+- Fixed an issue where using Get-PnPUser -WithRightsAssigned would not return the proper users with actually having access to that site
+- Fixed an issue when using ConvertTo-PnPClientSidePage to convert Delve Blog posts that it would throw a nullreference exception in some scenarios
+- Fixed an issue using `Add-PnPDataRowsToProvisioningTemp` to add data from a list containing a multi choice to a PnP Provisioning Template where the data would be shown as `System.String[]` instead of the actual data
 - Bumped to .Net 4.6.1 as minimal .Net runtime version
-- Changed the way properties are being set in Set-PnPField to support setting field specific properties such as the Lookup list on a Lookup field [PR2212](https://github.com/SharePoint/PnP-PowerShell/pull/2212)
-- Fixed an issue where using Apply-PnPProvisioningTemplate -InputInstance $instance would throw a connectionString error if being executed from the root of a drive, i.e. c:\ or d:\ [PR2433](https://github.com/SharePoint/PnP-PowerShell/pull/2433)
+- Changed the way properties are being set in Set-PnPField to support setting field specific properties such as the Lookup list on a Lookup field
+- Fixed an issue where using Apply-PnPProvisioningTemplate -InputInstance $instance would throw a connectionString error if being executed from the root of a drive, i.e. c:\ or d:\
 
 ### Contributors
+- Koen Zomers \[[koenzomers](https://github.com/koenzomers)\]
+- Robin Meure \[[robinmeure](https://github.com/robinmeure)\]
+- Michael Rees Pullen \[[mrpullen](https://github.com/mrpullen)\]
+- Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
+- Rene Modery \[[modery](https://github.com/modery)\]
+- Krystian Niepsuj \[[MrDoNotBreak](https://github.com/MrDoNotBreak)\]
+- Piotr Siatka \[[siata13](https://github.com/siata13)\]
+- Heinrich Ulbricht \[[heinrich-ulbricht](https://github.com/heinrich-ulbricht)\]
+- Dan Cecil \[[danielcecil](https://github.com/danielcecil)\]
 - Gautam Sheth \[[gautamdsheth](https://github.com/gautamdsheth)\]
 - Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
 - Will Holland \[[willholland](https://github.com/willholland)\]
