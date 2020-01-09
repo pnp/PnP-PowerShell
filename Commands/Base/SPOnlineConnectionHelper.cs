@@ -363,6 +363,27 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
+        internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, X509Certificate2 certificate, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        {
+            var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment), retryCount, retryWait * 1000);
+            var connectionType = ConnectionType.OnPrem;
+            if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+            {
+                connectionType = ConnectionType.O365;
+            }
+            if (skipAdminCheck == false)
+            {
+                if (IsTenantAdminSite(context))
+                {
+                    connectionType = ConnectionType.TenantAdmin;
+                }
+            }
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry,InitializationType.AADAppOnly);
+            spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
+            return spoConnection;
+        }
+
         internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, string certificatePath, SecureString certificatePassword, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(certificatePath, certificatePassword);
