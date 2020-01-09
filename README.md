@@ -6,25 +6,19 @@ This solution contains a library of PowerShell commands that allows you to perfo
 ![SharePoint Patterns and Practices](https://devofficecdn.azureedge.net/media/Default/PnP/sppnp.png)
   
 ### Applies to ###
--  Office 365 Multi Tenant (MT)
--  Office 365 Dedicated (D)
--  SharePoint 2013 on-premises
--  SharePoint 2016 on-premises
+-  Sharepoint Online (Multi Tenant & Dedicated)
 -  SharePoint 2019 on-premises
+-  SharePoint 2016 on-premises
+-  SharePoint 2013 on-premises
 
 ### Prerequisites ###
-In order to generate the Cmdlet help you need to have Windows Management Framework installed.
+In order to generate the Cmdlet help you need to have the Windows Management Framework v4.0 installed, which you can download from http://www.microsoft.com/en-us/download/details.aspx?id=40855
 
-If it is not [pre-installed on your operating system](https://docs.microsoft.com/powershell/wmf/overview#wmf-availability-across-windows-operating-systems), you can find installation instructions in the [WMF release notes.](https://docs.microsoft.com/powershell/wmf/overview#wmf-release-notes)
-  
-### Solution ###
-Solution | Author(s)
----------|----------
-SharePointPnP.PowerShell | Erwin van Hunen and countless community contributors
+Check out the "Getting Started" section to make sure you have all requirements in place. 
 
-### Disclaimer ###
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+### Latest Release Quick Download
 
+The latest release can be found on [this link](https://github.com/SharePoint/PnP-PowerShell/releases)
 
 ----------
 
@@ -32,10 +26,9 @@ SharePointPnP.PowerShell | Erwin van Hunen and countless community contributors
 [Navigate here for an overview of all cmdlets and their parameters](Documentation/readme.md)
 
 # Installation #
+There are two ways:
 
-There are 2 ways to install the cmdlets. We recommend, where possible, to install them from the [PowerShell Gallery](https://www.powershellgallery.com). Check out the "Getting Started with the Gallery" section to make sure you have all requirements in place. Alternatively you can download the setup files and install the cmdlets directly.
-
-## PowerShell Gallery ##
+## 1. Using the [PowerShell Gallery](https://www.powershellgallery.com) **(Recommended)**
 
 If you main OS is Windows 10, or if you have [PowerShellGet](https://github.com/powershell/powershellget) installed, you can run the following commands to install the PowerShell cmdlets:
 
@@ -51,10 +44,11 @@ If you main OS is Windows 10, or if you have [PowerShellGet](https://github.com/
 
 In order to install the cmdlets when you get this error specify the -SkipPublisherCheck switch with the Install-Module cmdlet, e.g. ```Install-Module SharePointPnPPowerShellOnline -SkipPublisherCheck -AllowClobber```
 
-## Setup files ##
+## 2. Downloading the Files directly
+
 You can download the setup files from the [releases](https://github.com/officedev/pnp-powershell/releases) section of the PnP PowerShell repository. These files will up be updated on a monthly basis. Run the install and restart any open instances of PowerShell to use the cmdlets.
 
-# Updating #
+### How to Update the Cmdlets 
 Every month a new release will be made available of the PnP PowerShell Cmdlets. If you earlier installed the cmdlets using the setup file, simply download the [latest version](https://github.com/SharePoint/PnP-PowerShell/releases/latest) and run the setup. This will update your existing installation.
 
 If you have installed the cmdlets using PowerShellGet with ```Install-Module``` from the PowerShell Gallery then you will be able to use the following command to install the latest updated version:
@@ -88,7 +82,7 @@ Connect-PnPOnline –Url https://yoursite.sharepoint.com –UseWebLogin
 To view all cmdlets, enter:
 
 ```powershell
-Get-Command -Module *PnP*
+Get-Command -Module SharePointPnPPowerShell*
 ```
 
 At the following links you will find a few videos on how to get started with the cmdlets:
@@ -103,6 +97,15 @@ See this [wiki page](https://github.com/OfficeDev/PnP-PowerShell/wiki/How-to-use
 # Contributing #
 
 If you want to contribute to this SharePoint Patterns and Practices PowerShell library, please [proceed here](CONTRIBUTING.md)
+
+### Solution/Authors ###
+Solution | Author(s)
+---------|----------
+SharePointPnP.PowerShell | Erwin van Hunen and countless community contributors
+
+### Disclaimer ###
+**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+
 
 ## Building the source code ##
 
