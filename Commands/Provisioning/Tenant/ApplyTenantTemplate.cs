@@ -354,7 +354,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                     }
                     else
                     {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                         return (SPOnlineConnection.AuthenticationResult.Token);
 #else
                         return SPOnlineConnection.AuthenticationResult.AccessToken;

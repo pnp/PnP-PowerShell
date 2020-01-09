@@ -47,6 +47,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
             }
             catch (Exception ex)
             {
+#if !NETSTANDARD2_1
                 if (ex.InnerException != null)
                 {
                     if (ex.InnerException is HttpException)
@@ -64,6 +65,9 @@ namespace SharePointPnP.PowerShell.Commands.Admin
                 {
                     throw ex;
                 }
+#else
+                throw ex;
+#endif
             }
         }
     }

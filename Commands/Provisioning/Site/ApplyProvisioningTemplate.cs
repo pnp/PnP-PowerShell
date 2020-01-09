@@ -416,7 +416,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                     }
                     else
                     {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                         return (SPOnlineConnection.AuthenticationResult.Token);
 #else
                         return SPOnlineConnection.AuthenticationResult.AccessToken;

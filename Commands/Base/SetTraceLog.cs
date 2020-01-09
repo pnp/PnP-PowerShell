@@ -62,7 +62,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (WriteToConsole.IsPresent || string.IsNullOrEmpty(LogFile))
                 {
                     RemoveListener(ConsoleListenername);
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                     ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
                     consoleListener.Name = ConsoleListenername;
                     Trace.Listeners.Add(consoleListener);

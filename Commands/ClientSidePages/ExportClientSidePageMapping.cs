@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !ONPREMISES && !NETSTANDARD2_1
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Management.Automation;
@@ -10,6 +10,7 @@ using SharePointPnP.Modernization.Framework.Publishing;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.Modernization.Framework.Cache;
 using SharePointPnP.Modernization.Framework.Telemetry.Observers;
+using SharePointPnP.Modernization.Framework.Transform;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
@@ -84,7 +85,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 else
                 {
                     // Load the default one from resources into a model, no need for persisting this file
-                    string webpartMappingFileContents = WebPartMappingLoader.LoadFile("SharePointPnP.PowerShell.Commands.ClientSidePages.webpartmapping.xml");
+                    string webpartMappingFileContents = PageTransformator.LoadDefaultWebPartMappingFile();
                     System.IO.File.WriteAllText(fileName, webpartMappingFileContents);
                 }
             }
@@ -101,7 +102,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 else
                 {
                     // Load the default one from resources into a model, no need for persisting this file
-                    string pageLayoutMappingFileContents = WebPartMappingLoader.LoadFile("SharePointPnP.PowerShell.Commands.ClientSidePages.pagelayoutmapping.xml");
+                    string pageLayoutMappingFileContents = PublishingPageTransformator.LoadDefaultPageLayoutMappingFile(); 
                     System.IO.File.WriteAllText(fileName, pageLayoutMappingFileContents);
                 }
             }

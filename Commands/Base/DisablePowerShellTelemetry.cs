@@ -1,6 +1,6 @@
 ﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
-#if NETSTANDARD2_0
+#if NETSTANDARD2_1
 using System.IdentityModel.Tokens.Jwt;
 #else
 using System.IdentityModel.Tokens;

@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD2_0
+﻿#if !NETSTANDARD2_1
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 #endif
 using Microsoft.Online.SharePoint.TenantAdministration;
@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #endif
         private static bool VersionChecked;
 
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
         public static AuthenticationContext AuthContext { get; set; }
 #endif
         static SPOnlineConnectionHelper()
@@ -78,10 +78,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.SPClientSecret);
+            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, clientId, clientSecret, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.SPClientSecret);
         }
 
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
 #if ONPREMISES
         internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, string hightrustCertificatePath, string hightrustCertificatePassword, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck)
         {
@@ -133,7 +133,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 Utilities.Clipboard.Copy(returnData["user_code"]);
                 messageCallback("Code has been copied to clipboard");
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                 BrowserHelper.OpenBrowser(returnData["verification_url"], (success) =>
                 {
                     if (success)
@@ -208,7 +208,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 Utilities.Clipboard.Copy(returnData["user_code"]);
                 messageCallback("Code has been copied to clipboard");
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                 BrowserHelper.OpenBrowser(returnData["verification_url"], (success) =>
                 {
                     if (success)
@@ -334,7 +334,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
         }
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
 #if !ONPREMISES
         internal static SPOnlineConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
@@ -360,6 +360,27 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADNativeApp);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADNativeApplication;
+            return spoConnection;
+        }
+
+        internal static SPOnlineConnection InitiateAzureADAppOnlyConnection(Uri url, string clientId, string tenant, X509Certificate2 certificate, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        {
+            var authManager = new OfficeDevPnP.Core.AuthenticationManager();
+            var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment), retryCount, retryWait * 1000);
+            var connectionType = ConnectionType.OnPrem;
+            if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+            {
+                connectionType = ConnectionType.O365;
+            }
+            if (skipAdminCheck == false)
+            {
+                if (IsTenantAdminSite(context))
+                {
+                    connectionType = ConnectionType.TenantAdmin;
+                }
+            }
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry,InitializationType.AADAppOnly);
+            spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
             return spoConnection;
         }
 
@@ -469,7 +490,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 #endif
 
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
         internal static SPOnlineConnection InstantiateWebloginConnection(Uri url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
@@ -540,12 +561,17 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         context.ExecuteQueryRetry();
                     }
 #if !ONPREMISES
-                    catch (NotSupportedException)
+                    catch (NotSupportedException nox)
                     {
+#if NETSTANDARD2_1
+                        // Legacy auth is not supported with .NET Standard
+                        throw nox;
+#else
                         // legacy auth?
                         var authManager = new OfficeDevPnP.Core.AuthenticationManager();
                         context = PnPClientContext.ConvertFrom(authManager.GetAzureADCredentialsContext(url.ToString(), credentials.UserName, credentials.Password));
                         context.ExecuteQueryRetry();
+#endif
                     }
 #endif
                     catch (ClientRequestException)
@@ -611,7 +637,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
         internal static SPOnlineConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();

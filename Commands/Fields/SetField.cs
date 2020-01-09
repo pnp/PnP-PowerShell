@@ -87,11 +87,14 @@ namespace SharePointPnP.PowerShell.Commands.Fields
             ClientContext.Load(field);
             ClientContext.ExecuteQueryRetry();
 
+            // Get a reference to the type-specific object to allow setting type-specific properties, i.e. LookupList and LookupField for Microsoft.SharePoint.Client.FieldLookup
+            var typeSpecificField = field.TypedObject;
+
             foreach (string key in Values.Keys)
             {
                 var value = Values[key];
 
-                var property = field.GetType().GetProperty(key);
+                var property = typeSpecificField.GetType().GetProperty(key);
                 if (property == null)
                 {
                     WriteWarning($"No property '{key}' found on this field. Value will be ignored.");
@@ -100,7 +103,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 {
                     try
                     {
-                        property.SetValue(field, value);
+                        property.SetValue(typeSpecificField, value);
                     }
                     catch (Exception e)
                     {

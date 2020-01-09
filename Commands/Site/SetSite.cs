@@ -154,7 +154,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     if (System.IO.File.Exists(LogoFilePath))
                     {
                         var bytes = System.IO.File.ReadAllBytes(LogoFilePath);
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                         var mimeType = System.Web.MimeMapping.GetMimeMapping(LogoFilePath);
 #else
                         var mimeType = "";
