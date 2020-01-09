@@ -647,6 +647,7 @@
     <Compile Include="Graph\RemoveDeletedUnifiedGroup.cs" />
     <Compile Include="Graph\RestoreDeletedUnifiedGroup.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
+    <Compile Include="InformationManagement\ResetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
     <Compile Include="Files\SetFolderPermission.cs" />
