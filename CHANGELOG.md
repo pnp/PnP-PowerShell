@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online
 - Add/Remove/Get-PnPOrgAssetsLibrary commands to set document libraries as organizational asset sources on SharePoint Online
 - `-Recursive` option to `Get-PnPFolderItem` to allow retrieving all files and folders recursively
+
 ### Changed 
 
 - Fixes issues with connections not properly closing under some conditions when using Disconnect-PnPOnline
@@ -30,20 +31,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Bumped to .Net 4.6.1 as minimal .Net runtime version
 - Changed the way properties are being set in Set-PnPField to support setting field specific properties such as the Lookup list on a Lookup field
 - Fixed an issue where using Apply-PnPProvisioningTemplate -InputInstance $instance would throw a connectionString error if being executed from the root of a drive, i.e. c:\ or d:\
+- Fixed issue with access token not returning correctly after update to newer version of NewtonSoft JSON.
+- Fixes issue with pipeline not returning object correctly.
 
 ### Contributors
-- Koen Zomers \[[koenzomers](https://github.com/koenzomers)\]
-- Robin Meure \[[robinmeure](https://github.com/robinmeure)\]
-- Michael Rees Pullen \[[mrpullen](https://github.com/mrpullen)\]
-- Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
-- Rene Modery \[[modery](https://github.com/modery)\]
-- Krystian Niepsuj \[[MrDoNotBreak](https://github.com/MrDoNotBreak)\]
-- Piotr Siatka \[[siata13](https://github.com/siata13)\]
-- Heinrich Ulbricht \[[heinrich-ulbricht](https://github.com/heinrich-ulbricht)\]
-- Dan Cecil \[[danielcecil](https://github.com/danielcecil)\]
-- Gautam Sheth \[[gautamdsheth](https://github.com/gautamdsheth)\]
-- Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
-- Will Holland \[[willholland](https://github.com/willholland)\]
+- Koen Zomers [koenzomers]
+- Robin Meure [robinmeure]
+- Michael Rees Pullen [mrpullen]
+- Giacomo Pozzoni [jackpoz]
+- Rene Modery [modery]
+- Krystian Niepsuj [MrDoNotBreak]
+- Piotr Siatka [siata13]
+- Heinrich Ulbricht [heinrich-ulbricht]
+- Dan Cecil [danielcecil]
+- Gautam Sheth [gautamdsheth]
+- Giacomo Pozzoni [jackpoz]
+- Will Holland [willholland]
+- Ivan Vagunin [ivanvagunin]
 
 ## [3.16.1912.0]
 
