@@ -4,6 +4,384 @@
         <name>SharePointPnP.Modernization.Framework</name>
     </assembly>
     <members>
+        <member name="T:SharePointPnP.Modernization.Framework.Cache.CacheOptions">
+            <summary>
+            MemoryDistributedCache options class
+            </summary>
+            <summary>
+            MemoryDistributedCache options class
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheOptions.KeyPrefix">
+            <summary>
+            Prefix value that will be prepended to the provided key value
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheOptions.EntryOptions">
+            <summary>
+            Default cache entry configuration, will be used to save items to the cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheOptions.GetKey(System.String)">
+            <summary>
+            Returns the key value to use by the caching system, in this case this will mean prepending the KeyPrefix
+            </summary>
+            <param name="key">Provided key</param>
+            <returns>Key to use by the caching system</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Cache.Extensions">
+            <summary>
+            Extensions methods to make it easier to work with the distributed cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.Extensions.ToByteArray(System.Object)">
+            <summary>
+            Converts an object into a bytearray
+            </summary>
+            <param name="obj">Object to return as byte array</param>
+            <returns>byte array</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.Extensions.FromByteArray``1(System.Byte[])">
+            <summary>
+            Converts a byte array to an object
+            </summary>
+            <typeparam name="T">Type of the object to return</typeparam>
+            <param name="byteArray">Byte array</param>
+            <returns>Object</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.Extensions.SetAsync``1(Microsoft.Extensions.Caching.Distributed.IDistributedCache,System.String,``0,Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions,System.Threading.CancellationToken)">
+            <summary>
+            Sets an object of type T in connected cache system
+            </summary>
+            <typeparam name="T">Type of the object to cache</typeparam>
+            <param name="distributedCache">Connected cache system</param>
+            <param name="key">Key of the object in the cache</param>
+            <param name="value">Value to be cached</param>
+            <param name="options">Caching options</param>
+            <param name="token">Cancellation token</param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.Extensions.Set``1(Microsoft.Extensions.Caching.Distributed.IDistributedCache,System.String,``0,Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions)">
+            <summary>
+            Sets an object of type T in connected cache system
+            </summary>
+            <typeparam name="T">Type of the object to cache</typeparam>
+            <param name="distributedCache">Connected cache system</param>
+            <param name="key">Key of the object in the cache</param>
+            <param name="value">Value to be cached</param>
+            <param name="options">Caching options</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.Extensions.GetAsync``1(Microsoft.Extensions.Caching.Distributed.IDistributedCache,System.String)">
+            <summary>
+            Gets an object from the connected cache system
+            </summary>
+            <typeparam name="T">Type of the object to return from cache</typeparam>
+            <param name="distributedCache">Connected cache system</param>
+            <param name="key">Key of the object in the cache</param>
+            <returns>Object of the type T</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.Extensions.Get``1(Microsoft.Extensions.Caching.Distributed.IDistributedCache,System.String)">
+            <summary>
+            Gets an object from the connected cache system
+            </summary>
+            <typeparam name="T">Type of the object to return from cache</typeparam>
+            <param name="distributedCache">Connected cache system</param>
+            <param name="key">Key of the object in the cache</param>
+            <returns>Object of the type T</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.Extensions.GetAndInitialize``1(Microsoft.Extensions.Caching.Distributed.IDistributedCache,System.String)">
+            <summary>
+            Gets an object from the connected cache system. If not cached the object will be created
+            </summary>
+            <typeparam name="T">Type of the object to return from cache</typeparam>
+            <param name="distributedCache">Connected cache system</param>
+            <param name="key">Key of the object in the cache</param>
+            <returns>Object of the type T</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Cache.ICacheOptions">
+            <summary>
+            Interface to be implemented by each cache options implementation
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.ICacheOptions.KeyPrefix">
+            <summary>
+            Prefix value that will be prepended to the provided key value
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.ICacheOptions.GetKey(System.String)">
+            <summary>
+            Returns the key value to use by the caching system, typically this will mean prepending the KeyPrefix
+            </summary>
+            <param name="key">Provided key</param>
+            <returns>Key to use by the caching system</returns>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.ICacheOptions.EntryOptions">
+            <summary>
+            Default cache entry configuration, will be used to save items to the cache
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Cache.CacheManager">
+            <summary>
+            Caching manager, singleton
+            Important: don't cache SharePoint Client objects as these are tied to a specific client context and hence will fail when there's context switching!
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.Instance">
+            <summary>
+            Get's the single cachemanager instance, singleton pattern
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetSharePointVersion(System.Uri)">
+            <summary>
+            Get's the cached SharePoint version for a given site
+            </summary>
+            <param name="site">Site to get the SharePoint version for</param>
+            <returns>Found SharePoint version or "Unknown" if not found in cache</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetSharePointVersion(System.Uri,SharePointPnP.Modernization.Framework.Transform.SPVersion)">
+            <summary>
+            Sets the SharePoint version in cache
+            </summary>
+            <param name="site">Site to the set the SharePoint version for</param>
+            <param name="version">SharePoint version of the site</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetExactSharePointVersion(System.Uri)">
+            <summary>
+            Get's the exact SharePoint version from cache
+            </summary>
+            <param name="site">Site to get the exact version for</param>
+            <returns>Exact version from cache</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetExactSharePointVersion(System.Uri,System.String)">
+            <summary>
+            Adds exact SharePoint version for a given site to cache
+            </summary>
+            <param name="site">Site to add the SharePoint version for to cache</param>
+            <param name="version">Version to add</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetAADTenantId(System.Uri)">
+            <summary>
+            Returns the used AzureAD tenant id
+            </summary>
+            <param name="site">Url of the site</param>
+            <returns>Azure AD tenant id</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetAADTenantId(System.Guid,System.Uri)">
+            <summary>
+            Sets the Azure AD tenant Id in cache
+            </summary>
+            <param name="tenantId">Tenant Id</param>
+            <param name="site">Site url</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetClientSideComponents(OfficeDevPnP.Core.Pages.ClientSidePage)">
+            <summary>
+            Get's the clientside components from cache or if needed retrieves and caches them
+            </summary>
+            <param name="page">Page to grab the components for</param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearClientSideComponents">
+            <summary>
+            Clear the clientside component cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetBaseTemplate(Microsoft.SharePoint.Client.Web)">
+            <summary>
+            Get's the base template that will be used to filter out "OOB" fields
+            </summary>
+            <param name="web">web to operate against</param>
+            <returns>Provisioning template of the base template of STS#0</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearBaseTemplate">
+            <summary>
+            Clear base template cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetFieldsToCopy(Microsoft.SharePoint.Client.Web,Microsoft.SharePoint.Client.List,System.String)">
+            <summary>
+            Get the list of fields that need to be copied from cache. If cache is empty the list will be calculated
+            </summary>
+            <param name="web">Web to operate against</param>
+            <param name="sourceLibrary">Pages library instance</param>
+            <returns>List of fields that need to be copied</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetPublishingContentTypeField(Microsoft.SharePoint.Client.List,System.String,System.String)">
+            <summary>
+            Get field information of a content type field
+            </summary>
+            <param name="pagesLibrary">Pages library list</param>
+            <param name="contentTypeId">ID of the content type</param>
+            <param name="fieldName">Name of the field to get information from</param>
+            <returns>FieldData object holding field information</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearFieldsToCopy">
+            <summary>
+            Clear the fields to copy cache
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetPublishingWeb(System.String)">
+            <summary>
+            Marks this web as a publishing web
+            </summary>
+            <param name="webUrl">Url of the web</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetBlogWeb(System.String)">
+            <summary>
+            Marks this web as a blog web
+            </summary>
+            <param name="webUrl">Url of the web</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.IsPublishingWeb(System.String)">
+            <summary>
+            Checks if this is publishing web
+            </summary>
+            <param name="webUrl">Web url to check</param>
+            <returns>True if publishing, false otherwise</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.IsBlogWeb(System.String)">
+            <summary>
+            Checks if this is blog web
+            </summary>
+            <param name="webUrl">Web url to check</param>
+            <returns>True if blog, false otherwise</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetPublishingPagesLibraryName(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Get translation for the publishing pages library
+            </summary>
+            <param name="context">Context of the site</param>
+            <returns>Translated name of the pages library</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetBlogListName(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Get translation for the blog list name
+            </summary>
+            <param name="context">Context of the site</param>
+            <returns>Translated name of the blog list</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetResourceString(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Returns the translated value for a resource string
+            </summary>
+            <param name="context">Context of the site</param>
+            <param name="resource">Key of the resource (e.g. $Resources:core,ScriptEditorWebPartDescription;) </param>
+            <returns>Translated string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetPageLayoutMapping(Microsoft.SharePoint.Client.ListItem)">
+            <summary>
+            Generate pagelayout mapping file for given publishing page
+            </summary>
+            <param name="page">Publishing page</param>
+            <returns>Page layout mapping model</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearAllCaches">
+            <summary>
+            Clear all the caches
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearSharePointVersions">
+            <summary>
+            Clears Cached SharePoint versions
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearGeneratedPageLayoutMappings">
+            <summary>
+            Clears the cache of generated page layout mappings
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetMappedUsers">
+            <summary>
+            Mapped users
+            </summary>
+            <returns>A dictionary of mapped users</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.AddMappedUser(System.String,System.String)">
+            <summary>
+            Adds a user to the dictionary of mapped users
+            </summary>
+            <param name="principal">Principal to map</param>
+            <param name="user">mapped user</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetEnsuredUser(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Run and cache the output value of EnsureUser for a given user
+            </summary>
+            <param name="context">ClientContext to operate on</param>
+            <param name="userValue">User name of user to ensure</param>
+            <returns>ResolvedUser instance holding information about the ensured user</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserFromUserList(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Lookup a user from the site's user list based upon the user's upn
+            </summary>
+            <param name="context">Context of the web holding the user list</param>
+            <param name="userUpn">Upn of the user to fetch</param>
+            <returns>A UserEntity instance holding information about the user</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserFromUserList(Microsoft.SharePoint.Client.ClientContext,System.Int32)">
+            <summary>
+            Lookup a user from the site's user list based upon the user's id
+            </summary>
+            <param name="context">Context of the web holding the user list</param>
+            <param name="userListId">Id of the user to fetch</param>
+            <returns>A UserEntity instance holding information about the user</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetContentTypeId(Microsoft.SharePoint.Client.List,System.String)">
+            <summary>
+            Get's the ID of a contenttype
+            </summary>
+            <param name="pagesLibrary">Pages library holding the content type</param>
+            <param name="contentTypeName">Name of the content type</param>
+            <returns>ID of the content type</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetLastUsedTransformator(SharePointPnP.Modernization.Framework.Transform.BasePageTransformator)">
+            <summary>
+            Caches the last used page transformator instance, needed to postpone log writing when transforming multiple pages
+            </summary>
+            <param name="transformator"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetLastUsedTransformator">
+            <summary>
+            Gets the last used page transformator instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUrlMapping(System.String,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Returns a list of url mappings
+            </summary>
+            <param name="urlMappingFile">File with url mappings</param>
+            <param name="logObservers">Attached list of log observers</param>
+            <returns>List of url mappings</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserMapping(System.String,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Gets the list of user mappings, if first time file will be laoded
+            </summary>
+            <param name="userMappingFile">File with the user mappings</param>
+            <param name="logObservers">Attached list of log observers</param>
+            <returns>List of user mappings</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Cache.FieldData">
+            <summary>
+            Field data used to transfer information about a field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldName">
+            <summary>
+            Internal name of the field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldId">
+            <summary>
+            Id of the field
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldType">
+            <summary>
+            Type of the field
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Delve.DelvePageTransformationInformation">
             <summary>
             Information to initiate the transformation of a Delve blog page
@@ -769,6 +1147,13 @@
             <param name="pageUrl">Server Relative Page Url</param>
             <returns></returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ExtractWebPartPageViaWebServicesFromPage(System.String)">
+            <summary>
+            Uses the WebPartPages.asmx service to retrieve the page contents, needed to find ZoneId for SP2010 based v3 web parts
+            </summary>
+            <param name="fileLeafRef">Page to load</param>
+            <returns>The found page</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ExtractWebPartPropertiesViaWebServicesFromPage(System.String)">
             <summary>
             Call SharePoint Web Services to extract web part properties not exposed by CSOM
@@ -1123,6 +1508,12 @@
             </summary>
             <param name="publishingPageTransformationInformation">Information about the publishing page to transform</param>
             <returns>The path to the created modern page</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformator.LoadDefaultPageLayoutMappingFile">
+            <summary>
+            Loads the default page layout mapping model file
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformator.DetailSettingsAsLogEntries(SharePointPnP.Modernization.Framework.Publishing.PublishingPageTransformationInformation)">
             <summary>
@@ -2599,6 +2990,18 @@
             Base page transformator class that contains logic that applies for all page transformations
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.LoadDefaultWebPartMapping">
+            <summary>
+            Loads the default webpart mapping model
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.LoadDefaultWebPartMappingFile">
+            <summary>
+            Loads the default webpart mapping model file
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.GetVersion">
             <summary>
             Gets the version of the assembly
@@ -3661,238 +4064,6 @@
             </summary>
             <param name="wikiPageWebParts">List of web parts on the page</param>
             <returns>Updated list of web parts</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Cache.CacheManager">
-            <summary>
-            Caching manager, singleton
-            Important: don't cache SharePoint Client objects as these are tied to a specific client context and hence will fail when there's context switching!
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.Instance">
-            <summary>
-            Get's the single cachemanager instance, singleton pattern
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.SharepointVersions">
-            <summary>
-            List of URLs and SharePoint Versions
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.ExactSharepointVersions">
-            <summary>
-            List of URLs and Exact SharePoint Versions
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.AADTenantId">
-            <summary>
-            AADTenantID's used
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.AssetsTransfered">
-            <summary>
-            List of assets transferred from source to destination
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetClientSideComponents(OfficeDevPnP.Core.Pages.ClientSidePage)">
-            <summary>
-            Get's the clientside components from cache or if needed retrieves and caches them
-            </summary>
-            <param name="page">Page to grab the components for</param>
-            <returns></returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearClientSideComponents">
-            <summary>
-            Clear the clientside component cache
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetBaseTemplate(Microsoft.SharePoint.Client.Web)">
-            <summary>
-            Get's the base template that will be used to filter out "OOB" fields
-            </summary>
-            <param name="web">web to operate against</param>
-            <returns>Provisioning template of the base template of STS#0</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearBaseTemplate">
-            <summary>
-            Clear base template cache
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetFieldsToCopy(Microsoft.SharePoint.Client.Web,Microsoft.SharePoint.Client.List,System.String)">
-            <summary>
-            Get the list of fields that need to be copied from cache. If cache is empty the list will be calculated
-            </summary>
-            <param name="web">Web to operate against</param>
-            <param name="sourceLibrary">Pages library instance</param>
-            <returns>List of fields that need to be copied</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetPublishingContentTypeField(Microsoft.SharePoint.Client.List,System.String,System.String)">
-            <summary>
-            Get field information of a content type field
-            </summary>
-            <param name="pagesLibrary">Pages library list</param>
-            <param name="contentTypeId">ID of the content type</param>
-            <param name="fieldName">Name of the field to get information from</param>
-            <returns>FieldData object holding field information</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearFieldsToCopy">
-            <summary>
-            Clear the fields to copy cache
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetPublishingWeb(System.String)">
-            <summary>
-            Marks this web as a publishing web
-            </summary>
-            <param name="webUrl">Url of the web</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetBlogWeb(System.String)">
-            <summary>
-            Marks this web as a blog web
-            </summary>
-            <param name="webUrl">Url of the web</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.IsPublishingWeb(System.String)">
-            <summary>
-            Checks if this is publishing web
-            </summary>
-            <param name="webUrl">Web url to check</param>
-            <returns>True if publishing, false otherwise</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.IsBlogWeb(System.String)">
-            <summary>
-            Checks if this is blog web
-            </summary>
-            <param name="webUrl">Web url to check</param>
-            <returns>True if blog, false otherwise</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetPublishingPagesLibraryName(Microsoft.SharePoint.Client.ClientContext)">
-            <summary>
-            Get translation for the publishing pages library
-            </summary>
-            <param name="context">Context of the site</param>
-            <returns>Translated name of the pages library</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetBlogListName(Microsoft.SharePoint.Client.ClientContext)">
-            <summary>
-            Get translation for the blog list name
-            </summary>
-            <param name="context">Context of the site</param>
-            <returns>Translated name of the blog list</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetResourceString(Microsoft.SharePoint.Client.ClientContext,System.String)">
-            <summary>
-            Returns the translated value for a resource string
-            </summary>
-            <param name="context">Context of the site</param>
-            <param name="resource">Key of the resource (e.g. $Resources:core,ScriptEditorWebPartDescription;) </param>
-            <returns>Translated string</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetPageLayoutMapping(Microsoft.SharePoint.Client.ListItem)">
-            <summary>
-            Generate pagelayout mapping file for given publishing page
-            </summary>
-            <param name="page">Publishing page</param>
-            <returns>Page layout mapping model</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearAllCaches">
-            <summary>
-            Clear all the caches
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearSharePointVersions">
-            <summary>
-            Clears Cached SharePoint versions
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.ClearGeneratedPageLayoutMappings">
-            <summary>
-            Clears the cache of generated page layout mappings
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.CacheManager.MappedUsers">
-            <summary>
-            Mapped users
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetEnsuredUser(Microsoft.SharePoint.Client.ClientContext,System.String)">
-            <summary>
-            Run and cache the output value of EnsureUser for a given user
-            </summary>
-            <param name="context">ClientContext to operate on</param>
-            <param name="userValue">User name of user to ensure</param>
-            <returns>ResolvedUser instance holding information about the ensured user</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserFromUserList(Microsoft.SharePoint.Client.ClientContext,System.String)">
-            <summary>
-            Lookup a user from the site's user list based upon the user's upn
-            </summary>
-            <param name="context">Context of the web holding the user list</param>
-            <param name="userUpn">Upn of the user to fetch</param>
-            <returns>A UserEntity instance holding information about the user</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserFromUserList(Microsoft.SharePoint.Client.ClientContext,System.Int32)">
-            <summary>
-            Lookup a user from the site's user list based upon the user's id
-            </summary>
-            <param name="context">Context of the web holding the user list</param>
-            <param name="userListId">Id of the user to fetch</param>
-            <returns>A UserEntity instance holding information about the user</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetContentTypeId(Microsoft.SharePoint.Client.List,System.String)">
-            <summary>
-            Get's the ID of a contenttype
-            </summary>
-            <param name="pagesLibrary">Pages library holding the content type</param>
-            <param name="contentTypeName">Name of the content type</param>
-            <returns>ID of the content type</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetLastUsedTransformator(SharePointPnP.Modernization.Framework.Transform.BasePageTransformator)">
-            <summary>
-            Caches the last used page transformator instance, needed to postpone log writing when transforming multiple pages
-            </summary>
-            <param name="transformator"></param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetLastUsedTransformator">
-            <summary>
-            Gets the last used page transformator instance
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUrlMapping(System.String,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
-            <summary>
-            Returns a list of url mappings
-            </summary>
-            <param name="urlMappingFile">File with url mappings</param>
-            <param name="logObservers">Attached list of log observers</param>
-            <returns>List of url mappings</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetUserMapping(System.String,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
-            <summary>
-            Gets the list of user mappings, if first time file will be laoded
-            </summary>
-            <param name="userMappingFile">File with the user mappings</param>
-            <param name="logObservers">Attached list of log observers</param>
-            <returns>List of user mappings</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Cache.FieldData">
-            <summary>
-            Field data used to transfer information about a field
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldName">
-            <summary>
-            Internal name of the field
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldId">
-            <summary>
-            Id of the field
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Cache.FieldData.FieldType">
-            <summary>
-            Type of the field
-            </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Constants">
             <summary>

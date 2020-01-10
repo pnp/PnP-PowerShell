@@ -32,7 +32,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
     <AssemblyName>SharePointPnP.PowerShell.2013.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -51,7 +51,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
     <AssemblyName>SharePointPnP.PowerShell.2016.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -70,7 +70,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
     <AssemblyName>SharePointPnP.PowerShell.2019.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -557,8 +557,10 @@
   <ItemGroup>
     <Compile Include="Admin\AddHubSiteAssociation.cs" />
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
+    <Compile Include="Admin\AddOrgAssetsLibrary.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Admin\RemoveOrgAssetsLibrary.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
     <Compile Include="Admin\EnableCommSite.cs" />
     <Compile Include="Admin\GetHubSiteChild.cs" />
@@ -568,6 +570,10 @@
     <Compile Include="Apps\GetApplicationCustomizer.cs" />
     <Compile Include="Apps\SetApplicationCustomizer.cs" />
     <Compile Include="Apps\RemoveApplicationCustomizer.cs" />
+    <Compile Include="Admin\GetOrgAssetsLibrary.cs" />
+    <Compile Include="Admin\GetOrgNewsSite.cs" />
+    <Compile Include="Admin\RemoveOrgNewsSite.cs" />
+    <Compile Include="Admin\AddOrgNewsSite.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
@@ -644,6 +650,7 @@
     <Compile Include="Graph\RemoveDeletedUnifiedGroup.cs" />
     <Compile Include="Graph\RestoreDeletedUnifiedGroup.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
+    <Compile Include="InformationManagement\ResetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
     <Compile Include="Files\SetFolderPermission.cs" />
