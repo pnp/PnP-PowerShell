@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
        Code = @"PS:> Get-PnPLabel -List ""Demo List""",
        Remarks = @"This gets the Office 365 retention label which is set to a list or a library.", SortOrder = 1)]
 
-    public class GetListComplianceTag : PnPWebCmdlet
+    public class GetLabel : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID or Url of the list.")]
         public ListPipeBind List;

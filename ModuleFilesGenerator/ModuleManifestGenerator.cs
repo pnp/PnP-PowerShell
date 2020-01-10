@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         }
         internal void Generate()
         {
-#if NETCOREAPP2_0
+#if NETCOREAPP3_0
             var spVersion = "Core";
 #else
             var spVersion = string.Empty;
@@ -68,7 +68,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             }
 
             // Create Module Manifest
-#if !NETCOREAPP2_0
+#if !NETCOREAPP3_0
             var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShell{spVersion}.psd1";
 #else
             var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShellCore.psd1";
@@ -89,7 +89,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             //{
             //    aliases = $"{Environment.NewLine}AliasesToExport = {aliasesToExport}";
             //}
-#if !NETCOREAPP2_0
+#if !NETCOREAPP3_0
             var manifest = $@"@{{
     RootModule = 'SharePointPnP.PowerShell.{spVersion}.Commands.dll'
     ModuleVersion = '{_assemblyVersion}'

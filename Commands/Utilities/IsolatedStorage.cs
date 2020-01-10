@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD2_1
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,3 +33,4 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         }
     }
 }
+#endif

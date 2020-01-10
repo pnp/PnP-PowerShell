@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD2_0
+﻿#if !NETSTANDARD2_1
 using Microsoft.Graph;
 #endif
 using SharePointPnP.PowerShell.Commands.Properties;
@@ -32,14 +32,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     }
                     else
                     {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                         return (SPOnlineConnection.AuthenticationResult.Token);
 #else
                         return SPOnlineConnection.AuthenticationResult.AccessToken;
 #endif
                     }
                 }
-                else if (SPOnlineConnection.CurrentConnection.AccessToken != null)
+                else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)
                 {
                     return SPOnlineConnection.CurrentConnection.AccessToken;
                 }
@@ -70,7 +70,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             base.BeginProcessing();
 
 
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
 
             //if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
             //{

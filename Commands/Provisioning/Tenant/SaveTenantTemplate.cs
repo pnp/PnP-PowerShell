@@ -9,8 +9,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Reflection;
-using System.Security.Policy;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
@@ -80,9 +78,9 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
             if (extension == ".pnp")
             {
-
+#if !NETSTANDARD2_1
                 IsolatedStorage.InitializeIsolatedStorage();
-
+#endif
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
