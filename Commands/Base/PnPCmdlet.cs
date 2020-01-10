@@ -112,7 +112,9 @@ namespace SharePointPnP.PowerShell.Commands
             }
             catch (System.Management.Automation.PipelineStoppedException)
             {
-                //swallow pipeline stopped exception
+                //don't swallow pipeline stopped exception
+                //it makes select-object work weird
+                throw;
             }
             catch (Exception ex)
             {
