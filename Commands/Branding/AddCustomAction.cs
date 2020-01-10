@@ -4,8 +4,6 @@ using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using Newtonsoft.Json;
 
 namespace SharePointPnP.PowerShell.Commands.Branding
 {
@@ -23,10 +21,10 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
     SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "UserCustomAction",
-        Url = "https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.usercustomaction.aspx")]
+        Url = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15)")]
     [CmdletRelatedLink(
         Text = "BasePermissions",
-        Url = "https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.basepermissions.aspx")]
+        Url = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15)")]
     public class AddCustomAction : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";
