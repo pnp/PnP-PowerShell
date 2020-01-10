@@ -113,6 +113,19 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return null;
         }
 
+        /// <summary>
+        /// Converts a public key certificate stored in Base64 encoding such as retrieved from Azure KeyVault to a X509Certificate2
+        /// </summary>
+        /// <param name="publicCert">Public key certificate endoded with Base64</param>
+        /// <returns>X509Certificate2 certificate</returns>
+        internal static X509Certificate2 GetCertificateFromBase64Encodedstring(string publicCert)
+        {
+            var certificateBytes = Convert.FromBase64String(publicCert);
+            var certificate = new X509Certificate2(certificateBytes);
+
+            return certificate;
+        }
+
         internal static X509Certificate2 GetCertificateFromPEMstring(string publicCert, string privateKey, string password)
         {
             if (string.IsNullOrWhiteSpace(password)) password = "";

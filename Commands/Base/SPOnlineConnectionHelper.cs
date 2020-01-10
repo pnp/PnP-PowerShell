@@ -411,6 +411,57 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, true);
         }
 
+        /// <summary>
+        /// Takes a certificate encoded in Base64 such as retrieved from Azure KeyVault when using Azure Functions to authenticate to SharePoint
+        /// </summary>
+        /// <remarks>See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread how to set up a certificate which you can store in Azure KeyVault</remarks>
+        /// <param name="url">Url of the SharePoint site to connect to</param>
+        /// <param name="clientId">Application/client ID of the Azure Active Directory application registration</param>
+        /// <param name="tenant">Tenant name to connect to, i.e. contoso.onmicrosoft.com</param>
+        /// <param name="minimalHealthScore">Value between 0 and 10 indicating the health of the SharePoint server connected to should report before commands get executed where 0 is the healthiest and 10 the least healthy. I.e. if you set it to 3, SharePoint must report a health score of 0, 1, 2 or 3 before it will execute the commands. If set to -1, no health check will be performed.</param>
+        /// <param name="retryCount">Amount of times to retry an operation that i.e. times out or runs into health issues before giving up on it</param>
+        /// <param name="retryWait">Time in seconds to wait between retry attempts</param>
+        /// <param name="requestTimeout">Time in milliseconds to allow a command to complete before considering it failed</param>
+        /// <param name="tenantAdminUrl">Url of the admin site of the tenant. If not provided, it will assume to connect automatically to https://<tenantname>-admin.sharepoint.com.</param>
+        /// <param name="host">Reference to the PowerShell session in which the commands will be executed</param>
+        /// <param name="disableTelemetry">Boolean indicating whether or not telemetry should be disabled</param>
+        /// <param name="skipAdminCheck">Boolean indicating if it should check if the connection is being made to the Tenand admin site</param>
+        /// <param name="azureEnvironment">Type of Azure environment connecting to</param>
+        /// <param name="base64EncodedCertificate">Base64 encoded string containing the certificate which grants access to SharePoint Online</param>
+        /// <returns>A connection to SharePoint</returns>
+        internal static SPOnlineConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant,
+            int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
+            bool skipAdminCheck, AzureEnvironment azureEnvironment, string base64EncodedCertificate)
+        {
+            X509Certificate2 certificate = CertificateHelper.GetCertificateFromBase64Encodedstring(base64EncodedCertificate);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate);
+        }
+
+        /// <summary>
+        /// Takes a certificate encoded in Base64 such as retrieved from Azure KeyVault when using Azure Functions to authenticate to SharePoint
+        /// </summary>
+        /// <remarks>See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/security-apponly-azuread how to set up a certificate which you can store in Azure KeyVault</remarks>
+        /// <param name="url">Url of the SharePoint site to connect to</param>
+        /// <param name="clientId">Application/client ID of the Azure Active Directory application registration</param>
+        /// <param name="tenant">Tenant name to connect to, i.e. contoso.onmicrosoft.com</param>
+        /// <param name="minimalHealthScore">Value between 0 and 10 indicating the health of the SharePoint server connected to should report before commands get executed where 0 is the healthiest and 10 the least healthy. I.e. if you set it to 3, SharePoint must report a health score of 0, 1, 2 or 3 before it will execute the commands. If set to -1, no health check will be performed.</param>
+        /// <param name="retryCount">Amount of times to retry an operation that i.e. times out or runs into health issues before giving up on it</param>
+        /// <param name="retryWait">Time in seconds to wait between retry attempts</param>
+        /// <param name="requestTimeout">Time in milliseconds to allow a command to complete before considering it failed</param>
+        /// <param name="tenantAdminUrl">Url of the admin site of the tenant. If not provided, it will assume to connect automatically to https://<tenantname>-admin.sharepoint.com.</param>
+        /// <param name="host">Reference to the PowerShell session in which the commands will be executed</param>
+        /// <param name="disableTelemetry">Boolean indicating whether or not telemetry should be disabled</param>
+        /// <param name="skipAdminCheck">Boolean indicating if it should check if the connection is being made to the Tenand admin site</param>
+        /// <param name="azureEnvironment">Type of Azure environment connecting to</param>
+        /// <param name="certificate">The X509Certificate2 which grants access to SharePoint Online</param>
+        /// <returns>A connection to SharePoint</returns>
+        internal static SPOnlineConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant,
+            int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
+            bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate)
+        {
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
+        }
+
         private static SPOnlineConnection InitiateAzureAdAppOnlyConnectionWithCert(Uri url, string clientId, string tenant,
             int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry,
             bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
