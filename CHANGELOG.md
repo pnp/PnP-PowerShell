@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `-Recursive` option to `Get-PnPFolderItem` to allow retrieving all files and folders recursively
 
 ### Changed 
-
+- Marked Get-PnPHealthScore as obsolete for SharePoint Online.
 - Fixes issues with connections not properly closing under some conditions when using Disconnect-PnPOnline
 - When using commands that utilize the Graph API but not being connected to one of the Graph API Connect-PnPOnline methods, it would throw a NullReferenceException. It will now throw a cleaner exception indicating you should connect with the Graph API first.
 - Fixed an issue where using Get-PnPUser -WithRightsAssigned would not return the proper users with actually having access to that site
