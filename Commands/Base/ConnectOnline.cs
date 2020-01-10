@@ -714,7 +714,8 @@ Use -PnPO365ManagementShell instead");
                 {
                     url = aud;
                 }
-                if (url.ToLower() == "https://graph.microsoft.com")
+                if ((Url.ToLower() == "https://graph.microsoft.com") ||
+                    (Url.ToLower() == "https://manage.office.com"))
                 {
                     connection = ConnectGraphDeviceLogin(AccessToken);
                 }
