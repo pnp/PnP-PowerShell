@@ -137,7 +137,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         Remarks = @"Connect to an on-premises SharePoint environment using a high trust certificate stored in a .PFX file.",
         SortOrder = 16)]
 #endif
-    public class ConnectOnline : PSCmdlet
+    public class ConnectOnline : BasePSCmdlet
     {
         private const string ParameterSet_MAIN = "Main";
         private const string ParameterSet_TOKEN = "Token";
