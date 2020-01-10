@@ -640,6 +640,7 @@
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
     <Compile Include="ClientSidePages\SaveClientSidePageConversionLog.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
+    <Compile Include="Enums\AuditContentType.cs" />
     <Compile Include="Enums\HttpRequestMethod.cs" />
     <Compile Include="Enums\InitializationType.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
@@ -657,6 +658,7 @@
     <Compile Include="ManagementApi\GetUnifiedAuditLog.cs" />
     <Compile Include="Model\ManagementApiSubscription.cs" />
     <Compile Include="Model\ManagementApiSubscriptionContent.cs" />
+    <Compile Include="Model\ManagementApiUnifiedLogRecordKeyValuePair.cs" />
     <Compile Include="Model\ManagementApiUnifiedLogRecord.cs" />
     <Compile Include="Files\SetFolderPermission.cs" />
     <Compile Include="Model\PnPException.cs" />
