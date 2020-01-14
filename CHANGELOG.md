@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.18.2002.0] (not released yet)
+
+### Added
+- `get-PnPManagementApiAccessToken` to retrieve access token for the Office 365 Management API using app credentials, app should be registered in AAD and assigned to interact with Management API
+- `Get-PnPUnifiedAuditLog` to retrieve unified audit logs from the Office 365 Management API
+- Added ability to connect to an on-premises SharePoint 2013/2016/2019 farm using a High Trust Server 2 Server App + User context by providing the username using `-Username`. Before only a High Trust App Only context was possible.
+
+### Contributors
+
+- Ivan Vagunin [ivanvagunin]
+- Thomas Meckel [tmeckel]
+
+## [3.17.2001.2]
+
+### 
+- No changed to PnP PowerShell but an updated reference to an updated intermediate release of PnP Sites Core which fixes an issue with PnP Provisioning.
+
+## [3.17.2001.1]
+
+### Changed 
+- Fixed issue with not correctly identifying framework version and not including required assemblies in packaging.
+
 ## [3.17.2001.0]
 
 ### Added
