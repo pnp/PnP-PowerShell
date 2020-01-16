@@ -73,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         public string RankingModelId;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the name of the client which issued the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public string ClientType = "ContentSearchLow";
+        public string ClientType = "PnP";
 
         [Parameter(Mandatory = false, HelpMessage = "Limit the number of items per the collapse specification. See https://docs.microsoft.com/en-us/sharepoint/dev/general-development/customizing-search-results-in-sharepoint#collapse-similar-search-results-using-the-collapsespecification-property for more information.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string CollapseSpecification;
@@ -113,6 +113,10 @@ namespace SharePointPnP.PowerShell.Commands.Search
             {
                 startRow = 0;
                 rowLimit = 500;
+                SortList = new Hashtable()
+                    {
+                        {"IndexDocId", "ascending"}
+                    };
             }
 
             var currentCount = 0;
@@ -185,9 +189,9 @@ namespace SharePointPnP.PowerShell.Commands.Search
         private object ConvertToPSObject(IDictionary<string, object> r)
         {
             PSObject res = new PSObject();
-            if(r != null)
+            if (r != null)
             {
-                foreach(var kvp in r)
+                foreach (var kvp in r)
                 {
                     res.Properties.Add(new PSNoteProperty(kvp.Key, kvp.Value));
                 }
