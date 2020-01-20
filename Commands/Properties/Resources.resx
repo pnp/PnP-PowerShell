@@ -315,4 +315,7 @@
   <data name="SiteNotFound" xml:space="preserve">
     <value>The provided site could not be found</value>
   </data>
+  <data name="SetRequestAccessEmailsOnlyOneAddressAllowed" xml:space="preserve">
+    <value>Only one e-mail address can be configured to receive the access requests</value>
+  </data>
 </root>

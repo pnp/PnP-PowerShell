@@ -1,38 +1,74 @@
 ﻿#if !ONPREMISES
+using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPRequestAccessEmails")]
-    [CmdletHelp("Sets Request Access Emails on a web",
-        SupportedPlatform = CmdletSupportedPlatform.Online,
+    [CmdletHelp("Sets Request Access Email on a web",
+       DetailedDescription = "Enables or disables access requests to be sent and configures which e-mail address should receive these requests. The web you apply this on must have unique rights.",
+       SupportedPlatform = CmdletSupportedPlatform.Online,
        Category = CmdletHelpCategory.Webs)]
     [CmdletExample(
        Code = @"PS:> Set-PnPRequestAccessEmails -Emails someone@example.com ",
-       Remarks = "This will update the request access e-mail address",
+       Remarks = "This will enable requesting access and send the requests to the provided e-mail address",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Set-PnPRequestAccessEmails -Emails @( someone@example.com; someoneelse@example.com )",
-       Remarks = "This will update multiple request access e-mail addresses",
+       Code = @"PS:> Set-PnPRequestAccessEmails -Disabled",
+       Remarks = "This will disable the ability to request access to the site",
        SortOrder = 2)]
+    [CmdletExample(
+       Code = @"PS:> Set-PnPRequestAccessEmails -Disabled:$false",
+       Remarks = "This will enable the ability to request access to the site and send the requests to the default owners of the site",
+       SortOrder = 3)]
     public class SetRequestAccessEmails : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Email address(es) to set the RequestAccessEmails to")]
+        // Parameter must remain a string array for backwards compatibility, even though only one e-mail address can be provided
+        [Parameter(Mandatory = false, HelpMessage = "Email address to send the access requests to")]
         public string[] Emails = null;
+
+        [Parameter(Mandatory = false, HelpMessage = "Enables or disables access to be requested")]
+        public SwitchParameter Disabled;
 
         protected override void ExecuteCmdlet()
         {
-            if (Emails != null && Emails.Length > 0)
-            {
-                SelectedWeb.EnsureProperty(w => w.HasUniqueRoleAssignments);
+            SelectedWeb.EnsureProperty(w => w.HasUniqueRoleAssignments);
 
-                // Can only set the Request Access Emails if the web has unique permissions
-                if (SelectedWeb.HasUniqueRoleAssignments)
+            // Can only set the Request Access Emails if the web has unique permissions
+            if (SelectedWeb.HasUniqueRoleAssignments)
+            {
+                if (Emails != null && Emails.Length > 0 && !Disabled)
                 {
-                    SelectedWeb.EnableRequestAccess(Emails);
-                }                
+                    if (Emails.Length > 1)
+                    {
+                        // Only one e-mail address can be configured to receive the access requests
+                        throw new ArgumentException(Resources.SetRequestAccessEmailsOnlyOneAddressAllowed, nameof(Emails));
+                    }
+                    else
+                    {
+                        // Configure the one e-mail address to receive the access requests
+                        SelectedWeb.SetUseAccessRequestDefaultAndUpdate(false);
+                        SelectedWeb.EnableRequestAccess(Emails[0]);
+                    }
+                }
+                else
+                {
+                    if (Disabled)
+                    {
+                        // Disable requesting access
+                        SelectedWeb.DisableRequestAccess();
+                    }
+                    else
+                    {
+                        // Enable requesting access and set it to the default owners group
+                        SelectedWeb.SetUseAccessRequestDefaultAndUpdate(true);
+                        SelectedWeb.Update();
+                        SelectedWeb.Context.ExecuteQueryRetry();
+                    }
+                }
             }
         }
     }
