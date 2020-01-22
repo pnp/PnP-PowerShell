@@ -54,7 +54,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = "Disables Microsoft Flow for this site", ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? DisableFlows;
 
-        [Parameter(Mandatory = false, HelpMessage = "Sets the logo if the site is modern team site. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl", ParameterSetName = ParameterSet_PROPERTIES)]
+        [Parameter(Mandatory = false, HelpMessage = "Sets the logo of the site if it concerns a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.", ParameterSetName = ParameterSet_PROPERTIES)]
         public string LogoFilePath;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies what the sharing capabilities are for the site. Possible values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly", ParameterSetName = ParameterSet_PROPERTIES)]
@@ -136,14 +136,13 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 siteUrl = context.Url;
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Classification"))
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(Classification)))
             {
                 site.Classification = Classification;
                 executeQueryRequired = true;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("LogoFilePath"))
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(LogoFilePath)))
             {
-                //var webTemplate = ClientContext.Web.EnsureProperty(w => w.WebTemplate);
                 site.EnsureProperty(s => s.GroupId);
                 if (site.GroupId != Guid.Empty)
                 {
