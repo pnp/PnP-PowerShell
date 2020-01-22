@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false, HelpMessage = "An array of fields to use in the view. Notice that specifying this value will remove the existing fields")]
         public string[] Fields;
 
-        [Parameter(Mandatory = false, HelpMessage = "A valid XMl fragment containing one or more Aggregations")]
+        [Parameter(Mandatory = false, HelpMessage = "A valid XML fragment containing one or more Aggregations")]
         public string Aggregations;
 
         protected override void ExecuteCmdlet()
@@ -84,7 +84,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 throw new PSArgumentException("View provided in the Identity argument could not be found", "Identity");
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Values)))
+            if (ParameterSpecified(nameof(Values)))
             {
                 bool atLeastOnePropertyChanged = false;
                 foreach (string key in Values.Keys)
@@ -116,7 +116,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                     ClientContext.ExecuteQueryRetry();
                 }
             }
-            if(MyInvocation.BoundParameters.ContainsKey(nameof(Fields)))
+            if(ParameterSpecified(nameof(Fields)))
             {
                 view.ViewFields.RemoveAll();
                 foreach(var viewField in Fields)
@@ -126,7 +126,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 view.Update();
                 ClientContext.ExecuteQueryRetry();
             }
-            if(Aggregations != null)
+            if(ParameterSpecified(nameof(Aggregations)))
             {
                 view.Aggregations = Aggregations;
                 view.Update();

@@ -51,7 +51,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "If specified, the view will have paging.")]
         public SwitchParameter Paged;
 
-        [Parameter(Mandatory = false, HelpMessage = "A valid XMl fragment containing one or more Aggregations")]
+        [Parameter(Mandatory = false, HelpMessage = "A valid XML fragment containing one or more Aggregations")]
         public string Aggregations;
 
         protected override void ExecuteCmdlet()
@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             {
                 var view = list.CreateView(Title, ViewType, Fields, RowLimit, SetAsDefault, Query, Personal, Paged);
 
-                if(Aggregations != null)
+                if(ParameterSpecified(nameof(Aggregations)))
                 {
                     view.Aggregations = Aggregations;
                     view.Update();
