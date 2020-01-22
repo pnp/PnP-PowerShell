@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - Jarbas Horst [JarbasHorst]
 - Gautam Sheth [gautamdsheth]
+- Craig Hair [MacsInSpace]
 
 ## [3.17.2001.2]
 
