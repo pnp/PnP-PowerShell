@@ -50,12 +50,12 @@ namespace SharePointPnP.PowerShell.Commands.Events
                 if (list == null)
                     throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
-                if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+                if (ParameterSpecified(nameof(Identity)))
                 {
                     var eventReceiver = Identity.GetEventReceiverOnList(list);
                     if (eventReceiver != null)
                     {
-                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                         {
                             eventReceiversToDelete.Add(eventReceiver);
                         }
@@ -69,7 +69,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
 
                     foreach (var eventReceiver in eventReceivers)
                     {
-                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                         {
                             eventReceiversToDelete.Add(eventReceiver);
                         }
@@ -79,12 +79,12 @@ namespace SharePointPnP.PowerShell.Commands.Events
             }
             else
             {
-                if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+                if (ParameterSpecified(nameof(Identity)))
                 {
                     var eventReceiver = Identity.GetEventReceiverOnWeb(SelectedWeb);
                     if (eventReceiver != null)
                     {
-                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                         {
                             eventReceiversToDelete.Add(eventReceiver);
                         }
@@ -98,7 +98,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
 
                     foreach (var eventReceiver in eventReceivers)
                     {
-                        if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
+                        if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                         {
                             eventReceiversToDelete.Add(eventReceiver);
                         }

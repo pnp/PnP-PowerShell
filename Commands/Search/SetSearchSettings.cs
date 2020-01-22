@@ -68,7 +68,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            bool hasSearchPageUrl = MyInvocation.BoundParameters.ContainsKey("SearchPageUrl");
+            bool hasSearchPageUrl = ParameterSpecified(nameof(SearchPageUrl));
             if (hasSearchPageUrl && SearchPageUrl == null)
             {
                 SearchPageUrl = string.Empty;

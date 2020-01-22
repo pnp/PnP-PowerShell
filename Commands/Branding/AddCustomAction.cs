@@ -138,12 +138,12 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
                     ClientSideComponentProperties = ClientSideComponentProperties
                 };
 
-                if (MyInvocation.BoundParameters.ContainsKey("RegistrationId"))
+                if (ParameterSpecified(nameof(RegistrationId)))
                 {
                     ca.RegistrationId = RegistrationId;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("RegistrationType"))
+                if (ParameterSpecified(nameof(RegistrationType)))
                 {
                     ca.RegistrationType = RegistrationType;
                 }

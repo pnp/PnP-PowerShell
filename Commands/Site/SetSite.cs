@@ -136,13 +136,12 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 siteUrl = context.Url;
             }
 
-
-            if (MyInvocation.BoundParameters.ContainsKey("Classification"))
+            if (ParameterSpecified(nameof(Classification)))
             {
                 site.Classification = Classification;
                 executeQueryRequired = true;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("LogoFilePath"))
+            if (ParameterSpecified(nameof(LogoFilePath)))
             {
                 var webTemplate = ClientContext.Web.EnsureProperty(w => w.WebTemplate);
                 if (webTemplate == "GROUP")

@@ -212,20 +212,20 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
             keywordQuery.QueryText = query;
             keywordQuery.ClientType = ClientType;
-            if (MyInvocation.BoundParameters.ContainsKey("TrimDuplicates")) keywordQuery.TrimDuplicates = TrimDuplicates;
-            if (MyInvocation.BoundParameters.ContainsKey("Refiners")) keywordQuery.Refiners = Refiners;
-            if (MyInvocation.BoundParameters.ContainsKey("Culture")) keywordQuery.Culture = Culture;
-            if (MyInvocation.BoundParameters.ContainsKey("QueryTemplate")) keywordQuery.QueryTemplate = QueryTemplate;
-            if (MyInvocation.BoundParameters.ContainsKey("RankingModelId")) keywordQuery.RankingModelId = RankingModelId;
-            if (MyInvocation.BoundParameters.ContainsKey("HiddenConstraints")) keywordQuery.HiddenConstraints = HiddenConstraints;
-            if (MyInvocation.BoundParameters.ContainsKey("TimeZoneId")) keywordQuery.TimeZoneId = TimeZoneId;
-            if (MyInvocation.BoundParameters.ContainsKey("EnablePhonetic")) keywordQuery.EnablePhonetic = EnablePhonetic;
-            if (MyInvocation.BoundParameters.ContainsKey("EnableStemming")) keywordQuery.EnableStemming = EnableStemming;
-            if (MyInvocation.BoundParameters.ContainsKey("EnableQueryRules")) keywordQuery.EnableQueryRules = EnableQueryRules;
-            if (MyInvocation.BoundParameters.ContainsKey("SourceId")) keywordQuery.SourceId = SourceId;
-            if (MyInvocation.BoundParameters.ContainsKey("ProcessBestBets")) keywordQuery.ProcessBestBets = ProcessBestBets;
-            if (MyInvocation.BoundParameters.ContainsKey("ProcessPersonalFavorites")) keywordQuery.ProcessPersonalFavorites = ProcessPersonalFavorites;
-            if (MyInvocation.BoundParameters.ContainsKey("CollapseSpecification")) keywordQuery.CollapseSpecification = CollapseSpecification;
+            if (ParameterSpecified(nameof(TrimDuplicates))) keywordQuery.TrimDuplicates = TrimDuplicates;
+            if (ParameterSpecified(nameof(Refiners))) keywordQuery.Refiners = Refiners;
+            if (ParameterSpecified(nameof(Culture))) keywordQuery.Culture = Culture;
+            if (ParameterSpecified(nameof(QueryTemplate))) keywordQuery.QueryTemplate = QueryTemplate;
+            if (ParameterSpecified(nameof(RankingModelId))) keywordQuery.RankingModelId = RankingModelId;
+            if (ParameterSpecified(nameof(HiddenConstraints))) keywordQuery.HiddenConstraints = HiddenConstraints;
+            if (ParameterSpecified(nameof(TimeZoneId))) keywordQuery.TimeZoneId = TimeZoneId;
+            if (ParameterSpecified(nameof(EnablePhonetic))) keywordQuery.EnablePhonetic = EnablePhonetic;
+            if (ParameterSpecified(nameof(EnableStemming))) keywordQuery.EnableStemming = EnableStemming;
+            if (ParameterSpecified(nameof(EnableQueryRules))) keywordQuery.EnableQueryRules = EnableQueryRules;
+            if (ParameterSpecified(nameof(SourceId))) keywordQuery.SourceId = SourceId;
+            if (ParameterSpecified(nameof(ProcessBestBets))) keywordQuery.ProcessBestBets = ProcessBestBets;
+            if (ParameterSpecified(nameof(ProcessPersonalFavorites))) keywordQuery.ProcessPersonalFavorites = ProcessPersonalFavorites;
+            if (ParameterSpecified(nameof(CollapseSpecification))) keywordQuery.CollapseSpecification = CollapseSpecification;
 
             if (SortList != null)
             {

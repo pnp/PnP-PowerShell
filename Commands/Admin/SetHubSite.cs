@@ -55,27 +55,27 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         {
             var hubSiteProperties = Identity.GetHubSite(Tenant);
             ClientContext.Load(hubSiteProperties);
-            if (MyInvocation.BoundParameters.ContainsKey("Title"))
+            if (ParameterSpecified(nameof(Title)))
             {
                 hubSiteProperties.Title = Title;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("LogoUrl"))
+            if (ParameterSpecified(nameof(LogoUrl)))
             {
                 hubSiteProperties.LogoUrl = LogoUrl;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("Description"))
+            if (ParameterSpecified(nameof(Description)))
             {
                 hubSiteProperties.Description = Description;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("SiteDesignId"))
+            if (ParameterSpecified(nameof(SiteDesignId)))
             {
                 hubSiteProperties.SiteDesignId = SiteDesignId.Id;
             }
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(HideNameInNavigation)))
+            if (ParameterSpecified(nameof(HideNameInNavigation)))
             {
                 hubSiteProperties.HideNameInNavigation = HideNameInNavigation.ToBool();
             }
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(RequiresJoinApproval)))
+            if (ParameterSpecified(nameof(RequiresJoinApproval)))
             {
                 hubSiteProperties.RequiresJoinApproval = RequiresJoinApproval.ToBool();
             }

@@ -1,6 +1,7 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
 using System.Linq;
 using System.Management.Automation;
 
@@ -13,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
        Code = @"PS:> $site = New-PnPTenantSequenceCommunicationSite -Url ""/sites/mycommunicationsite"" -Title ""My Team Site""",
        Remarks = "Creates a new communication site object with the specified variables",
        SortOrder = 1)]
-    public class NewTenantSequenceCommunicationSite : PSCmdlet
+    public class NewTenantSequenceCommunicationSite : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Url;
@@ -58,7 +59,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 IsHubSite = HubSite.IsPresent,
                 Title = Title,
             };
-            if(MyInvocation.BoundParameters.ContainsKey("SiteDesignId"))
+            if(ParameterSpecified(nameof(SiteDesignId)))
             {
                 site.SiteDesign = SiteDesignId;
             }

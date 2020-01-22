@@ -1,6 +1,7 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
@@ -18,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
        Code = @"PS:> Get-PnPTenantSequence -Template $myTemplateObject -Identity ""mysequence""",
        Remarks = "Returns the specified sequence from the specified tenant template",
        SortOrder = 2)]
-    public class GetTenantSequence : PSCmdlet
+    public class GetTenantSequence : BasePSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The template to retrieve the sequence from", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ProvisioningHierarchy Template;
@@ -27,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public ProvisioningSequencePipeBind Identity;
         protected override void ProcessRecord()
         {
-            if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (!ParameterSpecified(nameof(Identity)))
             {
                 WriteObject(Template.Sequences, true);
             }

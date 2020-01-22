@@ -46,7 +46,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
 
                 if (list != null)
                 {
-                    if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
+                    if (!ParameterSpecified(nameof(Identity)))
                     {
                         var query = ClientContext.LoadQuery(list.EventReceivers);
                         ClientContext.ExecuteQueryRetry();
@@ -60,7 +60,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
             }
             else
             {
-                if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
+                if (!ParameterSpecified(nameof(Identity)))
                 {
                     var query = ClientContext.LoadQuery(SelectedWeb.EventReceivers);
                     ClientContext.ExecuteQueryRetry();

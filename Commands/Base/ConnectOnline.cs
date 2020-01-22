@@ -653,14 +653,14 @@ Use -PnPO365ManagementShell instead");
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
 #if !NETSTANDARD2_1
-                if (MyInvocation.BoundParameters.ContainsKey("CertificatePath"))
+                if (ParameterSpecified(nameof(CertificatePath)))
                 {
                     connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
                     WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                } else if (MyInvocation.BoundParameters.ContainsKey("Certificate"))
+                } else if (ParameterSpecified(nameof(Certificate)))
                 {
                     connection = SPOnlineConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, Certificate);
-                } else if (MyInvocation.BoundParameters.ContainsKey("CertificateBase64Encoded"))
+                } else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
                 {
                     connection = SPOnlineConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, CertificateBase64Encoded);
                 } else
@@ -761,7 +761,7 @@ Use -PnPO365ManagementShell instead");
             }
 #if !ONPREMISES
 #if !NETSTANDARD2_1
-            if (MyInvocation.BoundParameters.ContainsKey("Scopes") && ParameterSetName != ParameterSet_GRAPHWITHSCOPE)
+            if (ParameterSpecified(nameof(Scopes)) && ParameterSetName != ParameterSet_GRAPHWITHSCOPE)
             {
                 ConnectGraphScopes();
             }

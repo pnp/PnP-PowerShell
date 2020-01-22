@@ -47,7 +47,7 @@ namespace SharePointPnP.PowerShell.Commands.Webhooks
         protected override void ExecuteCmdlet()
         {
             // NOTE: Currently only supports List Webhooks
-            if (MyInvocation.BoundParameters.ContainsKey("List"))
+            if (ParameterSpecified(nameof(List)))
             {
                 // Get the list from the currently selected web
                 List list = List.GetList(SelectedWeb);

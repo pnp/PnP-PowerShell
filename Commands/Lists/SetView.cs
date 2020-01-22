@@ -77,7 +77,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 throw new PSArgumentException("View provided in the Identity argument could not be found", "Identity");
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Values)))
+            if (ParameterSpecified(nameof(Values)))
             {
                 bool atLeastOnePropertyChanged = false;
                 foreach (string key in Values.Keys)
@@ -109,7 +109,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                     ClientContext.ExecuteQueryRetry();
                 }
             }
-            if(MyInvocation.BoundParameters.ContainsKey(nameof(Fields)))
+            if(ParameterSpecified(nameof(Fields)))
             {
                 view.ViewFields.RemoveAll();
                 foreach(var viewField in Fields)

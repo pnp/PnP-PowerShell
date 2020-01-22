@@ -53,7 +53,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
         {
             
             ExtractConfiguration extractConfiguration = null;
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
+            if (ParameterSpecified(nameof(Configuration)))
             {
                 extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
                 if(!string.IsNullOrEmpty(SiteUrl))

@@ -55,24 +55,24 @@ PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone $roleDefinition -Exclude
             catch { }
             if (roleDefinition.ServerObjectIsNull == null)
             {
-                var spRoleDef = new Microsoft.SharePoint.Client.RoleDefinitionCreationInformation();
-                var spBasePerm = new Microsoft.SharePoint.Client.BasePermissions();
+                var spRoleDef = new RoleDefinitionCreationInformation();
+                var spBasePerm = new BasePermissions();
 
-                if (MyInvocation.BoundParameters.ContainsKey("Clone"))
+                if (ParameterSpecified(nameof(Clone)))
                 {
                     var clonePerm = Clone.GetRoleDefinition(ClientContext.Site);
                     spBasePerm = clonePerm.BasePermissions;
                 }
 
                 // Include and Exclude Flags
-                if (MyInvocation.BoundParameters.ContainsKey("Include"))
+                if (ParameterSpecified(nameof(Include)))
                 {
                     foreach (var flag in Include)
                     {
                         spBasePerm.Set(flag);
                     }
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Exclude"))
+                if (ParameterSpecified(nameof(Exclude)))
                 {
                     foreach (var flag in Exclude)
                     {

@@ -4,6 +4,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
+using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
@@ -25,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
     [CmdletRelatedLink(
         Text = "Encoding",
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
-    public class ConvertSiteTemplate : PSCmdlet
+    public class ConvertSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the site template")]
         public string Path;
@@ -49,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Out"))
+            if (ParameterSpecified(nameof(Out)))
             {
                 if (!System.IO.Path.IsPathRooted(Out))
                 {
