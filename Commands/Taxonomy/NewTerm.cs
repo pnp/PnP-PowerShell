@@ -40,8 +40,7 @@ PS:> Invoke-PnPQuery",
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The termset to add the term to.")]
         public TaxonomyItemPipeBind<TermSet> TermSet;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true,
-            HelpMessage = "The termgroup to create the term in.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The termgroup to create the term in.")]
         public TermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = false, HelpMessage = "Descriptive text to help users understand the intended use of this term.")]
@@ -53,8 +52,7 @@ PS:> Invoke-PnPQuery",
         [Parameter(Mandatory = false, HelpMessage = "Custom Properties")]
         public Hashtable LocalCustomProperties;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets,
-            HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Term store to check; if not specified the default term store is used.")]
         [Alias("TermStoreName")]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 
