@@ -851,6 +851,7 @@
     <Compile Include="Site\GetRoleDefinition.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
+    <Compile Include="Taxonomy\NewTermLabel.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />
     <Compile Include="UserProfiles\NewUPABulkImportJob.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
