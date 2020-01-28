@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Gautam Sheth [gautamdsheth]
 - Craig Hair [MacsInSpace]
 - Dan Cecil [danielcecil]
+- Markus Hanisch [Markus-Hanisch]
 
 ## [3.17.2001.2]
 

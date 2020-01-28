@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Management.Automation;
-using System.Runtime.InteropServices;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -15,7 +13,8 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
     [CmdletHelp(@"Creates a taxonomy term",
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(Term),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.term.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/jj166573(v=office.15)",
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample
         (Code = @"PS:> New-PnPTerm -TermSet ""Departments"" -TermGroup ""Corporate"" -Name ""Finance""",
         Remarks = @"Creates a new taxonomy term named ""Finance"" in the termset Departments which is located in the ""Corporate"" termgroup",
@@ -23,10 +22,9 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
     [CmdletExample(
         Code = @"PS:> $context = Get-PnPContext
 PS:> $term = New-PnPTerm -Name ""Finance"" -TermSet ""Departments"" -TermGroup ""Corporate"" -LCID 1033
-PS:> $createLabel = $term.CreateLabel(""Finanzwesen"", 1031, $true)
-PS:> $context.Load($term)
+PS:> $term.CreateLabel(""Finanzwesen"", 1031, $true)
 PS:> Invoke-PnPQuery",
-        Remarks = @"This example creates a new English taxonomy term named ""Finance"" in the termset Departments which is located in the ""Corporate"" termgroup and adds a German default label for the newly created English term by means of the CreateLabel method",
+        Remarks = @"This example creates a new English taxonomy term named ""Finance"" in the termset ""Departments"" which is located in the ""Corporate"" termgroup and adds a German default label for the newly created English term by means of the CreateLabel method",
         SortOrder = 2)]
     public class NewTerm : PnPCmdlet
     {
@@ -46,7 +44,6 @@ PS:> Invoke-PnPQuery",
             HelpMessage = "The termgroup to create the term in.")]
         public TermGroupPipeBind TermGroup;
 
-        
         [Parameter(Mandatory = false, HelpMessage = "Descriptive text to help users understand the intended use of this term.")]
         public string Description;
 
@@ -137,6 +134,5 @@ PS:> Invoke-PnPQuery",
             ClientContext.ExecuteQueryRetry();
             WriteObject(term);
         }
-
     }
 }
