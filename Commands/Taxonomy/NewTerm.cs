@@ -20,6 +20,14 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         (Code = @"PS:> New-PnPTerm -TermSet ""Departments"" -TermGroup ""Corporate"" -Name ""Finance""",
         Remarks = @"Creates a new taxonomy term named ""Finance"" in the termset Departments which is located in the ""Corporate"" termgroup",
         SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> $context = Get-PnPContext
+PS:> $term = New-PnPTerm -Name ""Finance"" -TermSet ""Departments"" -TermGroup ""Corporate"" -LCID 1033
+PS:> $createLabel = $term.CreateLabel(""Finanzwesen"", 1031, $true)
+PS:> $context.Load($term)
+PS:> Invoke-PnPQuery",
+        Remarks = @"This example creates a new English taxonomy term named ""Finance"" in the termset Departments which is located in the ""Corporate"" termgroup and adds a German default label for the newly created English term by means of the CreateLabel method",
+        SortOrder = 2)]
     public class NewTerm : PnPCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The name of the term.")]
