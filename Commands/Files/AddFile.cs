@@ -129,9 +129,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 }
             }
 
-            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-
-            var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
+            var folder = GetFolder();
             var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName);
 
             ContentType targetContentType = null;
@@ -235,6 +233,32 @@ namespace SharePointPnP.PowerShell.Commands.Files
             ClientContext.Load(file);
             ClientContext.ExecuteQueryRetry();
             WriteObject(file);
+        }
+
+        private Folder GetFolder()
+        {
+            // First try to get the folder if it exists already. This avoids an Access Denied exception if the current user doesn't have Full Control access at Web level
+            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var Url = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
+
+            Folder folder = null;
+            try
+            {
+#if ONPREMISES
+                folder = SelectedWeb.GetFolderByServerRelativeUrl(Url);
+#else
+                folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
+#endif
+                folder.EnsureProperties(f => f.ServerRelativeUrl);
+                return folder;
+            }
+            catch (ServerException serverEx) when (serverEx.ServerErrorCode == -2147024894)
+            {
+                // If the folder doesn't exist, create it
+                folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
+                folder.EnsureProperties(f => f.ServerRelativeUrl);
+                return folder;
+            }
         }
     }
 }
