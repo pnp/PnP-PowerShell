@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Security;
 using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
+using System.IdentityModel.Tokens.Jwt;
 #if NETSTANDARD2_1
 using System.IdentityModel.Tokens.Jwt;
 #endif
@@ -707,13 +708,10 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
             {
-                var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(AccessToken);
                 var aud = jwtToken.Audiences.FirstOrDefault();
                 var url = Url;
-                if (aud != null)
-                {
-                    url = aud;
-                }
                 if ((url.ToLower() == "https://graph.microsoft.com") ||
                     (url.ToLower() == "https://manage.office.com"))
                 {
