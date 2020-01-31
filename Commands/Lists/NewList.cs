@@ -60,6 +60,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                 list.Update();
                 ClientContext.ExecuteQueryRetry();
             }
+
+            WriteObject(list);
         }
     }
 
