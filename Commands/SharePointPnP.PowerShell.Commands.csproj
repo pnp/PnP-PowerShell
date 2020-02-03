@@ -562,7 +562,6 @@
     <Compile Include="Admin\AddTenantTheme.cs" />
     <Compile Include="Admin\RemoveOrgAssetsLibrary.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
-    <Compile Include="Admin\EnableCommSite.cs" />
     <Compile Include="Admin\GetHubSiteChild.cs" />
     <Compile Include="Admin\GetTenantId.cs" />
     <Compile Include="Base\BasePSCmdlet.cs" />
@@ -848,7 +847,7 @@
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
     <Compile Include="Site\AddRoleDefinition.cs" />
     <Compile Include="Site\AddTeamsTeam.cs" />
-    <Compile Include="Site\ConvertToCommSite.cs" />
+    <Compile Include="Site\EnableCommSite.cs" />
     <Compile Include="Site\GetRoleDefinition.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
