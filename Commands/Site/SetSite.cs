@@ -16,6 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
     [CmdletHelp("Sets Site Collection properties.",
         Category = CmdletHelpCategory.Sites,
         SupportedPlatform = CmdletSupportedPlatform.All)]
+#if !SP2013 && !SP2016
     [CmdletExample(
         Code = @"PS:> Set-PnPSite -Classification ""HBI""",
         Remarks = "Sets the current site classification to HBI",
@@ -24,6 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Set-PnPSite -Classification $null",
         Remarks = "Unsets the current site classification",
         SortOrder = 1)]
+#endif
 #if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Set-PnPSite -DisableFlows",
@@ -50,9 +52,10 @@ namespace SharePointPnP.PowerShell.Commands.Site
         [Alias("Url")]
         public string Identity;
 
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = false, HelpMessage = "The classification to set", ParameterSetName = ParameterSet_PROPERTIES)]
         public string Classification;
-
+#endif
 #if !ONPREMISES
         [Parameter(Mandatory = false, HelpMessage = "Disables Microsoft Flow for this site", ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? DisableFlows;
