@@ -7,7 +7,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.New, "PnPList")]
     [CmdletHelp("Creates a new list",
-        Category = CmdletHelpCategory.Lists)]
+        Category = CmdletHelpCategory.Lists,
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
         Code = "PS:> New-PnPList -Title Announcements -Template Announcements",
         SortOrder = 1,
@@ -15,11 +16,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [CmdletExample(
         Code = @"PS:> New-PnPList -Title ""Demo List"" -Url ""DemoList"" -Template Announcements",
         SortOrder = 2,
-        Remarks = "Create a list with a title that is different from the url")]
+        Remarks = "Create an announcements list with a title that is different from the url")]
     [CmdletExample(
         Code = "PS:> New-PnPList -Title HiddenList -Template GenericList -Hidden",
         SortOrder = 3,
-        Remarks = "Create a new custom list and hides it from the SharePoint UI.")]
+        Remarks = "Create a new custom list and hides it from the SharePoint UI")]
     public class NewList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The Title of the list")]
@@ -64,5 +65,4 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             WriteObject(list);
         }
     }
-
 }
