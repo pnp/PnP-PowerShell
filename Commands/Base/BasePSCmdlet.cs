@@ -36,10 +36,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
+                var location = Assembly.GetExecutingAssembly().Location;
+                var escapedLocation = Uri.UnescapeDataString(location);
+                return Path.GetDirectoryName(escapedLocation);
             }
         }
 
