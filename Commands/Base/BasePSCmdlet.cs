@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -27,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         private void FixAssemblyResolving()
         {
-            newtonsoftAssembly = System.Reflection.Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
+            newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
             System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
         }
@@ -42,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
-        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             if (args.Name.StartsWith("Newtonsoft.Json"))
             {
