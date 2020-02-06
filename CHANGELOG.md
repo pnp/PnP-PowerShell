@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Optimized Invoke-PnPSearchQuery when using the -All parameter to ensure all results are returned by ordering on IndexDocId, and changed the default ClientType to 'PnP'
 - `Add-PnPFolder` will now return the newly created folder instance [PR # 2463](https://github.com/SharePoint/PnP-PowerShell/pull/2463)
 - Using `Set-PnPSite -LogoFilePath` now checks if the site collection has a GroupId set instead of validating if the site template name starts with Group to determine if the site is a modern site [PR # 2328](https://github.com/SharePoint/PnP-PowerShell/pull/2328)
+- Use of `Set-PnPSite` in combination with `-Owners`, `-NoScriptSite`, `-LocaleId` and/or `-AllowSelfServiceUpgrade` is now possible on SharePoint 2013, 2016 and 2019 as well [PR # 2293](https://github.com/SharePoint/PnP-PowerShell/pull/2293)
 
 ### Contributors
 
@@ -33,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Gautam Sheth [gautamdsheth]
 - Craig Hair [MacsInSpace]
 - Dan Cecil [danielcecil]
+- Jens Otto Hatlevold [jensotto]
 
 ## [3.17.2001.2]
 

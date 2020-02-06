@@ -323,7 +323,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter.
+        ///   Looks up a localized string similar to No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter..
         /// </summary>
         internal static string NoTenantAdminUrlSpecified {
             get {
