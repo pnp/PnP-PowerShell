@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.All,
         OutputType =typeof(Microsoft.Online.SharePoint.TenantAdministration.SPOTenantWebTemplateCollection),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.online.sharepoint.tenantadministration.spotenantwebtemplatecollection.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/dn174817(v=office.15)")]
     [CmdletExample(Code = @"PS:> Get-PnPWebTemplates", SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Get-PnPWebTemplates -LCID 1033", Remarks = @"Returns all webtemplates for the Locale with ID 1033 (English)", SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Get-PnPWebTemplates -CompatibilityLevel 15", Remarks = @"Returns all webtemplates for the compatibility level 15", SortOrder = 2)]
