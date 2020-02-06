@@ -18,14 +18,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            System.AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
         }
 
         private void FixAssemblyResolving()
         {
             newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-            System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
         private string AssemblyDirectory
@@ -44,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 return newtonsoftAssembly;
             }
-            foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (assembly.FullName == args.Name)
                 {
