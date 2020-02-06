@@ -61,6 +61,7 @@ namespace SharePointPnP.PowerShell.Commands
             }
 
             bool dodelete = true;
+#if !ONPREMISES
             // Check if not deleting the root web
             var siteUri = new Uri(Url);
             if ($"{siteUri.Scheme}://{siteUri.Host}".Equals(Url, StringComparison.OrdinalIgnoreCase) && !Force)
@@ -68,7 +69,7 @@ namespace SharePointPnP.PowerShell.Commands
                 dodelete = false;
                 dodelete = ShouldContinue("You are trying to delete the root site collection. Be aware that you need to contact Office 365 Support in order to create a new root site collection. Also notice that some CSOM and REST operations require the root site collection to be present. Removing this site can affect all your remote processing code, even when accessing non-root site collections.", Resources.Confirm);
             }
-
+#endif
             if (dodelete && (Force || ShouldContinue(string.Format(Resources.RemoveSiteCollection0, Url), Resources.Confirm)))
             {
 #if !ONPREMISES
