@@ -1,5 +1,4 @@
-﻿#if !ONPREMISES
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -12,13 +11,14 @@ namespace SharePointPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Remove, "PnPTenantSite", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = false)]
     [CmdletHelp("Removes a site collection",
         "Removes a site collection which is listed in your tenant administration site.",
-        SupportedPlatform = CmdletSupportedPlatform.Online,
+        SupportedPlatform = CmdletSupportedPlatform.All,
          Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
          Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso",
          Remarks =
              @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso'  and put it in the recycle bin.",
          SortOrder = 1)]
+#if !ONPREMISES
     [CmdletExample(
          Code = @"PS:> Remove-PnPTenantSite -Url https://tenant.sharepoint.com/sites/contoso -Force -SkipRecycleBin",
          Remarks =
@@ -29,11 +29,13 @@ namespace SharePointPnP.PowerShell.Commands
          Remarks =
              @"This will remove the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.",
          SortOrder = 3)]
+#endif
     public class RemoveSite : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the full URL of the site collection that needs to be deleted")]
         public string Url;
 
+#if !ONPREMISES
         [Parameter(Mandatory = false, HelpMessage = "Do not add to the tenant scoped recycle bin when selected.")]
         [Alias("SkipTrash")]
         public SwitchParameter SkipRecycleBin;
@@ -45,6 +47,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "If specified, will search for the site in the Recycle Bin and remove it from there.")]
         [Obsolete("Use Clear-PnPTenantRecycleBinItem instead.")]
         public SwitchParameter FromRecycleBin;
+#endif
 
         [Parameter(Mandatory = false, HelpMessage = "Do not ask for confirmation.")]
         public SwitchParameter Force;
@@ -68,8 +71,14 @@ namespace SharePointPnP.PowerShell.Commands
 
             if (dodelete && (Force || ShouldContinue(string.Format(Resources.RemoveSiteCollection0, Url), Resources.Confirm)))
             {
-                Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
+#if !ONPREMISES
 
+                Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
+#endif
+
+#if ONPREMISES
+                Tenant.DeleteSiteCollection(Url);
+#else
 #pragma warning disable 618
                 if (!FromRecycleBin)
 #pragma warning restore 618
@@ -80,6 +89,7 @@ namespace SharePointPnP.PowerShell.Commands
                 {
                     Tenant.DeleteSiteCollectionFromRecycleBin(Url, true, timeoutFunction);
                 }
+#endif
             }
         }
 
@@ -96,4 +106,3 @@ namespace SharePointPnP.PowerShell.Commands
         }
     }
 }
-#endif
