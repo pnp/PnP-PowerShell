@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -22,24 +18,22 @@ namespace SharePointPnP.PowerShell.Commands.Base
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            System.AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
         }
 
         private void FixAssemblyResolving()
         {
-            newtonsoftAssembly = System.Reflection.Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-            System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
+            newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
         private string AssemblyDirectory
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
+                var location = Assembly.GetExecutingAssembly().Location;
+                var escapedLocation = Uri.UnescapeDataString(location);
+                return Path.GetDirectoryName(escapedLocation);
             }
         }
 
@@ -49,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 return newtonsoftAssembly;
             }
-            foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (assembly.FullName == args.Name)
                 {
