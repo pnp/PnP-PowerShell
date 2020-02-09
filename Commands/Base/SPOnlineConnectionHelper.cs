@@ -891,7 +891,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         {
                             if (availableVersion > new Version(currentVersion))
                             {
-                                return $"A newer version of PnP PowerShell is available: {availableVersion}. Consider upgrading.";
+                                return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Consider upgrading.\n";
                             }
                         }
                         SPOnlineConnectionHelper.VersionChecked = true;
