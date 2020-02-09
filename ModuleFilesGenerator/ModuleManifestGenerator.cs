@@ -84,11 +84,6 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
         private void WriteModuleManifest(string path, string spVersion, string cmdletsToExport, string aliasesToExport)
         {
-            var aliases = "";
-            //if (aliasesToExport != null)
-            //{
-            //    aliases = $"{Environment.NewLine}AliasesToExport = {aliasesToExport}";
-            //}
 #if !NETCOREAPP3_0
             var manifest = $@"@{{
     RootModule = 'SharePointPnP.PowerShell.{spVersion}.Commands.dll'
