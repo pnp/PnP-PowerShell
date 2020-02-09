@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.18.2002.0] (not released yet)
+## [3.18.2002.0]
 
 ### Added
 - Fixed issue with access token forcing site connection url to be the the value of the Audience in the token
@@ -21,8 +21,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Fixed samples on Set-PnPRequestAccessEmail, added ability to revert back to default owners group, added ability to disable requesting access [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
 - Optimized Invoke-PnPSearchQuery when using the -All parameter to ensure all results are returned by ordering on IndexDocId, and changed the default ClientType to 'PnP'
-- `Add-PnPFolder` will now return the newly created folder instance [PR # 2463](https://github.com/SharePoint/PnP-PowerShell/pull/2463)
+- `Add-PnPFolder` will now return the newly created folder instance [PR #2463](https://github.com/SharePoint/PnP-PowerShell/pull/2463)
 - Using `Set-PnPSite -LogoFilePath` now checks if the site collection has a GroupId set instead of validating if the site template name starts with Group to determine if the site is a modern site [PR # 2328](https://github.com/SharePoint/PnP-PowerShell/pull/2328)
+- Fixed documentation for Export-PnPTaxonomy [PR #2462](https://github.com/SharePoint/PnP-PowerShell/pull/2462)
+- Connect-PnPOnline can now use different Azure Authentication endpoints when using App Only auth. [PR #2355](https://github.com/SharePoint/PnP-PowerShell/pull/2355)
 
 ### Contributors
 
@@ -34,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Gautam Sheth [gautamdsheth]
 - Craig Hair [MacsInSpace]
 - Dan Cecil [danielcecil]
+- gobigfoot [gobigfoot]
 
 ## [3.17.2001.2]
 
