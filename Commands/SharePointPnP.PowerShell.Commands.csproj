@@ -560,6 +560,8 @@
     <Compile Include="Admin\AddOrgAssetsLibrary.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Admin\ClearTenantAppCatalogUrl.cs" />
+    <Compile Include="Admin\SetTenantAppCatalogUrl.cs" />
     <Compile Include="Admin\RemoveOrgAssetsLibrary.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
     <Compile Include="Admin\GetHubSiteChild.cs" />
