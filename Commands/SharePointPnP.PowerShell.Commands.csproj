@@ -716,6 +716,8 @@
     <Compile Include="SiteDesigns\GetSiteDesignRun.cs" />
     <Compile Include="SiteDesigns\AddSiteDesignTask.cs" />
     <Compile Include="Search\RemoveSearchConfiguration.cs" />
+    <Compile Include="SiteDesigns\GetSiteScriptFromList.cs" />
+    <Compile Include="SiteDesigns\GetSiteScriptFromWeb.cs" />
     <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
     <Compile Include="SiteDesigns\RemoveSiteDesignTask.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
