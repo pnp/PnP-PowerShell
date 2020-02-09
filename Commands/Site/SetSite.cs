@@ -171,7 +171,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
                             mimeType = "image/png";
                         }
 #endif
-                        var result = OfficeDevPnP.Core.Sites.SiteCollection.SetGroupImage(context, bytes, mimeType).GetAwaiter().GetResult();
+                        var result = OfficeDevPnP.Core.Sites.SiteCollection.SetGroupImageAsync(context, bytes, mimeType).GetAwaiter().GetResult();
                     }
                     else
                     {
