@@ -334,6 +334,14 @@
             <param name="contentTypeName">Name of the content type</param>
             <returns>ID of the content type</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetTermFromId(Microsoft.SharePoint.Client.ClientContext,System.Guid)">
+            <summary>
+            Return information for the given term
+            </summary>
+            <param name="context">ClientContext object to operate on</param>
+            <param name="termId">Id of the term to lookup</param>
+            <returns>Term label</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetLastUsedTransformator(SharePointPnP.Modernization.Framework.Transform.BasePageTransformator)">
             <summary>
             Caches the last used page transformator instance, needed to postpone log writing when transforming multiple pages
@@ -978,7 +986,7 @@
             <param name="s">string to prepare</param>
             <returns>json ready string</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.DelvePage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.DelvePage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates a web part page object
             </summary>
@@ -1015,7 +1023,7 @@
             Analyzes a web part page for SP2010 to SP2016 on-premises SharePoint
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPageOnPremises.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPageOnPremises.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates a web part page object for on-premises environments
             </summary>
@@ -1201,7 +1209,7 @@
             Analyzes a web part page
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WebPartPage.#ctor(Microsoft.SharePoint.Client.ListItem,Microsoft.SharePoint.Client.File,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates a web part page object
             </summary>
@@ -1244,7 +1252,7 @@
             Analyzes a wiki page
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Instantiates a wiki page object
             </summary>
@@ -1337,6 +1345,34 @@
             <param name="staticString">Static string that will be returned</param>
             <returns>String provided as input</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.Prefix(System.String,System.String,System.String)">
+            <summary>
+            Prefixes a string
+            </summary>
+            <param name="prefix">Prefix to be applied</param>
+            <param name="content">Value to apply the prefix to</param>
+            <param name="applyIfContentIsEmpty">Apply prefix also when the content field is empty</param>
+            <returns>Prefixed string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.Suffix(System.String,System.String,System.String)">
+            <summary>
+            Suffixes a string
+            </summary>
+            <param name="suffix">Suffix to be applied</param>
+            <param name="content">Value to apply the suffix to</param>
+            <param name="applyIfContentIsEmpty">Apply suffix also when the content field is empty</param>
+            <returns>Prefixed string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.PrefixAndSuffix(System.String,System.String,System.String,System.String)">
+            <summary>
+            Prefixes and suffixes a string
+            </summary>
+            <param name="prefix">Prefix to be applied</param>
+            <param name="suffix">Suffix to be applied</param>
+            <param name="content">Value to apply the prefix/suffix to</param>
+            <param name="applyIfContentIsEmpty">Apply prefix/suffix also when the content field is empty</param>
+            <returns>Prefixed string</returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.ToImageUrl(System.String)">
             <summary>
             Returns the server relative image url of a Publishing Image field value
@@ -1378,6 +1414,15 @@
             </summary>
             <param name="userId">The id (int) of a user</param>
             <returns>A formatted json blob describing the user's details</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Publishing.PublishingBuiltIn.DefaultTaxonomyFieldValue(System.String,System.String,System.String)">
+            <summary>
+            Populate a taxonomy field based upon provided term id's. You can configure to optionally overwrite existing values
+            </summary>
+            <param name="fieldValue">List of term id's to set, multiple values can also be used when the taxonomy field is configured to accept multiple terms</param>
+            <param name="termIdString">Static bool ('true', 'false') to indicate if the default term values have to be set in case the fiels already contains terms</param>
+            <param name="overwriteString">String with term information needed to set the taxonomy field</param>
+            <returns></returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Publishing.PublishingFunctionProcessor">
             <summary>
@@ -3606,7 +3651,7 @@
             Transforms the received Html in html that can be displayed and maintained in the modern client side text part
             </summary>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.#ctor">
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.HtmlTransformator.#ctor(System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
             Default constructor
             </summary>

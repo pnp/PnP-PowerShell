@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added ability to use `Set-PnPRequestAccessEmails` with `-Disabled` to disable requesting access to a site and `-Disabled:$false` to set the access requests to be sent to the default owners of the site [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
 - Added `Get-PnPSiteScriptFromList` and `Get-PnPSiteScriptFromWeb` commands which allow generation of Site Script JSON based off of existing lists or an entire site [PR # 2459](https://github.com/SharePoint/PnP-PowerShell/pull/2459)
 - Added `-Aggregations` argument to `Add-PnPView` and `Set-PnPView` to allow for creating a Totals count in a view [PR #2257](https://github.com/SharePoint/PnP-PowerShell/pull/2257)
+- Deprecated old tenant level `Enable-PnPCommSite` cmdlet and added new `Enable-PnPCommSite` command to enable the modern communication site experience on an classic team site. This one can be applied by non tenant admins as well
 
 ### Changed
 - Optimized Invoke-PnPSearchQuery when using the -All parameter to ensure all results are returned by ordering on IndexDocId, and changed the default ClientType to 'PnP'
