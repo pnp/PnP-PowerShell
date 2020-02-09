@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Using `Set-PnPSite -LogoFilePath` now checks if the site collection has a GroupId set instead of validating if the site template name starts with Group to determine if the site is a modern site [PR # 2328](https://github.com/SharePoint/PnP-PowerShell/pull/2328)
 - Fixed documentation for Export-PnPTaxonomy [PR #2462](https://github.com/SharePoint/PnP-PowerShell/pull/2462)
 - Connect-PnPOnline can now use different Azure Authentication endpoints when using App Only auth. [PR #2355](https://github.com/SharePoint/PnP-PowerShell/pull/2355)
+- Fix examples in Start-PnPWorkflowInstance [PR #2483](https://github.com/SharePoint/PnP-PowerShell/pull/2483)
 
 ### Contributors
 
