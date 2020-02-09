@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Publishing
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 WriteObject(Identity.GetImageRendition(SelectedWeb));
             }

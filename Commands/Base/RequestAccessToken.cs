@@ -101,7 +101,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             string response;
             var password = string.Empty;
             var username = string.Empty;
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Credentials)))
+            if (ParameterSpecified(nameof(Credentials)))
             {
                 password = EncryptionUtility.ToInsecureString(Credentials.Password);
                 username = Credentials.UserName;

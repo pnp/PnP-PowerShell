@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             get
             {
-                if (MyInvocation.BoundParameters.ContainsKey("Includes") && MyInvocation.BoundParameters["Includes"] != null)
+                if (ParameterSpecified(nameof(Includes)) && MyInvocation.BoundParameters["Includes"] != null)
                 {
                     return MyInvocation.BoundParameters["Includes"] as string[];
                 }
@@ -67,7 +67,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             var fieldsToLoad = new List<string>();
 
-            if (MyInvocation.BoundParameters.ContainsKey("Includes"))
+            if (ParameterSpecified(nameof(Includes)))
             {
                 var values = MyInvocation.BoundParameters["Includes"] as string[];
 

@@ -64,12 +64,7 @@ PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
 
             var template = ClientContext.Web.GetProvisioningTemplate(templateCi);
 
-            //template.Security = null;
-            //template.Features = null;
-            //template.CustomActions = null;
-            //template.ComposedLook = null;
-
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 if (Identity.Id != Guid.Empty)
                 {

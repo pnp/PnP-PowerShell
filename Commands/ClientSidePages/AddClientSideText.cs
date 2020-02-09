@@ -40,12 +40,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Section") && Section == 0)
+            if (ParameterSpecified(nameof(Section)) && Section == 0)
             {
                 throw new Exception("Section value should be at least 1 or higher");
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Column") && Column == 0)
+            if (ParameterSpecified(nameof(Column)) && Column == 0)
             {
                 throw new Exception("Column value should be at least 1 or higher");
             }
@@ -57,9 +57,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 throw new Exception($"Page {Page} cannot be found.");
 
             var textControl = new ClientSideText() { Text = Text };
-            if (MyInvocation.BoundParameters.ContainsKey("Section"))
+            if (ParameterSpecified(nameof(Section)))
             {
-                if (MyInvocation.BoundParameters.ContainsKey("Section"))
+                if (ParameterSpecified(nameof(Section)))
                 {
                     clientSidePage.AddControl(textControl,
                     clientSidePage.Sections[Section - 1].Columns[Column - 1], Order);

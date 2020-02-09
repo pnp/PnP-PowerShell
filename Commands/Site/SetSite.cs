@@ -136,12 +136,12 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 siteUrl = context.Url;
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Classification)))
+            if (ParameterSpecified(nameof(Classification)))
             {
                 site.Classification = Classification;
                 executeQueryRequired = true;
             }
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(LogoFilePath)))
+            if (ParameterSpecified(nameof(LogoFilePath)))
             {
                 site.EnsureProperty(s => s.GroupId);
                 if (site.GroupId != Guid.Empty)

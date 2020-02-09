@@ -192,7 +192,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         protected override void ExecuteCmdlet()
         {
             ExtractConfiguration extractConfiguration = null;
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
+            if (ParameterSpecified(nameof(Configuration)))
             {
                 extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
             }
@@ -239,11 +239,11 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (ParameterSpecified(nameof(Handlers)))
             {
                 creationInformation.HandlersToProcess = Handlers;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (ParameterSpecified(nameof(ExcludeHandlers)))
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
@@ -279,31 +279,31 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 creationInformation.FileConnector = fileSystemConnector;
             }
 #pragma warning disable 618
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(PersistBrandingFiles)) || MyInvocation.BoundParameters.ContainsKey(nameof(PersistComposedLookFiles)))
+            if (ParameterSpecified(nameof(PersistBrandingFiles)) || ParameterSpecified(nameof(PersistComposedLookFiles)))
             {
                 creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
             }
 #pragma warning restore 618
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(IncludeSiteGroups)))
+            if (ParameterSpecified(nameof(IncludeSiteGroups)))
             {
                 creationInformation.IncludeSiteGroups = IncludeSiteGroups;
             }
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
-            if(MyInvocation.BoundParameters.ContainsKey(nameof(IncludeHiddenLists)))
+            if(ParameterSpecified(nameof(IncludeHiddenLists)))
             {
                 creationInformation.IncludeHiddenLists = IncludeHiddenLists;
             }
 #if !SP2013 && !SP2016
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(IncludeAllClientSidePages)))
+            if (ParameterSpecified(nameof(IncludeAllClientSidePages)))
             {
                 creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
             }
 #endif
             creationInformation.SkipVersionCheck = SkipVersionCheck;
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(ContentTypeGroups)) && ContentTypeGroups != null)
+            if (ParameterSpecified(nameof(ContentTypeGroups)) && ContentTypeGroups != null)
             {
                 creationInformation.ContentTypeGroupsToInclude = ContentTypeGroups.ToList();
             }
@@ -424,7 +424,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 }
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(ExcludeContentTypesFromSyndication)))
+            if (ParameterSpecified(nameof(ExcludeContentTypesFromSyndication)))
             {
                 creationInformation.IncludeContentTypesFromSyndication = !ExcludeContentTypesFromSyndication.ToBool();
             }

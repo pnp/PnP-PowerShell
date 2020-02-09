@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         protected override void ProcessRecord()
         {
             ExtractConfiguration extractConfiguration = null;
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
+            if (ParameterSpecified(nameof(Configuration)))
             {
                 extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
             }
@@ -83,7 +83,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             {
                 ci = new ProvisioningTemplateCreationInformation(SelectedWeb);
             }
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(PersistBrandingFiles)))
+            if (ParameterSpecified(nameof(PersistBrandingFiles)))
             {
                 ci.PersistBrandingFiles = PersistBrandingFiles;
             }

@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
         {
             var o365 = new Office365Tenant(ClientContext);
 
-            if (MyInvocation.BoundParameters.ContainsKey("JobId"))
+            if (ParameterSpecified(nameof(JobId)))
             {
                 var job = o365.GetImportProfilePropertyJob(JobId.Id);
                 ClientContext.Load(job);

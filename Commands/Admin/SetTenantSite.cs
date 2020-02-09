@@ -152,7 +152,7 @@ namespace SharePointPnP.PowerShell.Commands
                     updateRequired = true;
                 }
 #pragma warning disable CS0618 // Type or member is obsolete
-                if (ParameterSpecified(nameof(UserCodeMaximumLevel)))
+                if(ParameterSpecified(nameof(UserCodeMaximumLevel)))
                 {
                     props.UserCodeMaximumLevel = UserCodeMaximumLevel;
                     updateRequired = true;

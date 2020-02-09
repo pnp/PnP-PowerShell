@@ -37,7 +37,7 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 
             var item = Identity.GetListItem(list);
 
-            if (!MyInvocation.BoundParameters.ContainsKey("DeclarationDate"))
+            if (!ParameterSpecified(nameof(DeclarationDate)))
             {
                 Microsoft.SharePoint.Client.RecordsRepository.Records.DeclareItemAsRecord(ClientContext, item);
             }

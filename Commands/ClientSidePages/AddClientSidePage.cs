@@ -85,7 +85,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 clientSidePage.Save(name);
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("ContentType"))
+            if (ParameterSpecified(nameof(ContentType)))
             {
                 ContentType ct = null;
                 if (ContentType.ContentType == null)
@@ -128,7 +128,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             }
 
 
-            if (MyInvocation.BoundParameters.ContainsKey("CommentsEnabled"))
+            if (ParameterSpecified(nameof(CommentsEnabled)))
             {
                 if (CommentsEnabled)
                 {

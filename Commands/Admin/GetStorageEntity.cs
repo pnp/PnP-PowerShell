@@ -76,7 +76,7 @@ namespace SharePointPnP.PowerShell.Commands
                     };
                     storageEntities.Add(storageEntity);
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Key"))
+                if (ParameterSpecified(nameof(Key)))
                 {
                     WriteObject(storageEntities.Where(k => k.Key == Key));
                 }

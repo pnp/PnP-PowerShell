@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var roleDefinition = Identity.GetRoleDefinition(ClientContext.Site);
                 ClientContext.Load(roleDefinition);

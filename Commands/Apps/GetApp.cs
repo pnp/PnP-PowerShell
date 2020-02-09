@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         {
             var manager = new AppManager(ClientContext);
 
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var app = Identity.GetAppMetadata(ClientContext, Scope);
                 if (app != null)
