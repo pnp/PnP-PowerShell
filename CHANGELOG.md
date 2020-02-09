@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Aggregations` argument to `Add-PnPView` and `Set-PnPView` to allow for creating a Totals count in a view [PR #2257](https://github.com/SharePoint/PnP-PowerShell/pull/2257)
 - Added `New-PnPTermLabel` to add a localized label to an existing taxonomy term [PR #2475](https://github.com/SharePoint/PnP-PowerShell/pull/2475)
 - Deprecated old tenant level `Enable-PnPCommSite` cmdlet and added new `Enable-PnPCommSite` command to enable the modern communication site experience on an classic team site. This one can be applied by non tenant admins as well
+- Added `Clear-PnPTenantAppCatalogUrl` to remove the tenant configuration for the tenant scoped app catalog [PR # 2485](https://github.com/SharePoint/PnP-PowerShell/pull/2485)
+- Added `Set-PnPTenantAppCatalogUrl` to configure the tenant for the site collection to use for the tenant scoped app catalog [PR # 2485](https://github.com/SharePoint/PnP-PowerShell/pull/2485)
 
 ### Changed
 - Fixed samples on Set-PnPRequestAccessEmail, added ability to revert back to default owners group, added ability to disable requesting access [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
