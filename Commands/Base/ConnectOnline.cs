@@ -594,7 +594,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                     outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
                 }
                 Host.UI.WriteLine(outMessage);
-            } else
+            }
+            else
             {
                 WriteWarning(message);
             }
@@ -620,7 +621,11 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             SPOnlineConnection connection = null;
             if (ParameterSetName == ParameterSet_TOKEN)
             {
+#if !ONPREMISES
                 connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+#else
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+#endif
             }
             else if (UseWebLogin)
             {
@@ -734,7 +739,7 @@ Use -PnPO365ManagementShell instead");
                 connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
                 throw new NotImplementedException();	
-#endif	
+#endif
             }
 #if !NETSTANDARD2_1
             else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
