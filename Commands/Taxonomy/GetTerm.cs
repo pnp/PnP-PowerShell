@@ -29,7 +29,12 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
     [CmdletExample(
         Code = @"PS:> Get-PnPTerm -Identity ""Small Finance"" -TermSet ""Departments"" -TermGroup ""Corporate"" -Recursive",
         Remarks = @"Returns the term named ""Small Finance"", from the ""Departments"" termset in a term group called ""Corporate"" from the site collection termstore even if it's a subterm below ""Finance""",
-        SortOrder = 2)]
+        SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> $term = Get-PnPTerm -Identity ""Small Finance"" -TermSet ""Departments"" -TermGroup ""Corporate"" -Include Labels
+PS:> $term.Labels",
+        Remarks = @"Returns all the localized labels for the term named ""Small Finance"", from the ""Departments"" termset in a term group called ""Corporate""",
+        SortOrder = 4)]
     public class GetTerm : PnPRetrievalsCmdlet<Term>
     {
         private const string ParameterSet_TERM = "By Term Id";

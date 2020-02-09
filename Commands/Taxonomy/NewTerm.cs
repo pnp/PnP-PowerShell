@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Management.Automation;
-using System.Runtime.InteropServices;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -15,7 +13,8 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
     [CmdletHelp(@"Creates a taxonomy term",
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(Term),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.term.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-csom/jj166573(v=office.15)",
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample
         (Code = @"PS:> New-PnPTerm -TermSet ""Departments"" -TermGroup ""Corporate"" -Name ""Finance""",
         Remarks = @"Creates a new taxonomy term named ""Finance"" in the termset Departments which is located in the ""Corporate"" termgroup",
@@ -34,11 +33,9 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The termset to add the term to.")]
         public TaxonomyItemPipeBind<TermSet> TermSet;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true,
-            HelpMessage = "The termgroup to create the term in.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The termgroup to create the term in.")]
         public TermGroupPipeBind TermGroup;
 
-        
         [Parameter(Mandatory = false, HelpMessage = "Descriptive text to help users understand the intended use of this term.")]
         public string Description;
 
@@ -48,8 +45,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, HelpMessage = "Custom Properties")]
         public Hashtable LocalCustomProperties;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets,
-            HelpMessage = "Term store to check; if not specified the default term store is used.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Term store to check; if not specified the default term store is used.")]
         [Alias("TermStoreName")]
         public GenericObjectNameIdPipeBind<TermStore> TermStore;
 
@@ -129,6 +125,5 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             ClientContext.ExecuteQueryRetry();
             WriteObject(term);
         }
-
     }
 }
