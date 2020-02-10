@@ -73,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 
             if (user != null)
             {
-                if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveUser, user.Id, user.LoginName, user.Email), Properties.Resources.Confirm))
+                if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveUser, user.Id, user.LoginName, user.Email), Properties.Resources.Confirm))
                 {
                     WriteVerbose($"Removing user {user.Id} {user.LoginName} {user.Email}");
                     ClientContext.Web.SiteUsers.Remove(user);

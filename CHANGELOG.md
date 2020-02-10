@@ -5,6 +5,47 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.18.2002.0]
+
+### Added
+- Fixed issue with access token forcing site connection url to be the the value of the Audience in the token
+- Added ability to set HostProperties to Add-PnPCustomAction.
+- `Get-PnPManagementApiAccessToken` to retrieve access token for the Office 365 Management API using app credentials, app should be registered in AAD and assigned to interact with Management API
+- `Get-PnPUnifiedAuditLog` to retrieve unified audit logs from the Office 365 Management API
+- Added ability to connect to an on-premises SharePoint 2013/2016/2019 farm using a High Trust Server 2 Server App + User context by providing the username using `-Username`. Before only a High Trust App Only context was possible. [PR #2213](https://github.com/SharePoint/PnP-PowerShell/pull/2213)
+- Added ability to use `Set-PnPRequestAccessEmails` with `-Disabled` to disable requesting access to a site and `-Disabled:$false` to set the access requests to be sent to the default owners of the site [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
+- Added `Get-PnPSiteScriptFromList` and `Get-PnPSiteScriptFromWeb` commands which allow generation of Site Script JSON based off of existing lists or an entire site [PR # 2459](https://github.com/SharePoint/PnP-PowerShell/pull/2459)
+- Added `-Aggregations` argument to `Add-PnPView` and `Set-PnPView` to allow for creating a Totals count in a view [PR #2257](https://github.com/SharePoint/PnP-PowerShell/pull/2257)
+- Added `New-PnPTermLabel` to add a localized label to an existing taxonomy term [PR #2475](https://github.com/SharePoint/PnP-PowerShell/pull/2475)
+- Deprecated old tenant level `Enable-PnPCommSite` cmdlet and added new `Enable-PnPCommSite` command to enable the modern communication site experience on an classic team site. This one can be applied by non tenant admins as well
+- Added `Clear-PnPTenantAppCatalogUrl` to remove the tenant configuration for the tenant scoped app catalog [PR # 2485](https://github.com/SharePoint/PnP-PowerShell/pull/2485)
+- Added `Set-PnPTenantAppCatalogUrl` to configure the tenant for the site collection to use for the tenant scoped app catalog [PR # 2485](https://github.com/SharePoint/PnP-PowerShell/pull/2485)
+
+### Changed
+- Fixed samples on Set-PnPRequestAccessEmail, added ability to revert back to default owners group, added ability to disable requesting access [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
+- Optimized Invoke-PnPSearchQuery when using the -All parameter to ensure all results are returned by ordering on IndexDocId, and changed the default ClientType to 'PnP'
+- `Add-PnPFolder` will now return the newly created folder instance [PR #2463](https://github.com/SharePoint/PnP-PowerShell/pull/2463)
+- Using `Set-PnPSite -LogoFilePath` now checks if the site collection has a GroupId set instead of validating if the site template name starts with Group to determine if the site is a modern site [PR # 2328](https://github.com/SharePoint/PnP-PowerShell/pull/2328)
+- Fixed using `Import-Module` to the PnP PowerShell Module located on a UNC fileshare path resulting in an error [PR # 2490](https://github.com/SharePoint/PnP-PowerShell/pull/2490)
+- `New-PnPList` will now return the newly created list instance [PR # 2481](https://github.com/SharePoint/PnP-PowerShell/pull/2481)
+- Fixed documentation for Export-PnPTaxonomy [PR #2462](https://github.com/SharePoint/PnP-PowerShell/pull/2462)
+- Connect-PnPOnline can now use different Azure Authentication endpoints when using App Only auth. [PR #2355](https://github.com/SharePoint/PnP-PowerShell/pull/2355)
+- Fix examples in Start-PnPWorkflowInstance [PR #2483](https://github.com/SharePoint/PnP-PowerShell/pull/2483)
+
+### Contributors
+
+- Ivan Vagunin [ivanvagunin]
+- Thomas Meckel [tmeckel]
+- Koen Zomers [koenzomers]
+- Giacomo Pozzoni [jackpoz]
+- Jarbas Horst [JarbasHorst]
+- Gautam Sheth [gautamdsheth]
+- Craig Hair [MacsInSpace]
+- Dan Cecil [danielcecil]
+- gobigfoot [gobigfoot]
+- Markus Hanisch [Markus-Hanisch]
+- Raphael [PowershellNinja]
+
 ## [3.17.2001.2]
 
 ### 

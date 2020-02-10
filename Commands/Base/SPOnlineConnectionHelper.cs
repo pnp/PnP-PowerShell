@@ -41,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
         }
 
-        internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false)
+        internal static SPOnlineConnection InstantiateSPOnlineConnection(Uri url, string realm, string clientId, string clientSecret, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
             if (realm == null)
@@ -56,7 +56,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             else
             {
-                context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret), retryCount, retryWait * 1000);
+                context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: authManager.GetAzureADACSEndPoint(azureEnvironment), globalEndPointPrefix: authManager.GetAzureADACSEndPointPrefix(azureEnvironment)), retryCount, retryWait * 1000);
             }
 
             context.ApplicationName = Properties.Resources.ApplicationName;
@@ -83,18 +83,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
 #if !NETSTANDARD2_1
 #if ONPREMISES
-        internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, string hightrustCertificatePath, string hightrustCertificatePassword, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck)
+        internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, string hightrustCertificatePath, string hightrustCertificatePassword, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck, string loginName)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-            var context = authManager.GetHighTrustCertificateAppOnlyAuthenticatedContext(url, clientId, hightrustCertificatePath, hightrustCertificatePassword, hightrustCertificateIssuerId);
+            var context = authManager.GetHighTrustCertificateAppAuthenticatedContext(url, clientId, hightrustCertificatePath, hightrustCertificatePassword, hightrustCertificateIssuerId, loginName);
 
             return InstantiateHighTrustConnection(context, url, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck);
         }
 
-        internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 hightrustCertificate, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck)
+        internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 hightrustCertificate, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck, string loginName)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-            var context = authManager.GetHighTrustCertificateAppOnlyAuthenticatedContext(url, clientId, hightrustCertificate, hightrustCertificateIssuerId);
+            var context = authManager.GetHighTrustCertificateAppAuthenticatedContext(url, clientId, hightrustCertificate, hightrustCertificateIssuerId, loginName);
 
             return InstantiateHighTrustConnection(context, url, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck);
         }
@@ -114,7 +114,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url, tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.HighTrust);
+            return new SPOnlineConnection(context,
+                connectionType,
+                minimalHealthScore,
+                retryCount,
+                retryWait,
+                null,
+                url,
+                tenantAdminUrl,
+                PnPPSVersionTag,
+                host,
+                disableTelemetry,
+                InitializationType.HighTrust);
         }
 #endif
 #endif
@@ -891,7 +902,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         {
                             if (availableVersion > new Version(currentVersion))
                             {
-                                return $"A newer version of PnP PowerShell is available: {availableVersion}. Consider upgrading.";
+                                return $"\nA newer version of PnP PowerShell is available: {availableVersion}. Consider upgrading.\n";
                             }
                         }
                         SPOnlineConnectionHelper.VersionChecked = true;

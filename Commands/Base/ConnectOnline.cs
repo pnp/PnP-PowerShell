@@ -10,10 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
-using System.Reflection;
 using System.Security;
 using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
+using System.IdentityModel.Tokens.Jwt;
 #if NETSTANDARD2_1
 using System.IdentityModel.Tokens.Jwt;
 #endif
@@ -210,7 +210,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADPEM, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCER, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")][Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADThumb, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCER, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADThumb, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
@@ -455,6 +456,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
 #if !NETSTANDARD2_1
@@ -500,7 +502,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")][Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
 #endif
 #if ONPREMISES
@@ -523,7 +526,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHWITHSCOPE, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
 #endif
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]        
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
 #endif
 #if ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
@@ -547,6 +550,11 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "The IssuerID under which the certificate has been registered in SharePoint as a Trusted Security Token issuer to use for the High Trust connection. Uses the ClientID if not specified.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_PFX, HelpMessage = "The IssuerID under which the CER counterpart of the PFX has been registered in SharePoint as a Trusted Security Token issuer to use for the High Trust connection. Uses the ClientID if not specified.")]
         public string HighTrustCertificateIssuerId;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "Name of the user (login name) on whose behalf to create the access token. Supported input formats are SID and User Principal Name (UPN) in the format user@domain.local. If the parameter is not specified, an App Only Context is created.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_HIGHTRUST_PFX, HelpMessage = "Name of the user (login name) on whose behalf to create the access token. Supported input formats are SID and User Principal Name (UPN) in the format user@domain.local. If the parameter is not specified, an App Only Context is created.")]
+        [ValidateNotNullOrEmpty()]
+        public string UserName;
 #endif
 
         protected override void ProcessRecord()
@@ -554,18 +562,51 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             try
             {
                 Connect();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
                 throw ex;
             }
         }
+
+        private void WriteUpdateMessage(string message)
+        {
+
+            if (Host.Name == "ConsoleHost")
+            {
+                // Use Warning Color
+                var notificationColor = "\x1B[7m";
+                var resetColor = "\x1B[0m";
+
+                var lineLength = 0;
+                foreach (var line in message.Split('\n'))
+                {
+                    if (line.Length > lineLength)
+                    {
+                        lineLength = line.Length;
+                    }
+                }
+                var outMessage = string.Empty;
+                foreach (var line in message.Split('\n'))
+                {
+                    var lineToAdd = line.PadRight(lineLength);
+                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
+                }
+                Host.UI.WriteLine(outMessage);
+            }
+            else
+            {
+                WriteWarning(message);
+            }
+        }
+
         protected void Connect()
         {
             var latestVersion = SPOnlineConnectionHelper.GetLatestVersion();
             if (!string.IsNullOrEmpty(latestVersion))
             {
-                WriteWarning(latestVersion);
+                WriteUpdateMessage(latestVersion);
             }
 
             if (IgnoreSslErrors)
@@ -580,7 +621,11 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             SPOnlineConnection connection = null;
             if (ParameterSetName == ParameterSet_TOKEN)
             {
-                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+#if !ONPREMISES
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+#else
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+#endif
             }
             else if (UseWebLogin)
             {
@@ -653,17 +698,18 @@ Use -PnPO365ManagementShell instead");
             else if (ParameterSetName == ParameterSet_APPONLYAAD)
             {
 #if !NETSTANDARD2_1
-                if (MyInvocation.BoundParameters.ContainsKey("CertificatePath"))
+                if (ParameterSpecified(nameof(CertificatePath)))
                 {
                     connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
                     WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                } else if (MyInvocation.BoundParameters.ContainsKey("Certificate"))
+                } else if (ParameterSpecified(nameof(Certificate)))
                 {
                     connection = SPOnlineConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, Certificate);
-                } else if (MyInvocation.BoundParameters.ContainsKey("CertificateBase64Encoded"))
+                } else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
                 {
                     connection = SPOnlineConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, CertificateBase64Encoded);
-                } else
+                }
+                else
                 {
                     throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
                 }
@@ -693,7 +739,7 @@ Use -PnPO365ManagementShell instead");
                 connection = SPOnlineConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
                 throw new NotImplementedException();	
-#endif	
+#endif
             }
 #if !NETSTANDARD2_1
             else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
@@ -707,14 +753,12 @@ Use -PnPO365ManagementShell instead");
             }
             else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
             {
-                var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(AccessToken);
                 var aud = jwtToken.Audiences.FirstOrDefault();
                 var url = Url;
-                if (aud != null)
-                {
-                    url = aud;
-                }
-                if (url.ToLower() == "https://graph.microsoft.com")
+                if ((url.ToLower() == "https://graph.microsoft.com") ||
+                    (url.ToLower() == "https://manage.office.com"))
                 {
                     connection = ConnectGraphDeviceLogin(AccessToken);
                 }
@@ -740,11 +784,36 @@ Use -PnPO365ManagementShell instead");
 #if ONPREMISES
             else if (ParameterSetName == ParameterSet_HIGHTRUST_CERT)
             {
-                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url, ClientId, HighTrustCertificate, HighTrustCertificateIssuerId ?? ClientId, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck);
+                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url,
+                    ClientId,
+                    HighTrustCertificate,
+                    HighTrustCertificateIssuerId ?? ClientId,
+                    MinimalHealthScore,
+                    RetryCount,
+                    RetryWait,
+                    RequestTimeout,
+                    TenantAdminUrl,
+                    Host,
+                    NoTelemetry,
+                    SkipTenantAdminCheck,
+                    UserName);
             }
             else if (ParameterSetName == ParameterSet_HIGHTRUST_PFX)
             {
-                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url, ClientId, HighTrustCertificatePath, HighTrustCertificatePassword, HighTrustCertificateIssuerId ?? ClientId, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck);
+                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url,
+                    ClientId,
+                    HighTrustCertificatePath,
+                    HighTrustCertificatePassword,
+                    HighTrustCertificateIssuerId ?? ClientId,
+                    MinimalHealthScore,
+                    RetryCount,
+                    RetryWait,
+                    RequestTimeout,
+                    TenantAdminUrl,
+                    Host,
+                    NoTelemetry,
+                    SkipTenantAdminCheck,
+                    UserName);
             }
 #endif
             else
@@ -757,11 +826,22 @@ Use -PnPO365ManagementShell instead");
                         creds = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
                     }
                 }
-                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), creds, Host, CurrentCredentials, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, NoTelemetry, SkipTenantAdminCheck, AuthenticationMode);
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
+                    creds,
+                    Host,
+                    CurrentCredentials,
+                    MinimalHealthScore,
+                    RetryCount,
+                    RetryWait,
+                    RequestTimeout,
+                    TenantAdminUrl,
+                    NoTelemetry,
+                    SkipTenantAdminCheck,
+                    AuthenticationMode);
             }
 #if !ONPREMISES
 #if !NETSTANDARD2_1
-            if (MyInvocation.BoundParameters.ContainsKey("Scopes") && ParameterSetName != ParameterSet_GRAPHWITHSCOPE)
+            if (ParameterSpecified(nameof(Scopes)) && ParameterSetName != ParameterSet_GRAPHWITHSCOPE)
             {
                 ConnectGraphScopes();
             }

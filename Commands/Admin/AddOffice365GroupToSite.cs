@@ -58,7 +58,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
                 Owners = Owners
             };
 
-            if (MyInvocation.BoundParameters.ContainsKey("HubSiteId"))
+            if (ParameterSpecified(nameof(HubSiteId)))
             {
                 groupifyInformation.HubSiteId = HubSiteId.Id;
             }

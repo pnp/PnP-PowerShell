@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
             var document = XDocument.Parse(fullXml);
 
             XElement termGroupsElement;
-            if (MyInvocation.BoundParameters.ContainsKey("Xml"))
+            if (ParameterSpecified(nameof(Xml)))
             {
                 termGroupsElement = XElement.Parse(Xml);
             }

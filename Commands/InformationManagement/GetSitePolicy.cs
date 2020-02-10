@@ -29,19 +29,19 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
         protected override void ExecuteCmdlet()
         {
 
-            if (!MyInvocation.BoundParameters.ContainsKey("AllAvailable") && !MyInvocation.BoundParameters.ContainsKey("Name"))
+            if (!ParameterSpecified(nameof(AllAvailable)) && !ParameterSpecified(nameof(Name)))
             {
                 // Return the current applied site policy
                 WriteObject(this.SelectedWeb.GetAppliedSitePolicy());
             }
             else
             {
-                if (MyInvocation.BoundParameters.ContainsKey("AllAvailable"))
+                if (ParameterSpecified(nameof(AllAvailable)))
                 {
                     WriteObject(SelectedWeb.GetSitePolicies(),true);
                     return;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Name"))
+                if (ParameterSpecified(nameof(Name)))
                 {
                     WriteObject(SelectedWeb.GetSitePolicyByName(Name));
                 }

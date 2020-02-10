@@ -65,12 +65,12 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Section") && Section == 0)
+            if (ParameterSpecified(nameof(Section)) && Section == 0)
             {
                 throw new Exception("Section value should be at least 1 or higher");
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Column") && Column == 0)
+            if (ParameterSpecified(nameof(Column)) && Column == 0)
             {
                 throw new Exception("Column value should be at least 1 or higher");
             }
@@ -83,7 +83,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
             }
 
             ClientSideWebPart webpart = null;
-            if (MyInvocation.BoundParameters.ContainsKey("DefaultWebPartType"))
+            if (ParameterSpecified(nameof(DefaultWebPartType)))
             {
                 webpart = clientSidePage.InstantiateDefaultWebPart(DefaultWebPartType);
             }
@@ -104,9 +104,9 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
                 }
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Section"))
+            if (ParameterSpecified(nameof(Section)))
             {
-                if (MyInvocation.BoundParameters.ContainsKey("Column"))
+                if (ParameterSpecified(nameof(Column)))
                 {
                     clientSidePage.AddControl(webpart,
                                 clientSidePage.Sections[Section - 1].Columns[Column - 1], Order);

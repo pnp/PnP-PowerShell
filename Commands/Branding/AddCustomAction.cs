@@ -95,6 +95,11 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the custom action. Specify values as a json string : \"{Property1 : 'Value1', Property2: 'Value2'}\"", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
         public string ClientSideComponentProperties;
 #endif
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "The Client Side Host Properties of the custom action. Specify values as a json string : \"{'preAllocatedApplicationCustomizerTopHeight': '50', 'preAllocatedApplicationCustomizerBottomHeight': '50'}\"", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
+        public string ClientSideHostProperties;
+#endif
+
         protected override void ExecuteCmdlet()
         {
             var permissions = new BasePermissions();
@@ -135,15 +140,18 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
                     Location = Location,
                     Sequence = Sequence,
                     ClientSideComponentId = ClientSideComponentId.Id,
-                    ClientSideComponentProperties = ClientSideComponentProperties
+                    ClientSideComponentProperties = ClientSideComponentProperties,
+#if !ONPREMISES
+                    ClientSideHostProperties = ClientSideHostProperties
+#endif
                 };
 
-                if (MyInvocation.BoundParameters.ContainsKey("RegistrationId"))
+                if (ParameterSpecified(nameof(RegistrationId)))
                 {
                     ca.RegistrationId = RegistrationId;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("RegistrationType"))
+                if (ParameterSpecified(nameof(RegistrationType)))
                 {
                     ca.RegistrationType = RegistrationType;
                 }

@@ -629,6 +629,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only one e-mail address can be configured to receive the access requests.
+        /// </summary>
+        internal static string SetRequestAccessEmailsOnlyOneAddressAllowed {
+            get {
+                return ResourceManager.GetString("SetRequestAccessEmailsOnlyOneAddressAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The provided site could not be found.
         /// </summary>
         internal static string SiteNotFound {

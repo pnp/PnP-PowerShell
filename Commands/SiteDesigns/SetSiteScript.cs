@@ -45,22 +45,22 @@ PS:> Set-PnPSiteScript -Identity $script -Title ""My Site Script""",
             {
                 var isDirty = false;
 
-                if (MyInvocation.BoundParameters.ContainsKey("Title"))
+                if (ParameterSpecified(nameof(Title)))
                 {
                     script.Title = Title;
                     isDirty = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Description"))
+                if (ParameterSpecified(nameof(Description)))
                 {
                     script.Description = Description;
                     isDirty = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Content"))
+                if (ParameterSpecified(nameof(Content)))
                 {
                     script.Content = Content;
                     isDirty = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Version"))
+                if (ParameterSpecified(nameof(Version)))
                 {
                     script.Version = Version;
                     isDirty = true;

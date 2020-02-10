@@ -46,7 +46,7 @@ namespace SharePointPnP.PowerShell.Commands
                 ThrowTerminatingError(new ErrorRecord(new Exception("Site has NoScript enabled, and setting property bag values is not supported"), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
                 return;
             }
-            if (!MyInvocation.BoundParameters.ContainsKey("Folder"))
+            if (!ParameterSpecified(nameof(Folder)))
             {
                 if (!Indexed)
                 {

@@ -32,13 +32,13 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Identity)))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var script = Tenant.GetSiteScript(ClientContext, Identity.Id);
                 script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version);
                 WriteObject(script);
             }
-            else if (MyInvocation.BoundParameters.ContainsKey(nameof(SiteDesign)))
+            else if (ParameterSpecified(nameof(SiteDesign)))
             {
                 var scripts = new List<TenantSiteScript>();
                 var design = Tenant.GetSiteDesign(ClientContext, SiteDesign.Id);

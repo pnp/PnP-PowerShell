@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("List"))
+            if (ParameterSpecified(nameof(List)))
             {
                 var list = List.GetList(SelectedWeb);
                 WriteObject(list.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));

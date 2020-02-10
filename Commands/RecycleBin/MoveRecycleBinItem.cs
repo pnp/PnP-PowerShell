@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var item = Identity.GetRecycleBinItem(ClientContext.Site);
                 if (Force || ShouldContinue(string.Format(Resources.MoveRecycleBinItemWithLeaf0ToSecondStage, item.LeafName), Resources.Confirm))

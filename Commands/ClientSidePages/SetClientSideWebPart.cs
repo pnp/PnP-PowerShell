@@ -47,12 +47,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 var webpart = controls.First();
                 bool updated = false;
 
-                if (MyInvocation.BoundParameters.ContainsKey("PropertiesJson"))
+                if (ParameterSpecified(nameof(PropertiesJson)))
                 {
                     webpart.PropertiesJson = PropertiesJson;
                     updated = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Title"))
+                if (ParameterSpecified(nameof(Title)))
                 {
                     webpart.Title = Title;
                     updated = true;

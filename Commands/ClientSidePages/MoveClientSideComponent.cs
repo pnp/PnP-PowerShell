@@ -70,7 +70,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var column = control.Section.Columns[Column - 1];
                             if (column != control.Column)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
+                                if (ParameterSpecified(nameof(Position)))
                                 {
                                     control.MovePosition(column, Position);
                                 }
@@ -87,7 +87,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var section = clientSidePage.Sections[Section - 1];
                             if (section != control.Section)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
+                                if (ParameterSpecified(nameof(Position)))
                                 {
                                     control.MovePosition(section, Position);
                                 }
@@ -110,7 +110,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var column = section.Columns[Column - 1];
                             if (column != control.Column)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
+                                if (ParameterSpecified(nameof(Position)))
                                 {
                                     control.MovePosition(column, Position);
                                 }
