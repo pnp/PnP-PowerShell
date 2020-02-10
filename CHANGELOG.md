@@ -11,10 +11,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 
 ### Changed
-
+- Removed `FieldOptions` argument from `Add-PnPField` as it was marked as obsolete since 2015 already and wasn't used anymore [PR # ](https://github.com/SharePoint/PnP-PowerShell/pull/2475)
 
 ### Contributors
-
+- Koen Zomers [koenzomers]
 
 ## [3.18.2002.0]
 
