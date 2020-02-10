@@ -4,8 +4,6 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System.Collections;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace SharePointPnP.PowerShell.Commands.Fields
@@ -15,13 +13,14 @@ namespace SharePointPnP.PowerShell.Commands.Fields
         "Adds a field to a list or as a site column",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee545882(v=office.15)",
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
-     Code = @"PS:> Add-PnPField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
-     Remarks = @"This will add a field of type Choice to the list ""Demo List"".", SortOrder = 1)]
+        Code = @"PS:> Add-PnPField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
+        Remarks = @"This will add a field of type Choice to the list ""Demo List"".", SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
-Remarks = @"This will add a field of type Multiple Choice to the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
+        Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
+        Remarks = @"This will add a field of type Multiple Choice to the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Add-PnPField -Type Calculated -InternalName ""C1"" -DisplayName ""C1"" -Formula =""[Title]""",
         Remarks = @"Adds a new calculated site column with the formula specified")]
@@ -80,10 +79,6 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The Client Side Component Properties to set to the field")]
         public string ClientSideComponentProperties;
 #endif
-
-        [Parameter(Mandatory = false)]
-        [Obsolete("Not in use")]
-        public AddFieldOptions FieldOptions = AddFieldOptions.DefaultValue;
 
         public object GetDynamicParameters()
         {
@@ -366,7 +361,5 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
             [Parameter(Mandatory = false)]
             public string ResultType;
         }
-
     }
-
 }
