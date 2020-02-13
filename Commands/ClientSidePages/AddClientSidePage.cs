@@ -47,6 +47,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Publishes the page once it is saved. Applicable to libraries set to create major and minor versions.")]
         public SwitchParameter Publish;
 
+        [Parameter(Mandatory = false, HelpMessage = "Type of layout used inside the header")]
+        public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
+
         [Obsolete("This parameter will be ignored")]
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
         public string PublishMessage = string.Empty;
@@ -76,6 +79,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             // Create a page that persists immediately
             clientSidePage = SelectedWeb.AddClientSidePage(name);
             clientSidePage.LayoutType = LayoutType;
+            clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
             if (PromoteAs == ClientSidePagePromoteType.Template)
             {
                 clientSidePage.SaveAsTemplate(name);
