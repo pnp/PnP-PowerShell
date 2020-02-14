@@ -8,13 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.19.2003.0] *not yet released*
 
 ### Added
-
+Added `-HeaderLayoutType` option to `Add-PnPClientSidePage` which allows setting the header layout of a new Site Page [PR # 2514](https://github.com/SharePoint/PnP-PowerShell/pull/2514)
 
 ### Changed
 
 
 ### Contributors
-
+- kadu-jr
 
 ## [3.18.2002.0]
 
