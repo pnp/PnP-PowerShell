@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 
 ### Changed
-
+- Output just the URL for the Redirect url in Get-PnPSearchSettings. Return web setting on sc root as fallback if sc setting is missing (via core).
 
 ### Contributors
 - Arun Kumar Perumal [arunkumarperumal]
