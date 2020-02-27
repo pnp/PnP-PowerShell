@@ -18,7 +18,7 @@ You must be a SharePoint Online global administrator to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
-        Code = @"PS:> Remove-PnPTenantCdnOrigin -Url /sites/site/subfolder -CdnType Public",
+        Code = @"PS:> Remove-PnPTenantCdnOrigin -OriginUrl /sites/site/subfolder -CdnType Public",
         Remarks = @"This example removes the specified origin from the public CDN", SortOrder = 1)]
     public class RemoveTenantCdnOrigin : PnPAdminCmdlet
     {
