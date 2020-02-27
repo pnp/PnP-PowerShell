@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.19.2003.0] - Unreleased
+
+### Added
+
+### Changed
+- Marked the -Rights parameter as obsolete on Grant-PnPHubSiteRights. Use Revoke-PnPHubSiteRights to revoke rights for specific users to join sites ot the hubsite
+
 ## [3.18.2002.0]
 
 ### Added
