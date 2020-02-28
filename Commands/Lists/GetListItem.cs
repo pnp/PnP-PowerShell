@@ -60,6 +60,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list", ParameterSetName = ParameterSet_BYQUERY)]
         public string Query;
 
+
+        [Parameter(Mandatory = false, HelpMessage = "The server relative URL of a list folder from which results will be returned.", ParameterSetName = ParameterSet_BYQUERY)]
+        [Parameter(Mandatory = false, HelpMessage = "The server relative URL of a list folder from which results will be returned.", ParameterSetName = ParameterSet_ALLITEMS)]
+        public string FolderServerRelativeUrl;
+
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_ALLITEMS)]
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_BYID)]
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_BYUNIQUEID)]
@@ -118,6 +123,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             else
             {
 				CamlQuery query = HasCamlQuery() ? new CamlQuery { ViewXml = Query } : CamlQuery.CreateAllItemsQuery();
+                query.FolderServerRelativeUrl = FolderServerRelativeUrl;
 
 				if (Fields != null)
                 {
