@@ -72,6 +72,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false, ParameterSetName = URLTOPATH, HelpMessage = "Overwrites the file if it exists.")]
         public SwitchParameter Force;
+        
+        [Parameter(Mandatory = false, ParameterSetName = URLASFILEOBJECT, HelpMessage = "Retrieve the file contents as a file object.")]
+        public SwitchParameter AsFileObject;
 
         protected override void ExecuteCmdlet()
         {
