@@ -43,7 +43,6 @@ namespace SharePointPnP.PowerShell.Commands
         {
             try
             {
-
                 if (!ParameterSpecified(nameof(Folder)))
                 {
                     if (!Indexed)
