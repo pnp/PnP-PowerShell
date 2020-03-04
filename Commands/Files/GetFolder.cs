@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolder")]
     [CmdletHelp("Return a folder object", Category = CmdletHelpCategory.Files,
-        DetailedDescription = "Retrieves a folder if it exists or all folders inside a provided list or library. Use Ensure-PnPFolder to create the folder if it does not exist.",
+        DetailedDescription = "Retrieves a folder if it exists or all folders inside a provided list or library. Use Resolve-PnPFolder to create the folder if it does not exist.",
         OutputType = typeof(Folder),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.folder.aspx")]
     [CmdletExample(
@@ -30,8 +30,8 @@ namespace SharePointPnP.PowerShell.Commands.Files
         SortOrder = 3
         )]
     [CmdletRelatedLink(
-        Text = "Ensure-PnPFolder",
-        Url = "https://github.com/OfficeDev/PnP-PowerShell/blob/master/Documentation/EnsureSPOFolder.md")]
+        Text = "Resolve-PnPFolder",
+        Url = "https://github.com/MicrosoftDocs/office-docs-powershell/blob/master/sharepoint/sharepoint-ps/sharepoint-pnp/Resolve-PnPFolder.md")]
     public class GetFolder : PnPWebRetrievalsCmdlet<Folder>
     {
         private const string ParameterSet_FOLDERSINLIST = "Folders In List";
