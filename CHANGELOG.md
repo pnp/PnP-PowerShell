@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 - Added `TermMappingFile` and `SkipTermStoreMapping` parameters to the `ConvertTo-PnPClientSidePage` cmdlet for supporting managed metadata mapping
+- Added `AsFileObject` parameter to `Get-PnPFile` which allows the result to be returned as file objects instead of list iems [PR # 2550](https://github.com/SharePoint/PnP-PowerShell/pull/2550)
 
 ### Changed
 
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Arun Kumar Perumal [arunkumarperumal]
 - Paul Bullock [pkbullock]
+- Pepe [ingepepe]
 
 ## [3.18.2002.0]
 
