@@ -202,6 +202,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Specifies a user mapping file")]
         public string UserMappingFile = "";
 
+        [Parameter(Mandatory = false, HelpMessage = "Specifies a taxonomy term mapping file")]
+        public string TermMappingFile = "";
+
+        [Parameter(Mandatory = false, HelpMessage = "Disables term mapping during transformation")]
+        public SwitchParameter SkipTermStoreMapping = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Specifies a LDAP connection string e.g. LDAP://OU=Users,DC=Contoso,DC=local")]
         public string LDAPConnectionString = "";
 
@@ -443,6 +449,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     LDAPConnectionString = this.LDAPConnectionString,
                     TargetPageFolder = this.TargetPageFolder,
                     TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
+                    TermMappingFile = TermMappingFile,
+                    SkipTermStoreMapping = SkipTermStoreMapping,
                 };
 
                 // Set mapping properties
@@ -543,6 +551,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
                     },
+                    TermMappingFile = TermMappingFile,
+                    SkipTermStoreMapping = SkipTermStoreMapping,
                 };
 
                 // Set mapping properties
