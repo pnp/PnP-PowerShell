@@ -43,7 +43,6 @@ namespace SharePointPnP.PowerShell.Commands
         {
             try
             {
-
                 if (!ParameterSpecified(nameof(Folder)))
                 {
                     if (!Indexed)
@@ -89,6 +88,7 @@ namespace SharePointPnP.PowerShell.Commands
                         ThrowTerminatingError(new ErrorRecord(new Exception($"{ex.Message} Site might have NoScript enabled, this prevents setting some property bag values.", ex), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
                         return;
                     }
+                    throw;
                 }
                 else
                 {
