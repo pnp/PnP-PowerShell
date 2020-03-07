@@ -26,10 +26,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
             var newtonsoftAssemblyByLocation = Path.Combine(AssemblyDirectoryFromLocation, "Newtonsoft.Json.dll");
             if (File.Exists(newtonsoftAssemblyByLocation))
             {
+                // Local run, network run, etc.
                 newtonsoftAssembly = Assembly.LoadFrom(newtonsoftAssemblyByLocation);
             }
             else
             {
+                // Running from Azure Function
                 var newtonsoftAssemblyByCodeBase = Path.Combine(AssemblyDirectoryFromCodeBase, "Newtonsoft.Json.dll");
                 newtonsoftAssembly = Assembly.LoadFrom(newtonsoftAssemblyByCodeBase);
             }
