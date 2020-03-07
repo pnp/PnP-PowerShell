@@ -15,11 +15,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Marked the -Rights parameter as obsolete on Grant-PnPHubSiteRights. Use Revoke-PnPHubSiteRights to revoke rights for specific users to join sites ot the hubsite
 - Output just the URL for the Redirect url in Get-PnPSearchSettings. Return web setting on sc root as fallback if sc setting is missing (via core).
+- Made it possible to set property bag value on a NoScript site using `Set-PnPPropertyBagValue` by providing the argument `Folder` and specifying something other than the root folder [PR # 2544](https://github.com/SharePoint/PnP-PowerShell/pull/2544)
 
 ### Contributors
 
 - Arun Kumar Perumal [arunkumarperumal]
 - Paul Bullock [pkbullock]
+- Jens Otto Hatlevold [jensotto]
 
 ## [3.18.2002.0]
 
