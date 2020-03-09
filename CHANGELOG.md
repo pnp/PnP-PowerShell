@@ -18,12 +18,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `FieldOptions` argument from `Add-PnPField` as it was marked as obsolete since 2015 already and wasn't used anymore [PR # 2497](https://github.com/SharePoint/PnP-PowerShell/pull/2497)
 - Marked the -Rights parameter as obsolete on Grant-PnPHubSiteRights. Use Revoke-PnPHubSiteRights to revoke rights for specific users to join sites ot the hubsite
 - Output just the URL for the Redirect url in Get-PnPSearchSettings. Return web setting on sc root as fallback if sc setting is missing (via core).
+- Made it possible to set property bag value on a NoScript site using `Set-PnPPropertyBagValue` by providing the argument `Folder` and specifying something other than the root folder [PR # 2544](https://github.com/SharePoint/PnP-PowerShell/pull/2544)
 - The February 2020 release of PnP PowerShell was throwing an error on not being able to find and load the Newtonsoft assembly when used in an Azure Function. Fixed in this release.
 
 ### Contributors
 
 - Arun Kumar Perumal [arunkumarperumal]
 - Paul Bullock [pkbullock]
+- Jens Otto Hatlevold [jensotto]
 - Pepe [ingepepe]
 - [bjdekker]
 - [N4TheKing]
