@@ -120,11 +120,17 @@ namespace SharePointPnP.PowerShell.Commands.Files
 #else
                     file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 #endif
-                    ClientContext.Load(file, f => f.Author, f => f.Length,
-                        f => f.ModifiedBy, f => f.Name, f => f.TimeCreated,
-                        f => f.TimeLastModified, f => f.Title);
-
-                    ClientContext.ExecuteQueryRetry();
+                    try
+                    {
+                        ClientContext.Load(file, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        ClientContext.ExecuteQueryRetry();
+                    }                    
+                    catch (ServerException e) when (e.Message == "User cannot be found.")
+                    {
+                        // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
+                        ClientContext.Load(file, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        ClientContext.ExecuteQueryRetry();
+                    }                    
 
                     WriteObject(file);
                     break;
