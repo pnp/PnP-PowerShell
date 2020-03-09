@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - [N4TheKing]
 - Koen Zomers [koenzomers]
 - kadu-jr
+- [a1mery]
 
 ## [3.18.2002.0]
 
