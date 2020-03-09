@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 - Added `-HeaderLayoutType` option to `Add-PnPClientSidePage` which allows setting the header layout of a new Site Page [PR # 2514](https://github.com/SharePoint/PnP-PowerShell/pull/2514)
 - Added `TermMappingFile` and `SkipTermStoreMapping` parameters to the `ConvertTo-PnPClientSidePage` cmdlet for supporting managed metadata mapping
+- Added `RemoveEmptySectionsAndColumns` parameter to the `ConvertTo-PnPClientSidePage` cmdlet for allowing for empty sections and columns to stay after conversion [PR # 2539](https://github.com/SharePoint/PnP-PowerShell/pull/2539)
 
 ### Changed
 - Fixed issue where downloading a file using `Get-PnPFile` would throw an user not found exception if the user having created or having last modified the file no longer existed [PR #2504](https://github.com/SharePoint/PnP-PowerShell/pull/2504)
@@ -22,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Arun Kumar Perumal [arunkumarperumal]
 - Paul Bullock [pkbullock]
+- [bjdekker]
 - [N4TheKing]
 - Koen Zomers [koenzomers]
 - kadu-jr
