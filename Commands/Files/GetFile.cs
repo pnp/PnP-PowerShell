@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletHelp("Downloads a file.",
         Category = CmdletHelpCategory.Files,
         OutputType = typeof(File),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539248(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor",
         Remarks = "Retrieves the file and downloads it to the current folder",
@@ -72,6 +72,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false, ParameterSetName = URLTOPATH, HelpMessage = "Overwrites the file if it exists.")]
         public SwitchParameter Force;
+        
+        [Parameter(Mandatory = false, ParameterSetName = URLASFILEOBJECT, HelpMessage = "Retrieve the file contents as a file object.")]
+        public SwitchParameter AsFileObject;
 
         protected override void ExecuteCmdlet()
         {
