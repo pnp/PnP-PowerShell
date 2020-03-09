@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            if (args.Name.StartsWith("Newtonsoft.Json"))
+            if (args.Name.StartsWith("NewtonSoft.Json", StringComparison.InvariantCultureIgnoreCase))
             {
                 return newtonsoftAssembly;
             }
