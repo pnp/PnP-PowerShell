@@ -23,11 +23,22 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         private void FixAssemblyResolving()
         {
-            newtonsoftAssembly = Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
+            var newtonsoftAssemblyByLocation = Path.Combine(AssemblyDirectoryFromLocation, "Newtonsoft.Json.dll");
+            if (File.Exists(newtonsoftAssemblyByLocation))
+            {
+                // Local run, network run, etc.
+                newtonsoftAssembly = Assembly.LoadFrom(newtonsoftAssemblyByLocation);
+            }
+            else
+            {
+                // Running from Azure Function
+                var newtonsoftAssemblyByCodeBase = Path.Combine(AssemblyDirectoryFromCodeBase, "Newtonsoft.Json.dll");
+                newtonsoftAssembly = Assembly.LoadFrom(newtonsoftAssemblyByCodeBase);
+            }
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
-        private string AssemblyDirectory
+        private string AssemblyDirectoryFromLocation
         {
             get
             {
@@ -37,9 +48,20 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
+        private string AssemblyDirectoryFromCodeBase
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            if (args.Name.StartsWith("Newtonsoft.Json"))
+            if (args.Name.StartsWith("NewtonSoft.Json", StringComparison.InvariantCultureIgnoreCase))
             {
                 return newtonsoftAssembly;
             }

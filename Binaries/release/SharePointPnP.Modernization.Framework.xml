@@ -342,6 +342,39 @@
             <param name="termId">Id of the term to lookup</param>
             <returns>Term label</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.StoreTermSetTerms(Microsoft.SharePoint.Client.ClientContext,System.Guid,System.Guid,System.Boolean,System.Boolean)">
+            <summary>
+            Get Term Path by ID
+            </summary>
+            <param name="context"></param>
+            <param name="termData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetTransformTermCacheTermById(Microsoft.SharePoint.Client.ClientContext,System.Guid)">
+            <summary>
+            Get Term from Term Cache
+            </summary>
+            <param name="context"></param>
+            <param name="termId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetTransformTermCacheTermByName(Microsoft.SharePoint.Client.ClientContext,System.String,System.String)">
+            <summary>
+            Search Cached term by name
+            </summary>
+            <param name="context"></param>
+            <param name="termLabel"></param>
+            <param name="termPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetTransformTermCacheTermsByTermSet(Microsoft.SharePoint.Client.ClientContext,System.Guid)">
+            <summary>
+            Get Term by Term Set Id
+            </summary>
+            <param name="context"></param>
+            <param name="termSetId"></param>
+            <returns></returns>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.SetLastUsedTransformator(SharePointPnP.Modernization.Framework.Transform.BasePageTransformator)">
             <summary>
             Caches the last used page transformator instance, needed to postpone log writing when transforming multiple pages
@@ -369,6 +402,14 @@
             <param name="userMappingFile">File with the user mappings</param>
             <param name="logObservers">Attached list of log observers</param>
             <returns>List of user mappings</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Cache.CacheManager.GetTermMapping(System.String,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Returns a cached list of mapped items
+            </summary>
+            <param name="mappingFile"></param>
+            <param name="logObservers"></param>
+            <returns></returns>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Cache.FieldData">
             <summary>
@@ -518,6 +559,36 @@
         <member name="P:SharePointPnP.Modernization.Framework.Entities.ResolvedUser.Id">
             <summary>
             Id of the user
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TermData.TermGuid">
+            <summary>
+            Term Guid
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TermData.TermLabel">
+            <summary>
+            Term Label
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TermData.TermPath">
+            <summary>
+            Term Path
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TermData.TermSetId">
+            <summary>
+            Term Set ID
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TermData.IsTermResolved">
+            <summary>
+            Marks the term data validation against the term store
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Entities.TermData.IsSourceTerm">
+            <summary>
+            Is the term a source term
             </summary>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Entities.TransformationLogAnalysis">
@@ -985,6 +1056,508 @@
             </summary>
             <param name="s">string to prepare</param>
             <returns>json ready string</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.MediaWebpartConfigurationException">
+            <summary>
+            Exception class thrown when a SharePoint resource (e.g. file) is not available
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.MediaWebpartConfigurationException.#ctor(System.String)">
+            <summary>
+            Throws a ResourceNotFoundException message
+            </summary>
+            <param name="message">Error message</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.MediaWebpartConfigurationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Throws a ResourceNotFoundException message
+            </summary>
+            <param name="message">Error message</param>
+            <param name="innerException">Inner exception object</param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor">
+            <summary>
+            Base class for function processors
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionType">
+            <summary>
+            Allowed function parameter types
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter">
+            <summary>
+            Definition of a function parameter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.Name">
+            <summary>
+            Name of the parameter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.Type">
+            <summary>
+            Type if the parameter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.Value">
+            <summary>
+            Value of the parameter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.IsStatic">
+            <summary>
+            Is this a static, hard coded, value. Eg 'my hardcoded string'
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition">
+            <summary>
+            Definition of a function or selector
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition.AddOn">
+            <summary>
+            AddOn hosting the function/selector. Empty value means the function is hosted by the internal builtin functions library
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition.Name">
+            <summary>
+            Name of the function/selector
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition.Output">
+            <summary>
+            Parameter specifying the function result
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition.Input">
+            <summary>
+            List of input parameter used to call the function
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType">
+            <summary>
+            Defines a loaded AddOn function/selector class instance
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType.Name">
+            <summary>
+            Name of the addon. The name is used to link the determine which class instance needs to be used to execute a function
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType.Instance">
+            <summary>
+            Instance of the class that holds the functions/selectors
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType.Assembly">
+            <summary>
+            Assembly holding the functions/selector class
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType.Type">
+            <summary>
+            Type of the functions/selector class
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException">
+            <summary>
+            Exception class thrown when a SharePoint object (e.g. list) is not available at the target site
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException.#ctor(System.String)">
+            <summary>
+            Throws a NotAvailableAtTargetException message
+            </summary>
+            <param name="message">Error message</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException.#ctor(System.String,System.Exception)">
+            <summary>
+            Throws a NotAvailableAtTargetException message
+            </summary>
+            <param name="message">Error message</param>
+            <param name="innerException">Inner exception object</param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.BuiltIn">
+            <summary>
+            Set of native, builtin, functions
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.#ctor(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Instantiates the base builtin function library
+            </summary>
+            <param name="pageClientContext">ClientContext object for the site holding the page being transformed</param>
+            <param name="sourceClientContext">The ClientContext for the source </param>
+            <param name="clientSidePage">Reference to the client side page</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.HtmlEncode(System.String)">
+            <summary>
+            Html encodes a string
+            </summary>
+            <param name="text">Text to html encode</param>
+            <returns>Html encoded string</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.HtmlEncodeForJson(System.String)">
+            <summary>
+            Html encodes string for inclusion in JSON
+            </summary>
+            <param name="text">Text to html encode</param>
+            <returns>Html encoded string for inclusion in JSON</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnTrue">
+            <summary>
+            Return true
+            </summary>
+            <returns>True</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnFalse">
+            <summary>
+            Return false
+            </summary>
+            <returns>False</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnServerRelativePath(System.String)">
+            <summary>
+            Transforms the incoming path into a server relative path
+            </summary>
+            <param name="path">Path to transform</param>
+            <returns>Server relative path</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnFileName(System.String)">
+            <summary>
+            Returns the filename of the given path
+            </summary>
+            <param name="path"></param>
+            <returns>File name</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.StaticString(System.String)">
+            <summary>
+            Returns an the (static) string provided as input
+            </summary>
+            <returns>String provided as input</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextSelector(System.String)">
+            <summary>
+            Selector to allow to embed a spacer instead of an empty text
+            </summary>
+            <param name="text">Text to evaluate</param>
+            <returns>Text if text needs to be inserted, Spacer if text was empty and you want a spacer</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextCleanup(System.String,System.String)">
+            <summary>
+            Wiki html rewrite to work in RTE
+            </summary>
+            <param name="text">Wiki html to rewrite</param>
+            <returns>Html that's compatible with RTE</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContainsScript(System.String)">
+            <summary>
+            Checks if the provided html contains JavaScript
+            </summary>
+            <param name="content">Html content to check</param>
+            <returns>True is the html contains script, false otherwise</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListSelectorListLibrary(System.Guid,System.String)">
+            <summary>
+            Selector that returns the base type of the list as input for selecting the correct mapping
+            </summary>
+            <param name="listId">Id of the list</param>
+            <returns>Mapping to be used for the given list</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListCrossSiteCheck(System.Guid)">
+            <summary>
+            Returns the cross site collection save list id.
+            </summary>
+            <param name="listId">Id of the list</param>
+            <returns>Cross site collection safe list id</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListAddServerRelativeUrl(System.Guid)">
+            <summary>
+            Function that returns the server relative url of the given list
+            </summary>
+            <param name="listId">Id of the list</param>
+            <returns>Server relative url of the list</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListAddWebRelativeUrl(System.Guid)">
+            <summary>
+            Function that returns the web relative url of the given list
+            </summary>
+            <param name="listId">Id of the list</param>
+            <returns>Web relative url of the list</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListHideToolBar(System.String)">
+            <summary>
+            Checks if an XSLTListView web part has a hidden toolbar
+            </summary>
+            <param name="xmlDefinition">XmlDefinition attribute of the XSLTListViewWebPart</param>
+            <returns>Boolean indicating if the toolbar should be hidden</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListDetectUsedView(System.Guid,System.String)">
+            <summary>
+            Tries to find the id of the view used to configure the web part
+            </summary>
+            <param name="listId">Id of the list</param>
+            <param name="xmlDefinition">Webpart view definition</param>
+            <returns>Id of the detected view if found or otherwise the id of the default list view</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ImageLookup(System.String)">
+            <summary>
+            Does return image properties based on given server relative image path
+            </summary>
+            <param name="serverRelativeImagePath">Server relative path of the image</param>
+            <returns>A set of image properties</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnCrossSiteRelativePath(System.String)">
+            <summary>
+            Copy the asset to target site in cross site transformation
+            </summary>
+            <param name="imageLink"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ImageAnchorUrlRewrite(System.String,System.String,System.String)">
+            <summary>
+            Rewrite the image anchor tag url
+            </summary>
+            <param name="anchor">Original anchor tag fetched from the source image</param>
+            <param name="originalImageUrl">Original image url</param>
+            <param name="newImageUrl">New image url</param>
+            <returns>The url after url rewrite. If the anchor and original image url were the same then the anchor will be set to the new image url</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ExtractWebpartProperties(System.String)">
+            <summary>
+            Extracts the client side web part properties so they can be reused
+            </summary>
+            <param name="clientSideWebPartHtml">Html defining the client side web part hosted on a classic page</param>
+            <returns>Client side web part properties ready for reuse</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentEmbedCrossSiteCheck(System.String)">
+            <summary>
+            Throws an exception when link to .aspx file.
+            </summary>
+            <param name="listId">Link value if set</param>
+            <returns>Unused variable</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.LoadContentFromFile(System.String)">
+            <summary>
+            Loads contents of a file as a string.
+            </summary>
+            <param name="contentLink">Server relative url to the file to load</param>
+            <returns>Text content of the file. Return empty string if file was not found</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.UserDocumentsToHighlightedContentProperties">
+            <summary>
+            Maps the user documents web part data into a properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part
+            </summary>
+            <param name="dataProviderJson"></param>
+            <param name="selectedPropertiesJson"></param>
+            <param name="resultsPerPage"></param>
+            <param name="renderTemplateId"></param>
+            <returns>A properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentBySearchToHighlightedContentProperties(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Maps content by search web part data into a properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part
+            </summary>
+            <param name="dataProviderJson"></param>
+            <param name="selectedPropertiesJson"></param>
+            <param name="resultsPerPage"></param>
+            <param name="renderTemplateId"></param>
+            <returns>A properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentByQueryToHighlightedContentProperties(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Maps content by query web part data into a properties collection for the contentrollup (= Highlighted Content) web part
+            </summary>
+            <param name="webUrl"></param>
+            <param name="listGuid"></param>
+            <param name="listName"></param>
+            <param name="serverTemplate"></param>
+            <param name="contentTypeBeginsWithId"></param>
+            <param name="filterField1"></param>
+            <param name="filter1ChainingOperator"></param>
+            <param name="filterField1Value"></param>
+            <param name="filterOperator1"></param>
+            <param name="filterField2"></param>
+            <param name="filter2ChainingOperator"></param>
+            <param name="filterField2Value"></param>
+            <param name="filterOperator2"></param>
+            <param name="filterField3"></param>
+            <param name="filterField3Value"></param>
+            <param name="filterOperator3"></param>
+            <param name="sortBy"></param>
+            <param name="sortByDirection"></param>
+            <param name="groupBy"></param>
+            <param name="groupByDirection"></param>
+            <param name="itemLimit"></param>
+            <param name="displayColumns"></param>
+            <param name="dataMappings"></param>
+            <returns>A properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.SummaryLinkSelector(System.String)">
+            <summary>
+            Uses the SummaryLinksToQuickLinks mapping property provided via the PageTransformationInformation instance to determine the mapping
+            </summary>
+            <param name="useQuickLinks">The SummaryLinksToQuickLinks mapping property provided via the PageTransformationInformation instance</param>
+            <returns>Whether to transform via the QuickLinks web part or via Text</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextCleanUpSummaryLinks(System.String,System.Int32,System.String)">
+            <summary>
+            Rewrites summarylinks web part html to be compliant with the html supported by the client side text part
+            </summary>
+            <param name="text">Original wiki html content</param>
+            <returns>Html compliant with client side text part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.SummaryLinksToQuickLinksProperties(System.String,System.String)">
+            <summary>
+            Maps summarylinks web part data into a properties collection and supporting serverProcessedContent nodes for the quicklinks web part
+            </summary>
+            <param name="text">Original wiki html content</param>
+            <returns>Properties collection for the quicklinks web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ScriptEditorSelector(System.String)">
+            <summary>
+            Uses the UseCommunityScriptEditor mapping property provided via the PageTransformationInformation instance to determine the mapping
+            </summary>
+            <param name="useQuickLinks">The UseCommunityScriptEditor mapping property provided via the PageTransformationInformation instance</param>
+            <returns>Whether to transform via the community script editor web part</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.UserExistsSelector(System.String)">
+            <summary>
+            Checks if the passed value is a user or not
+            </summary>
+            <param name="person">Account of the user</param>
+            <returns>Indication if user is valid or not</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.LookupPerson(System.String)">
+            <summary>
+            Looks up a person from the UserInfo list and returns the needed details
+            </summary>
+            <param name="person">User account to lookup (in i:0#.f|membership|joe@contoso.onmicrosoft.com format)</param>
+            <returns>Information about the found user</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute">
+            <summary>
+            Base attribute to document a function or selector
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute.Description">
+            <summary>
+            Description of the function
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute.Example">
+            <summary>
+            Function example
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.FunctionDocumentationAttribute">
+            <summary>
+            Function documentation attribute class
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.SelectorDocumentationAttribute">
+            <summary>
+            Selector documentation attribute class
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute">
+            <summary>
+            Base parameter to document a function/selector parameter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute.Name">
+            <summary>
+            Name of the parameter
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute.Description">
+            <summary>
+            Parameter description
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.InputDocumentationAttribute">
+            <summary>
+            Input parameter documentation attribute
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.OutputDocumentationAttribute">
+            <summary>
+            Output parameter documentation attribute
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor">
+            <summary>
+            Class that executes functions and selectors defined in the mapping 
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Instantiates the function processor. Also loads the defined add-ons
+            </summary>
+            <param name="page">Client side page for which we're executing the functions/selectors as part of the mapping</param>
+            <param name="pageTransformation">Webpart mapping information</param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.Process(SharePointPnP.Modernization.Framework.WebPart@,SharePointPnP.Modernization.Framework.Entities.WebPartEntity)">
+            <summary>
+            Executes the defined functions and selectors in the provided web part
+            </summary>
+            <param name="webPartData">Web Part mapping data</param>
+            <param name="webPart">Definition of the web part to be transformed</param>
+            <returns>The ouput of the mapping selector if there was one executed, null otherwise</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.ProcessMappingFunctions(SharePointPnP.Modernization.Framework.WebPart@,SharePointPnP.Modernization.Framework.Entities.WebPartEntity,SharePointPnP.Modernization.Framework.Mapping)">
+            <summary>
+            Executes the defined functions and selectors in the provided web part
+            </summary>
+            <param name="webPartData">Web Part mapping data</param>
+            <param name="webPart">Definition of the web part to be transformed</param>
+            <returns>The ouput of the mapping selector if there was one executed, null otherwise</returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.FunctionsBase">
+            <summary>
+            Base class for all function libraries
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionsBase.#ctor(Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Instantiates a function library class
+            </summary>
+            <param name="clientContext">ClientContext object for the site holding the page being transformed</param>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.XmlComparer">
+            <summary>
+            Loosely compares XML documents for equality:
+            <list type="bullet">
+            <item>Order of siblings in an element is ignored.</item>
+            <item>Text nodes are the only node in at the bottom of the tree so sibling text nodes are merged for comparison.</item>
+            <item>The prefix used for a namespace is ignored.</item>
+            <item>Comments are ignored.</item>
+            </list>
+            This type of comparison is useful when comparing the XML documents used as messages, configuration, etc. in various specifications.
+            </summary>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Functions.XmlEqualityResult">
+            <summary>
+            The result of an equiality comparison with <see cref="T:SharePointPnP.Modernization.Framework.Functions.XmlComparer"/>
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.XmlEqualityResult.Success">
+            <summary>
+            Gets whether the match was successful
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.XmlEqualityResult.FailObject">
+            <summary>
+            Gets or sets the object that failed the match
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Functions.XmlEqualityResult.ErrorMessage">
+            <summary>
+            Gets or sets a descriptive error message if the match failed.
+            </summary>
+            <remarks>
+            If set to null or not set the default Error Message is returned.
+            </remarks>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Pages.DelvePage.#ctor(Microsoft.SharePoint.Client.ListItem,SharePointPnP.Modernization.Framework.PageTransformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
             <summary>
@@ -2113,490 +2686,6 @@
         <member name="F:SharePointPnP.Modernization.Framework.Publishing.PageLayoutPageHeader.Custom">
             <remarks/>
         </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor">
-            <summary>
-            Base class for function processors
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionType">
-            <summary>
-            Allowed function parameter types
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter">
-            <summary>
-            Definition of a function parameter
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.Name">
-            <summary>
-            Name of the parameter
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.Type">
-            <summary>
-            Type if the parameter
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.Value">
-            <summary>
-            Value of the parameter
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionParameter.IsStatic">
-            <summary>
-            Is this a static, hard coded, value. Eg 'my hardcoded string'
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition">
-            <summary>
-            Definition of a function or selector
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition.AddOn">
-            <summary>
-            AddOn hosting the function/selector. Empty value means the function is hosted by the internal builtin functions library
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition.Name">
-            <summary>
-            Name of the function/selector
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition.Output">
-            <summary>
-            Parameter specifying the function result
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.FunctionDefinition.Input">
-            <summary>
-            List of input parameter used to call the function
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType">
-            <summary>
-            Defines a loaded AddOn function/selector class instance
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType.Name">
-            <summary>
-            Name of the addon. The name is used to link the determine which class instance needs to be used to execute a function
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType.Instance">
-            <summary>
-            Instance of the class that holds the functions/selectors
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType.Assembly">
-            <summary>
-            Assembly holding the functions/selector class
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionProcessor.AddOnType.Type">
-            <summary>
-            Type of the functions/selector class
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException">
-            <summary>
-            Exception class thrown when a SharePoint object (e.g. list) is not available at the target site
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException.#ctor(System.String)">
-            <summary>
-            Throws a NotAvailableAtTargetException message
-            </summary>
-            <param name="message">Error message</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.NotAvailableAtTargetException.#ctor(System.String,System.Exception)">
-            <summary>
-            Throws a NotAvailableAtTargetException message
-            </summary>
-            <param name="message">Error message</param>
-            <param name="innerException">Inner exception object</param>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.BuiltIn">
-            <summary>
-            Set of native, builtin, functions
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.#ctor(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
-            <summary>
-            Instantiates the base builtin function library
-            </summary>
-            <param name="pageClientContext">ClientContext object for the site holding the page being transformed</param>
-            <param name="sourceClientContext">The ClientContext for the source </param>
-            <param name="clientSidePage">Reference to the client side page</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.HtmlEncode(System.String)">
-            <summary>
-            Html encodes a string
-            </summary>
-            <param name="text">Text to html encode</param>
-            <returns>Html encoded string</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.HtmlEncodeForJson(System.String)">
-            <summary>
-            Html encodes string for inclusion in JSON
-            </summary>
-            <param name="text">Text to html encode</param>
-            <returns>Html encoded string for inclusion in JSON</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnTrue">
-            <summary>
-            Return true
-            </summary>
-            <returns>True</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnFalse">
-            <summary>
-            Return false
-            </summary>
-            <returns>False</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnServerRelativePath(System.String)">
-            <summary>
-            Transforms the incoming path into a server relative path
-            </summary>
-            <param name="path">Path to transform</param>
-            <returns>Server relative path</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnFileName(System.String)">
-            <summary>
-            Returns the filename of the given path
-            </summary>
-            <param name="path"></param>
-            <returns>File name</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.StaticString(System.String)">
-            <summary>
-            Returns an the (static) string provided as input
-            </summary>
-            <returns>String provided as input</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextSelector(System.String)">
-            <summary>
-            Selector to allow to embed a spacer instead of an empty text
-            </summary>
-            <param name="text">Text to evaluate</param>
-            <returns>Text if text needs to be inserted, Spacer if text was empty and you want a spacer</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextCleanup(System.String,System.String)">
-            <summary>
-            Wiki html rewrite to work in RTE
-            </summary>
-            <param name="text">Wiki html to rewrite</param>
-            <returns>Html that's compatible with RTE</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContainsScript(System.String)">
-            <summary>
-            Checks if the provided html contains JavaScript
-            </summary>
-            <param name="content">Html content to check</param>
-            <returns>True is the html contains script, false otherwise</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListSelectorListLibrary(System.Guid,System.String)">
-            <summary>
-            Selector that returns the base type of the list as input for selecting the correct mapping
-            </summary>
-            <param name="listId">Id of the list</param>
-            <returns>Mapping to be used for the given list</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListCrossSiteCheck(System.Guid)">
-            <summary>
-            Returns the cross site collection save list id.
-            </summary>
-            <param name="listId">Id of the list</param>
-            <returns>Cross site collection safe list id</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListAddServerRelativeUrl(System.Guid)">
-            <summary>
-            Function that returns the server relative url of the given list
-            </summary>
-            <param name="listId">Id of the list</param>
-            <returns>Server relative url of the list</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListAddWebRelativeUrl(System.Guid)">
-            <summary>
-            Function that returns the web relative url of the given list
-            </summary>
-            <param name="listId">Id of the list</param>
-            <returns>Web relative url of the list</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListHideToolBar(System.String)">
-            <summary>
-            Checks if an XSLTListView web part has a hidden toolbar
-            </summary>
-            <param name="xmlDefinition">XmlDefinition attribute of the XSLTListViewWebPart</param>
-            <returns>Boolean indicating if the toolbar should be hidden</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ListDetectUsedView(System.Guid,System.String)">
-            <summary>
-            Tries to find the id of the view used to configure the web part
-            </summary>
-            <param name="listId">Id of the list</param>
-            <param name="xmlDefinition">Webpart view definition</param>
-            <returns>Id of the detected view if found or otherwise the id of the default list view</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ImageLookup(System.String)">
-            <summary>
-            Does return image properties based on given server relative image path
-            </summary>
-            <param name="serverRelativeImagePath">Server relative path of the image</param>
-            <returns>A set of image properties</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ReturnCrossSiteRelativePath(System.String)">
-            <summary>
-            Copy the asset to target site in cross site transformation
-            </summary>
-            <param name="imageLink"></param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ImageAnchorUrlRewrite(System.String,System.String,System.String)">
-            <summary>
-            Rewrite the image anchor tag url
-            </summary>
-            <param name="anchor">Original anchor tag fetched from the source image</param>
-            <param name="originalImageUrl">Original image url</param>
-            <param name="newImageUrl">New image url</param>
-            <returns>The url after url rewrite. If the anchor and original image url were the same then the anchor will be set to the new image url</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ExtractWebpartProperties(System.String)">
-            <summary>
-            Extracts the client side web part properties so they can be reused
-            </summary>
-            <param name="clientSideWebPartHtml">Html defining the client side web part hosted on a classic page</param>
-            <returns>Client side web part properties ready for reuse</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentEmbedCrossSiteCheck(System.String)">
-            <summary>
-            Throws an exception when link to .aspx file.
-            </summary>
-            <param name="listId">Link value if set</param>
-            <returns>Unused variable</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.LoadContentFromFile(System.String)">
-            <summary>
-            Loads contents of a file as a string.
-            </summary>
-            <param name="contentLink">Server relative url to the file to load</param>
-            <returns>Text content of the file. Return empty string if file was not found</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.UserDocumentsToHighlightedContentProperties">
-            <summary>
-            Maps the user documents web part data into a properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part
-            </summary>
-            <param name="dataProviderJson"></param>
-            <param name="selectedPropertiesJson"></param>
-            <param name="resultsPerPage"></param>
-            <param name="renderTemplateId"></param>
-            <returns>A properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentBySearchToHighlightedContentProperties(System.String,System.String,System.Int32,System.String)">
-            <summary>
-            Maps content by search web part data into a properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part
-            </summary>
-            <param name="dataProviderJson"></param>
-            <param name="selectedPropertiesJson"></param>
-            <param name="resultsPerPage"></param>
-            <param name="renderTemplateId"></param>
-            <returns>A properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ContentByQueryToHighlightedContentProperties(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.String)">
-            <summary>
-            Maps content by query web part data into a properties collection for the contentrollup (= Highlighted Content) web part
-            </summary>
-            <param name="webUrl"></param>
-            <param name="listGuid"></param>
-            <param name="listName"></param>
-            <param name="serverTemplate"></param>
-            <param name="contentTypeBeginsWithId"></param>
-            <param name="filterField1"></param>
-            <param name="filter1ChainingOperator"></param>
-            <param name="filterField1Value"></param>
-            <param name="filterOperator1"></param>
-            <param name="filterField2"></param>
-            <param name="filter2ChainingOperator"></param>
-            <param name="filterField2Value"></param>
-            <param name="filterOperator2"></param>
-            <param name="filterField3"></param>
-            <param name="filterField3Value"></param>
-            <param name="filterOperator3"></param>
-            <param name="sortBy"></param>
-            <param name="sortByDirection"></param>
-            <param name="groupBy"></param>
-            <param name="groupByDirection"></param>
-            <param name="itemLimit"></param>
-            <param name="displayColumns"></param>
-            <param name="dataMappings"></param>
-            <returns>A properties collection and supporting serverProcessedContent nodes for the content rollup (= Highlighted Content) web part</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.SummaryLinkSelector(System.String)">
-            <summary>
-            Uses the SummaryLinksToQuickLinks mapping property provided via the PageTransformationInformation instance to determine the mapping
-            </summary>
-            <param name="useQuickLinks">The SummaryLinksToQuickLinks mapping property provided via the PageTransformationInformation instance</param>
-            <returns>Whether to transform via the QuickLinks web part or via Text</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.TextCleanUpSummaryLinks(System.String,System.Int32,System.String)">
-            <summary>
-            Rewrites summarylinks web part html to be compliant with the html supported by the client side text part
-            </summary>
-            <param name="text">Original wiki html content</param>
-            <returns>Html compliant with client side text part</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.SummaryLinksToQuickLinksProperties(System.String,System.String)">
-            <summary>
-            Maps summarylinks web part data into a properties collection and supporting serverProcessedContent nodes for the quicklinks web part
-            </summary>
-            <param name="text">Original wiki html content</param>
-            <returns>Properties collection for the quicklinks web part</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.ScriptEditorSelector(System.String)">
-            <summary>
-            Uses the UseCommunityScriptEditor mapping property provided via the PageTransformationInformation instance to determine the mapping
-            </summary>
-            <param name="useQuickLinks">The UseCommunityScriptEditor mapping property provided via the PageTransformationInformation instance</param>
-            <returns>Whether to transform via the community script editor web part</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.UserExistsSelector(System.String)">
-            <summary>
-            Checks if the passed value is a user or not
-            </summary>
-            <param name="person">Account of the user</param>
-            <returns>Indication if user is valid or not</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.BuiltIn.LookupPerson(System.String)">
-            <summary>
-            Looks up a person from the UserInfo list and returns the needed details
-            </summary>
-            <param name="person">User account to lookup (in i:0#.f|membership|joe@contoso.onmicrosoft.com format)</param>
-            <returns>Information about the found user</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute">
-            <summary>
-            Base attribute to document a function or selector
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute.Description">
-            <summary>
-            Description of the function
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.BaseFunctionDocumentationAttribute.Example">
-            <summary>
-            Function example
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.FunctionDocumentationAttribute">
-            <summary>
-            Function documentation attribute class
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.SelectorDocumentationAttribute">
-            <summary>
-            Selector documentation attribute class
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute">
-            <summary>
-            Base parameter to document a function/selector parameter
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute.Name">
-            <summary>
-            Name of the parameter
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.ParameterDocumentationAttribute.Description">
-            <summary>
-            Parameter description
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.InputDocumentationAttribute">
-            <summary>
-            Input parameter documentation attribute
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.OutputDocumentationAttribute">
-            <summary>
-            Output parameter documentation attribute
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor">
-            <summary>
-            Class that executes functions and selectors defined in the mapping 
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.#ctor(Microsoft.SharePoint.Client.ClientContext,OfficeDevPnP.Core.Pages.ClientSidePage,SharePointPnP.Modernization.Framework.PageTransformation,SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
-            <summary>
-            Instantiates the function processor. Also loads the defined add-ons
-            </summary>
-            <param name="page">Client side page for which we're executing the functions/selectors as part of the mapping</param>
-            <param name="pageTransformation">Webpart mapping information</param>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.Process(SharePointPnP.Modernization.Framework.WebPart@,SharePointPnP.Modernization.Framework.Entities.WebPartEntity)">
-            <summary>
-            Executes the defined functions and selectors in the provided web part
-            </summary>
-            <param name="webPartData">Web Part mapping data</param>
-            <param name="webPart">Definition of the web part to be transformed</param>
-            <returns>The ouput of the mapping selector if there was one executed, null otherwise</returns>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionProcessor.ProcessMappingFunctions(SharePointPnP.Modernization.Framework.WebPart@,SharePointPnP.Modernization.Framework.Entities.WebPartEntity,SharePointPnP.Modernization.Framework.Mapping)">
-            <summary>
-            Executes the defined functions and selectors in the provided web part
-            </summary>
-            <param name="webPartData">Web Part mapping data</param>
-            <param name="webPart">Definition of the web part to be transformed</param>
-            <returns>The ouput of the mapping selector if there was one executed, null otherwise</returns>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.FunctionsBase">
-            <summary>
-            Base class for all function libraries
-            </summary>
-        </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Functions.FunctionsBase.#ctor(Microsoft.SharePoint.Client.ClientContext)">
-            <summary>
-            Instantiates a function library class
-            </summary>
-            <param name="clientContext">ClientContext object for the site holding the page being transformed</param>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.XmlComparer">
-            <summary>
-            Loosely compares XML documents for equality:
-            <list type="bullet">
-            <item>Order of siblings in an element is ignored.</item>
-            <item>Text nodes are the only node in at the bottom of the tree so sibling text nodes are merged for comparison.</item>
-            <item>The prefix used for a namespace is ignored.</item>
-            <item>Comments are ignored.</item>
-            </list>
-            This type of comparison is useful when comparing the XML documents used as messages, configuration, etc. in various specifications.
-            </summary>
-        </member>
-        <member name="T:SharePointPnP.Modernization.Framework.Functions.XmlEqualityResult">
-            <summary>
-            The result of an equiality comparison with <see cref="T:SharePointPnP.Modernization.Framework.Functions.XmlComparer"/>
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.XmlEqualityResult.Success">
-            <summary>
-            Gets whether the match was successful
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.XmlEqualityResult.FailObject">
-            <summary>
-            Gets or sets the object that failed the match
-            </summary>
-        </member>
-        <member name="P:SharePointPnP.Modernization.Framework.Functions.XmlEqualityResult.ErrorMessage">
-            <summary>
-            Gets or sets a descriptive error message if the match failed.
-            </summary>
-            <remarks>
-            If set to null or not set the default Error Message is returned.
-            </remarks>
-        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Telemetry.LogStrings">
             <summary>
             Class holding strings used in log messages
@@ -2633,7 +2722,12 @@
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.ILogObserver.Flush">
             <summary>
-            Pushes all output to destination
+            Pushes all output to destination and clears the cached log information
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.ILogObserver.Flush(System.Boolean)">
+            <summary>
+            Pushes all output to destination and clears the cached log information if needed
             </summary>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.ILogObserver.SetPageId(System.String)">
@@ -2793,6 +2887,12 @@
             Output a summary to the console
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.ConsoleObserver.Flush(System.Boolean)">
+            <summary>
+            Output a summary to the console
+            </summary>
+            <param name="clearLogData">Also clear the log data</param>
+        </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.ConsoleObserver.Info(SharePointPnP.Modernization.Framework.Telemetry.LogEntry)">
             <summary>
             Output on operations throughout the transform process
@@ -2892,6 +2992,12 @@
             Output the report when flush is called
             </summary>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownObserver.Flush(System.Boolean)">
+            <summary>
+            Output the report when flush is called
+            </summary>
+            <param name="clearLogData">Also clear the log data</param>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownToSharePointObserver">
             <summary>
             Writes an MD log file to a folder (default = Transformation-Reports) inside the sitepages library
@@ -2911,10 +3017,11 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownToSharePointObserver.Flush">
+        <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownToSharePointObserver.Flush(System.Boolean)">
             <summary>
             Write the report to SharePoint
             </summary>
+            <param name="clearLogData">Also clear the log data</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Telemetry.Observers.MarkdownToSharePointObserver.GetMarkdownJsonProperties(System.String)">
             <summary>
@@ -3072,6 +3179,12 @@
             </summary>
             <param name="baseTransformationInformation"></param>
             <param name="sourceClientContext"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.BasePageTransformator.InitializeTermMapping(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation)">
+            <summary>
+            Loads the term mapping transform
+            </summary>
+            <param name="baseTransformationInformation"></param>
         </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.BaseTransform">
             <summary>
@@ -3250,6 +3363,16 @@
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.UrlMappingFile">
             <summary>
             Url to an URL mapping file
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.TermMappingFile">
+            <summary>
+            URL to an Term Store Mapping File
+            </summary>
+        </member>
+        <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SkipTermStoreMapping">
+            <summary>
+            Turn off term store mapping
             </summary>
         </member>
         <member name="P:SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation.SkipUserMapping">
@@ -3959,6 +4082,94 @@
             <param name="text">Summarylinks html to be transformed</param>
             <returns>List of links</returns>
         </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.#ctor(SharePointPnP.Modernization.Framework.Transform.BaseTransformationInformation,Microsoft.SharePoint.Client.ClientContext,Microsoft.SharePoint.Client.ClientContext,System.Collections.Generic.IList{SharePointPnP.Modernization.Framework.Telemetry.ILogObserver})">
+            <summary>
+            Constructor for the Term Transformator class
+            </summary>
+            <param name="baseTransformationInformation"></param>
+            <param name="sourceContext"></param>
+            <param name="targetContext"></param>
+            <param name="logObservers"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.TransformCollection(Microsoft.SharePoint.Client.Taxonomy.TaxonomyFieldValueCollection)" -->
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.Transform(SharePointPnP.Modernization.Framework.Entities.TermData)">
+            <summary>
+            Main entry method for transforming terms
+            </summary>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.CacheTermsFromTermStore(System.Guid,System.Guid,System.Guid,System.Boolean)">
+            <summary>
+            Sets the cache for contents of the term store to be used when getting terms for fields
+            </summary>
+            <param name="sourceTermSetId"></param>
+            <param name="targetTermSetId"></param>
+            <param name="sourceSspId"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.GetAllTermsFromTermSet(System.Guid,Microsoft.SharePoint.Client.ClientContext)">
+            <summary>
+            Extract all the terms from a termset for caching and quicker processing
+            </summary>
+            <param name="termSetId"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.ParseSubTerms(System.String,Microsoft.SharePoint.Client.Taxonomy.Term,System.Guid,Microsoft.SharePoint.Client.ClientRuntimeContext)">
+            <summary>
+            Gets the term labels within a term recursively
+            </summary>
+            <param name="subTermPath"></param>
+            <param name="term"></param>
+            <param name="includeId"></param>
+            <param name="delimiter"></param>
+            <param name="clientContext"></param>
+            <returns></returns>
+            Reference: https://github.com/SharePoint/PnP-Sites-Core/blob/master/Core/OfficeDevPnP.Core/Extensions/TaxonomyExtensions.cs
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.ResolveTermInCache(Microsoft.SharePoint.Client.ClientContext,System.String)">
+            <summary>
+            Validate the source term contains the path and is recognised in the term store
+            </summary>
+            <param name="context"></param>
+            <param name="termPath"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.ResolveTermInCache(Microsoft.SharePoint.Client.ClientContext,System.Guid)">
+            <summary>
+            Validate the source term contains the GUID and is recognised in the term store
+            </summary>
+            <param name="context"></param>
+            <param name="termId"></param>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.ExtractTermSetIdOrSspIdFromXmlSchema(System.String,System.Boolean)">
+            <summary>
+            Extracts the term set id from the xml schema
+            </summary>
+            <param name="xmlfieldSchema"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.CallTaxonomyWebServiceFindTermSetId(Microsoft.SharePoint.Client.ClientContext,System.Guid,System.Guid)">
+            <summary>
+            Calls the web services to get the termset details
+            </summary>
+            <param name="context"></param>
+            <param name="sspId"></param>
+            <param name="termSetId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Transform.TermTransformator.CallTaxonomyWebServiceFindChildTerms(Microsoft.SharePoint.Client.ClientContext,System.Guid,System.Guid,System.Guid,System.String)">
+            <summary>
+            Finds the child terms using the fall back web services
+            </summary>
+            <param name="context"></param>
+            <param name="sspId"></param>
+            <param name="termSetId"></param>
+            <param name="termId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SharePointPnP.Modernization.Framework.Transform.XmlTermSetTerm">
+            <summary>
+            Class containing details of terms returned from web services
+            </summary>
+        </member>
         <member name="T:SharePointPnP.Modernization.Framework.Transform.TokenParser">
             <summary>
             Resolves tokens by their actual representation
@@ -4184,6 +4395,13 @@
             <param name="logObservers">Connected loggers</param>
         </member>
         <member name="M:SharePointPnP.Modernization.Framework.Utilities.FileManager.LoadUrlMappingFile(System.String)">
+            <summary>
+            Loads a URL mapping file
+            </summary>
+            <param name="mappingFile">Path to the mapping file</param>
+            <returns>A collection of URLMapping objects</returns>
+        </member>
+        <member name="M:SharePointPnP.Modernization.Framework.Utilities.FileManager.LoadTermMappingFile(System.String)">
             <summary>
             Loads a URL mapping file
             </summary>

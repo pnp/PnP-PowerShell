@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.19.2003.0] - Unreleased
+
+### Added
+- Added `-HeaderLayoutType` option to `Add-PnPClientSidePage` which allows setting the header layout of a new Site Page [PR # 2514](https://github.com/SharePoint/PnP-PowerShell/pull/2514)
+- Added `TermMappingFile` and `SkipTermStoreMapping` parameters to the `ConvertTo-PnPClientSidePage` cmdlet for supporting managed metadata mapping
+- Added `AsFileObject` parameter to `Get-PnPFile` which allows the result to be returned as file objects instead of list iems [PR # 2550](https://github.com/SharePoint/PnP-PowerShell/pull/2550)
+- Added `RemoveEmptySectionsAndColumns` parameter to the `ConvertTo-PnPClientSidePage` cmdlet for allowing for empty sections and columns to stay after conversion [PR # 2539](https://github.com/SharePoint/PnP-PowerShell/pull/2539)
+
+### Changed
+- Fixed issue where downloading a file using `Get-PnPFile` would throw an user not found exception if the user having created or having last modified the file no longer existed [PR #2504](https://github.com/SharePoint/PnP-PowerShell/pull/2504)
+- Removed `FieldOptions` argument from `Add-PnPField` as it was marked as obsolete since 2015 already and wasn't used anymore [PR # 2497](https://github.com/SharePoint/PnP-PowerShell/pull/2497)
+- Marked the -Rights parameter as obsolete on Grant-PnPHubSiteRights. Use Revoke-PnPHubSiteRights to revoke rights for specific users to join sites ot the hubsite
+- Output just the URL for the Redirect url in Get-PnPSearchSettings. Return web setting on sc root as fallback if sc setting is missing (via core).
+- Made it possible to set property bag value on a NoScript site using `Set-PnPPropertyBagValue` by providing the argument `Folder` and specifying something other than the root folder [PR # 2544](https://github.com/SharePoint/PnP-PowerShell/pull/2544)
+- The February 2020 release of PnP PowerShell was throwing an error on not being able to find and load the Newtonsoft assembly when used in an Azure Function. Fixed in this release.
+
+### Contributors
+
+- Arun Kumar Perumal [arunkumarperumal]
+- Paul Bullock [pkbullock]
+- Jens Otto Hatlevold [jensotto]
+- Pepe [ingepepe]
+- [bjdekker]
+- [N4TheKing]
+- Koen Zomers [koenzomers]
+- kadu-jr
+- [a1mery]
+
 ## [3.18.2002.0]
 
 ### Added

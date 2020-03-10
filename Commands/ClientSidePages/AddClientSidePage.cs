@@ -26,7 +26,13 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     [CmdletExample(
         Code = @"PS:> Add-PnPClientSidePage -Name ""Folder/NewPage""",
         Remarks = "Creates a new Client-Side page named 'NewPage' under 'Folder' folder and saves as a template to the site.",
-        SortOrder = 3)]        
+        SortOrder = 3)]
+#if !ONPREMISES
+    [CmdletExample(
+        Code = @"PS:> Add-PnPClientSidePage -Name ""NewPage"" -HeaderLayoutType ColorBlock",
+        Remarks = "Creates a new Client-Side page named 'NewPage' using the ColorBlock header layout",
+        SortOrder = 4)]
+#endif
     public class AddClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the name of the page.")]
@@ -47,17 +53,19 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Publishes the page once it is saved. Applicable to libraries set to create major and minor versions.")]
         public SwitchParameter Publish;
 
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "Type of layout used for the header")]
+        public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
+#endif
         [Obsolete("This parameter will be ignored")]
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
         public string PublishMessage = string.Empty;
 
         protected override void ExecuteCmdlet()
         {
-
             ClientSidePage clientSidePage = null;
 
             // Check if the page exists
-
             string name = ClientSidePageUtilities.EnsureCorrectPageName(Name);
 
             bool pageExists = false;
@@ -76,6 +84,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             // Create a page that persists immediately
             clientSidePage = SelectedWeb.AddClientSidePage(name);
             clientSidePage.LayoutType = LayoutType;
+
+#if !ONPREMISES
+            clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
+#endif
             if (PromoteAs == ClientSidePagePromoteType.Template)
             {
                 clientSidePage.SaveAsTemplate(name);
@@ -126,7 +138,6 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 default:
                     break;
             }
-
 
             if (ParameterSpecified(nameof(CommentsEnabled)))
             {

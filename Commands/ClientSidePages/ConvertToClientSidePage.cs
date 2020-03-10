@@ -193,6 +193,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "When setting a target page folder then the target page folder overrides possibly default folder path (e.g. in the source page lived in a folder) instead of being appended to it")]
         public SwitchParameter TargetPageFolderOverridesDefaultFolder = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Remove empty sections and columns after transformation of the page")]
+        public SwitchParameter RemoveEmptySectionsAndColumns = true;
+
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
         public SPOnlineConnection TargetConnection = null;
 
@@ -201,6 +204,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies a user mapping file")]
         public string UserMappingFile = "";
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies a taxonomy term mapping file")]
+        public string TermMappingFile = "";
+
+        [Parameter(Mandatory = false, HelpMessage = "Disables term mapping during transformation")]
+        public SwitchParameter SkipTermStoreMapping = false;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies a LDAP connection string e.g. LDAP://OU=Users,DC=Contoso,DC=local")]
         public string LDAPConnectionString = "";
@@ -443,6 +452,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     LDAPConnectionString = this.LDAPConnectionString,
                     TargetPageFolder = this.TargetPageFolder,
                     TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
+                    TermMappingFile = TermMappingFile,
+                    SkipTermStoreMapping = SkipTermStoreMapping,
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
                 };
 
                 // Set mapping properties
@@ -484,6 +496,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     LDAPConnectionString = this.LDAPConnectionString,
                     TargetPageFolder = this.TargetPageFolder,
                     TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
                 };
 
                 // Set mapping properties
@@ -543,6 +556,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
                     },
+                    TermMappingFile = TermMappingFile,
+                    SkipTermStoreMapping = SkipTermStoreMapping,
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
                 };
 
                 // Set mapping properties

@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
             ClientContext.Site.EnsureProperty(s => s.SearchBoxInNavBar);
 
             string siteUrl = ClientContext.Web.GetSiteCollectionSearchCenterUrl();
-            string webUrl = ClientContext.Web.GetWebSearchCenterUrl();
+            string webUrl = ClientContext.Web.GetWebSearchCenterUrl(urlOnly: true);
 
             PSObject res = new PSObject();
             res.Properties.Add(new PSNoteProperty("Classic Search Center URL", siteUrl));
