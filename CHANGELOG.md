@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.19.2003.0] - Unreleased
+## [3.19.2003.0]
 
 ### Added
 - Added `-HeaderLayoutType` option to `Add-PnPClientSidePage` which allows setting the header layout of a new Site Page [PR # 2514](https://github.com/SharePoint/PnP-PowerShell/pull/2514)
