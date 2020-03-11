@@ -7,7 +7,7 @@ using SharePointPnP.PowerShell.Commands.Enums;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Add, "PnPStoredCredential")]
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
     [CmdletHelp("Adds a credential to the Windows Credential Manager",
         @"Adds an entry to the Windows Credential Manager. If you add an entry in the form of the URL of your tenant/server PnP PowerShell will check if that entry is available when you connect using Connect-PnPOnline. If it finds a matching URL it will use the associated credentials.
 
@@ -41,7 +41,7 @@ Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/mydemosite",
         [Parameter(Mandatory = false, HelpMessage = @"If not specified you will be prompted to enter your password. 
 If you want to specify this value use ConvertTo-SecureString -String 'YourPassword' -AsPlainText -Force")]
         public SecureString Password;
-#if NETSTANDARD2_0
+#if NETSTANDARD2_1
         [Parameter(Mandatory = false)]
         public SwitchParameter Overwrite;
 #endif
@@ -53,7 +53,7 @@ If you want to specify this value use ConvertTo-SecureString -String 'YourPasswo
                 Password = Host.UI.ReadLineAsSecureString();
             } 
             
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
             Utilities.CredentialManager.AddCredential(Name, Username, Password);
 #else
             Utilities.CredentialManager.AddCredential(Name, Username, Password, Overwrite.ToBool());

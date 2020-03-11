@@ -5,20 +5,128 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [3.19.2003.0]
 
 ### Added
-- Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online [PR2060](https://github.com/SharePoint/PnP-PowerShell/pull/2060)
-- Add/Remove/Get-PnPOrgAssetsLibrary commands to set document libraries as organizational asset sources on SharePoint Online [PR2179](https://github.com/SharePoint/PnP-PowerShell/pull/2179)
+- Added `-HeaderLayoutType` option to `Add-PnPClientSidePage` which allows setting the header layout of a new Site Page [PR # 2514](https://github.com/SharePoint/PnP-PowerShell/pull/2514)
+- Added `TermMappingFile` and `SkipTermStoreMapping` parameters to the `ConvertTo-PnPClientSidePage` cmdlet for supporting managed metadata mapping
+- Added `AsFileObject` parameter to `Get-PnPFile` which allows the result to be returned as file objects instead of list iems [PR # 2550](https://github.com/SharePoint/PnP-PowerShell/pull/2550)
+- Added `RemoveEmptySectionsAndColumns` parameter to the `ConvertTo-PnPClientSidePage` cmdlet for allowing for empty sections and columns to stay after conversion [PR # 2539](https://github.com/SharePoint/PnP-PowerShell/pull/2539)
 
 ### Changed
-
-- Bumped to .Net 4.6.1 as minimal .Net runtime version
-- Changed the way properties are being set in Set-PnPField to support setting field specific properties such as the Lookup list on a Lookup field [PR2212](https://github.com/SharePoint/PnP-PowerShell/pull/2212)
+- Fixed issue where downloading a file using `Get-PnPFile` would throw an user not found exception if the user having created or having last modified the file no longer existed [PR #2504](https://github.com/SharePoint/PnP-PowerShell/pull/2504)
+- Removed `FieldOptions` argument from `Add-PnPField` as it was marked as obsolete since 2015 already and wasn't used anymore [PR # 2497](https://github.com/SharePoint/PnP-PowerShell/pull/2497)
+- Marked the -Rights parameter as obsolete on Grant-PnPHubSiteRights. Use Revoke-PnPHubSiteRights to revoke rights for specific users to join sites ot the hubsite
+- Output just the URL for the Redirect url in Get-PnPSearchSettings. Return web setting on sc root as fallback if sc setting is missing (via core).
+- Made it possible to set property bag value on a NoScript site using `Set-PnPPropertyBagValue` by providing the argument `Folder` and specifying something other than the root folder [PR # 2544](https://github.com/SharePoint/PnP-PowerShell/pull/2544)
+- The February 2020 release of PnP PowerShell was throwing an error on not being able to find and load the Newtonsoft assembly when used in an Azure Function. Fixed in this release.
 
 ### Contributors
-- Gautam Sheth \[[gautamdsheth](https://github.com/gautamdsheth)\]
-- Giacomo Pozzoni \[[jackpoz](https://github.com/jackpoz)\]
+
+- Arun Kumar Perumal [arunkumarperumal]
+- Paul Bullock [pkbullock]
+- Jens Otto Hatlevold [jensotto]
+- Pepe [ingepepe]
+- [bjdekker]
+- [N4TheKing]
+- Koen Zomers [koenzomers]
+- kadu-jr
+- [a1mery]
+
+## [3.18.2002.0]
+
+### Added
+- Fixed issue with access token forcing site connection url to be the the value of the Audience in the token
+- Added ability to set HostProperties to Add-PnPCustomAction.
+- `Get-PnPManagementApiAccessToken` to retrieve access token for the Office 365 Management API using app credentials, app should be registered in AAD and assigned to interact with Management API
+- `Get-PnPUnifiedAuditLog` to retrieve unified audit logs from the Office 365 Management API
+- Added ability to connect to an on-premises SharePoint 2013/2016/2019 farm using a High Trust Server 2 Server App + User context by providing the username using `-Username`. Before only a High Trust App Only context was possible. [PR #2213](https://github.com/SharePoint/PnP-PowerShell/pull/2213)
+- Added ability to use `Set-PnPRequestAccessEmails` with `-Disabled` to disable requesting access to a site and `-Disabled:$false` to set the access requests to be sent to the default owners of the site [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
+- Added `Get-PnPSiteScriptFromList` and `Get-PnPSiteScriptFromWeb` commands which allow generation of Site Script JSON based off of existing lists or an entire site [PR # 2459](https://github.com/SharePoint/PnP-PowerShell/pull/2459)
+- Added `-Aggregations` argument to `Add-PnPView` and `Set-PnPView` to allow for creating a Totals count in a view [PR #2257](https://github.com/SharePoint/PnP-PowerShell/pull/2257)
+- Added `New-PnPTermLabel` to add a localized label to an existing taxonomy term [PR #2475](https://github.com/SharePoint/PnP-PowerShell/pull/2475)
+- Deprecated old tenant level `Enable-PnPCommSite` cmdlet and added new `Enable-PnPCommSite` command to enable the modern communication site experience on an classic team site. This one can be applied by non tenant admins as well
+- Added `Clear-PnPTenantAppCatalogUrl` to remove the tenant configuration for the tenant scoped app catalog [PR # 2485](https://github.com/SharePoint/PnP-PowerShell/pull/2485)
+- Added `Set-PnPTenantAppCatalogUrl` to configure the tenant for the site collection to use for the tenant scoped app catalog [PR # 2485](https://github.com/SharePoint/PnP-PowerShell/pull/2485)
+
+### Changed
+- Fixed samples on Set-PnPRequestAccessEmail, added ability to revert back to default owners group, added ability to disable requesting access [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
+- Optimized Invoke-PnPSearchQuery when using the -All parameter to ensure all results are returned by ordering on IndexDocId, and changed the default ClientType to 'PnP'
+- `Add-PnPFolder` will now return the newly created folder instance [PR #2463](https://github.com/SharePoint/PnP-PowerShell/pull/2463)
+- Using `Set-PnPSite -LogoFilePath` now checks if the site collection has a GroupId set instead of validating if the site template name starts with Group to determine if the site is a modern site [PR # 2328](https://github.com/SharePoint/PnP-PowerShell/pull/2328)
+- Fixed using `Import-Module` to the PnP PowerShell Module located on a UNC fileshare path resulting in an error [PR # 2490](https://github.com/SharePoint/PnP-PowerShell/pull/2490)
+- `New-PnPList` will now return the newly created list instance [PR # 2481](https://github.com/SharePoint/PnP-PowerShell/pull/2481)
+- Fixed documentation for Export-PnPTaxonomy [PR #2462](https://github.com/SharePoint/PnP-PowerShell/pull/2462)
+- Connect-PnPOnline can now use different Azure Authentication endpoints when using App Only auth. [PR #2355](https://github.com/SharePoint/PnP-PowerShell/pull/2355)
+- Fix examples in Start-PnPWorkflowInstance [PR #2483](https://github.com/SharePoint/PnP-PowerShell/pull/2483)
+
+### Contributors
+
+- Ivan Vagunin [ivanvagunin]
+- Thomas Meckel [tmeckel]
+- Koen Zomers [koenzomers]
+- Giacomo Pozzoni [jackpoz]
+- Jarbas Horst [JarbasHorst]
+- Gautam Sheth [gautamdsheth]
+- Craig Hair [MacsInSpace]
+- Dan Cecil [danielcecil]
+- gobigfoot [gobigfoot]
+- Markus Hanisch [Markus-Hanisch]
+- Raphael [PowershellNinja]
+
+## [3.17.2001.2]
+
+### 
+- No changed to PnP PowerShell but an updated reference to an updated intermediate release of PnP Sites Core which fixes an issue with PnP Provisioning.
+
+## [3.17.2001.1]
+
+### Changed 
+- Fixed issue with not correctly identifying framework version and not including required assemblies in packaging.
+
+## [3.17.2001.0]
+
+### Added
+- Add/Remove/Set/Get-PnPApplicationCustomizer commands to allow working with SharePoint Framework Application Customizer Extensions
+- Ability to pipe in a result from Get-PnPFolder to Get-PnPFolderItem using the -Identity parameter
+- Added ability to pipe Get-PnPUnifiedGroup to Get-PnPUnifiedGroupOwners and Get-PnPUnifiedGroupMembers
+- Added permissions required for each of the \*-PnPUnifiedGroup\* commands in the Azure Active Directory App Registration to the help text of the commands
+- Added option to use Connect-PnPOnline with a base64 encoded private key for use in i.e. PnP PowerShell within an Azure Function v1 and an option to provide a certificate reference for use in i.e. Azure Function v2
+- Added option to use Connect-PnPOnline with a public key certificate for use in i.e. Azure Runbooks
+- Added option -RowLimit to Get-PnPRecycleBinItem to avoid getting throttled on full recycle bins
+- Added `-WriteToConsole` option to `Set-PnPTraceLog` to allow writing trace listener output from the PnP Templating commands to both the console and to a file. Doesn't work for .NET Core.
+- Added `Reset-PnPLabel` command to allow removal of an Office 365 Retention Label from a list
+- Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online
+- Add/Remove/Get-PnPOrgAssetsLibrary commands to set document libraries as organizational asset sources on SharePoint Online
+- `-Recursive` option to `Get-PnPFolderItem` to allow retrieving all files and folders recursively
+
+### Changed 
+- Marked Get-PnPHealthScore as obsolete for SharePoint Online.
+- Fixes issues with connections not properly closing under some conditions when using Disconnect-PnPOnline
+- When using commands that utilize the Graph API but not being connected to one of the Graph API Connect-PnPOnline methods, it would throw a NullReferenceException. It will now throw a cleaner exception indicating you should connect with the Graph API first.
+- Fixed an issue where using Get-PnPUser -WithRightsAssigned would not return the proper users with actually having access to that site
+- Fixed an issue when using ConvertTo-PnPClientSidePage to convert Delve Blog posts that it would throw a nullreference exception in some scenarios
+- Fixed an issue using `Add-PnPDataRowsToProvisioningTemp` to add data from a list containing a multi choice to a PnP Provisioning Template where the data would be shown as `System.String[]` instead of the actual data
+- Bumped to .Net 4.6.1 as minimal .Net runtime version
+- Changed the way properties are being set in Set-PnPField to support setting field specific properties such as the Lookup list on a Lookup field
+- Fixed an issue where using Apply-PnPProvisioningTemplate -InputInstance $instance would throw a connectionString error if being executed from the root of a drive, i.e. c:\ or d:\
+- Fixed issue with access token not returning correctly after update to newer version of NewtonSoft JSON.
+- Fixes issue with pipeline not returning object correctly.
+
+### Contributors
+- Koen Zomers [koenzomers]
+- Robin Meure [robinmeure]
+- Michael Rees Pullen [mrpullen]
+- Giacomo Pozzoni [jackpoz]
+- Rene Modery [modery]
+- Krystian Niepsuj [MrDoNotBreak]
+- Piotr Siatka [siata13]
+- Heinrich Ulbricht [heinrich-ulbricht]
+- Dan Cecil [danielcecil]
+- Gautam Sheth [gautamdsheth]
+- Giacomo Pozzoni [jackpoz]
+- Will Holland [willholland]
+- Ivan Vagunin [ivanvagunin]
 
 ## [3.16.1912.0]
 

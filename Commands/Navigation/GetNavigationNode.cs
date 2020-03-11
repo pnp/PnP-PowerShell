@@ -107,7 +107,7 @@ PS> $children = $node.Children",
                     }
                 }
             }
-            if (MyInvocation.BoundParameters.ContainsKey("Id"))
+            if (ParameterSpecified(nameof(Id)))
             {
                 var node = SelectedWeb.Navigation.GetNodeById(Id);
                 ClientContext.Load(node);

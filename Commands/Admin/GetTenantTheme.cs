@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Name"))
+            if (ParameterSpecified(nameof(Name)))
             {
                 var theme = Tenant.GetTenantTheme(Name);
                 ClientContext.Load(theme);

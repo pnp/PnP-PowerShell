@@ -41,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             // Following code to handle deprecated parameter
             CustomActionScope setScope;
 
-            if (MyInvocation.BoundParameters.ContainsKey("SiteScoped"))
+            if (ParameterSpecified(nameof(SiteScoped)))
             {
                 setScope = CustomActionScope.Site;
             }

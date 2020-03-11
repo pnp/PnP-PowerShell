@@ -122,7 +122,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             ProvisioningTemplate provisioningTemplate;
 
             FileConnectorBase fileConnector;
-            if (MyInvocation.BoundParameters.ContainsKey("Path"))
+            if (ParameterSpecified(nameof(Path)))
             {
                 bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
                 string templateFileName = System.IO.Path.GetFileName(Path);
@@ -191,7 +191,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                     }
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey(nameof(TemplateId)))
+                if (ParameterSpecified(nameof(TemplateId)))
                 {
                     provisioningTemplate = provider.GetTemplate(templateFileName, TemplateId, null, TemplateProviderExtensions);
                 }
@@ -248,7 +248,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                         Path = SessionState.Path.CurrentFileSystemLocation.Path;
                     }
                     var fileInfo = new FileInfo(Path);
-                    fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                    fileConnector = new FileSystemConnector(System.IO.Path.IsPathRooted(fileInfo.FullName) ? fileInfo.FullName : fileInfo.DirectoryName, "");
                     provisioningTemplate.Connector = fileConnector;
                 }
             }
@@ -270,11 +270,11 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
 
-            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (ParameterSpecified(nameof(Handlers)))
             {
                 applyingInformation.HandlersToProcess = Handlers;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (ParameterSpecified(nameof(ExcludeHandlers)))
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
@@ -416,7 +416,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                     }
                     else
                     {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                         return (SPOnlineConnection.AuthenticationResult.Token);
 #else
                         return SPOnlineConnection.AuthenticationResult.AccessToken;

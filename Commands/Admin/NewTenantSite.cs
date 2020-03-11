@@ -114,7 +114,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
 #else
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-                if (MyInvocation.BoundParameters.ContainsKey("Description"))
+                if (ParameterSpecified(nameof(Description)))
                 {
                     // We have to fall back to synchronous behaviour as we have to wait for the site to be present in order to set the description.
                     Wait = true;

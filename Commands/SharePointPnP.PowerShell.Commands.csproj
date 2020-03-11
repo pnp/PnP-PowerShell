@@ -32,7 +32,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
     <AssemblyName>SharePointPnP.PowerShell.2013.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -51,7 +51,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
     <AssemblyName>SharePointPnP.PowerShell.2016.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -70,7 +70,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
     <AssemblyName>SharePointPnP.PowerShell.2019.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -557,10 +557,14 @@
   <ItemGroup>
     <Compile Include="Admin\AddHubSiteAssociation.cs" />
     <Compile Include="Admin\AddOffice365GroupToSite.cs" />
+    <Compile Include="Admin\AddOrgAssetsLibrary.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />
+    <Compile Include="Admin\ClearTenantAppCatalogUrl.cs" />
+    <Compile Include="Admin\RevokeHubSiteRights.cs" />
+    <Compile Include="Admin\SetTenantAppCatalogUrl.cs" />
+    <Compile Include="Admin\RemoveOrgAssetsLibrary.cs" />
     <Compile Include="Admin\GetHomeSite.cs" />
-    <Compile Include="Admin\EnableCommSite.cs" />
     <Compile Include="Admin\GetHubSiteChild.cs" />
     <Compile Include="Admin\GetTenantId.cs" />
     <Compile Include="Base\BasePSCmdlet.cs" />
@@ -568,6 +572,10 @@
     <Compile Include="Apps\GetApplicationCustomizer.cs" />
     <Compile Include="Apps\SetApplicationCustomizer.cs" />
     <Compile Include="Apps\RemoveApplicationCustomizer.cs" />
+    <Compile Include="Admin\GetOrgAssetsLibrary.cs" />
+    <Compile Include="Admin\GetOrgNewsSite.cs" />
+    <Compile Include="Admin\RemoveOrgNewsSite.cs" />
+    <Compile Include="Admin\AddOrgNewsSite.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
@@ -634,6 +642,7 @@
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
     <Compile Include="ClientSidePages\SaveClientSidePageConversionLog.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
+    <Compile Include="Enums\AuditContentType.cs" />
     <Compile Include="Enums\HttpRequestMethod.cs" />
     <Compile Include="Enums\InitializationType.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />
@@ -644,8 +653,15 @@
     <Compile Include="Graph\RemoveDeletedUnifiedGroup.cs" />
     <Compile Include="Graph\RestoreDeletedUnifiedGroup.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
+    <Compile Include="InformationManagement\ResetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
+    <Compile Include="ManagementApi\GetManagementApiAccessToken.cs" />
+    <Compile Include="ManagementApi\GetUnifiedAuditLog.cs" />
+    <Compile Include="Model\ManagementApiSubscription.cs" />
+    <Compile Include="Model\ManagementApiSubscriptionContent.cs" />
+    <Compile Include="Model\ManagementApiUnifiedLogRecordKeyValuePair.cs" />
+    <Compile Include="Model\ManagementApiUnifiedLogRecord.cs" />
     <Compile Include="Files\SetFolderPermission.cs" />
     <Compile Include="Model\PnPException.cs" />
     <Compile Include="Model\ProvisionedSite.cs" />
@@ -703,6 +719,8 @@
     <Compile Include="SiteDesigns\GetSiteDesignRun.cs" />
     <Compile Include="SiteDesigns\AddSiteDesignTask.cs" />
     <Compile Include="Search\RemoveSearchConfiguration.cs" />
+    <Compile Include="SiteDesigns\GetSiteScriptFromList.cs" />
+    <Compile Include="SiteDesigns\GetSiteScriptFromWeb.cs" />
     <Compile Include="SiteDesigns\InvokeSiteDesign.cs" />
     <Compile Include="SiteDesigns\RemoveSiteDesignTask.cs" />
     <Compile Include="SiteDesigns\SetSiteDesign.cs" />
@@ -834,9 +852,11 @@
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
     <Compile Include="Site\AddRoleDefinition.cs" />
     <Compile Include="Site\AddTeamsTeam.cs" />
+    <Compile Include="Site\EnableCommSite.cs" />
     <Compile Include="Site\GetRoleDefinition.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
+    <Compile Include="Taxonomy\NewTermLabel.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />
     <Compile Include="UserProfiles\NewUPABulkImportJob.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />

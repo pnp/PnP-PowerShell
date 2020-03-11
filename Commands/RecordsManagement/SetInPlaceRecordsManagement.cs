@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Enabled"))
+            if (ParameterSpecified(nameof(Enabled)))
             {
                 if (Enabled)
                 {
@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
             else
             {
                 // obsolete
-                if (MyInvocation.BoundParameters.ContainsKey("On"))
+                if (ParameterSpecified(nameof(On)))
                 {
                     ClientContext.Site.ActivateInPlaceRecordsManagementFeature();
                 }

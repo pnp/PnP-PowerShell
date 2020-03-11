@@ -94,7 +94,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 
             var sitesProvisioned = new List<ProvisionedSite>();
             var configuration = new ApplyConfiguration();
-            if (MyInvocation.BoundParameters.ContainsKey("Configuration"))
+            if (ParameterSpecified(nameof(Configuration)))
             {
                 configuration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
             }
@@ -108,7 +108,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 }
             };
 
-            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (ParameterSpecified(nameof(Handlers)))
             {
                 if (!Handlers.Has(Handlers.All))
                 {
@@ -132,7 +132,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                     }
                 }
             }
-            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (ParameterSpecified(nameof(ExcludeHandlers)))
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
@@ -354,7 +354,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                     }
                     else
                     {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                         return (SPOnlineConnection.AuthenticationResult.Token);
 #else
                         return SPOnlineConnection.AuthenticationResult.AccessToken;

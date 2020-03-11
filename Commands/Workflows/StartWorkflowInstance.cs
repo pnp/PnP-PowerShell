@@ -14,11 +14,11 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
     [CmdletHelp("Starts a workflow instance on a list item",
         Category = CmdletHelpCategory.Workflows)]
     [CmdletExample(
-        Code = @"PS:> Start-PnPWorkflowInstance -Name 'WorkflowName' -ListItem $item ", 
+        Code = @"PS:> Start-PnPWorkflowInstance -Subscription $subscription -ListItem $item ", 
         Remarks = "Starts a workflow instance on the specified list item",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Start-PnPWorkflowInstance -Name 'WorkflowName' -ListItem 2 ",
+        Code = @"PS:> Start-PnPWorkflowInstance -Subscription $subscription -ListItem 2 ",
         Remarks = "Starts a workflow instance on the specified list item",
         SortOrder = 2)]
     public class StartWorkflowInstance : PnPWebCmdlet

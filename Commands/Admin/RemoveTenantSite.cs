@@ -74,7 +74,7 @@ namespace SharePointPnP.PowerShell.Commands
                 if (!FromRecycleBin)
 #pragma warning restore 618
                 {
-                    Tenant.DeleteSiteCollection(Url, !MyInvocation.BoundParameters.ContainsKey("SkipRecycleBin"), timeoutFunction);
+                    Tenant.DeleteSiteCollection(Url, !ParameterSpecified(nameof(SkipRecycleBin)), timeoutFunction);
                 }
                 else
                 {

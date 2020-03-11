@@ -45,7 +45,7 @@ PS:> Remove-PnPSiteClassification -Classifications ""HBI"", ""Top Secret""",
 
                         if (existingSettings.DefaultClassification == classification)
                         {
-                            if ((MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveDefaultClassification0, classification), Properties.Resources.Confirm))
+                            if ((ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveDefaultClassification0, classification), Properties.Resources.Confirm))
                             {
                                 existingSettings.DefaultClassification = "";
                                 existingSettings.Classifications.Remove(classification);

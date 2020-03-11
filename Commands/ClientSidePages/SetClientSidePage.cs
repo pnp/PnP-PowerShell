@@ -114,7 +114,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 clientSidePage.ThumbnailUrl = ThumbnailUrl;
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("HeaderType"))
+            if (ParameterSpecified(nameof(HeaderType)))
             {
                 switch (HeaderType)
                 {
@@ -158,7 +158,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     break;
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("CommentsEnabled"))
+            if (ParameterSpecified(nameof(CommentsEnabled)))
             {
                 if (CommentsEnabled)
                 {
@@ -170,7 +170,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
-            if(MyInvocation.BoundParameters.ContainsKey("ContentType"))
+            if(ParameterSpecified(nameof(ContentType)))
             {
                 ContentType ct = null;
                 if (ContentType.ContentType == null)

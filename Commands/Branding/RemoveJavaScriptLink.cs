@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         protected override void ExecuteCmdlet()
         {
             // Following code to handle deprecated parameter
-            if (MyInvocation.BoundParameters.ContainsKey("FromSite"))
+            if (ParameterSpecified(nameof(FromSite)))
             {
                 Scope = CustomActionScope.Site;
             }
@@ -89,7 +89,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 }
             }
 
-            foreach (var action in actions.Where(action => Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Resources.RemoveJavaScript0, action.Name, action.Id, action.Scope), Resources.Confirm)))
+            foreach (var action in actions.Where(action => Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Resources.RemoveJavaScript0, action.Name, action.Id, action.Scope), Resources.Confirm)))
             {
                 switch (action.Scope)
                 {

@@ -53,7 +53,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
         {
             
             ExtractConfiguration extractConfiguration = null;
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Configuration)))
+            if (ParameterSpecified(nameof(Configuration)))
             {
                 extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
                 if(!string.IsNullOrEmpty(SiteUrl))
@@ -208,7 +208,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                     }
                     else
                     {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_1
                         return (SPOnlineConnection.AuthenticationResult.Token);
 #else
                         return SPOnlineConnection.AuthenticationResult.AccessToken;

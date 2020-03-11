@@ -53,7 +53,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
             {
                 var changed = false;
                 var settings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
-                if (MyInvocation.BoundParameters.ContainsKey("Classifications"))
+                if (ParameterSpecified(nameof(Classifications)))
                 {
                     if (settings.Classifications != Classifications)
                     {
@@ -61,7 +61,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
                         changed = true;
                     }
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("DefaultClassification"))
+                if (ParameterSpecified(nameof(DefaultClassification)))
                 {
                     if (settings.Classifications.Contains(DefaultClassification))
                     {
@@ -72,7 +72,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
                         }
                     }
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("UsageGuidelinesUrl"))
+                if (ParameterSpecified(nameof(UsageGuidelinesUrl)))
                 {
                     if (settings.UsageGuidelinesUrl != UsageGuidelinesUrl)
                     {

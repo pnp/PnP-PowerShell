@@ -4,6 +4,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
+using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
@@ -25,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
     [CmdletRelatedLink(
         Text = "Encoding",
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
-    public class ConvertSiteTemplate : PSCmdlet
+    public class ConvertSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml file containing the site template")]
         public string Path;
@@ -49,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Out"))
+            if (ParameterSpecified(nameof(Out)))
             {
                 if (!System.IO.Path.IsPathRooted(Out))
                 {
@@ -118,12 +119,16 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                         }
                     case XMLPnPSchemaVersion.V201801:
                         {
+#pragma warning disable CS0618 // Type or member is obsolete
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01);
+#pragma warning restore CS0618 // Type or member is obsolete
                             break;
                         }
                     case XMLPnPSchemaVersion.V201805:
                         {
+#pragma warning disable CS0618 // Type or member is obsolete
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
+#pragma warning restore CS0618 // Type or member is obsolete
                             break;
                         }
                     case XMLPnPSchemaVersion.V201807:
@@ -139,6 +144,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
                     case XMLPnPSchemaVersion.V201909:
                         {
                             formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_09);
+                            break;
+                        }
+                    case XMLPnPSchemaVersion.V202002:
+                        {
+                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2020_02);
                             break;
                         }
                 }

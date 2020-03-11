@@ -37,6 +37,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public int RetryCount { get; protected set; }
         public int RetryWait { get; protected set; }
         public PSCredential PSCredential { get; protected set; }
+        public string ClientId { get; protected set; }
+        public string ClientSecret { get; protected set; }
 
         public TelemetryClient TelemetryClient { get; set; }
 
@@ -100,6 +102,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
+        internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
+            : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        {
+            this.ClientId = clientId;
+            this.ClientSecret = clientSecret;
+        }
 
         internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
@@ -205,7 +213,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
-#if !ONPREMISES && !NETSTANDARD2_0
+#if !ONPREMISES && !NETSTANDARD2_1
                     if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
                     {
                         // legacy auth?
@@ -217,7 +225,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
 #endif
                         throw;
-#if !ONPREMISES && !NETSTANDARD2_0
+#if !ONPREMISES && !NETSTANDARD2_1
                     }
 #endif
                 }
@@ -298,12 +306,22 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
                 TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
                 TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+#if !NETSTANDARD2_1
                 TelemetryClient.Context.GlobalProperties.Add("ServerLibraryVersion", serverLibraryVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ServerVersion", serverVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ConnectionMethod", initializationType.ToString());
+#else
+                TelemetryClient.Context.Properties.Add("ServerLibraryVersion", serverLibraryVersion);
+                TelemetryClient.Context.Properties.Add("ServerVersion", serverVersion);
+                TelemetryClient.Context.Properties.Add("ConnectionMethod", initializationType.ToString());
+#endif
                 var coreAssembly = Assembly.GetExecutingAssembly();
-
+#if !NETSTANDARD2_1
                 TelemetryClient.Context.GlobalProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+#else
+                TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
+#endif
+
 #if SP2013
             TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2013");
 #elif SP2016
@@ -311,7 +329,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #elif SP2019
             TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2019");
 #else
+#if !NETSTANDARD2_1
                 TelemetryClient.Context.GlobalProperties.Add("Platform", "SPO");
+#else
+                TelemetryClient.Context.Properties.Add("Platform", "SPO");
+#endif
 #endif
                 TelemetryClient.TrackEvent("Connect-PnPOnline");
             }

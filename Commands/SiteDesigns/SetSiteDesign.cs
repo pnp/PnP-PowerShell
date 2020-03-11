@@ -62,42 +62,42 @@ PS:> Set-PnPSiteDesign -Identity $design -Title ""My Updated Company Design""",
             if (design != null)
             {
                 var isDirty = false;
-                if (MyInvocation.BoundParameters.ContainsKey("Title"))
+                if (ParameterSpecified(nameof(Title)))
                 {
                     design.Title = Title;
                     isDirty = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Description"))
+                if (ParameterSpecified(nameof(Description)))
                 {
                     design.Description = Description;
                     isDirty = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("IsDefault"))
+                if (ParameterSpecified(nameof(IsDefault)))
                 {
                     design.IsDefault = IsDefault;
                     isDirty = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("PreviewImageAltText"))
+                if (ParameterSpecified(nameof(PreviewImageAltText)))
                 {
                     design.PreviewImageAltText = PreviewImageAltText;
                     isDirty = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("PreviewImageUrl"))
+                if (ParameterSpecified(nameof(PreviewImageUrl)))
                 {
                     design.PreviewImageUrl = PreviewImageUrl;
                     isDirty = true;
                 }
-                if(MyInvocation.BoundParameters.ContainsKey("WebTemplate"))
+                if(ParameterSpecified(nameof(WebTemplate)))
                 {
                     design.WebTemplate = ((int)WebTemplate).ToString();
                     isDirty = true;
                 }
-                if(MyInvocation.BoundParameters.ContainsKey("Version"))
+                if(ParameterSpecified(nameof(Version)))
                 {
                     design.Version = Version;
                     isDirty = true;
                 }
-                if(MyInvocation.BoundParameters.ContainsKey("SiteScriptIds"))
+                if(ParameterSpecified(nameof(SiteScriptIds)))
                 {
                     design.SiteScriptIds = SiteScriptIds.Select(t => t.Id).ToArray();
                     isDirty = true;

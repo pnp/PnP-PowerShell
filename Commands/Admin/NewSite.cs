@@ -113,7 +113,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             if (Type == SiteType.CommunicationSite)
             {
-                if (!MyInvocation.BoundParameters.ContainsKey("Lcid"))
+                if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
                     _communicationSiteParameters.Lcid = ClientContext.Web.Language;
@@ -127,7 +127,7 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.ShareByEmailEnabled = _communicationSiteParameters.AllowFileSharingForGuestUsers || _communicationSiteParameters.ShareByEmailEnabled;
 #pragma warning restore CS0618 // Type or member is obsolete
                 creationInformation.Lcid = _communicationSiteParameters.Lcid;
-                if (MyInvocation.BoundParameters.ContainsKey("HubSiteId"))
+                if (ParameterSpecified(nameof(HubSiteId)))
                 {
                     creationInformation.HubSiteId = HubSiteId.Id;
                 }
@@ -154,7 +154,7 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.Description = _teamSiteParameters.Description;
                 creationInformation.IsPublic = _teamSiteParameters.IsPublic;
                 creationInformation.Lcid = _teamSiteParameters.Lcid;
-                if (MyInvocation.BoundParameters.ContainsKey("HubSiteId"))
+                if (ParameterSpecified(nameof(HubSiteId)))
                 {
                     creationInformation.HubSiteId = HubSiteId.Id;
                 }

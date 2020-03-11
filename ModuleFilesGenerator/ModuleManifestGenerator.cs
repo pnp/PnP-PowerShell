@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         }
         internal void Generate()
         {
-#if NETCOREAPP2_0
+#if NETCOREAPP3_0
             var spVersion = "Core";
 #else
             var spVersion = string.Empty;
@@ -68,7 +68,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
             }
 
             // Create Module Manifest
-#if !NETCOREAPP2_0
+#if !NETCOREAPP3_0
             var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShell{spVersion}.psd1";
 #else
             var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\SharePointPnPPowerShellCore.psd1";
@@ -84,12 +84,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
         private void WriteModuleManifest(string path, string spVersion, string cmdletsToExport, string aliasesToExport)
         {
-            var aliases = "";
-            //if (aliasesToExport != null)
-            //{
-            //    aliases = $"{Environment.NewLine}AliasesToExport = {aliasesToExport}";
-            //}
-#if !NETCOREAPP2_0
+#if !NETCOREAPP3_0
             var manifest = $@"@{{
     RootModule = 'SharePointPnP.PowerShell.{spVersion}.Commands.dll'
     ModuleVersion = '{_assemblyVersion}'
@@ -97,7 +92,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
     GUID = '8f1147be-a8e4-4bd2-a705-841d5334edc0'
     Author = 'SharePoint Patterns and Practices'
     CompanyName = 'SharePoint Patterns and Practices'
-    DotNetFrameworkVersion = '4.5'
+    DotNetFrameworkVersion = '4.6.1'
     ProcessorArchitecture = 'None'
     FunctionsToExport = '*'
     CmdletsToExport = {cmdletsToExport}

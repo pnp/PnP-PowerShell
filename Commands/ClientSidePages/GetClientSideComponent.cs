@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             if (clientSidePage == null)
                 throw new Exception($"Page '{Page?.Name}' does not exist");
 
-            if(!MyInvocation.BoundParameters.ContainsKey("InstanceId"))
+            if(!ParameterSpecified(nameof(InstanceId)))
             {
                 WriteObject(clientSidePage.Controls, true);
             } else

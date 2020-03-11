@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -100,7 +101,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             string response;
             var password = string.Empty;
             var username = string.Empty;
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Credentials)))
+            if (ParameterSpecified(nameof(Credentials)))
             {
                 password = EncryptionUtility.ToInsecureString(Credentials.Password);
                 username = Credentials.UserName;
@@ -117,13 +118,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             if (!string.IsNullOrEmpty(Resource))
             {
-                body = $"grant_type=password&client_id={ClientId}&username={username}&password={password}&resource={Resource}";
+                body = $"grant_type=password&client_id={ClientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&resource={Resource}";
                 response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenantId}/oauth2/token", body, "application/x-www-form-urlencoded");
             }
             else
             {
                 var scopes = string.Join(" ", Scopes);
-                body = $"grant_type=password&client_id={ClientId}&username={username}&password={password}&scope={scopes}";
+                body = $"grant_type=password&client_id={ClientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&scope={scopes}";
                 response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token", body, "application/x-www-form-urlencoded");
             }
             var json = JToken.Parse(response);

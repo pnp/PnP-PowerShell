@@ -1,6 +1,7 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
@@ -18,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
        Code = @"PS:> Get-PnPTenantSequenceSite -Sequence $mysequence -Identity 8058ea99-af7b-4bb7-b12a-78f93398041e",
        Remarks = "Returns the specified site from the specified sequence",
        SortOrder = 2)]
-    public class GetTenantSequenceSite : PSCmdlet
+    public class GetTenantSequenceSite : BasePSCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The sequence to retrieve the site from", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ProvisioningSequence Sequence;
@@ -27,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         public ProvisioningSitePipeBind Identity;
         protected override void ProcessRecord()
         {
-            if (!MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (!ParameterSpecified(nameof(Identity)))
             {
                 WriteObject(Sequence.SiteCollections, true);
             }

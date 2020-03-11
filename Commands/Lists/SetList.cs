@@ -130,62 +130,62 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("Hidden") && Hidden != list.Hidden)
+                if (ParameterSpecified(nameof(Hidden)) && Hidden != list.Hidden)
                 {
                     list.Hidden = Hidden;
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("EnableContentTypes") && list.ContentTypesEnabled != EnableContentTypes)
+                if (ParameterSpecified(nameof(EnableContentTypes)) && list.ContentTypesEnabled != EnableContentTypes)
                 {
                     list.ContentTypesEnabled = EnableContentTypes;
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("EnableVersioning") && EnableVersioning != enableVersioning)
+                if (ParameterSpecified(nameof(EnableVersioning)) && EnableVersioning != enableVersioning)
                 {
                     list.EnableVersioning = EnableVersioning;
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("EnableMinorVersions") && EnableMinorVersions != enableMinorVersions)
+                if (ParameterSpecified(nameof(EnableMinorVersions)) && EnableMinorVersions != enableMinorVersions)
                 {
                     list.EnableMinorVersions = EnableMinorVersions;
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("EnableModeration") && list.EnableModeration != EnableModeration)
+                if (ParameterSpecified(nameof(EnableModeration)) && list.EnableModeration != EnableModeration)
                 {
                     list.EnableModeration = EnableModeration;
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("EnableAttachments") && EnableAttachments != enableAttachments)
+                if (ParameterSpecified(nameof(EnableAttachments)) && EnableAttachments != enableAttachments)
                 {
                     list.EnableAttachments = EnableAttachments;
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("Description"))
+                if (ParameterSpecified(nameof(Description)))
                 {
                     list.Description = Description;
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("EnableFolderCreation"))
+                if (ParameterSpecified(nameof(EnableFolderCreation)))
                 {
                     list.EnableFolderCreation = EnableFolderCreation;
                     updateRequired = true;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("ForceCheckout"))
+                if (ParameterSpecified(nameof(ForceCheckout)))
                 {
                     list.ForceCheckout = ForceCheckout;
                     updateRequired = true;
                 }
 
 #if !ONPREMISES
-                if (MyInvocation.BoundParameters.ContainsKey("ListExperience"))
+                if (ParameterSpecified(nameof(ListExperience)))
                 {
                     list.ListExperienceOptions = ListExperience;
                     updateRequired = true;
@@ -206,13 +206,13 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     if (list.BaseType == BaseType.DocumentLibrary)
                     {
 
-                        if (MyInvocation.BoundParameters.ContainsKey("MajorVersions"))
+                        if (ParameterSpecified(nameof(MajorVersions)))
                         {
                             list.MajorVersionLimit = (int)MajorVersions;
                             updateRequired = true;
                         }
 
-                        if (MyInvocation.BoundParameters.ContainsKey("MinorVersions") && list.EnableMinorVersions)
+                        if (ParameterSpecified(nameof(MinorVersions)) && list.EnableMinorVersions)
                         {
                             list.MajorWithMinorVersionsLimit = (int)MinorVersions;
                             updateRequired = true;
@@ -220,7 +220,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                     }
                     else
                     {
-                        if (MyInvocation.BoundParameters.ContainsKey("MajorVersions"))
+                        if (ParameterSpecified(nameof(MajorVersions)))
                         {
                             list.MajorVersionLimit = (int)MajorVersions;
                             updateRequired = true;

@@ -36,14 +36,22 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the application customizer. Specify values as a json string : \"{Property1 : 'Value1', Property2: 'Value2'}\"")]
         public string ClientSideComponentProperties;
 
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "The Client Side Host Properties of the application customizer. Specify values as a json string : \"{'preAllocatedApplicationCustomizerTopHeight': '50', 'preAllocatedApplicationCustomizerBottomHeight': '50'}\"")]
+        public string ClientSideHostProperties;
+#endif
+
         protected override void ExecuteCmdlet()
         {
-            CustomActionEntity ca = new CustomActionEntity()
+            CustomActionEntity ca = new CustomActionEntity
             {
                 Title = Title,
                 Location = "ClientSideExtension.ApplicationCustomizer",
                 ClientSideComponentId = ClientSideComponentId.Id,
-                ClientSideComponentProperties = ClientSideComponentProperties
+                ClientSideComponentProperties = ClientSideComponentProperties,
+#if !ONPREMISES
+                ClientSideHostProperties = ClientSideHostProperties
+#endif
             };
 
             switch (Scope)
