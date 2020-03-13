@@ -5,19 +5,15 @@ using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Enums;
 using System;
-using System.IO;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
-using System.Security;
 using OfficeDevPnP.Core;
 using OfficeDevPnP.Core.Utilities;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using SharePointPnP.PowerShell.Commands.Model;
@@ -671,21 +667,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    // If current credentials should be used, use the DefaultNetworkCredentials of the CredentialCache. This has the same effect
-                    // as using "UseDefaultCredentials" in a HttpClient.
+                    // If current credentials should be used, use the DefaultNetworkCredentials of the CredentialCache. This has the same effect as using "UseDefaultCredentials" in a HttpClient.
                     context.Credentials = CredentialCache.DefaultNetworkCredentials;
                 }
                 
-                //Add Request Header to force Windows Authentication
+                // Add Request Header to force Windows Authentication which avoids an issue if multiple authentication providers are enabled on a webapplication
                 context.ExecutingWebRequest += delegate(object sender, WebRequestEventArgs e)
                 {
-                    try
-                    {
-                        //Add the header that tells SharePoint to use Windows authentication
-                        e.WebRequestExecutor.RequestHeaders.Add(
-                        "X-FORMS_BASED_AUTH_ACCEPTED", "f");
-                    }
-                    catch { }
+                    // Add the header that tells SharePoint to use Windows authentication
+                    e.WebRequestExecutor.RequestHeaders["X-FORMS_BASED_AUTH_ACCEPTED"] = "f";
                 };
                 
             }
