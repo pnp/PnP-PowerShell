@@ -114,7 +114,9 @@ Online site collection fails if a deleted site with the same URL exists in the R
 #else
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (ParameterSpecified(nameof(Description)))
+#pragma warning restore CS0618 // Type or member is obsolete
                 {
                     // We have to fall back to synchronous behaviour as we have to wait for the site to be present in order to set the description.
                     Wait = true;
