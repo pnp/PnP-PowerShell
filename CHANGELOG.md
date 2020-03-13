@@ -10,8 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Using `Connect-PnPOnline -CurrentCredentials` against an on-premises SharePoint farm having more than one authentication provider configured on the webapplication no longer causes an access denied [PR #2571](https://github.com/SharePoint/PnP-PowerShell/pull/2571)
 
 ### Contributors
+Raphael [PowershellNinja]
 
 ## [3.19.2003.0]
 
