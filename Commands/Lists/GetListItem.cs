@@ -42,6 +42,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }",
         Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item",
         SortOrder = 7)]
+    [CmdletExample(
+        Code = "PS:> Get-PnPListItem -List Samples -FolderServerRelativeUrl \"/sites/contosomarketing/Lists/Samples/Demo\"",
+        Remarks = "Retrieves all list items from the Demo folder in the Samples list located in the contosomarketing site collection",
+        SortOrder = 8)]
     public class GetListItem : PnPWebCmdlet
     {
         private const string ParameterSet_BYID = "By Id";
@@ -59,7 +63,6 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list", ParameterSetName = ParameterSet_BYQUERY)]
         public string Query;
-
 
         [Parameter(Mandatory = false, HelpMessage = "The server relative URL of a list folder from which results will be returned.", ParameterSetName = ParameterSet_BYQUERY)]
         [Parameter(Mandatory = false, HelpMessage = "The server relative URL of a list folder from which results will be returned.", ParameterSetName = ParameterSet_ALLITEMS)]
