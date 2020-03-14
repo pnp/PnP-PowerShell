@@ -622,7 +622,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         context.ExecuteQueryRetry();
                     }
 #if !ONPREMISES
-                    catch (NotSupportedException nox)
+                    catch (NotSupportedException)
                     {
 #if NETSTANDARD2_1
                         // Legacy auth is not supported with .NET Standard
@@ -860,15 +860,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     return true;
                 }
             }
-            catch (ClientRequestException x1)
+            catch (ClientRequestException)
             {
                 return false;
             }
-            catch (ServerException x2)
+            catch (ServerException)
             {
                 return false;
             }
-            catch (WebException x3)
+            catch (WebException)
             {
                 return false;
             }

@@ -50,7 +50,9 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         protected override void ExecuteCmdlet()
         {
             // Following code to handle deprecated parameter
+#pragma warning disable CS0618 // Type or member is obsolete
             if (ParameterSpecified(nameof(FromSite)))
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 Scope = CustomActionScope.Site;
             }

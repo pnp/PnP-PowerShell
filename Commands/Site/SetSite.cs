@@ -344,7 +344,9 @@ namespace SharePointPnP.PowerShell.Commands.Site
                 DisableFlows.HasValue ||
                 DisableSharingForNonOwners.IsPresent ||
                 LocaleId.HasValue ||
+#pragma warning disable CS0618 // Type or member is obsolete
                 !string.IsNullOrEmpty(NewUrl) ||
+#pragma warning restore CS0618 // Type or member is obsolete
                 RestrictedToGeo.HasValue ||
                 SocialBarOnSitePagesDisabled.HasValue;
     }
