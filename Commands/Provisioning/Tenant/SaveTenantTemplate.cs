@@ -4,6 +4,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.IO;
@@ -16,22 +17,44 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
     [CmdletHelp("Saves a PnP provisioning hierarchy to the file system",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Save-PnPTenantTemplate -Template $template -Out .\tenanttemplate.pnp",
+       Code = @"PS:> Save-PnPTenantTemplate -Template template.xml -Out .\tenanttemplate.pnp",
        Remarks = "Saves a PnP tenant template to the file system",
        SortOrder = 1)]
+    [CmdletExample(
+       Code = @"PS:> $template = Read-PnPTenantTemplate -Path template.xml
+PS:> Save-PnPTenantTemplate -Template $template -Out .\template.pnp",
+       Remarks = "Saves a PnP tenant template to the file system as a PnP file. The schema used will the latest released schema when creating the PnP file regardless of the original schema",
+       SortOrder = 2)]
+    [CmdletExample(
+       Code = @"PS:> $template = Read-PnPTenantTemplate -Path template.xml
+PS:> Save-PnPTenantTemplate -Template $template -Out .\template.pnp -Schema V202002",
+       Remarks = "Saves a PnP tenant template to the file system as a PnP file and converts the template in the PnP file to the specified schema.",
+       SortOrder = 3)]
+    [CmdletExample(
+       Code = @"PS:> Read-PnPTenantTemplate -Path template.xml | Save-PnPTenantTemplate -Out .\template.pnp",
+       Remarks = "Saves a PnP tenant template to the file system as a PnP file.",
+       SortOrder = 4)]
     public class SaveTenantTemplate : PSCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Allows you to provide an in-memory instance of a Tenant Template. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
-        public ProvisioningHierarchy Template;
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Allows you to provide an in-memory instance of a Tenant Template or a filename of a template file in XML format. When using this parameter, the -Out parameter refers to the path for saving the template and storing any supporting file for the template.")]
+        public ProvisioningHierarchyPipeBind Template;
 
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Filename to write to, optionally including full path.")]
         public string Out;
+
+        [Parameter(Mandatory = false, HelpMessage = "The optional schema to use when creating the PnP file. Always defaults to the latest schema.")]
+        public XMLPnPSchemaVersion Schema = XMLPnPSchemaVersion.LATEST;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
 
         protected override void ProcessRecord()
         {
+            var templateObject = Template.GetTemplate(SessionState.Path.CurrentFileSystemLocation.Path, (e) =>
+             {
+                 WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+             });
+
             // Determine the output file name and path
             string outFileName = Path.GetFileName(Out);
 
@@ -74,7 +97,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
             var fileSystemConnector = new FileSystemConnector(outPath, "");
 
-            ITemplateFormatter formatter = XMLPnPSchemaFormatter.LatestFormatter;
+            var formatter = ProvisioningHelper.GetFormatter(Schema);
 
             if (extension == ".pnp")
             {
@@ -82,12 +105,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 IsolatedStorage.InitializeIsolatedStorage();
 #endif
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
-
                 XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                       Out, fileSystemConnector, templateFileName: templateFileName);
                 WriteObject("Processing template");
-                provider.SaveAs(Template, templateFileName);
-                ProcessFiles(Template, Out, fileSystemConnector, provider.Connector, (message) =>
+                provider.SaveAs(templateObject, templateFileName, formatter);
+                ProcessFiles(templateObject, Out, fileSystemConnector, provider.Connector, (message) =>
                 {
                     WriteObject(message);
                 });
@@ -95,7 +117,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
             else
             {
                 XMLTemplateProvider provider = new XMLFileSystemTemplateProvider(outPath, "");
-                provider.SaveAs(Template, Out);
+                provider.SaveAs(templateObject, Out, formatter);
             }
         }
 

@@ -11,6 +11,7 @@ using System.Management.Automation;
 using System.Xml.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
+using SharePointPnP.PowerShell.Commands.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Provisioning
 {
@@ -226,84 +227,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
             template.Files.AddRange(EnumerateFiles(folder, ctid, Properties));
 
-            var formatter = GetTemplateFormatterFromSchema(schema);
+            var formatter = ProvisioningHelper.GetFormatter(schema);
             var outputStream = formatter.ToFormattedTemplate(template);
             StreamReader reader = new StreamReader(outputStream);
 
             return reader.ReadToEnd();
-        }
-
-        private static ITemplateFormatter GetTemplateFormatterFromSchema(XMLPnPSchemaVersion schema)
-        {
-            ITemplateFormatter formatter = null;
-            switch (schema)
-            {
-                case XMLPnPSchemaVersion.LATEST:
-                    {
-                        formatter = XMLPnPSchemaFormatter.LatestFormatter;
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201503:
-                    {
-#pragma warning disable CS0618 // Type or member is obsolete
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03);
-#pragma warning restore CS0618 // Type or member is obsolete
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201505:
-                    {
-#pragma warning disable CS0618 // Type or member is obsolete
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
-#pragma warning disable CS0618 // Type or member is obsolete
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201508:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201512:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201605:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201705:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201801:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201805:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201807:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_07);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201903:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201909:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_09);
-                        break;
-                    }
-            }
-            return formatter;
         }
 
         private List<OfficeDevPnP.Core.Framework.Provisioning.Model.File> EnumerateFiles(string folder, string ctid, Hashtable properties)
