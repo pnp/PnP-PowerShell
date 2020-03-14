@@ -17,6 +17,10 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using SharePointPnP.PowerShell.Commands.Model;
+using System.Security.Cryptography.X509Certificates;
+using System.Security;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
