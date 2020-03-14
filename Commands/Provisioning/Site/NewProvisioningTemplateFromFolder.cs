@@ -52,7 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        SortOrder = 8)]
     [CmdletRelatedLink(
        Text ="Encoding", 
-       Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
+       Url = "https://docs.microsoft.com/dotnet/api/system.text.encoding")]
 
     public class NewProvisioningTemplateFromFolder : PnPWebCmdlet
     {
