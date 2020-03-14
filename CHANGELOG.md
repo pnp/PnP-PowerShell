@@ -9,12 +9,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `-FolderServerRelativeUrl` argument to `Get-PnPListItem` to allow for retrieval of only those list items located in a specific folder inside a list [PR #2546](https://github.com/SharePoint/PnP-PowerShell/pull/2546)
+
 ### Changed
 
 - Save-PnPProvisioningTemplate and Save-PnPTenantTemplate now support XML file as input without the need to first read them into a variable with Read-PnPProvisioningTemplate or Read-PnPTenantTemplate
 - Added -Schema parameter to Save-PnPProvisioningTemplate and Save-PnPTenantTemplate to force a specific schema for the embedded template. If not specified it defaults always to the latest released template.
 
 ### Contributors
+
+- Giacomo Pozzoni [jackpoz]
 
 ## [3.19.2003.0]
 
