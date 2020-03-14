@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [CmdletHelp("Retrieves list items",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee539951(v=office.15)")]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks",
         Remarks = "Retrieves all list items from the Tasks list",
