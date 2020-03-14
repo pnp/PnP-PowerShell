@@ -623,6 +623,8 @@
     <Compile Include="Base\PipeBinds\ApplyConfigurationPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ExtractConfigurationPipeBind.cs" />
     <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ProvisioningTemplatePipeBind.cs" />
+    <Compile Include="Base\PipeBinds\ProvisioningHierarchyPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignTaskPipeBind.cs" />
@@ -866,6 +868,7 @@
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="Utilities\IsolatedStorage.cs" />
     <Compile Include="Utilities\OperatingSystem.cs" />
+    <Compile Include="Utilities\ProvisioningHelper.cs" />
     <Compile Include="Utilities\REST\MetadataType.cs" />
     <Compile Include="Utilities\REST\RestHelper.cs" />
     <Compile Include="Utilities\REST\RestRequest.cs" />
