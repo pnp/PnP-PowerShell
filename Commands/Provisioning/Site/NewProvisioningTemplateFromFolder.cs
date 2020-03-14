@@ -208,7 +208,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             XElement xElement = XElement.Parse(xml);
             // Get the Files Element
 
-            XNamespace pnp = null;
+            XNamespace pnp;
             switch (Schema)
             {
                 case XMLPnPSchemaVersion.V201503:
@@ -264,11 +264,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         private string GetFiles(XMLPnPSchemaVersion schema, string folder, string ctid)
         {
-            ProvisioningTemplate template = new ProvisioningTemplate();
-            template.Id = "FOLDEREXPORT";
-            template.Security = null;
-            template.Features = null;
-            template.ComposedLook = null;
+            ProvisioningTemplate template = new ProvisioningTemplate
+            {
+                Id = "FOLDEREXPORT",
+                Security = null,
+                Features = null,
+                ComposedLook = null
+            };
 
             template.Files.AddRange(EnumerateFiles(folder, ctid, Properties));
 
