@@ -27,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.SiteDesigns
        SortOrder = 3)]
     public class GetSiteDesignTask : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The ID of the site design to apply.")]
+        [Parameter(Mandatory = false, HelpMessage = "The ID of the site design task to retrieve.")]
         public TenantSiteDesignTaskPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "The URL of the site collection where the site design will be applied. If not specified the design will be applied to the site you connected to with Connect-PnPOnline.")]
@@ -42,8 +42,8 @@ namespace SharePointPnP.PowerShell.Commands.SiteDesigns
                 if (Identity != null)
                 {
                     var task = Tenant.GetSiteDesignTask(tenantContext, Identity.Id);
-                    ClientContext.Load(task);
-                    ClientContext.ExecuteQueryRetry();
+                    tenantContext.Load(task);
+                    tenantContext.ExecuteQueryRetry();
                     WriteObject(task);
                 }
                 else
@@ -63,6 +63,8 @@ namespace SharePointPnP.PowerShell.Commands.SiteDesigns
                         }
                     }
                     var tasks = tenant.GetSiteDesignTasks(webUrl);
+                    tenantContext.Load( tasks );
+                    tenantContext.ExecuteQueryRetry();
                     WriteObject(tasks, true);
                 }
             }
