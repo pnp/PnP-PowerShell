@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.SiteDesigns
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteDesignTask", SupportsShouldProcess = true)]
-    [CmdletHelp(@"Similar to Invoke-PnPSiteDesign, this command is used to apply a published site design to a specified site collection target. It schedules the operation, allowing for the application of larger site scripts (Invoke-PnPSiteDesign is limited to 30 actions and subactions). ",
+    [CmdletHelp(@"Similar to Invoke-PnPSiteDesign, this command is used to apply a published site design to a specified site collection target. It schedules the operation, allowing for the application of larger site scripts (Invoke-PnPSiteDesign is limited to 30 actions and subactions).",
        Category = CmdletHelpCategory.TenantAdmin,
         Description = @"This command is used to apply a published site design to a specified site collection target. It schedules the operation, allowing for the application of larger site scripts (Invoke-PnPSiteDesign is limited to 30 actions and subactions).
 This command is intended to replace Invoke-PnPSiteDesign and is useful when you need to apply a large number of actions or multiple site scripts.",
@@ -51,10 +51,10 @@ This command is intended to replace Invoke-PnPSiteDesign and is useful when you 
                 }
                 try
                 {
-                    var designTask = Tenant.AddSiteDesignTask( tenantContext, webUrl, SiteDesignId.Id );
-                    tenantContext.Load( designTask );
+                    var designTask = Tenant.AddSiteDesignTask(tenantContext, webUrl, SiteDesignId.Id);
+                    tenantContext.Load(designTask);
                     tenantContext.ExecuteQueryRetry();
-                    WriteObject( designTask );
+                    WriteObject(designTask);
                 }
                 catch (System.Net.WebException ex)
                 {
@@ -64,7 +64,7 @@ This command is intended to replace Invoke-PnPSiteDesign and is useful when you 
                         if (null != webResponse && 
                             webResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
                         {
-                            WriteObject( "The server threw an exception (see below). It seems you may not have access to the server or you are executing this script outside of the tenant admin URL eg. yourtenant-admin.sharepoint.com. Please Connect to the tenant URL first and try again." );
+                            WriteObject("The server threw an exception (see below). It seems you may not have access to the server or you are executing this script outside of the tenant admin URL eg. yourtenant-admin.sharepoint.com. Please connect to the tenant admin URL first and try again.");
                         }
                     }
                     WriteObject( ex );
