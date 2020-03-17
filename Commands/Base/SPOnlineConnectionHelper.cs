@@ -269,7 +269,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     progressCallback("No token received.");
                 }
-            }            
+            }
             return spoConnection;
         }
 
@@ -389,7 +389,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry,InitializationType.AADAppOnly);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
             return spoConnection;
         }
@@ -506,6 +506,17 @@ namespace SharePointPnP.PowerShell.Commands.Base
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
+
+            // Retrieve Graph certificate
+
+            ClientAssertionCertificate cac = new ClientAssertionCertificate(clientId, certificate);
+            AuthenticationContext authContext = new AuthenticationContext($"https://login.microsoftonline.com/{tenant}");
+            AuthenticationResult result = authContext.AcquireTokenAsync("https://graph.microsoft.com", cac).GetAwaiter().GetResult();
+            if (result != null)
+            {
+                spoConnection.AccessToken = result.AccessToken;
+            }
+
             if (certificateFromFile)
             {
                 spoConnection.CertFile = certificate;
