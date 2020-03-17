@@ -10,12 +10,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
-- Connect-PnPOnline with clientid and certificate will now, if API permissions have been granted for the Graph work with the PnP Graph Cmdlets. [PR #2515](https://github.com/SharePoint/PnP-PowerShell/pull/2515)
+- Connect-PnPOnline with clientid and certificate will now, if API permissions have been granted for the Graph work with the PnP Graph Cmdlets. [PR # 2515](https://github.com/SharePoint/PnP-PowerShell/pull/2515)
 - Save-PnPProvisioningTemplate and Save-PnPTenantTemplate now support XML file as input without the need to first read them into a variable with Read-PnPProvisioningTemplate or Read-PnPTenantTemplate
 - Added -Schema parameter to Save-PnPProvisioningTemplate and Save-PnPTenantTemplate to force a specific schema for the embedded template. If not specified it defaults always to the latest released template.
+- Uploading files using `Add-PnPFile` no longer requires Site Owner rights on the entire site. Read rights on the site and at least contribute rights on the document library where the file needs to be uploaded to will suffice as long as the target folder already exists. [PR # 2478](https://github.com/SharePoint/PnP-PowerShell/pull/2478)
 
 ### Contributors
 - Lane Blundell [fastlaneb]
+- Giacomo Pozzoni [jackpoz]
 
 ## [3.19.2003.0]
 
