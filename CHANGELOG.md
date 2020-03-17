@@ -13,8 +13,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Save-PnPProvisioningTemplate and Save-PnPTenantTemplate now support XML file as input without the need to first read them into a variable with Read-PnPProvisioningTemplate or Read-PnPTenantTemplate
 - Added -Schema parameter to Save-PnPProvisioningTemplate and Save-PnPTenantTemplate to force a specific schema for the embedded template. If not specified it defaults always to the latest released template.
+- Use of `Set-PnPSite` in combination with `-Owners`, `-NoScriptSite`, `-LocaleId` and/or `-AllowSelfServiceUpgrade` is now possible on SharePoint 2013, 2016 and 2019 as well [PR # 2293](https://github.com/SharePoint/PnP-PowerShell/pull/2293)
 
 ### Contributors
+
+- Jens Otto Hatlevold [jensotto]
 
 ## [3.19.2003.0]
 
