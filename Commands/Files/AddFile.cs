@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletHelp("Uploads a file to Web",
         Category = CmdletHelpCategory.Files,
         OutputType = typeof(Microsoft.SharePoint.Client.File),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee539248(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Add-PnPFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage""",
         Remarks = "This will upload the file company.master to the masterpage catalog",
