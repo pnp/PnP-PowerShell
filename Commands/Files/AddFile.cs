@@ -129,11 +129,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 }
             }
 
-            var folder = GetFolder();
+            var folder = EnsureFolder();
             var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName);
 
             ContentType targetContentType = null;
-            //Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
+            // Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
                 try
@@ -235,7 +235,11 @@ namespace SharePointPnP.PowerShell.Commands.Files
             WriteObject(file);
         }
 
-        private Folder GetFolder()
+        /// <summary>
+        /// Ensures the folder to which the file is to be uploaded exists. Changed from using the EnsureFolder implementation in PnP Sites Core as that requires at least member rights to the entire site to work.
+        /// </summary>
+        /// <returns>The folder to which the file needs to be uploaded</returns>
+        private Folder EnsureFolder()
         {
             // First try to get the folder if it exists already. This avoids an Access Denied exception if the current user doesn't have Full Control access at Web level
             SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
@@ -252,9 +256,10 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 folder.EnsureProperties(f => f.ServerRelativeUrl);
                 return folder;
             }
+            // Exception will be thrown if the folder does not exist yet on SharePoint
             catch (ServerException serverEx) when (serverEx.ServerErrorCode == -2147024894)
             {
-                // If the folder doesn't exist, create it
+                // Try to create the folder
                 folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
                 folder.EnsureProperties(f => f.ServerRelativeUrl);
                 return folder;
