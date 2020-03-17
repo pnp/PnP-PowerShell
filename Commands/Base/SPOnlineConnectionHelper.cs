@@ -269,7 +269,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     progressCallback("No token received.");
                 }
-            }            
+            }
             return spoConnection;
         }
 
@@ -389,7 +389,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry,InitializationType.AADAppOnly);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
             return spoConnection;
         }
@@ -507,11 +507,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
 
-            //Adding code to add a graph token when connecting with the certifcate thumbprint method
-            Microsoft.IdentityModel.Clients.ActiveDirectory.ClientAssertionCertificate cac = new Microsoft.IdentityModel.Clients.ActiveDirectory.ClientAssertionCertificate(clientId, certificate);
-            Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext authContext = new Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext($"https://login.microsoftonline.com/{tenant}");
-            Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationResult result = authContext.AcquireTokenAsync("https://graph.microsoft.com", cac).GetAwaiter().GetResult();
-            spoConnection.AccessToken = result.AccessToken;
+            // Retrieve Graph certificate
+
+            ClientAssertionCertificate cac = new ClientAssertionCertificate(clientId, certificate);
+            AuthenticationContext authContext = new AuthenticationContext($"https://login.microsoftonline.com/{tenant}");
+            AuthenticationResult result = authContext.AcquireTokenAsync("https://graph.microsoft.com", cac).GetAwaiter().GetResult();
+            if (result != null)
+            {
+                spoConnection.AccessToken = result.AccessToken;
+            }
 
             if (certificateFromFile)
             {
