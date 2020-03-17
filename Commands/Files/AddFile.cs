@@ -133,13 +133,12 @@ namespace SharePointPnP.PowerShell.Commands.Files
             var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName);
 
             ContentType targetContentType = null;
-            // Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
+            // Check to see if the Content Type exists. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
                 try
                 {
                     var list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
-
 
                     if (!string.IsNullOrEmpty(ContentType.Id))
                     {
