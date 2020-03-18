@@ -570,6 +570,7 @@
     <Compile Include="Admin\GetHomeSite.cs" />
     <Compile Include="Admin\GetHubSiteChild.cs" />
     <Compile Include="Admin\GetTenantId.cs" />
+    <Compile Include="Admin\RegisterAppCatalogSite.cs" />
     <Compile Include="Base\BasePSCmdlet.cs" />
     <Compile Include="Apps\AddApplicationCustomizer.cs" />
     <Compile Include="Apps\GetApplicationCustomizer.cs" />
