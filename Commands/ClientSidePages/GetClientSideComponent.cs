@@ -1,16 +1,15 @@
 ﻿#if !SP2013 && !SP2016
-using OfficeDevPnP.Core.Pages;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Get, "PnPClientSideComponent")]
-    [CmdletHelp("Retrieve one or more Client-Side components from a page",
+    [CmdletHelp("Retrieve one or more Client-Side components from a site page",
+        DetailedDescription = "This command allows the retrieval of the components placed on a modern sitepage along with its properties. Note that for a newly created modern site, the Home.aspx page will not be returning any components. This is because the underlying CanvasContent1 will not be populated until the homepage has been edited and published. The reason for this behavior is to allow for the default homepage to be able to be updated by Microsoft as long as it hasn't been modified. For any other site page or after editing and publishing the homepage, this command will return the correct components as they are positioned on the site page.",
         Category = CmdletHelpCategory.WebParts,
         SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
