@@ -5,6 +5,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Enums;
 using System;
+using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands
 {
@@ -160,7 +161,7 @@ namespace SharePointPnP.PowerShell.Commands
                 }
                 creationInformation.Owners = _teamSiteParameters.Owners;
 
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait:!Wait);
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait:!Wait, graphAccessToken: SPOnlineConnection.CurrentConnection.AccessToken);
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
