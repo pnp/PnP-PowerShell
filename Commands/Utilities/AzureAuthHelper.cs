@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.ActiveDirectory.GraphClient;
 using Microsoft.Azure.ActiveDirectory.GraphClient.Internal;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 
             var authority = $"https://login.microsoftonline.com/{tenantId}";
             var scopes = new string[] { "https://graph.microsoft.com/.default" };
-            var app = new Microsoft.Identity.Client.PublicClientApplication(authority, CLIENTID);
-            var result = await app.AcquireTokenAsync(scopes, "bla");
-            return result.Token;
+            var app = PublicClientApplicationBuilder.Create(CLIENTID).WithAuthority(authority).Build();
+            var result = await app.AcquireTokenInteractive(scopes).ExecuteAsync();
+            return result.AccessToken;
         }
 
         internal static void UploadCert(string accessToken, string appId, string certPath)

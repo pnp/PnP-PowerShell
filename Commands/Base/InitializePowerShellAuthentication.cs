@@ -161,6 +161,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     scopes.Add(permissionScopes.GetScope("Sites.FullControl.All"));
                     scopes.Add(permissionScopes.GetScope("Group.ReadWrite.All"));
+                    scopes.Add(permissionScopes.GetScope("User.Read.All"));
                 }
 
                 var scopesPayload = GetScopesPayload(scopes);
