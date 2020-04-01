@@ -416,6 +416,9 @@
     <Reference Include="Microsoft.ApplicationInsights, Version=2.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.8.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.ActiveDirectory.GraphClient, Version=2.1.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.ActiveDirectory.GraphClient.2.1.1\lib\portable-net4+sl5+win+wpa+wp8\Microsoft.Azure.ActiveDirectory.GraphClient.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.8.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
@@ -580,6 +583,7 @@
     <Compile Include="Admin\GetOrgNewsSite.cs" />
     <Compile Include="Admin\RemoveOrgNewsSite.cs" />
     <Compile Include="Admin\AddOrgNewsSite.cs" />
+    <Compile Include="Base\InitializePowerShellAuthentication.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
@@ -626,6 +630,7 @@
     <Compile Include="Base\PipeBinds\AlertPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ApplyConfigurationPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ExtractConfigurationPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TeamPipeBind.cs" />
     <Compile Include="Base\PipeBinds\PagePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningTemplatePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningHierarchyPipeBind.cs" />
@@ -664,6 +669,7 @@
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
     <Compile Include="ManagementApi\GetManagementApiAccessToken.cs" />
     <Compile Include="ManagementApi\GetUnifiedAuditLog.cs" />
+    <Compile Include="Model\AzureApp.cs" />
     <Compile Include="Model\ManagementApiSubscription.cs" />
     <Compile Include="Model\ManagementApiSubscriptionContent.cs" />
     <Compile Include="Model\ManagementApiUnifiedLogRecordKeyValuePair.cs" />
@@ -863,14 +869,20 @@
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
     <Compile Include="Taxonomy\NewTermLabel.cs" />
+    <Compile Include="Teams\AddTeamsChannel.cs" />
+    <Compile Include="Teams\RemoveTeamsChannel.cs" />
+    <Compile Include="Teams\GetTeamsTeam.cs" />
+    <Compile Include="Teams\GetTeamsChannel.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />
     <Compile Include="UserProfiles\NewUPABulkImportJob.cs" />
+    <Compile Include="Utilities\AzureAuthHelper.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
     <Compile Include="Utilities\CertificateCrypto.cs" />
     <Compile Include="Utilities\CertificateHelper.cs" />
     <Compile Include="Utilities\Clipboard.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="Utilities\IsolatedStorage.cs" />
+    <Compile Include="Utilities\JwtUtility.cs" />
     <Compile Include="Utilities\OperatingSystem.cs" />
     <Compile Include="Utilities\ProvisioningHelper.cs" />
     <Compile Include="Utilities\REST\MetadataType.cs" />

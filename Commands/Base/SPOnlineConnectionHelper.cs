@@ -497,23 +497,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
 
-            //if (certificateFromFile)
-            //{
-            //    // we keep track of the 
-            //    CleanupCryptoMachineKey(certificate);
-            //}
-
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
 
             // Retrieve Graph certificate
-
+        
             ClientAssertionCertificate cac = new ClientAssertionCertificate(clientId, certificate);
             AuthenticationContext authContext = new AuthenticationContext($"https://login.microsoftonline.com/{tenant}");
             AuthenticationResult result = authContext.AcquireTokenAsync("https://graph.microsoft.com", cac).GetAwaiter().GetResult();
             if (result != null)
             {
+                
                 spoConnection.AccessToken = result.AccessToken;
             }
 
