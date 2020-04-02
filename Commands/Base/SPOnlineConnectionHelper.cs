@@ -21,6 +21,7 @@ using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using SharePointPnP.PowerShell.Commands.Model;
+using Microsoft.Identity.Client;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -502,13 +503,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
 
             // Retrieve Graph certificate
-        
-            ClientAssertionCertificate cac = new ClientAssertionCertificate(clientId, certificate);
-            AuthenticationContext authContext = new AuthenticationContext($"https://login.microsoftonline.com/{tenant}");
-            AuthenticationResult result = authContext.AcquireTokenAsync("https://graph.microsoft.com", cac).GetAwaiter().GetResult();
+
+            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"https://login.microsoftonline.com/{tenant}").WithCertificate(certificate).Build();
+            var result = app.AcquireTokenForClient(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
             if (result != null)
             {
-                
                 spoConnection.AccessToken = result.AccessToken;
             }
 
