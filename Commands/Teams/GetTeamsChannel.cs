@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannel")]
     [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All'.",
-       Category = CmdletHelpCategory.Graph,
+       Category = CmdletHelpCategory.Teams,
        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
       Code = "PS:> Get-PnPUnifiedGroup",
@@ -39,15 +39,26 @@ namespace SharePointPnP.PowerShell.Commands.Teams
     public class GetTeamsChannel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
-        public TeamPipeBind TeamIdentity;
+        public TeamPipeBind Team;
+
+        [Parameter(Mandatory = false)]
+        public string Channel;
 
         protected override void ExecuteCmdlet()
         {
             if (JwtUtility.HasScope(AccessToken, "Group.Read.All") || JwtUtility.HasScope(AccessToken, "Group.ReadWrite.All"))
             {
-                if (ParameterSpecified(nameof(TeamIdentity)))
+                if (ParameterSpecified(nameof(Team)))
                 {
-                    WriteObject(TeamsUtility.GetChannels(AccessToken, TeamIdentity.GetTeamId()), true);
+                    var channels = TeamsUtility.GetChannels(AccessToken, Team.GetTeamId());
+                    if (ParameterSpecified(nameof(Channel)))
+                    {
+                        WriteObject(channels.FirstOrDefault(c => c.DisplayName == Channel || c.ID == Channel));
+                    }
+                    else
+                    {
+                        WriteObject(channels, true);
+                    }
                 }
             }
             else

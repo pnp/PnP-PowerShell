@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam")]
     [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All'.",
-        Category = CmdletHelpCategory.Graph,
+        Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroup",
@@ -38,7 +38,8 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     public class GetTeamsTeam : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
-        public string GroupId;
+        [Alias("GroupId")]
+        public string Id;
 
         [Parameter(Mandatory = false)]
         public TeamIncludes[] Includes;
@@ -57,9 +58,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     includeApps = Includes.Contains(TeamIncludes.Apps);
                     includeSecurity = Includes.Contains(TeamIncludes.Security);
                 }
-                if (ParameterSpecified(nameof(GroupId)))
+                if (ParameterSpecified(nameof(Id)))
                 {
-                    WriteObject(TeamsUtility.GetTeam(AccessToken, GroupId, includeChannels, includeMessages, includeApps, includeSecurity));
+                    WriteObject(TeamsUtility.GetTeam(AccessToken, Id, includeChannels, includeMessages, includeApps, includeSecurity));
                 }
                 else
                 {

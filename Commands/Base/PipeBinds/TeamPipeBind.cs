@@ -14,6 +14,17 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             groupId = id.ToString();
         }
 
+        public TeamPipeBind(string stringId)
+        {
+            if(Guid.TryParse(stringId, out Guid guidId))
+            {
+                groupId = guidId.ToString();
+            } else
+            {
+                throw new ArgumentException("ID is not in correct format, needs to be a GUID");
+            }
+        }
+
         public TeamPipeBind(Team team)
         {
             this.team = team;

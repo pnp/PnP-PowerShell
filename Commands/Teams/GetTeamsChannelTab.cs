@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Teams
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPTeamsChannel")]
+    [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelTab")]
     [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All'.",
        Category = CmdletHelpCategory.Teams,
        SupportedPlatform = CmdletSupportedPlatform.Online)]
@@ -36,34 +36,39 @@ namespace SharePointPnP.PowerShell.Commands.Teams
       Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
       Remarks = "Retrieves a specific Office 365 Group based on its object instance",
       SortOrder = 5)]
-    public class RemoveTeamsChannel : PnPGraphCmdlet
+    public class GetTeamsChannelTab : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
         public TeamPipeBind Team;
 
         [Parameter(Mandatory = true)]
-        public string DisplayName;
+        public string Channel;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
-        public SwitchParameter Force;
+        [Parameter(Mandatory = false)]
+        public string TabIdentity;
 
         protected override void ExecuteCmdlet()
         {
-            if (JwtUtility.HasScope(AccessToken, "Group.ReadWrite.All"))
+            if (JwtUtility.HasScope(AccessToken, "Group.Read.All") || JwtUtility.HasScope(AccessToken, "Group.ReadWrite.All"))
             {
+                
                 if (ParameterSpecified(nameof(Team)))
                 {
-                    if (Force || ShouldContinue("Removing the channel will also remove all the messages in the channel.", Properties.Resources.Confirm))
+                    var tabs = TeamsUtility.GetTabs(AccessToken, Team.GetTeamId(), Channel);
+                    if (ParameterSpecified(nameof(TabIdentity)))
                     {
-                        TeamsUtility.DeleteChannel(AccessToken, Team.GetTeamId(), DisplayName);
+                        WriteObject(tabs.FirstOrDefault(t => t.ID == TabIdentity || t.DisplayName == TabIdentity));
+                    }
+                    else
+                    {
+                        WriteObject(tabs, true);
                     }
                 }
             }
             else
             {
-                WriteWarning("The current access token lacks the Group.ReadWrite.All permission scope");
+                WriteWarning("The current access token lacks the Group.Read.All or equivalent permission scope");
             }
-
         }
     }
 }

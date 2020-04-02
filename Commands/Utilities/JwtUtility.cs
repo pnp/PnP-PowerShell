@@ -13,16 +13,27 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         {
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(accessToken);
-            var scpClaim = token.Claims.FirstOrDefault(c => c.Type == "scp");
-            var rolesClaim = token.Claims.FirstOrDefault(c => c.Type == "roles");
-            if(scpClaim != null)
+            var scpClaims = token.Claims.Where(c => c.Type == "scp");
+            var roleClaims = token.Claims.Where(c => c.Type == "roles");
+            if (scpClaims != null)
             {
-                // delegated token
-                return scpClaim.Value.Contains(scope);
+                foreach (var scpClaim in scpClaims)
+                {
+                    if (scpClaim.Value.Contains(scope))
+                    {
+                        return true;
+                    }
+                }
             }
-            if(rolesClaim != null)
+            if (roleClaims != null)
             {
-                return rolesClaim.Value.Contains(scope);
+                foreach (var roleClaim in roleClaims)
+                {
+                    if (roleClaim.Value.Contains(scope))
+                    {
+                        return true;
+                    }
+                }
             }
             return false;
         }

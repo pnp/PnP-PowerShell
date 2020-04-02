@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Teams
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPTeamsChannel")]
-    [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All'.",
+    [Cmdlet(VerbsCommon.Remove, "PnPTeamsChannelTab")]
+    [CmdletHelp("Removes the specified tab from a Microsoft Teams Channel.",
        Category = CmdletHelpCategory.Teams,
        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup",
+      Code = "PS:> Remove-PnPTeamsChannelTab -Team 8fa4ba64-de77-42b4-8985-6bce49f173e6 -Channel  ",
       Remarks = "Retrieves all the Office 365 Groups",
       SortOrder = 1)]
     [CmdletExample(
@@ -36,13 +36,16 @@ namespace SharePointPnP.PowerShell.Commands.Teams
       Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
       Remarks = "Retrieves a specific Office 365 Group based on its object instance",
       SortOrder = 5)]
-    public class RemoveTeamsChannel : PnPGraphCmdlet
+    public class RemoveTeamsChannelTab : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
         public TeamPipeBind Team;
 
         [Parameter(Mandatory = true)]
-        public string DisplayName;
+        public string Channel;
+
+        [Parameter(Mandatory = true)]
+        public string Tab;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
@@ -53,9 +56,9 @@ namespace SharePointPnP.PowerShell.Commands.Teams
             {
                 if (ParameterSpecified(nameof(Team)))
                 {
-                    if (Force || ShouldContinue("Removing the channel will also remove all the messages in the channel.", Properties.Resources.Confirm))
+                    if (Force || ShouldContinue("Remove?", Properties.Resources.Confirm))
                     {
-                        TeamsUtility.DeleteChannel(AccessToken, Team.GetTeamId(), DisplayName);
+                        TeamsUtility.DeleteTab(AccessToken, Team.GetTeamId(), Channel, Tab);
                     }
                 }
             }

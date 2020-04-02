@@ -38,70 +38,82 @@ namespace SharePointPnP.PowerShell.Commands.Model
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "bf7b1a76-6e77-406b-b258-bf5c7720e98f",
-                Identifier = "Group.Create"
+                Identifier = "MSGraph.Group.Create"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "5b567255-7703-4780-807c-7be8301ae99b",
-                Identifier = "Group.Read.All"
+                Identifier = "MSGraph.Group.Read.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "62a82d76-70ea-41e2-9197-370581804d09",
-                Identifier = "Group.ReadWrite.All"
+                Identifier = "MSGraph.Group.ReadWrite.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "5ef47bde-23a3-4cfb-be03-6ab63044aec6",
-                Identifier = "Group.Select"
+                Identifier = "MSGraph.Group.Select"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "98830695-27a2-44f7-8c18-0c3ebc9698f6",
-                Identifier = "GroupMember.Read.All"
+                Identifier = "MSGraph.GroupMember.Read.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "dbaae8cf-10b5-4b86-a4a1-f871c94c6695",
-                Identifier = "GroupMember.ReadWrite.All"
+                Identifier = "MSGraph.GroupMember.ReadWrite.All"
             });
 
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "01d4889c-1287-42c6-ac1f-5d1e02578ef6",
-                Identifier = "Files.Read.All"
+                Identifier = "MSGraph.Files.Read.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "75359482-378d-4052-8f01-80520e7db3cd",
-                Identifier = "Files.ReadWrite.All"
+                Identifier = "MSGraph.Files.ReadWrite.All"
             });
 
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "b0afded3-3588-46d8-8b3d-9842eff778da",
-                Identifier = "AuditLog.Read.All"
+                Identifier = "MSGraph.AuditLog.Read.All"
             });
 
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "798ee544-9d2d-430c-a058-570e29e34338",
-                Identifier = "Calendars.Read"
+                Identifier = "MSGraph.Calendars.Read"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0000-c000-000000000000",
                 Id = "ef54d2bf-783f-4e0f-bca1-3210c0444d99",
-                Identifier = "Calendars.ReadWrite"
+                Identifier = "MSGraph.Calendars.ReadWrite"
+            });
+            scopes.Add(new PermissionScope()
+            {
+                resourceAppId = "00000003-0000-0000-c000-000000000000",
+                Id = "df021288-bdef-4463-88db-98f22de89214",
+                Identifier = "MSGraph.User.Read.All"
+            });
+            scopes.Add(new PermissionScope()
+            {
+                resourceAppId = "00000003-0000-0000-c000-000000000000",
+                Id = "741f803b-c850-494e-b5df-cde7c675a1ca",
+                Identifier = "MSGraph.User.ReadWrite.All"
             });
             #endregion
             #region SPO
@@ -110,49 +122,49 @@ namespace SharePointPnP.PowerShell.Commands.Model
             {
                 resourceAppId = "00000003-0000-0ff1-ce00-000000000000",
                 Id = "678536fe-1083-478a-9c59-b99265e6b0d3",
-                Identifier = "Sites.FullControl.All"
+                Identifier = "SPO.Sites.FullControl.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0ff1-ce00-000000000000",
                 Id = "fbcd29d2-fcca-4405-aded-518d457caae4",
-                Identifier = "Sites.ReadWrite.All"
+                Identifier = "SPO.Sites.ReadWrite.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0ff1-ce00-000000000000",
                 Id = "9bff6588-13f2-4c48-bbf2-ddab62256b36",
-                Identifier = "Sites.Manage.All"
+                Identifier = "SPO.Sites.Manage.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0ff1-ce00-000000000000",
                 Id = "d13f72ca-a275-4b96-b789-48ebcc4da984",
-                Identifier = "Sites.Read.All"
+                Identifier = "SPO.Sites.Read.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0ff1-ce00-000000000000",
                 Id = "2a8d57a5-4090-4a41-bf1c-3c621d2ccad3",
-                Identifier = "TermStore.Read.All"
+                Identifier = "SPO.TermStore.Read.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0ff1-ce00-000000000000",
                 Id = "c8e3537c-ec53-43b9-bed3-b2bd3617ae97",
-                Identifier = "TermStore.ReadWrite.All"
+                Identifier = "SPO.TermStore.ReadWrite.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0ff1-ce00-000000000000",
                 Id = "df021288-bdef-4463-88db-98f22de89214",
-                Identifier = "User.Read.All"
+                Identifier = "SPO.User.Read.All"
             });
             scopes.Add(new PermissionScope()
             {
                 resourceAppId = "00000003-0000-0ff1-ce00-000000000000",
                 Id = "741f803b-c850-494e-b5df-cde7c675a1ca",
-                Identifier = "User.ReadWrite.All"
+                Identifier = "SPO.User.ReadWrite.All"
             });
             #endregion
         }

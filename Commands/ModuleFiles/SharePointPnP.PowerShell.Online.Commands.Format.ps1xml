@@ -2119,9 +2119,6 @@
           <TableColumnHeader>
             <Label>DisplayName</Label>
           </TableColumnHeader>
-          <TableColumnHeader>
-            <Label>TeamsAppId</Label>
-          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -2131,9 +2128,6 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>DisplayName</PropertyName>
-              </TableColumnItem>
-              <TableColumnItem>
-                <PropertyName>TeamsAppId</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
