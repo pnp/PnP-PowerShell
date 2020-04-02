@@ -193,8 +193,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 var azureApp = JsonConvert.DeserializeObject<AzureApp>(postResult);
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
-                //var appResult = HttpHelper.MakeGetRequestForString($"https://graph.microsoft.com/beta/applications/{azureApp.Id}", token);
-
                 var waitTime = 20;
                 this.Host.UI.Write(ConsoleColor.Yellow, this.Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window.");
                 for (var i = 0; i < waitTime; i++)
@@ -210,7 +208,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     this.Host.UI.WriteLine(ConsoleColor.Red, this.Host.UI.RawUI.BackgroundColor, message);
                 });
-                //OpenBrowser(consentUrl);
                 WriteObject(record);
             }
 
@@ -242,35 +239,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 else
                 {
                     return null;
-                }
-            }
-        }
-
-        private static void OpenBrowser(string url)
-        {
-            try
-            {
-                Process.Start(url);
-            }
-            catch
-            {
-                // hack because of this: https://github.com/dotnet/corefx/issues/10361
-                if (Utilities.OperatingSystem.IsWindows())
-                {
-                    url = url.Replace("&", "^&");
-                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
-                }
-                else if (Utilities.OperatingSystem.IsLinux())
-                {
-                    Process.Start("xdg-open", url);
-                }
-                else if (Utilities.OperatingSystem.IsMacOS())
-                {
-                    Process.Start("open", url);
-                }
-                else
-                {
-                    throw;
                 }
             }
         }

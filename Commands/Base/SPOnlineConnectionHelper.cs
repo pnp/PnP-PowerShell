@@ -21,6 +21,8 @@ using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using SharePointPnP.PowerShell.Commands.Model;
+using Microsoft.Identity.Client;
+using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -132,65 +134,75 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
+            
             SPOnlineConnection spoConnection = null;
             var connectionUri = new Uri(url);
-            HttpClient client = new HttpClient();
-            var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
-            var returnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-            var context = new ClientContext(url);
-            messageCallback(returnData["message"]);
 
-            if (launchBrowser)
+            var app = PublicClientApplicationBuilder.Create(SPOnlineConnection.DeviceLoginAppId).Build();
+            app.AcquireTokenWithDeviceCode(new[] { "{connectionUri.Scheme}://{connectionUri.Host}" }, (result) =>
             {
-                Utilities.Clipboard.Copy(returnData["user_code"]);
-                messageCallback("Code has been copied to clipboard");
-#if !NETSTANDARD2_1
-                BrowserHelper.OpenBrowser(returnData["verification_url"], (success) =>
-                {
-                    if (success)
-                    {
-                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-                        if (tokenResult != null)
-                        {
-                            progressCallback("Token received");
-                            spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
-                        }
-                        else
-                        {
-                            progressCallback("No token received.");
-                        }
-                    }
-                });
-#else
-                OpenBrowser(returnData["verification_url"]);
-                messageCallback(returnData["message"]);
+                Utilities.Clipboard.Copy(result.DeviceCode);
+                messageCallback(result.Message);
+                return Task.FromResult(0);
+            });
 
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
+//            HttpClient client = new HttpClient();
+//            var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
+//            var returnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+//            var context = new ClientContext(url);
+//            messageCallback(returnData["message"]);
 
-                if (tokenResult != null)
-                {
-                    progressCallback("Token received");
-                    spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
-                }
-                else
-                {
-                    progressCallback("No token received.");
-                }
-#endif
-            }
-            else
-            {
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-                if (tokenResult != null)
-                {
-                    progressCallback("Token received");
-                    spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
-                }
-                else
-                {
-                    progressCallback("No token received.");
-                }
-            }
+//            if (launchBrowser)
+//            {
+//                Utilities.Clipboard.Copy(returnData["user_code"]);
+//                messageCallback("Code has been copied to clipboard");
+//#if !NETSTANDARD2_1
+//                BrowserHelper.OpenBrowser(returnData["verification_url"], (success) =>
+//                {
+//                    if (success)
+//                    {
+//                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
+//                        if (tokenResult != null)
+//                        {
+//                            progressCallback("Token received");
+//                            spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
+//                        }
+//                        else
+//                        {
+//                            progressCallback("No token received.");
+//                        }
+//                    }
+//                });
+//#else
+//                OpenBrowser(returnData["verification_url"]);
+//                messageCallback(returnData["message"]);
+
+//                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
+
+//                if (tokenResult != null)
+//                {
+//                    progressCallback("Token received");
+//                    spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
+//                }
+//                else
+//                {
+//                    progressCallback("No token received.");
+//                }
+//#endif
+//            }
+//            else
+//            {
+//                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
+//                if (tokenResult != null)
+//                {
+//                    progressCallback("Token received");
+//                    spoConnection = new SPOnlineConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
+//                }
+//                else
+//                {
+//                    progressCallback("No token received.");
+//                }
+//            }
             spoConnection.ConnectionMethod = ConnectionMethod.DeviceLogin;
             return spoConnection;
         }
@@ -208,6 +220,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
+         
             var connectionUri = new Uri("https://graph.microsoft.com");
             HttpClient client = new HttpClient();
             var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
