@@ -297,7 +297,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
             using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
             {
                 // Get Azure AD Token
-                if (AccessToken != null)
+                if (AccessToken != null && resource.StartsWith("https://graph.microsoft.com",StringComparison.OrdinalIgnoreCase))
                 {
                     // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
                     return Task.FromResult(AccessToken);
