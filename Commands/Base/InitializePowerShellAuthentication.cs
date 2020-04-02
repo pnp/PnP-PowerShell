@@ -42,7 +42,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public string CertificatePath;
 
         [Parameter(Mandatory = false, HelpMessage = "Common Name (e.g. server FQDN or YOUR name). defaults to 'pnp.contoso.com'", Position = 0, ParameterSetName = ParameterSet_NEWCERT)]
-        public string CommonName = "pnp.contoso.com";
+        public string CommonName;
 
         [Parameter(Mandatory = false, HelpMessage = "Country Name (2 letter code)", Position = 1, ParameterSetName = ParameterSet_NEWCERT)]
         public string Country = String.Empty;
@@ -94,6 +94,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 // Generate a certificate
                 var x500Values = new List<string>();
+                if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
+                {
+                    CommonName = ApplicationName;
+                }
                 if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
                 if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
                 if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
@@ -159,9 +163,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    scopes.Add(permissionScopes.GetScope("Sites.FullControl.All"));
-                    scopes.Add(permissionScopes.GetScope("Group.ReadWrite.All"));
-                    scopes.Add(permissionScopes.GetScope("User.Read.All"));
+                    scopes.Add(permissionScopes.GetScope("SPO.Sites.FullControl.All"));
+                    scopes.Add(permissionScopes.GetScope("MSGraph.Group.ReadWrite.All"));
+                    scopes.Add(permissionScopes.GetScope("SPO.User.Read.All"));
+                    scopes.Add(permissionScopes.GetScope("MSGraph.User.Read.All"));
                 }
 
                 var scopesPayload = GetScopesPayload(scopes);
@@ -193,8 +198,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 var azureApp = JsonConvert.DeserializeObject<AzureApp>(postResult);
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
-                var waitTime = 20;
-                this.Host.UI.Write(ConsoleColor.Yellow, this.Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window.");
+                var waitTime = 60;
+                this.Host.UI.Write(ConsoleColor.Yellow, this.Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
                 for (var i = 0; i < waitTime; i++)
                 {
                     this.Host.UI.Write(ConsoleColor.Yellow, this.Host.UI.RawUI.BackgroundColor, ".");
