@@ -13,29 +13,17 @@ using System.Threading.Tasks;
 namespace SharePointPnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannel")]
-    [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All'.",
+    [CmdletHelp("Gets all of a specific channel from a specific team.",
        Category = CmdletHelpCategory.Teams,
        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup",
-      Remarks = "Retrieves all the Office 365 Groups",
+      Code = "PS:> Get-PnPTeamsChannel -Team 27c42116-6645-419a-a66e-e30f762e7607",
+      Remarks = "Returns all channels for the specified team",
       SortOrder = 1)]
     [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup -Identity $groupId",
-      Remarks = "Retrieves a specific Office 365 Group based on its ID",
+      Code = "PS:> Get-PnPTeamsChannel -Team 27c42116-6645-419a-a66e-e30f762e7607 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype",
+      Remarks = "Returns a specific channel for a team",
       SortOrder = 2)]
-    [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup -Identity $groupDisplayName",
-      Remarks = "Retrieves a specific or list of Office 365 Groups that start with the given DisplayName",
-      SortOrder = 3)]
-    [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup -Identity $groupSiteMailNickName",
-      Remarks = "Retrieves a specific or list of Office 365 Groups for which the email starts with the provided mail nickName",
-      SortOrder = 4)]
-    [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
-      Remarks = "Retrieves a specific Office 365 Group based on its object instance",
-      SortOrder = 5)]
     public class GetTeamsChannel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -46,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            if (JwtUtility.HasScope(AccessToken, "Group.Read.All") || JwtUtility.HasScope(AccessToken, "Group.ReadWrite.All"))
+            if (JwtUtility.HasScope(AccessToken, "Group.Read.All"))
             {
                 if (ParameterSpecified(nameof(Team)))
                 {
@@ -63,7 +51,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
             }
             else
             {
-                WriteWarning("The current access token lacks the Group.Read.All or equivalent permission scope");
+                WriteWarning("The current access token lacks the Group.Read.All permission.");
             }
         }
     }

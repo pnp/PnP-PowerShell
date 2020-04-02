@@ -11,45 +11,30 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsChannel")]
-    [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All'.",
+    [CmdletHelp("Adds a new channel to an existing team. Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup",
-       Remarks = "Retrieves all the Office 365 Groups",
+       Code = "PS:> Add-PnPTeamsChannel -TeamId 27c42116-6645-419a-a66e-e30f762e7607 -DisplayName 'My Test Channel' -Description 'A description'",
+       Remarks = "Adds a new channel to the specified team.",
        SortOrder = 1)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupId",
-       Remarks = "Retrieves a specific Office 365 Group based on its ID",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupDisplayName",
-       Remarks = "Retrieves a specific or list of Office 365 Groups that start with the given DisplayName",
-       SortOrder = 3)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupSiteMailNickName",
-       Remarks = "Retrieves a specific or list of Office 365 Groups for which the email starts with the provided mail nickName",
-       SortOrder = 4)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
-       Remarks = "Retrieves a specific Office 365 Group based on its object instance",
-       SortOrder = 5)]
     public class AddTeamsChannel : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true)]
-        public string GroupId;
+        [Parameter(Mandatory = true, HelpMessage = "The Group/Team id of the team to add the channel to.")]
+        [Alias("GroupId")]
+        public GuidPipeBind TeamId;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the channel to add")]
         public string DisplayName;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel")]
         public string Description;
 
         protected override void ExecuteCmdlet()
         {
             if (JwtUtility.HasScope(AccessToken, "Group.ReadWrite.All"))
             {
-                var id = TeamsUtility.AddChannel(AccessToken, GroupId, DisplayName, Description);
+                var id = TeamsUtility.AddChannel(AccessToken, TeamId.Id.ToString(), DisplayName, Description);
                 WriteObject(new { Id = id, DisplayName, Description });
 
             }
