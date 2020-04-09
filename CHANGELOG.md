@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 - Added Set-PnPKnowledgeHubSite, Get-PnPKnowledgeHubSite and Remove-PnPKnowledgeHubSite cmdlets
 - Added Register-PnPTenantAppCatalog to create and register a new Tenant App Catalog
+- Added `IncludeHasTeam` flag to `Get-PnPUnifiedGroup` to include a `HasTeam` flag for each returned Office 365 Group indicating if a Microsoft Team has been set up for it
 
 ### Changed
 - Connect-PnPOnline with clientid and certificate will now, if API permissions have been granted for the Graph work with the PnP Graph Cmdlets. [PR #2515](https://github.com/SharePoint/PnP-PowerShell/pull/2515)
@@ -18,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 - Lane Blundell [fastlaneb]
+- Koen Zomers [koenzomers]
 
 ## [3.19.2003.0]
 
