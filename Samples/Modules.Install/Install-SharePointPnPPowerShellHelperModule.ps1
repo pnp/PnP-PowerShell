@@ -8,6 +8,8 @@
 .EXAMPLE
     Install-SharePointPnPPowerShellModule -ModuleToInstall Online
 .EXAMPLE
+    Install-SharePointPnPPowerShellModule -ModuleToInstall SP2019
+.EXAMPLE
     Install-SharePointPnPPowerShellModule -ModuleToInstall SP2016
 .EXAMPLE
     Install-SharePointPnPPowerShellModule -ModuleToInstall SP2013
@@ -15,8 +17,8 @@
 #Requires -Version 3.0
 #Requires -Modules PowerShellGet
 param (
-        [Parameter(Mandatory=$true,HelpMessage='Online is for SharePoint Online, SP2013 for SharePoint 2013 and SP2016 for SharePoint 2016')]
-        [ValidateSet('Online','SP2013','SP2016')]
+        [Parameter(Mandatory=$true,HelpMessage='Online is for SharePoint Online, SP2013 for SharePoint 2013, SP2016 for SharePoint 2016 and SP2019 for SharePoint 2019')]
+        [ValidateSet('Online','SP2013','SP2016','SP2019')]
         [string] $ModuleToInstall   
        )
        
@@ -35,6 +37,10 @@ param (
                 $moduleVersion = 'SharePoint 2016'
                 $moduleName = 'SharePointPnPPowerShell2016'
             }
+	    'SP2019' {
+                $moduleVersion = 'SharePoint 2019'
+                $moduleName = 'SharePointPnPPowerShell2019'
+            }
        }
 
        if (!(Get-command -Module $moduleName).count -gt 0)
@@ -52,16 +58,18 @@ function Request-SPOOrOnPremises
     [string]$message="Which version of the Modules do you want to install?"
     
 	$SPO = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint &Online", "SharePoint Online"
-    $SP2016 = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint 201&6", "SharePoint 2016"
+	$SP2019 = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint 201&9", "SharePoint 2019"
+    	$SP2016 = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint 201&6", "SharePoint 2016"
 	$SP2013 = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint 201&3", "SharePoint 2013"
-	$options = [System.Management.Automation.Host.ChoiceDescription[]]($SPO, $SP2016, $SP2013)
+	$options = [System.Management.Automation.Host.ChoiceDescription[]]($SPO, $SP2019, $SP2016, $SP2013)
 
 	$result = $host.ui.PromptForChoice($title, $message, $options, 0)
 
 	switch ($result)
 	{
-        2 { Return 'SP2013'}
-		1 { Return 'SP2016' } 
+        3 { Return 'SP2013'}
+		2 { Return 'SP2016' } 
+		1 { Return 'SP2019' } 
 		0 { Return 'Online' }
 	}
 }
