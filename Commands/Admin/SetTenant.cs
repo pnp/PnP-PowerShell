@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         DetailedDescription = @"Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
 ResourceQuotaAllocated, and SiteCreationMode.
 
-You must be a SharePoint Online global administrator to run the cmdlet.",
+You must have the SharePoint Online admin or Global admin role to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
@@ -32,8 +32,6 @@ Set-PnPTenant -NoAccessRedirectUrl 'http://www.contoso.com'",
         Remarks = @"This example enables the use of special persisted cookie for Open with Explorer.", SortOrder = 3)]
     public class SetTenant : PnPAdminCmdlet
     {
-        const string ParameterSet_COMPATIBILITYLEVEL = "Compatibility Level";
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Specifies the lower bound on the compatibility level for new sites.")]
         public int MinCompatibilityLevel;
 
