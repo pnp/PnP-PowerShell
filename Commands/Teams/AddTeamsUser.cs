@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -TeamId 27c42116-6645-419a-a66e-e30f762e7607 -DisplayName 'My Test Channel' -Description 'A description'",
+       Code = "PS:> Add-PnPTeamsUSer -TeamId 27c42116-6645-419a-a66e-e30f762e7607 -DisplayName 'My Test Channel' -Description 'A description'",
        Remarks = "Adds a new channel to the specified team.",
        SortOrder = 1)]
     public class AddTeamsUser : PnPGraphCmdlet
@@ -24,10 +24,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Alias("GroupId")]
         public GuidPipeBind TeamId;
 
-        [Parameter(Mandatory = true, HelpMessage = "The name of the channel to add")]
+        [Parameter(Mandatory = true, HelpMessage = "The principal name of the user to add, e.g. user@domain.com")]
         public string User;
 
-        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel")]
+        [Parameter(Mandatory = false, HelpMessage = "The role of the user to add, e.g. Member or Owner")]
         [ValidateSet("Member", "Owner")]
         public string Role = "Member";
 
@@ -35,9 +35,8 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         {
             if (JwtUtility.HasScope(AccessToken, "Group.ReadWrite.All"))
             {
-
-                //var id = TeamsUtility.AddUser(AccessToken, TeamId.Id.ToString(), DisplayName, Description);
-                //WriteObject(new { Id = id, DisplayName, Description });
+                var id = TeamsUtility.AddUser(AccessToken, TeamId.Id.ToString(), DisplayName, Description);
+                WriteObject(new { Id = id, DisplayName, Description });
 
             }
             else
