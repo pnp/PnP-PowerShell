@@ -580,6 +580,7 @@
     <Compile Include="Admin\GetOrgNewsSite.cs" />
     <Compile Include="Admin\RemoveOrgNewsSite.cs" />
     <Compile Include="Admin\AddOrgNewsSite.cs" />
+    <Compile Include="Base\InitializePowerShellAuthentication.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
     <Compile Include="Admin\RemoveHomeSite.cs" />
     <Compile Include="Admin\SetHomeSite.cs" />
@@ -664,6 +665,7 @@
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
     <Compile Include="ManagementApi\GetManagementApiAccessToken.cs" />
     <Compile Include="ManagementApi\GetUnifiedAuditLog.cs" />
+    <Compile Include="Model\AzureApp.cs" />
     <Compile Include="Model\ManagementApiSubscription.cs" />
     <Compile Include="Model\ManagementApiSubscriptionContent.cs" />
     <Compile Include="Model\ManagementApiUnifiedLogRecordKeyValuePair.cs" />
@@ -865,6 +867,7 @@
     <Compile Include="Taxonomy\NewTermLabel.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />
     <Compile Include="UserProfiles\NewUPABulkImportJob.cs" />
+    <Compile Include="Utilities\AzureAuthHelper.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
     <Compile Include="Utilities\CertificateCrypto.cs" />
     <Compile Include="Utilities\CertificateHelper.cs" />
