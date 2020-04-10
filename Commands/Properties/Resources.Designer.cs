@@ -323,6 +323,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter..
+        /// </summary>
+        internal static string NoTenantAdminUrlSpecified {
+            get {
+                return ResourceManager.GetString("NoTenantAdminUrlSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SharePoint PnP PowerShell Library ({0}).
         /// </summary>
         internal static string OfficeDevPnPPowerShellLibrary0 {
