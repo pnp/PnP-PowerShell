@@ -137,7 +137,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 if (ParameterSpecified(nameof(Store)))
                 {
-                    using (var store = new X509Store("My", Store))
+                    using (var store = new X509Store("My",Store))
                     {
                         store.Open(OpenFlags.ReadWrite);
                         store.Add(cert);

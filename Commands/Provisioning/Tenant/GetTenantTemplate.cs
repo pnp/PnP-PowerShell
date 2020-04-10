@@ -208,11 +208,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                     }
                     else
                     {
-#if !NETSTANDARD2_1
-                        return (SPOnlineConnection.AuthenticationResult.Token);
-#else
                         return SPOnlineConnection.AuthenticationResult.AccessToken;
-#endif
                     }
                 }
                 else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)

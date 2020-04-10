@@ -88,7 +88,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                         var query = HttpUtility.ParseQueryString(args.Url.Query);
                         messageAction?.Invoke(query.Get("error"));
                         retryCount++;
-
+                        
                         if (retryCount < maxRetry)
                         {
                             browser.Navigate(url);

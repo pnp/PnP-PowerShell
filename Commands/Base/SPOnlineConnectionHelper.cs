@@ -21,6 +21,8 @@ using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using SharePointPnP.PowerShell.Commands.Model;
+using Microsoft.Identity.Client;
+using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -132,6 +134,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
+
             SPOnlineConnection spoConnection = null;
             var connectionUri = new Uri(url);
             HttpClient client = new HttpClient();
@@ -208,6 +211,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
+         
             var connectionUri = new Uri("https://graph.microsoft.com");
             HttpClient client = new HttpClient();
             var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
@@ -497,21 +501,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
 
-            //if (certificateFromFile)
-            //{
-            //    // we keep track of the 
-            //    CleanupCryptoMachineKey(certificate);
-            //}
-
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
 
             // Retrieve Graph certificate
 
-            ClientAssertionCertificate cac = new ClientAssertionCertificate(clientId, certificate);
-            AuthenticationContext authContext = new AuthenticationContext($"https://login.microsoftonline.com/{tenant}");
-            AuthenticationResult result = authContext.AcquireTokenAsync("https://graph.microsoft.com", cac).GetAwaiter().GetResult();
+            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"https://login.microsoftonline.com/{tenant}").WithCertificate(certificate).Build();
+            var result = app.AcquireTokenForClient(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
             if (result != null)
             {
                 spoConnection.AccessToken = result.AccessToken;
