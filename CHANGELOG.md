@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Use of `Set-PnPSite` in combination with `-Owners`, `-NoScriptSite`, `-LocaleId` and/or `-AllowSelfServiceUpgrade` is now possible on SharePoint 2013, 2016 and 2019 as well [PR # 2293](https://github.com/SharePoint/PnP-PowerShell/pull/2293)
 - Using `Connect-PnPOnline -CurrentCredentials` against an on-premises SharePoint farm having more than one authentication provider configured on the webapplication no longer causes an access denied [PR #2571](https://github.com/SharePoint/PnP-PowerShell/pull/2571)
 - Fixed `Add-PnPSiteDesignTask` not actually applying the Site Design to the site [PR # 2542](https://github.com/SharePoint/PnP-PowerShell/pull/2542)
+- Fixed `Get-PnPSiteDesignTask` throwing a collection not initialized error [PR # 2545](https://github.com/SharePoint/PnP-PowerShell/pull/2545)
 
 ### Contributors
 - Lane Blundell [fastlaneb]
