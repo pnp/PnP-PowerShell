@@ -41,7 +41,9 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             // Following code to handle deprecated parameter
             CustomActionScope setScope;
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (ParameterSpecified(nameof(SiteScoped)))
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 setScope = CustomActionScope.Site;
             }

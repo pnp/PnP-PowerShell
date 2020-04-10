@@ -287,7 +287,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Azure AD connection, please connect first with Connect-PnPOnline -Graph, Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain.
+        ///   Looks up a localized string similar to No Azure AD connection/Access Token. Please connect first with Connect-PnPOnline -Url [url] -ClientId [clientid] -CertificatePath [path] -Tenant [tenant], Connect-PnPOnline -Graph, Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain.
         /// </summary>
         internal static string NoAzureADAccessToken {
             get {
@@ -319,6 +319,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string NoContextPresent {
             get {
                 return ResourceManager.GetString("NoContextPresent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter..
+        /// </summary>
+        internal static string NoTenantAdminUrlSpecified {
+            get {
+                return ResourceManager.GetString("NoTenantAdminUrlSpecified", resourceCulture);
             }
         }
         

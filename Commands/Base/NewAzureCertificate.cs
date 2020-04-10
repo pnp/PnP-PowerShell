@@ -85,9 +85,11 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
             var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable);
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (!string.IsNullOrWhiteSpace(Out))
             {
                 OutPfx = Out;
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             if (!string.IsNullOrWhiteSpace(OutPfx))
             {

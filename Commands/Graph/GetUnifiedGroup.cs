@@ -32,6 +32,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
        Remarks = "Retrieves a specific Office 365 Group based on its object instance",
        SortOrder = 5)]
+    [CmdletExample(
+       Code = "PS:> Get-PnPUnifiedGroup -IncludeIfHasTeam",
+       Remarks = "Retrieves all the Office 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it",
+       SortOrder = 6)]
     public class GetUnifiedGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The Identity of the Office 365 Group.")]
@@ -42,6 +46,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         [Parameter(Mandatory = false, HelpMessage = "Include Classification value of Office 365 Groups.")]
         public SwitchParameter IncludeClassification;
+
+        [Parameter(Mandatory = false, HelpMessage = "Include a flag for every Office 365 Group if it has a Microsoft Team provisioned for it. This will slow down the retrieval of Office 365 Groups so only use it if you need it.")]
+        public SwitchParameter IncludeHasTeam;
 
         protected override void ExecuteCmdlet()
         {
@@ -55,7 +62,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             else
             {
                 // Retrieve all the groups
-                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, includeSite: !ExcludeSiteUrl.IsPresent, includeClassification:IncludeClassification.IsPresent);
+                groups = UnifiedGroupsUtility.ListUnifiedGroups(AccessToken, includeSite: !ExcludeSiteUrl.IsPresent, includeClassification:IncludeClassification.IsPresent, includeHasTeam: IncludeHasTeam.IsPresent);
             }
 
             if (group != null)

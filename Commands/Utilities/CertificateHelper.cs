@@ -154,6 +154,8 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return certificate;
         }
 
+
+
         #region certificate manipulation
         private static void EncodeLength(BinaryWriter stream, int length)
         {

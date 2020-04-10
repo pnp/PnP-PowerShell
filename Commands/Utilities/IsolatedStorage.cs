@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             {
                 var usfdAttempt1 = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForDomain(); // this will fail when the current AppDomain Evidence is instantiated via COM or in PowerShell
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 useNewEvidence = true;
             }

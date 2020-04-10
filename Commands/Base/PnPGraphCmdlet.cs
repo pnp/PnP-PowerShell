@@ -32,11 +32,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     }
                     else
                     {
-#if !NETSTANDARD2_1
-                        return (SPOnlineConnection.AuthenticationResult.Token);
-#else
-                        return SPOnlineConnection.AuthenticationResult.AccessToken;
-#endif
+                        return (SPOnlineConnection.AuthenticationResult.AccessToken);
                     }
                 }
                 else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)

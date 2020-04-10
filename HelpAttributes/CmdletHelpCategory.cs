@@ -55,6 +55,8 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         [EnumMember(Value = "Site Designs")]
         SiteDesigns = 29,
         [EnumMember(Value = "Management API")]
-        ManagementApi = 30           
+        ManagementApi = 30,
+        [EnumMember(Value = "Microsoft Teams")]
+        Teams = 31
     }
 }

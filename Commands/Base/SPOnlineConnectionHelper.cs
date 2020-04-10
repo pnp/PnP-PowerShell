@@ -5,22 +5,24 @@ using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Enums;
 using System;
-using System.IO;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
-using System.Security;
 using OfficeDevPnP.Core;
 using OfficeDevPnP.Core.Utilities;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using SharePointPnP.PowerShell.Commands.Model;
+using System.Security.Cryptography.X509Certificates;
+using System.Security;
+using System.IO;
+using System.Security.Cryptography;
+using Microsoft.Identity.Client;
+using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -61,9 +63,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-#if !ONPREMISES
-            context.DisableReturnValueCache = true;
-#elif SP2016 || SP2019
+#if !SP2013
             context.DisableReturnValueCache = true;
 #endif
             var connectionType = ConnectionType.OnPrem;
@@ -103,7 +103,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-#if SP2016 || SP2019
+#if !SP2013
             context.DisableReturnValueCache = true;
 #endif
             var connectionType = ConnectionType.OnPrem;
@@ -132,6 +132,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
+
             SPOnlineConnection spoConnection = null;
             var connectionUri = new Uri(url);
             HttpClient client = new HttpClient();
@@ -208,6 +209,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
+         
             var connectionUri = new Uri("https://graph.microsoft.com");
             HttpClient client = new HttpClient();
             var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}").GetAwaiter().GetResult();
@@ -269,7 +271,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     progressCallback("No token received.");
                 }
-            }            
+            }
             return spoConnection;
         }
 
@@ -389,7 +391,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry,InitializationType.AADAppOnly);
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.AzureADAppOnly;
             return spoConnection;
         }
@@ -497,15 +499,19 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
 
-            //if (certificateFromFile)
-            //{
-            //    // we keep track of the 
-            //    CleanupCryptoMachineKey(certificate);
-            //}
-
             var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
                 url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
             spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
+
+            // Retrieve Graph certificate
+
+            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"https://login.microsoftonline.com/{tenant}").WithCertificate(certificate).Build();
+            var result = app.AcquireTokenForClient(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
+            if (result != null)
+            {
+                spoConnection.AccessToken = result.AccessToken;
+            }
+
             if (certificateFromFile)
             {
                 spoConnection.CertFile = certificate;
@@ -564,10 +570,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 context.Delay = retryWait * 1000;
                 context.ApplicationName = Properties.Resources.ApplicationName;
                 context.RequestTimeout = requestTimeout;
-#if !ONPREMISES
+#if !SP2013
                 context.DisableReturnValueCache = true;
-#elif SP2016 || SP2019
-            context.DisableReturnValueCache = true;
 #endif
                 var connectionType = ConnectionType.OnPrem;
                 if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
@@ -596,9 +600,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
             context.ApplicationName = Properties.Resources.ApplicationName;
-#if !ONPREMISES
-            context.DisableReturnValueCache = true;
-#elif SP2016 || SP2019
+#if !SP2013
             context.DisableReturnValueCache = true;
 #endif
             context.RequestTimeout = requestTimeout;
@@ -622,7 +624,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         context.ExecuteQueryRetry();
                     }
 #if !ONPREMISES
-                    catch (NotSupportedException nox)
+                    catch (NotSupportedException)
                     {
 #if NETSTANDARD2_1
                         // Legacy auth is not supported with .NET Standard
@@ -671,10 +673,17 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    // If current credentials should be used, use the DefaultNetworkCredentials of the CredentialCache. This has the same effect
-                    // as using "UseDefaultCredentials" in a HttpClient.
+                    // If current credentials should be used, use the DefaultNetworkCredentials of the CredentialCache. This has the same effect as using "UseDefaultCredentials" in a HttpClient.
                     context.Credentials = CredentialCache.DefaultNetworkCredentials;
                 }
+                
+                // Add Request Header to force Windows Authentication which avoids an issue if multiple authentication providers are enabled on a webapplication
+                context.ExecutingWebRequest += delegate(object sender, WebRequestEventArgs e)
+                {
+                    // Add the header that tells SharePoint to use Windows authentication
+                    e.WebRequestExecutor.RequestHeaders["X-FORMS_BASED_AUTH_ACCEPTED"] = "f";
+                };
+                
             }
 #if SP2013 || SP2016 || SP2019
             var connectionType = ConnectionType.OnPrem;
@@ -743,9 +752,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
-#if !ONPREMISES
-            context.DisableReturnValueCache = true;
-#elif SP2016 || SP2019
+#if !SP2013
             context.DisableReturnValueCache = true;
 #endif
 
@@ -860,15 +867,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     return true;
                 }
             }
-            catch (ClientRequestException x1)
+            catch (ClientRequestException)
             {
                 return false;
             }
-            catch (ServerException x2)
+            catch (ServerException)
             {
                 return false;
             }
-            catch (WebException x3)
+            catch (WebException)
             {
                 return false;
             }

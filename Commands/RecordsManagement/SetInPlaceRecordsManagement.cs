@@ -50,7 +50,9 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
             else
             {
                 // obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (ParameterSpecified(nameof(On)))
+#pragma warning restore CS0618 // Type or member is obsolete
                 {
                     ClientContext.Site.ActivateInPlaceRecordsManagementFeature();
                 }

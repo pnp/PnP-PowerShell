@@ -910,8 +910,10 @@ Use -PnPO365ManagementShell instead");
 #if !NETSTANDARD2_1
         private void ConnectGraphScopes()
         {
-            var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
-            var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
+            var clientApplication = PublicClientApplicationBuilder.Create(MSALPnPPowerShellClientId).Build();
+            //var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
+            var authenticationResult = clientApplication.AcquireTokenInteractive(Scopes).ExecuteAsync().GetAwaiter().GetResult();
+            //var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
             SPOnlineConnection.AuthenticationResult = authenticationResult;
         }
 #endif
@@ -953,7 +955,10 @@ Use -PnPO365ManagementShell instead");
                 }
                 return false;
             }, Host, NoTelemetry);
-            Console.TreatControlCAsInput = ctrlCAsInput;
+            if (Host.Name == "ConsoleHost")
+            {
+              Console.TreatControlCAsInput = ctrlCAsInput;
+            }
             return connection;
         }
 
@@ -992,7 +997,10 @@ Use -PnPO365ManagementShell instead");
                     }
                     return false;
                 }, Host, NoTelemetry);
-                Console.TreatControlCAsInput = ctrlCAsInput;
+                if (Host.Name == "ConsoleHost")
+                {
+                    Console.TreatControlCAsInput = ctrlCAsInput;
+                }
                 return connection;
             }
             else
@@ -1004,12 +1012,10 @@ Use -PnPO365ManagementShell instead");
 
         private void ConnectGraphAAD()
         {
-            var appCredentials = new ClientCredential(AppSecret);
             var authority = new Uri(GraphAADLogin, AADDomain).AbsoluteUri;
 #if !NETSTANDARD2_1
-            var clientApplication = new ConfidentialClientApplication(authority, AppId, RedirectUri, appCredentials, null);
-            var authenticationResult = clientApplication.AcquireTokenForClient(GraphDefaultScope, null).GetAwaiter().GetResult();
-            SPOnlineConnection.AuthenticationResult = authenticationResult;
+            var clientApplication = ConfidentialClientApplicationBuilder.Create(AppId).WithClientSecret(AppSecret).WithRedirectUri(RedirectUri).WithAuthority(authority).Build();
+            var authenticationResult = clientApplication.AcquireTokenForClient(GraphDefaultScope).ExecuteAsync().GetAwaiter().GetResult();
 #else
             throw new NotImplementedException();
 #endif

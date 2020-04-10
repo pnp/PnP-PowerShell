@@ -1,14 +1,8 @@
 ﻿#if !ONPREMISES
-using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System.Management.Automation;
-using OfficeDevPnP.Core.Sites;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using SharePointPnP.PowerShell.Commands.Enums;
-using System.Collections.Generic;
 using SharePointPnP.PowerShell.Commands.Model;
 
 namespace SharePointPnP.PowerShell.Commands.Admin
@@ -20,7 +14,7 @@ ResourceQuotaAllocated, and SiteCreationMode.
 
 Currently, there are no parameters for this cmdlet.
 
-You must be a SharePoint Online global administrator to run the cmdlet.",
+You must have the SharePoint Online admin or Global admin role to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(

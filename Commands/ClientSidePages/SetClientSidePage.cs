@@ -54,7 +54,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Sets the layout type of the page. (Default = Article)")]
         public ClientSidePageLayoutType LayoutType = ClientSidePageLayoutType.Article;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows to promote the page for a specific purpose (HomePage | NewsPage)")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template)")]
         public ClientSidePagePromoteType PromoteAs = ClientSidePagePromoteType.None;
 
         [Parameter(Mandatory = false, HelpMessage = "Enables or Disables the comments on the page")]

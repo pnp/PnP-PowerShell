@@ -19,7 +19,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (_tenant == null)
                 {
                     _tenant = new Tenant(ClientContext);
-
                 }
                 return _tenant;
             }
@@ -42,7 +41,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             SPOnlineConnection.CurrentConnection.CacheContext();
 
-            if (SPOnlineConnection.CurrentConnection.TenantAdminUrl != null && SPOnlineConnection.CurrentConnection.ConnectionType == ConnectionType.O365)
+            if (SPOnlineConnection.CurrentConnection.TenantAdminUrl != null &&
+                (SPOnlineConnection.CurrentConnection.ConnectionType == ConnectionType.O365 ||
+                 SPOnlineConnection.CurrentConnection.ConnectionType == ConnectionType.OnPrem))
             {
                 var uri = new Uri(SPOnlineConnection.CurrentConnection.Url);
                 var uriParts = uri.Host.Split('.');
@@ -72,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     SPOnlineConnection.CurrentConnection.Context =
                         SPOnlineConnection.CurrentConnection.CloneContext(adminUrl);
                 }
-                else if(SPOnlineConnection.CurrentConnection.ConnectionType == ConnectionType.TenantAdmin)
+                else if (SPOnlineConnection.CurrentConnection.ConnectionType == ConnectionType.TenantAdmin)
                 {
                     _baseUri =
                        new Uri(
