@@ -3,8 +3,7 @@
 .Synopsis
    This Function will Check and see if the Office365DevPNP PowerShellModules are installed on your system and if not will use PowerShell Package Management to install them
 .DESCRIPTION
-   This uses System.Net.WebRequest & System.Net.WebClient to download the specific version of PowerShellPackageManager for your OS version (x64/x86) and then uses
-   msiexec to install it.
+   This verifies if the NuGet package provider is available on your environment and if not, will install it
 .EXAMPLE
     Install-SharePointPnPPowerShellModule -ModuleToInstall Online
 .EXAMPLE
@@ -49,13 +48,13 @@ param (
        }
 
        Write-Output -InputObject "The modules for $moduleVersion have been installed and can now be used"
-       Write-Output -InputObject 'On the next release you can just run Update-Module -force to update this and other installed modules'
+       Write-Output -InputObject 'On the next release you can just run Update-Module SharePointPnPPowerShell* -Force to update these modules'
 }
 
 function Request-SPOOrOnPremises
 {
     [string]$title="Confirm"
-    [string]$message="Which version of the Modules do you want to install?"
+    [string]$message="Which version of the PnP PowerShell Module do you want to install?"
     
 	$SPO = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint &Online", "SharePoint Online"
 	$SP2019 = New-Object -TypeName System.Management.Automation.Host.ChoiceDescription -ArgumentList "SharePoint 201&9", "SharePoint 2019"
@@ -74,15 +73,14 @@ function Request-SPOOrOnPremises
 	}
 }
 
-
-if ((Get-command -Module PowerShellGet).count -gt 0) 
-    { 
-    Write-Output -InputObject 'PowerShellPackageManagement now installed we will now run the next command in 10 Seconds'
+if ((Get-command -Module PowerShellGet).count -eq 0) 
+{ 
+	Write-Output -InputObject "NuGet package provider is not available on this machine, trying to install it now"
+	Install-PackageProvider -Name NuGet -Force
+}
+else
+{
+    Write-Output -InputObject 'NuGet package provider is available, we will now run the next command in 10 seconds'
     Start-Sleep -Seconds 10 
     Install-SharePointPnPPowerShellModule -ModuleToInstall (Request-SPOOrOnPremises)
-    }
-    else
-        {
-        Write-Output -InputObject "PowerShellPackageManagement is not installed on this Machine - Please run the below to install - you will need to Copy and Paste it as i'm not doing everything for you ;-)"
-        Write-Output -InputObject "Invoke-Expression (New-Object -TypeName Net.WebClient).DownloadString('http://bit.ly/PSPackManInstall')"
-        }
+}
