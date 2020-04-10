@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added Set-PnPKnowledgeHubSite, Get-PnPKnowledgeHubSite and Remove-PnPKnowledgeHubSite cmdlets
 - Added Register-PnPTenantAppCatalog to create and register a new Tenant App Catalog
 
+- Added `-FolderServerRelativeUrl` argument to `Get-PnPListItem` to allow for retrieval of only those list items located in a specific folder inside a list [PR #2546](https://github.com/SharePoint/PnP-PowerShell/pull/2546)
+
 ### Changed
 - Connect-PnPOnline with clientid and certificate will now, if API permissions have been granted for the Graph work with the PnP Graph Cmdlets. [PR #2515](https://github.com/SharePoint/PnP-PowerShell/pull/2515)
 - Save-PnPProvisioningTemplate and Save-PnPTenantTemplate now support XML file as input without the need to first read them into a variable with Read-PnPProvisioningTemplate or Read-PnPTenantTemplate
@@ -25,6 +27,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Jens Otto Hatlevold [jensotto]
 - Raphael [PowershellNinja]
 - Razvan Hrestic [CodingSinceThe80s]
+
+- Giacomo Pozzoni [jackpoz]
 
 ## [3.19.2003.0]
 

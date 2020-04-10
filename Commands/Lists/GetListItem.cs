@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
     [CmdletHelp("Retrieves list items",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee539951(v=office.15)")]
     [CmdletExample(
         Code = "PS:> Get-PnPListItem -List Tasks",
         Remarks = "Retrieves all list items from the Tasks list",
@@ -42,6 +42,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }",
         Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item",
         SortOrder = 7)]
+    [CmdletExample(
+        Code = "PS:> Get-PnPListItem -List Samples -FolderServerRelativeUrl \"/sites/contosomarketing/Lists/Samples/Demo\"",
+        Remarks = "Retrieves all list items from the Demo folder in the Samples list located in the contosomarketing site collection",
+        SortOrder = 8)]
     public class GetListItem : PnPWebCmdlet
     {
         private const string ParameterSet_BYID = "By Id";
@@ -59,6 +63,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list", ParameterSetName = ParameterSet_BYQUERY)]
         public string Query;
+
+        [Parameter(Mandatory = false, HelpMessage = "The server relative URL of a list folder from which results will be returned.", ParameterSetName = ParameterSet_BYQUERY)]
+        [Parameter(Mandatory = false, HelpMessage = "The server relative URL of a list folder from which results will be returned.", ParameterSetName = ParameterSet_ALLITEMS)]
+        public string FolderServerRelativeUrl;
 
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_ALLITEMS)]
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.", ParameterSetName = ParameterSet_BYID)]
@@ -118,6 +126,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             else
             {
 				CamlQuery query = HasCamlQuery() ? new CamlQuery { ViewXml = Query } : CamlQuery.CreateAllItemsQuery();
+                query.FolderServerRelativeUrl = FolderServerRelativeUrl;
 
 				if (Fields != null)
                 {
