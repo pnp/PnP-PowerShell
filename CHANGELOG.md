@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.20.2004.0] - Unreleased
+## [3.20.2004.0]
 
 ### Added
 - Added Set-PnPKnowledgeHubSite, Get-PnPKnowledgeHubSite and Remove-PnPKnowledgeHubSite cmdlets
@@ -19,7 +19,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 - Lane Blundell [fastlaneb]
-
 - Jens Otto Hatlevold [jensotto]
 
 ## [3.19.2003.0]
