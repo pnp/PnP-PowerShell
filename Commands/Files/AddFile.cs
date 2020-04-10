@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
     [CmdletHelp("Uploads a file to Web",
         Category = CmdletHelpCategory.Files,
         OutputType = typeof(Microsoft.SharePoint.Client.File),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee539248(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Add-PnPFile -Path c:\temp\company.master -Folder ""_catalogs/masterpage""",
         Remarks = "This will upload the file company.master to the masterpage catalog",
@@ -129,19 +129,16 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 }
             }
 
-            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
-
-            var folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
+            var folder = EnsureFolder();
             var fileUrl = UrlUtility.Combine(folder.ServerRelativeUrl, FileName);
 
             ContentType targetContentType = null;
-            //Check to see if the Content Type exists.. If it doesn't we are going to throw an exception and block this transaction right here.
+            // Check to see if the Content Type exists. If it doesn't we are going to throw an exception and block this transaction right here.
             if (ContentType != null)
             {
                 try
                 {
                     var list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
-
 
                     if (!string.IsNullOrEmpty(ContentType.Id))
                     {
@@ -235,6 +232,37 @@ namespace SharePointPnP.PowerShell.Commands.Files
             ClientContext.Load(file);
             ClientContext.ExecuteQueryRetry();
             WriteObject(file);
+        }
+
+        /// <summary>
+        /// Ensures the folder to which the file is to be uploaded exists. Changed from using the EnsureFolder implementation in PnP Sites Core as that requires at least member rights to the entire site to work.
+        /// </summary>
+        /// <returns>The folder to which the file needs to be uploaded</returns>
+        private Folder EnsureFolder()
+        {
+            // First try to get the folder if it exists already. This avoids an Access Denied exception if the current user doesn't have Full Control access at Web level
+            SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            var Url = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
+
+            Folder folder = null;
+            try
+            {
+#if ONPREMISES
+                folder = SelectedWeb.GetFolderByServerRelativeUrl(Url);
+#else
+                folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
+#endif
+                folder.EnsureProperties(f => f.ServerRelativeUrl);
+                return folder;
+            }
+            // Exception will be thrown if the folder does not exist yet on SharePoint
+            catch (ServerException serverEx) when (serverEx.ServerErrorCode == -2147024894)
+            {
+                // Try to create the folder
+                folder = SelectedWeb.EnsureFolder(SelectedWeb.RootFolder, Folder);
+                folder.EnsureProperties(f => f.ServerRelativeUrl);
+                return folder;
+            }
         }
     }
 }
