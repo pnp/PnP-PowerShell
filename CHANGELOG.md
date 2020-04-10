@@ -33,7 +33,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Raphael [PowershellNinja]
 - Razvan Hrestic [CodingSinceThe80s]
 - Giacomo Pozzoni [jackpoz]
-- Jens Otto Hatlevold [jensotto]
 - [victorbutuza]
 - Koen Zomers [koenzomers]
 
@@ -54,7 +53,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - The February 2020 release of PnP PowerShell was throwing an error on not being able to find and load the Newtonsoft assembly when used in an Azure Function. Fixed in this release.
 
 ### Contributors
-
 - Arun Kumar Perumal [arunkumarperumal]
 - Paul Bullock [pkbullock]
 - Jens Otto Hatlevold [jensotto]
@@ -93,7 +91,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix examples in Start-PnPWorkflowInstance [PR #2483](https://github.com/SharePoint/PnP-PowerShell/pull/2483)
 
 ### Contributors
-
 - Ivan Vagunin [ivanvagunin]
 - Thomas Meckel [tmeckel]
 - Koen Zomers [koenzomers]
