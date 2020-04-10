@@ -38,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 };
                 browser.Navigated += (sender, args) =>
                 {
-                    if(browser.DocumentText.Contains("You have signed in to the PnP Office 365 Management Shell application on your device. You may now close this window."))
+                    if(browser.Url.AbsoluteUri.Equals("https://login.microsoftonline.com/common/login", StringComparison.InvariantCultureIgnoreCase) || browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/reprocess", StringComparison.InvariantCultureIgnoreCase))
                     {
                         form.Close();
                         success(true);
