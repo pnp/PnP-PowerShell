@@ -955,7 +955,10 @@ Use -PnPO365ManagementShell instead");
                 }
                 return false;
             }, Host, NoTelemetry);
-            Console.TreatControlCAsInput = ctrlCAsInput;
+            if (Host.Name == "ConsoleHost")
+            {
+              Console.TreatControlCAsInput = ctrlCAsInput;
+            }
             return connection;
         }
 
@@ -994,7 +997,10 @@ Use -PnPO365ManagementShell instead");
                     }
                     return false;
                 }, Host, NoTelemetry);
-                Console.TreatControlCAsInput = ctrlCAsInput;
+                if (Host.Name == "ConsoleHost")
+                {
+                    Console.TreatControlCAsInput = ctrlCAsInput;
+                }
                 return connection;
             }
             else
