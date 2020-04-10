@@ -11,8 +11,8 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.New, "PnPTeamsTeam")]
-    [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All' and the Graph Permission 'User.Read.All'.",
+    [Cmdlet(VerbsCommon.Set, "PnPTeamsTeam")]
+    [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All' and the Graph permission 'User.Read.All'.",
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -35,22 +35,19 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
        Remarks = "Retrieves a specific Office 365 Group based on its object instance",
        SortOrder = 5)]
-    public class NewTeamsTeam : PnPGraphCmdlet
+    public class SetTeamsTeam : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
+        public TeamPipeBind Id;
+
+        [Parameter(Mandatory = false)]
         public string DisplayName;
 
         [Parameter(Mandatory = false)]
         public string MailNickName;
 
-        [Parameter(Mandatory = true)]
-        public string Description;
-
-        [Parameter(Mandatory = true)]
-        public string[] Owners;
-
         [Parameter(Mandatory = false)]
-        public string[] Members;
+        public string Description;
 
         [Parameter(Mandatory = false)]
         public bool AllowGiphy;
@@ -139,7 +136,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     AllowUserDeleteMessages = AllowUserDeleteMessages,
                     AllowUserEditMessages = AllowUserEditMessages
                 };
-                TeamsUtility.CreateTeam(DisplayName, MailNickName, Description, Owners, Members, funSettings, guestSettings, memberSettings, messagingSettings, Visibility, AccessToken);
+                TeamsUtility.UpdateTeam(AccessToken, Id.GetTeamId(), DisplayName, MailNickName, Description, funSettings, guestSettings, memberSettings, messagingSettings, Visibility);
             }
             else
             {

@@ -864,6 +864,9 @@
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
     <Compile Include="Taxonomy\NewTermLabel.cs" />
+    <Compile Include="Teams\GetTeamsUser.cs" />
+    <Compile Include="Teams\AddTeamsUser.cs" />
+    <Compile Include="Teams\SetTeamsTeam.cs" />
     <Compile Include="Teams\NewTeamsTeam.cs" />
     <Compile Include="Teams\AddTeamsChannel.cs" />
     <Compile Include="Teams\GetTeamsChannelTab.cs" />
