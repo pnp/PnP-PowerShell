@@ -13,17 +13,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `IncludeHasTeam` flag to `Get-PnPUnifiedGroup` to include a `HasTeam` flag for each returned Office 365 Group indicating if a Microsoft Team has been set up for it [PR #2612](https://github.com/SharePoint/PnP-PowerShell/pull/2612)
 
 ### Changed
-- Connect-PnPOnline with clientid and certificate will now, if API permissions have been granted for the Graph work with the PnP Graph Cmdlets. [PR # 2515](https://github.com/SharePoint/PnP-PowerShell/pull/2515)
+- Connect-PnPOnline with clientid and certificate will now, if API permissions have been granted for the Graph work with the PnP Graph Cmdlets. [PR #2515](https://github.com/SharePoint/PnP-PowerShell/pull/2515)
 - Save-PnPProvisioningTemplate and Save-PnPTenantTemplate now support XML file as input without the need to first read them into a variable with Read-PnPProvisioningTemplate or Read-PnPTenantTemplate
 - Added -Schema parameter to Save-PnPProvisioningTemplate and Save-PnPTenantTemplate to force a specific schema for the embedded template. If not specified it defaults always to the latest released template.
 - Fixed using `Connect-PnPOnline -PnPO365ManagementShell` only working if your default system language is English [PR #2613](https://github.com/SharePoint/PnP-PowerShell/pull/2613)
-- Updated help text of 'Get-PnPClientSidePage' and 'Get-PnPClientSideComponent' to indicate that the out of the box homepage of a modern site will not return its contents as designed [PR #2592]https://github.com/SharePoint/PnP-PowerShell/pull/2592)
-- Fixed using `Connect-PnPOnline -PnPO365ManagementShell` not working in PowerShell ISE [PR # 2590](https://github.com/SharePoint/PnP-PowerShell/pull/2590)
-- Uploading files using `Add-PnPFile` no longer requires Site Owner rights on the entire site. Read rights on the site and at least contribute rights on the document library where the file needs to be uploaded to will suffice as long as the target folder already exists. [PR # 2478](https://github.com/SharePoint/PnP-PowerShell/pull/2478)
-- Use of `Set-PnPSite` in combination with `-Owners`, `-NoScriptSite`, `-LocaleId` and/or `-AllowSelfServiceUpgrade` is now possible on SharePoint 2013, 2016 and 2019 as well [PR # 2293](https://github.com/SharePoint/PnP-PowerShell/pull/2293)
+- Updated help text of 'Get-PnPClientSidePage' and 'Get-PnPClientSideComponent' to indicate that the out of the box homepage of a modern site will not return its contents as designed [PR #2592](https://github.com/SharePoint/PnP-PowerShell/pull/2592)
+- Fixed using `Connect-PnPOnline -PnPO365ManagementShell` not working in PowerShell ISE [PR #2590](https://github.com/SharePoint/PnP-PowerShell/pull/2590)
+- Uploading files using `Add-PnPFile` no longer requires Site Owner rights on the entire site. Read rights on the site and at least contribute rights on the document library where the file needs to be uploaded to will suffice as long as the target folder already exists. [PR #2478](https://github.com/SharePoint/PnP-PowerShell/pull/2478)
+- Use of `Set-PnPSite` in combination with `-Owners`, `-NoScriptSite`, `-LocaleId` and/or `-AllowSelfServiceUpgrade` is now possible on SharePoint 2013, 2016 and 2019 as well [PR #2293](https://github.com/SharePoint/PnP-PowerShell/pull/2293)
 - Using `Connect-PnPOnline -CurrentCredentials` against an on-premises SharePoint farm having more than one authentication provider configured on the webapplication no longer causes an access denied [PR #2571](https://github.com/SharePoint/PnP-PowerShell/pull/2571)
-- Fixed `Add-PnPSiteDesignTask` not actually applying the Site Design to the site [PR # 2542](https://github.com/SharePoint/PnP-PowerShell/pull/2542)
-- Fixed `Get-PnPSiteDesignTask` throwing a collection not initialized error [PR # 2545](https://github.com/SharePoint/PnP-PowerShell/pull/2545)
+- Fixed `Add-PnPSiteDesignTask` not actually applying the Site Design to the site [PR #2542](https://github.com/SharePoint/PnP-PowerShell/pull/2542)
+- Fixed `Get-PnPSiteDesignTask` throwing a collection not initialized error [PR #2545](https://github.com/SharePoint/PnP-PowerShell/pull/2545)
 
 ### Contributors
 - Lane Blundell [fastlaneb]
