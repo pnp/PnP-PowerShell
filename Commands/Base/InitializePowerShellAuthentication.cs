@@ -32,10 +32,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
         private const string ParameterSet_NEWCERT = "Generate Certificate";
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, HelpMessage = "The name of the Azure AD Application to create", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ApplicationName;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = true, HelpMessage = "The identifier of your tenant, e.g. mytenant.onmicrosoft.com", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Tenant;
 
         [Parameter(Mandatory = true, HelpMessage = "Password for the certificate being created", ParameterSetName = ParameterSet_EXISTINGCERT)]
@@ -69,7 +69,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, HelpMessage = "Folder to create certificate files in (.CER and .PFX)", ParameterSetName = ParameterSet_NEWCERT)]
         public string OutPath;
 
-        [Parameter(Mandatory = false, HelpMessage = "Certificate Store to add the certificate to", ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, HelpMessage = "Local Certificate Store to add the certificate to", ParameterSetName = ParameterSet_NEWCERT)]
         public StoreLocation Store;
 
         protected override void ProcessRecord()
