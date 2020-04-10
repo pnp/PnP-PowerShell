@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
         Remarks = "Extracts a provisioning template in Office Open XML from the current web and includes the term group currently (if set) assigned to the site collection.",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistComposedLookFiles",
+        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistBrandingFiles",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web and saves the files that make up the composed look to the same folder as where the template is saved.",
         SortOrder = 6)]
     [CmdletExample(
