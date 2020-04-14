@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Admin
     public class GetHubSiteChild : PnPAdminCmdlet
     {
         [Parameter(ValueFromPipeline = true, Mandatory = true, HelpMessage = "The URL of the hubsite for which to receive the sites refering to it")]
-        public HubSitePipeBind Identity { get; set; }
+        public HubSitePipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
