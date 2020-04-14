@@ -10,8 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Fixed using `Connect-PnPOnline -AppId <appid> -AppSecret <appsecret> -AADDomain` not actually authenticating to Microsoft Graph
 
 ### Contributors
+- Koen Zomers [koenzomers]
 
 ## [3.20.2004.0]
 

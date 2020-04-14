@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Provider;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -14,11 +13,6 @@ using System.Security;
 using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
 using System.IdentityModel.Tokens.Jwt;
-#if NETSTANDARD2_1
-using System.IdentityModel.Tokens.Jwt;
-#endif
-#if !ONPREMISES
-#endif
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -107,7 +101,7 @@ PS:> dir",
 #if !ONPREMISES
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -AppId '<id>' -AppSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'",
-       Remarks = "Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.",
+       Remarks = "Connects to the Microsoft Graph API using application only permissions using a Client ID and Client Secret granting it the permissions assigned to the application registration in Azure Active Directory",
        SortOrder = 15)]
     [CmdletExample(
         Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -CertificatePath c:\\absolute-path\\to\\pnp.pfx -CertificatePassword <if needed>",
@@ -175,8 +169,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private const string MSALPnPPowerShellClientId = "bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71";
         private const string GraphRedirectUri = "urn:ietf:wg:oauth:2.0:oob";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
-        private static readonly Uri GraphAADLogin = new Uri("https://login.microsoftonline.com/");
-        private static readonly string[] GraphDefaultScope = { "https://graph.microsoft.com/.default" };
 #endif
 
 
@@ -749,7 +741,7 @@ Use -PnPO365ManagementShell instead");
 #endif
             else if (ParameterSetName == ParameterSet_GRAPHWITHAAD)
             {
-                ConnectGraphAAD();
+                connection = SPOnlineConnectionHelper.InitiateAzureAdAppOnlyConnectionWithClientIdClientSecret(AppId, AppSecret, AADDomain, Host, NoTelemetry);
             }
             else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
             {
@@ -1008,20 +1000,7 @@ Use -PnPO365ManagementShell instead");
                 return SPOnlineConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken, Host, NoTelemetry);
             }
         }
-
-
-        private void ConnectGraphAAD()
-        {
-            var authority = new Uri(GraphAADLogin, AADDomain).AbsoluteUri;
-#if !NETSTANDARD2_1
-            var clientApplication = ConfidentialClientApplicationBuilder.Create(AppId).WithClientSecret(AppSecret).WithRedirectUri(RedirectUri).WithAuthority(authority).Build();
-            var authenticationResult = clientApplication.AcquireTokenForClient(GraphDefaultScope).ExecuteAsync().GetAwaiter().GetResult();
-#else
-            throw new NotImplementedException();
 #endif
-        }
-#endif
-
         private PSCredential GetCredentials()
         {
             PSCredential creds;
