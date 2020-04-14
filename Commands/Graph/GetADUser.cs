@@ -6,7 +6,7 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPADUser")]
+    [Cmdlet(VerbsCommon.Get, "PnPADUser", DefaultParameterSetName = ParameterSet_LIST)]
     [CmdletHelp("Gets users from Azure Active Directory. Requires the Azure Active Directory application permission 'User.Read.All'.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
