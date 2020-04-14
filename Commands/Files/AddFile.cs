@@ -138,7 +138,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
             {
                 try
                 {
-                    var list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
+                    var list = SelectedWeb.GetListByUrl(Folder);
 
                     if (!string.IsNullOrEmpty(ContentType.Id))
                     {
