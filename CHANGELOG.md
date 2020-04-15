@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.21.2005.0] (not yet released)
 
 ### Added
-- Added `Get-PnPFooter` and `Set-PnPFooter` to work with the footer shown on Modern Communication pages
+- Added `Get-PnPFooter` and `Set-PnPFooter` to work with the footer shown on Modern Communication pages [PR #2634](https://github.com/pnp/PnP-PowerShell/pull/2634)
 
 ### Changed
 
