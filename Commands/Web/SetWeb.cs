@@ -9,6 +9,14 @@ namespace SharePointPnP.PowerShell.Commands
         DetailedDescription = "Allows setting various properties on a web",
         Category = CmdletHelpCategory.Webs,
         SupportedPlatform = CmdletSupportedPlatform.All)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPWeb -CommentsOnSitePagesDisabled:$true",
+        Remarks = "Disables the page comments to be shown below each page in the current web by default",
+        SortOrder = 1)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPWeb -QuickLaunchEnabled:false",
+        Remarks = "Hides the quick launch from being shown in the current web",
+        SortOrder = 2)]
     public class SetWeb : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Sets the logo of the web to the current url. If you want to set the logo to a modern team site, use Set-PnPSite -LogoFilePath.")]
