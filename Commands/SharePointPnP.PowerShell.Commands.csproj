@@ -865,6 +865,9 @@
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
     <Compile Include="Taxonomy\NewTermLabel.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />
+    <Compile Include="UserProfiles\SetUserOneDriveQuota.cs" />
+    <Compile Include="UserProfiles\ResetUserOneDriveQuotaToDefault.cs" />
+    <Compile Include="UserProfiles\GetUserOneDriveQuota.cs" />
     <Compile Include="UserProfiles\NewUPABulkImportJob.cs" />
     <Compile Include="Utilities\AzureAuthHelper.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
