@@ -8,10 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.21.2005.0] (not yet released)
 
 ### Added
+- Added `Get-PnPFooter` and `Set-PnPFooter` to work with the footer shown on Modern Communication pages
 
 ### Changed
 
 ### Contributors
+- Koen Zomers [koenzomers]
 
 ## [3.20.2004.0]
 
