@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client.WorkflowServices;
 
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
-    [Cmdlet(VerbsCommon.Get, "PnPWorkflowInstance")]
-    [CmdletHelp("Get workflow instances",
-        "Gets all workflow instances",
-        Category = CmdletHelpCategory.Workflows)]
+    [Cmdlet(VerbsCommon.Get, "PnPWorkflowInstance", DefaultParameterSetName = ParameterSet_BYLISTITEM)]
+    [CmdletHelp("Gets SharePoint 2010/2013 workflow instances",
+        DetailedDescription = "Gets all SharePoint 2010/2013 workflow instances",
+        Category = CmdletHelpCategory.Workflows,
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
         Code = @"PS:> Get-PnPWorkflowInstance -List ""My Library"" -ListItem $ListItem",
         Remarks = @"Retrieves workflow instances running against the provided item on list ""My Library""",
@@ -22,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
         SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Get-PnPWorkflowSubscription | Get-PnPWorkflowInstance",
-        Remarks = @"Retrieves workflow instances from all subscriptions.",
+        Remarks = @"Retrieves workflow instances from all subscriptions",
         SortOrder = 3)]
 
     public class GetWorkflowInstance : PnPWebCmdlet
@@ -61,7 +60,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
                 list = List.GetList(SelectedWeb);
                 if (list == null)
                 {
-                    throw new PSArgumentException($"No list found with id, title or url '{List}'", "Identity");
+                    throw new PSArgumentException($"No list found with id, title or url '{List}'", nameof(List));
                 }
             }
             else
@@ -74,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
                 listitem = ListItem.GetListItem(list);
                 if (listitem == null)
                 {
-                    throw new PSArgumentException($"No list item found with id, or title '{ListItem}'", "Identity");
+                    throw new PSArgumentException($"No list item found with id, or title '{ListItem}'", nameof(ListItem));
                 }
             }
             else

@@ -1,18 +1,17 @@
-﻿using System;
-using System.Linq;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Microsoft.SharePoint.Client.Workflow;
 using Microsoft.SharePoint.Client.WorkflowServices;
 using System.Collections.Generic;
 
 namespace SharePointPnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsLifecycle.Start, "PnPWorkflowInstance")]
-    [CmdletHelp("Starts a workflow instance on a list item",
-        Category = CmdletHelpCategory.Workflows)]
+    [CmdletHelp("Starts a SharePoint 2010/2013 workflow instance on a list item",
+        DetailedDescription = "Allows starting a SharePoint 2010/2013 workflow on a list item in a list",
+        Category = CmdletHelpCategory.Workflows,
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
         Code = @"PS:> Start-PnPWorkflowInstance -Subscription 'WorkflowName' -ListItem $item",
         Remarks = "Starts a workflow instance on the specified list item",
@@ -44,12 +43,12 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
                 }
                 else
                 {
-                    throw new PSArgumentException("No valid list item specified.");
+                    throw new PSArgumentException("No valid list item specified.", nameof(ListItem));
                 }
             }
             else
             {
-                throw new PSArgumentException("List Item is required");
+                throw new PSArgumentException("List Item is required", nameof(ListItem));
             }
 
             var subscription = Subscription.GetWorkflowSubscription(SelectedWeb)
