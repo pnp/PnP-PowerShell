@@ -10,8 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Updated `Get-PnPWorkflowInstance` to allow passing in a workflow subscription to list all running instances of a specific workflow
 
 ### Contributors
+- James May [fowl2]
 
 ## [3.20.2004.0]
 
