@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.21.2005.0] (not yet released)
 
 ### Added
-- Added following arguments to `Set-PnPWeb` allowing them to be set: `CommentsOnSitePagesDisabled`, `DisablePowerAutomate`, `MegaMenuEnabled`, `MembersCanShare`, `NavAudienceTargetingEnabled`, `QuickLaunchEnabled` [PR #2633](https://github.com/pnp/PnP-PowerShell/pull/2633)
+- Added following arguments to `Set-PnPWeb` allowing them to be set: `CommentsOnSitePagesDisabled`, `DisablePowerAutomate`, `MegaMenuEnabled`, `MembersCanShare`, `NavAudienceTargetingEnabled`, `QuickLaunchEnabled` and `NoCrawl` [PR #2633](https://github.com/pnp/PnP-PowerShell/pull/2633)
 
 ### Changed
 

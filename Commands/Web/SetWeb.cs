@@ -14,9 +14,13 @@ namespace SharePointPnP.PowerShell.Commands
         Remarks = "Disables the page comments to be shown below each page in the current web by default",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPWeb -QuickLaunchEnabled:false",
+        Code = @"PS:> Set-PnPWeb -QuickLaunchEnabled:$false",
         Remarks = "Hides the quick launch from being shown in the current web",
         SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPWeb -NoCrawl:$true",
+        Remarks = "Prevents the current web from being returned in search results",
+        SortOrder = 3)]
     public class SetWeb : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Sets the logo of the web to the current url. If you want to set the logo to a modern team site, use Set-PnPSite -LogoFilePath.")]
@@ -42,6 +46,9 @@ namespace SharePointPnP.PowerShell.Commands
 
         [Parameter(Mandatory = false, HelpMessage = "Indicates if members of this site can share the site and individual sites with others ($true) or only owners can do this ($false)")]
         public SwitchParameter MembersCanShare;
+
+        [Parameter(Mandatory = false, HelpMessage = "Indicates if this site should not be returned in search results ($true) or if it should be ($false)")]
+        public SwitchParameter NoCrawl;
 
 #if !ONPREMISES
         [Parameter(Mandatory = false)]
@@ -108,6 +115,11 @@ namespace SharePointPnP.PowerShell.Commands
 
                     case nameof(MembersCanShare):
                         SelectedWeb.MembersCanShare = MembersCanShare.ToBool();
+                        dirty = true;
+                        break;
+
+                    case nameof(NoCrawl):
+                        SelectedWeb.NoCrawl = NoCrawl.ToBool();
                         dirty = true;
                         break;
 #if !ONPREMISES
