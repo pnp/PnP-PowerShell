@@ -686,7 +686,6 @@
     <Compile Include="InformationManagement\SetListInformationRightsManagement.cs" />
     <Compile Include="InformationManagement\GetListInformationRightsManagement.cs" />
     <Compile Include="Model\ConnectionMethod.cs" />
-    <Compile Include="Model\GraphObject.cs" />
     <Compile Include="Model\ResponseCollection.cs" />
     <Compile Include="Model\SPOPublicCdnOrigin.cs" />
     <Compile Include="Model\SPOTenant.cs" />
