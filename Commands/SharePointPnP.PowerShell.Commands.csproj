@@ -632,6 +632,7 @@
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignTaskPipeBind.cs" />
+    <Compile Include="Base\PnPOfficeManagementApiCmdlet.cs" />
     <Compile Include="Base\RemoveStoredCredential.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\HubSitePipeBind.cs" />

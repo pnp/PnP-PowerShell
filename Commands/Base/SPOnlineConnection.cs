@@ -61,13 +61,25 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// </summary>
         private Dictionary<TokenAudience, GenericToken> AccessTokens = new Dictionary<TokenAudience, GenericToken>();
 
+
+        /// <summary>
+        /// Tries to get an access token for the provided audience
+        /// </summary>
+        /// <param name="tokenAudience">Audience to try to get an access token for</param>
+        /// <param name="roles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default roles assigned to clientId if not specified.</param>
+        /// <returns>AccessToken for the audience or NULL if unable to retrieve an access token for the audience on the current connection</returns>
+        internal string TryGetAccessToken(TokenAudience tokenAudience, string[] roles = null)
+        {
+            return TryGetToken(tokenAudience, roles)?.AccessToken;
+        }
+
         /// <summary>
         /// Tries to get a token for the provided audience
         /// </summary>
         /// <param name="tokenAudience">Audience to try to get a token for</param>
-        /// <param name="role">The specific role to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
-        /// <returns>AccessToken for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal string TryGetAccessToken(TokenAudience tokenAudience, string role = null)
+        /// <param name="roles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
+        /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
+        internal GenericToken TryGetToken(TokenAudience tokenAudience, string[] roles = null)
         {
             GenericToken token = null;
 
@@ -79,10 +91,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 if (token.ExpiresOn > DateTime.Now)
                 {
-                    // Token is still valid, ensure we dont have a specific role to check for or the requested role is present in the token
-                    if(role == null || token.Roles.Contains(role))
+                    // Token is still valid, ensure we dont have specific roles to check for or the requested roles are present in the token
+                    if(roles == null || !roles.Except(token.Roles).Any())
                     {
-                        return token.AccessToken;
+                        return token;
                     }
                 }
 
@@ -105,7 +117,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 // Managed to create a token for the requested audience, add it to our collection with tokens
                 AccessTokens[tokenAudience] = token;
-                return token.AccessToken;
+                return token;
             }
 
             // Didn't have a token yet and unable to retrieve one

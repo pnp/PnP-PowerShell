@@ -47,6 +47,11 @@ namespace SharePointPnP.PowerShell.Commands.Model
         public Enums.TokenAudience TokenAudience { get; protected set; }
 
         /// <summary>
+        /// The unique identifier of the tenant to which the token belongs
+        /// </summary>
+        public Guid? TenantId { get; protected set; }
+
+        /// <summary>
         /// Instantiates a new token
         /// </summary>
         /// <param name="accesstoken">Accesstoken of which to instantiate a new token</param>
@@ -64,6 +69,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
             ExpiresOn = ParsedToken.ValidTo.ToLocalTime();
             Audiences = ParsedToken.Audiences.ToArray();
             Roles = ParsedToken.Claims.Where(c => c.Type == "roles").Select(c => c.Value).ToArray();
+            TenantId = Guid.TryParse(ParsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value, out Guid tenandIdGuid) ? (Guid?)tenandIdGuid : null;
         }
 
         /// <summary>
