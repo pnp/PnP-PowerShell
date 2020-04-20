@@ -654,6 +654,7 @@
     <Compile Include="Enums\ListItemUpdateType.cs" />
     <Compile Include="Enums\SearchBoxInNavBar.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
+    <Compile Include="Enums\TokenAudience.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
     <Compile Include="Graph\GetDeletedUnifiedGroup.cs" />
     <Compile Include="Graph\RemoveDeletedUnifiedGroup.cs" />
@@ -665,6 +666,8 @@
     <Compile Include="ManagementApi\GetManagementApiAccessToken.cs" />
     <Compile Include="ManagementApi\GetUnifiedAuditLog.cs" />
     <Compile Include="Model\AzureApp.cs" />
+    <Compile Include="Model\OfficeManagementApiToken.cs" />
+    <Compile Include="Model\GraphToken.cs" />
     <Compile Include="Model\ManagementApiSubscription.cs" />
     <Compile Include="Model\ManagementApiSubscriptionContent.cs" />
     <Compile Include="Model\ManagementApiUnifiedLogRecordKeyValuePair.cs" />
@@ -691,7 +694,7 @@
     <Compile Include="Model\SPOPublicCdnOrigin.cs" />
     <Compile Include="Model\SPOTenant.cs" />
     <Compile Include="Model\SPOTheme.cs" />
-    <Compile Include="Model\TokenResult.cs" />
+    <Compile Include="Model\GenericToken.cs" />
     <Compile Include="ClientSidePages\ExportClientSidePage.cs" />
     <Compile Include="Principals\RemoveAlert.cs" />
     <Compile Include="Principals\GetAlert.cs" />

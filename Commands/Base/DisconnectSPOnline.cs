@@ -63,7 +63,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static bool DisconnectProvidedService(SPOnlineConnection connection)
         {
-            connection.AccessToken = string.Empty;
+            connection.ClearTokens();
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
             if (connection == null)
@@ -86,7 +86,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             if (SPOnlineConnection.CurrentConnection != null)
             {
-                SPOnlineConnection.CurrentConnection.AccessToken = string.Empty;
+                SPOnlineConnection.CurrentConnection.ClearTokens();
                 SPOnlineConnection.CurrentConnection.Context = null;
                 SPOnlineConnection.CurrentConnection = null;
             }

@@ -161,7 +161,7 @@ namespace SharePointPnP.PowerShell.Commands
                 }
                 creationInformation.Owners = _teamSiteParameters.Owners;
 
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait:!Wait, graphAccessToken: SPOnlineConnection.CurrentConnection.AccessToken);
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait:!Wait, graphAccessToken: SPOnlineConnection.CurrentConnection.TryGetAccessToken(TokenAudience.MicrosoftGraph));
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);

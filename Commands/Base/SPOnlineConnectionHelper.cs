@@ -198,10 +198,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static SPOnlineConnection InstantiateGraphAccessTokenConnection(string accessToken, PSHost host, bool disableTelemetry)
         {
-            var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
-            var tokenResult = new TokenResult();
-            tokenResult.AccessToken = accessToken;
-            tokenResult.ExpiresOn = jwtToken.ValidTo;
+            var tokenResult = new GenericToken(accessToken);
             var spoConnection = new SPOnlineConnection(tokenResult, ConnectionMethod.AccessToken, ConnectionType.O365, 0, 0, 0, PnPPSVersionTag, host, disableTelemetry, InitializationType.Graph);
             spoConnection.ConnectionMethod = ConnectionMethod.GraphDeviceLogin;
             return spoConnection;
@@ -277,7 +274,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
 
 
-        private static TokenResult GetTokenResult(Uri connectionUri, Dictionary<string, string> returnData, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest)
+        private static GenericToken GetTokenResult(Uri connectionUri, Dictionary<string, string> returnData, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest)
         {
             HttpClient client = new HttpClient();
             var body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={SPOnlineConnection.DeviceLoginAppId}&grant_type=device_code&code={returnData["device_code"]}");
@@ -302,7 +299,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             if (responseMessage.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<TokenResult>(responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                return JsonConvert.DeserializeObject<GenericToken>(responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult());
             }
             else
             {
@@ -480,9 +477,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             bool skipAdminCheck, AzureEnvironment azureEnvironment, X509Certificate2 certificate, bool certificateFromFile)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-            var clientContext =
-                authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate,
-                    azureEnvironment);
+            var clientContext = authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment);
             var context = PnPClientContext.ConvertFrom(clientContext, retryCount, retryWait * 1000);
             context.RequestTimeout = requestTimeout;
             var connectionType = ConnectionType.OnPrem;
@@ -499,23 +494,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
             }
 
-            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null,
-                url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly);
-            spoConnection.ConnectionMethod = ConnectionMethod.AzureADAppOnly;
-
-            // Retrieve Graph certificate
-
-            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"https://login.microsoftonline.com/{tenant}").WithCertificate(certificate).Build();
-            var result = app.AcquireTokenForClient(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
-            if (result != null)
+            var spoConnection = new SPOnlineConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, clientId, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.AADAppOnly)
             {
-                spoConnection.AccessToken = result.AccessToken;
-            }
+                ConnectionMethod = ConnectionMethod.AzureADAppOnly,
+                CertFile = certificate,
+                Tenant = tenant
+            };
 
-            if (certificateFromFile)
-            {
-                spoConnection.CertFile = certificate;
-            }
             return spoConnection;
 
         }

@@ -1,18 +1,12 @@
 ﻿#if !ONPREMISES
-using Newtonsoft.Json.Linq;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using SharePointPnP.PowerShell.Commands.Model;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -96,11 +90,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
 
             var tenantId = Microsoft.SharePoint.Client.TenantExtensions.GetTenantIdByUrl(tenantUri.ToString());
-
-            string body;
-            string response;
-            var password = string.Empty;
-            var username = string.Empty;
+            string password;
+            string username;
             if (ParameterSpecified(nameof(Credentials)))
             {
                 password = EncryptionUtility.ToInsecureString(Credentials.Password);
@@ -116,41 +107,42 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 throw new InvalidOperationException("Either a connection needs to be made by Connect-PnPOnline or Credentials needs to be specified");
             }
 
-            if (!string.IsNullOrEmpty(Resource))
+            GenericToken token = null;
+            if (ParameterSpecified(nameof(Resource)) && !string.IsNullOrEmpty(Resource))
             {
-                body = $"grant_type=password&client_id={ClientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&resource={Resource}";
-                response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenantId}/oauth2/token", body, "application/x-www-form-urlencoded");
+                token = GenericToken.AcquireV1Token(tenantId, ClientId, username, password, Resource);
             }
-            else
+
+            if (ParameterSpecified(nameof(Scopes)) && Scopes.Count > 0)
             {
-                var scopes = string.Join(" ", Scopes);
-                body = $"grant_type=password&client_id={ClientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&scope={scopes}";
-                response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token", body, "application/x-www-form-urlencoded");
+                token = GenericToken.AcquireV2Token(tenantId, ClientId, username, password, Scopes.ToArray());
             }
-            var json = JToken.Parse(response);
-            var accessToken = json["access_token"].ToString();
 
             if (SetAsCurrent.IsPresent)
             {
                 if (SPOnlineConnection.CurrentConnection != null)
                 {
-                    SPOnlineConnection.CurrentConnection.AccessToken = accessToken;
+                    if(token == null)
+                    {
+                        throw new InvalidOperationException($"-{nameof(SetAsCurrent)} can't be performed as no valid token could be retrieved");
+                    }
+
+                    SPOnlineConnection.CurrentConnection.AddToken(Enums.TokenAudience.Other, token);
                 }
                 else
                 {
-                    throw new InvalidOperationException("-SetAsCurrent can only be used when connecting using Connect-PnPOnline");
+                    throw new InvalidOperationException($"-{nameof(SetAsCurrent)} can only be used when having an active connection using Connect-PnPOnline");
                 }
             }
+
             if (Decoded.IsPresent)
             {
-                var decodedToken = new JwtSecurityToken(accessToken);
-                WriteObject(decodedToken);
+                WriteObject(token.ParsedToken);
             }
             else
             {
-                WriteObject(accessToken);
+                WriteObject(token.AccessToken);
             }
-
         }
     }
 }

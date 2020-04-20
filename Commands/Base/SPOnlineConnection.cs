@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
+using System.Management.Automation.Language;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -29,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         internal static List<ClientContext> ContextCache { get; set; }
 
         public static AuthenticationResult AuthenticationResult { get; set; }
-        public static TokenResult TokenResult { get; set; }
+        public static GenericToken TokenResult { get; set; }
         public static SPOnlineConnection CurrentConnection { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
         public InitializationType InitializationType { get; protected set; }
@@ -49,58 +50,129 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public X509Certificate2 CertFile { get; internal set; }
 
         public ClientContext Context { get; set; }
-        internal string AccessToken
+
+        /// <summary>
+        /// Tenant name to which the connection exists
+        /// </summary>
+        public string Tenant { get; set; }
+
+        /// <summary>
+        /// Collection with all available access tokens in the current session to access APIs. Key is the token audience, value is the JWT token itself.
+        /// </summary>
+        private Dictionary<TokenAudience, GenericToken> AccessTokens = new Dictionary<TokenAudience, GenericToken>();
+
+        /// <summary>
+        /// Tries to get a token for the provided audience
+        /// </summary>
+        /// <param name="tokenAudience">Audience to try to get a token for</param>
+        /// <param name="role">The specific role to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
+        /// <returns>AccessToken for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
+        internal string TryGetAccessToken(TokenAudience tokenAudience, string role = null)
         {
-            get
-            {
-                if (TokenResult != null)
-                {
-                    if (!string.IsNullOrEmpty(TokenResult.AccessToken) && DateTime.Now > TokenResult.ExpiresOn && !string.IsNullOrEmpty(TokenResult.RefreshToken))
-                    {
-                        // Expired token
-                        var client = new HttpClient();
-                        var uri = new Uri(Url);
-                        var url = $"{uri.Scheme}://{uri.Host}";
-                        var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={TokenResult.RefreshToken}");
-                        body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
-                        client.DefaultRequestHeaders.Accept.Clear();
-                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                        var result = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
-                        var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-                        TokenResult.AccessToken = tokens["access_token"];
-                        TokenResult.RefreshToken = tokens["refresh_token"];
-                        TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
-                    }
-                    return TokenResult.AccessToken;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(value);
+            GenericToken token = null;
 
-                    if (TokenResult != null)
-                    {
-                        TokenResult.AccessToken = value;
-                        TokenResult.ExpiresOn = jwtToken.ValidTo.ToLocalTime();
-                    }
-                    else
-                    {
+            // Validate if we have a token already
+            if (AccessTokens.ContainsKey(tokenAudience))
+            {
+                // We have a token already, ensure it is still valid
+                token = AccessTokens[tokenAudience];
 
-                        TokenResult = new TokenResult()
-                        {
-                            AccessToken = value,
-                            ExpiresOn = jwtToken.ValidTo.ToLocalTime()
-                        };
+                if (token.ExpiresOn > DateTime.Now)
+                {
+                    // Token is still valid, ensure we dont have a specific role to check for or the requested role is present in the token
+                    if(role == null || token.Roles.Contains(role))
+                    {
+                        return token.AccessToken;
                     }
                 }
+
+                // Token was no longer valid, proceed with trying to create a new token
             }
+
+            // We do not have a token for the requested audience yet or it was no longer valid, try to create (a new) one
+            switch(tokenAudience)
+            {
+                case TokenAudience.MicrosoftGraph:
+                    token = GraphToken.AcquireToken(Tenant, ClientId, CertFile);
+                    break;
+
+                case TokenAudience.OfficeManagementApi:
+                    token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, CertFile);
+                    break;
+            }
+
+            if(token != null)
+            {
+                // Managed to create a token for the requested audience, add it to our collection with tokens
+                AccessTokens[tokenAudience] = token;
+                return token.AccessToken;
+            }
+
+            // Didn't have a token yet and unable to retrieve one
+            return null;
         }
+
+        /// <summary>
+        /// Adds the provided token to the available tokens in the current connection
+        /// </summary>
+        /// <param name="tokenAudience">Audience the token is for</param>
+        /// <param name="token">The token to add</param>
+        internal void AddToken(TokenAudience tokenAudience, GenericToken token)
+        {
+            AccessTokens[tokenAudience] = token;
+        }
+
+        /// <summary>
+        /// Clears all available tokens on the current connection
+        /// </summary>
+        internal void ClearTokens()
+        {
+            AccessTokens.Clear();
+        }
+
+        //internal string AccessToken
+        //{
+        //    get
+        //    {
+        //        if (TokenResult != null)
+        //        {
+        //            if (!string.IsNullOrEmpty(TokenResult.AccessToken) && DateTime.Now > TokenResult.ExpiresOn && !string.IsNullOrEmpty(TokenResult.RefreshToken))
+        //            {
+        //                // Expired token
+        //                var client = new HttpClient();
+        //                var uri = new Uri(Url);
+        //                var url = $"{uri.Scheme}://{uri.Host}";
+        //                var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={TokenResult.RefreshToken}");
+        //                body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
+        //                client.DefaultRequestHeaders.Accept.Clear();
+        //                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        //                var result = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
+        //                var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+        //                TokenResult.AccessToken = tokens["access_token"];
+        //                TokenResult.RefreshToken = tokens["refresh_token"];
+        //                TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
+        //            }
+        //            return TokenResult.AccessToken;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        if (!string.IsNullOrEmpty(value))
+        //        {
+        //            var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(value);
+
+        //            if (TokenResult != null)
+        //            {
+        //                TokenResult.AccessToken = value;
+        //                TokenResult.ExpiresOn = jwtToken.ValidTo.ToLocalTime();
+        //            }
+        //        }
+        //    }
+        //}
 
         internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
             : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
@@ -133,7 +205,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ConnectionMethod = ConnectionMethod.Credentials;
         }
 
-        internal SPOnlineConnection(ClientContext context, TokenResult tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal SPOnlineConnection(ClientContext context, GenericToken tokenResult, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
@@ -159,12 +231,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.ExecutingWebRequest += (sender, args) =>
             {
                 args.WebRequestExecutor.WebRequest.UserAgent = userAgent;
-                args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + CurrentConnection.AccessToken;
+                args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + CurrentConnection.TryGetAccessToken(TokenAudience.MicrosoftGraph);
             };
         }
 
 
-        internal SPOnlineConnection(TokenResult tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        internal SPOnlineConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
