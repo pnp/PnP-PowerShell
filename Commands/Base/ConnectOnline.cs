@@ -606,39 +606,13 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
         }
 
-        private void WriteUpdateMessage(string message)
-        {
-
-            if (Host.Name == "ConsoleHost")
-            {
-                // Use Warning Color
-                var notificationColor = "\x1B[7m";
-                var resetColor = "\x1B[0m";
-
-                var lineLength = 0;
-                foreach (var line in message.Split('\n'))
-                {
-                    if (line.Length > lineLength)
-                    {
-                        lineLength = line.Length;
-                    }
-                }
-                var outMessage = string.Empty;
-                foreach (var line in message.Split('\n'))
-                {
-                    var lineToAdd = line.PadRight(lineLength);
-                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
-                }
-                Host.UI.WriteLine(outMessage);
-            }
-            else
-            {
-                WriteWarning(message);
-            }
-        }
-
+        /// <summary>
+        /// Sets up the connection using the information provided through the cmdlet arguments
+        /// </summary>
         protected void Connect()
         {
+            PnPConnection connection = null;
+
             var latestVersion = PnPConnectionHelper.GetLatestVersion();
             if (!string.IsNullOrEmpty(latestVersion))
             {
@@ -650,270 +624,109 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             }
 
-            PSCredential creds = null;
+            PSCredential credentials = null;
             if (Credentials != null)
             {
-                creds = Credentials.Credential;
-            }
+                credentials = Credentials.Credential;
+            }            
 
-            PnPConnection connection = null;
-
-            if (UseWebLogin)
-            {
-#if !NETSTANDARD2_1
-                connection = PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
-#else
-                WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework.
-Use -PnPO365ManagementShell instead");
-#endif
-            }
-
-            if (UseAdfs)
-            {
-                if (!Kerberos && creds == null)
-                {
-                    if ((creds = GetCredentials()) == null)
-                    {
-                        creds = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
-                    }
-                }
-#if !NETSTANDARD2_1
-                connection = PnPConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
-                    Kerberos,
-                    creds,
-                    Host,
-                    MinimalHealthScore,
-                    RetryCount,
-                    RetryWait,
-                    RequestTimeout,
-                    TenantAdminUrl,
-                    NoTelemetry,
-                    SkipTenantAdminCheck,
-                    LoginProviderName);
-#else
-                throw new NotImplementedException();
-#endif
-            }
-
-#if !NETSTANDARD2_1            
-            if (UseAdfsCert)
-            {
-                // Modal Dialog to enable a user to select a certificate to use to authenticate against ADFS
-                X509Store store = new X509Store("MY", StoreLocation.CurrentUser);
-                store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
-                var certs = X509Certificate2UI.SelectFromCollection(store.Certificates, "Select ADFS User Certificate", "Selec the certificate to use to authenticate to ADFS", X509SelectionFlag.SingleSelection);
-
-                if (certs[0] != null)
-                {
-                    var serialNumber = certs[0].SerialNumber;
-
-                    PnPConnection.CurrentConnection = PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
-                }
-            }
-#endif
-
+            // Connect using the used set parameters
             switch (ParameterSetName)
             {
 #if !ONPREMISES
                 case ParameterSet_GRAPHWITHAAD:
-#pragma warning disable CS0618 // Type or member is obsolete
-                    connection = PnPConnection.GetConnectionWithClientIdAndClientSecret(AppId, AppSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
-#pragma warning restore CS0618 // Type or member is obsolete
+                    connection = ConnectGraphWithAad();
+                    break;
+
+                case ParameterSet_SPOMANAGEMENT:
+                    connection = ConnectSpoManagement();
+                    break;
+
+                case ParameterSet_DEVICELOGIN:
+                    connection = ConnectDeviceLogin();
+                    break;
+
+                case ParameterSet_GRAPHDEVICELOGIN:
+                    connection = ConnectGraphDeviceLogin(null);
+                    break;
+
+                case ParameterSet_NATIVEAAD:
+                    connection = ConnectNativeAAD(ClientId, RedirectUri);
+                    break;
+
+                case ParameterSet_APPONLYAAD:
+                    connection = ConnectAppOnlyAad();
+                    break;
+
+                case ParameterSet_APPONLYAADPEM:
+                    connection = ConnectAppOnlyAadPem();
+                    break;
+
+                case ParameterSet_APPONLYAADThumb:
+                    connection = ConnectAppOnlyAadThumb();
+                    break;
+
+                case ParameterSet_APPONLYAADCER:
+                    connection = ConnectAppOnlyAadCer();
+                    break;
+
+                case ParameterSet_GRAPHWITHSCOPE:
+                    connection = ConnectGraphWithScope();
+                    break;
+
+                case ParameterSet_ACCESSTOKEN:
+                    connection = ConnectAccessToken();
+                    break;
+#else
+                case ParameterSet_HIGHTRUST_CERT:
+                    connection = ConnectHighTrustCert();
+                    break;
+
+                case ParameterSet_HIGHTRUST_PFX:
+                    connection = ConnectHighTrustPfx();
                     break;
 #endif
-
                 case ParameterSet_TOKEN:
-#if !ONPREMISES
-#pragma warning disable CS0618 // Type or member is obsolete
-                    connection = PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
-#pragma warning restore CS0618 // Type or member is obsolete
-#else
-                    connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
-#endif
+                    connection = ConnectToken();
                     break;
 
                 case ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL:
-#if !ONPREMISES
-                    connection = PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
-#else
-                    connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
-#endif
+                    connection = ConnectAppOnlyClientIdCClientSecretUrl();
                     break;
 
                 case ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN:
-#if !ONPREMISES
-                    connection = PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
-#else
-                    connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
-#endif
+                    connection = ConnectAppOnlyClientIdCClientSecretAadDomain();
                     break;
             }
 
-#if !ONPREMISES
-            else if (ParameterSetName == ParameterSet_SPOMANAGEMENT)
+            if (UseWebLogin.IsPresent)
             {
-                connection = ConnectNativeAAD(SPOManagementClientId, SPOManagementRedirectUri);
+                connection = ConnectWebLogin();
             }
-            else if (ParameterSetName == ParameterSet_DEVICELOGIN)
+
+            if (UseAdfs.IsPresent)
             {
-                connection = ConnectDeviceLogin();
+                connection = ConnectAdfs(credentials);
             }
-            else if (ParameterSetName == ParameterSet_GRAPHDEVICELOGIN)
+
+            if (UseAdfsCert.IsPresent)
             {
-                connection = ConnectGraphDeviceLogin(null);
+                connection = ConnectAdfsCertificate();
             }
-            else if (ParameterSetName == ParameterSet_NATIVEAAD)
+
+            if(connection == null)
             {
-                connection = ConnectNativeAAD(ClientId, RedirectUri);
+                connection = ConnectCredentials(credentials);
             }
-            else if (ParameterSetName == ParameterSet_APPONLYAAD)
+
+            // Ensure a connection instance has been created by now
+            if(connection == null)
             {
-#if !NETSTANDARD2_1
-                if (ParameterSpecified(nameof(CertificatePath)))
-                {
-                    connection = PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-                    WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
-                } else if (ParameterSpecified(nameof(Certificate)))
-                {
-                    connection = PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, Certificate);
-                } else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
-                {
-                    connection = PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, CertificateBase64Encoded);
-                }
-                else
-                {
-                    throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
-                }
-#else
-                throw new NotImplementedException();
-#endif
+                // No connection instance was created
+                throw new PSInvalidOperationException("Unable to connect using provided arguments");
             }
-            else if (ParameterSetName == ParameterSet_APPONLYAADPEM)
-            {
-#if !NETSTANDARD2_1
-                connection = PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-#else
-                throw new NotImplementedException();
-#endif
-            }
-            else if (ParameterSetName == ParameterSet_APPONLYAADThumb)
-            {
-#if !NETSTANDARD2_1
-                connection = PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-#else
-                throw new NotImplementedException();
-#endif
-            }
-            else if (ParameterSetName == ParameterSet_APPONLYAADCER)
-            {
-#if !NETSTANDARD2_1
-                connection = PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-#else
-                throw new NotImplementedException();	
-#endif
-            }
-#if !NETSTANDARD2_1
-            else if (ParameterSetName == ParameterSet_GRAPHWITHSCOPE)
-            {
-                ConnectGraphScopes();
-            }
-#endif
-            else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
-            {
-                var handler = new JwtSecurityTokenHandler();
-                var jwtToken = handler.ReadJwtToken(AccessToken);
-                var aud = jwtToken.Audiences.FirstOrDefault();
-                var url = Url;
-                if ((url.ToLower() == "https://graph.microsoft.com") ||
-                    (url.ToLower() == "https://manage.office.com"))
-                {
-                    connection = ConnectGraphDeviceLogin(AccessToken);
-                }
-                else
-                {
-                    Uri uri = null;
-                    try
-                    {
-                        uri = new Uri(url);
-                    }
-                    catch
-                    {
-                        uri = new Uri(Url);
-                    }
-                    //#if !NETSTANDARD2_0
-                    connection = PnPConnectionHelper.InitiateAccessTokenConnection(uri, AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-                    //#else
-                    //throw new NotImplementedException();
-                    //#endif
-                }
-            }
-#endif
-#if ONPREMISES
-            else if (ParameterSetName == ParameterSet_HIGHTRUST_CERT)
-            {
-                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url,
-                    ClientId,
-                    HighTrustCertificate,
-                    HighTrustCertificateIssuerId ?? ClientId,
-                    MinimalHealthScore,
-                    RetryCount,
-                    RetryWait,
-                    RequestTimeout,
-                    TenantAdminUrl,
-                    Host,
-                    NoTelemetry,
-                    SkipTenantAdminCheck,
-                    UserName);
-            }
-            else if (ParameterSetName == ParameterSet_HIGHTRUST_PFX)
-            {
-                connection = SPOnlineConnectionHelper.InstantiateHighTrustConnection(Url,
-                    ClientId,
-                    HighTrustCertificatePath,
-                    HighTrustCertificatePassword,
-                    HighTrustCertificateIssuerId ?? ClientId,
-                    MinimalHealthScore,
-                    RetryCount,
-                    RetryWait,
-                    RequestTimeout,
-                    TenantAdminUrl,
-                    Host,
-                    NoTelemetry,
-                    SkipTenantAdminCheck,
-                    UserName);
-            }
-#endif
-            else
-            {
-                if (!CurrentCredentials && creds == null)
-                {
-                    creds = GetCredentials();
-                    if (creds == null)
-                    {
-                        creds = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
-                    }
-                }
-                connection = PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
-                    creds,
-                    Host,
-                    CurrentCredentials,
-                    MinimalHealthScore,
-                    RetryCount,
-                    RetryWait,
-                    RequestTimeout,
-                    TenantAdminUrl,
-                    NoTelemetry,
-                    SkipTenantAdminCheck,
-                    AuthenticationMode);
-            }
-#if !ONPREMISES
-#if !NETSTANDARD2_1
-            if (ParameterSpecified(nameof(Scopes)) && ParameterSetName != ParameterSet_GRAPHWITHSCOPE)
-            {
-                ConnectGraphScopes();
-            }
-#endif
-#endif
+
+            // Connection has been established
             WriteVerbose($"PnP PowerShell Cmdlets ({System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
             PnPConnection.CurrentConnection = connection;
             if (CreateDrive && PnPConnection.CurrentConnection.Context != null)
@@ -930,62 +743,103 @@ Use -PnPO365ManagementShell instead");
                     SessionState.Drive.New(drive, "Global");
                 }
             }
-            if (PnPConnection.CurrentConnection != null)
+
+            if (PnPConnection.CurrentConnection.Url != null)
             {
-                if (PnPConnection.CurrentConnection.Url != null)
-                {
-                    var hostUri = new Uri(PnPConnection.CurrentConnection.Url);
-                    Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
-                    Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
-                }
-                else
-                {
-                    Environment.SetEnvironmentVariable("PNPPSHOST", "GRAPH");
-                    Environment.SetEnvironmentVariable("PNPPSSITE", "GRAPH");
-                }
+                var hostUri = new Uri(PnPConnection.CurrentConnection.Url);
+                Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
+                Environment.SetEnvironmentVariable("PNPPSSITE", hostUri.LocalPath);
             }
+            else
+            {
+                Environment.SetEnvironmentVariable("PNPPSHOST", "GRAPH");
+                Environment.SetEnvironmentVariable("PNPPSSITE", "GRAPH");
+            }
+
             if (ReturnConnection)
             {
                 WriteObject(connection);
             }
         }
 
+        #region Connect Types
+
+        /// <summary>
+        /// Connect using the paramater set TOKEN
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectToken()
+        {
 #if !ONPREMISES
-        private PnPConnection ConnectNativeAAD(string clientId, string redirectUrl)
-        {
-            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string configFolder = Path.Combine(appDataFolder, "SharePointPnP.PowerShell");
-            Directory.CreateDirectory(configFolder); // Ensure folder exists
-            if (ClearTokenCache)
-            {
-                string configFile = Path.Combine(configFolder, "tokencache.dat");
-
-                if (File.Exists(configFile))
-                {
-                    File.Delete(configFile);
-                }
-            }
-#if !NETSTANDARD2_1
-            return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
-                new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
-                RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+#pragma warning disable CS0618 // Type or member is obsolete
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+#pragma warning restore CS0618 // Type or member is obsolete
 #else
-            throw new NotImplementedException();
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
 #endif
         }
 
-#if !NETSTANDARD2_1
-        private void ConnectGraphScopes()
+        /// <summary>
+        /// Connect using the parameter set GRAPHWITHAAD
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectGraphWithAad()
         {
-            var clientApplication = PublicClientApplicationBuilder.Create(MSALPnPPowerShellClientId).Build();
-            //var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
-            var authenticationResult = clientApplication.AcquireTokenInteractive(Scopes).ExecuteAsync().GetAwaiter().GetResult();
-            //var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
-        }
+#if !ONPREMISES
+#pragma warning disable CS0618 // Type or member is obsolete
+            return PnPConnection.GetConnectionWithClientIdAndClientSecret(AppId, AppSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
+#pragma warning restore CS0618 // Type or member is obsolete
+#else
+            return null;
 #endif
+        }
 
+        /// <summary>
+        /// Connect using the parameter set APPONLYCLIENTIDCLIENTSECRETURL
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectAppOnlyClientIdCClientSecretUrl()
+        {
+#if !ONPREMISES
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+#else
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set APPONLYCLIENTIDCLIENTSECRETAADDOMAIN
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectAppOnlyClientIdCClientSecretAadDomain()
+        {
+#if !ONPREMISES
+            return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
+#else
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set SPOMANAGEMENT
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectSpoManagement()
+        {
+#if !ONPREMISES
+            return ConnectNativeAAD(SPOManagementClientId, SPOManagementRedirectUri);
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set DEVICELOGIN
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin()
         {
+#if !ONPREMISES
             bool ctrlCAsInput = false;
             if (Host.Name == "ConsoleHost")
             {
@@ -1023,14 +877,21 @@ Use -PnPO365ManagementShell instead");
             }, Host, NoTelemetry);
             if (Host.Name == "ConsoleHost")
             {
-              Console.TreatControlCAsInput = ctrlCAsInput;
+                Console.TreatControlCAsInput = ctrlCAsInput;
             }
             return connection;
+#else
+            return null;
+#endif
         }
 
+        /// <summary>
+        /// Connect using the parameter set GRAPHDEVICELOGIN
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectGraphDeviceLogin(string accessToken)
         {
-
+#if !ONPREMISES
             if (string.IsNullOrEmpty(accessToken))
             {
                 bool ctrlCAsInput = false;
@@ -1073,19 +934,346 @@ Use -PnPO365ManagementShell instead");
             {
                 return PnPConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken, Host, NoTelemetry);
             }
-        }
+#else
+            return null;
 #endif
+        }
 
+        /// <summary>
+        /// Connect using the parameter set NativeAAD
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectNativeAAD(string clientId, string redirectUrl)
+        {
+#if !ONPREMISES
+            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string configFolder = Path.Combine(appDataFolder, "SharePointPnP.PowerShell");
+            Directory.CreateDirectory(configFolder); // Ensure folder exists
+            if (ClearTokenCache)
+            {
+                string configFile = Path.Combine(configFolder, "tokencache.dat");
+
+                if (File.Exists(configFile))
+                {
+                    File.Delete(configFile);
+                }
+            }
+#if !NETSTANDARD2_1
+            return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
+                new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
+                RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+#else
+            throw new NotImplementedException();
+#endif
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set APPONLYAAD
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectAppOnlyAad()
+        {
+#if !ONPREMISES
+#if !NETSTANDARD2_1
+            if (ParameterSpecified(nameof(CertificatePath)))
+            {
+                WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
+                return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, CertificatePath, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);                
+            }
+            else if (ParameterSpecified(nameof(Certificate)))
+            {
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, Certificate);
+            }
+            else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
+            {
+                return PnPConnectionHelper.InitiateAzureAdAppOnlyConnectionWithCert(new Uri(Url), ClientId, Tenant, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment, CertificateBase64Encoded);
+            }
+            else
+            {
+                throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
+            }
+#else
+            throw new NotImplementedException();
+#endif
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set APPONLYAADPEM
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectAppOnlyAadPem()
+        {
+#if !ONPREMISES
+#if !NETSTANDARD2_1
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+#else
+            throw new NotImplementedException();
+#endif
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set APPONLYAADThumb
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectAppOnlyAadThumb()
+        {
+#if !ONPREMISES
+#if !NETSTANDARD2_1
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+#else
+            throw new NotImplementedException();
+#endif
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set APPONLYAADCER
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectAppOnlyAadCer()
+        {
+#if !ONPREMISES
+#if !NETSTANDARD2_1
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+#else
+            throw new NotImplementedException();	
+#endif
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set GRAPHWITHSCOPE
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectGraphWithScope()
+        {
+#if !ONPREMISES
+#if !NETSTANDARD2_1
+            var clientApplication = PublicClientApplicationBuilder.Create(MSALPnPPowerShellClientId).Build();
+            //var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
+            var authenticationResult = clientApplication.AcquireTokenInteractive(Scopes).ExecuteAsync().GetAwaiter().GetResult();
+            //var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
+
+            // TODO KZ: Finish implementation
+            throw new NotImplementedException();
+#else
+            throw new NotImplementedException();	
+#endif
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set ACCESSTOKEN
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectAccessToken()
+        {
+#if !ONPREMISES
+            // TODO KZ: Check current implementation
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(AccessToken);
+            var aud = jwtToken.Audiences.FirstOrDefault();
+            var url = Url;
+            if ((url.ToLower() == "https://graph.microsoft.com") ||
+                (url.ToLower() == "https://manage.office.com"))
+            {
+                return ConnectGraphDeviceLogin(AccessToken);
+            }
+            else
+            {
+                Uri uri = null;
+                try
+                {
+                    uri = new Uri(url);
+                }
+                catch
+                {
+                    uri = new Uri(Url);
+                }
+                //#if !NETSTANDARD2_0
+                return PnPConnectionHelper.InitiateAccessTokenConnection(uri, AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
+                //#else
+                //throw new NotImplementedException();
+                //#endif
+            }
+#else
+            return null;
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set HIGHTRUST_CERT
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectHighTrustCert()
+        {
+#if !ONPREMISES
+            return null;
+#else
+            return PnPConnectionHelper.InstantiateHighTrustConnection(Url,
+                                                                      ClientId,
+                                                                      HighTrustCertificate,
+                                                                      HighTrustCertificateIssuerId ?? ClientId,
+                                                                      MinimalHealthScore,
+                                                                      RetryCount,
+                                                                      RetryWait,
+                                                                      RequestTimeout,
+                                                                      TenantAdminUrl,
+                                                                      Host,
+                                                                      NoTelemetry,
+                                                                      SkipTenantAdminCheck,
+                                                                      UserName);
+#endif
+        }
+
+        /// <summary>
+        /// Connect using the parameter set HIGHTRUST_PFX
+        /// </summary>
+        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
+        private PnPConnection ConnectHighTrustPfx()
+        {
+#if !ONPREMISES
+            return null;
+#else
+            return PnPConnectionHelper.InstantiateHighTrustConnection(Url,
+                                                                      ClientId,
+                                                                      HighTrustCertificatePath,
+                                                                      HighTrustCertificatePassword,
+                                                                      HighTrustCertificateIssuerId ?? ClientId,
+                                                                      MinimalHealthScore,
+                                                                      RetryCount,
+                                                                      RetryWait,
+                                                                      RequestTimeout,
+                                                                      TenantAdminUrl,
+                                                                      Host,
+                                                                      NoTelemetry,
+                                                                      SkipTenantAdminCheck,
+                                                                      UserName);
+#endif
+        }
+
+        /// <summary>
+        /// Connect using ADFS
+        /// </summary>
+        /// <param name="credentials">Credentials to use to authenticate to ADFS</param>
+        /// <returns>PnPConnection based on ADFS authentication</returns>
+        private PnPConnection ConnectAdfs(PSCredential credentials)
+        {
+            if (!Kerberos && credentials == null)
+            {
+                if ((credentials = GetCredentials()) == null)
+                {
+                    credentials = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
+                }
+            }
+#if !NETSTANDARD2_1
+            return PnPConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
+                                                                 Kerberos,
+                                                                 credentials,
+                                                                 Host,
+                                                                 MinimalHealthScore,
+                                                                 RetryCount,
+                                                                 RetryWait,
+                                                                 RequestTimeout,
+                                                                 TenantAdminUrl,
+                                                                 NoTelemetry,
+                                                                 SkipTenantAdminCheck,
+                                                                  LoginProviderName);
+#else
+                throw new NotImplementedException();
+#endif
+        }
+
+        /// <summary>
+        /// Connect using ADFS Client Certificate
+        /// </summary>
+        /// <returns>PnPConnection based on ADFS Client Certificate authentication</returns>
+        private PnPConnection ConnectAdfsCertificate()
+        {
+#if !NETSTANDARD2_1
+            // Modal Dialog to enable a user to select a certificate to use to authenticate against ADFS
+            X509Store store = new X509Store("MY", StoreLocation.CurrentUser);
+            store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+            var certs = X509Certificate2UI.SelectFromCollection(store.Certificates, "Select ADFS User Certificate", "Selec the certificate to use to authenticate to ADFS", X509SelectionFlag.SingleSelection);
+
+            if (certs[0] != null)
+            {
+                var serialNumber = certs[0].SerialNumber;
+                return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+            }
+
+            return null;
+#else
+            throw new NotImplementedException();
+#endif
+        }
+
+        /// <summary>
+        /// Connect using WebLogin
+        /// </summary>
+        /// <returns>PnPConnection based on WebLogin authentication</returns>
+        private PnPConnection ConnectWebLogin()
+        {
+#if !NETSTANDARD2_1
+            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
+#else
+            WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPO365ManagementShell instead");
+#endif
+        }
+
+        /// <summary>
+        /// Connect using either provided credentials or the current credentials
+        /// </summary>
+        /// <returns>PnPConnection based on WebLogin authentication</returns>
+        private PnPConnection ConnectCredentials(PSCredential credentials)
+        {
+            if (!CurrentCredentials && credentials == null)
+            {
+                credentials = GetCredentials();
+                if (credentials == null)
+                {
+                    credentials = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
+                }
+            }
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
+                                                                     credentials,
+                                                                     Host,
+                                                                     CurrentCredentials,
+                                                                     MinimalHealthScore,
+                                                                     RetryCount,
+                                                                     RetryWait,
+                                                                     RequestTimeout,
+                                                                     TenantAdminUrl,
+                                                                     NoTelemetry,
+                                                                     SkipTenantAdminCheck,
+                                                                     AuthenticationMode);
+        }
+
+        #endregion
+
+        #region Helper methods
         private PSCredential GetCredentials()
         {
-            PSCredential creds;
-
             var connectionUri = new Uri(Url);
 
             // Try to get the credentials by full url
-
-            creds = Utilities.CredentialManager.GetCredential(Url);
-            if (creds == null)
+            PSCredential credentials = Utilities.CredentialManager.GetCredential(Url);
+            if (credentials == null)
             {
                 // Try to get the credentials by splitting up the path
                 var pathString = $"{connectionUri.Scheme}://{(connectionUri.IsDefaultPort ? connectionUri.Host : $"{connectionUri.Host}:{connectionUri.Port}")}";
@@ -1096,29 +1284,61 @@ Use -PnPO365ManagementShell instead");
                     if (!string.IsNullOrEmpty(path))
                     {
                         var pathUrl = $"{pathString}{path}";
-                        creds = Utilities.CredentialManager.GetCredential(pathUrl);
-                        if (creds != null)
+                        credentials = Utilities.CredentialManager.GetCredential(pathUrl);
+                        if (credentials != null)
                         {
                             break;
                         }
                     }
                 }
 
-                if (creds == null)
+                if (credentials == null)
                 {
                     // Try to find the credentials by schema and hostname
-                    creds = Utilities.CredentialManager.GetCredential(connectionUri.Scheme + "://" + connectionUri.Host);
+                    credentials = Utilities.CredentialManager.GetCredential(connectionUri.Scheme + "://" + connectionUri.Host);
 
-                    if (creds == null)
+                    if (credentials == null)
                     {
                         // try to find the credentials by hostname
-                        creds = Utilities.CredentialManager.GetCredential(connectionUri.Host);
+                        credentials = Utilities.CredentialManager.GetCredential(connectionUri.Host);
                     }
                 }
 
             }
 
-            return creds;
+            return credentials;
         }
+
+        private void WriteUpdateMessage(string message)
+        {
+
+            if (Host.Name == "ConsoleHost")
+            {
+                // Use Warning Color
+                var notificationColor = "\x1B[7m";
+                var resetColor = "\x1B[0m";
+
+                var lineLength = 0;
+                foreach (var line in message.Split('\n'))
+                {
+                    if (line.Length > lineLength)
+                    {
+                        lineLength = line.Length;
+                    }
+                }
+                var outMessage = string.Empty;
+                foreach (var line in message.Split('\n'))
+                {
+                    var lineToAdd = line.PadRight(lineLength);
+                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
+                }
+                Host.UI.WriteLine(outMessage);
+            }
+            else
+            {
+                WriteWarning(message);
+            }
+        }
+        #endregion
     }
 }

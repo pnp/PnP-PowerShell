@@ -1,5 +1,6 @@
 ﻿using Microsoft.ApplicationInsights;
 using Microsoft.SharePoint.Client;
+using OfficeDevPnP.Core.Extensions;
 using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Model;
 using System;
@@ -227,6 +228,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                               InitializationType initializationType, 
                               string url = null, 
                               ClientContext clientContext = null, 
+                              Dictionary<TokenAudience, GenericToken> tokens = null,
                               int? minimalHealthScore = null,
                               string pnpVersionTag = null, 
                               bool disableTelemetry = false)
@@ -238,6 +240,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";                       
             Context = clientContext;
+
+            // Enrich the AccessTokens collection with the token(s) passed in
+            if (tokens != null)
+            {
+                AccessTokens.AddRange(tokens);
+            }
             
             // Validate if we have a SharePoint Context
             if (Context != null)
@@ -246,8 +254,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 ContextCache = new List<ClientContext> { Context };
 
 #if !ONPREMISES
-                // If we have a Graph Access Token, use it for the SharePoint connection
-                var accessToken = CurrentConnection.AccessTokens.ContainsKey(TokenAudience.SharePointOnline) ? CurrentConnection.TryGetAccessToken(TokenAudience.SharePointOnline) : CurrentConnection.TryGetAccessToken(TokenAudience.MicrosoftGraph);
+                // If we have a SharePoint or a Graph Access Token, use it for the SharePoint connection
+                var accessToken = AccessTokens.ContainsKey(TokenAudience.SharePointOnline) ? TryGetAccessToken(TokenAudience.SharePointOnline) : TryGetAccessToken(TokenAudience.MicrosoftGraph);
                 if (accessToken != null)
                 {
                     Context.ExecutingWebRequest += (sender, args) =>
@@ -288,17 +296,17 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// <param name="disableTelemetry">Boolean indicating if telemetry on the commands being executed should be disabled. Telemetry is enabled by default.</param>
         /// <returns><see cref="PnPConnection"/ instance which can be used to communicate with one of the supported APIs</returns>
         public static PnPConnection GetConnectionWithClientIdAndClientSecret(string clientId, 
-                                                                                  string clientSecret,
-                                                                                  PSHost host,
-                                                                                  InitializationType initializationType,
-                                                                                  string url = null,
-                                                                                  string aadDomain = null,
-                                                                                  ClientContext clientContext = null,
-                                                                                  int? minimalHealthScore = null,
-                                                                                  string pnpVersionTag = null,
-                                                                                  bool disableTelemetry = false)
+                                                                             string clientSecret,
+                                                                             PSHost host,
+                                                                             InitializationType initializationType,
+                                                                             string url = null,
+                                                                             string aadDomain = null,
+                                                                             ClientContext clientContext = null,
+                                                                             int? minimalHealthScore = null,
+                                                                             string pnpVersionTag = null,
+                                                                             bool disableTelemetry = false)
         {
-            return new PnPConnection(host, initializationType, url, clientContext, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            return new PnPConnection(host, initializationType, url, clientContext, null, minimalHealthScore, pnpVersionTag, disableTelemetry)
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
@@ -332,7 +340,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                                                                             string pnpVersionTag = null,
                                                                             bool disableTelemetry = false)
         {
-            return new PnPConnection(host, initializationType, url, clientContext, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            return new PnPConnection(host, initializationType, url, clientContext, null, minimalHealthScore, pnpVersionTag, disableTelemetry)
             {
                 ClientId = clientId,
                 Certificate = certificate,
@@ -362,7 +370,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                                                                   string pnpVersionTag = null,
                                                                   bool disableTelemetry = false)
         {
-            return new PnPConnection(host, initializationType, url, clientContext, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            return new PnPConnection(host, initializationType, url, clientContext, null, minimalHealthScore, pnpVersionTag, disableTelemetry)
             {
                 PSCredential = credential,
                 ConnectionMethod = ConnectionMethod.Credentials
@@ -392,11 +400,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
                                                            string pnpVersionTag = null,
                                                            bool disableTelemetry = false)
         {
-            var connection = new PnPConnection(host, initializationType, url, clientContext, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            var connection = new PnPConnection(host, initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) {{ tokenAudience, token }}, minimalHealthScore, pnpVersionTag, disableTelemetry)
             {
                 ConnectionMethod = ConnectionMethod.AccessToken
             };
-            connection.AddToken(tokenAudience, token);
 
             return connection;
         }

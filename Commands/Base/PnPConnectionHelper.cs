@@ -206,7 +206,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     progressCallback("No token received.");
                 }
             }
-            spoConnection.ConnectionMethod = ConnectionMethod.DeviceLogin;
+
+            if (spoConnection != null)
+            {
+                spoConnection.ConnectionMethod = ConnectionMethod.DeviceLogin;
+            }
             return spoConnection;
         }
 
