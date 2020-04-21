@@ -225,9 +225,6 @@
   <data name="RemoveTerm0AndAllUnderlyingTerms" xml:space="preserve">
     <value>Remove Term '{0}' and all underlying Terms?</value>
   </data>
-  <data name="NoAzureADAccessToken" xml:space="preserve">
-    <value>No Azure AD connection/Access Token. Please connect first with Connect-PnPOnline -Url [url] -ClientId [clientid] -CertificatePath [path] -Tenant [tenant], Connect-PnPOnline -Graph, Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain</value>
-  </data>
   <data name="MicrosoftGraphOAuthAccessTokenExpired" xml:space="preserve">
     <value>The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet.</value>
   </data>
@@ -320,5 +317,8 @@
   </data>
   <data name="SetRequestAccessEmailsOnlyOneAddressAllowed" xml:space="preserve">
     <value>Only one e-mail address can be configured to receive the access requests</value>
+  </data>
+  <data name="NoApiAccessToken" xml:space="preserve">
+    <value>Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument.</value>
   </data>
 </root>

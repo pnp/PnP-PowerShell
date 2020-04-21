@@ -1,51 +1,64 @@
-﻿using System;
+﻿#if !ONPREMISES
 using System.Management.Automation;
-using Newtonsoft.Json.Linq;
-using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 
 namespace SharePointPnP.PowerShell.Commands.ManagementApi
 {
-    [Cmdlet(VerbsCommon.Get, "PnPManagementApiAccessToken")]
+    [Cmdlet(VerbsCommon.Get, "PnPManagementApiAccessToken", DefaultParameterSetName = ParameterSet_GETTOKEN)]
     [CmdletHelp("Gets an access token for the Office 365 Management API",
         Category = CmdletHelpCategory.ManagementApi,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
+       Code = "PS:> Get-PnPManagementApiAccessToken",
+       Remarks = "Gets the OAuth 2.0 Access Token to consume the Microsoft Office Management API",
+       SortOrder = 1)]
+    [CmdletExample(
+       Code = "PS:> Get-PnPManagementApiAccessToken -Decoded",
+       Remarks = "Gets the full OAuth 2.0 Token to consume the Microsoft Office Management API",
+       SortOrder = 2)]
+    [CmdletExample(
        Code = "PS:> Get-PnPManagementApiAccessToken -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret)",
        Remarks = "Retrieves access token for the Office 365 Management API",
-       SortOrder = 1)]
+       SortOrder = 3)]
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -AccessToken (Get-PnPManagementApiAccessToken -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret)",
        Remarks = "Connects to the Office 365 Management API using an access token for the Office 365 Management API",
-       SortOrder = 2)]
-    public class GetManagementApiAccessToken : PnPGraphCmdlet
+       SortOrder = 4)]
+    public class GetManagementApiAccessToken : PnPOfficeManagementApiCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The Tenant ID to connect to the Office 365 Management API")]
+        private const string ParameterSet_CONNECT = "Connect and get token";
+        private const string ParameterSet_GETTOKEN = "Get the token from the active session";
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_CONNECT, HelpMessage = "The Tenant ID to connect to the Office 365 Management API")]
         public string TenantId;
 
-        [Parameter(Mandatory = true, HelpMessage = "The App\\Client ID of the app which gives you access to the Office 365 Management API")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_CONNECT, HelpMessage = "The App\\Client ID of the app which gives you access to the Office 365 Management API")]
         public string ClientId;
 
-        [Parameter(Mandatory = true, HelpMessage = "The Client Secret of the app which gives you access to the Office 365 Management API")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_CONNECT, HelpMessage = "The Client Secret of the app which gives you access to the Office 365 Management API")]
         public string ClientSecret;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CONNECT, HelpMessage = "Returns the access token in a decoded manner")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GETTOKEN, HelpMessage = "Returns the access token in a decoded manner")]
+        public SwitchParameter Decoded;
 
         protected override void ExecuteCmdlet()
         {
-            base.ExecuteCmdlet();
-            var resource = "https://manage.office.com";
-            var body = $"grant_type=client_credentials&client_id={ClientId}&client_secret={ClientSecret}&resource={resource}";
-            var response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{TenantId}/oauth2/token", body, "application/x-www-form-urlencoded");
-            try
+            if (ParameterSetName == ParameterSet_CONNECT)
             {
-                var json = JToken.Parse(response);
-                var accessToken = json["access_token"].ToString();
-                WriteObject(accessToken);
+                // TODO KZ: Deal with the tenantid/clientid/clientsecret connect
             }
-            catch(Exception e)
+
+            if (Decoded.IsPresent)
             {
-                WriteError(new ErrorRecord(e, "", ErrorCategory.ProtocolError, null));
+                WriteObject(Token.ParsedToken);
+            }
+            else
+            {
+                WriteObject(AccessToken);
             }
         }
     }
 }
+#endif

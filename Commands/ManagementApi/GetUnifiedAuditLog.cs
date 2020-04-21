@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Runtime.Remoting.Contexts;
 using Newtonsoft.Json;
 using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -21,6 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
        Code = "PS:> Get-PnPUnifiedAuditLog -ContentType SharePoint -StartTime (Get-Date).AddDays(-1) -EndTime (Get-Date).AddDays(-2)",
        Remarks = "Retrieves the audit logs of SharePoint happening between the current time yesterday and the current time the day before yesterday",
        SortOrder = 1)]
+    [CmdletOfficeManagementApiPermission(OfficeManagementApiPermission.ActivityFeed_Read)]
     public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet
     {
         private const string ParameterSet_LogsByDate = "Logs by date";
@@ -60,18 +60,13 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
         }
 
         /// <summary>
-        /// Root URL to the Office 365 Management API
+        /// Base URL to the Office 365 Management API being used in this cmdlet
         /// </summary>
-        protected string RootUrl => $"https://manage.office.com/api/v1.0/{Token.TenantId}/activity/feed";
-
-        /// <summary>
-        /// Roles required in order to execute this cmdlet
-        /// </summary>
-        protected new string[] RequiredRoles = new[] { "ActivityFeed.Read" };
+        protected string ApiUrl => $"{ApiRootUrl}activity/feed";
 
         private IEnumerable<ManagementApiSubscription> GetSubscriptions()
         {
-            var url = $"{RootUrl}/subscriptions/list";
+            var url = $"{ApiUrl}/subscriptions/list";
             var res = GraphHttpClient.MakeGetRequestForString(url.ToString(), AccessToken);
             var subscriptions = JsonConvert.DeserializeObject<IEnumerable<ManagementApiSubscription>>(res);
             return subscriptions;
@@ -83,7 +78,7 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
             var subscription = subscriptions.FirstOrDefault(s => s.ContentType == contentType);
             if (subscription == null)
             {
-                var url = $"{RootUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={Token.TenantId}";
+                var url = $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={Token.TenantId}";
                 var res = GraphHttpClient.MakePostRequestForString(url.ToString(), accessToken: AccessToken);
                 var response = JsonConvert.DeserializeObject<ManagementApiSubscription>(res);
                 if (response.Status != "enabled")
@@ -97,7 +92,7 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
         {
             EnsureSubscription(ContentTypeString);
 
-            var url = $"{RootUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier=${Token.TenantId}";
+            var url = $"{ApiUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier=${Token.TenantId}";
             if (StartTime != DateTime.MinValue)
             {
                 url += $"&startTime={StartTime:yyyy-MM-ddThh:mm:ss}";

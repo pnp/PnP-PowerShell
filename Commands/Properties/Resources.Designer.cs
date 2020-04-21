@@ -287,11 +287,11 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Azure AD connection/Access Token. Please connect first with Connect-PnPOnline -Url [url] -ClientId [clientid] -CertificatePath [path] -Tenant [tenant], Connect-PnPOnline -Graph, Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain.
+        ///   Looks up a localized string similar to Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument..
         /// </summary>
-        internal static string NoAzureADAccessToken {
+        internal static string NoApiAccessToken {
             get {
-                return ResourceManager.GetString("NoAzureADAccessToken", resourceCulture);
+                return ResourceManager.GetString("NoApiAccessToken", resourceCulture);
             }
         }
         

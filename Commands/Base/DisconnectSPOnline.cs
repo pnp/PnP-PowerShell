@@ -23,12 +23,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
         protected override void ProcessRecord()
         {
 #if !ONPREMISES
-            if(SPOnlineConnection.CurrentConnection.CertFile != null)
+            if(SPOnlineConnection.CurrentConnection.Certificate != null)
             {
 #if !NETSTANDARD2_1
-                SPOnlineConnectionHelper.CleanupCryptoMachineKey(SPOnlineConnection.CurrentConnection.CertFile);
+                SPOnlineConnectionHelper.CleanupCryptoMachineKey(SPOnlineConnection.CurrentConnection.Certificate);
 #endif
-                SPOnlineConnection.CurrentConnection.CertFile = null;
+                SPOnlineConnection.CurrentConnection.Certificate = null;
             }
 #endif
                 var success = false;
@@ -80,21 +80,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {            
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
-            if (SPOnlineConnection.CurrentConnection == null && SPOnlineConnection.AuthenticationResult == null)
+
+            if (SPOnlineConnection.CurrentConnection == null)
             {
                 return false;
             }
-            if (SPOnlineConnection.CurrentConnection != null)
+            else
             {
                 SPOnlineConnection.CurrentConnection.ClearTokens();
                 SPOnlineConnection.CurrentConnection.Context = null;
                 SPOnlineConnection.CurrentConnection = null;
-            }
-            if (SPOnlineConnection.AuthenticationResult != null)
-            {
-                SPOnlineConnection.AuthenticationResult = null;
-            }
-            return true;
+                return true;
+            }            
         }
     }
 }

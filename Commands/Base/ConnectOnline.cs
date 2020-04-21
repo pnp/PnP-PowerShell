@@ -5,7 +5,6 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Provider;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -14,6 +13,7 @@ using System.Security;
 using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
 using System.IdentityModel.Tokens.Jwt;
+using SharePointPnP.PowerShell.Commands.Enums;
 #if NETSTANDARD2_1
 using System.IdentityModel.Tokens.Jwt;
 #endif
@@ -70,7 +70,7 @@ PS:> dir",
         SortOrder = 8)]
 #if !ONPREMISES
     [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -AppId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -AppSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany",
+        Code = @"PS:> Connect-PnPOnline -Url https://contoso.sharepoint.de -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret a3f3faf33f3awf3a3sfs3f3ss3f4f4a3fawfas3ffsrrffssfd -AzureEnvironment Germany",
         Remarks = @"This will authenticate you to the German Azure environment using the German Azure endpoints for authentication",
         SortOrder = 9)]
 #endif
@@ -156,6 +156,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
     {
         private const string ParameterSet_MAIN = "Main";
         private const string ParameterSet_TOKEN = "Token";
+        private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL = "App-Only using a clientId and clientSecret and an URL";
+        private const string ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN = "App-Only using a clientId and clientSecret and an AAD Domain";
         private const string ParameterSet_WEBLOGIN = "WebLogin";
 #if !ONPREMISES
         private const string ParameterSet_NATIVEAAD = "Azure Active Directory";
@@ -186,6 +188,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #endif
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true, HelpMessage = "Returns the connection for use with the -Connection parameter on cmdlets.")]
@@ -205,6 +209,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MAIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_TOKEN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]        
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
 #if !ONPREMISES
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_NATIVEAAD, ValueFromPipeline = true, HelpMessage = "The Url of the site collection to connect to.")]
@@ -242,6 +247,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Specifies a minimal server healthscore before any requests are executed.")]
@@ -260,6 +267,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Defines how often a retry should be executed if the server healthscore is not sufficient. Default is 10 times.")]
@@ -278,6 +287,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Defines how many seconds to wait before each retry. Default is 1 second.")]
@@ -296,6 +307,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The request timeout. Default is 1800000")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The request timeout. Default is 1800000")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The request timeout. Default is 1800000")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The request timeout. Default is 1800000")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The request timeout. Default is 1800000")]
@@ -313,19 +326,29 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         public int RequestTimeout = 1800000;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Authentication realm. If not specified will be resolved from the url specified.")]
         public string Realm;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client ID to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client ID to use.")]        
+        
 #if !ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The client id of the app which gives you access to the Microsoft Graph API.")]
 #endif
+        [Obsolete("Use ClientId instead")]
         public string AppId;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client Secret to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Application Client Secret to use.")]        
 #if !ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The app key of the app which gives you access to the Microsoft Graph API.")]
 #endif
+        [Obsolete("Use ClientSecret instead")]
         public string AppSecret;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The client secret to use.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The client secret to use.")]
+        
+        public string ClientSecret;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to connect to SharePoint with browser based login. This is required when you have multi-factor authentication (MFA) enabled.")]
         public SwitchParameter UseWebLogin;
@@ -335,6 +358,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "If you want to create a PSDrive connected to the URL")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "If you want to create a PSDrive connected to the URL")]
@@ -353,6 +378,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Name of the PSDrive to create (default: SPO)")]
@@ -408,6 +435,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "The Client ID of the Azure AD Application")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The Client ID of the Azure AD Application")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "The Client ID of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The Client ID of the Azure AD Application")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The Client ID of the Azure AD Application")]        
 #endif
 #if ONPREMISES
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_HIGHTRUST_CERT, HelpMessage = "The Client ID of the Add-In Registration in SharePoint. Used as the HighTrustCertificateIssuerId if none is specified.")]
@@ -457,11 +486,13 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
 #if !NETSTANDARD2_1
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAAD, HelpMessage = "The array of permission scopes for the Microsoft Graph API.")]
@@ -471,6 +502,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #endif
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
         public string AADDomain;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN, HelpMessage = "Connect with an existing Access Token")]
@@ -478,6 +510,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #endif
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "The url to the Tenant Admin site. If not specified, the cmdlets will assume to connect automatically to https://<tenantname>-admin.sharepoint.com where appropriate.")]
@@ -496,6 +529,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Should we skip the check if this site is the Tenant admin site. Default is false")]
@@ -514,6 +548,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
@@ -619,12 +654,35 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 creds = Credentials.Credential;
             }
             SPOnlineConnection connection = null;
-            if (ParameterSetName == ParameterSet_TOKEN)
+
+            if (ParameterSetName == ParameterSet_GRAPHWITHAAD)
             {
 #if !ONPREMISES
-                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+                connection = SPOnlineConnection.GetConnectionWithClientIdAndClientSecret(AppId, AppSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
+#endif
+            }
+            else if (ParameterSetName == ParameterSet_TOKEN)
+            {
+#if !ONPREMISES
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
 #else
-                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), Realm, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+#endif
+            }
+            else if (ParameterSetName == ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)
+            {
+#if !ONPREMISES
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
+#else
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+#endif
+            }
+            else if (ParameterSetName == ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)
+            {
+#if !ONPREMISES
+                connection = SPOnlineConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
+#else
+                connection = SPOnlineConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
 #endif
             }
             else if (UseWebLogin)
@@ -747,10 +805,6 @@ Use -PnPO365ManagementShell instead");
                 ConnectGraphScopes();
             }
 #endif
-            else if (ParameterSetName == ParameterSet_GRAPHWITHAAD)
-            {
-                ConnectGraphAAD();
-            }
             else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
             {
                 var handler = new JwtSecurityTokenHandler();
@@ -865,7 +919,7 @@ Use -PnPO365ManagementShell instead");
             }
             if (SPOnlineConnection.CurrentConnection != null)
             {
-                if (SPOnlineConnection.CurrentConnection.ConnectionMethod != Model.ConnectionMethod.GraphDeviceLogin)
+                if (SPOnlineConnection.CurrentConnection.Url != null)
                 {
                     var hostUri = new Uri(SPOnlineConnection.CurrentConnection.Url);
                     Environment.SetEnvironmentVariable("PNPPSHOST", hostUri.Host);
@@ -914,7 +968,6 @@ Use -PnPO365ManagementShell instead");
             //var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
             var authenticationResult = clientApplication.AcquireTokenInteractive(Scopes).ExecuteAsync().GetAwaiter().GetResult();
             //var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
-            SPOnlineConnection.AuthenticationResult = authenticationResult;
         }
 #endif
 
@@ -1007,18 +1060,6 @@ Use -PnPO365ManagementShell instead");
             {
                 return SPOnlineConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken, Host, NoTelemetry);
             }
-        }
-
-
-        private void ConnectGraphAAD()
-        {
-            var authority = new Uri(GraphAADLogin, AADDomain).AbsoluteUri;
-#if !NETSTANDARD2_1
-            var clientApplication = ConfidentialClientApplicationBuilder.Create(AppId).WithClientSecret(AppSecret).WithRedirectUri(RedirectUri).WithAuthority(authority).Build();
-            var authenticationResult = clientApplication.AcquireTokenForClient(GraphDefaultScope).ExecuteAsync().GetAwaiter().GetResult();
-#else
-            throw new NotImplementedException();
-#endif
         }
 #endif
 

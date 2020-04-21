@@ -1,11 +1,10 @@
 ﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAccessToken")]
-    [CmdletHelp("Returns the current OAuth Access token",
+    [Cmdlet(VerbsCommon.Get, "PnPGraphAccessToken")]
+    [CmdletHelp("Returns the current OAuth Access token for the Microsoft Graph API",
         "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
@@ -16,8 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Code = "PS:> Get-PnPAccessToken -Decoded",
        Remarks = "Gets the full OAuth 2.0 Token to consume the Microsoft Graph API",
        SortOrder = 2)]
-    [Obsolete("Use Get-PnPGrahAccessToken instead")]
-    public class GetPnPAccessToken : PnPGraphCmdlet
+    public class GetGraphAccessToken : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Returns the access token in a decoded manner")]
         public SwitchParameter Decoded;

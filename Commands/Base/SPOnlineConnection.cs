@@ -23,14 +23,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
     {
         internal static string DeviceLoginAppId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
 
-        internal Assembly coreAssembly;
         internal string userAgent;
         internal ConnectionMethod ConnectionMethod { get; set; }
         internal string PnPVersionTag { get; set; }
         internal static List<ClientContext> ContextCache { get; set; }
 
-        public static AuthenticationResult AuthenticationResult { get; set; }
-        public static GenericToken TokenResult { get; set; }
         public static SPOnlineConnection CurrentConnection { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
         public InitializationType InitializationType { get; protected set; }
@@ -38,7 +35,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public int RetryCount { get; protected set; }
         public int RetryWait { get; protected set; }
         public PSCredential PSCredential { get; protected set; }
+
+        /// <summary>
+        /// ClientId under which the connection has been made
+        /// </summary>
         public string ClientId { get; protected set; }
+
+        /// <summary>
+        /// ClientSecret used to set up the connection
+        /// </summary>
         public string ClientSecret { get; protected set; }
 
         public TelemetryClient TelemetryClient { get; set; }
@@ -47,7 +52,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         public string TenantAdminUrl { get; protected set; }
 
-        public X509Certificate2 CertFile { get; internal set; }
+        /// <summary>
+        /// Certificate used to set up the connection
+        /// </summary>
+        public X509Certificate2 Certificate { get; internal set; }
 
         public ClientContext Context { get; set; }
 
@@ -59,8 +67,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// <summary>
         /// Collection with all available access tokens in the current session to access APIs. Key is the token audience, value is the JWT token itself.
         /// </summary>
-        private Dictionary<TokenAudience, GenericToken> AccessTokens = new Dictionary<TokenAudience, GenericToken>();
-
+        private readonly Dictionary<TokenAudience, GenericToken> AccessTokens = new Dictionary<TokenAudience, GenericToken>();
 
         /// <summary>
         /// Tries to get an access token for the provided audience
@@ -96,6 +103,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         return token;
                     }
+
+                    if (roles != null)
+                    {
+                        // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
+                        throw new PSArgumentException($"Access to {tokenAudience} failed because the role{(roles.Length != 1 ? "s" : "")} {string.Join(", ", roles).TrimEnd(new[] { ',', ' ' })} {(roles.Length != 1 ? "are" : "is")} not granted permissions on the app registration {ClientId} in tenant {Tenant}", "Identity");
+                    }
                 }
 
                 // Token was no longer valid, proceed with trying to create a new token
@@ -105,11 +118,31 @@ namespace SharePointPnP.PowerShell.Commands.Base
             switch(tokenAudience)
             {
                 case TokenAudience.MicrosoftGraph:
-                    token = GraphToken.AcquireToken(Tenant, ClientId, CertFile);
+                    if (!string.IsNullOrEmpty(Tenant))
+                    {
+                        if (Certificate != null)
+                        {
+                            token = GraphToken.AcquireToken(Tenant, ClientId, Certificate);
+                        }
+                        else if (ClientSecret != null)
+                        {
+                            token = GraphToken.AcquireToken(Tenant, ClientId, ClientSecret);
+                        }
+                    }
                     break;
 
                 case TokenAudience.OfficeManagementApi:
-                    token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, CertFile);
+                    if (!string.IsNullOrEmpty(Tenant))
+                    {
+                        if (Certificate != null)
+                        {
+                            token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, Certificate);
+                        }
+                        else if (ClientSecret != null)
+                        {
+                            token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, ClientSecret);
+                        }
+                    }
                     break;
             }
 
@@ -142,58 +175,123 @@ namespace SharePointPnP.PowerShell.Commands.Base
             AccessTokens.Clear();
         }
 
-        //internal string AccessToken
-        //{
-        //    get
-        //    {
-        //        if (TokenResult != null)
-        //        {
-        //            if (!string.IsNullOrEmpty(TokenResult.AccessToken) && DateTime.Now > TokenResult.ExpiresOn && !string.IsNullOrEmpty(TokenResult.RefreshToken))
-        //            {
-        //                // Expired token
-        //                var client = new HttpClient();
-        //                var uri = new Uri(Url);
-        //                var url = $"{uri.Scheme}://{uri.Host}";
-        //                var body = new StringContent($"resource={url}&client_id={DeviceLoginAppId}&grant_type=refresh_token&refresh_token={TokenResult.RefreshToken}");
-        //                body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
-        //                client.DefaultRequestHeaders.Accept.Clear();
-        //                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        //                var result = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
-        //                var tokens = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
-        //                TokenResult.AccessToken = tokens["access_token"];
-        //                TokenResult.RefreshToken = tokens["refresh_token"];
-        //                TokenResult.ExpiresOn = DateTime.Now.AddSeconds(int.Parse(tokens["expires_in"]));
-        //            }
-        //            return TokenResult.AccessToken;
-        //        }
-        //        else
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        if (!string.IsNullOrEmpty(value))
-        //        {
-        //            var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(value);
-
-        //            if (TokenResult != null)
-        //            {
-        //                TokenResult.AccessToken = value;
-        //                TokenResult.ExpiresOn = jwtToken.ValidTo.ToLocalTime();
-        //            }
-        //        }
-        //    }
-        //}
-
-        internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
-            : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        private SPOnlineConnection(PSHost host, 
+                                   InitializationType initializationType, 
+                                   string url = null, 
+                                   ClientContext clientContext = null, 
+                                   string pnpVersionTag = null, 
+                                   bool disableTelemetry = false)
         {
-            this.ClientId = clientId;
-            this.ClientSecret = clientSecret;
+            if (!disableTelemetry)
+            {
+                InitializeTelemetry(clientContext, host, initializationType);
+            }
+
+            userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";                       
+            Context = clientContext;
+            
+            // Validate if we have a SharePoint Context
+            if (Context != null)
+            {
+                // We have a SharePoint Context, configure the context
+                Context.ExecutingWebRequest += (object sender, WebRequestEventArgs e) => { e.WebRequestExecutor.WebRequest.UserAgent = userAgent; };
+                ContextCache = new List<ClientContext> { Context };
+
+#if !ONPREMISES
+                // If we have a Graph Access Token, use it for the SharePoint connection
+                var graphAccessToken = CurrentConnection.TryGetAccessToken(TokenAudience.MicrosoftGraph);
+                if (graphAccessToken != null)
+                {
+                    Context.ExecutingWebRequest += (sender, args) =>
+                    {
+                        args.WebRequestExecutor.WebRequest.UserAgent = userAgent;
+                        args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + CurrentConnection.TryGetAccessToken(TokenAudience.MicrosoftGraph);
+                    };
+                }
+#endif
+            }
+            else
+            {
+                // We do not have a SharePoint Context
+                ContextCache = null;
+            }
+
+            PnPVersionTag = pnpVersionTag;
+            Url = url;
         }
 
-        internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string url, string tenantAdminUrl, string pnpVersionTag, System.Management.Automation.Host.PSHost host, bool disableTelemetry, InitializationType initializationType)
+        public static SPOnlineConnection GetConnectionWithClientIdAndClientSecret(string clientId, 
+                                                                                  string clientSecret,
+                                                                                  PSHost host,
+                                                                                  InitializationType initializationType,
+                                                                                  string url = null,
+                                                                                  string aadDomain = null,
+                                                                                  ClientContext clientContext = null,
+                                                                                  string pnpVersionTag = null,
+                                                                                  bool disableTelemetry = false)
+        {
+            return new SPOnlineConnection(host, initializationType, url, clientContext, pnpVersionTag, disableTelemetry)
+            {
+                ClientId = clientId,
+                ClientSecret = clientSecret,
+                ConnectionMethod = ConnectionMethod.AzureADAppOnly,
+                Tenant = aadDomain
+            };
+        }
+
+        public static SPOnlineConnection GetConnectionWithClientIdAndCertificate(string clientId, 
+                                                                                 X509Certificate2 certificate,
+                                                                                 PSHost host,
+                                                                                 InitializationType initializationType,
+                                                                                 string url = null,
+                                                                                 string aadDomain = null,
+                                                                                 ClientContext clientContext = null,
+                                                                                 string pnpVersionTag = null,
+                                                                                 bool disableTelemetry = false)
+        {
+            return new SPOnlineConnection(host, initializationType, url, clientContext, pnpVersionTag, disableTelemetry)
+            {
+                ClientId = clientId,
+                Certificate = certificate,
+                ConnectionMethod = ConnectionMethod.AzureADAppOnly,
+                Tenant = aadDomain
+            };
+        }
+
+        public static SPOnlineConnection GetConnectionWithPsCredential(PSCredential credential,
+                                                                       PSHost host,
+                                                                       InitializationType initializationType,
+                                                                       string url = null, 
+                                                                       ClientContext clientContext = null,
+                                                                       string pnpVersionTag = null,
+                                                                       bool disableTelemetry = false)
+        {
+            return new SPOnlineConnection(host, initializationType, url, clientContext, pnpVersionTag, disableTelemetry)
+            {
+                PSCredential = credential,
+                ConnectionMethod = ConnectionMethod.Credentials
+            };
+        }
+
+        internal SPOnlineConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+            : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        {
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+        }
+
+        internal SPOnlineConnection(ClientContext context, 
+                                    ConnectionType connectionType, 
+                                    int minimalHealthScore, 
+                                    int retryCount, 
+                                    int retryWait, 
+                                    PSCredential credential, 
+                                    string url, 
+                                    string tenantAdminUrl, 
+                                    string pnpVersionTag, 
+                                    PSHost host, 
+                                    bool disableTelemetry, 
+                                    InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
@@ -201,18 +299,20 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
+            //if (context == null)
+            //    throw new ArgumentNullException(nameof(context));
             Context = context;
             Context.ExecutingWebRequest += Context_ExecutingWebRequest;
+            
             ConnectionType = connectionType;
             MinimalHealthScore = minimalHealthScore;
             RetryCount = retryCount;
             RetryWait = retryWait;
-            PSCredential = credential;
             TenantAdminUrl = tenantAdminUrl;
-            ContextCache = new List<ClientContext> { context };
+
+            PSCredential = credential;
             PnPVersionTag = pnpVersionTag;
+            ContextCache = new List<ClientContext> { context };
             Url = (new Uri(url)).AbsoluteUri;
             ConnectionMethod = ConnectionMethod.Credentials;
         }
@@ -226,7 +326,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
-            TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             Context = context;
@@ -247,14 +346,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
             };
         }
 
-
         internal SPOnlineConnection(GenericToken tokenResult, ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
         {
             if (!disableTelemetry)
             {
                 InitializeTelemetry(null, host, initializationType);
             }
-            TokenResult = tokenResult;
             var coreAssembly = Assembly.GetExecutingAssembly();
             userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
             ConnectionType = connectionType;
@@ -265,6 +362,21 @@ namespace SharePointPnP.PowerShell.Commands.Base
             ConnectionMethod = connectionMethod;
         }
 
+        internal SPOnlineConnection(ConnectionMethod connectionMethod, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
+        {
+            if (!disableTelemetry)
+            {
+                InitializeTelemetry(null, host, initializationType);
+            }
+            var coreAssembly = Assembly.GetExecutingAssembly();
+            userAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version}";
+            ConnectionType = connectionType;
+            MinimalHealthScore = minimalHealthScore;
+            RetryCount = retryCount;
+            RetryWait = retryWait;
+            PnPVersionTag = pnpVersionTag;
+            ConnectionMethod = connectionMethod;
+        }
 
         private void Context_ExecutingWebRequest(object sender, WebRequestEventArgs e)
         {
