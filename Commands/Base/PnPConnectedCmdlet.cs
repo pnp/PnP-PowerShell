@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             base.BeginProcessing();
 
             // Ensure there is an active connection
-            if (SPOnlineConnection.CurrentConnection == null)
+            if (PnPConnection.CurrentConnection == null)
             {
                 throw new InvalidOperationException(Resources.NoConnection);
             }

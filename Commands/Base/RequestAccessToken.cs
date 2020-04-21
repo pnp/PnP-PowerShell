@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     {
 
         [Parameter(Mandatory = false, HelpMessage = "The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell")]
-        public string ClientId = SPOnlineConnection.DeviceLoginAppId; // defaults to PnPO365ManagementShell
+        public string ClientId = PnPConnection.DeviceLoginClientId; // defaults to PnPO365ManagementShell
 
         [Parameter(Mandatory = false, HelpMessage = "The scopes to retrieve the token for. Defaults to AllSites.FullControl")]
         public string Resource;
@@ -63,11 +63,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
 
             Uri tenantUri = null;
-            if (string.IsNullOrEmpty(TenantUrl) && SPOnlineConnection.CurrentConnection != null)
+            if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.CurrentConnection != null)
             {
 
                 HttpClient client = new HttpClient();
-                var uri = new Uri(SPOnlineConnection.CurrentConnection.Url);
+                var uri = new Uri(PnPConnection.CurrentConnection.Url);
                 var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))
                 {
@@ -97,10 +97,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 password = EncryptionUtility.ToInsecureString(Credentials.Password);
                 username = Credentials.UserName;
             }
-            else if (SPOnlineConnection.CurrentConnection != null)
+            else if (PnPConnection.CurrentConnection != null)
             {
-                password = EncryptionUtility.ToInsecureString(SPOnlineConnection.CurrentConnection.PSCredential.Password);
-                username = SPOnlineConnection.CurrentConnection.PSCredential.UserName;
+                password = EncryptionUtility.ToInsecureString(PnPConnection.CurrentConnection.PSCredential.Password);
+                username = PnPConnection.CurrentConnection.PSCredential.UserName;
             }
             else
             {
@@ -120,14 +120,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             if (SetAsCurrent.IsPresent)
             {
-                if (SPOnlineConnection.CurrentConnection != null)
+                if (PnPConnection.CurrentConnection != null)
                 {
                     if(token == null)
                     {
                         throw new InvalidOperationException($"-{nameof(SetAsCurrent)} can't be performed as no valid token could be retrieved");
                     }
 
-                    SPOnlineConnection.CurrentConnection.AddToken(Enums.TokenAudience.Other, token);
+                    PnPConnection.CurrentConnection.AddToken(Enums.TokenAudience.Other, token);
                 }
                 else
                 {

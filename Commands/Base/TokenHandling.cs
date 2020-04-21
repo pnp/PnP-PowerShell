@@ -10,27 +10,27 @@ namespace SharePointPnP.PowerShell.Commands.Base
     {
         internal static string AcquireToken(string resource, string scope = null)
         {
-            if(SPOnlineConnection.CurrentConnection == null)
+            if(PnPConnection.CurrentConnection == null)
             {
                 return null;            
             }
 
-            var tenantId = TenantExtensions.GetTenantIdByUrl(SPOnlineConnection.CurrentConnection.Url);
+            var tenantId = TenantExtensions.GetTenantIdByUrl(PnPConnection.CurrentConnection.Url);
 
             if (tenantId == null) return null;
 
             string body = "";
-            if (SPOnlineConnection.CurrentConnection.PSCredential != null)
+            if (PnPConnection.CurrentConnection.PSCredential != null)
             { 
                 var clientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
-                var username = SPOnlineConnection.CurrentConnection.PSCredential.UserName;
-                var password = EncryptionUtility.ToInsecureString(SPOnlineConnection.CurrentConnection.PSCredential.Password);
+                var username = PnPConnection.CurrentConnection.PSCredential.UserName;
+                var password = EncryptionUtility.ToInsecureString(PnPConnection.CurrentConnection.PSCredential.Password);
                 body = $"grant_type=password&client_id={clientId}&username={username}&password={password}&resource={resource}";
             }
-            else if (!string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.ClientId) && !string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.ClientSecret))
+            else if (!string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientId) && !string.IsNullOrEmpty(PnPConnection.CurrentConnection.ClientSecret))
             {
-                var clientId = SPOnlineConnection.CurrentConnection.ClientId;
-                var clientSecret = HttpUtility.UrlEncode(SPOnlineConnection.CurrentConnection.ClientSecret);
+                var clientId = PnPConnection.CurrentConnection.ClientId;
+                var clientSecret = HttpUtility.UrlEncode(PnPConnection.CurrentConnection.ClientSecret);
                 body = $"grant_type=client_credentials&client_id={clientId}&client_secret={clientSecret}&resource={resource}";
             }
             else

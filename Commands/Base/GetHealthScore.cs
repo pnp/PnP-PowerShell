@@ -37,9 +37,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             else
             {
-                if (SPOnlineConnection.CurrentConnection != null)
+                if (PnPConnection.CurrentConnection != null)
                 {
-                    url = SPOnlineConnection.CurrentConnection.Url;
+                    url = PnPConnection.CurrentConnection.Url;
                 }
                 else
                 {

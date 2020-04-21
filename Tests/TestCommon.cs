@@ -146,7 +146,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 if (new Uri(contextUrl).DnsSafeHost.Contains("spoppe.com"))
                 {
-                    context = am.GetAppOnlyAuthenticatedContext(contextUrl, SPOnlineConnectionHelper.GetRealmFromTargetUrl(new Uri(contextUrl)), AppId, AppSecret, acsHostUrl: "windows-ppe.net", globalEndPointPrefix: "login");
+                    context = am.GetAppOnlyAuthenticatedContext(contextUrl, PnPConnectionHelper.GetRealmFromTargetUrl(new Uri(contextUrl)), AppId, AppSecret, acsHostUrl: "windows-ppe.net", globalEndPointPrefix: "login");
                 }
                 else
                 {

@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     {
         protected override void ProcessRecord()
         {
-            WriteObject(SPOnlineConnection.CurrentConnection.TelemetryClient != null);
+            WriteObject(PnPConnection.CurrentConnection.TelemetryClient != null);
         }
     }
 }

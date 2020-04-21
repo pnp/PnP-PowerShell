@@ -54,10 +54,10 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 var webUrl = spoParametes.Url ?? spoParametes.Web.EnsureProperty(w => w.Url);
                 web = spoParametes.Web.Context.Clone(webUrl).Web;
             }
-            else if (SPOnlineConnection.CurrentConnection != null)
+            else if (PnPConnection.CurrentConnection != null)
             {
-                var webUrl = spoParametes?.Url ?? SPOnlineConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
-                web = SPOnlineConnection.CurrentConnection.Context.Clone(webUrl).Web;
+                var webUrl = spoParametes?.Url ?? PnPConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
+                web = PnPConnection.CurrentConnection.Context.Clone(webUrl).Web;
             }
             else
             {

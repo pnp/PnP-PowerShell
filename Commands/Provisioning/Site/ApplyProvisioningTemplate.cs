@@ -376,9 +376,9 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
              {
                  // Get Azure AD Token
-                 if (SPOnlineConnection.CurrentConnection != null)
+                 if (PnPConnection.CurrentConnection != null)
                  {
-                     var graphAccessToken = SPOnlineConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                     var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
                      if(graphAccessToken != null)
                      {
                          // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
@@ -386,7 +386,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                      }
                  }
                  
-                 if (SPOnlineConnection.CurrentConnection.PSCredential != null)
+                 if (PnPConnection.CurrentConnection.PSCredential != null)
                  {
                      // Using normal credentials
                      return Task.FromResult(TokenHandler.AcquireToken(resource, null));

@@ -669,6 +669,7 @@
     <Compile Include="ManagementApi\GetManagementApiAccessToken.cs" />
     <Compile Include="ManagementApi\GetUnifiedAuditLog.cs" />
     <Compile Include="Model\AzureApp.cs" />
+    <Compile Include="Model\SharePointToken.cs" />
     <Compile Include="Model\OfficeManagementApiToken.cs" />
     <Compile Include="Model\GraphToken.cs" />
     <Compile Include="Model\ManagementApiSubscription.cs" />
@@ -840,8 +841,8 @@
     <Compile Include="Base\PnPAzureADConnection.cs" />
     <Compile Include="Base\PnPGraphCmdlet.cs" />
     <Compile Include="Base\SetContext.cs" />
-    <Compile Include="Base\SPOnlineConnection.cs" />
-    <Compile Include="Base\SPOnlineConnectionHelper.cs" />
+    <Compile Include="Base\PnPConnection.cs" />
+    <Compile Include="Base\PnPConnectionHelper.cs" />
     <Compile Include="Base\ConnectOnline.cs" />
     <Compile Include="Admin\GetTenantSite.cs" />
     <Compile Include="Base\SetTraceLog.cs" />

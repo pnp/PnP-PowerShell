@@ -20,11 +20,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             base.BeginProcessing();
 
-            if (SPOnlineConnection.CurrentConnection == null)
+            if (PnPConnection.CurrentConnection == null)
             {
                 throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
-            if (SPOnlineConnection.CurrentConnection.Context == null)
+            if (PnPConnection.CurrentConnection.Context == null)
             {
                 throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
@@ -32,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
-            WriteObject(SPOnlineConnection.CurrentConnection);
+            WriteObject(PnPConnection.CurrentConnection);
         }
     }
 }

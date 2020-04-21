@@ -29,10 +29,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
 
                 // Ensure we have an active connection
-                if (SPOnlineConnection.CurrentConnection != null)
+                if (PnPConnection.CurrentConnection != null)
                 {
                     // There is an active connection, try to get a Microsoft Office Management API Token on the active connection
-                    if (SPOnlineConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, requiredRoles.ToArray()) is OfficeManagementApiToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, requiredRoles.ToArray()) is OfficeManagementApiToken token)
                     {
                         // Microsoft Office Management API Access Token available, return it
                         return token;

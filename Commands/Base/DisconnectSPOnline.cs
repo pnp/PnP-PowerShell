@@ -18,17 +18,17 @@ namespace SharePointPnP.PowerShell.Commands.Base
     public class DisconnectSPOnline : PSCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Connection to be used by cmdlet")]
-        public SPOnlineConnection Connection = null;
+        public PnPConnection Connection = null;
 
         protected override void ProcessRecord()
         {
 #if !ONPREMISES
-            if(SPOnlineConnection.CurrentConnection.Certificate != null)
+            if(PnPConnection.CurrentConnection.Certificate != null)
             {
 #if !NETSTANDARD2_1
-                SPOnlineConnectionHelper.CleanupCryptoMachineKey(SPOnlineConnection.CurrentConnection.Certificate);
+                PnPConnectionHelper.CleanupCryptoMachineKey(PnPConnection.CurrentConnection.Certificate);
 #endif
-                SPOnlineConnection.CurrentConnection.Certificate = null;
+                PnPConnection.CurrentConnection.Certificate = null;
             }
 #endif
                 var success = false;
@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
-        internal static bool DisconnectProvidedService(SPOnlineConnection connection)
+        internal static bool DisconnectProvidedService(PnPConnection connection)
         {
             connection.ClearTokens();
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
@@ -81,15 +81,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
 
-            if (SPOnlineConnection.CurrentConnection == null)
+            if (PnPConnection.CurrentConnection == null)
             {
                 return false;
             }
             else
             {
-                SPOnlineConnection.CurrentConnection.ClearTokens();
-                SPOnlineConnection.CurrentConnection.Context = null;
-                SPOnlineConnection.CurrentConnection = null;
+                PnPConnection.CurrentConnection.ClearTokens();
+                PnPConnection.CurrentConnection.Context = null;
+                PnPConnection.CurrentConnection = null;
                 return true;
             }            
         }
