@@ -14,7 +14,7 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 namespace SharePointPnP.PowerShell.Commands
 {
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes", HelpMessage = "Specify properties to include when retrieving objects from the server.")]
-    public abstract class PnPRetrievalsCmdlet<TType> : PnPCmdlet, IDynamicParameters where TType : ClientObject
+    public abstract class PnPRetrievalsCmdlet<TType> : PnPSharePointCmdlet, IDynamicParameters where TType : ClientObject
     {
         public object GetDynamicParameters()
         {

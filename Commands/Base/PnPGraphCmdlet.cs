@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     /// <summary>
     /// Base class for all the PnP Microsoft Graph related cmdlets
     /// </summary>
-    public abstract class PnPGraphCmdlet : BasePSCmdlet
+    public abstract class PnPGraphCmdlet : PnPConnectedCmdlet
     {
         /// <summary>
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
@@ -50,19 +50,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// Returns an Access Token for Microsoft Graph, if available, otherwise NULL
         /// </summary>
         public string AccessToken => Token?.AccessToken;
-
-        protected override void BeginProcessing()
-        {
-            base.BeginProcessing();
-        }
-
-        protected virtual void ExecuteCmdlet()
-        { }
-
-        protected override void ProcessRecord()
-        {
-            ExecuteCmdlet();
-        }
     }
 }
 #endif

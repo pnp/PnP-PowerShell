@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
     [CmdletExample(
         Code = @"PS:> Add-PnPTeamsTeam",
         Remarks = @"This create a teams team for the connected site collection", SortOrder = 1)]
-    public class AddTeamsTeam : PnPCmdlet
+    public class AddTeamsTeam : PnPSharePointCmdlet
     {
 
         protected override void ExecuteCmdlet()

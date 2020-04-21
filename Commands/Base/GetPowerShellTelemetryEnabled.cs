@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Code = "PS:> Get-PnPPowerShellTelemetryEnabled",
        Remarks = "Will return true of false.",
        SortOrder = 1)]
-    public class GetPowerShellTelemetryEnabled : PnPCmdlet
+    public class GetPowerShellTelemetryEnabled : PnPSharePointCmdlet
     {
         protected override void ProcessRecord()
         {

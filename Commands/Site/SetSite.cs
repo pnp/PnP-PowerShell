@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Remarks = "Sets the logo if the site is a modern team site",
         SortOrder = 4)]
 #endif
-    public class SetSite : PnPCmdlet
+    public class SetSite : PnPSharePointCmdlet
     {
 
 #if !ONPREMISES

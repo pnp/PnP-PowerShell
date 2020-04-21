@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
        Code = @"PS:> Test-PnPTenantTemplate -Template $myTemplate",
        Remarks = "Checks for valid template references",
        SortOrder = 1)]
-    public class TestTenantTemplate : PnPCmdlet
+    public class TestTenantTemplate : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The in-memory template to test", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ProvisioningHierarchy Template;

@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         (Code = @"PS:> New-PnPTerm -TermSet ""Departments"" -TermGroup ""Corporate"" -Name ""Finance""",
         Remarks = @"Creates a new taxonomy term named ""Finance"" in the termset Departments which is located in the ""Corporate"" termgroup",
         SortOrder = 1)]
-    public class NewTerm : PnPCmdlet
+    public class NewTerm : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The name of the term.")]
         public string Name;

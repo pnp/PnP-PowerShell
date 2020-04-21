@@ -287,7 +287,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument..
+        ///   Looks up a localized string similar to Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument to connect..
         /// </summary>
         internal static string NoApiAccessToken {
             get {
@@ -296,7 +296,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No connection, please connect first with Connect-PnPOnline.
+        ///   Looks up a localized string similar to There is currently no connection yet. Use Connect-PnPOnline to connect..
         /// </summary>
         internal static string NoConnection {
             get {
@@ -319,6 +319,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string NoContextPresent {
             get {
                 return ResourceManager.GetString("NoContextPresent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url agrument to connect..
+        /// </summary>
+        internal static string NoSharePointConnection {
+            get {
+                return ResourceManager.GetString("NoSharePointConnection", resourceCulture);
             }
         }
         

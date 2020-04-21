@@ -22,11 +22,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             if (SPOnlineConnection.CurrentConnection == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
             if (SPOnlineConnection.CurrentConnection.Context == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
         }
 

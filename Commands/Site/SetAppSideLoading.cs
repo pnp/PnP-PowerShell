@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Set-PnPAppSideLoading -Off",
         Remarks = @"This will turn off App side loading",
         SortOrder = 1)]
-    public class SetAppSideLoading : PnPCmdlet
+    public class SetAppSideLoading : PnPSharePointCmdlet
     {
         [Parameter(ParameterSetName = "On", Mandatory = true)]
         public SwitchParameter On;

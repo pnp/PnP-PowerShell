@@ -6,15 +6,17 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    public class PnPCmdlet : BasePSCmdlet
+    /// <summary>
+    /// Base class for all the PnP SharePoint related cmdlets
+    /// </summary>
+    public class PnPSharePointCmdlet : PnPConnectedCmdlet
     {
+        /// <summary>
+        /// Reference the the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.
+        /// </summary>
         public ClientContext ClientContext => Connection?.Context ?? SPOnlineConnection.CurrentConnection.Context;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
@@ -30,21 +32,9 @@ namespace SharePointPnP.PowerShell.Commands
                 SPOnlineConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
             }
 
-            if (MyInvocation.InvocationName.ToUpper().IndexOf("-SPO", StringComparison.Ordinal) > -1)
+            if (Connection == null && ClientContext == null)
             {
-                WriteWarning($"PnP Cmdlets starting with the SPO Prefix have been deprecated since the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
-            }
-            if (SPOnlineConnection.CurrentConnection == null && Connection == null)
-            {
-                throw new InvalidOperationException(Resources.NoConnection);
-            }
-            if (SPOnlineConnection.CurrentConnection == null && ClientContext == null)
-            {
-                throw new InvalidOperationException(Resources.NoConnection);
-            }
-            if (SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
-            {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
         }
 
@@ -110,7 +100,7 @@ namespace SharePointPnP.PowerShell.Commands
                     ExecuteCmdlet();
                 }
             }
-            catch (System.Management.Automation.PipelineStoppedException)
+            catch (PipelineStoppedException)
             {
                 //don't swallow pipeline stopped exception
                 //it makes select-object work weird

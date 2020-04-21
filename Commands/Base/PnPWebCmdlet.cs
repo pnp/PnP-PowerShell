@@ -8,7 +8,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    public abstract class PnPWebCmdlet : PnPCmdlet
+    public abstract class PnPWebCmdlet : PnPSharePointCmdlet
     {
         private Web _selectedWeb;
 

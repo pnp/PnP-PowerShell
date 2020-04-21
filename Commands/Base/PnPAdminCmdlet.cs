@@ -7,7 +7,7 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
-    public abstract class PnPAdminCmdlet : PnPCmdlet
+    public abstract class PnPAdminCmdlet : PnPSharePointCmdlet
     {
         private Tenant _tenant;
         private Uri _baseUri;
@@ -32,11 +32,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             if (SPOnlineConnection.CurrentConnection == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
             if (ClientContext == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
 
             SPOnlineConnection.CurrentConnection.CacheContext();

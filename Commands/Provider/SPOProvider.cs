@@ -61,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             }
             else
             {
-                WriteErrorInternal(PnPResources.NoConnection, drive.Root, ErrorCategory.ConnectionError);
+                WriteErrorInternal(PnPResources.NoSharePointConnection, drive.Root, ErrorCategory.ConnectionError);
             }
 
             if (web != null)

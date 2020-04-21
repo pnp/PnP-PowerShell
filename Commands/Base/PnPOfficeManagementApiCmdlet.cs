@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     /// <summary>
     /// Base class for all the PnP Microsoft Office Management API related cmdlets
     /// </summary>
-    public abstract class PnPOfficeManagementApiCmdlet : BasePSCmdlet
+    public abstract class PnPOfficeManagementApiCmdlet : PnPConnectedCmdlet
     {
         /// <summary>
         /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
@@ -54,19 +54,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// Root URL to the Office 365 Management API
         /// </summary>
         protected string ApiRootUrl => $"https://manage.office.com/api/v1.0/{Token.TenantId}/";
-
-        protected override void BeginProcessing()
-        {
-            base.BeginProcessing();
-        }
-
-        protected virtual void ExecuteCmdlet()
-        { }
-
-        protected override void ProcessRecord()
-        {
-            ExecuteCmdlet();
-        }
     }
 }
 #endif

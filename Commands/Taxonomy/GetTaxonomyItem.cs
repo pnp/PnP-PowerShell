@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Category = CmdletHelpCategory.Taxonomy,
         OutputType = typeof(TaxonomyItem),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.taxonomy.taxonomyitem.aspx")]
-    public class GetTaxonomyItem : PnPCmdlet
+    public class GetTaxonomyItem : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The path, delimited by | of the taxonomy item to retrieve, alike GROUPLABEL|TERMSETLABEL|TERMLABEL")]
         [Alias("Term")]

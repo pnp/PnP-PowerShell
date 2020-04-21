@@ -150,8 +150,8 @@
   <data name="ListNotFound" xml:space="preserve">
     <value>List not found</value>
   </data>
-  <data name="NoConnection" xml:space="preserve">
-    <value>No connection, please connect first with Connect-PnPOnline</value>
+  <data name="NoSharePointConnection" xml:space="preserve">
+    <value>The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url agrument to connect.</value>
   </data>
   <data name="NoConnectionToDisconnect" xml:space="preserve">
     <value>No connection to disconnect</value>
@@ -319,6 +319,9 @@
     <value>Only one e-mail address can be configured to receive the access requests</value>
   </data>
   <data name="NoApiAccessToken" xml:space="preserve">
-    <value>Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument.</value>
+    <value>Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument to connect.</value>
+  </data>
+  <data name="NoConnection" xml:space="preserve">
+    <value>There is currently no connection yet. Use Connect-PnPOnline to connect.</value>
   </data>
 </root>
