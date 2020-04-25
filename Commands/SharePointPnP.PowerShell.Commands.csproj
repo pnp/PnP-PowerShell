@@ -651,6 +651,7 @@
     <Compile Include="ClientSidePages\SaveClientSidePageConversionLog.cs" />
     <Compile Include="Enums\AlertFilter.cs" />
     <Compile Include="Enums\AuditContentType.cs" />
+    <Compile Include="Enums\GrooveBlockOption.cs" />
     <Compile Include="Enums\HttpRequestMethod.cs" />
     <Compile Include="Enums\InitializationType.cs" />
     <Compile Include="Enums\ListItemUpdateType.cs" />

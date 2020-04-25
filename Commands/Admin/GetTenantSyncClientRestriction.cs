@@ -16,7 +16,8 @@ Currently, there are no parameters for this cmdlet.
 
 You must have the SharePoint Online admin or Global admin role to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
-        Category = CmdletHelpCategory.TenantAdmin)]
+        Category = CmdletHelpCategory.TenantAdmin,
+        OutputType = typeof(SPOTenantSyncClientRestriction))]
     [CmdletExample(
         Code = @"PS:> Get-PnPTenantSyncClientRestriction",
         Remarks = @"This example returns all tenant OneDrive synchronization restriction settings", SortOrder = 1)]
