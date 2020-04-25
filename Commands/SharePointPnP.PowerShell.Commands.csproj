@@ -560,6 +560,7 @@
     <Compile Include="Admin\AddTenantTheme.cs" />
     <Compile Include="Admin\ClearTenantAppCatalogUrl.cs" />
     <Compile Include="Admin\GetKnowledgeHubSite.cs" />
+    <Compile Include="Admin\GetTenantSyncClientRestriction.cs" />
     <Compile Include="Admin\RemoveKnowledgeHubSite.cs" />
     <Compile Include="Admin\SetKnowledgeHubSite.cs" />
     <Compile Include="Admin\RevokeHubSiteRights.cs" />
@@ -569,6 +570,7 @@
     <Compile Include="Admin\GetHubSiteChild.cs" />
     <Compile Include="Admin\GetTenantId.cs" />
     <Compile Include="Admin\RegisterAppCatalogSite.cs" />
+    <Compile Include="Admin\SetTenantSyncClientRestriction.cs" />
     <Compile Include="Base\BasePSCmdlet.cs" />
     <Compile Include="Apps\AddApplicationCustomizer.cs" />
     <Compile Include="Apps\GetApplicationCustomizer.cs" />
@@ -674,6 +676,7 @@
     <Compile Include="Model\ProvisionedSite.cs" />
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
     <Compile Include="ClientSidePages\ConvertToClientSidePage.cs" />
+    <Compile Include="Model\SPOTenantSyncClientRestriction.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
