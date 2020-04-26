@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Graph;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Properties;
@@ -11,6 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     [Cmdlet(VerbsCommon.New, "PnPUnifiedGroup")]
     [CmdletHelp("Creates a new Office 365 Group (aka Unified Group). Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
         Category = CmdletHelpCategory.Graph,
+        OutputTypeLink = "https://docs.microsoft.com/graph/api/group-post-groups",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> New-PnPUnifiedGroup -DisplayName $displayName -Description $description -MailNickname $nickname",
@@ -28,6 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> New-PnPUnifiedGroup -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate",
        Remarks = "Creates a private Office 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members",
        SortOrder = 4)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Create | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class NewPnPUnifiedGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The Display Name of the Office 365 Group.")]
@@ -98,3 +101,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif

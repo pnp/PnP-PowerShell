@@ -6,10 +6,11 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
     /// <summary>
     /// Defines the supported API permissions for the Office Management Api configurable in Azure Active Directory
     /// </summary>
-    public enum OfficeManagementApiPermission : short
+    [Flags]
+    public enum OfficeManagementApiPermission : int
     {
         [EnumMember(Value = "ActivityFeed.Read")]
-        ActivityFeed_Read = 0
+        ActivityFeed_Read = 1
     }
 
     /// <summary>
@@ -19,14 +20,14 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
     public sealed class CmdletOfficeManagementApiPermissionAttribute : Attribute
     {
         /// <summary>
-        /// The specific permission that is needed
+        /// One or more permissions of which only one is needed to granted to the token
         /// </summary>
         public OfficeManagementApiPermission ApiPermission { get; set; }
 
         /// <summary>
         /// Constructs a new ApiPermissionAttribute
         /// </summary>
-        /// <param name="apiPermission">Specific permission that is needed</param>
+        /// <param name="apiPermission">One or more possible permissions of which only one is needed to be granted in the token</param>
         public CmdletOfficeManagementApiPermissionAttribute(OfficeManagementApiPermission apiPermission)
         {
             ApiPermission = apiPermission;

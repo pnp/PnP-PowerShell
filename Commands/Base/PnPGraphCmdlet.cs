@@ -25,7 +25,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 var requiredRoles = new List<string>(requiredRoleAttributes.Length);
                 foreach (var requiredRoleAttribute in requiredRoleAttributes)
                 {
-                    requiredRoles.Add(requiredRoleAttribute.ApiPermission.ToString().Replace("_", "."));
+                    foreach (MicrosoftGraphApiPermission role in Enum.GetValues(typeof(MicrosoftGraphApiPermission)))
+                    {
+                        if(requiredRoleAttribute.ApiPermission.HasFlag(role))
+                        {
+                            requiredRoles.Add(role.ToString().Replace("_", "."));
+                        }
+                    }
                 }
 
                 // Ensure we have an active connection

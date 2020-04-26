@@ -129,8 +129,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 if (token.ExpiresOn > DateTime.Now)
                 {
-                    // Token is still valid, ensure we dont have specific roles to check for or the requested roles are present in the token
-                    if(roles == null || !roles.Except(token.Roles).Any())
+                    // Token is still valid, ensure we dont have specific roles to check for or the requested roles to execute the command are present in the token
+                    if(roles == null || roles.Length == 0 || roles.Any(r => token.Roles.Contains(r)))
                     {
                         return token;
                     }
@@ -138,7 +138,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     if (roles != null)
                     {
                         // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
-                        throw new PSArgumentException($"Access to {tokenAudience} failed because the role{(roles.Length != 1 ? "s" : "")} {string.Join(", ", roles).TrimEnd(new[] { ',', ' ' })} {(roles.Length != 1 ? "are" : "is")} not granted permissions on the app registration {ClientId} in tenant {Tenant}", "Identity");
+                        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted any of the permission{(roles.Length != 1 ? "s" : "")} {string.Join(", ", roles).TrimEnd(new[] { ',', ' ' })}");
                     }
                 }
 

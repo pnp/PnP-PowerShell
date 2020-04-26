@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         Code = "PS:> Get-PnPDeletedUnifiedGroup -Identity 38b32e13-e900-4d95-b860-fb52bc07ca7f",
         Remarks = "Retrieves a specific deleted Office 365 Group based on its ID",
         SortOrder = 2)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.Group_Read_All)]
     public class GetDeletedUnifiedGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The Identity of the Office 365 Group.")]
