@@ -8,10 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.21.2005.0] (not yet released)
 
 ### Added
+- Added `Reset-PnPUnifiedGroupExpiration` which allows the expiration date of an Office 365 Group to be extended by the number of days defined in the Azure Active Directrion Group Expiration policy
 
 ### Changed
 
 ### Contributors
+- Koen Zomers [koenzomers]
 
 ## [3.20.2004.0]
 
