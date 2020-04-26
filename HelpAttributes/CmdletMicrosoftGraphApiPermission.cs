@@ -8,8 +8,14 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
     /// </summary>
     public enum MicrosoftGraphApiPermission : short
     {
-        [EnumMember(Value = "ActivityFeed.Read")]
-        ActivityFeed_Read = 0
+        [EnumMember(Value = "Group.Read.All")]
+        Group_Read_All,
+
+        [EnumMember(Value = "Group.ReadWrite.All")]
+        Group_ReadWrite_All,
+
+        [EnumMember(Value = "Directory.ReadWrite.All")]
+        Directory_ReadWrite_All
     }
 
     /// <summary>
