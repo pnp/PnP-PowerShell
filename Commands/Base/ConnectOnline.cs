@@ -1,5 +1,4 @@
-﻿using Microsoft.Identity.Client;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -15,6 +14,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.IdentityModel.Tokens.Jwt;
 using SharePointPnP.PowerShell.Commands.Enums;
 using System.Web.UI.WebControls;
+using SharePointPnP.PowerShell.Commands.Model;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 #if NETSTANDARD2_1
 using System.IdentityModel.Tokens.Jwt;
 #endif
@@ -100,8 +101,8 @@ PS:> dir",
 #if !ONPREMISES
 #if !NETSTANDARD2_1
     [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\"",
-       Remarks = "Connects to Azure AD and gets and OAuth 2.0 Access Token to consume the Microsoft Graph API including the declared permission scopes. The available permission scopes are defined at the following URL: https://docs.microsoft.com/en-us/graph/permissions-reference",
+       Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\",\"ActivityFeed.Read\"",
+       Remarks = "Connects to Azure Active Directory and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/en-us/graph/permissions-reference",
        SortOrder = 14)]
 #endif
 #endif
@@ -850,7 +851,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             var uri = new Uri(Url);
             if ($"https://{uri.Host}".Equals(Url.ToLower()))
             {
-                Url = Url + "/";
+                Url += "/";
             }
             var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, (message) =>
             {
@@ -932,6 +933,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
             else
             {
+                // TODO KZ: GetConnectionWithToken?
                 return PnPConnectionHelper.InstantiateGraphAccessTokenConnection(accessToken, Host, NoTelemetry);
             }
 #else
@@ -1062,13 +1064,37 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         {
 #if !ONPREMISES
 #if !NETSTANDARD2_1
-            var clientApplication = PublicClientApplicationBuilder.Create(MSALPnPPowerShellClientId).Build();
-            //var clientApplication = new PublicClientApplication(MSALPnPPowerShellClientId);
-            var authenticationResult = clientApplication.AcquireTokenInteractive(Scopes).ExecuteAsync().GetAwaiter().GetResult();
-            //var authenticationResult = clientApplication.AcquireTokenAsync(Scopes).GetAwaiter().GetResult();
+            // Filter out the scopes for the Microsoft Office 365 Management API
+            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+            
+            // Take the remaining scopes and try requesting them from the Microsoft Graph API
+            var graphScopes = Scopes.Except(officeManagementApiScopes).ToArray();
 
-            // TODO KZ: Finish implementation
-            throw new NotImplementedException();
+            PnPConnection connection = null;
+
+            // If we have Office 365 scopes, get a token for those first
+            if (officeManagementApiScopes.Length > 0)
+            {
+                var officeManagementApiToken = OfficeManagementApiToken.AcquireTokenInteractive(MSALPnPPowerShellClientId, officeManagementApiScopes);
+                connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, Host, InitializationType.InteractiveLogin, disableTelemetry: NoTelemetry.ToBool());
+            }
+
+            // If we have Graph scopes, get a token for it
+            if(graphScopes.Length > 0)
+            {
+                var graphToken = GraphToken.AcquireTokenInteractive(MSALPnPPowerShellClientId, graphScopes);
+
+                // If there's a connection already, add the Graph token to it, otherwise set up a new connection with it
+                if(connection != null)
+                {
+                    connection.AddToken(TokenAudience.MicrosoftGraph, graphToken);
+                }
+                else
+                {
+                    connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, Host, InitializationType.InteractiveLogin, disableTelemetry: NoTelemetry.ToBool());
+                }
+            }
+            return connection;
 #else
             throw new NotImplementedException();	
 #endif
@@ -1084,32 +1110,21 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private PnPConnection ConnectAccessToken()
         {
 #if !ONPREMISES
-            // TODO KZ: Check current implementation
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(AccessToken);
             var aud = jwtToken.Audiences.FirstOrDefault();
-            var url = Url;
-            if ((url.ToLower() == "https://graph.microsoft.com") ||
-                (url.ToLower() == "https://manage.office.com"))
+            var url = Url ?? aud ?? throw new PSArgumentException(Resources.AccessTokenConnectFailed);
+            
+            switch(url.ToLower())
             {
-                return ConnectGraphDeviceLogin(AccessToken);
-            }
-            else
-            {
-                Uri uri = null;
-                try
-                {
-                    uri = new Uri(url);
-                }
-                catch
-                {
-                    uri = new Uri(Url);
-                }
-                //#if !NETSTANDARD2_0
-                return PnPConnectionHelper.InitiateAccessTokenConnection(uri, AccessToken, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
-                //#else
-                //throw new NotImplementedException();
-                //#endif
+                case GraphToken.ResourceIdentifier:
+                    return PnPConnection.GetConnectionWithToken(new GraphToken(AccessToken), TokenAudience.MicrosoftGraph, Host, InitializationType.Token, disableTelemetry: NoTelemetry.ToBool());
+
+                case OfficeManagementApiToken.ResourceIdentifier:
+                    return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, Host, InitializationType.Token, disableTelemetry: NoTelemetry.ToBool());
+
+                default:
+                    return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, Host, InitializationType.Token, Url, disableTelemetry: NoTelemetry.ToBool());
             }
 #else
             return null;
@@ -1264,9 +1279,9 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                                                                      AuthenticationMode);
         }
 
-        #endregion
+#endregion
 
-        #region Helper methods
+#region Helper methods
         private PSCredential GetCredentials()
         {
             var connectionUri = new Uri(Url);
@@ -1339,6 +1354,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 WriteWarning(message);
             }
         }
-        #endregion
+#endregion
     }
 }

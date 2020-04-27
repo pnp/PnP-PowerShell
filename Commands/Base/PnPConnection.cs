@@ -138,7 +138,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     if (roles != null)
                     {
                         // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
-                        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted any of the permission{(roles.Length != 1 ? "s" : "")} {string.Join(", ", roles).TrimEnd(new[] { ',', ' ' })}");
+                        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {(roles.Length != 1 ? "any of " : string.Empty)}the permission{(roles.Length != 1 ? "s" : string.Empty)} {string.Join(", ", roles).TrimEnd(new[] { ',', ' ' })}");
                     }
                 }
 
@@ -400,9 +400,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                                                            string pnpVersionTag = null,
                                                            bool disableTelemetry = false)
         {
-            var connection = new PnPConnection(host, initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) {{ tokenAudience, token }}, minimalHealthScore, pnpVersionTag, disableTelemetry)
+            var connection = new PnPConnection(host, initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) { { tokenAudience, token } }, minimalHealthScore, pnpVersionTag, disableTelemetry)
             {
-                ConnectionMethod = ConnectionMethod.AccessToken
+                ConnectionMethod = ConnectionMethod.AccessToken,
+                Tenant = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("tid", StringComparison.InvariantCultureIgnoreCase))?.Value,
+                ClientId = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("appid", StringComparison.InvariantCultureIgnoreCase))?.Value
             };
 
             return connection;

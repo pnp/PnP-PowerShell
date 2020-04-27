@@ -666,6 +666,7 @@
     <Compile Include="InformationManagement\ResetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
+    <Compile Include="ManagementApi\GetOfficeManagementApiAccessToken.cs" />
     <Compile Include="ManagementApi\GetManagementApiAccessToken.cs" />
     <Compile Include="ManagementApi\GetUnifiedAuditLog.cs" />
     <Compile Include="Model\AzureApp.cs" />

@@ -4,6 +4,7 @@ using OfficeDevPnP.Core.Utilities;
 using System;
 using System.Linq;
 using System.Web;
+using System.Collections.Generic;
 
 namespace SharePointPnP.PowerShell.Commands.Model
 {
@@ -67,9 +68,21 @@ namespace SharePointPnP.PowerShell.Commands.Model
             AccessToken = accesstoken;
 
             ExpiresOn = ParsedToken.ValidTo.ToLocalTime();
-            Audiences = ParsedToken.Audiences.ToArray();
-            Roles = ParsedToken.Claims.Where(c => c.Type == "roles").Select(c => c.Value).ToArray();
+            Audiences = ParsedToken.Audiences.ToArray();            
             TenantId = Guid.TryParse(ParsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value, out Guid tenandIdGuid) ? (Guid?)tenandIdGuid : null;
+
+            var rolesList = new List<string>();
+            rolesList.AddRange(ParsedToken.Claims.Where(c => c.Type.Equals("roles", StringComparison.InvariantCultureIgnoreCase)).Select(c => c.Value));
+            foreach(var scope in ParsedToken.Claims.Where(c => c.Type.Equals("scp", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                rolesList.AddRange(scope.Value.Split(' '));
+            }
+            Roles = rolesList.ToArray();
+        }
+
+        private object List<T>()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPUnifiedGroup -IncludeIfHasTeam",
        Remarks = "Retrieves all the Office 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it",
        SortOrder = 6)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All | MicrosoftGraphApiPermission.GroupMember_ReadWrite_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_Read_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All)]
     public class GetUnifiedGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The Identity of the Office 365 Group.")]

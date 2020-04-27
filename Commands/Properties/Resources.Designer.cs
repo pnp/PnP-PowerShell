@@ -61,6 +61,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No URL specified nor does the provided access token contain an audience.
+        /// </summary>
+        internal static string AccessTokenConnectFailed {
+            get {
+                return ResourceManager.GetString("AccessTokenConnectFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SharePoint PnP PowerShell Library.
         /// </summary>
         internal static string ApplicationName {
@@ -287,7 +296,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument to connect..
+        ///   Looks up a localized string similar to Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument or use Connect-PnPOnline -Scopes to connect..
         /// </summary>
         internal static string NoApiAccessToken {
             get {
