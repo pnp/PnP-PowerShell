@@ -1,4 +1,5 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Base
@@ -33,3 +34,4 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
     }
 }
+#endif

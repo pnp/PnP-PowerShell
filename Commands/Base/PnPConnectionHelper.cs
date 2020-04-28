@@ -98,7 +98,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
 #if !NETSTANDARD2_1
 #if ONPREMISES
-        internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, string hightrustCertificatePath, string hightrustCertificatePassword, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck, string loginName)
+        internal static PnPConnection InstantiateHighTrustConnection(string url, string clientId, string hightrustCertificatePath, string hightrustCertificatePassword, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck, string loginName)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
             var context = authManager.GetHighTrustCertificateAppAuthenticatedContext(url, clientId, hightrustCertificatePath, hightrustCertificatePassword, hightrustCertificateIssuerId, loginName);
@@ -106,7 +106,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return InstantiateHighTrustConnection(context, url, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck);
         }
 
-        internal static SPOnlineConnection InstantiateHighTrustConnection(string url, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 hightrustCertificate, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck, string loginName)
+        internal static PnPConnection InstantiateHighTrustConnection(string url, string clientId, System.Security.Cryptography.X509Certificates.X509Certificate2 hightrustCertificate, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck, string loginName)
         {
             var authManager = new OfficeDevPnP.Core.AuthenticationManager();
             var context = authManager.GetHighTrustCertificateAppAuthenticatedContext(url, clientId, hightrustCertificate, hightrustCertificateIssuerId, loginName);
@@ -114,7 +114,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return InstantiateHighTrustConnection(context, url, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck);
         }
 
-        private static SPOnlineConnection InstantiateHighTrustConnection(ClientContext context, string url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck)
+        private static PnPConnection InstantiateHighTrustConnection(ClientContext context, string url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck)
         {
             context.ApplicationName = Properties.Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
@@ -129,7 +129,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     connectionType = ConnectionType.TenantAdmin;
                 }
             }
-            return new SPOnlineConnection(context,
+            return new PnPConnection(context,
                 connectionType,
                 minimalHealthScore,
                 retryCount,

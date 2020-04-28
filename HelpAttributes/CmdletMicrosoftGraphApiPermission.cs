@@ -98,8 +98,13 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
     /// Add this attribute on a cmdlet class in order to provide the Api permission needed to execute the cmdlet
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class CmdletMicrosoftGraphApiPermission : Attribute
+    public sealed class CmdletMicrosoftGraphApiPermission : CmdletApiPermissionBase
     {
+        /// <summary>
+        /// Friendly name for this API used in the generated documentation
+        /// </summary>
+        public override string ApiName => "Microsoft Graph API";
+
         /// <summary>
         /// One or more permissions of which only one is needed to granted to the token
         /// </summary>

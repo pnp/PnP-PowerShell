@@ -776,7 +776,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
 #pragma warning restore CS0618 // Type or member is obsolete
 #else
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), null, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
 #endif
         }
 
@@ -804,7 +804,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #if !ONPREMISES
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
 #else
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), null, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
 #endif
         }
 
@@ -817,7 +817,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #if !ONPREMISES
             return PnPConnection.GetConnectionWithClientIdAndClientSecret(ClientId, ClientSecret, Host, InitializationType.AADAppOnly, Url, AADDomain, disableTelemetry: NoTelemetry);
 #else
-            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), null, ClientId, ClientSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
 #endif
         }
 

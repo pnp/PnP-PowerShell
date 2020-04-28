@@ -17,12 +17,17 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
     /// Add this attribute on a cmdlet class in order to provide the Api permission needed to execute the cmdlet
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class CmdletOfficeManagementApiPermissionAttribute : Attribute
+    public sealed class CmdletOfficeManagementApiPermissionAttribute : CmdletApiPermissionBase
     {
+        /// <summary>
+        /// Friendly name for this API used in the generated documentation
+        /// </summary>
+        public override string ApiName => "Microsoft Office 365 Management API";
+
         /// <summary>
         /// One or more permissions of which only one is needed to granted to the token
         /// </summary>
-        public OfficeManagementApiPermission ApiPermission { get; set; }
+        public OfficeManagementApiPermission ApiPermission { get; set; }     
 
         /// <summary>
         /// Constructs a new ApiPermissionAttribute

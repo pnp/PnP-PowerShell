@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if !ONPREMISES
+using System.Collections.Generic;
 using System.Management.Automation;
 using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.Core.Framework.Graph;
@@ -52,3 +53,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif
