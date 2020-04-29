@@ -102,13 +102,13 @@ PS:> dir",
 #if !NETSTANDARD2_1
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\",\"ActivityFeed.Read\"",
-       Remarks = "Connects to Azure Active Directory and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/en-us/graph/permissions-reference",
+       Remarks = "Connects to Azure Active Directory interactively and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP.PowerShell with application id bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71 registered by the PnP PowerShell team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/en-us/graph/permissions-reference . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. It will ask you to authenticate for each of the APIs you have listed scopes for.",
        SortOrder = 14)]
 #endif
 #endif
 #if !ONPREMISES
     [CmdletExample(
-       Code = "PS:> Connect-PnPOnline -AppId '<id>' -AppSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'",
+       Code = "PS:> Connect-PnPOnline -ClientId '<id>' -ClientSecret '<secret>' -AADDomain 'contoso.onmicrosoft.com'",
        Remarks = "Connects to the Microsoft Graph API using application permissions via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/Graph.ConnectUsingAppPermissions for a sample on how to get started.",
        SortOrder = 15)]
     [CmdletExample(
