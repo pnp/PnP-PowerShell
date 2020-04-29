@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         protected override void ProcessRecord()
         {
 #if !ONPREMISES
-            if(PnPConnection.CurrentConnection.Certificate != null)
+            if(PnPConnection.CurrentConnection?.Certificate != null)
             {
 #if !NETSTANDARD2_1
                 PnPConnectionHelper.CleanupCryptoMachineKey(PnPConnection.CurrentConnection.Certificate);
