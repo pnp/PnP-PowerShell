@@ -13,9 +13,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
         Code = @"PS:> Disconnect-PnPOnline",
-        Remarks = @"This will disconnect you from the server.",
+        Remarks = @"This will clear out all active tokens",
         SortOrder = 1)]
-    public class DisconnectSPOnline : PSCmdlet
+    public class DisconnectOnline : PSCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Connection to be used by cmdlet")]
         public PnPConnection Connection = null;

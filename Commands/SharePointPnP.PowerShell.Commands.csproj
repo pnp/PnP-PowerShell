@@ -829,7 +829,7 @@
     <Compile Include="Base\GetStoredCredential.cs" />
     <Compile Include="Base\GetHealthScore.cs" />
     <Compile Include="Base\InvokeQuery.cs" />
-    <Compile Include="Base\DisconnectSPOnline.cs" />
+    <Compile Include="Base\DisconnectOnline.cs" />
     <Compile Include="Base\PipeBinds\FieldPipeBind.cs" />
     <Compile Include="Base\PipeBinds\ListPipeBind.cs" />
     <Compile Include="Base\PipeBinds\AppPipeBind.cs" />
