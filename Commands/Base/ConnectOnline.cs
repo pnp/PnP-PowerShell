@@ -698,6 +698,10 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 case ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN:
                     connection = ConnectAppOnlyClientIdCClientSecretAadDomain();
                     break;
+
+                case ParameterSet_MAIN:
+                    connection = ConnectCredentials(credentials);
+                    break;
             }
 
             if (UseWebLogin.IsPresent)
@@ -713,11 +717,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             if (UseAdfsCert.IsPresent)
             {
                 connection = ConnectAdfsCertificate();
-            }
-
-            if(connection == null)
-            {
-                connection = ConnectCredentials(credentials);
             }
 
             // Ensure a connection instance has been created by now
@@ -1262,7 +1261,14 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 credentials = GetCredentials();
                 if (credentials == null)
                 {
-                    credentials = Host.UI.PromptForCredential(Properties.Resources.EnterYourCredentials, "", "", "");
+                    credentials = Host.UI.PromptForCredential(Resources.EnterYourCredentials, "", "", "");
+
+                    // Ensure credentials have been entered
+                    if(credentials == null)
+                    {
+                        // No credentials have been provided
+                        return null;
+                    }
                 }
             }
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
