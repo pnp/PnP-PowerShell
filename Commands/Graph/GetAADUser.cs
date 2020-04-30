@@ -6,27 +6,27 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPADUser", DefaultParameterSetName = ParameterSet_LIST)]
+    [Cmdlet(VerbsCommon.Get, "PnPAADUser", DefaultParameterSetName = ParameterSet_LIST)]
     [CmdletHelp("Gets users from Azure Active Directory. Requires the Azure Active Directory application permission 'User.Read.All'.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Get-PnPADUser",
+       Code = "PS:> Get-PnPAADUser",
        Remarks = "Retrieves all users from Azure Active Directory",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-PnPADUser -Identity 328c7693-5524-44ac-a946-73e02d6b0f98",
+       Code = "PS:> Get-PnPAADUser -Identity 328c7693-5524-44ac-a946-73e02d6b0f98",
        Remarks = "Retrieves the user from Azure Active Directory with the id 328c7693-5524-44ac-a946-73e02d6b0f98",
        SortOrder = 2)]
     [CmdletExample(
-       Code = "PS:> Get-PnPADUser -Filter \"accountEnabled eq false\"",
+       Code = "PS:> Get-PnPAADUser -Filter \"accountEnabled eq false\"",
        Remarks = "Retrieves all the disabled users from Azure Active Directory",
        SortOrder = 3)]
     [CmdletExample(
-       Code = "PS:> Get-PnPADUser -Filter \"startswith(DisplayName, 'John')\" -OrderBy \"DisplayName\"",
+       Code = "PS:> Get-PnPAADUser -Filter \"startswith(DisplayName, 'John')\" -OrderBy \"DisplayName\"",
        Remarks = "Retrieves all the users from Azure Active Directory of which their DisplayName starts with 'John' and sort the results by the DisplayName",
        SortOrder = 4)]
-    public class GetADUser : PnPGraphCmdlet
+    public class GetAADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
         const string ParameterSet_LIST = "Return a list";
