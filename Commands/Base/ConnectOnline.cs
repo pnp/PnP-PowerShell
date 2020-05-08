@@ -1016,6 +1016,7 @@ Use -PnPO365ManagementShell instead");
 #if !NETSTANDARD2_1
             var clientApplication = ConfidentialClientApplicationBuilder.Create(AppId).WithClientSecret(AppSecret).WithRedirectUri(RedirectUri).WithAuthority(authority).Build();
             var authenticationResult = clientApplication.AcquireTokenForClient(GraphDefaultScope).ExecuteAsync().GetAwaiter().GetResult();
+            SPOnlineConnection.AuthenticationResult = authenticationResult;
 #else
             throw new NotImplementedException();
 #endif
