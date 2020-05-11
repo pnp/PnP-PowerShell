@@ -13,6 +13,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
     /// </summary>
     public abstract class PnPGraphCmdlet : PnPConnectedCmdlet
     {
+        [Parameter(Mandatory = false, HelpMessage = "Allows the check for required permissions in the access token to be bypassed when set to $true")]
+        public SwitchParameter ByPassPermissionCheck;
+
         /// <summary>
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
         /// </summary>
@@ -38,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (PnPConnection.CurrentConnection != null)
                 {
                     // There is an active connection, try to get a Microsoft Graph Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, requiredRoles.ToArray()) is GraphToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, ByPassPermissionCheck.ToBool() ? null : requiredRoles.ToArray()) is GraphToken token)
                     {
                         // Microsoft Graph Access Token available, return it
                         return token;

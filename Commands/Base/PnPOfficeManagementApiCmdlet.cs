@@ -13,6 +13,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
     /// </summary>
     public abstract class PnPOfficeManagementApiCmdlet : PnPConnectedCmdlet
     {
+        [Parameter(Mandatory = false, HelpMessage = "Allows the check for required permissions in the access token to be bypassed when set to $true")]
+        public SwitchParameter ByPassPermissionCheck;
+
         /// <summary>
         /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
         /// </summary>
@@ -32,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (PnPConnection.CurrentConnection != null)
                 {
                     // There is an active connection, try to get a Microsoft Office Management API Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, requiredRoles.ToArray()) is OfficeManagementApiToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, ByPassPermissionCheck.ToBool() ? null : requiredRoles.ToArray()) is OfficeManagementApiToken token)
                     {
                         // Microsoft Office Management API Access Token available, return it
                         return token;
