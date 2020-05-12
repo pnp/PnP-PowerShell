@@ -45,6 +45,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST, HelpMessage = "Includes a custom sorting instruction to the retrieval of the users. Use OData syntax to construct the orderby, i.e. \"DisplayName desc\".")]
         public string OrderBy;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID, HelpMessage = "Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST, HelpMessage = "Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.")]
+        public string[] Select;
+
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Identity)))
@@ -56,13 +60,13 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 }
                 else
                 {
-                    user = OfficeDevPnP.Core.Framework.Graph.UsersUtility.GetUser(AccessToken, Identity);
+                    user = OfficeDevPnP.Core.Framework.Graph.UsersUtility.GetUser(AccessToken, Identity, Select);
                 }
                 WriteObject(user);
             }
             else
             {
-                List<OfficeDevPnP.Core.Framework.Graph.Model.User> users = OfficeDevPnP.Core.Framework.Graph.UsersUtility.ListUsers(AccessToken, Filter, OrderBy);
+                List<OfficeDevPnP.Core.Framework.Graph.Model.User> users = OfficeDevPnP.Core.Framework.Graph.UsersUtility.ListUsers(AccessToken, Filter, OrderBy, Select);
                 WriteObject(users, true);
             }
         }
