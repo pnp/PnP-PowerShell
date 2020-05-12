@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.21.2005.0]
+
+### Added
+
+### Changed
+- Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
+
+### Contributors
+
 ## [3.20.2004.0]
 
 ### Added

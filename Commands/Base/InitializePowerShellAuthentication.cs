@@ -18,7 +18,9 @@ using System.Windows.Forms;
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsData.Initialize, "PnPPowerShellAuthentication")]
-
+    [CmdletHelp(@"Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.",
+        Category = CmdletHelpCategory.TenantAdmin,
+        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", HelpMessage = "Specify which permissions scopes to request.", ParameterSetName = ParameterSet_NEWCERT)]
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", HelpMessage = "Specify which permissions scopes to request.", ParameterSetName = ParameterSet_EXISTINGCERT)]
 
