@@ -1,6 +1,7 @@
 ﻿#if !ONPREMISES
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
+using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 
@@ -19,13 +20,17 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Remarks = "Retrieves the user from Azure Active Directory with the id 328c7693-5524-44ac-a946-73e02d6b0f98",
        SortOrder = 2)]
     [CmdletExample(
+       Code = "PS:> Get-PnPAADUser -Identity john@contoso.com",
+       Remarks = "Retrieves the user from Azure Active Directory with the user principal name john@contoso.com",
+       SortOrder = 3)]
+    [CmdletExample(
        Code = "PS:> Get-PnPAADUser -Filter \"accountEnabled eq false\"",
        Remarks = "Retrieves all the disabled users from Azure Active Directory",
-       SortOrder = 3)]
+       SortOrder = 4)]
     [CmdletExample(
        Code = "PS:> Get-PnPAADUser -Filter \"startswith(DisplayName, 'John')\" -OrderBy \"DisplayName\"",
        Remarks = "Retrieves all the users from Azure Active Directory of which their DisplayName starts with 'John' and sort the results by the DisplayName",
-       SortOrder = 4)]
+       SortOrder = 5)]
     public class GetAADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
@@ -44,7 +49,15 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                OfficeDevPnP.Core.Framework.Graph.Model.User user = OfficeDevPnP.Core.Framework.Graph.UsersUtility.GetUser(AccessToken, System.Guid.Parse(Identity));
+                OfficeDevPnP.Core.Framework.Graph.Model.User user;
+                if (Guid.TryParse(Identity, out Guid identityGuid))
+                {
+                    user = OfficeDevPnP.Core.Framework.Graph.UsersUtility.GetUser(AccessToken, identityGuid);
+                }
+                else
+                {
+                    user = OfficeDevPnP.Core.Framework.Graph.UsersUtility.GetUser(AccessToken, Identity);
+                }
                 WriteObject(user);
             }
             else
