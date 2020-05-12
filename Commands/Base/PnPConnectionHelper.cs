@@ -24,6 +24,8 @@ using System.Security.Cryptography;
 using Microsoft.Identity.Client;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Graph;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -65,7 +67,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: authManager.GetAzureADACSEndPoint(azureEnvironment), globalEndPointPrefix: authManager.GetAzureADACSEndPointPrefix(azureEnvironment)), retryCount, retryWait * 1000);
                 }
-                context.ApplicationName = Properties.Resources.ApplicationName;
+                context.ApplicationName = Resources.ApplicationName;
                 context.RequestTimeout = requestTimeout;
 #if !SP2013
                 context.DisableReturnValueCache = true;
@@ -116,7 +118,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         private static PnPConnection InstantiateHighTrustConnection(ClientContext context, string url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck)
         {
-            context.ApplicationName = Properties.Resources.ApplicationName;
+            context.ApplicationName = Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
 #if !SP2013
             context.DisableReturnValueCache = true;
@@ -429,6 +431,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(thumbprint);
 
+            if(certificate == null)
+            {
+                throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintNotFound, thumbprint));
+            }            
+
             return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
         }
 
@@ -594,7 +601,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 context.RetryCount = retryCount;
                 context.Delay = retryWait * 1000;
-                context.ApplicationName = Properties.Resources.ApplicationName;
+                context.ApplicationName = Resources.ApplicationName;
                 context.RequestTimeout = requestTimeout;
 #if !SP2013
                 context.DisableReturnValueCache = true;
@@ -625,7 +632,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
-            context.ApplicationName = Properties.Resources.ApplicationName;
+            context.ApplicationName = Resources.ApplicationName;
 #if !SP2013
             context.DisableReturnValueCache = true;
 #endif
@@ -776,7 +783,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             context.RetryCount = retryCount;
             context.Delay = retryWait * 1000;
 
-            context.ApplicationName = Properties.Resources.ApplicationName;
+            context.ApplicationName = Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
 #if !SP2013
             context.DisableReturnValueCache = true;
@@ -811,7 +818,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             var context = authManager.GetADFSCertificateMixedAuthenticationContext(url.ToString(), serialNumber, adfsHost, adfsRelyingParty);
 
-            context.ApplicationName = Properties.Resources.ApplicationName;
+            context.ApplicationName = Resources.ApplicationName;
             context.RequestTimeout = requestTimeout;
 #if !ONPREMISES
             context.DisableReturnValueCache = true;

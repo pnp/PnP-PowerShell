@@ -327,4 +327,7 @@
   <data name="AccessTokenConnectFailed" xml:space="preserve">
     <value>No URL specified nor does the provided access token contain an audience</value>
   </data>
+  <data name="CertificateWithThumbprintNotFound" xml:space="preserve">
+    <value>No certificate with the thumbprint '{0}' has been found in the Windows certificate store</value>
+  </data>
 </root>

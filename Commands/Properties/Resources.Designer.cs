@@ -79,6 +79,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No certificate with the thumbprint &apos;{0}&apos; has been found in the Windows certificate store.
+        /// </summary>
+        internal static string CertificateWithThumbprintNotFound {
+            get {
+                return ResourceManager.GetString("CertificateWithThumbprintNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Permanently delete all items in the first and second stage recycle bins?.
         /// </summary>
         internal static string ClearBothRecycleBins {
