@@ -24,13 +24,17 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Remarks = "Retrieves the user from Azure Active Directory with the user principal name john@contoso.com",
        SortOrder = 3)]
     [CmdletExample(
+       Code = "PS:> Get-PnPAADUser -Identity john@contoso.com -Select \"DisplayName\",\"extension_3721d05137db455ad81aa442e3c2d4f9_extensionAttribute1\"",
+       Remarks = "Retrieves only the DisplayName and extensionAttribute1 properties of the user from Azure Active Directory which has the user principal name john@contoso.com",
+       SortOrder = 4)]
+    [CmdletExample(
        Code = "PS:> Get-PnPAADUser -Filter \"accountEnabled eq false\"",
        Remarks = "Retrieves all the disabled users from Azure Active Directory",
-       SortOrder = 4)]
+       SortOrder = 5)]
     [CmdletExample(
        Code = "PS:> Get-PnPAADUser -Filter \"startswith(DisplayName, 'John')\" -OrderBy \"DisplayName\"",
        Remarks = "Retrieves all the users from Azure Active Directory of which their DisplayName starts with 'John' and sort the results by the DisplayName",
-       SortOrder = 5)]
+       SortOrder = 6)]
     public class GetAADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
