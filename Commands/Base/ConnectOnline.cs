@@ -238,7 +238,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect to your on-premises SharePoint farm using ADFS")]
         public SwitchParameter UseAdfs;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Main", HelpMessage = "If you want to connect to your SharePoint farm using ADFS with Certificate Authentication")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect to your SharePoint farm using ADFS with Certificate Authentication")]
         public SwitchParameter UseAdfsCert;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Authenticate using Kerberos to an on-premises ADFS instance.")]
@@ -1251,12 +1251,13 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         }
 
         /// <summary>
-        /// Connect using either provided credentials or the current credentials
+        /// Connect using either provided credentials or the current credentials with or without going through an ADFS server
         /// </summary>
-        /// <returns>PnPConnection based on WebLogin authentication</returns>
+        /// <returns>PnPConnection based on credentials authentication</returns>
         private PnPConnection ConnectCredentials(PSCredential credentials)
         {
-            if (!CurrentCredentials && credentials == null)
+            if ((!CurrentCredentials && credentials == null) || 
+                (UseAdfs && !Kerberos && credentials == null))
             {
                 credentials = GetCredentials();
                 if (credentials == null)
@@ -1271,6 +1272,49 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                     }
                 }
             }
+
+            // ADFS with credentials
+            if (UseAdfs)
+            {
+#if !NETSTANDARD2_1
+                return PnPConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
+                                                                     Kerberos,
+                                                                     credentials,
+                                                                     Host,
+                                                                     MinimalHealthScore,
+                                                                     RetryCount,
+                                                                     RetryWait,
+                                                                     RequestTimeout,
+                                                                     TenantAdminUrl,
+                                                                     NoTelemetry,
+                                                                     SkipTenantAdminCheck,
+                                                                     LoginProviderName);
+#else
+                throw new NotImplementedException();
+#endif
+            }
+
+            // ADFS with client certificate
+            if (UseAdfsCert)
+            {
+#if !NETSTANDARD2_1
+                // Modal Dialog to enable a user to select a certificate to use to authenticate against ADFS
+                X509Store store = new X509Store("MY", StoreLocation.CurrentUser);
+                store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+                var certs = X509Certificate2UI.SelectFromCollection(store.Certificates, "Select ADFS User Certificate", "Selec the certificate to use to authenticate to ADFS", X509SelectionFlag.SingleSelection);
+
+                if (certs[0] != null)
+                {
+                    var serialNumber = certs[0].SerialNumber;
+
+                    return PnPConnectionHelper.InstantiateAdfsCertificateConnection(new Uri(Url), serialNumber, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck);
+                }
+#else
+                throw new NotImplementedException();
+#endif
+            }
+
+            // No ADFS
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
                                                                      credentials,
                                                                      Host,
