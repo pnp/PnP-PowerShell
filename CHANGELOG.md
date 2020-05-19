@@ -8,11 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.21.2005.0] (not yet released)
 
 ### Added
+- Added `Get-PnPOffice365CurrentServiceStatus`, `Get-PnPOffice365HistoricalServiceStatus`, `Get-PnPOffice365ServiceMessage` and `Get-PnPOffice365Services` to retrieve information from the Office 365 Management API regarding the Office 365 services
 
 ### Changed
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
 
 ### Contributors
+- Koen Zomers [koenzomers]
 
 ## [3.20.2004.0]
 
