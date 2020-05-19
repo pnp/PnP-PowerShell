@@ -247,22 +247,20 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         public CredentialPipeBind Credentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to connect with the current user credentials")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Credentials of the user to connect with. Either specify a PSCredential object or a string. In case of a string value a lookup will be done to the Generic Credentials section of the Windows Credentials in the Windows Credential Manager for the correct credentials.")]
         public SwitchParameter CurrentCredentials;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "If you want to connect to your on-premises SharePoint farm using ADFS")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "If you want to connect to SharePoint using ADFS and credentials")]
         public SwitchParameter UseAdfs;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "If you want to connect to your SharePoint farm using ADFS with Certificate Authentication")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "If you want to connect to SharePoint farm using ADFS with a client certificate")]
         public SwitchParameter UseAdfsCert;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "The client certificate which you want to use for authentication")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "The client certificate which you want to use for the ADFS authentication")]
         public X509Certificate2 ClientCertificate;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Authenticate using Kerberos to an on-premises ADFS instance")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "Authenticate using Kerberos to ADFS")]
         public SwitchParameter Kerberos;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "The name of the ADFS trusted login provider")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCERT, HelpMessage = "The name of the ADFS trusted login provider")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADFSCREDENTIALS, HelpMessage = "The name of the ADFS trusted login provider")]        
         public string LoginProviderName;
