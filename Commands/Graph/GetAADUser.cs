@@ -35,23 +35,41 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPAADUser -Filter \"startswith(DisplayName, 'John')\" -OrderBy \"DisplayName\"",
        Remarks = "Retrieves all the users from Azure Active Directory of which their DisplayName starts with 'John' and sort the results by the DisplayName",
        SortOrder = 6)]
+    [CmdletExample(
+       Code = "PS:> Get-PnPAADUser -Delta",
+       Remarks = "Retrieves all the users from Azure Active Directory and include a delta DeltaToken which can be used by providing -DeltaToken <token> to query for changes to users in Active Directory since this run",
+       SortOrder = 7)]
+    [CmdletExample(
+       Code = "PS:> Get-PnPAADUser -Delta -DeltaToken abcdef",
+       Remarks = "Retrieves all the users from Azure Active Directory which have had changes since the provided DeltaToken was given out",
+       SortOrder = 8)]
     public class GetAADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
         const string ParameterSet_LIST = "Return a list";
+        const string ParameterSet_DELTA = "Return the delta";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID, HelpMessage = "Returns the user with the provided user id")]
         public string Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST, HelpMessage = "Includes a filter to the retrieval of the users. Use OData instructions to construct the filter, i.e. \"startswith(DisplayName, 'John')\".")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA, HelpMessage = "Includes a filter to the retrieval of the users. Use OData instructions to construct the filter, i.e. \"startswith(DisplayName, 'John')\".")]
         public string Filter;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST, HelpMessage = "Includes a custom sorting instruction to the retrieval of the users. Use OData syntax to construct the orderby, i.e. \"DisplayName desc\".")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA, HelpMessage = "Includes a custom sorting instruction to the retrieval of the users. Use OData syntax to construct the orderby, i.e. \"DisplayName desc\".")]
         public string OrderBy;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID, HelpMessage = "Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST, HelpMessage = "Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA, HelpMessage = "Allows providing an array with the property names of specific properties to return. If not provided, the default properties will be returned.")]
         public string[] Select;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DELTA, HelpMessage = "Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command")]
+        public SwitchParameter Delta;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA, HelpMessage = "The change token provided during the previous run with -Delta to query for the changes to user objects made in Azure Active Directory since that run")]
+        public string DeltaToken;
 
         protected override void ExecuteCmdlet()
         {
@@ -68,6 +86,11 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 }
                 WriteObject(user);
             }
+            else if (ParameterSpecified(nameof(Delta)))
+            {
+                OfficeDevPnP.Core.Framework.Graph.Model.UserDelta userDelta = OfficeDevPnP.Core.Framework.Graph.UsersUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select);
+                WriteObject(userDelta);
+            } 
             else
             {
                 List<OfficeDevPnP.Core.Framework.Graph.Model.User> users = OfficeDevPnP.Core.Framework.Graph.UsersUtility.ListUsers(AccessToken, Filter, OrderBy, Select);
