@@ -762,7 +762,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
 
             // Connection has been established
-            WriteVerbose($"PnP PowerShell Cmdlets ({System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
+            WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version}): Connected to {Url}");
             PnPConnection.CurrentConnection = connection;
             if (CreateDrive && PnPConnection.CurrentConnection.Context != null)
             {
@@ -810,7 +810,9 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), AADDomain, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false, AzureEnvironment);
 #pragma warning restore CS0618 // Type or member is obsolete
 #else
+#pragma warning disable CS0618 // Type or member is obsolete
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url), null, AppId, AppSecret, Host, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, SkipTenantAdminCheck, false);
+#pragma warning restore CS0618 // Type or member is obsolete
 #endif
         }
 
@@ -1249,7 +1251,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                                                                  TenantAdminUrl,
                                                                  NoTelemetry,
                                                                  SkipTenantAdminCheck,
-                                                                  LoginProviderName);
+                                                                 LoginProviderName);
 #else
                 throw new NotImplementedException();
 #endif
