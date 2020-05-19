@@ -124,6 +124,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The client certificate is invalid.
+        /// </summary>
+        internal static string ClientCertificateInvalid {
+            get {
+                return ResourceManager.GetString("ClientCertificateInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command not executed due to healthscore value of {0}.
         /// </summary>
         internal static string CommandNotExecutedDueToHealthscoreValueOf0 {

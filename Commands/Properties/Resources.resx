@@ -330,4 +330,7 @@
   <data name="CertificateWithThumbprintNotFound" xml:space="preserve">
     <value>No certificate with the thumbprint '{0}' has been found in the Windows certificate store</value>
   </data>
+  <data name="ClientCertificateInvalid" xml:space="preserve">
+    <value>The client certificate is invalid</value>
+  </data>
 </root>
