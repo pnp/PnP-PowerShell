@@ -148,7 +148,7 @@
     <value>Health score not sufficient</value>
   </data>
   <data name="ListNotFound" xml:space="preserve">
-    <value>List not found</value>
+    <value>No list found with id, title or url '{0}'</value>
   </data>
   <data name="NoSharePointConnection" xml:space="preserve">
     <value>The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument but not -SPOManagementShell or -PnPO365ManagementShell to connect.</value>

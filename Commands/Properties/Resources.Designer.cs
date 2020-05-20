@@ -260,7 +260,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List not found.
+        ///   Looks up a localized string similar to No list found with id, title or url &apos;{0}&apos;.
         /// </summary>
         internal static string ListNotFound {
             get {
