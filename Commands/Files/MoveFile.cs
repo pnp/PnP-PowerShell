@@ -8,43 +8,87 @@ namespace SharePointPnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Move, "PnPFile", SupportsShouldProcess = true)]
     [CmdletHelp("Moves a file to a different location",
+#if !ONPREMISES
+        DetailedDescription = "Allows moving a file to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection",
+#else
+        DetailedDescription = "Allows moving a file to a different location inside the same document library, such as in a subfolder or to a different document library on the same site collection. It is not possible to move files between site collections.",
+#endif
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
-        Remarks = "Moves a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to the site collection otherproject located in the managed path sites. If a file named company.aspx already exists, it won't perform the move.",
-        Code = @"PS:>Move-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetUrl /sites/otherproject/Documents/company.docx",
+        Remarks = @"Moves a file named Document.docx located in the document library named ""Shared Documents"" in the current site to the document library named ""Archive"" in the same site, renaming the file to Document2.docx. If a file named Document2.docx already exists at the destination, it won't perform the move.",
+        Code = @"PS:>Move-PnPFile -SiteRelativeUrl ""Shared Documents/Document.docx"" -TargetUrl ""/sites/project/Archive/Document2.docx""",
         SortOrder = 1)]
     [CmdletExample(
-        Remarks = "Moves a file named company.docx located in the document library called Documents located in the current site to the Documents library in the site collection otherproject located in the managed path sites. If a file named company.aspx already exists, it won't perform the move.",
-        Code = @"PS:>Move-PnPFile -SiteRelativeUrl Documents/company.aspx -TargetUrl /sites/otherproject/Documents/company.docx",
+        Remarks = @"Moves a file named Document.docx located in the document library named ""Shared Documents"" in the current site to the document library named ""Archive"" in the same site. If a file named Document.docx already exists at the destination, it will overwrite it.",
+        Code = @"PS:>Move-PnPFile -ServerRelativeUrl ""/sites/project/Shared Documents/Document.docx -TargetUrl ""/sites/project/Archive/Document.docx"" -OverwriteIfAlreadyExists",
         SortOrder = 2)]
+#if !ONPREMISES
     [CmdletExample(
-        Remarks = "Moves a file named company.docx located in the document library called Documents located in the projects sitecollection under the managed path sites to the site collection otherproject located in the managed path sites. If a file named company.aspx already exists, it will still perform the move and replace the original company.aspx file.",
-        Code = @"PS:>Move-PnPFile -ServerRelativeUrl /sites/project/Documents/company.docx -TargetUrl /sites/otherproject/Documents/company.docx -OverwriteIfAlreadyExists",
+        Remarks = @"Moves a file named Document.docx located in the document library named ""Shared Documents"" in the current site to the document library named ""Shared Documents"" in another site collection ""otherproject"" allowing it to overwrite an existing file Document.docx in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.",
+        Code = @"PS:>Move-PnPFile -ServerRelativeUrl ""/sites/project/Shared Documents/Document.docx"" -TargetServerRelativeLibrary ""/sites/otherproject/Shared Documents"" -OverwriteIfAlreadyExists -AllowSchemaMismatch -AllowSmallerVersionLimitOnDestination",
         SortOrder = 3)]
+#endif
 
     public class MoveFile : PnPWebCmdlet
     {
         private const string ParameterSet_SERVER = "Server Relative";
         private const string ParameterSet_SITE = "Site Relative";
+#if !ONPREMISES
+        private const string ParameterSet_OTHERSITE = "Other Site Collection";
+#endif
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SERVER, HelpMessage = "Server relative Url specifying the file to move. Must include the file name.")]
+#if !ONPREMISES
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "Server relative Url specifying the file to move. Must include the file name.")]
+#endif
         public string ServerRelativeUrl = string.Empty;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SITE, HelpMessage = "Site relative Url specifying the file to move. Must include the file name.")]
+#if !ONPREMISES
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "Site relative Url specifying the file to move. Must include the file name.")]
+#endif
         public string SiteRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to move the file to. Must include the file name.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SITE, Position = 1, HelpMessage = "Server relative Url where to move the file to. Must include the file name.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SERVER, Position = 1, HelpMessage = "Server relative Url where to move the file to. Must include the file name.")]
         public string TargetUrl = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.")]
+#if !ONPREMISES
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "Server relative url of a document library where to move the file to. Must not include the file name.")]
+        public string TargetServerRelativeLibrary = string.Empty;
+#endif
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SERVER, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SITE, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetUrl location.")]
+#if !ONPREMISES
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided, if a file already exists at the TargetServerRelativeLibrary, it will be overwritten. If omitted, the move operation will be canceled if the file already exists at the TargetServerRelativeLibrary location.")]
+#endif
         public SwitchParameter OverwriteIfAlreadyExists;
 
+#if !ONPREMISES
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided and the target document library specified using TargetServerRelativeLibrary has different fields than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of metadata stored in fields that cannot be moved along.")]
+        public SwitchParameter AllowSchemaMismatch;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided and the target document library specified using TargetServerRelativeLibrary is configured to keep less historical versions of documents than the document library where the document is being moved from, the move will succeed. If not provided, it will fail to protect against data loss of historical versions that cannot be moved along.")]
+        public SwitchParameter AllowSmallerVersionLimitOnDestination;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided, only the latest version of the document will be moved and its history will be discared. If not provided, all historical versions will be moved along.")]
+        public SwitchParameter IgnoreVersionHistory;
+#endif
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSetName == ParameterSet_SITE)
+#if !ONPREMISES
+            // Ensure that with ParameterSet_OTHERSITE we either receive a ServerRelativeUrl or SiteRelativeUrl
+            if (ParameterSetName == ParameterSet_OTHERSITE && !ParameterSpecified(nameof(ServerRelativeUrl)) && !ParameterSpecified(nameof(SiteRelativeUrl)))
+            {
+                throw new PSArgumentException($"Either provide {nameof(ServerRelativeUrl)} or {nameof(SiteRelativeUrl)}");
+            }
+#endif
+
+            if (ParameterSpecified(nameof(SiteRelativeUrl)))
             {
                 var webUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
                 ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
@@ -64,12 +108,35 @@ namespace SharePointPnP.PowerShell.Commands.Files
 #else
             var file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
 
-            ClientContext.Load(file, f => f.Name);
+            ClientContext.Load(file, f => f.Name, f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
 
             if (Force || ShouldContinue(string.Format(Resources.MoveFile0To1, ServerRelativeUrl, TargetUrl), Resources.Confirm))
             {
-                file.MoveToUsingPath(ResourcePath.FromDecodedUrl(TargetUrl), OverwriteIfAlreadyExists ? MoveOperations.Overwrite : MoveOperations.None);
+                switch(ParameterSetName)
+                {
+                    case ParameterSet_SITE:
+                    case ParameterSet_SERVER:
+                        file.MoveToUsingPath(ResourcePath.FromDecodedUrl(TargetUrl), OverwriteIfAlreadyExists.ToBool() ? MoveOperations.Overwrite : MoveOperations.None);
+                        break;
+
+                    case ParameterSet_OTHERSITE:
+                        SelectedWeb.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+
+                        // Create full URLs including the SharePoint domain to the source and destination
+                        var source = UrlUtility.Combine(SelectedWeb.Url.Remove(SelectedWeb.Url.Length - SelectedWeb.ServerRelativeUrl.Length + 1, SelectedWeb.ServerRelativeUrl.Length - 1), file.ServerRelativeUrl);
+                        var destination = UrlUtility.Combine(SelectedWeb.Url.Remove(SelectedWeb.Url.Length - SelectedWeb.ServerRelativeUrl.Length + 1, SelectedWeb.ServerRelativeUrl.Length - 1), TargetServerRelativeLibrary);
+
+                        ClientContext.Site.CreateCopyJobs(new[] { source }, destination, new CopyMigrationOptions { IsMoveMode = true, 
+                                                                                                                    AllowSchemaMismatch = AllowSchemaMismatch.ToBool(), 
+                                                                                                                    AllowSmallerVersionLimitOnDestination = AllowSmallerVersionLimitOnDestination.ToBool(), 
+                                                                                                                    IgnoreVersionHistory = IgnoreVersionHistory.ToBool(), 
+                                                                                                                    NameConflictBehavior = OverwriteIfAlreadyExists.ToBool() ? MigrationNameConflictBehavior.Replace : MigrationNameConflictBehavior.Fail });
+                        break;
+
+                    default:
+                        throw new PSInvalidOperationException(string.Format(Resources.ParameterSetNotImplemented, ParameterSetName));
+                }
 
                 ClientContext.ExecuteQueryRetry();
             }
