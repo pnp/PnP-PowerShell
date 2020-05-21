@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
-- Implementation of `Move-PnPFile` has been changed adding `-TargetServerRelativeLibrary` for SharePoint Online to allow moving files to other site collections
+- Implementation of `Move-PnPFile` has been changed adding `-TargetServerRelativeLibrary` for SharePoint Online to allow moving files to other site collections [PR #2688](https://github.com/pnp/PnP-PowerShell/pull/2688)
 
 ### Contributors
 - Koen Zomers [koenzomers]
