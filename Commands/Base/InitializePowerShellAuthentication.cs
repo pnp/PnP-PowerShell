@@ -25,7 +25,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -StoreLocation CurrentUser",
        Remarks = "Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
        SortOrder = 1)]
-
     public class InitializePowerShellAuthentication : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
@@ -90,7 +89,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             else
             {
-
                 // Generate a certificate
                 var x500Values = new List<string>();
                 if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
@@ -122,7 +120,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         OutPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutPath);
                     }
-                    if (System.IO.Directory.Exists(OutPath))
+                    if (Directory.Exists(OutPath))
                     {
                         var pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
                         byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
@@ -169,7 +167,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
 
                 var scopesPayload = GetScopesPayload(scopes);
-
                 var payload = new
                 {
                     displayName = ApplicationName,
@@ -198,24 +195,22 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
                 var waitTime = 60;
-                this.Host.UI.Write(ConsoleColor.Yellow, this.Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
+                Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
                 for (var i = 0; i < waitTime; i++)
                 {
-                    this.Host.UI.Write(ConsoleColor.Yellow, this.Host.UI.RawUI.BackgroundColor, ".");
+                    Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
                     System.Threading.Thread.Sleep(1000);
                 }
-                this.Host.UI.WriteLine();
+                Host.UI.WriteLine();
                 var consentUrl = $"https://login.microsoftonline.com/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default";
                 record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
 
                 AzureAuthHelper.OpenConsentFlow(consentUrl, (message) =>
                 {
-                    this.Host.UI.WriteLine(ConsoleColor.Red, this.Host.UI.RawUI.BackgroundColor, message);
+                    Host.UI.WriteLine(ConsoleColor.Red, Host.UI.RawUI.BackgroundColor, message);
                 });
                 WriteObject(record);
             }
-
-
         }
 
         private static object GetScopesPayload(List<PermissionScope> scopes)
