@@ -5,15 +5,11 @@ using SharePointPnP.PowerShell.Commands.Model;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
