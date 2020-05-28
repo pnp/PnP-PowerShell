@@ -861,6 +861,7 @@
     <Compile Include="Site\AddTeamsTeam.cs" />
     <Compile Include="Site\EnableCommSite.cs" />
     <Compile Include="Site\GetRoleDefinition.cs" />
+    <Compile Include="Site\GetIsSiteAliasAvailable.cs" />
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
     <Compile Include="Taxonomy\NewTermLabel.cs" />
