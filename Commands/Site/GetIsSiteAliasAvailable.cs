@@ -15,7 +15,7 @@ namespace SharePointPnP.PowerShell.Commands
         SortOrder = 1)]
     public class GetIsSiteAliasAvailable : PnPCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Alias you want to check for if it is still available to create a new site collection for")]
+        [Parameter(Mandatory = false, HelpMessage = "Alias you want to check for if it is still available to create a new site collection for", ValueFromPipeline = true)]
         [Alias("Alias")]
         public string Identity;
 
