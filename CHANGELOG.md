@@ -8,10 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.22.2006.0] (not yet released)
 
 ### Added
+- Added `-ValuesOnly` option to `Get-PnPLabel` which will return more detailed information regarding the retention label set on a list or library and return the information as properties instead of written text
 
 ### Changed
 
 ### Contributors
+- Koen Zomers [koenzomers]
 
 ## [3.21.2005.0]
 
