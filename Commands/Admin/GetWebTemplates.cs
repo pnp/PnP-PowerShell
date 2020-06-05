@@ -15,10 +15,10 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletExample(Code = @"PS:> Get-PnPWebTemplates", SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Get-PnPWebTemplates -LCID 1033", Remarks = @"Returns all webtemplates for the Locale with ID 1033 (English)", SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Get-PnPWebTemplates -CompatibilityLevel 15", Remarks = @"Returns all webtemplates for the compatibility level 15", SortOrder = 2)]
-    [CmdletRelatedLink(Text = "Locale IDs", Url = "https://docs.microsoft.com/openspecs/office_standards/ms-oe376/6c085406-a698-4e12-9d4d-c3b0ee3dbc4a")]
+    [CmdletRelatedLink(Text = "Locale IDs", Url = "https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint")]
     public class GetWebTemplates : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The language ID. For instance: 1033 for English.")]
+        [Parameter(Mandatory = false, HelpMessage = "The language ID. For instance: 1033 for English. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: (Get-PnPWeb -Includes RegionalSettings.InstalledLanguages).RegionalSettings.InstalledLanguages.")]
         public uint Lcid;
 
         [Parameter(Mandatory = false, HelpMessage = "The compatibily level of SharePoint where 14 is SharePoint 2010, 15 is SharePoint 2013 and 16 is SharePoint 2016 and later including SharePoint Online")]
