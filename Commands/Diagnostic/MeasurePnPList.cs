@@ -42,7 +42,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             var retrievalExpressions = new Expression<Func<List, object>>[] {
                 l => l.ItemCount,
                 l => l.HasUniqueRoleAssignments,
-                //l => l.RootFolder.Folders.Include(f => f.Name)
+                l => l.RootFolder.Folders.Include(f => f.Name)
             };
             list.EnsureProperties(retrievalExpressions);
 
