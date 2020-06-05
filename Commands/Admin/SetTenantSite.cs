@@ -46,7 +46,7 @@ namespace SharePointPnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "Specifies the title of the site", ParameterSetName = ParameterSet_PROPERTIES)]
         public string Title;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft (https://docs.microsoft.com/openspecs/office_standards/ms-oe376/6c085406-a698-4e12-9d4d-c3b0ee3dbc4a).", ParameterSetName = ParameterSet_PROPERTIES)]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint.", ParameterSetName = ParameterSet_PROPERTIES)]
         public uint LocaleId;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies if the site administrator can upgrade the site collection", ParameterSetName = ParameterSet_PROPERTIES)]
