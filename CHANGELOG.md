@@ -8,10 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.22.2006.0] (not yet released)
 
 ### Added
+- Added `-PreferredDataLocation` option to `New-PnPSite` which allows for providing a geography in which the new SharePoint sitecollection should be created. Only applicable on multi-geo enabled tenants.
 
 ### Changed
 
 ### Contributors
+- Koen Zomers [koenzomers]
 
 ## [3.21.2005.0]
 
