@@ -61,6 +61,8 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Owner", Mandatory = false, HelpMessage = @"Specifies the owner of the site. Specify the value as a string array: ""user@domain.com""", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Owner", Mandatory = false, HelpMessage = @"Specifies the owner of the site. Specify the value as a string array: ""user@domain.com""", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "PreferredDataLocation", Mandatory = false, HelpMessage = @"Allows specifying in which geography the SharePoint site collection should be created. I.e. NAM, EUR, APC. Only supported on multi-geo enabled tenants.", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "PreferredDataLocation", Mandatory = false, HelpMessage = @"Allows specifying in which geography the SharePoint site collection should be created. I.e. NAM, EUR, APC. Only supported on multi-geo enabled tenants.", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "AllowFileSharingForGuestUsers", Mandatory = false, HelpMessage = @"Specifies if guest users can share files in the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "AllowFileSharingForGuestUsers", Mandatory = false, HelpMessage = @"Specifies if guest users can share files in the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(OfficeDevPnP.Core.Sites.CommunicationSiteDesign), ParameterName = "SiteDesign", Mandatory = false, HelpMessage = @"Specifies the site design of the new site collection. Defaults to 'Topic'", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
@@ -74,6 +76,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "IsPublic", Mandatory = false, HelpMessage = @"Specifies if new site collection is public. Defaults to false.", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Owners", Mandatory = false, HelpMessage = @"Specifies the owners of the site. Specify the value as a string array: ""user@domain.com"",""anotheruser@domain.com""", ParameterSetName = ParameterSet_TEAM)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "PreferredDataLocation", Mandatory = false, HelpMessage = @"Allows specifying in which geography the SharePoint site collection should be created. I.e. NAM, EUR, APC. Only supported on multi-geo enabled tenants.", ParameterSetName = ParameterSet_TEAM)]
     public class NewSite : PnPCmdlet, IDynamicParameters
     {
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";
@@ -141,7 +144,9 @@ namespace SharePointPnP.PowerShell.Commands
                     creationInformation.SiteDesign = _communicationSiteParameters.SiteDesign;
                 }
                 creationInformation.Owner = _communicationSiteParameters.Owner;
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation,noWait:!Wait);
+                creationInformation.PreferredDataLocation = _communicationSiteParameters.PreferredDataLocation;
+
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
@@ -160,8 +165,9 @@ namespace SharePointPnP.PowerShell.Commands
                     creationInformation.HubSiteId = HubSiteId.Id;
                 }
                 creationInformation.Owners = _teamSiteParameters.Owners;
+                creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
 
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait:!Wait, graphAccessToken: SPOnlineConnection.CurrentConnection.AccessToken);
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: SPOnlineConnection.CurrentConnection.AccessToken);
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
@@ -186,7 +192,6 @@ namespace SharePointPnP.PowerShell.Commands
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
             public string Classification;
 
-
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
             [Obsolete("Use ShareByEmailEnabled instead.")]
@@ -209,6 +214,10 @@ namespace SharePointPnP.PowerShell.Commands
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
             public string Owner;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+            public string PreferredDataLocation;
         }
 
         public class TeamSiteParameters
@@ -233,6 +242,9 @@ namespace SharePointPnP.PowerShell.Commands
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
             public string[] Owners;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public string PreferredDataLocation;
         }
     }
 }
