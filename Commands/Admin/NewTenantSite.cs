@@ -26,7 +26,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "Locale IDs",
-        Url = "https://docs.microsoft.com/openspecs/office_standards/ms-oe376/6c085406-a698-4e12-9d4d-c3b0ee3dbc4a")]
+        Url = "https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint")]
     [CmdletRelatedLink(
         Text = "Resource Usage Limits on Sandboxed Solutions in SharePoint 2010",
         Url = "https://docs.microsoft.com/previous-versions/office/developer/sharepoint-2010/gg615462(v=office.14)")]
