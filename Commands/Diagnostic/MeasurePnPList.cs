@@ -4,7 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.Commands.Extensions;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
@@ -43,7 +42,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
             var retrievalExpressions = new Expression<Func<List, object>>[] {
                 l => l.ItemCount,
                 l => l.HasUniqueRoleAssignments,
-                l => l.RootFolder.Folders.Include(f => f.Name)
+                //l => l.RootFolder.Folders.Include(f => f.Name)
             };
             list.EnsureProperties(retrievalExpressions);
 
