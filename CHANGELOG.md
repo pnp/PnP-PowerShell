@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.22.2006.0] (not yet released)
 
 ### Added
+- Added `EnableAIPIntegration` option to `Set-PnPTenant` which allows enabling Azure Information Protection integration with SharePoint Online and OneDrive for Business on your tenant [PR #2703](https://github.com/pnp/PnP-PowerShell/pull/2703)
 - Added `Get-PnPAADUser` cmdlet which allows retrieval of users from Azure Active Directory through the Microsoft Graph API [PR #2626](https://github.com/pnp/PnP-PowerShell/pull/2626)
 - Added `Add-PnPGraphSubscription`, `Get-PnPGraphSubscription`, `Remove-PnPGraphSubscription` and `Set-PnPGraphSubscription` to work with Microsoft Graph Subscriptions [PR #2673](https://github.com/SharePoint/PnP-PowerShell/pull/2673)
 - Added `Reset-PnPUnifiedGroupExpiration` which allows the expiration date of an Office 365 Group to be extended by the number of days defined in the Azure Active Directory Group Expiration policy [PR #2655](https://github.com/pnp/PnP-PowerShell/pull/2655)
