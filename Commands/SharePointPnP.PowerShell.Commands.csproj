@@ -634,6 +634,7 @@
     <Compile Include="Base\PipeBinds\ProvisioningSitePipeBind.cs" />
     <Compile Include="Base\PipeBinds\ProvisioningSequencePipebind.cs" />
     <Compile Include="Base\PipeBinds\TenantSiteDesignTaskPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\GraphSubscriptionPipeBind.cs" />
     <Compile Include="Base\RemoveStoredCredential.cs" />
     <Compile Include="Base\PipeBinds\ClientSideWebPartPipeBind.cs" />
     <Compile Include="Base\PipeBinds\HubSitePipeBind.cs" />
@@ -658,10 +659,14 @@
     <Compile Include="Enums\SearchBoxInNavBar.cs" />
     <Compile Include="Enums\StorageEntityScope.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
+    <Compile Include="Graph\GetGraphSubscription.cs" />
     <Compile Include="Graph\GetDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\NewGraphSubscription.cs" />
     <Compile Include="Graph\ResetUnifiedGroupExpiration.cs" />
     <Compile Include="Graph\GetAADUser.cs" />
     <Compile Include="Graph\RemoveDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\SetGraphSubscription.cs" />
+    <Compile Include="Graph\RemoveGraphSubscription.cs" />
     <Compile Include="Graph\RestoreDeletedUnifiedGroup.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
     <Compile Include="InformationManagement\ResetLabel.cs" />
