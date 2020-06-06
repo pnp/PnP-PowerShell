@@ -1,0 +1,13 @@
+# Set to true to add reviewers to pull requests
+addReviewers: false
+
+# Set to true to add assignees to pull requests
+addAssignees: true
+
+assignees:
+  - koenzomers
+  - erwinvanhunen
+
+# A number of reviewers added to the pull request
+# Set 0 to add all the reviewers (default: 0)
+numberOfReviewers: 0
