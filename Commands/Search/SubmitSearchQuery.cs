@@ -239,11 +239,16 @@ namespace SharePointPnP.PowerShell.Commands.Search
             }
             if (SelectProperties != null)
             {
+                keywordQuery.SelectProperties.Clear();
                 var selectProperties = keywordQuery.SelectProperties;
-                selectProperties.Clear();
+                if (SelectProperties.Length == 1 && SelectProperties[0].Contains(","))
+                {
+                    SelectProperties = SelectProperties[0].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                }
+                
                 foreach (string property in SelectProperties)
                 {
-                    selectProperties.Add(property);
+                    selectProperties.Add(property.Trim());
                 }
             }
             if (RefinementFilters != null)
