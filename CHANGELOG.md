@@ -16,11 +16,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Fixed uploading a file using `Add-PnPFile` using `-ContentType` throwing an exception [PR #2619](https://github.com/pnp/PnP-PowerShell/pull/2619)
 - Fixed using `Connect-PnPOnline -AppId <appid> -AppSecret <appsecret> -AADDomain` not actually authenticating to Microsoft Graph [PR #2624](https://github.com/pnp/PnP-PowerShell/pull/2624)
+- Updated `Get-PnPWorkflowInstance` to allow passing in a workflow subscription to list all running instances of a specific workflow [PR #2636](https://github.com/pnp/PnP-PowerShell/pull/2636)
 
 ### Contributors
 - Nik Charlebois [NikCharlebois]
 - Eduardo Garcia-Prieto [egarcia74]
 - Koen Zomers [koenzomers]
+- James May [fowl2]
 
 ## [3.21.2005.0]
 
