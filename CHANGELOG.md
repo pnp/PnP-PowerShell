@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
 
 ### Contributors
+- Kunj Balkrishna Sangani [kunj-sangani]
 
 
 ## [3.20.2004.0]
