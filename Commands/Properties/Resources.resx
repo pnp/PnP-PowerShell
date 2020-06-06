@@ -321,4 +321,7 @@
   <data name="SetRequestAccessEmailsOnlyOneAddressAllowed" xml:space="preserve">
     <value>Only one e-mail address can be configured to receive the access requests</value>
   </data>
+  <data name="GrooveBlockOptionNotSupported" xml:space="preserve">
+    <value>The provided option for {0} being {1} is not yet supported in this cmdlet</value>
+  </data>
 </root>

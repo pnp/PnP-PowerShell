@@ -13,7 +13,7 @@ using OfficeDevPnP.Core.Utilities;
 namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.New, "PnPUPABulkImportJob")]
-    [CmdletHelp(@"Submit up a new user profile bulk import job.", "See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online for information on the API and how the bulk import process works.",
+    [CmdletHelp(@"Submit up a new user profile bulk import job.", "See https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online for information on the API and how the bulk import process works.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.UserProfiles)]
     [CmdletExample(

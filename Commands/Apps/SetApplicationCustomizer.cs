@@ -14,10 +14,10 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         "Updates a SharePoint Framework client side extension application customizer by updating its custom action. Only the properties that will be provided will be updated. Others will remain as they are.",
         Category = CmdletHelpCategory.Apps,
         SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
-    [CmdletExample(Code = @"PS:> Set-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", 
+    [CmdletExample(Code = @"PS:> Set-PnPApplicationCustomizer -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", 
                    Remarks = @"Updates the custom action representing the client side extension registration with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.", 
                    SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Set-PnPCustomAction -ClientSideComponentId aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web -ClientSideComponentProperties ""{`""sourceTermSet`"":`""PnP-CollabFooter-SharedLinks`"",`""personalItemsStorageProperty`"":`""PnP-CollabFooter-MyLinks`""}", 
+    [CmdletExample(Code = @"PS:> Set-PnPApplicationCustomizer -ClientSideComponentId aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web -ClientSideComponentProperties ""{`""sourceTermSet`"":`""PnP-CollabFooter-SharedLinks`"",`""personalItemsStorageProperty`"":`""PnP-CollabFooter-MyLinks`""}", 
                    Remarks = @"Updates the custom action(s) properties being registered for a SharePoint Framework solution having the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' in its manifest from the current web.", 
                    SortOrder = 2)]
     public class SetApplicationCustomizer : PnPWebCmdlet

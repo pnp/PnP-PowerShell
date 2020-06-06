@@ -9,10 +9,8 @@ using System.Linq;
 namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Set, "PnPUserProfileProperty")]
-    [CmdletHelp(@"Office365 only: Uses the tenant API to retrieve site information.
-
-You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command. 
-", DetailedDescription = "Requires a connection to a SharePoint Tenant Admin site.",
+    [CmdletHelp(@"Office365 only: Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.", 
+        DetailedDescription = "Requires a connection to a SharePoint Tenant Admin site.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.UserProfiles)]
     [CmdletExample(
