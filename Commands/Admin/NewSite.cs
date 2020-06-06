@@ -59,6 +59,8 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "SensitivityLabel", Mandatory = false, HelpMessage = @"Specifies the sensitivity label of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "SensitivityLabel", Mandatory = false, HelpMessage = @"Specifies the sensitivity label of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Owner", Mandatory = false, HelpMessage = @"Specifies the owner of the site. Specify the value as a string array: ""user@domain.com""", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Owner", Mandatory = false, HelpMessage = @"Specifies the owner of the site. Specify the value as a string array: ""user@domain.com""", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "AllowFileSharingForGuestUsers", Mandatory = false, HelpMessage = @"Specifies if guest users can share files in the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
@@ -72,6 +74,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Alias", Mandatory = true, HelpMessage = @"Specifies the alias of the new site collection which represents the part of the URL that will be assigned to the site behind 'https://tenant.sharepoint.com/sites/' or 'https://tenant.sharepoint.com/teams/' based on the managed path configuration in the SharePoint Online Admin portal, this parameter only applies to Modern Team Sites", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_TEAM)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "SensitivityLabel", Mandatory = false, HelpMessage = @"Specifies the sensitivity label of the new site collection", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "IsPublic", Mandatory = false, HelpMessage = @"Specifies if new site collection is public. Defaults to false.", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Owners", Mandatory = false, HelpMessage = @"Specifies the owners of the site. Specify the value as a string array: ""user@domain.com"",""anotheruser@domain.com""", ParameterSetName = ParameterSet_TEAM)]
     public class NewSite : PnPCmdlet, IDynamicParameters
@@ -128,6 +131,7 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.ShareByEmailEnabled = _communicationSiteParameters.AllowFileSharingForGuestUsers || _communicationSiteParameters.ShareByEmailEnabled;
 #pragma warning restore CS0618 // Type or member is obsolete
                 creationInformation.Lcid = _communicationSiteParameters.Lcid;
+                creationInformation.SensitivityLabel = _communicationSiteParameters.SensitivityLabel;
                 if (ParameterSpecified(nameof(HubSiteId)))
                 {
                     creationInformation.HubSiteId = HubSiteId.Id;
@@ -141,7 +145,7 @@ namespace SharePointPnP.PowerShell.Commands
                     creationInformation.SiteDesign = _communicationSiteParameters.SiteDesign;
                 }
                 creationInformation.Owner = _communicationSiteParameters.Owner;
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation,noWait:!Wait);
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
@@ -155,13 +159,14 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.Description = _teamSiteParameters.Description;
                 creationInformation.IsPublic = _teamSiteParameters.IsPublic;
                 creationInformation.Lcid = _teamSiteParameters.Lcid;
+                creationInformation.SensitivityLabel = _teamSiteParameters.SensitivityLabel;
                 if (ParameterSpecified(nameof(HubSiteId)))
                 {
                     creationInformation.HubSiteId = HubSiteId.Id;
                 }
                 creationInformation.Owners = _teamSiteParameters.Owners;
 
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait:!Wait, graphAccessToken: SPOnlineConnection.CurrentConnection.AccessToken);
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: SPOnlineConnection.CurrentConnection.AccessToken);
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
@@ -209,6 +214,10 @@ namespace SharePointPnP.PowerShell.Commands
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
             public string Owner;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+            public string SensitivityLabel;
         }
 
         public class TeamSiteParameters
@@ -233,6 +242,9 @@ namespace SharePointPnP.PowerShell.Commands
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
             public string[] Owners;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public string SensitivityLabel;
         }
     }
 }
