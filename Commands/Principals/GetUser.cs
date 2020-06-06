@@ -14,7 +14,8 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Category = CmdletHelpCategory.Principals,
         DetailedDescription = "This command will return all users that exist in the current site collection's User Information List",
         OutputType = typeof(User),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.user.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee540236(v=office.15)",
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
         Code = @"PS:> Get-PnPUser",
         Remarks = "Returns all users from the User Information List of the current site collection regardless if they currently have rights to access the current site",
