@@ -22,12 +22,20 @@ using System.Security;
 using System.IO;
 using System.Security.Cryptography;
 using Microsoft.Identity.Client;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     internal class SPOnlineConnectionHelper
     {
+        /// <summary>
+        /// The URL to request authentication tokens from Microsoft Graph on
+        /// </summary>
+        private static readonly Uri GraphAADLoginUri = new Uri("https://login.microsoftonline.com/");
+
+        /// <summary>
+        /// The default scopes to request from Microsoft Graph
+        /// </summary>
+        private static readonly string[] GraphDefaultScopes = { "https://graph.microsoft.com/.default" };
 
 #if DEBUG
         private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/dev/version.txt");
@@ -505,8 +513,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             // Retrieve Graph certificate
 
-            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"https://login.microsoftonline.com/{tenant}").WithCertificate(certificate).Build();
-            var result = app.AcquireTokenForClient(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
+            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{GraphAADLoginUri}{tenant}").WithCertificate(certificate).Build();
+            var result = app.AcquireTokenForClient(GraphDefaultScopes).ExecuteAsync().GetAwaiter().GetResult();
             if (result != null)
             {
                 spoConnection.AccessToken = result.AccessToken;
@@ -517,7 +525,28 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 spoConnection.CertFile = certificate;
             }
             return spoConnection;
+        }
 
+        /// <summary>
+        /// Sets up a connection to Microsoft Graph using a Client Id and Client Secret
+        /// </summary>
+        /// <param name="clientId">Client ID to use to authenticate</param>
+        /// <param name="clientSecret">Client Secret to use to authenticate</param>
+        /// <param name="aadDomain">The Azure Active Directory domain to authenticate to, i.e. contoso.onmicrosoft.com</param>
+        /// <param name="host">The PowerShell host environment reference</param>
+        /// <param name="disableTelemetry">Boolean indicating if telemetry should be disabled</param>
+        /// <returns></returns>
+        internal static SPOnlineConnection InitiateAzureAdAppOnlyConnectionWithClientIdClientSecret(string clientId, string clientSecret, string aadDomain, PSHost host, bool disableTelemetry)
+        {
+            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{GraphAADLoginUri}{aadDomain}").WithClientSecret(clientSecret).Build();
+            var result = app.AcquireTokenForClient(GraphDefaultScopes).ExecuteAsync().GetAwaiter().GetResult();
+            if (result == null)
+            {
+                return null;
+            }
+            
+            var spoConnection = InstantiateGraphAccessTokenConnection(result.AccessToken, host, disableTelemetry);
+            return spoConnection;
         }
 
         internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
