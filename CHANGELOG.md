@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.22.2006.0] (not yet released)
 
 ### Added
+- Added `Reset-PnPUnifiedGroupExpiration` which allows the expiration date of an Office 365 Group to be extended by the number of days defined in the Azure Active Directory Group Expiration policy [PR #2655](https://github.com/pnp/PnP-PowerShell/pull/2655)
 - Added following arguments to `Set-PnPWeb` allowing them to be set: `CommentsOnSitePagesDisabled`, `DisablePowerAutomate`, `MegaMenuEnabled`, `MembersCanShare`, `NavAudienceTargetingEnabled`, `QuickLaunchEnabled` and `NoCrawl` [PR #2633](https://github.com/pnp/PnP-PowerShell/pull/2633)
 - Added `Set-PnPUserOneDriveQuota`, `Reset-PnPUserOneDriveQuotaToDefault` and `Get-PnPUserOneDriveQuota` commands to work with quotas on OneDrive for Business sites [PR #2630](https://github.com/SharePoint/PnP-PowerShell/pull/2630)
 - Added `Get-PnPADUser` cmdlet which allows retrieval of users from Azure Active Directory through the Microsoft Graph API [PR #2626](https://github.com/pnp/PnP-PowerShell/pull/2626)
@@ -34,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
 
 ### Contributors
+- Koen Zomers [koenzomers]
 
 ## [3.20.2004.0]
 
