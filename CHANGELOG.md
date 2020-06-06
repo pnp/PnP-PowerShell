@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Updated `Get-PnPWorkflowInstance` to allow passing in a workflow subscription to list all running instances of a specific workflow [PR #2636](https://github.com/pnp/PnP-PowerShell/pull/2636)
 
 ### Contributors
+- Rune Sperre [rsperre]
 - Nik Charlebois [NikCharlebois]
 - Eduardo Garcia-Prieto [egarcia74]
 - Koen Zomers [koenzomers]
@@ -33,7 +34,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
 
 ### Contributors
-
 
 ## [3.20.2004.0]
 
