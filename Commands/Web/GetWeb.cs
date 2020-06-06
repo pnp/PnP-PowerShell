@@ -4,7 +4,6 @@ using System;
 using System.Linq.Expressions;
 using System.Management.Automation;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Extensions;
 
 namespace SharePointPnP.PowerShell.Commands
@@ -13,7 +12,8 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletHelp("Returns the current web object",
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(Web),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee537040(v=office.15)",
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
         Code = @"PS:> Get-PnPWeb",
         Remarks = "This will return the current web",
@@ -47,6 +47,5 @@ namespace SharePointPnP.PowerShell.Commands
                 }
             }
         }
-
     }
 }
