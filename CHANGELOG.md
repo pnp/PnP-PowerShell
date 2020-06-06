@@ -8,10 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.22.2006.0] (not yet released)
 
 ### Added
+- Added `Get-PnPTenantSyncClientRestriction` and `Set-PnPTenantSyncClientRestriction` cmdlets to allow configuring tenant wide OneDrive sync restriction settings [PR #2649](https://github.com/pnp/PnP-PowerShell/pull/2649)
 
 ### Changed
 
 ### Contributors
+- Nik Charlebois [NikCharlebois]
 
 ## [3.21.2005.0]
 
