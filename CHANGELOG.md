@@ -11,9 +11,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPTenantSyncClientRestriction` and `Set-PnPTenantSyncClientRestriction` cmdlets to allow configuring tenant wide OneDrive sync restriction settings [PR #2649](https://github.com/pnp/PnP-PowerShell/pull/2649)
 
 ### Changed
+- Fixed uploading a file using `Add-PnPFile` using `-ContentType` throwing an exception [PR #2619](https://github.com/pnp/PnP-PowerShell/pull/2619)
 
 ### Contributors
 - Nik Charlebois [NikCharlebois]
+- Eduardo Garcia-Prieto [egarcia74]
 
 ## [3.21.2005.0]
 
@@ -23,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
 
 ### Contributors
+
 
 ## [3.20.2004.0]
 
