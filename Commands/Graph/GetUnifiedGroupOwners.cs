@@ -10,20 +10,20 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPUnifiedGroupOwners")]
-    [CmdletHelp("Gets owners of a particular Office 365 Group (aka Unified Group). Requires the Azure Active Directory application permissions 'Group.Read.All' and 'User.Read.All'.",
+    [CmdletHelp("Gets owners of a particular Microsoft 365 Group (aka Unified Group). Requires the Azure Active Directory application permissions 'Group.Read.All' and 'User.Read.All'.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroupOwners -Identity $groupId",
-       Remarks = "Retrieves all the owners of a specific Office 365 Group based on its ID",
+       Remarks = "Retrieves all the owners of a specific Microsoft 365 Group based on its ID",
        SortOrder = 1)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroupOwners -Identity $group",
-       Remarks = "Retrieves all the owners of a specific Office 365 Group based on the group's object instance",
+       Remarks = "Retrieves all the owners of a specific Microsoft 365 Group based on the group's object instance",
        SortOrder = 2)]
     public class GetUnifiedGroupOwners : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Office 365 Group.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group.")]
         public UnifiedGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
