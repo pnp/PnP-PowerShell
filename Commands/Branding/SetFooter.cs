@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 SelectedWeb.FooterEmphasis = BackgroundTheme;
                 isDirty = true;
             }
-            
+
             if (isDirty)
             {
                 SelectedWeb.Update();
