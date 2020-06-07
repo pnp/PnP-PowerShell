@@ -7,7 +7,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPFooter")]
     [CmdletHelp("Configures the footer of the current web",
-        DetailedDescription = "Allows the footer to be enabled or disabled and fine tuned in the current web. For modifying the navigation links shown in the footer, use Add-PnPNavigationNode.",
+        DetailedDescription = "Allows the footer to be enabled or disabled and fine tuned in the current web. For modifying the navigation links shown in the footer, use Add-PnPNavigationNode -Location Footer.",
         Category = CmdletHelpCategory.Branding,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -15,8 +15,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Remarks = "Enables the footer to be shown on the current web",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Set-PnPFooter -Enabled:$true -LayoutType Extended -VariantThemeType Neutral",
-        Remarks = "Enables the footer to be shown on the current web with the extended layout using a neutral emphasis",
+        Code = @"PS:> Set-PnPFooter -Enabled:$true -Layout Extended -BackgroundTheme Neutral",
+        Remarks = "Enables the footer to be shown on the current web with the extended layout using a neutral background",
         SortOrder = 2)]
     public class SetFooter : PnPWebCmdlet
     {
@@ -24,10 +24,10 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         public SwitchParameter Enabled;
 
         [Parameter(Mandatory = false, HelpMessage = "Defines how the footer should look like")]
-        public FooterLayoutType LayoutType;
+        public FooterLayoutType Layout;
 
         [Parameter(Mandatory = false, HelpMessage = "Defines the background emphasis of the content in the footer")]
-        public FooterVariantThemeType BackgroundThemeType;
+        public FooterVariantThemeType BackgroundTheme;
 
         protected override void ExecuteCmdlet()
         {
@@ -39,15 +39,15 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 isDirty = true;
             }
 
-            if (ParameterSpecified(nameof(LayoutType)))
+            if (ParameterSpecified(nameof(Layout)))
             {
-                SelectedWeb.FooterLayout = LayoutType;
+                SelectedWeb.FooterLayout = Layout;
                 isDirty = true;
             }
 
-            if (ParameterSpecified(nameof(BackgroundThemeType)))
+            if (ParameterSpecified(nameof(BackgroundTheme)))
             {
-                SelectedWeb.FooterEmphasis = BackgroundThemeType;
+                SelectedWeb.FooterEmphasis = BackgroundTheme;
                 isDirty = true;
             }
             

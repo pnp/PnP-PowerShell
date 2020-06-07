@@ -687,7 +687,6 @@
     <Compile Include="Model\ServicePrincipalPermissionGrant.cs" />
     <Compile Include="ClientSidePages\ConvertToClientSidePage.cs" />
     <Compile Include="Model\SPOTenantSyncClientRestriction.cs" />
-    <Compile Include="Model\Footer.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />

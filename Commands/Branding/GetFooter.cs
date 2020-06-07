@@ -9,8 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     [CmdletHelp("Gets the configuration regarding the footer of the current web",
         DetailedDescription = "Allows the current configuration of the footer in the current web to be retrieved. The footer currently only works on Modern Communication sites.",
         Category = CmdletHelpCategory.Branding,
-        SupportedPlatform = CmdletSupportedPlatform.Online,
-        OutputType = typeof(Model.Footer))]
+        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = @"PS:> Get-PnPFooter",
         Remarks = "Returns the current footer configuration of the current web",
@@ -19,13 +18,14 @@ namespace SharePointPnP.PowerShell.Commands.Branding
     {
         protected override void ExecuteCmdlet()
         {
-            SelectedWeb.EnsureProperties(w => w.FooterEnabled);
+            SelectedWeb.EnsureProperties(w => w.FooterEnabled, w => w.FooterLayout, w => w.FooterEmphasis);
 
-            var webFooterModel = new Model.Footer
-            {
-                IsEnabled = SelectedWeb.FooterEnabled
-            };
-            WriteObject(webFooterModel);
+            var footer = new PSObject();
+            footer.Properties.Add(new PSVariableProperty(new PSVariable("IsEnabled", SelectedWeb.FooterEnabled)));
+            footer.Properties.Add(new PSVariableProperty(new PSVariable("Layout", SelectedWeb.FooterLayout)));
+            footer.Properties.Add(new PSVariableProperty(new PSVariable("BackgroundTheme", SelectedWeb.FooterEmphasis)));
+
+            WriteObject(footer);
         }
     }
 }
