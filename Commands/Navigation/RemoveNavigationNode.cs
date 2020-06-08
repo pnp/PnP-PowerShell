@@ -39,7 +39,7 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
         public NavigationNodePipeBind Identity;
 
         [Obsolete("Use -Identity with an Id instead.")]
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "The location from where to remove the node (QuickLaunch, TopNavigationBar", ParameterSetName = ParameterSet_BYNAME)]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "The location from where to remove the node. Either TopNavigationBar, QuickLaunch, SearchNav or Footer.", ParameterSetName = ParameterSet_BYNAME)]
         public NavigationType Location;
 
         [Obsolete("Use -Identity with an Id instead.")]
