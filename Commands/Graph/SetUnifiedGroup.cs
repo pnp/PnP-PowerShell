@@ -11,7 +11,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPUnifiedGroup")]
-    [CmdletHelp("Sets Office 365 Group (aka Unified Group) properties. Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
+    [CmdletHelp("Sets Microsoft 365 Group (aka Unified Group) properties. Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
         Category = CmdletHelpCategory.Graph,
         OutputTypeLink = "https://docs.microsoft.com/graph/api/group-update",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        SortOrder = 2)]
     [CmdletExample(
        Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -GroupLogoPath "".\MyLogo.png""",
-       Remarks = "Sets a specific Office 365 Group logo.",
+       Remarks = "Sets a specific Microsoft 365 Group logo.",
        SortOrder = 3)]
     [CmdletExample(
        Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -IsPrivate:$false",
@@ -38,13 +38,13 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class SetUnifiedGroup : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The Identity of the Office 365 Group.", ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, HelpMessage = "The Identity of the Microsoft 365 Group", ValueFromPipeline = true)]
         public UnifiedGroupPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The DisplayName of the group to set.")]
+        [Parameter(Mandatory = false, HelpMessage = "The DisplayName of the group to set")]
         public string DisplayName;
 
-        [Parameter(Mandatory = false, HelpMessage = "The Description of the group to set.")]
+        [Parameter(Mandatory = false, HelpMessage = "The Description of the group to set")]
         public string Description;
 
         [Parameter(Mandatory = false, HelpMessage = "The array UPN values of owners to set to the group. Note: Will replace owners.")]
@@ -53,13 +53,13 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "The array UPN values of members to set to the group. Note: Will replace members.")]
         public String[] Members;
 
-        [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected.")]
+        [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected")]
         public SwitchParameter IsPrivate;
 
-        [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set.")]
+        [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set")]
         public string GroupLogoPath;
 
-        [Parameter(Mandatory = false, HelpMessage = "Creates a MS Teams team associated with created group.")]
+        [Parameter(Mandatory = false, HelpMessage = "Creates a Microsoft Teams team associated with created group")]
         public SwitchParameter CreateTeam;
 
         protected override void ExecuteCmdlet()

@@ -6,7 +6,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPGraphAccessToken")]
     [CmdletHelp("Returns the current OAuth Access token for the Microsoft Graph API",
-        "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
+        DetailedDescription = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
        Code = "PS:> Get-PnPAccessToken",

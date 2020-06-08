@@ -403,6 +403,9 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
         [Parameter(Mandatory = false, HelpMessage = "Guids of out of the box modern web part id's to hide")]
         public Guid[] DisabledWebPartIds;
 
+        [Parameter(Mandatory = false, HelpMessage = "Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels")]
+        public bool? EnableAIPIntegration;
+
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(Tenant);
@@ -962,6 +965,11 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
             if (DisabledWebPartIds != null)
             {
                 Tenant.DisabledWebPartIds = DisabledWebPartIds;
+                isDirty = true;
+            }
+            if(EnableAIPIntegration.HasValue)
+            {
+                Tenant.EnableAIPIntegration = EnableAIPIntegration.Value;
                 isDirty = true;
             }
             if (isDirty)

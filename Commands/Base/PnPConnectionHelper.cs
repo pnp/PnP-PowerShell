@@ -58,7 +58,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     realm = GetRealmFromTargetUrl(url);
                 }
-                
+
                 if (url.DnsSafeHost.Contains("spoppe.com"))
                 {
                     context = PnPClientContext.ConvertFrom(authManager.GetAppOnlyAuthenticatedContext(url.ToString(), realm, clientId, clientSecret, acsHostUrl: "windows-ppe.net", globalEndPointPrefix: "login"), retryCount, retryWait * 1000);
@@ -431,10 +431,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             X509Certificate2 certificate = CertificateHelper.GetCertificatFromStore(thumbprint);
 
-            if(certificate == null)
+            if (certificate == null)
             {
                 throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintNotFound, thumbprint));
-            }            
+            }
 
             return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
         }
@@ -528,7 +528,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
             };
 
             return spoConnection;
-
         }
 
         /// <summary>
@@ -709,14 +708,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     // If current credentials should be used, use the DefaultNetworkCredentials of the CredentialCache. This has the same effect as using "UseDefaultCredentials" in a HttpClient.
                     context.Credentials = CredentialCache.DefaultNetworkCredentials;
                 }
-                
+
                 // Add Request Header to force Windows Authentication which avoids an issue if multiple authentication providers are enabled on a webapplication
-                context.ExecutingWebRequest += delegate(object sender, WebRequestEventArgs e)
+                context.ExecutingWebRequest += delegate (object sender, WebRequestEventArgs e)
                 {
                     // Add the header that tells SharePoint to use Windows authentication
                     e.WebRequestExecutor.RequestHeaders["X-FORMS_BASED_AUTH_ACCEPTED"] = "f";
                 };
-                
+
             }
 #if SP2013 || SP2016 || SP2019
             var connectionType = ConnectionType.OnPrem;
