@@ -19,12 +19,12 @@ Check out the "Getting Started" section to make sure you have all requirements i
 
 ### Latest Release Quick Download
 
-The latest release can be found on [this link](https://github.com/SharePoint/PnP-PowerShell/releases)
+The latest release can be found on [this link](https://github.com/pnp/PnP-PowerShell/releases)
 
 ----------
 
 # Commands included #
-[Navigate here for an overview of all cmdlets and their parameters](Documentation/readme.md)
+[Navigate here for an overview of all cmdlets and their parameters](https://docs.microsoft.com/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps)
 
 # Installation #
 There are two ways:
@@ -47,10 +47,10 @@ In order to install the cmdlets when you get this error specify the -SkipPublish
 
 ## 2. Downloading the Files directly
 
-You can download the setup files from the [releases](https://github.com/officedev/pnp-powershell/releases) section of the PnP PowerShell repository. These files will up be updated on a monthly basis. Run the install and restart any open instances of PowerShell to use the cmdlets.
+You can download the setup files from the [releases](https://github.com/pnp/PnP-PowerShell/releases) section of the PnP PowerShell repository. These files will up be updated on a monthly basis. Run the install and restart any open instances of PowerShell to use the cmdlets.
 
 ### How to Update the Cmdlets 
-Every month a new release will be made available of the PnP PowerShell Cmdlets. If you earlier installed the cmdlets using the setup file, simply download the [latest version](https://github.com/SharePoint/PnP-PowerShell/releases/latest) and run the setup. This will update your existing installation.
+Every month a new release will be made available of the PnP PowerShell Cmdlets. If you earlier installed the cmdlets using the setup file, simply download the [latest version](https://github.com/pnp/PnP-PowerShell/releases/latest) and run the setup. This will update your existing installation.
 
 If you have installed the cmdlets using PowerShellGet with ```Install-Module``` from the PowerShell Gallery then you will be able to use the following command to install the latest updated version:
 

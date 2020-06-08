@@ -8,7 +8,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPNavigationNode")]
     [CmdletHelp("Adds an item to a navigation element",
-        "Adds a menu item to either the quicklaunch or top navigation",
+        "Adds a menu item to either the quicklaunch, top navigation, search navigation or the footer",
         OutputType = typeof(NavigationNode),
         OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.NavigationNode.aspx",
         Category = CmdletHelpCategory.Branding)]
@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         SortOrder = 5)]
     public class AddNavigationNode : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "The location of the node to add. Either TopNavigationBar, QuickLaunch, SearchNav")]
+        [Parameter(Mandatory = true, HelpMessage = "The location where to add the navigation node to. Either TopNavigationBar, QuickLaunch, SearchNav or Footer.")]
         public NavigationType Location;
 
         [Parameter(Mandatory = true, HelpMessage = "The title of the node to add")]
@@ -46,14 +46,14 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         [Parameter(Mandatory = false, HelpMessage = "The key of the parent. Leave empty to add to the top level")]
         public int? Parent;
 
-        [Parameter(Mandatory = false, HelpMessage = "Optional value of a header entry to add the menu item to.")]
+        [Parameter(Mandatory = false, HelpMessage = "Optional value of a header entry to add the menu item to")]
         [Obsolete("Use Parent instead")]
         public string Header;
 
-        [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection.")]
+        [Parameter(Mandatory = false, HelpMessage = "Add the new menu item to beginning of the collection")]
         public SwitchParameter First;
 
-        [Parameter(Mandatory = false, HelpMessage = "Indicates the destination URL is outside of the site collection.")]
+        [Parameter(Mandatory = false, HelpMessage = "Indicates the destination URL is outside of the site collection")]
         public SwitchParameter External;
 
         protected override void ExecuteCmdlet()
