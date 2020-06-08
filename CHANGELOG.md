@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.22.2006.0] (not yet released)
 
 ### Added
+- Added `-ValuesOnly` option to `Get-PnPLabel` which will return more detailed information regarding the retention label set on a list or library and return the information as properties instead of written text [PR #2710](https://github.com/pnp/PnP-PowerShell/pull/2710)
 - Added `-PreferredDataLocation` option to `New-PnPSite` which allows for providing a geography in which the new SharePoint sitecollection should be created. Only applicable on multi-geo enabled tenants. [PR #2708](https://github.com/pnp/PnP-PowerShell/pull/2708)
 - Added `EnableAIPIntegration` option to `Set-PnPTenant` which allows enabling Azure Information Protection integration with SharePoint Online and OneDrive for Business on your tenant [PR #2703](https://github.com/pnp/PnP-PowerShell/pull/2703)
 - Added `Get-PnPAADUser` cmdlet which allows retrieval of users from Azure Active Directory through the Microsoft Graph API [PR #2626](https://github.com/pnp/PnP-PowerShell/pull/2626)
