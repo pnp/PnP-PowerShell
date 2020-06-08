@@ -650,6 +650,8 @@
     <Compile Include="Base\PipeBinds\TenantSiteDesignPipeBind.cs" />
     <Compile Include="Base\RequestAccessToken.cs" />
     <Compile Include="Base\TokenHandling.cs" />
+    <Compile Include="Branding\GetFooter.cs" />
+    <Compile Include="Branding\SetFooter.cs" />
     <Compile Include="ClientSidePages\ClientSidePageTransformatorLogType.cs" />
     <Compile Include="ClientSidePages\ExportClientSidePageMapping.cs" />
     <Compile Include="ClientSidePages\SaveClientSidePageConversionLog.cs" />
