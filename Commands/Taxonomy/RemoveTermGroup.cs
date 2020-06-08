@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
     [Cmdlet(VerbsCommon.Remove, "PnPTermGroup", SupportsShouldProcess = false)]
     [CmdletHelp(@"Removes a taxonomy term group and all its containing termsets",
         Category = CmdletHelpCategory.Taxonomy)]
-    public class RemoveTermGroup : PnPCmdlet
+    public class RemoveTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0,
             HelpMessage = "Name of the taxonomy term group to delete.")]

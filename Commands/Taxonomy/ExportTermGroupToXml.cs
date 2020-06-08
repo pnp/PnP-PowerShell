@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
 PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
         Remarks = "Retrieves a termgroup and subsequently exports that term group to a the file named 'output.xml'",
         SortOrder = 4)]
-    public class ExportTermGroup : PnPCmdlet
+    public class ExportTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The ID or name of the termgroup",
             ValueFromPipeline = true)]

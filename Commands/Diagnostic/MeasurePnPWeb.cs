@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         Remarks = @"Gets statistics on the provided web including all its subwebs",
         SortOrder = 2)]
 
-    public class MeasurePnPWeb : PnPCmdlet
+    public class MeasurePnPWeb : PnPSharePointCmdlet
     {
         private Expression<Func<Web, object>>[] _retrievalExpressions;
 

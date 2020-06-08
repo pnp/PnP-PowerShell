@@ -32,7 +32,7 @@ Do auditing for:
 - Moving or copying items to another location in the site
 - Searching site content",
         SortOrder = 5)]
-    public class SetAuditing : PnPCmdlet
+    public class SetAuditing : PnPSharePointCmdlet
     {
         const string ParameterSet_ENABLEALL = "Enable all";
         const string ParameterSet_DISABLEALL = "Disable All";

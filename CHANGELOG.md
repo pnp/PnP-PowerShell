@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.22.2006.0] (not yet released)
 
 ### Added
+- Added `-ValuesOnly` option to `Get-PnPLabel` which will return more detailed information regarding the retention label set on a list or library and return the information as properties instead of written text [PR #2710](https://github.com/pnp/PnP-PowerShell/pull/2710)
+- Added `-PreferredDataLocation` option to `New-PnPSite` which allows for providing a geography in which the new SharePoint sitecollection should be created. Only applicable on multi-geo enabled tenants. [PR #2708](https://github.com/pnp/PnP-PowerShell/pull/2708)
 - Added `EnableAIPIntegration` option to `Set-PnPTenant` which allows enabling Azure Information Protection integration with SharePoint Online and OneDrive for Business on your tenant [PR #2703](https://github.com/pnp/PnP-PowerShell/pull/2703)
 - Added `Get-PnPAADUser` cmdlet which allows retrieval of users from Azure Active Directory through the Microsoft Graph API [PR #2626](https://github.com/pnp/PnP-PowerShell/pull/2626)
 - Added `Add-PnPGraphSubscription`, `Get-PnPGraphSubscription`, `Remove-PnPGraphSubscription` and `Set-PnPGraphSubscription` to work with Microsoft Graph Subscriptions [PR #2673](https://github.com/SharePoint/PnP-PowerShell/pull/2673)
@@ -17,6 +19,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPTenantSyncClientRestriction` and `Set-PnPTenantSyncClientRestriction` cmdlets to allow configuring tenant wide OneDrive sync restriction settings [PR #2649](https://github.com/pnp/PnP-PowerShell/pull/2649)
 - Added `Disable-PnPSharingForNonOwnersOfSite` and `Get-PnPSharingForNonOwnersOfSite` cmdlets to control disabling the ability for only owners of the site to be allowed to share the site or its files and folders with others [PR #2641](https://github.com/pnp/PnP-PowerShell/pull/2641)
 - Added `Get-PnPIsSiteAliasAvailable` which allows checking if a certain alias is still available to create a new site collection with [PR #2698](https://github.com/pnp/PnP-PowerShell/pull/2698)
+- Added `Get-PnPFooter` and `Set-PnPFooter` to work with the footer shown on Modern Communication pages [PR #2634](https://github.com/pnp/PnP-PowerShell/pull/2634)
+- Added ability to getting and setting the title and logo shown in the footer of a Modern Communication site [PR #2715](https://github.com/pnp/PnP-PowerShell/pull/2715)
 
 ### Changed
 - Fixed uploading a file using `Add-PnPFile` using `-ContentType` throwing an exception [PR #2619](https://github.com/pnp/PnP-PowerShell/pull/2619)

@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(Code = @"PS:> Set-PnPStorageEntity -Key MyKey -Value ""MyValue"" -Comment ""My Comment"" -Description ""My Description""", Remarks = "Sets an existing or adds a new storage entity / farm property at tenant level.", SortOrder = 1)]
     [CmdletExample(Code = @"PS:> Set-PnPStorageEntity -Scope Site -Key MyKey -Value ""MyValue"" -Comment ""My Comment"" -Description ""My Description""", Remarks = "Sets an existing or adds a new storage entity site collection level.", SortOrder = 2)]
-    public class SetPnPStorageEntity : PnPCmdlet
+    public class SetPnPStorageEntity : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The key of the value to set.")]
         public string Key;

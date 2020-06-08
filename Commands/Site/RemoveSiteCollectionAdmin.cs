@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
     [CmdletExample(
         Code = @"PS:> Get-PnPSiteCollectionAdmin | Remove-PnPSiteCollectionAdmin",
         Remarks = @"This will remove all existing site collection administrators from the site collection in the current context", SortOrder = 4)]
-    public class RemoveSiteCollectionAdmin : PnPCmdlet
+    public class RemoveSiteCollectionAdmin : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to remove as site collection administrators. Can be both users and groups.")]
         public List<UserPipeBind> Owners;

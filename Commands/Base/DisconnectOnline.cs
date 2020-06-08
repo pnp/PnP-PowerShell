@@ -13,22 +13,22 @@ namespace SharePointPnP.PowerShell.Commands.Base
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
         Code = @"PS:> Disconnect-PnPOnline",
-        Remarks = @"This will disconnect you from the server.",
+        Remarks = @"This will clear out all active tokens",
         SortOrder = 1)]
-    public class DisconnectSPOnline : PSCmdlet
+    public class DisconnectOnline : PSCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Connection to be used by cmdlet")]
-        public SPOnlineConnection Connection = null;
+        public PnPConnection Connection = null;
 
         protected override void ProcessRecord()
         {
 #if !ONPREMISES
-            if(SPOnlineConnection.CurrentConnection.CertFile != null)
+            if(PnPConnection.CurrentConnection?.Certificate != null)
             {
 #if !NETSTANDARD2_1
-                SPOnlineConnectionHelper.CleanupCryptoMachineKey(SPOnlineConnection.CurrentConnection.CertFile);
+                PnPConnectionHelper.CleanupCryptoMachineKey(PnPConnection.CurrentConnection.Certificate);
 #endif
-                SPOnlineConnection.CurrentConnection.CertFile = null;
+                PnPConnection.CurrentConnection.Certificate = null;
             }
 #endif
                 var success = false;
@@ -61,9 +61,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
         }
 
-        internal static bool DisconnectProvidedService(SPOnlineConnection connection)
+        internal static bool DisconnectProvidedService(PnPConnection connection)
         {
-            connection.AccessToken = string.Empty;
+            connection.ClearTokens();
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
             if (connection == null)
@@ -80,21 +80,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {            
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
-            if (SPOnlineConnection.CurrentConnection == null && SPOnlineConnection.AuthenticationResult == null)
+
+            if (PnPConnection.CurrentConnection == null)
             {
                 return false;
             }
-            if (SPOnlineConnection.CurrentConnection != null)
+            else
             {
-                SPOnlineConnection.CurrentConnection.AccessToken = string.Empty;
-                SPOnlineConnection.CurrentConnection.Context = null;
-                SPOnlineConnection.CurrentConnection = null;
-            }
-            if (SPOnlineConnection.AuthenticationResult != null)
-            {
-                SPOnlineConnection.AuthenticationResult = null;
-            }
-            return true;
+                PnPConnection.CurrentConnection.ClearTokens();
+                PnPConnection.CurrentConnection.Context = null;
+                PnPConnection.CurrentConnection = null;
+                return true;
+            }            
         }
     }
 }

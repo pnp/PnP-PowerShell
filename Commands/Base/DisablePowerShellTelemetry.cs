@@ -33,9 +33,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if (Force || ShouldContinue("Do you want to disable telemetry for PnP PowerShell?", "Confirm"))
             {
                 System.IO.File.WriteAllText(telemetryFile, "disallow");
-                if (SPOnlineConnection.CurrentConnection != null)
+                if (PnPConnection.CurrentConnection != null)
                 {
-                    SPOnlineConnection.CurrentConnection.TelemetryClient = null;
+                    PnPConnection.CurrentConnection.TelemetryClient = null;
                 }
                 WriteObject("Telemetry disabled");
             }

@@ -61,11 +61,29 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No URL specified nor does the provided access token contain an audience.
+        /// </summary>
+        internal static string AccessTokenConnectFailed {
+            get {
+                return ResourceManager.GetString("AccessTokenConnectFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SharePoint PnP PowerShell Library.
         /// </summary>
         internal static string ApplicationName {
             get {
                 return ResourceManager.GetString("ApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No certificate with the thumbprint &apos;{0}&apos; has been found in the Windows certificate store.
+        /// </summary>
+        internal static string CertificateWithThumbprintNotFound {
+            get {
+                return ResourceManager.GetString("CertificateWithThumbprintNotFound", resourceCulture);
             }
         }
         
@@ -102,6 +120,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string ClearTenantRecycleBinItem {
             get {
                 return ResourceManager.GetString("ClearTenantRecycleBinItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The client certificate is invalid.
+        /// </summary>
+        internal static string ClientCertificateInvalid {
+            get {
+                return ResourceManager.GetString("ClientCertificateInvalid", resourceCulture);
             }
         }
         
@@ -242,7 +269,7 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List not found.
+        ///   Looks up a localized string similar to No list found with id, title or url &apos;{0}&apos;.
         /// </summary>
         internal static string ListNotFound {
             get {
@@ -296,16 +323,16 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Azure AD connection/Access Token. Please connect first with Connect-PnPOnline -Url [url] -ClientId [clientid] -CertificatePath [path] -Tenant [tenant], Connect-PnPOnline -Graph, Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain.
+        ///   Looks up a localized string similar to Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument or use Connect-PnPOnline -Scopes to connect..
         /// </summary>
-        internal static string NoAzureADAccessToken {
+        internal static string NoApiAccessToken {
             get {
-                return ResourceManager.GetString("NoAzureADAccessToken", resourceCulture);
+                return ResourceManager.GetString("NoApiAccessToken", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No connection, please connect first with Connect-PnPOnline.
+        ///   Looks up a localized string similar to There is currently no connection yet. Use Connect-PnPOnline to connect..
         /// </summary>
         internal static string NoConnection {
             get {
@@ -328,6 +355,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string NoContextPresent {
             get {
                 return ResourceManager.GetString("NoContextPresent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument but not -SPOManagementShell or -PnPO365ManagementShell to connect..
+        /// </summary>
+        internal static string NoSharePointConnection {
+            get {
+                return ResourceManager.GetString("NoSharePointConnection", resourceCulture);
             }
         }
         

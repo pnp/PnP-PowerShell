@@ -17,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
       Code = @"PS:> Invoke-PnPQuery -RetryWait 10",
       Remarks = @"This will execute any queued actions / changes on the SharePoint Client Side Object Model Context and delay the execution for 10 seconds before it retries the execution.", SortOrder = 2)]
 
-    public class InvokeQuery : PnPCmdlet
+    public class InvokeQuery : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Number of times to retry in case of throttling. Defaults to 10.")]
         public int RetryCount = 10;

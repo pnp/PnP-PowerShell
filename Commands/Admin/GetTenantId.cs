@@ -32,9 +32,9 @@ namespace SharePointPnP.PowerShell.Commands.Admin
         {
             try
             {
-                if (string.IsNullOrEmpty(TenantUrl) && SPOnlineConnection.CurrentConnection != null)
+                if (string.IsNullOrEmpty(TenantUrl) && PnPConnection.CurrentConnection != null)
                 {
-                    WriteObject(TenantExtensions.GetTenantIdByUrl(SPOnlineConnection.CurrentConnection.Url));
+                    WriteObject(TenantExtensions.GetTenantIdByUrl(PnPConnection.CurrentConnection.Url));
                 }
                 else if (!string.IsNullOrEmpty(TenantUrl))
                 {
