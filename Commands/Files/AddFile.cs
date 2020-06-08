@@ -50,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         private const string ParameterSet_ASFILE = "Upload file";
         private const string ParameterSet_ASSTREAM = "Upload file from stream";
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASFILE, HelpMessage = "The local file path.")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASFILE, HelpMessage = "The local file path")]
         public string Path = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The destination folder in the site")]
@@ -65,22 +65,22 @@ namespace SharePointPnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, HelpMessage = "Stream with the file contents")]
         public Stream Stream;
 
-        [Parameter(Mandatory = false, HelpMessage = "If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again.")]
+        [Parameter(Mandatory = false, HelpMessage = "If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again")]
         public SwitchParameter Checkout;
 
-        [Parameter(Mandatory = false, HelpMessage = "The comment added to the checkin.")]
+        [Parameter(Mandatory = false, HelpMessage = "The comment added to the checkin")]
         public string CheckInComment = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Will auto approve the uploaded file.")]
+        [Parameter(Mandatory = false, HelpMessage = "Will auto approve the uploaded file")]
         public SwitchParameter Approve;
 
-        [Parameter(Mandatory = false, HelpMessage = "The comment added to the approval.")]
+        [Parameter(Mandatory = false, HelpMessage = "The comment added to the approval")]
         public string ApproveComment = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "Will auto publish the file.")]
+        [Parameter(Mandatory = false, HelpMessage = "Will auto publish the file")]
         public SwitchParameter Publish;
 
-        [Parameter(Mandatory = false, HelpMessage = "The comment added to the publish action.")]
+        [Parameter(Mandatory = false, HelpMessage = "The comment added to the publish action")]
         public string PublishComment = string.Empty;
 
         [Parameter(Mandatory = false)]
@@ -108,7 +108,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
              "\n\nHyperlink or Picture: -Values @{\"Hyperlink\" = \"https://github.com/OfficeDev/, OfficePnp\"}")]
         public Hashtable Values;
 
-        [Parameter(Mandatory = false, HelpMessage = "Use to assign a ContentType to the file.")]
+        [Parameter(Mandatory = false, HelpMessage = "Use to assign a ContentType to the file")]
         public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()
@@ -138,7 +138,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
             {
                 try
                 {
-                    var list = SelectedWeb.GetListByUrl(folder.ServerRelativeUrl);
+                    var list = SelectedWeb.GetListByUrl(Folder);
 
                     if (!string.IsNullOrEmpty(ContentType.Id))
                     {
