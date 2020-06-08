@@ -22,6 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Code = "PS:> Get-PnPAccessToken",
        Remarks = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
        SortOrder = 1)]
+    [Obsolete("Use Get-PnPGraphAccessToken instead")]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Returns the details from the access token in a decoded manner")]
