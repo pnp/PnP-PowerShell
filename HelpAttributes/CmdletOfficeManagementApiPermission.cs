@@ -10,7 +10,11 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
     public enum OfficeManagementApiPermission : int
     {
         [EnumMember(Value = "ActivityFeed.Read")]
-        ActivityFeed_Read = 1
+        ActivityFeed_Read = 1,
+
+        // Documentation: https://docs.microsoft.com/en-us/office/office-365-management-api/office-365-service-communications-api-reference#the-fundamentals
+        [EnumMember(Value = "ServiceHealth.Read")]
+        ServiceHealth_Read = 2
     }
 
     /// <summary>
