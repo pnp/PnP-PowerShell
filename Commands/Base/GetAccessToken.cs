@@ -1,9 +1,14 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using System;
+using System.Collections.Generic;
 #if NETSTANDARD2_1
 using System.IdentityModel.Tokens.Jwt;
 #else
+using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 #endif
+using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Base
@@ -17,20 +22,16 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Code = "PS:> Get-PnPAccessToken",
        Remarks = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
        SortOrder = 1)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPAccessToken -Decoded",
-       Remarks = "Gets detailed information about the OAuth 2.0 Access Token that can be consumed to access the Microsoft Graph API",
-       SortOrder = 2)]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Returns the details from the access token in a decoded manner")]
         public SwitchParameter Decoded;
+
         protected override void ExecuteCmdlet()
         {
             if (Decoded.IsPresent)
             {
-                var decodedToken = new JwtSecurityToken(AccessToken);
-                WriteObject(decodedToken);
+                WriteObject(Token.ParsedToken);
             }
             else
             {
@@ -39,3 +40,4 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
     }
 }
+#endif
