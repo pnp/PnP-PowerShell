@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSite", SupportsShouldProcess = true)]
-    [CmdletHelp("Creates a new team site without an Office 365 group in-memory object",
+    [CmdletHelp("Creates a new team site without a Microsoft 365 group in-memory object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> $site = New-PnPTenantSequenceTeamNoGroupSite -Url ""/sites/MyTeamSite"" -Title ""My Team Site""",
