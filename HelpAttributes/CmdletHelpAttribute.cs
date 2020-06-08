@@ -67,7 +67,6 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
             DetailedDescription = detailedDescription;
             SupportedPlatform = supportedPlatform;
         }
-
     }
 
 }

@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         (Code = @"PS:> Get-PnPTerm -Identity ""Finance"" -TermSet ""Departments"" -TermGroup ""Corporate"" | New-PnPTermLabel -Name ""Finanzwesen"" -Lcid 1031",
         Remarks = @"Creates a new localized taxonomy label in German (LCID 1031) named ""Finanzwesen"" for the term ""Finance"" in the termset Departments which is located in the ""Corporate"" termgroup",
         SortOrder = 2)]
-    public class NewTermLabel : PnPCmdlet
+    public class NewTermLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The term to add the localized label to")]
         public TaxonomyItemPipeBind<Term> Term;

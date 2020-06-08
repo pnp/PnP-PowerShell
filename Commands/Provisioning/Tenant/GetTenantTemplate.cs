@@ -173,12 +173,17 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
             {
                 // Get Azure AD Token
-                if (AccessToken != null)
+                if (PnPConnection.CurrentConnection != null)
                 {
-                    // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                    return Task.FromResult(AccessToken);
+                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    if (graphAccessToken != null)
+                    {
+                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                        return Task.FromResult(graphAccessToken);
+                    }
                 }
-                else if (SPOnlineConnection.CurrentConnection.PSCredential != null)
+
+                if (PnPConnection.CurrentConnection.PSCredential != null)
                 {
                     // Using normal credentials
                     return Task.FromResult(TokenHandler.AcquireToken(resource, null));
@@ -191,34 +196,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             }))
             {
                 return Tenant.GetTenantTemplate(configuration);
-            }
-        }
-
-        private string AccessToken
-        {
-            get
-            {
-                if (SPOnlineConnection.AuthenticationResult != null)
-                {
-                    if (SPOnlineConnection.AuthenticationResult.ExpiresOn < DateTimeOffset.Now)
-                    {
-                        WriteWarning(Properties.Resources.MicrosoftGraphOAuthAccessTokenExpired);
-                        SPOnlineConnection.AuthenticationResult = null;
-                        return null;
-                    }
-                    else
-                    {
-                        return SPOnlineConnection.AuthenticationResult.AccessToken;
-                    }
-                }
-                else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)
-                {
-                    return SPOnlineConnection.CurrentConnection.AccessToken;
-                }
-                else
-                {
-                    return null;
-                }
             }
         }
     }

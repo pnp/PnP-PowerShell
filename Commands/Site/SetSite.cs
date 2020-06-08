@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Remarks = "Sets the logo if the site is a modern team site",
         SortOrder = 4)]
 #endif
-    public class SetSite : PnPCmdlet
+    public class SetSite : PnPSharePointCmdlet
     {
 
 #if !ONPREMISES
@@ -206,11 +206,11 @@ namespace SharePointPnP.PowerShell.Commands.Site
             {
 #if ONPREMISES
                 string tenantAdminUrl;
-                if (!string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.TenantAdminUrl))
+                if (!string.IsNullOrEmpty(PnPConnection.CurrentConnection.TenantAdminUrl))
                 {
-                    tenantAdminUrl = SPOnlineConnection.CurrentConnection.TenantAdminUrl;
+                    tenantAdminUrl = PnPConnection.CurrentConnection.TenantAdminUrl;
                 }
-                else if (SPOnlineConnection.CurrentConnection.ConnectionType == Enums.ConnectionType.TenantAdmin)
+                else if (PnPConnection.CurrentConnection.ConnectionType == Enums.ConnectionType.TenantAdmin)
                 {
                     tenantAdminUrl = ClientContext.Url;
                 }

@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
@@ -24,6 +22,7 @@ PS:> Remove-PnPSiteClassification -Classifications ""HBI""",
 PS:> Remove-PnPSiteClassification -Classifications ""HBI"", ""Top Secret""",
         Remarks = @"Removes the ""HBI"" site classification from the list of available values.",
         SortOrder = 2)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class RemoveSiteClassification : PnPGraphCmdlet
     {
 

@@ -3,7 +3,6 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Site
@@ -18,7 +17,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Remarks = "Restricts sharing of the site and items in the site only to owners",
         SortOrder = 1)]
 
-    public class DisableSharingForNonOwnersOfSite : PnPCmdlet
+    public class DisableSharingForNonOwnersOfSite : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         [Alias("Url")]

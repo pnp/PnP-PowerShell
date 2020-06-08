@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletExample(Code = @"PS:> Get-PnPStorageEntity -Key MyKey", Remarks = "Returns the storage entity/farm property with the given key.", SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Get-PnPStorageEntity -Scope Site", Remarks = "Returns all site collection scoped storage entities", SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Get-PnPStorageEntity -Key MyKey -Scope Site", Remarks = "Returns the storage entity from the site collection with the given key", SortOrder = 3)]
-    public class GetPnPStorageEntity : PnPCmdlet
+    public class GetPnPStorageEntity : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The key of the value to retrieve.")]
         public string Key;

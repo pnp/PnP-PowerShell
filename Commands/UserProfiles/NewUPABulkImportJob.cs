@@ -63,7 +63,7 @@ PS:> New-PnPUPABulkImportJob -Folder ""Shared Documents"" -Path profiles.json -I
                 throw new InvalidEnumArgumentException(@"IdProperty cannot be empty.");
             }
             
-            var webCtx = ClientContext.Clone(SPOnlineConnection.CurrentConnection.Url);
+            var webCtx = ClientContext.Clone(PnPConnection.CurrentConnection.Url);
             var web = webCtx.Web;
             var webServerRelativeUrl = web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!Folder.ToLower().StartsWith(webServerRelativeUrl))

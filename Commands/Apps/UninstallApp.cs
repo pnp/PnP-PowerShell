@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         Code = @"PS:> Uninstall-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site",
         Remarks = @"This will uninstall the specified app from the current site. Notice that the app was original installed from the site collection appcatalog.",
         SortOrder = 2)]
-    public class UninstallApp : PnPCmdlet
+    public class UninstallApp : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Id of the Addin Instance")]
         public AppMetadataPipeBind Identity;

@@ -40,6 +40,11 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator.Model
 
         public string Platform { get; set; }
 
+        /// <summary>
+        /// Holds a list with API permissions which are required for the current cmdlet to be able to be executed
+        /// </summary>
+        public List<CmdletApiPermissionBase> ApiPermissions { get; set; }
+
         public CmdletInfo()
         {
             Parameters = new List<CmdletParameterInfo>();
@@ -48,6 +53,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator.Model
             Examples = new List<CmdletExampleAttribute>();
             RelatedLinks = new List<CmdletRelatedLinkAttribute>();
             AdditionalParameters = new List<CmdletAdditionalParameter>();
+            ApiPermissions = new List<CmdletApiPermissionBase>();
         }
     }
 }

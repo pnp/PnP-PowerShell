@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Entities;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -12,6 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     [Cmdlet(VerbsCommon.Set, "PnPUnifiedGroup")]
     [CmdletHelp("Sets Microsoft 365 Group (aka Unified Group) properties. Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
         Category = CmdletHelpCategory.Graph,
+        OutputTypeLink = "https://docs.microsoft.com/graph/api/group-update",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -DisplayName ""My Displayname""",
@@ -33,6 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -Owners demo@contoso.com",
        Remarks = "Sets demo@contoso.com as owner of the group.",
        SortOrder = 5)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class SetUnifiedGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The Identity of the Microsoft 365 Group", ValueFromPipeline = true)]
@@ -103,3 +106,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif

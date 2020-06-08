@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Remarks = "Returns $false if sharing of the site and items in the site is restricted only to owners or $true if members and owners are allowed to share",
         SortOrder = 1)]
 
-    public class GetSharingForNonOwnersOfSite : PnPCmdlet
+    public class GetSharingForNonOwnersOfSite : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         [Alias("Url")]

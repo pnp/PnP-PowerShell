@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         (Code = @"PS:> Get-PnPSiteCollectionTermStore",
         Remarks = "Returns the site collection term store.",
         SortOrder = 1)]
-    public class GetPnPSiteCollectionTermStore : PnPCmdlet
+    public class GetPnPSiteCollectionTermStore : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {

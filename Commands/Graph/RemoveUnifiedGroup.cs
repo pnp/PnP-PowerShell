@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Entities;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -10,6 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     [Cmdlet(VerbsCommon.Remove, "PnPUnifiedGroup")]
     [CmdletHelp("Removes one Microsoft 365 Group (aka Unified Group). Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
         Category = CmdletHelpCategory.Graph,
+        OutputTypeLink = "https://docs.microsoft.com/graph/api/group-delete",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> Remove-PnPUnifiedGroup -Identity $groupId",
@@ -23,6 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPUnifiedGroup | ? Visibility -eq \"Public\" | Remove-PnPUnifiedGroup",
        Remarks = "Removes all the public Microsoft 365 Groups",
        SortOrder = 3)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveUnifiedGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group")]
@@ -42,3 +45,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif

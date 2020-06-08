@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿#if !ONPREMISES
+using System.Management.Automation;
 using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -8,7 +9,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsData.Restore, "PnPDeletedUnifiedGroup")]
 
-    [CmdletHelp("Restores one deleted Microsoft 365 Group (aka Unified Group)",
+    [CmdletHelp("Restores one deleted Office 365 Group (aka Unified Group)",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -20,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 PS:> Restore-PnPDeletedUnifiedGroup -Identity $group",
         Remarks = "Restores the provided deleted Microsoft 365 Group",
         SortOrder = 2)]
-
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RestoreDeletedUnifiedGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the deleted Microsoft 365 Group")]
@@ -37,3 +38,4 @@ PS:> Restore-PnPDeletedUnifiedGroup -Identity $group",
         }
     }
 }
+#endif

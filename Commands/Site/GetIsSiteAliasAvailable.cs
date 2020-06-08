@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands
         Code = @"PS:> Get-PnPIsSiteAliasAvailable -Identity ""HR""",
         Remarks = @"Validates if the alias ""HR"" is still available to be used",
         SortOrder = 1)]
-    public class GetIsSiteAliasAvailable : PnPCmdlet
+    public class GetIsSiteAliasAvailable : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Alias you want to check for if it is still available to create a new site collection for", ValueFromPipeline = true)]
         [Alias("Alias")]

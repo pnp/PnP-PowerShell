@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
     [Cmdlet(VerbsCommon.Remove, "PnPTaxonomyItem", SupportsShouldProcess = true)]
     [CmdletHelp(@"Removes a taxonomy item",
          Category = CmdletHelpCategory.Taxonomy)]
-    public class RemoveTaxonomyItem : PnPCmdlet
+    public class RemoveTaxonomyItem : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true,
              HelpMessage =

@@ -1,12 +1,8 @@
 ﻿#if !ONPREMISES
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
@@ -24,9 +20,9 @@ PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"
 PS:> Enable-PnPSiteClassification -Classifications ""HBI"",""LBI"",""Top Secret"" -UsageGuidelinesUrl https://aka.ms/sppnp",
         Remarks = @"Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.",
         SortOrder = 2)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class EnableSiteClassification : PnPGraphCmdlet
     {
-
         [Parameter(Mandatory = true)]
         public List<string> Classifications;
 
