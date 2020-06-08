@@ -24,6 +24,8 @@ namespace SharePointPnP.PowerShell.Commands.Branding
             footer.Properties.Add(new PSVariableProperty(new PSVariable("IsEnabled", SelectedWeb.FooterEnabled)));
             footer.Properties.Add(new PSVariableProperty(new PSVariable("Layout", SelectedWeb.FooterLayout)));
             footer.Properties.Add(new PSVariableProperty(new PSVariable("BackgroundTheme", SelectedWeb.FooterEmphasis)));
+            footer.Properties.Add(new PSVariableProperty(new PSVariable("Title", SelectedWeb.GetFooterTitle())));
+            footer.Properties.Add(new PSVariableProperty(new PSVariable("LogoUrl", SelectedWeb.GetFooterLogoUrl())));
 
             WriteObject(footer);
         }
