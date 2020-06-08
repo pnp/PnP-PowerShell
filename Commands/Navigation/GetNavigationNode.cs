@@ -33,7 +33,7 @@ PS> $children = $node.Children",
         private const string ParameterSet_ALLBYLOCATION = "All nodes by location";
         private const string ParameterSet_BYID = "A single node by ID";
 
-        [Parameter(Mandatory = false, HelpMessage = "The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch", ParameterSetName = ParameterSet_ALLBYLOCATION)]
+        [Parameter(Mandatory = false, HelpMessage = "The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch, SearchNav or Footer.", ParameterSetName = ParameterSet_ALLBYLOCATION)]
         public NavigationType Location = NavigationType.QuickLaunch;
 
         [Parameter(Mandatory = false, HelpMessage = "The Id of the node to retrieve", ParameterSetName = ParameterSet_BYID)]
@@ -44,7 +44,6 @@ PS> $children = $node.Children",
 
         protected override void ExecuteCmdlet()
         {
-
             if (ParameterSetName == ParameterSet_ALLBYLOCATION)
             {
                 if (Tree.IsPresent)
