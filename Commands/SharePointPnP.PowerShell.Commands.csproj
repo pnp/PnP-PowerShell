@@ -1068,6 +1068,7 @@
     <Compile Include="Files\GetFolderItem.cs" />
     <Compile Include="Web\GetRequestAccessEmails.cs" />
     <Compile Include="Principals\GetUser.cs" />
+    <Compile Include="Web\GetAvailableLanguage.cs" />
     <Compile Include="Web\InvokeWebAction.cs" />
     <Compile Include="Files\ResolveFolder.cs" />
     <Compile Include="Files\AddFolder.cs" />

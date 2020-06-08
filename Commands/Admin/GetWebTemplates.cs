@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletRelatedLink(Text = "Locale IDs", Url = "https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint")]
     public class GetWebTemplates : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The language ID. For instance: 1033 for English. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: (Get-PnPWeb -Includes RegionalSettings.InstalledLanguages).RegionalSettings.InstalledLanguages.")]
+        [Parameter(Mandatory = false, HelpMessage = "The language ID. For instance: 1033 for English. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.")]
         public uint Lcid;
 
         [Parameter(Mandatory = false, HelpMessage = "The compatibily level of SharePoint where 14 is SharePoint 2010, 15 is SharePoint 2013 and 16 is SharePoint 2016 and later including SharePoint Online")]
