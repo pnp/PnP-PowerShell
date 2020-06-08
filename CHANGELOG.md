@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed uploading a file using `Add-PnPFile` using `-ContentType` throwing an exception [PR #2619](https://github.com/pnp/PnP-PowerShell/pull/2619)
 - Fixed using `Connect-PnPOnline -AppId <appid> -AppSecret <appsecret> -AADDomain` not actually authenticating to Microsoft Graph [PR #2624](https://github.com/pnp/PnP-PowerShell/pull/2624)
 - Updated `Get-PnPWorkflowInstance` to allow passing in a workflow subscription to list all running instances of a specific workflow [PR #2636](https://github.com/pnp/PnP-PowerShell/pull/2636)
+- Implementation of `Move-PnPFile` has been changed adding `-TargetServerRelativeLibrary` for SharePoint Online to allow moving files to other site collections [PR #2688](https://github.com/pnp/PnP-PowerShell/pull/2688)
 
 ### Contributors
 - Alberto Suarez [holylander]
@@ -39,10 +40,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
-- Implementation of `Move-PnPFile` has been changed adding `-TargetServerRelativeLibrary` for SharePoint Online to allow moving files to other site collections [PR #2688](https://github.com/pnp/PnP-PowerShell/pull/2688)
 
 ### Contributors
-- Koen Zomers [koenzomers]
 
 ## [3.20.2004.0]
 
