@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPTenantSyncClientRestriction` and `Set-PnPTenantSyncClientRestriction` cmdlets to allow configuring tenant wide OneDrive sync restriction settings [PR #2649](https://github.com/pnp/PnP-PowerShell/pull/2649)
 - Added `Disable-PnPSharingForNonOwnersOfSite` and `Get-PnPSharingForNonOwnersOfSite` cmdlets to control disabling the ability for only owners of the site to be allowed to share the site or its files and folders with others [PR #2641](https://github.com/pnp/PnP-PowerShell/pull/2641)
 - Added `Get-PnPIsSiteAliasAvailable` which allows checking if a certain alias is still available to create a new site collection with [PR #2698](https://github.com/pnp/PnP-PowerShell/pull/2698)
+- Added `Get-PnPFooter` and `Set-PnPFooter` to work with the footer shown on Modern Communication pages [PR #2634](https://github.com/pnp/PnP-PowerShell/pull/2634)
 
 ### Changed
 - Fixed uploading a file using `Add-PnPFile` using `-ContentType` throwing an exception [PR #2619](https://github.com/pnp/PnP-PowerShell/pull/2619)
