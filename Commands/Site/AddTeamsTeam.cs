@@ -7,7 +7,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsTeam")]
     [CmdletHelp("Adds a Teams team to an existing, group connected, site collection",
-        DetailedDescription = "This command allows you to add a Teams team to an existing, Office 365 group connected, site collection.",
+        DetailedDescription = "This command allows you to add a Teams team to an existing, Microsoft 365 group connected, site collection.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.Sites)]
     [CmdletExample(

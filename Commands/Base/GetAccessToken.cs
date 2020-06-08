@@ -1,33 +1,36 @@
-﻿#if !ONPREMISES
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+#if NETSTANDARD2_1
+using System.IdentityModel.Tokens.Jwt;
+#else
+using System.IdentityModel.Tokens.Jwt;
+#endif
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken")]
     [CmdletHelp("Returns the current OAuth Access token",
-        "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
-        Category = CmdletHelpCategory.TenantAdmin)]
+        DetailedDescription = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options.",
+        Category = CmdletHelpCategory.Graph,
+        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> Get-PnPAccessToken",
        Remarks = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
        SortOrder = 1)]
     [CmdletExample(
        Code = "PS:> Get-PnPAccessToken -Decoded",
-       Remarks = "Gets the full OAuth 2.0 Token to consume the Microsoft Graph API",
+       Remarks = "Gets detailed information about the OAuth 2.0 Access Token that can be consumed to access the Microsoft Graph API",
        SortOrder = 2)]
-    [Obsolete("Use Get-PnPGraphAccessToken instead")]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Returns the access token in a decoded manner")]
+        [Parameter(Mandatory = false, HelpMessage = "Returns the details from the access token in a decoded manner")]
         public SwitchParameter Decoded;
-
         protected override void ExecuteCmdlet()
         {
             if (Decoded.IsPresent)
             {
-                WriteObject(Token.ParsedToken);
+                var decodedToken = new JwtSecurityToken(AccessToken);
+                WriteObject(decodedToken);
             }
             else
             {
@@ -36,4 +39,3 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
     }
 }
-#endif

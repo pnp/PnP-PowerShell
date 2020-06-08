@@ -1116,12 +1116,18 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             // If we have Graph scopes, get a token for it
             if(graphScopes.Length > 0)
             {
-                var graphToken = GraphToken.AcquireTokenInteractive(MSALPnPPowerShellClientId, graphScopes);
-
-                // If there's a connection already, add the Graph token to it, otherwise set up a new connection with it
-                if(connection != null)
+                ConnectGraphAAD();
+            }
+            else if (ParameterSetName == ParameterSet_ACCESSTOKEN)
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(AccessToken);
+                var aud = jwtToken.Audiences.FirstOrDefault();
+                var url = Url;
+                if ((url.ToLower() == "https://graph.microsoft.com") ||
+                    (url.ToLower() == "https://manage.office.com"))
                 {
-                    connection.AddToken(TokenAudience.MicrosoftGraph, graphToken);
+                    connection = ConnectGraphDeviceLogin(AccessToken);
                 }
                 else
                 {
