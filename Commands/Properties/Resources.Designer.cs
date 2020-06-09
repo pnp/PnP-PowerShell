@@ -386,6 +386,15 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parameter set {0} has not yet been implemented. Please create an issue for this on GitHub..
+        /// </summary>
+        internal static string ParameterSetNotImplemented {
+            get {
+                return ResourceManager.GetString("ParameterSetNotImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove Client-Side Page?.
         /// </summary>
         internal static string RemoveClientSidePage {

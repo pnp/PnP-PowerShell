@@ -623,6 +623,7 @@
     <Compile Include="Base\GetPowerShellTelemetryEnabled.cs" />
     <Compile Include="Base\EnablePowerShellTelemetry.cs" />
     <Compile Include="Base\PnPConnectedCmdlet.cs" />
+    <Compile Include="Enums\Office365Workload.cs" />
     <Compile Include="Graph\GetGraphAccessToken.cs" />
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
@@ -678,10 +679,20 @@
     <Compile Include="InformationManagement\ResetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
     <Compile Include="Lists\ClearDefaultColumnValues.cs" />
+    <Compile Include="ManagementApi\GetOffice365HistoricalServiceStatus.cs" />
+    <Compile Include="ManagementApi\GetOffice365ServiceMessage.cs" />
+    <Compile Include="ManagementApi\GetOffice365Services.cs" />
     <Compile Include="ManagementApi\GetOfficeManagementApiAccessToken.cs" />
     <Compile Include="ManagementApi\GetManagementApiAccessToken.cs" />
+    <Compile Include="ManagementApi\GetOffice365CurrentServiceStatus.cs" />
     <Compile Include="ManagementApi\GetUnifiedAuditLog.cs" />
     <Compile Include="Model\AzureApp.cs" />
+    <Compile Include="Model\ManagementApiFeatureStatus.cs" />
+    <Compile Include="Model\ManagementApiFeature.cs" />
+    <Compile Include="Model\ManagementApiService.cs" />
+    <Compile Include="Model\ManagementApiServiceMessageText.cs" />
+    <Compile Include="Model\ManagementApiServiceMessage.cs" />
+    <Compile Include="Model\ManagementApiServiceStatus.cs" />
     <Compile Include="Model\SharePointToken.cs" />
     <Compile Include="Model\OfficeManagementApiToken.cs" />
     <Compile Include="Model\GraphToken.cs" />
@@ -1057,6 +1068,7 @@
     <Compile Include="Files\GetFolderItem.cs" />
     <Compile Include="Web\GetRequestAccessEmails.cs" />
     <Compile Include="Principals\GetUser.cs" />
+    <Compile Include="Web\GetAvailableLanguage.cs" />
     <Compile Include="Web\InvokeWebAction.cs" />
     <Compile Include="Files\ResolveFolder.cs" />
     <Compile Include="Files\AddFolder.cs" />
