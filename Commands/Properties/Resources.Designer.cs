@@ -79,7 +79,16 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No certificate with the thumbprint &apos;{0}&apos; has been found in the Windows certificate store.
+        ///   Looks up a localized string similar to The provided certificate with the thumbprint &apos;{0}&apos; does not have a private key which is required for a connection to be established. Ensure you have imported the certificate containing the private key, typically the .pfx file, into the Windows Certificate Store..
+        /// </summary>
+        internal static string CertificateWithThumbprintDoesNotHavePrivateKey {
+            get {
+                return ResourceManager.GetString("CertificateWithThumbprintDoesNotHavePrivateKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No certificate with the thumbprint &apos;{0}&apos; has been found in the Windows Certificate Store.
         /// </summary>
         internal static string CertificateWithThumbprintNotFound {
             get {

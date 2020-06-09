@@ -445,6 +445,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintNotFound, thumbprint));
             }
 
+            // Ensure the private key of the certificate is available
+            if (!certificate.HasPrivateKey)
+            {
+                throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintDoesNotHavePrivateKey, thumbprint));
+            }
+
             return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
         }
 
@@ -562,16 +568,30 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
+        /// <summary>
+        /// Tries to remove the local cached machine copy of the private key
+        /// </summary>
+        /// <param name="certificate">Certificate to try to clean up the local cached copy of the private key of</param>
         internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
         {
+            if(!certificate.HasPrivateKey)
+            {
+                // If somehow a public key certificate was passed in, we can't clean it up, thus we have nothing to do here
+                return;
+            }
+
             var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
             string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
             certificate.Reset();
+
             var path = Environment.GetEnvironmentVariable("ProgramData");
-            if (string.IsNullOrEmpty(path)) path = @"C:\ProgramData";
+            if (string.IsNullOrEmpty(path))
+            {
+                path = @"C:\ProgramData";
+            }
             try
             {
-                System.IO.File.Delete(string.Format(@"{0}\Microsoft\Crypto\RSA\MachineKeys\{1}", path, uniqueKeyContainerName));
+                System.IO.File.Delete($@"{path}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}");
             }
             catch (Exception)
             {
