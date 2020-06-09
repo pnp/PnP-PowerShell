@@ -8,10 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.23.2007.0] (not yet released)
 
 ### Added
+- Added `-HideFromAddressLists` and `-HideFromOutlookClients` to `Set-PnPUnifiedGroup` to allow for setting the visibility of Microsoft 365 Groups [PR #2717](https://github.com/pnp/PnP-PowerShell/pull/2717)
 
 ### Changed
 
 ### Contributors
+- Koen Zomers [koenzomers]
 
 ## [3.22.2006.1]
 
