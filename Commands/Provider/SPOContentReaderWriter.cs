@@ -63,7 +63,11 @@ namespace SharePointPnP.PowerShell.Commands.Provider
 
             _streamWriter.Flush();
             _stream.Position = 0;
+#if NETSTANDARD2_1
+            _file.SaveBinary(new FileSaveBinaryInformation());
+#else
             File.SaveBinaryDirect((_file.Context as ClientContext), _file.ServerRelativeUrl, _stream, true);
+#endif
             return content;
         }
 

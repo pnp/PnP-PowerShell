@@ -65,7 +65,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             var creds = Utilities.CredentialManager.GetCredential(Name);
             if(creds != null)
             {
-                var spoCreds = new Microsoft.SharePoint.Client.SharePointOnlineCredentials(creds.UserName, creds.Password);
+                var spoCreds = new System.Net.NetworkCredential(creds.UserName, creds.Password);
                 WriteObject(spoCreds);
             } else
             {

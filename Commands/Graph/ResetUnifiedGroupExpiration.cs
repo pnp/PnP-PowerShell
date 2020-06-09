@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES
+﻿#if !ONPREMISES && !NETSTANDARD2_1
 using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
