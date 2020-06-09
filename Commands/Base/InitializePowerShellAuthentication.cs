@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Scopes", HelpMessage = "Specify which permissions scopes to request.", ParameterSetName = ParameterSet_EXISTINGCERT)]
 
     [CmdletExample(
-       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -StoreLocation CurrentUser",
+       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser",
        Remarks = "Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
        SortOrder = 1)]
     public class InitializePowerShellAuthentication : BasePSCmdlet, IDynamicParameters
