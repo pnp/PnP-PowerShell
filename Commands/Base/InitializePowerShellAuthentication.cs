@@ -10,7 +10,9 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Security;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -26,6 +28,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser",
        Remarks = "Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
        SortOrder = 1)]
+    [CmdletExample(
+       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String ""password"" -AsPlainText -Force)",
+       Remarks = "Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
+       SortOrder = 2)]
+    [CmdletExample(
+       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Scopes ""MSGraph.User.Read.All"",""SPO.Sites.Read.All""",
+       Remarks = "Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All",
+       SortOrder = 3)]
+    
     public class InitializePowerShellAuthentication : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
@@ -79,13 +90,39 @@ namespace SharePointPnP.PowerShell.Commands.Base
             var cert = new X509Certificate2();
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
             {
+                // Ensure a file exists at the provided CertificatePath
+                if (!File.Exists(CertificatePath))
+                {
+                    throw new PSArgumentException(string.Format(Resources.CertificateNotFoundAtPath, CertificatePath), nameof(CertificatePath));
+                }
+
                 if (ParameterSpecified(nameof(CertificatePassword)))
                 {
-                    cert.Import(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable);
+                    try
+                    { 
+                        cert.Import(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable);
+                    }
+                    catch (CryptographicException e) when (e.Message.Contains("The specified network password is not correct"))
+                    {
+                        throw new PSArgumentNullException(nameof(CertificatePassword), string.Format(Resources.PrivateKeyCertificateImportFailedPasswordIncorrect, nameof(CertificatePassword)));
+                    }
                 }
                 else
                 {
-                    cert.Import(CertificatePath);
+                    try
+                    {
+                        cert.Import(CertificatePath);
+                    }
+                    catch(CryptographicException e) when (e.Message.Contains("The specified network password is not correct"))
+                    {
+                        throw new PSArgumentNullException(nameof(CertificatePassword), string.Format(Resources.PrivateKeyCertificateImportFailedPasswordMissing, nameof(CertificatePassword)));
+                    }
+                }
+
+                // Ensure the certificate at the provided CertificatePath holds a private key
+                if (!cert.HasPrivateKey)
+                {
+                    throw new PSArgumentException(string.Format(Resources.CertificateAtPathHasNoPrivateKey, CertificatePath), nameof(CertificatePath));
                 }
             }
             else

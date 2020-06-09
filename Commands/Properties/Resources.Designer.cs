@@ -79,6 +79,24 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The certificate located at &apos;{0}&apos; holds no private key. Ensure you provide the private key certificate, typically the .pfx file..
+        /// </summary>
+        internal static string CertificateAtPathHasNoPrivateKey {
+            get {
+                return ResourceManager.GetString("CertificateAtPathHasNoPrivateKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No private key certificate has been found at &apos;{0}&apos;.
+        /// </summary>
+        internal static string CertificateNotFoundAtPath {
+            get {
+                return ResourceManager.GetString("CertificateNotFoundAtPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No certificate with the thumbprint &apos;{0}&apos; has been found in the Windows certificate store.
         /// </summary>
         internal static string CertificateWithThumbprintNotFound {
@@ -391,6 +409,24 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
         internal static string ParameterSetNotImplemented {
             get {
                 return ResourceManager.GetString("ParameterSetNotImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading of the private key certificate failed as the password with which it has been signed does not match the provided password. Use {0} to provide the proper password for the private key certificate file..
+        /// </summary>
+        internal static string PrivateKeyCertificateImportFailedPasswordIncorrect {
+            get {
+                return ResourceManager.GetString("PrivateKeyCertificateImportFailedPasswordIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading of the private key certificate failed as the password with which it has been signed has not been provided. Use {0} to provide the password..
+        /// </summary>
+        internal static string PrivateKeyCertificateImportFailedPasswordMissing {
+            get {
+                return ResourceManager.GetString("PrivateKeyCertificateImportFailedPasswordMissing", resourceCulture);
             }
         }
         
