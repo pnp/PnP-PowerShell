@@ -13,14 +13,15 @@ using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
 using System.IdentityModel.Tokens.Jwt;
 using SharePointPnP.PowerShell.Commands.Enums;
+#if !NETSTANDARD2_1
 using System.Web.UI.WebControls;
+#endif
 using SharePointPnP.PowerShell.Commands.Model;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+#if !NETSTANDARD2_1
 using System.Security.Cryptography;
+#endif 
 using System.Reflection;
-#if NETSTANDARD2_1
-using System.IdentityModel.Tokens.Jwt;
-#endif
 #if !ONPREMISES
 #endif
 
@@ -375,8 +376,10 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to connect to SharePoint with browser based login. This is required when you have multi-factor authentication (MFA) enabled.")]
         public SwitchParameter UseWebLogin;
 
+#if !NETSTANDARD2_1
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Specify to use for instance use forms based authentication (FBA)")]
         public ClientAuthenticationMode AuthenticationMode = ClientAuthenticationMode.Default;
+#endif
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOKEN, HelpMessage = "If you want to create a PSDrive connected to the URL")]
@@ -693,10 +696,11 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                     connection = ConnectAppOnlyAadCer();
                     break;
 
+#if !NETSTANDARD2_1
                 case ParameterSet_GRAPHWITHSCOPE:
                     connection = ConnectGraphWithScope();
                     break;
-
+#endif
                 case ParameterSet_ACCESSTOKEN:
                     connection = ConnectAccessToken();
                     break;
@@ -782,7 +786,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
         }
 
-        #region Connect Types
+#region Connect Types
 
         /// <summary>
         /// Connect using the paramater set TOKEN
@@ -1036,7 +1040,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #if !NETSTANDARD2_1
             return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
-            throw new NotImplementedException();
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #endif
 #else
             return null;
@@ -1053,7 +1057,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #if !NETSTANDARD2_1
             return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
-            throw new NotImplementedException();
+            return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #endif
 #else
             return null;
@@ -1296,6 +1300,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
 #else
             WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPO365ManagementShell instead");
+            return null;
 #endif
         }
 
@@ -1321,6 +1326,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 }
             }
 
+#if !NETSTANDARD2_1
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
                                                                      credentials,
                                                                      Host,
@@ -1333,11 +1339,24 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                                                                      NoTelemetry,
                                                                      SkipTenantAdminCheck,
                                                                      AuthenticationMode);
+#else
+            return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
+                                                               credentials,
+                                                               Host,
+                                                               CurrentCredentials,
+                                                               MinimalHealthScore,
+                                                               RetryCount,
+                                                               RetryWait,
+                                                               RequestTimeout,
+                                                               TenantAdminUrl,
+                                                               NoTelemetry,
+                                                               SkipTenantAdminCheck);
+#endif
         }
 
-        #endregion
+#endregion
 
-        #region Helper methods
+#region Helper methods
         private PSCredential GetCredentials()
         {
             var connectionUri = new Uri(Url);
@@ -1410,6 +1429,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 WriteWarning(message);
             }
         }
-        #endregion
+#endregion
     }
 }

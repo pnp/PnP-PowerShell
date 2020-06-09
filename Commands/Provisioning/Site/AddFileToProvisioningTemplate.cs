@@ -97,7 +97,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 
                 var fileName = file.EnsureProperty(f => f.Name);
                 var folderRelativeUrl = serverRelativeUrl.Substring(0, serverRelativeUrl.Length - fileName.Length - 1);
+#if !NETSTANDARD2_1
                 var folderWebRelativeUrl = HttpUtility.UrlKeyValueDecode(folderRelativeUrl.Substring(SelectedWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
+#else
+                var folderWebRelativeUrl = System.Web.HttpUtility.UrlDecode(folderRelativeUrl.Substring(SelectedWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
+#endif
                 if (ClientContext.HasPendingRequest) ClientContext.ExecuteQuery();
                 try
                 {

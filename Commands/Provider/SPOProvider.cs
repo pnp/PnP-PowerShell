@@ -537,7 +537,11 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 if (ShouldProcess($"Clear content from {GetServerRelativePath(path)}"))
                 {
                     var file = obj as File;
+#if NETSTANDARD2_1
+                    file.SaveBinary(new FileSaveBinaryInformation());
+#else
                     File.SaveBinaryDirect(file.Context as ClientContext, file.ServerRelativeUrl, Stream.Null, true);
+#endif
                 }
             }
         }
@@ -547,7 +551,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             return null;
         }
 
-        #region Helpers
+#region Helpers
 
         //Get helpers
         private object GetFileOrFolder(string path, bool throwError = true, bool useCache = true)
@@ -1144,6 +1148,6 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             });
         }
 
-        #endregion
+#endregion
     }
 }

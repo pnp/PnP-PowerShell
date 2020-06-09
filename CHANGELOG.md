@@ -14,6 +14,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 - Gautam Sheth [gautamdsheth]
 
+## [3.22.2006.1]
+
+Intermediate release due to a fix in the underlying Core Library.
+
 ## [3.22.2006.0]
 
 ### Added
