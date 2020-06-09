@@ -148,10 +148,10 @@
     <value>Health score not sufficient</value>
   </data>
   <data name="ListNotFound" xml:space="preserve">
-    <value>List not found</value>
+    <value>No list found with id, title or url '{0}'</value>
   </data>
-  <data name="NoConnection" xml:space="preserve">
-    <value>No connection, please connect first with Connect-PnPOnline</value>
+  <data name="NoSharePointConnection" xml:space="preserve">
+    <value>The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument but not -SPOManagementShell or -PnPO365ManagementShell to connect.</value>
   </data>
   <data name="NoConnectionToDisconnect" xml:space="preserve">
     <value>No connection to disconnect</value>
@@ -224,9 +224,6 @@
   </data>
   <data name="RemoveTerm0AndAllUnderlyingTerms" xml:space="preserve">
     <value>Remove Term '{0}' and all underlying Terms?</value>
-  </data>
-  <data name="NoAzureADAccessToken" xml:space="preserve">
-    <value>No Azure AD connection/Access Token. Please connect first with Connect-PnPOnline -Url [url] -ClientId [clientid] -CertificatePath [path] -Tenant [tenant], Connect-PnPOnline -Graph, Connect-PnPOnline -Scopes or Connect-PnPOnline -AppId -AppSecret -AADDomain</value>
   </data>
   <data name="MicrosoftGraphOAuthAccessTokenExpired" xml:space="preserve">
     <value>The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet.</value>
@@ -320,5 +317,26 @@
   </data>
   <data name="SetRequestAccessEmailsOnlyOneAddressAllowed" xml:space="preserve">
     <value>Only one e-mail address can be configured to receive the access requests</value>
+  </data>
+  <data name="NoApiAccessToken" xml:space="preserve">
+    <value>Unable to retrieve a token for {0}. Ensure you connect using one of the Connect-PnPOnline commands which uses the -ClientId argument or use Connect-PnPOnline -Scopes to connect.</value>
+  </data>
+  <data name="NoConnection" xml:space="preserve">
+    <value>There is currently no connection yet. Use Connect-PnPOnline to connect.</value>
+  </data>
+  <data name="AccessTokenConnectFailed" xml:space="preserve">
+    <value>No URL specified nor does the provided access token contain an audience</value>
+  </data>
+  <data name="CertificateWithThumbprintNotFound" xml:space="preserve">
+    <value>No certificate with the thumbprint '{0}' has been found in the Windows certificate store</value>
+  </data>
+  <data name="ClientCertificateInvalid" xml:space="preserve">
+    <value>The client certificate is invalid</value>
+  </data>
+  <data name="GrooveBlockOptionNotSupported" xml:space="preserve">
+    <value>The provided option for {0} being {1} is not yet supported in this cmdlet</value>
+  </data>
+  <data name="ParameterSetNotImplemented" xml:space="preserve">
+    <value>Parameter set {0} has not yet been implemented. Please create an issue for this on GitHub.</value>
   </data>
 </root>

@@ -8,11 +8,12 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUserProfileProperty")]
 #if !ONPREMISES
-    [CmdletHelp(@"You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet. 
-", DetailedDescription = "Requires a connection to a SharePoint Tenant Admin site.", 
+    [CmdletHelp(@"You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet. ", 
+        DetailedDescription = "Requires a connection to a SharePoint Tenant Admin site.", 
         Category = CmdletHelpCategory.UserProfiles,
-         OutputType = typeof(PersonProperties),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.userprofiles.personproperties.aspx")]
+        OutputType = typeof(PersonProperties),
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-csom/jj164752(v=office.15)",
+        SupportedPlatform = CmdletSupportedPlatform.All)]
 #endif
     [CmdletExample(
         Code = @"PS:> Get-PnPUserProfileProperty -Account 'user@domain.com'", 

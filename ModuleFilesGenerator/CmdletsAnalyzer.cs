@@ -135,6 +135,11 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     {
                         cmdletInfo.AdditionalParameters.Add(additionalParameter);
                     }
+                    var apiPermissionAttribute = attribute as CmdletApiPermissionBase;
+                    if(apiPermissionAttribute != null)
+                    {
+                        cmdletInfo.ApiPermissions.Add(apiPermissionAttribute);
+                    }
                 }
                 if (!string.IsNullOrEmpty(cmdletInfo.Verb) && !string.IsNullOrEmpty(cmdletInfo.Noun))
                 {

@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿#if !ONPREMISES
+using System.Management.Automation;
 using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -8,22 +9,22 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPDeletedUnifiedGroup")]
 
-    [CmdletHelp("Permanently removes one deleted Office 365 Group (aka Unified Group)",
+    [CmdletHelp("Permanently removes one deleted Microsoft 365 Group (aka Unified Group)",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
         Code = "PS:> Remove-PnPDeletedUnifiedGroup -Identity 38b32e13-e900-4d95-b860-fb52bc07ca7f",
-        Remarks = "Permanently removes a deleted Office 365 Group based on its ID",
+        Remarks = "Permanently removes a deleted Microsoft 365 Group based on its ID",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> $group = Get-PnPDeletedUnifiedGroup -Identity 38b32e13-e900-4d95-b860-fb52bc07ca7f
 PS:> Remove-PnPDeletedUnifiedGroup -Identity $group",
-        Remarks = "Permanently removes the provided deleted Office 365 Group",
+        Remarks = "Permanently removes the provided deleted Microsoft 365 Group",
         SortOrder = 2)]
-
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveDeletedUnifiedGroup : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the deleted Office 365 Group")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the deleted Microsoft 365 Group")]
         public UnifiedGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
@@ -37,3 +38,4 @@ PS:> Remove-PnPDeletedUnifiedGroup -Identity $group",
         }
     }
 }
+#endif

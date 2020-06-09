@@ -4,15 +4,12 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsData.Update, "PnPSiteClassification")]
-    [CmdletHelp("Updates Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
+    [CmdletHelp("Updates Site Classifications for the tenant. Requires a connection to the Microsoft Graph with the permission 'Directory.ReadWrite.All'.",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -30,6 +27,7 @@ PS:> Update-PnPSiteClassification -DefaultClassification ""LBI""",
 PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
         Remarks = @"sets the usage guideliness URL to the specified URL.",
         SortOrder = 3)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class UpdateSiteClassification : PnPGraphCmdlet
     {
         const string ParameterSet_SETTINGS = "Settings";

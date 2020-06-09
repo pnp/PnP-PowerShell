@@ -30,7 +30,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSetId f6f43025-7242-4f7a-b739-41fa32847254 -Lcid 1044",
         Remarks = "Exports the term set with the specified id using Norwegian labels",
         SortOrder = 4)]
-    public class ExportTaxonomy : PnPCmdlet
+    public class ExportTaxonomy : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "If specified, will export the specified termset only")]
         public GuidPipeBind TermSetId = new GuidPipeBind();
