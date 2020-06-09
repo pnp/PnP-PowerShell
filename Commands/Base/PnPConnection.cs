@@ -552,8 +552,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
                     {
                         // legacy auth?
-                        var authManager = new OfficeDevPnP.Core.AuthenticationManager();
-                        context = authManager.GetAzureADCredentialsContext(url.ToString(), CurrentConnection.PSCredential.UserName, CurrentConnection.PSCredential.Password);
+                        using(var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+                        {
+                            context = authManager.GetAzureADCredentialsContext(url.ToString(), CurrentConnection.PSCredential.UserName, CurrentConnection.PSCredential.Password);
+                        }
                         context.ExecuteQueryRetry();
                     }
                     else
