@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.22.2006.0] (not yet released)
+## [3.23.2007.0] (not yet released)
+
+### Added
+
+### Changed
+
+### Contributors
+
+
+## [3.22.2006.0]
 
 ### Added
 - Added `-ValuesOnly` option to `Get-PnPLabel` which will return more detailed information regarding the retention label set on a list or library and return the information as properties instead of written text [PR #2710](https://github.com/pnp/PnP-PowerShell/pull/2710)

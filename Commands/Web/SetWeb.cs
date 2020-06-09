@@ -112,7 +112,7 @@ namespace SharePointPnP.PowerShell.Commands
                         SelectedWeb.QuickLaunchEnabled = QuickLaunchEnabled.ToBool();
                         dirty = true;
                         break;
-
+#if !ONPREMISES
                     case nameof(MembersCanShare):
                         SelectedWeb.MembersCanShare = MembersCanShare.ToBool();
                         dirty = true;
@@ -122,7 +122,7 @@ namespace SharePointPnP.PowerShell.Commands
                         SelectedWeb.NoCrawl = NoCrawl.ToBool();
                         dirty = true;
                         break;
-#if !ONPREMISES
+
                     case nameof(HeaderLayout):
                         SelectedWeb.HeaderLayout = HeaderLayout;
                         dirty = true;
