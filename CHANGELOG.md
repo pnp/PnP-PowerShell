@@ -13,6 +13,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+## [3.22.2006.2]
+
+Intermediate release due to a fix in the underlying Core Library and the Connect-PnPOnline cmdlet.
+
 ## [3.22.2006.1]
 
 Intermediate release due to a fix in the underlying Core Library.
