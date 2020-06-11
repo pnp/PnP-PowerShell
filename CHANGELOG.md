@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 ### Contributors
+- Gautam Sheth [gautamdsheth]
 
 ## [3.22.2006.2]
 
