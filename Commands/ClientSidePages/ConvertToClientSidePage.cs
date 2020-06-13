@@ -78,6 +78,22 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target -UserMappingFile c:\\temp\user_mapping_file.csv",
     Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locations including using specific user mappings between the two environments.",
     SortOrder = 14)]
+
+    // Replay Function
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target -ReplayLayoutCapture",
+    Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. For Replay feature, Capture the first Transformation. " +
+        "Then make changes to layout in the page directly in SharePoint. Finally, run subsequent transformations with '-ReplayLayout' to apply your layout changes to all transforms with the same source " +
+        "page layout. Only applies to PublishingPage mode.",
+    SortOrder = 15)]
+
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target -ReplayLayout",
+    Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. " +
+        "Ensure first you have captured with '-ReplayLayoutCapture' and made changes in the page in SharePoint. This cmdlet will apply your layout changes to all transforms with the same source page. " +
+        "Only applies to PublishingPage mode.",
+    SortOrder = 16)]
+
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
@@ -214,6 +230,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Specifies a LDAP connection string e.g. LDAP://OU=Users,DC=Contoso,DC=local")]
         public string LDAPConnectionString = "";
 
+        [Parameter(Mandatory = false, HelpMessage = "Captures the page to reference for layout changes")]
+        public SwitchParameter ReplayLayoutCapture = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Applies the page layout changes from the page used to capture layout changes")]
+        public SwitchParameter ReplayLayout = false;
+
         protected override void ExecuteCmdlet()
         {
             //Fix loading of modernization framework
@@ -231,7 +253,17 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             {
                 throw new Exception($"The page is either a blog page, a publishing page or a Delve blog page. Setting PublishingPage, BlogPage and DelveBlogPage to true is not valid.");
             }
-            
+
+            if (this.PublishingPage && this.ReplayLayoutCapture && this.ReplayLayout)
+            {
+                throw new Exception($"Please specify either ReplayLayoutCapture OR ReplayLayout, running both on the same transformation is not supported.");
+            }
+
+            if (!this.PublishingPage && (this.ReplayLayoutCapture || this.ReplayLayout))
+            {
+                throw new Exception($"Running ReplayLayoutCapture OR ReplayLayout is only supported on publishing pages");
+            }
+
             ListItem page = null;
             if (this.PublishingPage)
             {
@@ -454,7 +486,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
                     TermMappingFile = TermMappingFile,
                     SkipTermStoreMapping = SkipTermStoreMapping,
-                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns,
+                    IsReplayCapture = this.ReplayLayoutCapture,
+                    IsReplayLayout = this.ReplayLayout
                 };
 
                 // Set mapping properties
