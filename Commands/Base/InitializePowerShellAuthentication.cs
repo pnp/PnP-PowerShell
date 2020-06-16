@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Management.Automation.Host;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -234,20 +235,36 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 var waitTime = 60;
                 Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
+                
+                Console.TreatControlCAsInput = true;
+               
                 for (var i = 0; i < waitTime; i++)
                 {
                     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
                     System.Threading.Thread.Sleep(1000);
+
+                    // Check if CTRL+C has been pressed and if so, abort the wait
+                    if (Host.UI.RawUI.KeyAvailable)
+                    {
+                        var key = Host.UI.RawUI.ReadKey(ReadKeyOptions.AllowCtrlC | ReadKeyOptions.NoEcho | ReadKeyOptions.IncludeKeyUp);
+                        if((key.ControlKeyState.HasFlag(ControlKeyStates.LeftCtrlPressed) || key.ControlKeyState.HasFlag(ControlKeyStates.RightCtrlPressed)) && key.VirtualKeyCode == 67)
+                        {
+                            
+                            break;
+                        }
+                    }
                 }
                 Host.UI.WriteLine();
+
                 var consentUrl = $"https://login.microsoftonline.com/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default";
                 record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
+
+                WriteObject(record);
 
                 AzureAuthHelper.OpenConsentFlow(consentUrl, (message) =>
                 {
                     Host.UI.WriteLine(ConsoleColor.Red, Host.UI.RawUI.BackgroundColor, message);
-                });
-                WriteObject(record);
+                });                
             }
         }
 
