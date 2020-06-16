@@ -37,7 +37,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Scopes ""MSGraph.User.Read.All"",""SPO.Sites.Read.All""",
        Remarks = "Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All",
        SortOrder = 3)]
-    
+    [CmdletExample(
+       Code = @"PS:> Initialize-PnPPowerShellAuthentication -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\",
+       Remarks = "Creates a new Azure AD Application registration, creates a new self signed certificate, and stores the public and private key certificates in c:\. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All",
+       SortOrder = 4)]
+
     public class InitializePowerShellAuthentication : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
