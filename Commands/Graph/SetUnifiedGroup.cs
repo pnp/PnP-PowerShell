@@ -11,7 +11,7 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPUnifiedGroup")]
-    [CmdletHelp("Sets Microsoft 365 Group (aka Unified Group) properties. Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
+    [CmdletHelp("Sets Microsoft 365 Group (aka Unified Group) properties",
         Category = CmdletHelpCategory.Graph,
         OutputTypeLink = "https://docs.microsoft.com/graph/api/group-update",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
