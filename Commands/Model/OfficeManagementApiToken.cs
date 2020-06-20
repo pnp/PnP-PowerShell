@@ -121,7 +121,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
         /// <param name="scopes">Array with scopes that should be requested access to. Required.</param>
         /// <param name="username">The username to authenticate with. Required.</param>
         /// <param name="securePassword">The password to authenticate with. Required.</param>
-        /// <returns><see cref="GraphToken"/> instance with the token</returns>
+        /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
         public static GenericToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string username, SecureString securePassword)
         {
             if (string.IsNullOrEmpty(clientId))
