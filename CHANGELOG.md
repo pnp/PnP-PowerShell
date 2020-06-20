@@ -10,9 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Updated implementation of `Copy-PnPFile` to now also support copying of files and folders accross site collections
+- Updated implementation of `Move-PnPFile` to now also support moving of files and folders accross site collections
 
 ### Contributors
 - Gautam Sheth [gautamdsheth]
+- Koen Zomers [koenzomers]
 
 ## [3.22.2006.2]
 
