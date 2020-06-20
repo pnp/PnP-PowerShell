@@ -56,7 +56,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, HelpMessage = "Makes the group private when selected")]
         public SwitchParameter IsPrivate;
 
-        [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set. Requires Site.ReadWrite.All permissions.")]
+        [Parameter(Mandatory = false, HelpMessage = "The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.")]
         public string GroupLogoPath;
 
         [Parameter(Mandatory = false, HelpMessage = "Creates a Microsoft Teams team associated with created group")]
