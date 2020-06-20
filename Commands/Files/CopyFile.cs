@@ -11,7 +11,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true, DefaultParameterSetName = "SOURCEURL")]
+    [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true, DefaultParameterSetName = ParameterSet_SITE)]
     [CmdletHelp("Copies a file or folder to a different location, currently there is a 200MB file size limit for the file to be copied.",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
@@ -61,30 +61,48 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
     public class CopyFile : PnPWebCmdlet
     {
+        private const string ParameterSet_SITE = "Site Relative";
+#if !ONPREMISES
+        private const string ParameterSet_OTHERSITE = "Other Site Collection";
+#endif
         private ProgressRecord _progressFolder = new ProgressRecord(0, "Activity", "Status") { Activity = "Copying folder" };
         private ProgressRecord _progressFile = new ProgressRecord(1, "Activity", "Status") { Activity = "Copying file" };
         private ClientContext _sourceContext;
         private ClientContext _targetContext;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER", HelpMessage = "Server relative Url specifying the file or folder to copy.")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER", HelpMessage = "Server relative Url specifying the file or folder to copy")]
         [Obsolete("Use SourceUrl instead.")]
         public string ServerRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SOURCEURL", HelpMessage = "Site relative Url specifying the file or folder to copy.")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SOURCEURL", HelpMessage = "Site relative Url specifying the file or folder to copy")]
         [Alias("SiteRelativeUrl")]
         public string SourceUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to copy the file or folder to.")]
+        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to copy the file or folder to")]
         public string TargetUrl = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location")]
         public SwitchParameter OverwriteIfAlreadyExists;
 
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false, HelpMessage = "If the source is a folder, the source folder name will not be created, only the contents within it.")]
+        [Parameter(Mandatory = false, HelpMessage = "If the source is a folder, the source folder name will not be created, only the contents within it")]
         public SwitchParameter SkipSourceFolderName;
+
+#if !ONPREMISES
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "Site relative Url specifying the file to copy. Must include the file name.")]
+        public string SiteRelativeUrl = string.Empty;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided and the target document library specified using TargetServerRelativeLibrary has different fields than the document library where the document is being copied from, the copy will succeed. If not provided, it will fail to protect against data loss of metadata stored in fields that cannot be copied along.")]
+        public SwitchParameter AllowSchemaMismatch;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided and the target document library specified using TargetServerRelativeLibrary is configured to keep less historical versions of documents than the document library where the document is being copied from, the copy will succeed. If not provided, it will fail to protect against data loss of historical versions that cannot be copied along.")]
+        public SwitchParameter AllowSmallerVersionLimitOnDestination;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided, only the latest version of the document will be copied and its history will be discared. If not provided, all historical versions will be copied along.")]
+        public SwitchParameter IgnoreVersionHistory;
+#endif
 
         protected override void ExecuteCmdlet()
         {
