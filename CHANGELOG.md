@@ -10,8 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
-- Updated implementation of `Copy-PnPFile` to now also support copying of files and folders accross site collections
-- Updated implementation of `Move-PnPFile` to now also support moving of files and folders accross site collections
+- Updated implementation of `Copy-PnPFile` to now also support copying of files and folders accross site collections [PR #2749](https://github.com/pnp/PnP-PowerShell/pull/2749)
+- Updated implementation of `Move-PnPFile` to now also support moving of files and folders accross site collections [PR #2749](https://github.com/pnp/PnP-PowerShell/pull/2749)
 
 ### Contributors
 - Gautam Sheth [gautamdsheth]
