@@ -153,11 +153,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         if (Certificate != null)
                         {
-                            token = GraphToken.AcquireToken(Tenant, ClientId, Certificate);
+                            token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
                         }
                         else if (ClientSecret != null)
                         {
-                            token = GraphToken.AcquireToken(Tenant, ClientId, ClientSecret);
+                            token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
                         }
                     }
                     break;
@@ -167,11 +167,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         if (Certificate != null)
                         {
-                            token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, Certificate);
+                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
                         }
                         else if (ClientSecret != null)
                         {
-                            token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, ClientSecret);
+                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
                         }
                     }
                     break;
