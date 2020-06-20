@@ -11,7 +11,7 @@ using File = Microsoft.SharePoint.Client.File;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true, DefaultParameterSetName = ParameterSet_SITE)]
+    [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true)]
     [CmdletHelp("Copies a file or folder to a different location, currently there is a 200MB file size limit for the file to be copied.",
         Category = CmdletHelpCategory.Files)]
     [CmdletExample(
@@ -61,27 +61,23 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
     public class CopyFile : PnPWebCmdlet
     {
-        private const string ParameterSet_SITE = "Site Relative";
-#if !ONPREMISES
-        private const string ParameterSet_OTHERSITE = "Other Site Collection";
-#endif
         private ProgressRecord _progressFolder = new ProgressRecord(0, "Activity", "Status") { Activity = "Copying folder" };
         private ProgressRecord _progressFile = new ProgressRecord(1, "Activity", "Status") { Activity = "Copying file" };
         private ClientContext _sourceContext;
         private ClientContext _targetContext;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVER", HelpMessage = "Server relative Url specifying the file or folder to copy")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SERVERRELATIVEURL", HelpMessage = "Server relative Url specifying the file or folder to copy")]
         [Obsolete("Use SourceUrl instead.")]
         public string ServerRelativeUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SOURCEURL", HelpMessage = "Site relative Url specifying the file or folder to copy")]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = "SOURCEURL", HelpMessage = "Site relative Url specifying the file to copy. Must include the file name.")]
         [Alias("SiteRelativeUrl")]
         public string SourceUrl = string.Empty;
 
-        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to copy the file or folder to")]
+        [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to copy the file or folder to. Must not include the file name.")]
         public string TargetUrl = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.")]
         public SwitchParameter OverwriteIfAlreadyExists;
 
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be requested and the action will be performed")]
@@ -91,16 +87,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         public SwitchParameter SkipSourceFolderName;
 
 #if !ONPREMISES
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "Site relative Url specifying the file to copy. Must include the file name.")]
-        public string SiteRelativeUrl = string.Empty;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided and the target document library specified using TargetServerRelativeLibrary has different fields than the document library where the document is being copied from, the copy will succeed. If not provided, it will fail to protect against data loss of metadata stored in fields that cannot be copied along.")]
-        public SwitchParameter AllowSchemaMismatch;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided and the target document library specified using TargetServerRelativeLibrary is configured to keep less historical versions of documents than the document library where the document is being copied from, the copy will succeed. If not provided, it will fail to protect against data loss of historical versions that cannot be copied along.")]
-        public SwitchParameter AllowSmallerVersionLimitOnDestination;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OTHERSITE, HelpMessage = "If provided, only the latest version of the document will be copied and its history will be discared. If not provided, all historical versions will be copied along.")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, only the latest version of the document will be copied and its history will be discared. If not provided, all historical versions will be copied along.")]
         public SwitchParameter IgnoreVersionHistory;
 #endif
 
@@ -109,6 +96,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
 #pragma warning disable CS0618 // Type or member is obsolete
             SourceUrl = SourceUrl ?? ServerRelativeUrl;
 #pragma warning restore CS0618 // Type or member is obsolete
+
             var webServerRelativeUrl = SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
             if (!SourceUrl.StartsWith("/"))
@@ -126,6 +114,24 @@ namespace SharePointPnP.PowerShell.Commands.Files
             Uri targetUri = new Uri(currentContextUri, TargetUrl);
             Uri targetWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
 
+            if (Force || ShouldContinue(string.Format(Resources.CopyFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
+            {
+                if (sourceWebUri != targetWebUri)
+                {
+                    CopyToOtherSiteCollection(sourceUri, targetUri);
+                }
+                else
+                {
+                    CopyWithinSameSiteCollection(currentContextUri, sourceWebUri, targetWebUri);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Allows copying to within the same site collection
+        /// </summary>
+        private void CopyWithinSameSiteCollection(Uri currentContextUri, Uri sourceWebUri, Uri targetWebUri)
+        {
             _sourceContext = ClientContext;
             if (!currentContextUri.AbsoluteUri.Equals(sourceWebUri.AbsoluteUri, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -176,54 +182,51 @@ namespace SharePointPnP.PowerShell.Commands.Files
                 {
                     srcIsFolder = false;
                 }
-
 #endif
             }
 
-            if (Force || ShouldContinue(string.Format(Resources.CopyFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
-            {
-                var srcWeb = _sourceContext.Web;
-                srcWeb.EnsureProperty(s => s.Url);
+            var srcWeb = _sourceContext.Web;
+            srcWeb.EnsureProperty(s => s.Url);
 
-                _targetContext = ClientContext.Clone(targetWebUri.AbsoluteUri);
-                var dstWeb = _targetContext.Web;
-                dstWeb.EnsureProperties(s => s.Url, s => s.ServerRelativeUrl);
-                if (srcWeb.Url == dstWeb.Url)
+            _targetContext = ClientContext.Clone(targetWebUri.AbsoluteUri);
+            var dstWeb = _targetContext.Web;
+            dstWeb.EnsureProperties(s => s.Url, s => s.ServerRelativeUrl);
+            if (srcWeb.Url == dstWeb.Url)
+            {
+                try
                 {
-                    try
-                    {
-                        var targetFile = UrlUtility.Combine(TargetUrl, file?.Name);
-                        // If src/dst are on the same Web, then try using CopyTo - backwards compability
+                    var targetFile = UrlUtility.Combine(TargetUrl, file?.Name);
+                    // If src/dst are on the same Web, then try using CopyTo - backwards compability
 #if ONPREMISES
                         file?.CopyTo(targetFile, OverwriteIfAlreadyExists);
 #else
-                        file?.CopyToUsingPath(ResourcePath.FromDecodedUrl(targetFile), OverwriteIfAlreadyExists);
+                    file?.CopyToUsingPath(ResourcePath.FromDecodedUrl(targetFile), OverwriteIfAlreadyExists);
 #endif
-                        _sourceContext.ExecuteQueryRetry();
-                        return;
-                    }
-                    catch
-                    {
-                        SkipSourceFolderName = true; // target folder exist
-                        //swallow exception, in case target was a lib/folder which exists
-                    }
+                    _sourceContext.ExecuteQueryRetry();
+                    return;
                 }
-
-                //different site/site collection
-                Folder targetFolder = null;
-                string fileOrFolderName = null;
-                bool targetFolderExists = false;
-                try
+                catch
                 {
+                    SkipSourceFolderName = true; // target folder exist
+                                                    //swallow exception, in case target was a lib/folder which exists
+                }
+            }
+
+            //different site/site collection
+            Folder targetFolder = null;
+            string fileOrFolderName = null;
+            bool targetFolderExists = false;
+            try
+            {
 #if ONPREMISES
                     targetFolder = _targetContext.Web.GetFolderByServerRelativeUrl(TargetUrl);
 #else
-                    targetFolder = _targetContext.Web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(TargetUrl));
+                targetFolder = _targetContext.Web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(TargetUrl));
 #endif
 #if !SP2013
-                    targetFolder.EnsureProperties(f => f.Name, f => f.Exists);
-                    if (!targetFolder.Exists) throw new Exception("TargetUrl is an existing file, not folder");
-                    targetFolderExists = true;
+                targetFolder.EnsureProperties(f => f.Name, f => f.Exists);
+                if (!targetFolder.Exists) throw new Exception("TargetUrl is an existing file, not folder");
+                targetFolderExists = true;
 #else
                     targetFolder.EnsureProperties(f => f.Name);
                     try
@@ -237,41 +240,54 @@ namespace SharePointPnP.PowerShell.Commands.Files
                     }
                     if (!targetFolderExists) throw new Exception("TargetUrl is an existing file, not folder");
 #endif
-                }
-                catch (Exception)
+            }
+            catch (Exception)
+            {
+                targetFolder = null;
+                Expression<Func<List, object>> expressionRelativeUrl = l => l.RootFolder.ServerRelativeUrl;
+                var query = _targetContext.Web.Lists.IncludeWithDefaultProperties(expressionRelativeUrl);
+                var lists = _targetContext.LoadQuery(query);
+                _targetContext.ExecuteQueryRetry();
+                lists = lists.OrderByDescending(l => l.RootFolder.ServerRelativeUrl); // order descending in case more lists start with the same
+                foreach (List targetList in lists)
                 {
-                    targetFolder = null;
-                    Expression<Func<List, object>> expressionRelativeUrl = l => l.RootFolder.ServerRelativeUrl;
-                    var query = _targetContext.Web.Lists.IncludeWithDefaultProperties(expressionRelativeUrl);
-                    var lists = _targetContext.LoadQuery(query);
-                    _targetContext.ExecuteQueryRetry();
-                    lists = lists.OrderByDescending(l => l.RootFolder.ServerRelativeUrl); // order descending in case more lists start with the same
-                    foreach (List targetList in lists)
-                    {
-                        if (!TargetUrl.StartsWith(targetList.RootFolder.ServerRelativeUrl, StringComparison.InvariantCultureIgnoreCase)) continue;
-                        fileOrFolderName = Regex.Replace(TargetUrl, _targetContext.Web.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
-                        targetFolder = srcIsFolder
-                            ? _targetContext.Web.EnsureFolderPath(fileOrFolderName)
-                            : targetList.RootFolder;
-                        //fileOrFolderName = Regex.Replace(TargetUrl, targetList.RootFolder.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
-                        //targetFolder = srcIsFolder ? targetList.RootFolder.EnsureFolder(fileOrFolderName) : targetList.RootFolder;
-                        break;
-                    }
-                }
-                if (targetFolder == null) throw new Exception("Target does not exist");
-                if (srcIsFolder)
-                {
-                    if (!SkipSourceFolderName && targetFolderExists)
-                    {
-                        targetFolder = targetFolder.EnsureFolder(folder.Name);
-                    }
-                    CopyFolder(folder, targetFolder);
-                }
-                else
-                {
-                    UploadFile(file, targetFolder, fileOrFolderName);
+                    if (!TargetUrl.StartsWith(targetList.RootFolder.ServerRelativeUrl, StringComparison.InvariantCultureIgnoreCase)) continue;
+                    fileOrFolderName = Regex.Replace(TargetUrl, _targetContext.Web.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
+                    targetFolder = srcIsFolder
+                        ? _targetContext.Web.EnsureFolderPath(fileOrFolderName)
+                        : targetList.RootFolder;
+                    //fileOrFolderName = Regex.Replace(TargetUrl, targetList.RootFolder.ServerRelativeUrl, "", RegexOptions.IgnoreCase).Trim('/');
+                    //targetFolder = srcIsFolder ? targetList.RootFolder.EnsureFolder(fileOrFolderName) : targetList.RootFolder;
+                    break;
                 }
             }
+            if (targetFolder == null) throw new Exception("Target does not exist");
+            if (srcIsFolder)
+            {
+                if (!SkipSourceFolderName && targetFolderExists)
+                {
+                    targetFolder = targetFolder.EnsureFolder(folder.Name);
+                }
+                CopyFolder(folder, targetFolder);
+            }
+            else
+            {
+                UploadFile(file, targetFolder, fileOrFolderName);
+            }
+        }
+
+        /// <summary>
+        /// Allows copying to another site collection
+        /// </summary>
+        private void CopyToOtherSiteCollection(Uri source, Uri destination)
+        {
+            ClientContext.Site.CreateCopyJobs(new[] { source.ToString() }, destination.ToString(), new CopyMigrationOptions
+            {
+                IsMoveMode = false,
+                IgnoreVersionHistory = IgnoreVersionHistory.ToBool(),
+                NameConflictBehavior = OverwriteIfAlreadyExists.ToBool() ? MigrationNameConflictBehavior.Replace : MigrationNameConflictBehavior.Fail
+            });
+            ClientContext.ExecuteQueryRetry();
         }
 
         private void CopyFolder(Folder sourceFolder, Folder targetFolder)
@@ -319,7 +335,6 @@ namespace SharePointPnP.PowerShell.Commands.Files
             this.UploadFileWithSpecialCharacters(targetFolder, filename, binaryStream.Value, OverwriteIfAlreadyExists);
             _targetContext.ExecuteQueryRetry();
         }
-
 
         private File UploadFileWithSpecialCharacters(Folder folder, string fileName, System.IO.Stream stream, bool overwriteIfExists)
         {

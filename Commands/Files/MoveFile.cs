@@ -6,7 +6,7 @@ using OfficeDevPnP.Core.Utilities;
 
 namespace SharePointPnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Move, "PnPFile", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Move, "PnPFile", SupportsShouldProcess = true, DefaultParameterSetName = ParameterSet_SITE)]
     [CmdletHelp("Moves a file to a different location",
 #if !ONPREMISES
         DetailedDescription = "Allows moving a file to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection",
