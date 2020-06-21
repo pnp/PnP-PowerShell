@@ -624,6 +624,11 @@
     <Compile Include="Base\EnablePowerShellTelemetry.cs" />
     <Compile Include="Base\PnPConnectedCmdlet.cs" />
     <Compile Include="Enums\Office365Workload.cs" />
+    <Compile Include="Graph\ClearUnifiedGroupMember.cs" />
+    <Compile Include="Graph\ClearUnifiedGroupOwner.cs" />
+    <Compile Include="Graph\RemoveUnifiedGroupOwner.cs" />
+    <Compile Include="Graph\RemoveUnifiedGroupMember.cs" />
+    <Compile Include="Graph\AddUnifiedGroupMember.cs" />
     <Compile Include="Graph\GetGraphAccessToken.cs" />
     <Compile Include="Base\GetAzureCertificate.cs" />
     <Compile Include="Base\NewAzureCertificate.cs" />
@@ -668,6 +673,7 @@
     <Compile Include="Files\ResetFileVersion.cs" />
     <Compile Include="Graph\GetGraphSubscription.cs" />
     <Compile Include="Graph\GetDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\AddUnifiedGroupOwner.cs" />
     <Compile Include="Graph\NewGraphSubscription.cs" />
     <Compile Include="Graph\ResetUnifiedGroupExpiration.cs" />
     <Compile Include="Graph\GetAADUser.cs" />
