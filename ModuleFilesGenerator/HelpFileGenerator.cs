@@ -115,6 +115,12 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 additionalDescriptionInfo.AppendLine();
             }
 
+            // Notice if the cmdlet is a PnPAdminCmdlet that access to the SharePoint Tenant Admin site is needed
+            if (cmdletInfo.CmdletType.BaseType.Name.Equals("PnPAdminCmdlet"))
+            {
+                additionalDescriptionInfo.AppendLine("* Required SharePoint permissions: Access to the SharePoint Tenant Administration site");
+            }
+
             // Validate if additional information should be prepended to the description
             if (additionalDescriptionInfo.Length > 0)
             {

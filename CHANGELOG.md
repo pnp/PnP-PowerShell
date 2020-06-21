@@ -10,9 +10,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- If a certain PnP PowerShell cmdlet needs access to the SharePoint Admin Center site in order to function correctly, it will now list this in the Synopsis section of the Get-Help for the cmdlet 
 
 ### Contributors
 - Gautam Sheth [gautamdsheth]
+- Koen Zomers [koenzomers]
 
 ## [3.22.2006.2]
 
