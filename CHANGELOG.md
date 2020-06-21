@@ -8,12 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.23.2007.0] (not yet released)
 
 ### Added
-- Added the following cmdlets to add/remove/clear owners and members of Microsoft 365 Groups: `Add-PnPUnifiedGroupMember`, `Add-PnPUnifiedGroupOwner`, `Remove-PnPUnifiedGroupMember`, `Remove-PnPUnifiedGroupOwner`, `Clear-PnPUnifiedGroupMember`, `Clear-PnPUnifiedGroupOwner`
+- Added the following cmdlets to add/remove/clear owners and members of Microsoft 365 Groups: `Add-PnPUnifiedGroupMember`, `Add-PnPUnifiedGroupOwner`, `Remove-PnPUnifiedGroupMember`, `Remove-PnPUnifiedGroupOwner`, `Clear-PnPUnifiedGroupMember`, `Clear-PnPUnifiedGroupOwner` [PR #2750](https://github.com/pnp/PnP-PowerShell/pull/2750)
 
 ### Changed
 
 ### Contributors
 - Gautam Sheth [gautamdsheth]
+- Koen Zomers [koenzomers]
 
 ## [3.22.2006.2]
 
