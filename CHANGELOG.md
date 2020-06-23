@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.21.2005.0]
 
 ### Added
-- Added `-WithRightsAssignedDetailed` parameter to `Get-PnPUser` allowing for fine grained (broken) permissions on item, list and site level to be shown
+- Added `-WithRightsAssignedDetailed` parameter to `Get-PnPUser` allowing for fine grained (broken) permissions on item, list and site level to be shown [PR #2754](https://github.com/pnp/PnP-PowerShell/pull/2754)
 
 ### Changed
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
