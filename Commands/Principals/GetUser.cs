@@ -10,15 +10,12 @@ using System.Xml.Linq;
 using System.Data;
 using System.Text;
 
-
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPUser")]
     [CmdletHelp("Returns site users of current web",
         Category = CmdletHelpCategory.Principals,
-        DetailedDescription = "This command will return all users that exist in the current site collection's User Information List",
-        OutputType = typeof(User),
-        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee540236(v=office.15)")]
+        DetailedDescription = "This command will return all users that exist in the current site collection's User Information List")]
     [CmdletExample(
         Code = @"PS:> Get-PnPUser",
         Remarks = "Returns all users from the User Information List of the current site collection regardless if they currently have rights to access the current site",
@@ -45,7 +42,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         SortOrder = 6)]
     [CmdletExample(
         Code = @"PS:> Get-PnPUser -WithRightsAssignedDetailed",
-        Remarks = "Returns all users who have been granted explicit access to the current site, lists and listitems.",
+        Remarks = "Returns all users who have been granted explicit access to the current site, lists and listitems",
         SortOrder = 7)]
     public class GetUser : PnPWebCmdlet
     {
@@ -91,7 +88,6 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                     g => g.Title,
                     g => g.LoginName)
             };
-
 
             if (Identity == null)
             {
@@ -250,7 +246,6 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                                             users.AddRange(GetPermissions(listItem.RoleAssignments, listItemUrl));
                                         }
                                     }
-
                                 }
                                 itemProgress.RecordType = ProgressRecordType.Completed;
                                 WriteProgress(itemProgress);
@@ -307,10 +302,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                         WriteObject(new { userInformation.Title, userInformation.LoginName, userInformation.Email, Groups, Permissions }, true);
                     }
                 }
-
-                
             }
-
             else
             {
                 User user = null;
@@ -334,7 +326,6 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                 WriteObject(user);
             }
         }
-
         private void WriteProgress(ProgressRecord record, string message, int step, int count)
         {
             var percentage = Convert.ToInt32((100 / Convert.ToDouble(count)) * Convert.ToDouble(step));
