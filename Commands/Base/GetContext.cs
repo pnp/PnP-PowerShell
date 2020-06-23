@@ -30,19 +30,19 @@ PS:> Get-PnPList # returns the lists from site A", SortOrder = 2)]
         {
             base.BeginProcessing();
 
-            if (SPOnlineConnection.CurrentConnection == null)
+            if (PnPConnection.CurrentConnection == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
-            if (SPOnlineConnection.CurrentConnection.Context == null)
+            if (PnPConnection.CurrentConnection.Context == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
         }
 
         protected override void ProcessRecord()
         {
-            WriteObject(SPOnlineConnection.CurrentConnection.Context);
+            WriteObject(PnPConnection.CurrentConnection.Context);
         }
     }
 }

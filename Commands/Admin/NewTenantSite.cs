@@ -9,7 +9,6 @@ using System;
 using System.Management.Automation;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
-
 namespace SharePointPnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSite")]
@@ -27,10 +26,10 @@ Online site collection fails if a deleted site with the same URL exists in the R
         SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "Locale IDs",
-        Url = "http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911")]
+        Url = "https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint")]
     [CmdletRelatedLink(
         Text = "Resource Usage Limits on Sandboxed Solutions in SharePoint 2010",
-        Url = "http://msdn.microsoft.com/en-us/library/gg615462.aspx.")]
+        Url = "https://docs.microsoft.com/previous-versions/office/developer/sharepoint-2010/gg615462(v=office.14)")]
     [CmdletRelatedLink(
         Text = "Creating on-premises site collections using CSOM",
         Url = "http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx")]
@@ -49,7 +48,7 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
         public string Owner = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft: https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.splanguage.lcid.aspx. To get the list of supported languages use: (Get-PnPWeb -Includes RegionalSettings.InstalledLanguages).RegionalSettings.InstalledLanguages ")]
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.")]
         public uint Lcid = 1033;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the site collection template type. Use the Get-PnPWebTemplates cmdlet to get the list of valid templates. If no template is specified, one can be added later. The Template and LocaleId parameters must be a valid combination as returned from the Get-PnPWebTemplates cmdlet.")]

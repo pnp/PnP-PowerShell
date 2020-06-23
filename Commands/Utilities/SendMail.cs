@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         [Parameter(Mandatory = true, HelpMessage = @"Subject of the email")]
         public string Subject;
 
-        [Parameter(Mandatory = true, HelpMessage = @"Body of the email")]
+        [Parameter(Mandatory = true, HelpMessage = @"Body of the email. Accepts simple HTML as `<h1></h1>`, `<br/>` etc.")]
         public string Body;
         
         protected override void ExecuteCmdlet()

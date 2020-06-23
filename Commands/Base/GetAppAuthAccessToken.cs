@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         Code = @"PS:> $accessToken = Get-PnPAppAuthAccessToken",
         Remarks = @"This will put the access token from current context in the $accessToken variable. Will only work in App authentication flow (App+user or App-Only)",
         SortOrder = 1)]
-    public class GetPnPAppAuthAccessToken : PnPCmdlet
+    public class GetPnPAppAuthAccessToken : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {

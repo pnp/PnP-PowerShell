@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletExample(
         Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Scope Site -Publish",
         Remarks = @"This will upload the specified app package to the site collection app catalog and deploy/trust it at the same time.", SortOrder = 2)]
-    public class AddApp : PnPCmdlet
+    public class AddApp : PnPSharePointCmdlet
     {
         private const string ParameterSet_ADD = "Add only";
         private const string ParameterSet_PUBLISH = "Add and Publish";

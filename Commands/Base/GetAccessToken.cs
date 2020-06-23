@@ -1,4 +1,5 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
 #if NETSTANDARD2_1
@@ -9,29 +10,29 @@ using System.IdentityModel.Tokens.Jwt;
 #endif
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken")]
     [CmdletHelp("Returns the current OAuth Access token",
-        "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
-        Category = CmdletHelpCategory.TenantAdmin)]
+        DetailedDescription = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options.",
+        Category = CmdletHelpCategory.Graph,
+        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> Get-PnPAccessToken",
        Remarks = "Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API",
        SortOrder = 1)]
+    [Obsolete("Use Get-PnPGraphAccessToken instead")]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "Returns the access token in a decoded manner")]
+        [Parameter(Mandatory = false, HelpMessage = "Returns the details from the access token in a decoded manner")]
         public SwitchParameter Decoded;
+
         protected override void ExecuteCmdlet()
         {
             if (Decoded.IsPresent)
             {
-                var decodedToken = new JwtSecurityToken(AccessToken);
-                WriteObject(decodedToken);
+                WriteObject(Token.ParsedToken);
             }
             else
             {
@@ -40,3 +41,4 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
     }
 }
+#endif

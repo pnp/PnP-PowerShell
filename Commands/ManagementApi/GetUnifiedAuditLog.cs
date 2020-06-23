@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !ONPREMISES
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -19,7 +20,8 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
        Code = "PS:> Get-PnPUnifiedAuditLog -ContentType SharePoint -StartTime (Get-Date).AddDays(-1) -EndTime (Get-Date).AddDays(-2)",
        Remarks = "Retrieves the audit logs of SharePoint happening between the current time yesterday and the current time the day before yesterday",
        SortOrder = 1)]
-    public class GetUnifiedAuditLog : PnPGraphCmdlet
+    [CmdletOfficeManagementApiPermission(OfficeManagementApiPermission.ActivityFeed_Read)]
+    public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet
     {
         private const string ParameterSet_LogsByDate = "Logs by date";
 
@@ -39,23 +41,6 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
             HelpMessage = "End time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart.")]
         public DateTime EndTime = DateTime.MaxValue;
 
-        private string tenantId;
-        /// <summary>
-        /// Returns the tenant Id from the JWT access token
-        /// </summary>        
-        protected string TenantId
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(tenantId) && !string.IsNullOrEmpty(AccessToken))
-                {
-                    var jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
-                    tenantId = jwtToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
-                }
-                return tenantId;
-            }
-        }
-
         /// <summary>
         /// Returns the Content Type to query in a string format which is recognized by the Office 365 Management API
         /// </summary>
@@ -74,12 +59,14 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
             }
         }
 
-        // Root URL to the Office 365 Management API
-        protected string RootUrl => $"https://manage.office.com/api/v1.0/{TenantId}/activity/feed";
+        /// <summary>
+        /// Base URL to the Office 365 Management API being used in this cmdlet
+        /// </summary>
+        protected string ApiUrl => $"{ApiRootUrl}activity/feed";
 
         private IEnumerable<ManagementApiSubscription> GetSubscriptions()
         {
-            var url = $"{RootUrl}/subscriptions/list";
+            var url = $"{ApiUrl}/subscriptions/list";
             var res = GraphHttpClient.MakeGetRequestForString(url.ToString(), AccessToken);
             var subscriptions = JsonConvert.DeserializeObject<IEnumerable<ManagementApiSubscription>>(res);
             return subscriptions;
@@ -91,7 +78,7 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
             var subscription = subscriptions.FirstOrDefault(s => s.ContentType == contentType);
             if (subscription == null)
             {
-                var url = $"{RootUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={TenantId}";
+                var url = $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={Token.TenantId}";
                 var res = GraphHttpClient.MakePostRequestForString(url.ToString(), accessToken: AccessToken);
                 var response = JsonConvert.DeserializeObject<ManagementApiSubscription>(res);
                 if (response.Status != "enabled")
@@ -105,14 +92,14 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
         {
             EnsureSubscription(ContentTypeString);
 
-            var url = $"{RootUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier=${tenantId}";
+            var url = $"{ApiUrl}/subscriptions/content?contentType={ContentTypeString}&PublisherIdentifier=${Token.TenantId}";
             if (StartTime != DateTime.MinValue)
             {
-                url += $"&startTime={StartTime.ToString("yyyy-MM-ddThh:mm:ss")}";
+                url += $"&startTime={StartTime:yyyy-MM-ddThh:mm:ss}";
             }
             if (EndTime != DateTime.MaxValue)
             {
-                url += $"&endTime={EndTime.ToString("yyyy-MM-ddThh:mm:ss")}";
+                url += $"&endTime={EndTime:yyyy-MM-ddThh:mm:ss}";
             }
             var res = GraphHttpClient.MakeGetRequestForString(url.ToString(), AccessToken);
             if (!string.IsNullOrEmpty(res))
@@ -128,3 +115,4 @@ namespace SharePointPnP.PowerShell.Commands.ManagementApi
         }
     }
 }
+#endif

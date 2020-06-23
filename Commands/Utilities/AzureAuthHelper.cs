@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.ActiveDirectory.GraphClient;
+﻿#if !NETSTANDARD2_1
+using Microsoft.Azure.ActiveDirectory.GraphClient;
 using Microsoft.Azure.ActiveDirectory.GraphClient.Internal;
 using Microsoft.Identity.Client;
 using System;
@@ -107,3 +108,4 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         }
     }
 }
+#endif

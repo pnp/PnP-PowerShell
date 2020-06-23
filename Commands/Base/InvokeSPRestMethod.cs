@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !NETSTANDARD2_1
+using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -43,7 +44,7 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
        Code = @"PS:> $item = ""{ '__metadata': { 'type': 'SP.Data.TestListItem' }, 'Title': 'Test'}""
 PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test')/items"" -Content $item -ContentType ""application/json;odata=verbose""",
        Remarks = @"This example creates a new item in the list 'Test' and sets the title field to 'Test'", SortOrder = 5)]
-    public class InvokeSPRestMethod : PnPCmdlet
+    public class InvokeSPRestMethod : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "The Http method to execute. Defaults to GET.")]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
@@ -233,3 +234,4 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
         }
     }
 }
+#endif

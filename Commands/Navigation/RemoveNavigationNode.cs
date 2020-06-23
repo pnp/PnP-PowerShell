@@ -16,18 +16,17 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Remarks = @"Removes the navigation node with the specified id",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> $nodes = Get-PnPNavigationNode -QuickLaunch
-PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
-        Remarks = @"Retrieves all navigation nodes from the Quick Launch navigation, then removes the first node in the list and it will not ask for a confirmation",
+        Code = @"PS:> Get-PnPNavigationNode -Location Footer | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
+        Remarks = @"Removes the first node of the footer navigation without asking for confirmation",
         SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Remove-PnPNavigationNode -Title Recent -Location QuickLaunch",
-        Remarks = "Will remove the recent navigation node from the quick launch in the current web.",
+        Remarks = "Will remove the recent navigation node from the quick launch in the current web after confirmation has been given that it should be deleted",
         SortOrder = 3)]
     [CmdletExample(Code = @"PS:> Remove-PnPNavigationNode -Title Home -Location TopNavigationBar -Force",
-        Remarks = "Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web.",
+        Remarks = "Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web",
         SortOrder = 4)]
     [CmdletExample(Code = @"PS:> Get-PnPNavigationNode -Location QuickLaunch | Remove-PnPNavigationNode -Force",
-        Remarks = "Will remove all the navigation nodes from the quick launch bar without prompting for a confirmation in the current web.",
+        Remarks = "Will remove all the navigation nodes from the quick launch bar without prompting for a confirmation in the current web",
         SortOrder = 5)]
     public class RemoveNavigationNode : PnPWebCmdlet
     {
@@ -39,7 +38,7 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
         public NavigationNodePipeBind Identity;
 
         [Obsolete("Use -Identity with an Id instead.")]
-        [Parameter(Mandatory = true, Position = 0, HelpMessage = "The location from where to remove the node (QuickLaunch, TopNavigationBar", ParameterSetName = ParameterSet_BYNAME)]
+        [Parameter(Mandatory = true, Position = 0, HelpMessage = "The location from where to remove the node. Either TopNavigationBar, QuickLaunch, SearchNav or Footer.", ParameterSetName = ParameterSet_BYNAME)]
         public NavigationType Location;
 
         [Obsolete("Use -Identity with an Id instead.")]
@@ -55,7 +54,6 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
-
 
         protected override void ExecuteCmdlet()
         {
@@ -87,6 +85,5 @@ PS:>$nodes | Select-Object -First 1 | Remove-PnPNavigationNode -Force",
                 }
             }
         }
-
     }
 }

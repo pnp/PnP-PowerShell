@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Entities;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Entities;
 using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
@@ -8,24 +9,26 @@ using System.Management.Automation;
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUnifiedGroup")]
-    [CmdletHelp("Removes one Office 365 Group (aka Unified Group). Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
+    [CmdletHelp("Removes one Microsoft 365 Group (aka Unified Group). Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
         Category = CmdletHelpCategory.Graph,
+        OutputTypeLink = "https://docs.microsoft.com/graph/api/group-delete",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = "PS:> Remove-PnPUnifiedGroup -Identity $groupId",
-       Remarks = "Removes an Office 365 Group based on its ID",
+       Remarks = "Removes an Microsoft 365 Group based on its ID",
        SortOrder = 1)]
     [CmdletExample(
        Code = "PS:> Remove-PnPUnifiedGroup -Identity $group",
-       Remarks = "Removes the provided Office 365 Group",
+       Remarks = "Removes the provided Microsoft 365 Group",
        SortOrder = 2)]
     [CmdletExample(
        Code = "PS:> Get-PnPUnifiedGroup | ? Visibility -eq \"Public\" | Remove-PnPUnifiedGroup",
-       Remarks = "Removes all the public Office 365 Groups",
+       Remarks = "Removes all the public Microsoft 365 Groups",
        SortOrder = 3)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveUnifiedGroup : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Office 365 Group")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group")]
         public UnifiedGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
@@ -42,3 +45,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif

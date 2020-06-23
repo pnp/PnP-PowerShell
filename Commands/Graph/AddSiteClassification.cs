@@ -3,10 +3,7 @@ using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
@@ -24,6 +21,7 @@ PS:> Add-PnPSiteClassification -Classifications ""Top Secret""",
 PS:> Add-PnPSiteClassification -Classifications ""Top Secret"",""HBI""",
         Remarks = @"Adds the ""Top Secret"" and the ""For Your Eyes Only"" classification to the already existing classification values.",
         SortOrder = 2)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class AddSiteClassification : PnPGraphCmdlet
     {
 

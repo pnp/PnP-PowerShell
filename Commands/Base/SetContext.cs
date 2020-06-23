@@ -23,7 +23,7 @@ PS:> Get-PnPList # returns the lists from site A", SortOrder = 1)]
 
         protected override void ProcessRecord()
         {
-            SPOnlineConnection.CurrentConnection.Context = Context;
+            PnPConnection.CurrentConnection.Context = Context;
         }
     }
 }

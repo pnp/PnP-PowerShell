@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletExample(
         Code = @"PS:> Remove-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site",
         Remarks = @"This will remove the specified app from the site collection scoped app catalog", SortOrder = 2)]
-    public class RemoveApp : PnPCmdlet
+    public class RemoveApp : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Id of the Addin Instance")]
         public AppMetadataPipeBind Identity;

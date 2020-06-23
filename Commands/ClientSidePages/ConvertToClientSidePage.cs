@@ -197,7 +197,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         public SwitchParameter RemoveEmptySectionsAndColumns = true;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
-        public SPOnlineConnection TargetConnection = null;
+        public PnPConnection TargetConnection = null;
 
         [Parameter(Mandatory = false, HelpMessage = "Disables user mapping during transformation")]
         public SwitchParameter SkipUserMapping = false;

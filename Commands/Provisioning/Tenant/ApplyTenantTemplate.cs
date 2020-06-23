@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet("Apply", "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [CmdletHelp("Applies a tenant template to the current tenant. You must be a SharePoint Online global administrator to run the cmdlet.",
+    [CmdletHelp("Applies a tenant template to the current tenant. You must have the Office 365 Global Admin role to run this cmdlet successfully.",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Apply-PnPTenantTemplate -Path myfile.pnp",
@@ -297,12 +297,17 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
             using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
             {
                 // Get Azure AD Token
-                if (AccessToken != null && resource.StartsWith("https://graph.microsoft.com",StringComparison.OrdinalIgnoreCase))
+                if (PnPConnection.CurrentConnection != null)
                 {
-                    // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                    return Task.FromResult(AccessToken);
+                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    if (graphAccessToken != null)
+                    {
+                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                        return Task.FromResult(graphAccessToken);
+                    }
                 }
-                else if (SPOnlineConnection.CurrentConnection.PSCredential != null)
+
+                if (PnPConnection.CurrentConnection.PSCredential != null)
                 {
                     // Using normal credentials
                     return Task.FromResult(TokenHandler.AcquireToken(resource, null));
@@ -338,34 +343,6 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
 #endif
             WriteObject(sitesProvisioned, true);
 
-        }
-
-        private string AccessToken
-        {
-            get
-            {
-                if (SPOnlineConnection.AuthenticationResult != null)
-                {
-                    if (SPOnlineConnection.AuthenticationResult.ExpiresOn < DateTimeOffset.Now)
-                    {
-                        WriteWarning(Properties.Resources.MicrosoftGraphOAuthAccessTokenExpired);
-                        SPOnlineConnection.AuthenticationResult = null;
-                        return null;
-                    }
-                    else
-                    {
-                        return SPOnlineConnection.AuthenticationResult.AccessToken;
-                    }
-                }
-                else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)
-                {
-                    return SPOnlineConnection.CurrentConnection.AccessToken;
-                }
-                else
-                {
-                    return null;
-                }
-            }
         }
 
 

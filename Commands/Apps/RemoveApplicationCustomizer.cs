@@ -15,10 +15,10 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         "Removes a SharePoint Framework client side extension application customizer by removing a user custom action from a web or sitecollection",
         Category = CmdletHelpCategory.Apps,
         SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
-    [CmdletExample(Code = @"PS:> Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", 
+    [CmdletExample(Code = @"PS:> Remove-PnPApplicationCustomizer -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2", 
                    Remarks = @"Removes the custom action representing the client side extension registration with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2'.", 
                    SortOrder = 1)]
-    [CmdletExample(Code = @"PS:> Remove-PnPCustomAction -ClientSideComponentId aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web", 
+    [CmdletExample(Code = @"PS:> Remove-PnPApplicationCustomizer -ClientSideComponentId aa66f67e-46c0-4474-8a82-42bf467d07f2 -Scope web", 
                    Remarks = @"Removes the custom action(s) being registered for a SharePoint Framework solution having the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' in its manifest from the current web.", 
                    SortOrder = 2)]
     public class RemoveApplicationCustomizer : PnPWebCmdlet

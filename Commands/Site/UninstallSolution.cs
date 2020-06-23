@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Uninstall-PnPSolution -PackageId c2f5b025-7c42-4d3a-b579-41da3b8e7254 -PackageName mypackage.wsp",
         Remarks = "Removes the package to the current site",
         SortOrder = 1)]
-    public class UninstallSolution : PnPCmdlet
+    public class UninstallSolution : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage="ID of the solution, from the solution manifest")]
         public GuidPipeBind PackageId;

@@ -6,75 +6,62 @@ using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.Commands.Base;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 
 namespace SharePointPnP.PowerShell.Commands
 {
-    public class PnPCmdlet : BasePSCmdlet
+    /// <summary>
+    /// Base class for all the PnP SharePoint related cmdlets
+    /// </summary>
+    public class PnPSharePointCmdlet : PnPConnectedCmdlet
     {
-        public ClientContext ClientContext => Connection?.Context ?? SPOnlineConnection.CurrentConnection.Context;
+        /// <summary>
+        /// Reference the the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.
+        /// </summary>
+        public ClientContext ClientContext => Connection?.Context ?? PnPConnection.CurrentConnection.Context;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
         [PnPParameter(Order = 99)]
-        public SPOnlineConnection Connection = null;
+        public PnPConnection Connection = null;
 
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
 
-            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.TelemetryClient != null)
+            if (PnPConnection.CurrentConnection != null && PnPConnection.CurrentConnection.TelemetryClient != null)
             {
-                SPOnlineConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
+                PnPConnection.CurrentConnection.TelemetryClient.TrackEvent(MyInvocation.MyCommand.Name);
             }
 
-            if (MyInvocation.InvocationName.ToUpper().IndexOf("-SPO", StringComparison.Ordinal) > -1)
+            if (Connection == null && ClientContext == null)
             {
-                WriteWarning($"PnP Cmdlets starting with the SPO Prefix have been deprecated since the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
-            }
-            if (SPOnlineConnection.CurrentConnection == null && Connection == null)
-            {
-                throw new InvalidOperationException(Resources.NoConnection);
-            }
-            if (SPOnlineConnection.CurrentConnection == null && ClientContext == null)
-            {
-                throw new InvalidOperationException(Resources.NoConnection);
-            }
-            if (SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
-            {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
         }
-
-        protected virtual void ExecuteCmdlet()
-        { }
 
         protected override void ProcessRecord()
         {
             try
             {
-                if (SPOnlineConnection.CurrentConnection.MinimalHealthScore != -1)
+                if (PnPConnection.CurrentConnection.MinimalHealthScore.HasValue && PnPConnection.CurrentConnection.MinimalHealthScore.Value >= 0)
                 {
-                    int healthScore = Utility.GetHealthScore(SPOnlineConnection.CurrentConnection.Url);
-                    if (healthScore <= SPOnlineConnection.CurrentConnection.MinimalHealthScore)
+                    int healthScore = Utility.GetHealthScore(PnPConnection.CurrentConnection.Url);
+                    if (healthScore <= PnPConnection.CurrentConnection.MinimalHealthScore.Value)
                     {
                         ExecuteCmdlet();
                     }
                     else
                     {
-                        if (SPOnlineConnection.CurrentConnection.RetryCount != -1)
+                        if (PnPConnection.CurrentConnection.RetryCount != -1)
                         {
                             int retry = 1;
-                            while (retry <= SPOnlineConnection.CurrentConnection.RetryCount)
+                            while (retry <= PnPConnection.CurrentConnection.RetryCount)
                             {
-                                WriteWarning(string.Format(Resources.Retry0ServerNotHealthyWaiting1seconds, retry, SPOnlineConnection.CurrentConnection.RetryWait, healthScore));
-                                Thread.Sleep(SPOnlineConnection.CurrentConnection.RetryWait * 1000);
-                                healthScore = Utility.GetHealthScore(SPOnlineConnection.CurrentConnection.Url);
-                                if (healthScore <= SPOnlineConnection.CurrentConnection.MinimalHealthScore)
+                                WriteWarning(string.Format(Resources.Retry0ServerNotHealthyWaiting1seconds, retry, PnPConnection.CurrentConnection.RetryWait, healthScore));
+                                Thread.Sleep(PnPConnection.CurrentConnection.RetryWait * 1000);
+                                healthScore = Utility.GetHealthScore(PnPConnection.CurrentConnection.Url);
+                                if (healthScore <= PnPConnection.CurrentConnection.MinimalHealthScore.Value)
                                 {
-                                    var tag = SPOnlineConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
+                                    var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
                                     if (tag.Length > 32)
                                     {
                                         tag = tag.Substring(0, 32);
@@ -87,7 +74,7 @@ namespace SharePointPnP.PowerShell.Commands
                                 }
                                 retry++;
                             }
-                            if (retry > SPOnlineConnection.CurrentConnection.RetryCount)
+                            if (retry > PnPConnection.CurrentConnection.RetryCount)
                             {
                                 ThrowTerminatingError(new ErrorRecord(new Exception(Resources.HealthScoreNotSufficient), "HALT", ErrorCategory.LimitsExceeded, null));
                             }
@@ -100,7 +87,7 @@ namespace SharePointPnP.PowerShell.Commands
                 }
                 else
                 {
-                    var tag = SPOnlineConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
+                    var tag = PnPConnection.CurrentConnection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name.Replace("SPO", "");
                     if (tag.Length > 32)
                     {
                         tag = tag.Substring(0, 32);
@@ -110,7 +97,7 @@ namespace SharePointPnP.PowerShell.Commands
                     ExecuteCmdlet();
                 }
             }
-            catch (System.Management.Automation.PipelineStoppedException)
+            catch (PipelineStoppedException)
             {
                 //don't swallow pipeline stopped exception
                 //it makes select-object work weird
@@ -118,8 +105,8 @@ namespace SharePointPnP.PowerShell.Commands
             }
             catch (Exception ex)
             {
-                SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
-                ex.Data.Add("CorrelationId", SPOnlineConnection.CurrentConnection.Context.TraceCorrelationId);
+                PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
+                ex.Data.Add("CorrelationId", PnPConnection.CurrentConnection.Context.TraceCorrelationId);
                 ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
                 var errorDetails = new ErrorDetails(ex.Message);
                 

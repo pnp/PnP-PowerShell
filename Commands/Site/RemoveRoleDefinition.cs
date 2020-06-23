@@ -12,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Remove-PnPRoleDefinition -Identity MyRoleDefinition",
         Remarks = "Removes the specified Role Definition (Permission Level) from the current site",
         SortOrder = 1)]
-    public class RemoveRoleDefinition : PnPCmdlet
+    public class RemoveRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The identity of the role definition, either a RoleDefinition object or a the name of roledefinition")]
         public RoleDefinitionPipeBind Identity;

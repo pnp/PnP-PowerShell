@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
     [CmdletExample(
         Code = @"PS:> Test-PnPOffice365GroupAliasIsUsed -Alias ""MyGroup""",
         Remarks = @"This will test if the alias MyGroup is already used", SortOrder = 1)]
-    public class AddOffice365GroupAliasIsUsed : PnPCmdlet
+    public class AddOffice365GroupAliasIsUsed : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specifies the alias of the group. Cannot contain spaces.")]
         public string Alias;

@@ -39,15 +39,15 @@ namespace SharePointPnP.PowerShell.Commands
             if (Web.Id != Guid.Empty)
             {
                 web = web.GetWebById(Web.Id);
-                SPOnlineConnection.CurrentConnection.CloneContext(web.Url);
+                PnPConnection.CurrentConnection.CloneContext(web.Url);
 
-                web = SPOnlineConnection.CurrentConnection.Context.Web;
+                web = PnPConnection.CurrentConnection.Context.Web;
             }
             else if (!string.IsNullOrEmpty(Web.Url))
             {
                 web = web.GetWebByUrl(Web.Url);
-                SPOnlineConnection.CurrentConnection.CloneContext(web.Url);
-                web = SPOnlineConnection.CurrentConnection.Context.Web;
+                PnPConnection.CurrentConnection.CloneContext(web.Url);
+                web = PnPConnection.CurrentConnection.Context.Web;
             }
             else if (Web.Web != null)
             {
@@ -55,19 +55,19 @@ namespace SharePointPnP.PowerShell.Commands
 
                 web.EnsureProperty(w => w.Url);
 
-                SPOnlineConnection.CurrentConnection.CloneContext(web.Url);
-                web = SPOnlineConnection.CurrentConnection.Context.Web;
+                PnPConnection.CurrentConnection.CloneContext(web.Url);
+                web = PnPConnection.CurrentConnection.Context.Web;
             }
             else
             {
-                if (SPOnlineConnection.CurrentConnection.Context.Url != SPOnlineConnection.CurrentConnection.Url)
+                if (PnPConnection.CurrentConnection.Context.Url != PnPConnection.CurrentConnection.Url)
                 {
-                    SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
+                    PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
                 }
                 web = ClientContext.Web;
             }
 
-            SPOnlineConnection.CurrentConnection.Context.ExecuteQueryRetry();
+            PnPConnection.CurrentConnection.Context.ExecuteQueryRetry();
 
             return web;
         }
@@ -75,16 +75,16 @@ namespace SharePointPnP.PowerShell.Commands
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            if (SPOnlineConnection.CurrentConnection.Context.Url != SPOnlineConnection.CurrentConnection.Url)
+            if (PnPConnection.CurrentConnection.Context.Url != PnPConnection.CurrentConnection.Url)
             {
-                SPOnlineConnection.CurrentConnection.RestoreCachedContext(SPOnlineConnection.CurrentConnection.Url);
+                PnPConnection.CurrentConnection.RestoreCachedContext(PnPConnection.CurrentConnection.Url);
             }
         }
 
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            SPOnlineConnection.CurrentConnection.CacheContext();
+            PnPConnection.CurrentConnection.CacheContext();
         }
     }
 }

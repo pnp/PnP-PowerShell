@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Get-PnPRoleDefinition -Identity Read",
         Remarks = "Retrieves the specified Role Definition (Permission Level) settings of the current site",
         SortOrder = 2)]
-    public class GetRoleDefinition : PnPCmdlet
+    public class GetRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The name of a role definition to retrieve.")]
         public RoleDefinitionPipeBind Identity;

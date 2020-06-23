@@ -103,6 +103,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CmdletApiPermissionBase.cs" />
+    <Compile Include="CmdletMicrosoftGraphApiPermission.cs" />
+    <Compile Include="CmdletOfficeManagementApiPermission.cs" />
     <Compile Include="CmdletPipeLineAttribute.cs" />
     <Compile Include="CmdletAdditionalParameterAttribute.cs" />
     <Compile Include="CmdletExampleAttribute.cs" />

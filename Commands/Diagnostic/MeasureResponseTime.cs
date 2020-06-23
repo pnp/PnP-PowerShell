@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD2_1
+using System;
 using System.Net;
 using System.Linq;
 using System.Threading;
@@ -26,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
      Code = @"PS:> Measure-PnPResponseTime $web -Count 1000 -WarmUp 10 -Histogram 20 -Timeout 50 | Select -expa Histogram | % {$_.GetEnumerator() | Export-Csv C:\Temp\responsetime.csv -NoTypeInformation}",
      Remarks = @"Builds histogram of response time for the home page of the web and exports to CSV for later processing in Excel",
      SortOrder = 3)]
-    public class MeasureResponseTime : PnPCmdlet
+    public class MeasureResponseTime : PnPSharePointCmdlet
     {
         private ProgressRecord _progressRecord = new ProgressRecord(0, "Measuring response time", "Sending probe requests");
 
@@ -243,3 +244,4 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         }
     }
 }
+#endif

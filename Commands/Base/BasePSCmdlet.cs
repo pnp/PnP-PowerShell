@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
+    /// <summary>
+    /// Base class for all the PnP Cmdlets
+    /// </summary>
     public class BasePSCmdlet : PSCmdlet
     {
         private Assembly newtonsoftAssembly;
@@ -13,6 +16,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             base.BeginProcessing();
             FixAssemblyResolving();
+
+            // Throw warning if an old *-SPO* cmdlet is being used
+            if (MyInvocation.InvocationName.ToUpper().IndexOf("-SPO", StringComparison.Ordinal) > -1)
+            {
+                WriteWarning($"PnP Cmdlets starting with the SPO Prefix have been deprecated since the June 2017 release. Please update your scripts and use {MyInvocation.MyCommand.Name} instead.");
+            }
         }
 
         protected override void EndProcessing()
@@ -83,6 +92,14 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public bool ParameterSpecified(string parameterName)
         {
             return MyInvocation.BoundParameters.ContainsKey(parameterName);
+        }
+
+        protected virtual void ExecuteCmdlet()
+        { }
+
+        protected override void ProcessRecord()
+        {
+            ExecuteCmdlet();
         }
     }
 }
