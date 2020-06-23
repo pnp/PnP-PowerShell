@@ -12,10 +12,11 @@ using System.Text;
 
 namespace SharePointPnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "PnPUser")]
+    [Cmdlet(VerbsCommon.Get, "PnPUser", DefaultParameterSetName = PARAMETERSET_IDENTITY)]
     [CmdletHelp("Returns site users of current web",
         Category = CmdletHelpCategory.Principals,
-        DetailedDescription = "This command will return all users that exist in the current site collection's User Information List")]
+        DetailedDescription = "This command will return all users that exist in the current site collection's User Information List, optionally identifying their current permissions to this site",
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
         Code = @"PS:> Get-PnPUser",
         Remarks = "Returns all users from the User Information List of the current site collection regardless if they currently have rights to access the current site",
@@ -46,15 +47,22 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         SortOrder = 7)]
     public class GetUser : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "User ID or login name")]
+        private const string PARAMETERSET_IDENTITY = "Identity based request";
+        private const string PARAMETERSET_WITHRIGHTSASSIGNED = "With rights assigned";
+        private const string PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED = "With rights assigned detailed";
+
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY, HelpMessage = "User ID or login name")]
         public UserPipeBind Identity;
 
-        [Parameter(Mandatory = false, Position = 1, HelpMessage = "If provided, only users that currently have any kinds of access rights assigned to the current site collection will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.")]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNED, HelpMessage = "If provided, only users that currently have any kinds of access rights assigned to the current site collection will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.")]
         public SwitchParameter WithRightsAssigned;
 
-        [Parameter(Mandatory = false, Position = 2, HelpMessage = "If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or listitems/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.")]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED, HelpMessage = "If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or listitems/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.")]
         public SwitchParameter WithRightsAssignedDetailed;
 
+        /// <summary>
+        /// Output type used with parameter WithRightsAssignedDetailed
+        /// </summary>
         public class DetailedUser
         {
             public User User { get; set; }
@@ -326,6 +334,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                 WriteObject(user);
             }
         }
+
         private void WriteProgress(ProgressRecord record, string message, int step, int count)
         {
             var percentage = Convert.ToInt32((100 / Convert.ToDouble(count)) * Convert.ToDouble(step));
