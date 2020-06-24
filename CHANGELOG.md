@@ -8,10 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.23.2007.0] (not yet released)
 
 ### Added
+- Added a `-RowLimit` parameter to `Clear-PnPRecycleBinItem` so that it can be used on recycle bins which hold more than 5000 items [PR #2760](https://github.com/pnp/PnP-PowerShell/pull/2760)
 
 ### Changed
 
 ### Contributors
+- Ellie Hussey [Professr]
 
 ## [3.22.2006.2]
 
