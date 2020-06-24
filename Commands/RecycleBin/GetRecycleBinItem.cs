@@ -57,7 +57,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         [Parameter(Mandatory = false, HelpMessage = "Limits return results to specified amount", ParameterSetName = ParameterSet_FIRSTSTAGE)]
         [Parameter(Mandatory = false, HelpMessage = "Limits return results to specified amount", ParameterSetName = ParameterSet_SECONDSTAGE)]
         [Parameter(Mandatory = false, HelpMessage = "Limits return results to specified amount", ParameterSetName = ParameterSet_ALL)]
-        public int RowLimit = -1;
+        public int RowLimit;
 #endif
         protected override void ExecuteCmdlet()
         {
@@ -73,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
             else
             {
 #if !SP2013
-                if (HasRowLimit())
+                if (ParameterSpecified(nameof(RowLimit)))
                 {
                     RecycleBinItemState recycleBinStage;
                     switch (ParameterSetName)
@@ -148,12 +148,5 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
 #endif
             }
         }
-
-#if !SP2013
-        private bool HasRowLimit()
-        {
-            return RowLimit > 0;
-        }
-#endif
     }
 }
