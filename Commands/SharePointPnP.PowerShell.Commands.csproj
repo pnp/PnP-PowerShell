@@ -554,7 +554,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\AddHubSiteAssociation.cs" />
-    <Compile Include="Admin\AddOffice365GroupToSite.cs" />
+    <Compile Include="Admin\AddMicrosoft365GroupToSite.cs" />
     <Compile Include="Admin\AddOrgAssetsLibrary.cs" />
     <Compile Include="Admin\AddSiteCollectionAppCatalog.cs" />
     <Compile Include="Admin\AddTenantTheme.cs" />

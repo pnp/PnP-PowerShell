@@ -9,7 +9,7 @@ using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace SharePointPnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Add, "PnPOffice365GroupToSite")]
+    [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupToSite")]
     [CmdletHelp("Groupifies a classic team site by creating a Microsoft 365 group for it and connecting the site with the newly created group",
         DetailedDescription = "This command allows you to add a Microsoft 365 Unified group to an existing classic site collection, also known as groupifying.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
@@ -17,7 +17,8 @@ namespace SharePointPnP.PowerShell.Commands.Admin
     [CmdletExample(
         Code = @"PS:> Add-PnPOffice365GroupToSite -Url ""https://contoso.sharepoint.com/sites/FinanceTeamsite"" -Alias ""FinanceTeamsite"" -DisplayName = ""My finance team site group""",
         Remarks = @"This will groupify the FinanceTeamsite", SortOrder = 1)]
-    public class AddOffice365GroupToSite: PnPAdminCmdlet
+    [Alias("Add-PnPOffice365GroupToSite")]
+    public class AddMicrosoft365GroupToSite: PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = @"Url of the site to be connected to an Microsoft 365 Group")]
         public string Url;
