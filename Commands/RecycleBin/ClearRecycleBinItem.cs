@@ -21,6 +21,13 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         Code = @"PS:> Clear-PnpRecycleBinItem -Identity $item -Force",
         Remarks = "Permanently deletes the recycle bin item stored under variable $item from the recycle bin without asking for confirmation from the end user first",
         SortOrder = 3)]
+#if !SP2013
+    [CmdletExample(
+        Code = @"PS:> Clear-PnPRecycleBinItem -All -RowLimit 10000",
+        Remarks = "Permanently deletes up to 10,000 items in recycle bin",
+        SortOrder = 4)]
+#endif
+
     public class ClearRecycleBinItem : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Id of the recycle bin item or the recycle bin item itself to permanently delete", ValueFromPipeline = true, ParameterSetName = "Identity")]
@@ -36,6 +43,10 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to permanently delete the recycle bin item")]
         public SwitchParameter Force;
 
+#if !SP2013
+        [Parameter(Mandatory = false, HelpMessage = "Limits deletion to specified number of items", ParameterSetName = "All")]
+        public int RowLimit = -1;
+#endif
 
         protected override void ExecuteCmdlet()
         {
@@ -52,21 +63,40 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                     }
                     break;
                 case "All":
-#if !ONPREMISES
-                    if (SecondStageOnly)
+#if !SP2013
+                    if (HasRowLimit())
                     {
-                        if (Force || ShouldContinue(Resources.ClearSecondStageRecycleBin, Resources.Confirm))
-                        {
-                            ClientContext.Site.RecycleBin.DeleteAllSecondStageItems();
+                        if (Force || ShouldContinue(SecondStageOnly ? Resources.ClearSecondStageRecycleBin : Resources.ClearBothRecycleBins, Resources.Confirm)) { 
+                            RecycleBinItemState recycleBinStage = SecondStageOnly ? RecycleBinItemState.SecondStageRecycleBin : RecycleBinItemState.None;
+
+                            RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate,
+                                recycleBinStage);
+                            ClientContext.Load(items);
+                            ClientContext.ExecuteQueryRetry();
+
+                            items.DeleteAll();
                             ClientContext.ExecuteQueryRetry();
                         }
                     }
                     else
+#endif
                     {
-                        if (Force || ShouldContinue(Resources.ClearBothRecycleBins, Resources.Confirm))
+#if !ONPREMISES
+                        if (SecondStageOnly)
                         {
-                            ClientContext.Site.RecycleBin.DeleteAll();
-                            ClientContext.ExecuteQueryRetry();
+                            if (Force || ShouldContinue(Resources.ClearSecondStageRecycleBin, Resources.Confirm))
+                            {
+                                ClientContext.Site.RecycleBin.DeleteAllSecondStageItems();
+                                ClientContext.ExecuteQueryRetry();
+                            }
+                        }
+                        else
+                        {
+                            if (Force || ShouldContinue(Resources.ClearBothRecycleBins, Resources.Confirm))
+                            {
+                                ClientContext.Site.RecycleBin.DeleteAll();
+                                ClientContext.ExecuteQueryRetry();
+                            }
                         }
                     }
                     break;
@@ -76,9 +106,18 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                             ClientContext.Site.RecycleBin.DeleteAll();
                             ClientContext.ExecuteQueryRetry();
                         }
+                    }
                     break;
 #endif
             }
         }
+
+#if !SP2013
+        private bool HasRowLimit()
+        {
+            return RowLimit > 0;
+        }
+#endif
+
     }
 }
