@@ -32,7 +32,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if(Connection?.Certificate != null)
             {
 #if !NETSTANDARD2_1
-                PnPConnectionHelper.CleanupCryptoMachineKey(Connection.Certificate);
+                if (Connection != null && Connection.DeleteCertificateFromCacheOnDisconnect)
+                {
+                    PnPConnectionHelper.CleanupCryptoMachineKey(Connection.Certificate);
+                }
 #endif
                 Connection.Certificate = null;
             }
