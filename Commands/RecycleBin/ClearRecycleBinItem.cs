@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
 #if !SP2013
     [CmdletExample(
         Code = @"PS:> Clear-PnPRecycleBinItem -All -RowLimit 10000",
-        Remarks = "Permanently deletes up to 10,000 items in recycle bin",
+        Remarks = "Permanently deletes up to 10,000 items in the recycle bin",
         SortOrder = 4)]
 #endif
 
@@ -44,7 +44,8 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         [Parameter(Mandatory = false, HelpMessage = "If provided, only all the items in the second stage recycle bin will be cleared", ParameterSetName = PARAMETERSET_ALL)]
         public SwitchParameter SecondStageOnly = false;
 #endif
-        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to permanently delete the recycle bin item")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to restore the recycle bin item", ParameterSetName = PARAMETERSET_IDENTITY)]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to restore the recycle bin item", ParameterSetName = PARAMETERSET_ALL)]
         public SwitchParameter Force;
 
 #if !SP2013

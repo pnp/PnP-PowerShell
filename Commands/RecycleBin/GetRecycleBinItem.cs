@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         Category = CmdletHelpCategory.RecycleBin,
         OutputType = typeof(RecycleBinItem),
         SupportedPlatform = CmdletSupportedPlatform.All,
-        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee541897(v=office.15)")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee541897(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Get-PnPRecycleBinItem",
         Remarks = "Returns all items in both the first and the second stage recycle bins in the current site collection",
@@ -89,14 +89,12 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                             break;
                     }
 
-                    RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate,
-                        recycleBinStage);
+                    RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, recycleBinStage);
                     ClientContext.Load(items);
                     ClientContext.ExecuteQueryRetry();
 
                     List<RecycleBinItem> recycleBinItemList = items.ToList();
                     WriteObject(recycleBinItemList, true);
-
                 }
                 else
                 {
@@ -107,7 +105,6 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
 
                     switch (ParameterSetName)
                     {
-
                         case ParameterSet_FIRSTSTAGE:
                             WriteObject(
                                 recycleBinItemList.Where(i => i.ItemState == RecycleBinItemState.FirstStageRecycleBin), true);
@@ -121,7 +118,6 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                             WriteObject(recycleBinItemList, true);
                             break;
                     }
-
                 }
 #else
                 ClientContext.Site.Context.Load(ClientContext.Site.RecycleBin, r => r.IncludeWithDefaultProperties(RetrievalExpressions));
