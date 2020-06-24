@@ -6,8 +6,9 @@ using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
 
 namespace SharePointPnP.PowerShell.Commands.RecycleBin
 {
-    [Cmdlet(VerbsCommon.Clear, "PnPRecycleBinItem", DefaultParameterSetName = "All")]
+    [Cmdlet(VerbsCommon.Clear, "PnPRecycleBinItem", DefaultParameterSetName = PARAMETERSET_ALL)]
     [CmdletHelp("Permanently deletes all or a specific recycle bin item",
+        SupportedPlatform = CmdletSupportedPlatform.All,
         Category = CmdletHelpCategory.RecycleBin)]
     [CmdletExample(
         Code = @"PS:> Get-PnPRecycleBinItem | ? FileLeafName -like ""*.docx"" | Clear-PnpRecycleBinItem",
@@ -30,47 +31,49 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
 
     public class ClearRecycleBinItem : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Id of the recycle bin item or the recycle bin item itself to permanently delete", ValueFromPipeline = true, ParameterSetName = "Identity")]
+        const string PARAMETERSET_ALL = "All";
+        const string PARAMETERSET_IDENTITY = "Identity";
+
+        [Parameter(Mandatory = true, HelpMessage = "Id of the recycle bin item or the recycle bin item itself to permanently delete", ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY)]
         public RecycleBinItemPipeBind Identity;
 
-        [Parameter(Mandatory = false, ParameterSetName = "All", HelpMessage = "Clears all items")]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_ALL, HelpMessage = "Clears all items")]
         public SwitchParameter All;
 
 #if !ONPREMISES
-        [Parameter(Mandatory = false, HelpMessage = "If provided, only all the items in the second stage recycle bin will be cleared", ParameterSetName = "All")]
+        [Parameter(Mandatory = false, HelpMessage = "If provided, only all the items in the second stage recycle bin will be cleared", ParameterSetName = PARAMETERSET_ALL)]
         public SwitchParameter SecondStageOnly = false;
 #endif
         [Parameter(Mandatory = false, HelpMessage = "If provided, no confirmation will be asked to permanently delete the recycle bin item")]
         public SwitchParameter Force;
 
 #if !SP2013
-        [Parameter(Mandatory = false, HelpMessage = "Limits deletion to specified number of items", ParameterSetName = "All")]
-        public int RowLimit = -1;
+        [Parameter(Mandatory = false, HelpMessage = "Limits deletion to specified number of items", ParameterSetName = PARAMETERSET_ALL)]
+        public int RowLimit;
 #endif
 
         protected override void ExecuteCmdlet()
         {
             switch (ParameterSetName)
             {
-                case "Identity":
+                case PARAMETERSET_IDENTITY:
                     var recycleBinItem = Identity.GetRecycleBinItem(ClientContext.Site);
 
-                    if (Force ||
-                        ShouldContinue(string.Format(Resources.ClearRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
+                    if (Force || ShouldContinue(string.Format(Resources.ClearRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
                     {
                         recycleBinItem.DeleteObject();
                         ClientContext.ExecuteQueryRetry();
                     }
                     break;
-                case "All":
+                case PARAMETERSET_ALL:
 #if !SP2013
-                    if (HasRowLimit())
+                    if (ParameterSpecified(nameof(RowLimit)))
                     {
-                        if (Force || ShouldContinue(SecondStageOnly ? Resources.ClearSecondStageRecycleBin : Resources.ClearBothRecycleBins, Resources.Confirm)) { 
+                        if (Force || ShouldContinue(SecondStageOnly ? Resources.ClearSecondStageRecycleBin : Resources.ClearBothRecycleBins, Resources.Confirm))
+                        { 
                             RecycleBinItemState recycleBinStage = SecondStageOnly ? RecycleBinItemState.SecondStageRecycleBin : RecycleBinItemState.None;
 
-                            RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate,
-                                recycleBinStage);
+                            RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, recycleBinStage);
                             ClientContext.Load(items);
                             ClientContext.ExecuteQueryRetry();
 
@@ -111,13 +114,5 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
 #endif
             }
         }
-
-#if !SP2013
-        private bool HasRowLimit()
-        {
-            return RowLimit > 0;
-        }
-#endif
-
     }
 }
