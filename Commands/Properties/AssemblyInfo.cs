@@ -23,6 +23,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2016.Commands")]
 #elif SP2019
 [assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2019.Commands")]
+#elif NETSTANDARD2_1
+[assembly: AssemblyProduct("PnP.PowerShell.Online.Commands")]
 #else
 [assembly: AssemblyProduct("SharePointPnP.PowerShell.Online.Commands")]
 #endif
