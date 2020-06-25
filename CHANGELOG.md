@@ -10,9 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Fixed `Invoke-PnPSPRestMethod -Method Merge` not passing in the `If-Match: *` header and thereby causing failed requests [PR #2764](https://github.com/pnp/PnP-PowerShell/pull/2764)
 
 ### Contributors
-
+- Gautam Sheth [gautamdsheth]
 
 ## [3.22.2006.0]
 
