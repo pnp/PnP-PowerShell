@@ -453,7 +453,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, true);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
         }
 
         /// <summary>
@@ -534,7 +534,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     ConnectionMethod = ConnectionMethod.AzureADAppOnly,
                     Certificate = certificate,
-                    Tenant = tenant
+                    Tenant = tenant,
+                    DeleteCertificateFromCacheOnDisconnect = certificateFromFile
                 };
                 return spoConnection;
             }
@@ -562,16 +563,28 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
+        /// <summary>
+        /// Verifies if a local copy of the certificate has been stored in the machinekeys cache of Windows and if so, will remove it to avoid the cache from growing over time
+        /// </summary>
+        /// <param name="certificate">Certificate to validate if there is a local cached copy for and if so, delete it</param>
         internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
         {
             var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
             string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
             certificate.Reset();
-            var path = Environment.GetEnvironmentVariable("ProgramData");
-            if (string.IsNullOrEmpty(path)) path = @"C:\ProgramData";
+            
+            var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
+            if (string.IsNullOrEmpty(programDataPath))
+            {
+                programDataPath = @"C:\ProgramData";
+            }
             try
             {
-                System.IO.File.Delete(string.Format(@"{0}\Microsoft\Crypto\RSA\MachineKeys\{1}", path, uniqueKeyContainerName));
+                var temporaryCertificateFilePath = $@"{programDataPath}\Microsoft\Crypto\RSA\MachineKeys\{uniqueKeyContainerName}";
+                if (System.IO.File.Exists(temporaryCertificateFilePath))
+                {
+                    System.IO.File.Delete(temporaryCertificateFilePath);
+                }
             }
             catch (Exception)
             {
