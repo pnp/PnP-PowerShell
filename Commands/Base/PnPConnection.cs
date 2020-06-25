@@ -80,6 +80,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// </summary>
         public X509Certificate2 Certificate { get; internal set; }
 
+        /// <summary>
+        /// Boolean indicating if when using Disconnect-PnPOnline to destruct this PnPConnection instance, if the certificate file should be deleted from C:\ProgramData\Microsoft\Crypto\RSA\MachineKeys
+        /// </summary>
+        public bool DeleteCertificateFromCacheOnDisconnect { get; internal set; }
+
         public ClientContext Context { get; set; }
 
         /// <summary>

@@ -453,7 +453,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             string password = new System.Net.NetworkCredential(string.Empty, certificatePassword).Password;
             X509Certificate2 certificate = CertificateHelper.GetCertificateFromPEMstring(certificatePEM, privateKeyPEM, password);
 
-            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, true);
+            return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
         }
 
         /// <summary>
@@ -534,7 +534,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     ConnectionMethod = ConnectionMethod.AzureADAppOnly,
                     Certificate = certificate,
-                    Tenant = tenant
+                    Tenant = tenant,
+                    DeleteCertificateFromCacheOnDisconnect = certificateFromFile
                 };
                 return spoConnection;
             }
