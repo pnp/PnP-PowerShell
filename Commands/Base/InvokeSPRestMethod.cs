@@ -91,6 +91,7 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
                     {
                         method = HttpMethod.Post;
                         request.Headers.Add("X-HTTP-Method", "MERGE");
+                        request.Headers.Add("IF-MATCH", "*");
                     }
 
                     if (!string.IsNullOrEmpty(accessToken))
