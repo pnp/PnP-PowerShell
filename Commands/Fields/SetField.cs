@@ -40,6 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
 
         protected override void ExecuteCmdlet()
         {
+            const string allowDeletionPropertyKey = "AllowDeletion";
             Field field = null;
             if (List != null)
             {
@@ -84,7 +85,14 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 }
             }
 
-            ClientContext.Load(field);
+            if (Values.ContainsKey(allowDeletionPropertyKey))
+            {
+                ClientContext.Load(field, f => f.SchemaXmlWithResourceTokens);
+            }
+            else
+            {
+                ClientContext.Load(field);
+            }
             ClientContext.ExecuteQueryRetry();
 
             // Get a reference to the type-specific object to allow setting type-specific properties, i.e. LookupList and LookupField for Microsoft.SharePoint.Client.FieldLookup
@@ -95,7 +103,10 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 var value = Values[key];
 
                 var property = typeSpecificField.GetType().GetProperty(key);
-                if (property == null)
+
+                bool isAllowDeletionProperty = string.Equals(key, allowDeletionPropertyKey, StringComparison.Ordinal);
+
+                if (property == null && !isAllowDeletionProperty)
                 {
                     WriteWarning($"No property '{key}' found on this field. Value will be ignored.");
                 }
@@ -103,7 +114,14 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 {
                     try
                     {
-                        property.SetValue(typeSpecificField, value);
+                        if (isAllowDeletionProperty)
+                        {
+                            field.SetAllowDeletion(value as bool?);
+                        }
+                        else
+                        {
+                            property.SetValue(typeSpecificField, value);
+                        }
                     }
                     catch (Exception e)
                     {
