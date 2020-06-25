@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD2_1
+using System;
 using System.Net;
 using System.Linq;
 using System.Threading;
@@ -243,3 +244,4 @@ namespace SharePointPnP.PowerShell.Commands.Diagnostic
         }
     }
 }
+#endif

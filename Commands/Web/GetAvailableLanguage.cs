@@ -1,4 +1,6 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !SP2013 && !SP2016
+
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq.Expressions;
@@ -10,7 +12,7 @@ namespace SharePointPnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Get, "PnPAvailableLanguage")]
     [CmdletHelp("Returns the available languages on the current web",
         Category = CmdletHelpCategory.Webs,
-        SupportedPlatform = CmdletSupportedPlatform.All)]
+        SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Get-PnPAvailableLanguage",
         Remarks = "This will return the available languages in the current web",
@@ -46,3 +48,4 @@ namespace SharePointPnP.PowerShell.Commands
         }
     }
 }
+#endif

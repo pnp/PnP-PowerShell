@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !NETSTANDARD2_1
+using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 using OfficeDevPnP.Core.Utilities;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
@@ -231,3 +232,4 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
         }
     }
 }
+#endif
