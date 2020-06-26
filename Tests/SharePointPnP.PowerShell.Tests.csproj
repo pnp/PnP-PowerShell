@@ -387,6 +387,28 @@
     <Compile Include="Admin\SetPnPTenantSyncClientRestrictionTests.cs" />
     <Compile Include="Admin\SetPnPTenantTests.cs" />
     <Compile Include="Admin\UnregisterPnPHubSiteTests.cs" />
+    <Compile Include="Apps\AddPnPAppTests.cs" />
+    <Compile Include="Apps\ApprovePnPTenantServicePrincipalPermissionRequestTests.cs" />
+    <Compile Include="Apps\DenyPnPTenantServicePrincipalPermissionRequestTests.cs" />
+    <Compile Include="Apps\DisablePnPTenantServicePrincipalTests.cs" />
+    <Compile Include="Apps\EnablePnPTenantServicePrincipalTests.cs" />
+    <Compile Include="Apps\GetPnPAppInstanceTests.cs" />
+    <Compile Include="Apps\GetPnPAppTests.cs" />
+    <Compile Include="Apps\GetPnPTenantServicePrincipalPermissionGrantsTests.cs" />
+    <Compile Include="Apps\GetPnPTenantServicePrincipalPermissionRequestsTests.cs" />
+    <Compile Include="Apps\GetPnPTenantServicePrincipalTests.cs" />
+    <Compile Include="Apps\GrantPnPTenantServicePrincipalPermissionTests.cs" />
+    <Compile Include="Apps\ImportPnPAppPackageTests.cs" />
+    <Compile Include="Apps\InstallPnPAppTests.cs" />
+    <Compile Include="Apps\PublishPnPAppTests.cs" />
+    <Compile Include="Apps\RegisterPnPAppCatalogSiteTests.cs" />
+    <Compile Include="Apps\RemovePnPAppTests.cs" />
+    <Compile Include="Apps\RevokePnPTenantServicePrincipalPermissionTests.cs" />
+    <Compile Include="Apps\SyncPnPAppToTeamsTests.cs" />
+    <Compile Include="Apps\UninstallPnPAppInstanceTests.cs" />
+    <Compile Include="Apps\UninstallPnPAppTests.cs" />
+    <Compile Include="Apps\UnpublishPnPAppTests.cs" />
+    <Compile Include="Apps\UpdatePnPAppTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="ContentTypeTests.cs" />
     <Compile Include="ClientSidePagesTests.cs" />
@@ -510,7 +532,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Apps\" />
     <Folder Include="Base\" />
     <Folder Include="Branding\" />
     <Folder Include="ClientSidePages\" />
