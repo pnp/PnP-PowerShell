@@ -1,0 +1,63 @@
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Management.Automation.Runspaces;
+
+namespace SharePointPnP.PowerShell.Tests.Publishing
+{
+
+    [TestClass]
+    public class SetAvailablePageLayoutsTests
+    {
+        #region Test Setup/CleanUp
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            using (var scope = new PSTestScope())
+            {
+                // Example
+                // scope.ExecuteCommand("cmdlet", new CommandParameter("param1", prop));
+            }
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            using (var scope = new PSTestScope())
+            {
+                try
+                {
+
+                }
+                catch (Exception)
+                {
+                    // Describe Exception
+                }
+            }
+        }
+
+        #endregion
+
+        #region Scaffolded Cmdlet Tests
+
+        
+
+        //TODO: This is a scaffold of the cmdlet - complete the unit test
+        //[TestMethod]
+        public void SetPnPAvailablePageLayoutsTest()
+        {
+                                
+            using (var scope = new PSTestScope(true))
+            {
+                // Complete writing cmd parameters
+                var results = scope.ExecuteCommand("Set-PnPAvailablePageLayouts",new CommandParameter("PageLayouts", "null"),new CommandParameter("AllowAllPageLayouts", "null"),new CommandParameter("InheritPageLayouts", "null"));
+                Assert.IsNotNull(results);
+            }
+
+        }
+            
+
+        #endregion
+    }
+}
+            
