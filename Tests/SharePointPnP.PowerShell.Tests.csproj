@@ -458,6 +458,18 @@
     <Compile Include="Branding\SetPnPMinimalDownloadStrategyTests.cs" />
     <Compile Include="Branding\SetPnPThemeTests.cs" />
     <Compile Include="Branding\SetPnPWebThemeTests.cs" />
+    <Compile Include="ClientSidePages\AddPnPClientSidePageSectionTests.cs" />
+    <Compile Include="ClientSidePages\AddPnPClientSidePageTests.cs" />
+    <Compile Include="ClientSidePages\AddPnPClientSideTextTests.cs" />
+    <Compile Include="ClientSidePages\GetPnPAvailableClientSideComponentsTests.cs" />
+    <Compile Include="ClientSidePages\GetPnPClientSideComponentTests.cs" />
+    <Compile Include="ClientSidePages\GetPnPClientSidePageTests.cs" />
+    <Compile Include="ClientSidePages\MovePnPClientSideComponentTests.cs" />
+    <Compile Include="ClientSidePages\RemovePnPClientSideComponentTests.cs" />
+    <Compile Include="ClientSidePages\RemovePnPClientSidePageTests.cs" />
+    <Compile Include="ClientSidePages\SetPnPClientSidePageTests.cs" />
+    <Compile Include="ClientSidePages\SetPnPClientSideTextTests.cs" />
+    <Compile Include="ClientSidePages\SetPnPClientSideWebPartTests.cs" />
     <Compile Include="ContentTypeTests.cs" />
     <Compile Include="ClientSidePagesTests.cs" />
     <Compile Include="EventReceiverTests.cs" />
@@ -509,7 +521,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ClientSidePages\" />
     <Folder Include="ContentTypes\" />
     <Folder Include="Diagnostic\" />
     <Folder Include="DocumentSets\" />
