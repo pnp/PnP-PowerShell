@@ -344,7 +344,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AdminTests.cs" />
+    <Compile Include="OldTests\AdminTests.cs" />
     <Compile Include="Admin\AddPnPHubSiteAssociationTests.cs" />
     <Compile Include="Admin\AddPnPOffice365GroupToSiteTests.cs" />
     <Compile Include="Admin\AddPnPOrgAssetsLibraryTests.cs" />
@@ -409,7 +409,7 @@
     <Compile Include="Apps\UninstallPnPAppTests.cs" />
     <Compile Include="Apps\UnpublishPnPAppTests.cs" />
     <Compile Include="Apps\UpdatePnPAppTests.cs" />
-    <Compile Include="BaseTests.cs" />
+    <Compile Include="OldTests\BaseTests.cs" />
     <Compile Include="Base\AddPnPStoredCredentialTests.cs" />
     <Compile Include="Base\ConnectPnPOnlineTests.cs" />
     <Compile Include="Base\DisablePnPPowerShellTelemetryTests.cs" />
@@ -479,8 +479,8 @@
     <Compile Include="ContentTypes\RemovePnPContentTypeTests.cs" />
     <Compile Include="ContentTypes\RemovePnPFieldFromContentTypeTests.cs" />
     <Compile Include="ContentTypes\SetPnPDefaultContentTypeToListTests.cs" />
-    <Compile Include="ContentTypeTests.cs" />
-    <Compile Include="ClientSidePagesTests.cs" />
+    <Compile Include="OldTests\ContentTypeTests.cs" />
+    <Compile Include="OldTests\ClientSidePagesTests.cs" />
     <Compile Include="Diagnostic\MeasurePnPListTests.cs" />
     <Compile Include="Diagnostic\MeasurePnPResponseTimeTests.cs" />
     <Compile Include="Diagnostic\MeasurePnPWebTests.cs" />
@@ -489,7 +489,7 @@
     <Compile Include="DocumentSets\GetPnPDocumentSetTemplateTests.cs" />
     <Compile Include="DocumentSets\RemovePnPContentTypeFromDocumentSetTests.cs" />
     <Compile Include="DocumentSets\SetPnPDocumentSetFieldTests.cs" />
-    <Compile Include="EventReceiverTests.cs" />
+    <Compile Include="OldTests\EventReceiverTests.cs" />
     <Compile Include="Events\AddPnPEventReceiverTests.cs" />
     <Compile Include="Events\GetPnPEventReceiverTests.cs" />
     <Compile Include="Events\RemovePnPEventReceiverTests.cs" />
@@ -497,8 +497,8 @@
     <Compile Include="Features\DisablePnPFeatureTests.cs" />
     <Compile Include="Features\EnablePnPFeatureTests.cs" />
     <Compile Include="Features\GetPnPFeatureTests.cs" />
-    <Compile Include="FeatureTests.cs" />
-    <Compile Include="FieldsTests.cs" />
+    <Compile Include="OldTests\FeatureTests.cs" />
+    <Compile Include="OldTests\FieldsTests.cs" />
     <Compile Include="Fields\AddPnPFieldFromXmlTests.cs" />
     <Compile Include="Fields\AddPnPFieldTests.cs" />
     <Compile Include="Fields\AddPnPTaxonomyFieldTests.cs" />
@@ -506,7 +506,7 @@
     <Compile Include="Fields\RemovePnPFieldTests.cs" />
     <Compile Include="Fields\SetPnPFieldTests.cs" />
     <Compile Include="Fields\SetPnPViewTests.cs" />
-    <Compile Include="FilesTest.cs" />
+    <Compile Include="OldTests\FilesTest.cs" />
     <Compile Include="Files\AddPnPFileTests.cs" />
     <Compile Include="Files\AddPnPFolderTests.cs" />
     <Compile Include="Files\CopyPnPFileTests.cs" />
@@ -555,8 +555,8 @@
     <Compile Include="InformationManagement\SetPnPListInformationRightsManagementTests.cs" />
     <Compile Include="InformationManagement\SetPnPSiteClosureTests.cs" />
     <Compile Include="InformationManagement\SetPnPSitePolicyTests.cs" />
-    <Compile Include="InvokeWebActionTest.cs" />
-    <Compile Include="ListDataRowProvisioningTemplate.cs" />
+    <Compile Include="OldTests\InvokeWebActionTest.cs" />
+    <Compile Include="OldTests\ListDataRowProvisioningTemplate.cs" />
     <Compile Include="Lists\AddPnPListItemTests.cs" />
     <Compile Include="Lists\AddPnPViewTests.cs" />
     <Compile Include="Lists\ClearPnPDefaultColumnValuesTests.cs" />
@@ -582,7 +582,7 @@
     <Compile Include="ManagementApi\GetPnPOffice365ServicesTests.cs" />
     <Compile Include="ManagementApi\GetPnPOfficeManagementApiAccessTokenTests.cs" />
     <Compile Include="ManagementApi\GetPnPUnifiedAuditLogTests.cs" />
-    <Compile Include="PrincipalsTests.cs" />
+    <Compile Include="OldTests\PrincipalsTests.cs" />
     <Compile Include="Principals\AddPnPAlertTests.cs" />
     <Compile Include="Principals\AddPnPUserToGroupTests.cs" />
     <Compile Include="Principals\GetPnPAlertTests.cs" />
@@ -624,8 +624,8 @@
     <Compile Include="Provisioning.Tenant\ReadPnPTenantTemplateTests.cs" />
     <Compile Include="Provisioning.Tenant\SavePnPTenantTemplateTests.cs" />
     <Compile Include="Provisioning.Tenant\TestPnPTenantTemplateTests.cs" />
-    <Compile Include="ProvisioningTemplateTests.cs" />
-    <Compile Include="GraphTests.cs" />
+    <Compile Include="OldTests\ProvisioningTemplateTests.cs" />
+    <Compile Include="OldTests\GraphTests.cs" />
     <Compile Include="Publishing\AddPnPHtmlPublishingPageLayoutTests.cs" />
     <Compile Include="Publishing\AddPnPMasterPageTests.cs" />
     <Compile Include="Publishing\AddPnPPublishingImageRenditionTests.cs" />
@@ -713,7 +713,7 @@
     <Compile Include="UserProfiles\SetPnPUserProfilePropertyTests.cs" />
     <Compile Include="Utilities\SendPnPMailTests.cs" />
     <Compile Include="WebhookSubscriptionsTests.cs" />
-    <Compile Include="DiagnosticTests.cs" />
+    <Compile Include="OldTests\DiagnosticTests.cs" />
     <Compile Include="Webhooks\AddPnPWebhookSubscriptionTests.cs" />
     <Compile Include="Webhooks\GetPnPWebhookSubscriptionsTests.cs" />
     <Compile Include="Webhooks\RemovePnPWebhookSubscriptionTests.cs" />
@@ -727,13 +727,13 @@
     <Compile Include="WebParts\RemovePnPWebPartTests.cs" />
     <Compile Include="WebParts\SetPnPWebPartPropertyTests.cs" />
     <Compile Include="WebTests.cs" />
-    <Compile Include="ProvisioningTemplateFromFolderTest.cs" />
+    <Compile Include="OldTests\ProvisioningTemplateFromFolderTest.cs" />
     <Compile Include="WebPartsTests.cs" />
-    <Compile Include="ListsTests.cs" />
+    <Compile Include="OldTests\ListsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PSTestScope.cs" />
     <Compile Include="TestCommon.cs" />
-    <Compile Include="BrandingTests.cs" />
+    <Compile Include="OldTests\BrandingTests.cs" />
     <Compile Include="Workflows\AddPnPWorkflowDefinitionTests.cs" />
     <Compile Include="Workflows\AddPnPWorkflowSubscriptionTests.cs" />
     <Compile Include="Workflows\GetPnPWorkflowDefinitionTests.cs" />
