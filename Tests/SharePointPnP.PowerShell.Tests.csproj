@@ -712,7 +712,7 @@
     <Compile Include="UserProfiles\SetPnPUserOneDriveQuotaTests.cs" />
     <Compile Include="UserProfiles\SetPnPUserProfilePropertyTests.cs" />
     <Compile Include="Utilities\SendPnPMailTests.cs" />
-    <Compile Include="WebhookSubscriptionsTests.cs" />
+    <Compile Include="OriginalTests\WebhookSubscriptionsTests.cs" />
     <Compile Include="OriginalTests\DiagnosticTests.cs" />
     <Compile Include="Webhooks\AddPnPWebhookSubscriptionTests.cs" />
     <Compile Include="Webhooks\GetPnPWebhookSubscriptionsTests.cs" />
@@ -726,9 +726,9 @@
     <Compile Include="WebParts\GetPnPWebPartXmlTests.cs" />
     <Compile Include="WebParts\RemovePnPWebPartTests.cs" />
     <Compile Include="WebParts\SetPnPWebPartPropertyTests.cs" />
-    <Compile Include="WebTests.cs" />
+    <Compile Include="OriginalTests\WebTests.cs" />
     <Compile Include="OriginalTests\ProvisioningTemplateFromFolderTest.cs" />
-    <Compile Include="WebPartsTests.cs" />
+    <Compile Include="OriginalTests\WebPartsTests.cs" />
     <Compile Include="OriginalTests\ListsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PSTestScope.cs" />
