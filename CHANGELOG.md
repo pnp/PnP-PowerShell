@@ -10,8 +10,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Fixed issue where using `Disconnect-PnPOnline -Connection $variable` after having connected using `$variable = Connect-PnPOnline -CertificatePath <path> -ReturnConnection`, it would not clean up the certificate on that connection instance passed in by $variable, but instead try to do it on the current connection context [PR #2755](https://github.com/pnp/PnP-PowerShell/pull/2755)
+- Fixed issue where using `Connect-PnPOnline` using `-Thumbnail` would delete the private key on some devices when running `Disconnect-PnPOnline` [PR #2759](https://github.com/pnp/PnP-PowerShell/pull/2759)
 
 ### Contributors
+- Gautam Sheth [gautamdsheth]
+- Koen Zomers [koenzomers]
+
+## [3.22.2006.2]
+
+Intermediate release due to a fix in the underlying Core Library and the Connect-PnPOnline cmdlet.
 
 ## [3.22.2006.1]
 
