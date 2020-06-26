@@ -481,6 +481,9 @@
     <Compile Include="ContentTypes\SetPnPDefaultContentTypeToListTests.cs" />
     <Compile Include="ContentTypeTests.cs" />
     <Compile Include="ClientSidePagesTests.cs" />
+    <Compile Include="Diagnostic\MeasurePnPListTests.cs" />
+    <Compile Include="Diagnostic\MeasurePnPResponseTimeTests.cs" />
+    <Compile Include="Diagnostic\MeasurePnPWebTests.cs" />
     <Compile Include="EventReceiverTests.cs" />
     <Compile Include="FeatureTests.cs" />
     <Compile Include="FieldsTests.cs" />
@@ -522,7 +525,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Diagnostic\" />
     <Folder Include="DocumentSets\" />
     <Folder Include="Enums\" />
     <Folder Include="Events\" />
