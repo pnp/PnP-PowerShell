@@ -410,6 +410,29 @@
     <Compile Include="Apps\UnpublishPnPAppTests.cs" />
     <Compile Include="Apps\UpdatePnPAppTests.cs" />
     <Compile Include="BaseTests.cs" />
+    <Compile Include="Base\AddPnPStoredCredentialTests.cs" />
+    <Compile Include="Base\ConnectPnPOnlineTests.cs" />
+    <Compile Include="Base\DisablePnPPowerShellTelemetryTests.cs" />
+    <Compile Include="Base\DisconnectPnPOnlineTests.cs" />
+    <Compile Include="Base\EnablePnPPowerShellTelemetryTests.cs" />
+    <Compile Include="Base\GetPnPAccessTokenTests.cs" />
+    <Compile Include="Base\GetPnPAppAuthAccessTokenTests.cs" />
+    <Compile Include="Base\GetPnPAzureCertificateTests.cs" />
+    <Compile Include="Base\GetPnPConnectionTests.cs" />
+    <Compile Include="Base\GetPnPContextTests.cs" />
+    <Compile Include="Base\GetPnPExceptionTests.cs" />
+    <Compile Include="Base\GetPnPGraphAccessTokenTests.cs" />
+    <Compile Include="Base\GetPnPHealthScoreTests.cs" />
+    <Compile Include="Base\GetPnPPowerShellTelemetryEnabledTests.cs" />
+    <Compile Include="Base\GetPnPPropertyTests.cs" />
+    <Compile Include="Base\GetPnPStoredCredentialTests.cs" />
+    <Compile Include="Base\InitializePnPPowerShellAuthenticationTests.cs" />
+    <Compile Include="Base\InvokePnPQueryTests.cs" />
+    <Compile Include="Base\NewPnPAzureCertificateTests.cs" />
+    <Compile Include="Base\RemovePnPStoredCredentialTests.cs" />
+    <Compile Include="Base\RequestPnPAccessTokenTests.cs" />
+    <Compile Include="Base\SetPnPContextTests.cs" />
+    <Compile Include="Base\SetPnPTraceLogTests.cs" />
     <Compile Include="ContentTypeTests.cs" />
     <Compile Include="ClientSidePagesTests.cs" />
     <Compile Include="EventReceiverTests.cs" />
@@ -532,7 +555,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Base\" />
     <Folder Include="Branding\" />
     <Folder Include="ClientSidePages\" />
     <Folder Include="ContentTypes\" />
