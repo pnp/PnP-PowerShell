@@ -345,6 +345,48 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AdminTests.cs" />
+    <Compile Include="Admin\AddPnPHubSiteAssociationTests.cs" />
+    <Compile Include="Admin\AddPnPOffice365GroupToSiteTests.cs" />
+    <Compile Include="Admin\AddPnPOrgAssetsLibraryTests.cs" />
+    <Compile Include="Admin\AddPnPOrgNewsSiteTests.cs" />
+    <Compile Include="Admin\AddPnPSiteCollectionAppCatalogTests.cs" />
+    <Compile Include="Admin\AddPnPTenantCdnOriginTests.cs" />
+    <Compile Include="Admin\AddPnPTenantThemeTests.cs" />
+    <Compile Include="Admin\GetPnPHideDefaultThemesTests.cs" />
+    <Compile Include="Admin\GetPnPHomeSiteTests.cs" />
+    <Compile Include="Admin\GetPnPHubSiteChildTests.cs" />
+    <Compile Include="Admin\GetPnPHubSiteTests.cs" />
+    <Compile Include="Admin\GetPnPKnowledgeHubSiteTests.cs" />
+    <Compile Include="Admin\GetPnPOrgAssetsLibraryTests.cs" />
+    <Compile Include="Admin\GetPnPOrgNewsSiteTests.cs" />
+    <Compile Include="Admin\GetPnPTenantCdnEnabledTests.cs" />
+    <Compile Include="Admin\GetPnPTenantCdnOriginTests.cs" />
+    <Compile Include="Admin\GetPnPTenantCdnPoliciesTests.cs" />
+    <Compile Include="Admin\GetPnPTenantIdTests.cs" />
+    <Compile Include="Admin\GetPnPTenantSyncClientRestrictionTests.cs" />
+    <Compile Include="Admin\GetPnPTenantTests.cs" />
+    <Compile Include="Admin\GetPnPTenantThemeTests.cs" />
+    <Compile Include="Admin\GrantPnPHubSiteRightsTests.cs" />
+    <Compile Include="Admin\InvokePnPSPRestMethodTests.cs" />
+    <Compile Include="Admin\RegisterPnPHubSiteTests.cs" />
+    <Compile Include="Admin\RemovePnPHomeSiteTests.cs" />
+    <Compile Include="Admin\RemovePnPHubSiteAssociationTests.cs" />
+    <Compile Include="Admin\RemovePnPKnowledgeHubSiteTests.cs" />
+    <Compile Include="Admin\RemovePnPOrgAssetsLibraryTests.cs" />
+    <Compile Include="Admin\RemovePnPOrgNewsSiteTests.cs" />
+    <Compile Include="Admin\RemovePnPSiteCollectionAppCatalogTests.cs" />
+    <Compile Include="Admin\RemovePnPTenantCdnOriginTests.cs" />
+    <Compile Include="Admin\RemovePnPTenantThemeTests.cs" />
+    <Compile Include="Admin\RevokePnPHubSiteRightsTests.cs" />
+    <Compile Include="Admin\SetPnPHideDefaultThemesTests.cs" />
+    <Compile Include="Admin\SetPnPHomeSiteTests.cs" />
+    <Compile Include="Admin\SetPnPHubSiteTests.cs" />
+    <Compile Include="Admin\SetPnPKnowledgeHubSiteTests.cs" />
+    <Compile Include="Admin\SetPnPTenantCdnEnabledTests.cs" />
+    <Compile Include="Admin\SetPnPTenantCdnPolicyTests.cs" />
+    <Compile Include="Admin\SetPnPTenantSyncClientRestrictionTests.cs" />
+    <Compile Include="Admin\SetPnPTenantTests.cs" />
+    <Compile Include="Admin\UnregisterPnPHubSiteTests.cs" />
     <Compile Include="BaseTests.cs" />
     <Compile Include="ContentTypeTests.cs" />
     <Compile Include="ClientSidePagesTests.cs" />
@@ -354,6 +396,7 @@
     <Compile Include="FilesTest.cs" />
     <Compile Include="InvokeWebActionTest.cs" />
     <Compile Include="ListDataRowProvisioningTemplate.cs" />
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs" />
     <Compile Include="PrincipalsTests.cs" />
     <Compile Include="ProvisioningTemplateTests.cs" />
     <Compile Include="GraphTests.cs" />
@@ -369,6 +412,73 @@
     <Compile Include="BrandingTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\AngleSharp.dll" />
+    <Content Include="bin\Debug\AngleSharp.xml" />
+    <Content Include="bin\Debug\Microsoft.ApplicationInsights.dll" />
+    <Content Include="bin\Debug\Microsoft.ApplicationInsights.xml" />
+    <Content Include="bin\Debug\Microsoft.Azure.ActiveDirectory.GraphClient.dll" />
+    <Content Include="bin\Debug\Microsoft.Graph.Core.dll" />
+    <Content Include="bin\Debug\Microsoft.Graph.Core.xml" />
+    <Content Include="bin\Debug\Microsoft.Graph.dll" />
+    <Content Include="bin\Debug\Microsoft.Graph.xml" />
+    <Content Include="bin\Debug\Microsoft.Identity.Client.dll" />
+    <Content Include="bin\Debug\Microsoft.Identity.Client.xml" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.xml" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.JsonWebTokens.pdb" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.JsonWebTokens.xml" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Logging.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Logging.pdb" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Logging.xml" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Tokens.dll" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Tokens.pdb" />
+    <Content Include="bin\Debug\Microsoft.IdentityModel.Tokens.xml" />
+    <Content Include="bin\Debug\Microsoft.Office.Client.Policy.dll" />
+    <Content Include="bin\Debug\Microsoft.Office.Client.TranslationServices.dll" />
+    <Content Include="bin\Debug\Microsoft.Online.SharePoint.Client.Tenant.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.DocumentManagement.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.Publishing.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.Runtime.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.Search.Applications.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.Search.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.Taxonomy.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.UserProfiles.dll" />
+    <Content Include="bin\Debug\Microsoft.SharePoint.Client.WorkflowServices.dll" />
+    <Content Include="bin\Debug\Microsoft.WindowsAzure.Storage.dll" />
+    <Content Include="bin\Debug\Microsoft.WindowsAzure.Storage.xml" />
+    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
+    <Content Include="bin\Debug\OfficeDevPnP.Core.dll" />
+    <Content Include="bin\Debug\OfficeDevPnP.Core.pdb" />
+    <Content Include="bin\Debug\OfficeDevPnP.Core.xml" />
+    <Content Include="bin\Debug\Resources\PnPTestList.xml" />
+    <Content Include="bin\Debug\SharePointPnP.IdentityModel.Extensions.dll" />
+    <Content Include="bin\Debug\SharePointPnP.Modernization.Framework.dll" />
+    <Content Include="bin\Debug\SharePointPnP.Modernization.Framework.xml" />
+    <Content Include="bin\Debug\SharePointPnP.PowerShell.CmdletHelpAttributes.dll" />
+    <Content Include="bin\Debug\SharePointPnP.PowerShell.CmdletHelpAttributes.pdb" />
+    <Content Include="bin\Debug\SharePointPnP.PowerShell.Online.Commands.dll" />
+    <Content Include="bin\Debug\SharePointPnP.PowerShell.Online.Commands.pdb" />
+    <Content Include="bin\Debug\SharePointPnP.PowerShell.Tests.dll" />
+    <Content Include="bin\Debug\SharePointPnP.PowerShell.Tests.pdb" />
+    <Content Include="bin\Debug\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.DiagnosticSource.xml" />
+    <Content Include="bin\Debug\System.IdentityModel.Tokens.Jwt.dll" />
+    <Content Include="bin\Debug\System.IdentityModel.Tokens.Jwt.pdb" />
+    <Content Include="bin\Debug\System.IdentityModel.Tokens.Jwt.xml" />
+    <Content Include="bin\Debug\System.Net.Http.dll" />
+    <Content Include="bin\Debug\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\Debug\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\Debug\System.Text.Encodings.Web.dll" />
+    <Content Include="bin\Debug\System.Text.Encodings.Web.xml" />
+    <Content Include="bin\Debug\System.Web.Http.dll" />
+    <Content Include="bin\Debug\System.Web.Http.xml" />
+    <Content Include="obj\Debug\SharePointPnP.PowerShell.Tests.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\SharePointPnP.PowerShell.Tests.dll" />
+    <Content Include="obj\Debug\SharePointPnP.PowerShell.Tests.pdb" />
     <Content Include="Resources\PnPTestList.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -380,12 +490,64 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="App.config.sample" />
+    <None Include="bin\Debug\ModuleFiles\SharePointPnP.PowerShell.2013.Commands.Format.ps1xml" />
+    <None Include="bin\Debug\ModuleFiles\SharePointPnP.PowerShell.2016.Commands.Format.ps1xml" />
+    <None Include="bin\Debug\ModuleFiles\SharePointPnP.PowerShell.2019.Commands.Format.ps1xml" />
+    <None Include="bin\Debug\ModuleFiles\SharePointPnP.PowerShell.Online.Commands.Format.ps1xml" />
+    <None Include="bin\Debug\OfficeDevPnP.Core.dll.config" />
+    <None Include="bin\Debug\SharePointPnP.PowerShell.Online.Commands.dll.config" />
+    <None Include="bin\Debug\SharePointPnP.PowerShell.Tests.dll.config" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\SharePointPnP.PowerShell.Tests.csproj.CopyComplete" />
+    <None Include="obj\Debug\SharePointPnP.PowerShell.Tests.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\SharePointPnP.PowerShell.Tests.csprojAssemblyReference.cache" />
+    <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Commands\SharePointPnP.PowerShell.Commands.csproj">
       <Project>{1dde6f0a-ca49-419a-9ce8-a6ca02f43ce0}</Project>
       <Name>SharePointPnP.PowerShell.Commands</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Apps\" />
+    <Folder Include="Base\" />
+    <Folder Include="Branding\" />
+    <Folder Include="ClientSidePages\" />
+    <Folder Include="ContentTypes\" />
+    <Folder Include="Diagnostic\" />
+    <Folder Include="DocumentSets\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Events\" />
+    <Folder Include="Extensibility\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Features\" />
+    <Folder Include="Fields\" />
+    <Folder Include="Files\" />
+    <Folder Include="Graph\" />
+    <Folder Include="InformationManagement\" />
+    <Folder Include="InvokeAction\" />
+    <Folder Include="Lists\" />
+    <Folder Include="ManagementApi\" />
+    <Folder Include="Model\" />
+    <Folder Include="Navigation\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Principals\" />
+    <Folder Include="Provider\" />
+    <Folder Include="Provisioning\" />
+    <Folder Include="Publishing\" />
+    <Folder Include="RecordsManagement\" />
+    <Folder Include="RecycleBin\" />
+    <Folder Include="Search\" />
+    <Folder Include="SiteDesigns\" />
+    <Folder Include="Site\" />
+    <Folder Include="Taxonomy\" />
+    <Folder Include="UserProfiles\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Webhooks\" />
+    <Folder Include="WebParts\" />
+    <Folder Include="Web\" />
+    <Folder Include="Workflows\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
