@@ -470,6 +470,15 @@
     <Compile Include="ClientSidePages\SetPnPClientSidePageTests.cs" />
     <Compile Include="ClientSidePages\SetPnPClientSideTextTests.cs" />
     <Compile Include="ClientSidePages\SetPnPClientSideWebPartTests.cs" />
+    <Compile Include="ContentTypes\AddPnPContentTypeTests.cs" />
+    <Compile Include="ContentTypes\AddPnPContentTypeToListTests.cs" />
+    <Compile Include="ContentTypes\AddPnPFieldToContentTypeTests.cs" />
+    <Compile Include="ContentTypes\GetPnPContentTypePublishingHubUrlTests.cs" />
+    <Compile Include="ContentTypes\GetPnPContentTypeTests.cs" />
+    <Compile Include="ContentTypes\RemovePnPContentTypeFromListTests.cs" />
+    <Compile Include="ContentTypes\RemovePnPContentTypeTests.cs" />
+    <Compile Include="ContentTypes\RemovePnPFieldFromContentTypeTests.cs" />
+    <Compile Include="ContentTypes\SetPnPDefaultContentTypeToListTests.cs" />
     <Compile Include="ContentTypeTests.cs" />
     <Compile Include="ClientSidePagesTests.cs" />
     <Compile Include="EventReceiverTests.cs" />
@@ -478,7 +487,6 @@
     <Compile Include="FilesTest.cs" />
     <Compile Include="InvokeWebActionTest.cs" />
     <Compile Include="ListDataRowProvisioningTemplate.cs" />
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs" />
     <Compile Include="PrincipalsTests.cs" />
     <Compile Include="ProvisioningTemplateTests.cs" />
     <Compile Include="GraphTests.cs" />
@@ -494,9 +502,6 @@
     <Compile Include="BrandingTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="obj\Debug\SharePointPnP.PowerShell.Tests.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\SharePointPnP.PowerShell.Tests.dll" />
-    <Content Include="obj\Debug\SharePointPnP.PowerShell.Tests.pdb" />
     <Content Include="Resources\PnPTestList.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -508,10 +513,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="App.config.sample" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\SharePointPnP.PowerShell.Tests.csproj.CopyComplete" />
-    <None Include="obj\Debug\SharePointPnP.PowerShell.Tests.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\Debug\SharePointPnP.PowerShell.Tests.csprojAssemblyReference.cache" />
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
@@ -521,7 +522,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ContentTypes\" />
     <Folder Include="Diagnostic\" />
     <Folder Include="DocumentSets\" />
     <Folder Include="Enums\" />
@@ -538,7 +538,6 @@
     <Folder Include="ManagementApi\" />
     <Folder Include="Model\" />
     <Folder Include="Navigation\" />
-    <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Principals\" />
     <Folder Include="Provider\" />
     <Folder Include="Provisioning\" />
