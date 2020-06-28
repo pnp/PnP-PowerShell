@@ -757,7 +757,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="App.config.sample" />
-    <None Include="Readme.md" />
+    <None Include="UnitTests-Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Commands\SharePointPnP.PowerShell.Commands.csproj">
