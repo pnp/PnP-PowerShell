@@ -5,6 +5,7 @@ using SharePointPnP.PowerShell.Commands.Properties;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
+using System.Net.Http;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -59,6 +60,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// Returns an Access Token for Microsoft Graph, if available, otherwise NULL
         /// </summary>
         public string AccessToken => Token?.AccessToken;
+
+        public HttpClient HttpClient => PnPConnection.CurrentConnection.HttpClient;
     }
 }
 #endif

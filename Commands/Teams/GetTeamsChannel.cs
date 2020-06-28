@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 namespace SharePointPnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannel")]
-    [CmdletHelp("Gets one Office 365 Group (aka Unified Group) or a list of Office 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All'.",
-       Category = CmdletHelpCategory.Graph,
+    [CmdletHelp("Gets the channels for a specified Team.",
+       Category = CmdletHelpCategory.Teams,
        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup",
-      Remarks = "Retrieves all the Office 365 Groups",
+      Code = "PS:> Get-PnPTeamsChannel -GroupId a6c1e0d7-f579-4993-81ab-4b666f8edea8",
+      Remarks = "Retrieves all channels for the specified team",
       SortOrder = 1)]
     [CmdletExample(
       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupId",
@@ -36,24 +36,16 @@ namespace SharePointPnP.PowerShell.Commands.Teams
       Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
       Remarks = "Retrieves a specific Office 365 Group based on its object instance",
       SortOrder = 5)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class GetTeamsChannel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
-        public TeamPipeBind TeamIdentity;
+        public GuidPipeBind GroupId;
 
         protected override void ExecuteCmdlet()
         {
-            if (JwtUtility.HasScope(AccessToken, "Group.Read.All") || JwtUtility.HasScope(AccessToken, "Group.ReadWrite.All"))
-            {
-                if (ParameterSpecified(nameof(TeamIdentity)))
-                {
-                    WriteObject(TeamsUtility.GetChannels(AccessToken, TeamIdentity.GetTeamId()), true);
-                }
-            }
-            else
-            {
-                WriteWarning("The current access token lacks the Group.Read.All or equivalent permission scope");
-            }
+            WriteObject(TeamsUtility.GetChannels(AccessToken, HttpClient, GroupId.Id.ToString()));
         }
     }
 }
