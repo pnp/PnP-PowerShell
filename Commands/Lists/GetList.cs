@@ -26,8 +26,8 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Remarks = "Returns a list with the given url",
         SortOrder = 3)]
     [CmdletExample(
-        Code = "PS:> Get-PnPList | Where-Object {$_.RootFolder.ServerRelativeUrl -like ""/lists/*""}",
-        Remarks = "This examples shows how to do wildcard searches on the list URL. It returns all lists whose URL starts with ""/lists/"" This could also be used to search for strings inside of the URL.",
+        Code = @"PS:> Get-PnPList | Where-Object {$_.RootFolder.ServerRelativeUrl -like ""/lists/*""}",
+        Remarks = @"This examples shows how to do wildcard searches on the list URL. It returns all lists whose URL starts with ""/lists/"" This could also be used to search for strings inside of the URL.",
         SortOrder = 4)]
     public class GetList : PnPWebRetrievalsCmdlet<List>
     {
