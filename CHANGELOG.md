@@ -9,10 +9,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added connection option to `Connect-PnPOnline` taking `-Scopes` and `-Credentials` to allow setting up a delegated permission token for use with Microsoft Graph and the Office 365 Management API. See [this wiki page](https://github.com/pnp/PnP-PowerShell/wiki/Connect-options#connect-using-scopes-and-credentials) for more details. [PR #2746](https://github.com/pnp/PnP-PowerShell/pull/2746)
+- Added Get-PnPTeamsTeam, Get-PnPTeamsChannel, Add-PnPTeamsChannel, Remove-PnPTeamsChannel cmdlets
 
 ### Changed
+- Fixed issue where using `Disconnect-PnPOnline -Connection $variable` after having connected using `$variable = Connect-PnPOnline -CertificatePath <path> -ReturnConnection`, it would not clean up the certificate on that connection instance passed in by $variable, but instead try to do it on the current connection context [PR #2755](https://github.com/pnp/PnP-PowerShell/pull/2755)
+- Fixed issue where using `Connect-PnPOnline` using `-Thumbnail` would delete the private key on some devices when running `Disconnect-PnPOnline` [PR #2759](https://github.com/pnp/PnP-PowerShell/pull/2759)
 
 ### Contributors
+- Erwin van Hunen [erwinvanhunen]
 - Gautam Sheth [gautamdsheth]
 - Koen Zomers [koenzomers]
 

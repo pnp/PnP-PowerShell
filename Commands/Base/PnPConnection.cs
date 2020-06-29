@@ -9,6 +9,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
@@ -28,6 +29,19 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         #region Properties
 
+        private HttpClient httpClient;
+
+        public HttpClient HttpClient
+        {
+            get
+            {
+                if (httpClient == null)
+                {
+                    httpClient = new HttpClient();
+                }
+                return httpClient;
+            }
+        }
         /// <summary>
         /// User Agent identifier to use on all connections being made to the APIs
         /// </summary>
@@ -79,6 +93,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// Certificate used to set up the connection
         /// </summary>
         public X509Certificate2 Certificate { get; internal set; }
+
+        /// <summary>
+        /// Boolean indicating if when using Disconnect-PnPOnline to destruct this PnPConnection instance, if the certificate file should be deleted from C:\ProgramData\Microsoft\Crypto\RSA\MachineKeys
+        /// </summary>
+        public bool DeleteCertificateFromCacheOnDisconnect { get; internal set; }
 
         public ClientContext Context { get; set; }
 
