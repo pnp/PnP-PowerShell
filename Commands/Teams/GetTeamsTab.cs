@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         public string ChannelId;
 
         [Parameter(Mandatory = false, HelpMessage = "Identity")]
-        public TeamTabPipeBind Identity;
+        public TeamsTabPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {

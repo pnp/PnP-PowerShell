@@ -100,7 +100,6 @@ PS:> dir",
         SortOrder = 14)]
 #endif
 #if !ONPREMISES
-#if !NETSTANDARD2_1
     [CmdletExample(
        Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\",\"ActivityFeed.Read\"",
        Remarks = "Connects to Azure Active Directory interactively and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP.PowerShell with application id bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71 registered by the PnP PowerShell team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/graph/permissions-reference . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. It will ask you to authenticate for each of the APIs you have listed scopes for.",
@@ -109,7 +108,6 @@ PS:> dir",
        Code = "PS:> Connect-PnPOnline -Scopes \"Mail.Read\",\"Files.Read\",\"ActivityFeed.Read\" -Credentials (New-Object System.Management.Automation.PSCredential (\"johndoe@contoso.onmicrosoft.com\", (ConvertTo-SecureString \"password\" -AsPlainText -Force)))",
        Remarks = "Connects to Azure Active Directory using delegated permissions and gets an OAuth 2.0 Access Token to consume the resources of the declared permission scopes. It will utilize the Azure Active Directory enterprise application named PnP.PowerShell with application id bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71 registered by the PnP PowerShell team. If you want to connect using your own Azure Active Directory application registration, use one of the Connect-PnPOnline cmdlets using a -ClientId attribute instead and pre-assign the required permissions/scopes/roles in your application registration in Azure Active Directory. The available permission scopes for Microsoft Graph are defined at the following URL: https://docs.microsoft.com/graph/permissions-reference . If the requested scope(s) have been used with this connect cmdlet before, they will not be asked for consent again. You can request scopes from different APIs in one Connect, i.e. from Microsoft Graph and the Microsoft Office Management API. You must have logged on interactively with the same scopes at least once without using -Credentials to allow for the permission grant dialog to show and allow constent for the user account you would like to use.",
        SortOrder = 16)]
-#endif
 #endif
 #if !ONPREMISES
     [CmdletExample(
@@ -177,9 +175,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP O365 Management Shell / DeviceLogin";
         private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Office 365 Management Shell to the Microsoft Graph";
-#if !NETSTANDARD2_1
         private const string ParameterSet_AADWITHSCOPE = "Azure Active Directory using Scopes";
-#endif
         private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
@@ -523,10 +519,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL, HelpMessage = "The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.")]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-#if !NETSTANDARD2_1        
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AADWITHSCOPE, HelpMessage = "The array of permission scopes to request from Azure Active Directory")]
         public string[] Scopes;
-#endif
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN, HelpMessage = "The AAD where the O365 app is registered. Eg.: contoso.com, or contoso.onmicrosoft.com.")]
@@ -701,11 +695,9 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                     connection = ConnectAppOnlyAadCer();
                     break;
 
-#if !NETSTANDARD2_1
                 case ParameterSet_AADWITHSCOPE:
                     connection = ConnectAadWithScope(credentials);
                     break;
-#endif
                 case ParameterSet_ACCESSTOKEN:
                     connection = ConnectAccessToken();
                     break;
@@ -1094,7 +1086,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private PnPConnection ConnectAadWithScope(PSCredential credentials)
         {
 #if !ONPREMISES
-#if !NETSTANDARD2_1
             // Filter out the scopes for the Microsoft Office 365 Management API
             var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
 
@@ -1126,9 +1117,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 }
             }
             return connection;
-#else
-            throw new NotImplementedException();	
-#endif
 #else
             return null;
 #endif

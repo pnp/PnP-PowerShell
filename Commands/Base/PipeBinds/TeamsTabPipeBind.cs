@@ -3,17 +3,17 @@ using System;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
-    public sealed class TeamTabPipeBind
+    public sealed class TeamsTabPipeBind
     {
         private readonly Guid _id;
         private readonly string _displayName;
 
-        public TeamTabPipeBind()
+        public TeamsTabPipeBind()
         {
             _id = Guid.Empty;
         }
 
-        public TeamTabPipeBind(string input)
+        public TeamsTabPipeBind(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
