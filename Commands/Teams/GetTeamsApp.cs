@@ -18,13 +18,13 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Remarks = "Retrieves all the Microsoft Teams Apps",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTeam -GroupId $groupId",
-       Remarks = "Retrieves a specific Microsoft Teams instance",
+       Code = "PS:> Get-PnPTeamsApp -Identity a54224d7-608b-4839-bf74-1b68148e65d4",
+       Remarks = "Retrieves a specific Microsoft Teams App",
        SortOrder = 2)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTeam -Visibility Public",
-       Remarks = "Retrieves all Microsoft Teams instances which are public visible",
-       SortOrder = 2)]
+       Code = "PS:> Get-PnPTeamsApp -Identity \"MyTeamsApp\"",
+       Remarks = "Retrieves a specific Microsoft Teams App",
+       SortOrder = 3)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.AppCatalog_Read_All)]
     public class GetTeamsApp: PnPGraphCmdlet
     {
