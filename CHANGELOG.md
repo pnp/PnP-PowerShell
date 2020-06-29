@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Erwin van Hunen [erwinvanhunen]
 - Gautam Sheth [gautamdsheth]
 - Koen Zomers [koenzomers]
+- Todd Klindt [ToddKlindt]
 
 ## [3.22.2006.2]
 
