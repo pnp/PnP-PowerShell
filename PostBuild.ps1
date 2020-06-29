@@ -5,7 +5,7 @@ if($ConfigurationName -like "Debug*")
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 	if($TargetDir -like "*Core*")
 	{
-		$DestinationFolder = "$documentsFolder\PowerShell\Modules\SharePointPnPPowerShellCore"
+		$DestinationFolder = "$documentsFolder\PowerShell\Modules\PnPPowerShellCore"
 	} else {
 		if($ConfigurationName -like "Debug15")
 		{
