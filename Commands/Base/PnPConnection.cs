@@ -134,9 +134,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// Tries to get a token for the provided audience
         /// </summary>
         /// <param name="tokenAudience">Audience to try to get a token for</param>
-        /// <param name="roles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
+        /// <param name="orRoles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
         /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, string[] roles = null)
+        internal GenericToken TryGetToken(TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null)
         {
             GenericToken token = null;
 
@@ -148,16 +148,43 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 if (token.ExpiresOn > DateTime.Now)
                 {
-                    // Token is still valid, ensure we dont have specific roles to check for or the requested roles to execute the command are present in the token
-                    if (roles == null || roles.Length == 0 || roles.Any(r => token.Roles.Contains(r)))
+                    var andRolesMatched = false;
+                    if (andRoles != null && andRoles.Length != 0)
                     {
-                        return token;
+                        // we have explicitely required roles
+                        andRolesMatched = andRoles.All(r => token.Roles.Contains(r));
+                    } else
+                    {
+                        andRolesMatched = true;
                     }
 
-                    if (roles != null)
+                    var orRolesMatched = false;
+                    if (orRoles != null && orRoles.Length != 0)
                     {
+                        orRolesMatched = orRoles.Any(r => token.Roles.Contains(r));
+                    } else
+                    {
+                        orRolesMatched = true;
+                    }
+
+                    if (orRolesMatched && andRolesMatched)
+                    { 
+                        return token; 
+                    }
+                    
+                    if (orRoles != null || andRoles != null)
+                    {
+                        var message = string.Empty;
                         // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
-                        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {(roles.Length != 1 ? "any of " : string.Empty)}the permission{(roles.Length != 1 ? "s" : string.Empty)} {string.Join(", ", roles).TrimEnd(new[] { ',', ' ' })}");
+                        if(!orRolesMatched)
+                        {
+                            message += "for one of the following roles: " + string.Join(", ", orRoles);
+                        }
+                        if(!andRolesMatched)
+                        {
+                            message += (message != string.Empty ? ", and " : ", ") + "for all of the following roles: " + string.Join(", ", andRoles);
+                        }
+                        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
                     }
                 }
 
@@ -172,11 +199,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         if (Certificate != null)
                         {
-                            token = GraphToken.AcquireToken(Tenant, ClientId, Certificate);
+                            token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
                         }
                         else if (ClientSecret != null)
                         {
-                            token = GraphToken.AcquireToken(Tenant, ClientId, ClientSecret);
+                            token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
                         }
                     }
                     break;
@@ -186,11 +213,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         if (Certificate != null)
                         {
-                            token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, Certificate);
+                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
                         }
                         else if (ClientSecret != null)
                         {
-                            token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, ClientSecret);
+                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
                         }
                     }
                     break;
@@ -582,7 +609,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     else
                     {
 #endif
-                        throw;
+                    throw;
 #if !ONPREMISES && !NETSTANDARD2_1
                     }
 #endif

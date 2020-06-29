@@ -25,17 +25,32 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 // Collect the permission attributes to discover required roles
                 var requiredRoleAttributes = (CmdletOfficeManagementApiPermissionAttribute[])Attribute.GetCustomAttributes(GetType(), typeof(CmdletOfficeManagementApiPermissionAttribute));
-                var requiredRoles = new List<string>(requiredRoleAttributes.Length);
-                foreach(var requiredRoleAttribute in requiredRoleAttributes)
+                var orRequiredRoles = new List<string>(requiredRoleAttributes.Length);
+                var andRequiredRoles = new List<string>(requiredRoleAttributes.Length);
+
+                foreach (var requiredRoleAttribute in requiredRoleAttributes)
                 {
-                    requiredRoles.Add(requiredRoleAttribute.ApiPermission.ToString().Replace("_", "."));
+                    foreach (OfficeManagementApiPermission role in Enum.GetValues(typeof(OfficeManagementApiPermission)))
+                    {
+                        if (role != OfficeManagementApiPermission.None)
+                        {
+                            if (requiredRoleAttribute.OrApiPermissions.HasFlag(role))
+                            {
+                                orRequiredRoles.Add(role.ToString().Replace("_", "."));
+                            }
+                            if (requiredRoleAttribute.AndApiPermissions.HasFlag(role))
+                            {
+                                andRequiredRoles.Add(role.ToString().Replace("_", "."));
+                            }
+                        }
+                    }
                 }
 
                 // Ensure we have an active connection
                 if (PnPConnection.CurrentConnection != null)
                 {
                     // There is an active connection, try to get a Microsoft Office Management API Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, ByPassPermissionCheck.ToBool() ? null : requiredRoles.ToArray()) is OfficeManagementApiToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray()) is OfficeManagementApiToken token)
                     {
                         // Microsoft Office Management API Access Token available, return it
                         return token;

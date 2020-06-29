@@ -1,14 +1,8 @@
-﻿using Microsoft.Azure.ActiveDirectory.GraphClient;
-using OfficeDevPnP.Core.Entities;
-using OfficeDevPnP.Core.Framework.Graph;
-using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
