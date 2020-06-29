@@ -26,14 +26,22 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 // Collect the permission attributes to discover required roles
                 var requiredRoleAttributes = (CmdletMicrosoftGraphApiPermission[])Attribute.GetCustomAttributes(GetType(), typeof(CmdletMicrosoftGraphApiPermission));
-                var requiredRoles = new List<string>(requiredRoleAttributes.Length);
+                var orRequiredRoles = new List<string>(requiredRoleAttributes.Length);
+                var andRequiredRoles = new List<string>(requiredRoleAttributes.Length);
                 foreach (var requiredRoleAttribute in requiredRoleAttributes)
                 {
                     foreach (MicrosoftGraphApiPermission role in Enum.GetValues(typeof(MicrosoftGraphApiPermission)))
                     {
-                        if(requiredRoleAttribute.ApiPermission.HasFlag(role))
+                        if (role != MicrosoftGraphApiPermission.None)
                         {
-                            requiredRoles.Add(role.ToString().Replace("_", "."));
+                            if (requiredRoleAttribute.OrApiPermissions.HasFlag(role))
+                            {
+                                orRequiredRoles.Add(role.ToString().Replace("_", "."));
+                            }
+                            if (requiredRoleAttribute.AndApiPermissions.HasFlag(role))
+                            {
+                                andRequiredRoles.Add(role.ToString().Replace("_", "."));
+                            }
                         }
                     }
                 }
@@ -42,7 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (PnPConnection.CurrentConnection != null)
                 {
                     // There is an active connection, try to get a Microsoft Graph Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, ByPassPermissionCheck.ToBool() ? null : requiredRoles.ToArray()) is GraphToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray()) is GraphToken token)
                     {
                         // Microsoft Graph Access Token available, return it
                         return token;

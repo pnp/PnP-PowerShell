@@ -913,6 +913,7 @@
     <Compile Include="Taxonomy\NewTermLabel.cs" />
     <Compile Include="Teams\AddTeamsChannel.cs" />
     <Compile Include="Teams\GetTeamsChannel.cs" />
+    <Compile Include="Teams\GetTeamsTab.cs" />
     <Compile Include="Teams\GetTeamsTeam.cs" />
     <Compile Include="Teams\RemoveTeamsChannel.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />

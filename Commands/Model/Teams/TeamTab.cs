@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
         /// <summary>
         /// Declares the ID for the Tab
         /// </summary>
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         #endregion
     }

@@ -21,21 +21,13 @@ namespace SharePointPnP.PowerShell.Commands.Teams
       Remarks = "Retrieves all channels for the specified team",
       SortOrder = 1)]
     [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup -Identity $groupId",
-      Remarks = "Retrieves a specific Office 365 Group based on its ID",
+      Code = "PS:> Get-PnPTeamsChannel -GroupId a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity \"Test Channel\"",
+      Remarks = "Retrieves the channel called 'Test Channel'",
       SortOrder = 2)]
     [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup -Identity $groupDisplayName",
-      Remarks = "Retrieves a specific or list of Office 365 Groups that start with the given DisplayName",
+      Code = "PS:> Get-PnPTeamsChannel -GroupId a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity \"19:796d063b63e34497aeaf092c8fb9b44e@thread.skype\"",
+      Remarks = "Retrieves the channel specified by its channel id",
       SortOrder = 3)]
-    [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup -Identity $groupSiteMailNickName",
-      Remarks = "Retrieves a specific or list of Office 365 Groups for which the email starts with the provided mail nickName",
-      SortOrder = 4)]
-    [CmdletExample(
-      Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
-      Remarks = "Retrieves a specific Office 365 Group based on its object instance",
-      SortOrder = 5)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class GetTeamsChannel : PnPGraphCmdlet
@@ -43,9 +35,20 @@ namespace SharePointPnP.PowerShell.Commands.Teams
         [Parameter(Mandatory = true)]
         public GuidPipeBind GroupId;
 
+        [Parameter(Mandatory = false)]
+        public string Identity;
+
         protected override void ExecuteCmdlet()
         {
-            WriteObject(TeamsUtility.GetChannels(AccessToken, HttpClient, GroupId.Id.ToString()));
+            if (ParameterSpecified(nameof(Identity)))
+            {
+                var channels = TeamsUtility.GetChannels(AccessToken, HttpClient, GroupId.Id.ToString());
+                WriteObject(channels.FirstOrDefault(c => c.DisplayName.Equals(Identity, StringComparison.OrdinalIgnoreCase) || c.Id.Equals(Identity, StringComparison.OrdinalIgnoreCase)));
+            }
+            else
+            {
+                WriteObject(TeamsUtility.GetChannels(AccessToken, HttpClient, GroupId.Id.ToString()));
+            }
         }
     }
 }
