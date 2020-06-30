@@ -668,14 +668,14 @@
     <Compile Include="Enums\TokenAudience.cs" />
     <Compile Include="Files\ResetFileVersion.cs" />
     <Compile Include="Graph\GetGraphSubscription.cs" />
-    <Compile Include="Graph\GetDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\GetDeletedMicrosoft365Group.cs" />
     <Compile Include="Graph\NewGraphSubscription.cs" />
-    <Compile Include="Graph\ResetUnifiedGroupExpiration.cs" />
+    <Compile Include="Graph\ResetMicrosoft365GroupExpiration.cs" />
     <Compile Include="Graph\GetAADUser.cs" />
-    <Compile Include="Graph\RemoveDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\RemoveDeletedMicrosoft365Group.cs" />
     <Compile Include="Graph\SetGraphSubscription.cs" />
     <Compile Include="Graph\RemoveGraphSubscription.cs" />
-    <Compile Include="Graph\RestoreDeletedUnifiedGroup.cs" />
+    <Compile Include="Graph\RestoreDeletedMicrosoft365Group.cs" />
     <Compile Include="InformationManagement\GetLabel.cs" />
     <Compile Include="InformationManagement\ResetLabel.cs" />
     <Compile Include="InformationManagement\SetLabel.cs" />
@@ -836,19 +836,19 @@
     <Compile Include="Files\RenameFile.cs" />
     <Compile Include="Base\PipeBinds\RecycleBinItemPipeBind.cs" />
     <Compile Include="Files\RenameFolder.cs" />
-    <Compile Include="Graph\GetUnifiedGroupOwners.cs" />
-    <Compile Include="Graph\GetUnifiedGroupMembers.cs" />
+    <Compile Include="Graph\GetMicrosoft365GroupOwners.cs" />
+    <Compile Include="Graph\GetMicrosoft365GroupMembers.cs" />
     <Compile Include="Graph\UpdateSiteClassification.cs" />
     <Compile Include="Graph\RemoveSiteClassification.cs" />
     <Compile Include="Graph\DisableSiteClassification.cs" />
     <Compile Include="Graph\AddSiteClassification.cs" />
     <Compile Include="Graph\GetSiteClassification.cs" />
     <Compile Include="Graph\EnableSiteClassification.cs" />
-    <Compile Include="Graph\GetUnifiedGroup.cs" />
+    <Compile Include="Graph\GetMicrosoft365Group.cs" />
     <Compile Include="Admin\GetWebTemplates.cs" />
     <Compile Include="Admin\GetTimeZoneId.cs" />
-    <Compile Include="Graph\NewUnifiedGroup.cs" />
-    <Compile Include="Graph\RemoveUnifiedGroup.cs" />
+    <Compile Include="Graph\NewMicrosoft365Group.cs" />
+    <Compile Include="Graph\RemoveMicrosoft365Group.cs" />
     <Compile Include="Admin\SetTenantSite.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -861,7 +861,7 @@
     <Compile Include="Base\PipeBinds\ListItemPipeBind.cs" />
     <Compile Include="Base\PipeBinds\FolderPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TermGroupPipeBind.cs" />
-    <Compile Include="Base\PipeBinds\UnifiedGroupPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\Microsoft365GroupPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowInstancePipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowDefinitionPipeBind.cs" />
     <Compile Include="Base\PipeBinds\WorkflowSubscriptionPipeBind.cs" />
@@ -889,7 +889,7 @@
     <Compile Include="Base\SetTraceLog.cs" />
     <Compile Include="Enums\TargetScope.cs" />
     <Compile Include="Files\GetFolder.cs" />
-    <Compile Include="Graph\SetUnifiedGroup.cs" />
+    <Compile Include="Graph\SetMicrosoft365Group.cs" />
     <Compile Include="Principals\GetGroupMembers.cs" />
     <Compile Include="RecordsManagement\DisableInPlaceRecordsManagementForSite.cs" />
     <Compile Include="RecordsManagement\EnableInPlaceRecordsManagementForSite.cs" />

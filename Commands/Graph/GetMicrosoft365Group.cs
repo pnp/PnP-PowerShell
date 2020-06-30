@@ -9,40 +9,41 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPUnifiedGroup")]
-    [CmdletHelp("Gets one Microsoft 365 Group (aka Unified Group) or a list of Microsoft 365 Groups. Requires the Azure Active Directory application permission 'Group.Read.All'.",
+    [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365Group")]
+    [Alias("Get-PnPUnifiedGroup")]
+    [CmdletHelp("Gets one Microsoft 365 Group or a list of Microsoft 365 Groups",
         Category = CmdletHelpCategory.Graph,
         OutputTypeLink = "https://docs.microsoft.com/graph/api/group-list",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup",
+       Code = "PS:> Get-Microsoft365Group",
        Remarks = "Retrieves all the Microsoft 365 Groups",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupId",
+       Code = "PS:> Get-Microsoft365Group -Identity $groupId",
        Remarks = "Retrieves a specific Microsoft 365 Group based on its ID",
        SortOrder = 2)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupDisplayName",
+       Code = "PS:> Get-Microsoft365Group -Identity $groupDisplayName",
        Remarks = "Retrieves a specific or list of Microsoft 365 Groups that start with the given DisplayName",
        SortOrder = 3)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $groupSiteMailNickName",
+       Code = "PS:> Get-Microsoft365Group -Identity $groupSiteMailNickName",
        Remarks = "Retrieves a specific or list of Microsoft 365 Groups for which the email starts with the provided mail nickName",
        SortOrder = 4)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -Identity $group",
+       Code = "PS:> Get-Microsoft365Group -Identity $group",
        Remarks = "Retrieves a specific Microsoft 365 Group based on its object instance",
        SortOrder = 5)]
     [CmdletExample(
-       Code = "PS:> Get-PnPUnifiedGroup -IncludeIfHasTeam",
+       Code = "PS:> Get-Microsoft365Group -IncludeIfHasTeam",
        Remarks = "Retrieves all the Microsoft 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it",
        SortOrder = 6)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_Read_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All)]
-    public class GetUnifiedGroup : PnPGraphCmdlet
+    public class GetMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The Identity of the Microsoft 365 Group")]
-        public UnifiedGroupPipeBind Identity;
+        public Microsoft365GroupPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Exclude fetching the site URL for Microsoft 365 Groups. This speeds up large listings.")]
         public SwitchParameter ExcludeSiteUrl;
