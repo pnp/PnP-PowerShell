@@ -149,51 +149,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 if (token.ExpiresOn > DateTime.Now)
                 {
-                    // check token type if needed
-                    if (tokenType != TokenType.All && token.TokenType != tokenType)
-                    {
-                        throw new PSSecurityException($"Access to {tokenAudience} failed because the API requires a {tokenType} token while you currently use a {token.TokenType} token.");
-                    }
-                    var andRolesMatched = false;
-                    if (andRoles != null && andRoles.Length != 0)
-                    {
-                        // we have explicitely required roles
-                        andRolesMatched = andRoles.All(r => token.Roles.Contains(r));
-                    }
-                    else
-                    {
-                        andRolesMatched = true;
-                    }
-
-                    var orRolesMatched = false;
-                    if (orRoles != null && orRoles.Length != 0)
-                    {
-                        orRolesMatched = orRoles.Any(r => token.Roles.Contains(r));
-                    }
-                    else
-                    {
-                        orRolesMatched = true;
-                    }
-
-                    if (orRolesMatched && andRolesMatched)
+                    var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
+                    if (validationResults.valid)
                     {
                         return token;
                     }
-
-                    if (orRoles != null || andRoles != null)
-                    {
-                        var message = string.Empty;
-                        // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
-                        if (!orRolesMatched)
-                        {
-                            message += "for one of the following roles: " + string.Join(", ", orRoles);
-                        }
-                        if (!andRolesMatched)
-                        {
-                            message += (message != string.Empty ? ", and " : ", ") + "for all of the following roles: " + string.Join(", ", andRoles);
-                        }
-                        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
-                    }
+                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
                 }
 
                 // Token was no longer valid, proceed with trying to create a new token
@@ -237,6 +198,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             if (token != null)
             {
+                var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
+                if (!validationResults.valid)
+                {
+                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
+                }
                 // Managed to create a token for the requested audience, add it to our collection with tokens
                 AccessTokens[tokenAudience] = token;
                 return token;
@@ -262,6 +228,58 @@ namespace SharePointPnP.PowerShell.Commands.Base
         internal void ClearTokens()
         {
             AccessTokens.Clear();
+        }
+
+        private (bool valid, string message) ValidateTokenForPermissions(GenericToken token, TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
+        {
+            bool valid = false;
+            var message = string.Empty;
+            if (tokenType != TokenType.All && token.TokenType != tokenType)
+            {
+                throw new PSSecurityException($"Access to {tokenAudience} failed because the API requires {(tokenType == TokenType.Application ? "an" : "a")} {tokenType} token while you currently use {(token.TokenType == TokenType.Application ? "an" : "a")} {token.TokenType} token.");
+            }
+            var andRolesMatched = false;
+            if (andRoles != null && andRoles.Length != 0)
+            {
+                // we have explicitely required roles
+                andRolesMatched = andRoles.All(r => token.Roles.Contains(r));
+            }
+            else
+            {
+                andRolesMatched = true;
+            }
+
+            var orRolesMatched = false;
+            if (orRoles != null && orRoles.Length != 0)
+            {
+                orRolesMatched = orRoles.Any(r => token.Roles.Contains(r));
+            }
+            else
+            {
+                orRolesMatched = true;
+            }
+
+            if (orRolesMatched && andRolesMatched)
+            {
+                valid = true;
+            }
+
+            if (orRoles != null || andRoles != null)
+            {
+                if (!valid)
+                {                // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
+                    if (!orRolesMatched)
+                    {
+                        message += "for one of the following roles: " + string.Join(", ", orRoles);
+                    }
+                    if (!andRolesMatched)
+                    {
+                        message += (message != string.Empty ? ", and " : ", ") + "for all of the following roles: " + string.Join(", ", andRoles);
+                    }
+                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
+                }
+            }
+            return (valid, message);
         }
 
         #endregion
