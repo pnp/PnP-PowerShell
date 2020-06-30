@@ -165,7 +165,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     scopes.Add(permissionScopes.GetScope("MSGraph.Group.ReadWrite.All"));
                     scopes.Add(permissionScopes.GetScope("SPO.User.Read.All"));
                     scopes.Add(permissionScopes.GetScope("MSGraph.User.Read.All"));
-                    scopes.Add(permissionScopes.GetScope("MSGraph.AppCatalog.ReadWrite.All");
                 }
 
                 var scopesPayload = GetScopesPayload(scopes);

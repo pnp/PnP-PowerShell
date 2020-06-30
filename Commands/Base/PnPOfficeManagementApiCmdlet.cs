@@ -2,6 +2,7 @@
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Model;
 using SharePointPnP.PowerShell.Commands.Properties;
+using SharePointPnP.PowerShell.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -23,6 +24,15 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             get
             {
+                var tokenType = TokenType.All;
+
+                // Collect, if present, the token type attribute
+                var tokenTypeAttribute = (CmdletTokenTypeAttribute)Attribute.GetCustomAttribute(GetType(), typeof(CmdletTokenTypeAttribute));
+                if (tokenTypeAttribute != null)
+                {
+                    tokenType = tokenTypeAttribute.TokenType;
+                }
+
                 // Collect the permission attributes to discover required roles
                 var requiredRoleAttributes = (CmdletOfficeManagementApiPermissionAttribute[])Attribute.GetCustomAttributes(GetType(), typeof(CmdletOfficeManagementApiPermissionAttribute));
                 var orRequiredRoles = new List<string>(requiredRoleAttributes.Length);
@@ -50,7 +60,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (PnPConnection.CurrentConnection != null)
                 {
                     // There is an active connection, try to get a Microsoft Office Management API Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray()) is OfficeManagementApiToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.OfficeManagementApi, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType) is OfficeManagementApiToken token)
                     {
                         // Microsoft Office Management API Access Token available, return it
                         return token;

@@ -3,16 +3,17 @@ using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
+using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsTab")]
-    [CmdletHelp("Gets one or all tabs in a channel.",
+    [CmdletHelp("Removes a Microsoft Teams tab in a channel.",
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype",
+       Code = "PS:> Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -TabId ",
        Remarks = "Retrieves the tabs for  the Microsoft Teams instances",
        SortOrder = 1)]
     [CmdletExample(
@@ -28,8 +29,8 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, HelpMessage = "Specify the channel id of the team to retrieve.")]
         public string ChannelId;
 
-        [Parameter(Mandatory = true, HelpMessage = "DisplayName")]
-        public string TabId;
+        [Parameter(Mandatory = true, HelpMessage = "Identity")]
+        public TeamsTabPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
@@ -38,9 +39,25 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         {
             if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
             {
-                if (!TeamsUtility.DeleteTab(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId, TabId))
+                var tabId = string.Empty;
+                if(Identity.Id != Guid.Empty)
                 {
-                    WriteError(new ErrorRecord(new Exception($"Tab remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                    tabId = Identity.Id.ToString();
+                } else
+                {
+                    var tabs = TeamsUtility.GetTabs(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId);
+                    var tab = tabs.FirstOrDefault(t => t.DisplayName.Equals(Identity.DisplayName, StringComparison.OrdinalIgnoreCase));
+                    if(tab != null)
+                    {
+                        tabId = tab.Id;
+                    } else
+                    {
+                        throw new PSArgumentException("Cannot find tab");
+                    }
+                }
+                if (!TeamsUtility.DeleteTab(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId, tabId))
+                {
+                    throw new PSInvalidOperationException("Tab remove failed");
                 }
             }
         }

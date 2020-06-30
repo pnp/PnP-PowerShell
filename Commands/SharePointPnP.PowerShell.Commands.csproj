@@ -622,6 +622,8 @@
     <Compile Include="Base\GetException.cs" />
     <Compile Include="Base\GetPowerShellTelemetryEnabled.cs" />
     <Compile Include="Base\EnablePowerShellTelemetry.cs" />
+    <Compile Include="Base\PipeBinds\TeamsAppPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TeamsTabPipeBind.cs" />
     <Compile Include="Base\PnPConnectedCmdlet.cs" />
     <Compile Include="Enums\Office365Workload.cs" />
     <Compile Include="Graph\GetGraphAccessToken.cs" />
@@ -707,6 +709,7 @@
     <Compile Include="Model\SPOTenantSyncClientRestriction.cs" />
     <Compile Include="Model\Teams\Group.cs" />
     <Compile Include="Model\Teams\Team.cs" />
+    <Compile Include="Model\Teams\TeamApp.cs" />
     <Compile Include="Model\Teams\TeamAppInstance.cs" />
     <Compile Include="Model\Teams\TeamChannel.cs" />
     <Compile Include="Model\Teams\TeamChannelMessage.cs" />

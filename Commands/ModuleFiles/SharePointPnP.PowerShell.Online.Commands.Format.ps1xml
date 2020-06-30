@@ -2128,5 +2128,45 @@
         </TableRowEntries>
       </TableControl>
     </View>
+    <View>
+      <Name>TeamTab</Name>
+      <ViewSelectedBy>
+        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamApp</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DisplayName</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DistributionMethod</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ExternalId</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>ID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DistributionMethod</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ExternalId</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
   </ViewDefinitions>
 </Configuration>

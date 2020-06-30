@@ -3,6 +3,7 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Extensions;
 using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Model;
+using SharePointPnP.PowerShell.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,7 +137,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// <param name="tokenAudience">Audience to try to get a token for</param>
         /// <param name="orRoles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
         /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null)
+        internal GenericToken TryGetToken(TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
         {
             GenericToken token = null;
 
@@ -148,12 +149,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 if (token.ExpiresOn > DateTime.Now)
                 {
+                    // check token type if needed
+                    if (tokenType != TokenType.All && token.TokenType != tokenType)
+                    {
+                        throw new PSSecurityException($"Access to {tokenAudience} failed because the API requires a {tokenType} token while you currently use a {token.TokenType} token.");
+                    }
                     var andRolesMatched = false;
                     if (andRoles != null && andRoles.Length != 0)
                     {
                         // we have explicitely required roles
                         andRolesMatched = andRoles.All(r => token.Roles.Contains(r));
-                    } else
+                    }
+                    else
                     {
                         andRolesMatched = true;
                     }
@@ -162,25 +169,26 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     if (orRoles != null && orRoles.Length != 0)
                     {
                         orRolesMatched = orRoles.Any(r => token.Roles.Contains(r));
-                    } else
+                    }
+                    else
                     {
                         orRolesMatched = true;
                     }
 
                     if (orRolesMatched && andRolesMatched)
-                    { 
-                        return token; 
+                    {
+                        return token;
                     }
-                    
+
                     if (orRoles != null || andRoles != null)
                     {
                         var message = string.Empty;
                         // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
-                        if(!orRolesMatched)
+                        if (!orRolesMatched)
                         {
                             message += "for one of the following roles: " + string.Join(", ", orRoles);
                         }
-                        if(!andRolesMatched)
+                        if (!andRolesMatched)
                         {
                             message += (message != string.Empty ? ", and " : ", ") + "for all of the following roles: " + string.Join(", ", andRoles);
                         }
@@ -459,7 +467,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         #endregion
 
         internal PnPConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
-            : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
