@@ -14,32 +14,32 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
         /// <summary>
         /// Defines if members can add and update channels
         /// </summary>
-        public bool AllowCreateUpdateChannels { get; set; }
+        public bool? AllowCreateUpdateChannels { get; set; }
 
         /// <summary>
         /// Defines if members can delete channels
         /// </summary>
-        public bool AllowDeleteChannels { get; set; }
+        public bool? AllowDeleteChannels { get; set; }
 
         /// <summary>
         /// Defines if members can add and remove apps
         /// </summary>
-        public bool AllowAddRemoveApps { get; set; }
+        public bool? AllowAddRemoveApps { get; set; }
 
         /// <summary>
         /// Defines if members can add, update, and remove tabs
         /// </summary>
-        public bool AllowCreateUpdateRemoveTabs { get; set; }
+        public bool? AllowCreateUpdateRemoveTabs { get; set; }
 
         /// <summary>
         /// Defines if members can add, update, and remove connectors
         /// </summary>
-        public bool AllowCreateUpdateRemoveConnectors { get; set; }
+        public bool? AllowCreateUpdateRemoveConnectors { get; set; }
 
         /// <summary>
         /// Defines if members can create private channels
         /// </summary>
-        public bool AllowCreatePrivateChannels { get; set; }
+        public bool? AllowCreatePrivateChannels { get; set; }
 
         #endregion
     }

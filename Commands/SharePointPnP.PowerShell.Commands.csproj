@@ -624,6 +624,7 @@
     <Compile Include="Base\EnablePowerShellTelemetry.cs" />
     <Compile Include="Base\PipeBinds\TeamsAppPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TeamsTabPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TeamsTeamPipeBind.cs" />
     <Compile Include="Base\PnPConnectedCmdlet.cs" />
     <Compile Include="Enums\Office365Workload.cs" />
     <Compile Include="Graph\GetGraphAccessToken.cs" />
@@ -720,9 +721,11 @@
     <Compile Include="Model\Teams\TeamMessagingSettings.cs" />
     <Compile Include="Model\Teams\TeamSecurity.cs" />
     <Compile Include="Model\Teams\TeamSecurityUser.cs" />
+    <Compile Include="Model\Teams\TeamSettings.cs" />
     <Compile Include="Model\Teams\TeamTab.cs" />
     <Compile Include="Model\Teams\TeamTabConfiguration.cs" />
     <Compile Include="Model\Teams\TeamTabResource.cs" />
+    <Compile Include="Model\Teams\User.cs" />
     <Compile Include="Navigation\GetNavigationNode.cs" />
     <Compile Include="Branding\SetWebTheme.cs" />
     <Compile Include="ClientSidePages\GetClientSideComponent.cs" />
@@ -919,6 +922,7 @@
     <Compile Include="Teams\GetTeamsChannel.cs" />
     <Compile Include="Teams\GetTeamsTab.cs" />
     <Compile Include="Teams\GetTeamsTeam.cs" />
+    <Compile Include="Teams\NewTeamsTeam.cs" />
     <Compile Include="Teams\RemoveTeamsChannel.cs" />
     <Compile Include="Teams\RemoveTeamsTab.cs" />
     <Compile Include="Teams\RemoveTeamsTeam.cs" />

@@ -1,8 +1,11 @@
-﻿using SharePointPnP.PowerShell.Commands.Model.Teams;
+﻿using Microsoft.BusinessData.MetadataModel;
+using Microsoft.IdentityModel.Tokens;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Net.Http;
 using System.Web;
 
@@ -13,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         private const int PageSize = 100;
 
         #region Team
-        private static List<Group> GetGroupsWithTeam(HttpClient httpClient, string accessToken, GroupVisibility visibility = GroupVisibility.NotSpecified)
+        public static List<Group> GetGroupsWithTeam(HttpClient httpClient, string accessToken)
         {
             List<Group> groups = new List<Group>();
             string url = string.Empty;
@@ -27,21 +30,14 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                     groups.AddRange(collection.Items);
                 }
             }
-            if (visibility != GroupVisibility.NotSpecified)
-            {
-                return groups.Where(g => g.Visibility == visibility).ToList();
-            }
-            else
-            {
-                return groups;
-            }
+            return groups;
         }
 
-        public static List<Team> GetTeams(string accessToken, HttpClient httpClient, GroupVisibility visibility = GroupVisibility.NotSpecified)
+        public static List<Team> GetTeams(string accessToken, HttpClient httpClient)
         {
             List<Team> teams = new List<Team>();
 
-            var groups = GetGroupsWithTeam(httpClient, accessToken, visibility);
+            var groups = GetGroupsWithTeam(httpClient, accessToken);
             foreach (var group in groups)
             {
                 Team team = ParseTeamJson(accessToken, httpClient, group.Id);
@@ -135,6 +131,101 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 return null;
             }
         }
+
+        public static Team NewTeam(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI)
+        {
+            Group group = null;
+            Team returnTeam = null;
+            // Create group
+            if (string.IsNullOrEmpty(groupId))
+            {
+                group = CreateGroup(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility);
+            }
+            else
+            {
+                group = GraphHelper.GetAsync<Group>(httpClient, $"v1.0/groups/{groupId}", accessToken).GetAwaiter().GetResult();
+                if (group == null)
+                {
+                    throw new PSArgumentException($"Cannot find group with id {groupId}");
+                }
+                teamCI.Visibility = group.Visibility;
+                teamCI.Description = group.Description;
+            }
+            if (group != null)
+            {
+                Team team = teamCI.ToTeam();
+                var teamSettings = GraphHelper.PutAsync(httpClient, $"v1.0/groups/{group.Id}/team", team, accessToken).GetAwaiter().GetResult();
+                if (teamSettings != null)
+                {
+                    returnTeam = TeamsUtility.GetTeam(accessToken, httpClient, group.Id);
+                }
+            }
+            return returnTeam;
+        }
+
+        private static Group CreateGroup(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility)
+        {
+            Group group = new Group();
+            // get the owner if no owner was specified
+            var ownerId = string.Empty;
+            if (string.IsNullOrEmpty(owner))
+            {
+                var user = GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken).GetAwaiter().GetResult();
+                ownerId = user.Id;
+            }
+            else
+            {
+                var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owner}?$select=Id", accessToken).GetAwaiter().GetResult();
+                if (user != null)
+                {
+                    ownerId = user.Id;
+                }
+                else
+                {
+                    // find the user in the organization
+                    var collection = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, "v1.0/myorganization/users?$filter=mail eq '{owner}'&$select=Id", accessToken).GetAwaiter().GetResult();
+                    if (collection != null)
+                    {
+                        if (collection.Items.Any())
+                        {
+                            ownerId = collection.Items.First().Id;
+                        }
+                    }
+                }
+            }
+
+            group.DisplayName = displayName;
+            group.Description = description;
+            group.Classification = classification;
+            group.MailEnabled = true;
+            group.MailNickname = mailNickname ?? CreateAlias(httpClient, accessToken);
+            group.GroupTypes = new List<string>() { "Unified" };
+            group.SecurityEnabled = false;
+            group.Owners = new List<string>() { $"https://graph.microsoft.com/v1.0/users/{ownerId}" };
+            group.Members = new List<string>() { $"https://graph.microsoft.com/v1.0/users/{ownerId}" };
+            group.Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
+
+            return GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken).GetAwaiter().GetResult();
+
+        }
+
+        private static string CreateAlias(HttpClient httpClient, string accessToken)
+        {
+            var guid = Guid.NewGuid().ToString();
+            var teamName = string.Empty;
+            // check if the group exists
+            do
+            {
+                var teamNameTemp = $"msteams_{guid.Substring(0, 8)}{guid.Substring(9, 4)}";
+                var collection = GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (mailNickname eq '{teamNameTemp}')", accessToken).GetAwaiter().GetResult();
+                if (collection != null)
+                {
+                    if (!collection.Items.Any()) teamName = teamNameTemp;
+                }
+
+            } while (teamName == string.Empty);
+            return teamName;
+        }
         #endregion
 
         #region Channel
@@ -190,7 +281,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 
         public static bool DeleteTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
         {
-           return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
+            return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
         }
 
         #endregion
@@ -199,7 +290,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         public static IEnumerable<TeamApp> GetApps(string accessToken, HttpClient httpClient)
         {
             var collection = GraphHelper.GetAsync<GraphCollection<TeamApp>>(httpClient, $"v1.0/appCatalogs/teamsApps", accessToken).GetAwaiter().GetResult();
-            if(collection != null)
+            if (collection != null)
             {
                 return collection.Items;
             }

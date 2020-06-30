@@ -3,6 +3,7 @@ using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
@@ -43,7 +44,9 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             }
             else if (ParameterSpecified(nameof(Visibility)))
             {
-                WriteObject(TeamsUtility.GetTeams(AccessToken, HttpClient, Visibility), true);
+                var teams = TeamsUtility.GetTeams(AccessToken, HttpClient);
+
+                WriteObject(teams.Where(t => t.Visibility == Visibility), true);
             }
             else
             {

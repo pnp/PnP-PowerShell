@@ -96,6 +96,22 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             }
         }
 
+        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, T content, string accessToken)
+        {
+            var requestContent = new StringContent(JsonConvert.SerializeObject(content, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var message = GetMessage(url, HttpMethod.Put, accessToken, requestContent);
+            var returnValue = await SendMessageAsync(httpClient, message);
+            if (!string.IsNullOrEmpty(returnValue))
+            {
+                return JsonConvert.DeserializeObject<T>(returnValue);
+            }
+            else
+            {
+                return default;
+            }
+        }
+
         public static async Task<bool> DeleteAsync(HttpClient httpClient, string url, string accessToken)
         {
             var message = GetMessage(url, HttpMethod.Delete, accessToken);
