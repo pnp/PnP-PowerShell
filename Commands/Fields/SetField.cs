@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
     [CmdletHelp("Changes one or more properties of a field in a specific list or for the whole web",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee545882(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Set-PnPField -Identity AssignedTo -Values @{JSLink=""customrendering.js"";Group=""My fields""}",
         Remarks = @"Updates the AssignedTo field on the current web to use customrendering.js for the JSLink and sets the group name the field is categorized in to ""My Fields"". Lists that are already using the AssignedTo field will not be updated.",
