@@ -915,10 +915,13 @@
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
     <Compile Include="Taxonomy\NewTermLabel.cs" />
     <Compile Include="Teams\AddTeamsChannel.cs" />
+    <Compile Include="Teams\GetTeamsApp.cs" />
     <Compile Include="Teams\GetTeamsChannel.cs" />
     <Compile Include="Teams\GetTeamsTab.cs" />
     <Compile Include="Teams\GetTeamsTeam.cs" />
     <Compile Include="Teams\RemoveTeamsChannel.cs" />
+    <Compile Include="Teams\RemoveTeamsTab.cs" />
+    <Compile Include="Teams\RemoveTeamsTeam.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />
     <Compile Include="UserProfiles\SetUserOneDriveQuota.cs" />
     <Compile Include="UserProfiles\ResetUserOneDriveQuotaToDefault.cs" />
