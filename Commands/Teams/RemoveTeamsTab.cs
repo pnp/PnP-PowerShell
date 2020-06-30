@@ -13,12 +13,12 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -TabId ",
-       Remarks = "Retrieves the tabs for  the Microsoft Teams instances",
+       Code = "PS:> Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki",
+       Remarks = "Removes the tab with the display name 'Wiki' from the channel",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -DisplayName \"Wiki\"",
-       Remarks = "Retrieves a tab with the display name 'Wiki' from the specified team and channel",
+       Code = "PS:> Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852",
+       Remarks = "Removes a tab with the specified id from the channel",
        SortOrder = 2)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveTeamsTab : PnPGraphCmdlet
