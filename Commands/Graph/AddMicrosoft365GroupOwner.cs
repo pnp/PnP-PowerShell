@@ -8,22 +8,24 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "PnPUnifiedGroupOwner")]
-    [CmdletHelp("Adds owners to a particular Microsoft 365 Group (aka Unified Group)",
+    [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupOwner")]
+    [Alias("Add-PnPUnifiedGroupOwner")]
+    [CmdletHelp("Adds owners to a particular Microsoft 365 Group",
         Category = CmdletHelpCategory.Graph,
         OutputTypeLink = "https://docs.microsoft.com/graph/api/group-post-owners",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPUnifiedGroupOwner -Identity ""Project Team"" -Users ""john@contoso.onmicrosoft.com"",""jane@contoso.onmicrosoft.com""",
+       Code = @"PS:> Add-PnPMicrosoft365GroupOwner -Identity ""Project Team"" -Users ""john@contoso.onmicrosoft.com"",""jane@contoso.onmicrosoft.com""",
        Remarks = @"Adds the provided two users as additional owners to the Microsoft 365 Group named ""Project Team""",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Add-PnPUnifiedGroupOwner -Identity ""Project Team"" -Users ""john@contoso.onmicrosoft.com"",""jane@contoso.onmicrosoft.com"" -RemoveExisting",
+       Code = @"PS:> Add-PnPMicrosoft365GroupOwner -Identity ""Project Team"" -Users ""john@contoso.onmicrosoft.com"",""jane@contoso.onmicrosoft.com"" -RemoveExisting",
        Remarks = @"Sets the provided two users as the only owners of the Microsoft 365 Group named ""Project Team"" by removing any current existing owners first",
        SortOrder = 2)]
+    [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-post-owners")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.User_ReadWrite_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    public class AddUnifiedGroupOwner : PnPGraphCmdlet
+    public class AddMicrosoft365GroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group to add owners to")]
         public UnifiedGroupPipeBind Identity;

@@ -8,17 +8,18 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPUnifiedGroupOwner")]
-    [CmdletHelp("Removes owners from a particular Microsoft 365 Group (aka Unified Group)",
+    [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365GroupOwner")]
+    [Alias("Remove-PnPUnifiedGroupOwner")]
+    [CmdletHelp("Removes owners from a particular Microsoft 365 Group",
         Category = CmdletHelpCategory.Graph,
-        OutputTypeLink = "https://docs.microsoft.com/graph/api/group-delete-owners",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Remove-PnPUnifiedGroupOwner -Identity ""Project Team"" -Users ""john@contoso.onmicrosoft.com"",""jane@contoso.onmicrosoft.com""",
+       Code = @"PS:> Remove-PnPMicrosoft365GroupOwner -Identity ""Project Team"" -Users ""john@contoso.onmicrosoft.com"",""jane@contoso.onmicrosoft.com""",
        Remarks = @"Removes the provided two users as owners from the Microsoft 365 Group named ""Project Team""",
        SortOrder = 1)]
+    [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-delete-owners")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
-    public class RemoveUnifiedGroupOwner : PnPGraphCmdlet
+    public class RemoveMicrosoft365GroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group to remove owners from")]
         public UnifiedGroupPipeBind Identity;

@@ -8,17 +8,18 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Clear, "PnPUnifiedGroupOwner")]
+    [Cmdlet(VerbsCommon.Clear, "PnPMicrosoft365GroupOwner")]
+    [Alias("Clear-PnPUnifiedGroupOwner")]
     [CmdletHelp("Removes all current owners from a particular Microsoft 365 Group (aka Unified Group)",
         Category = CmdletHelpCategory.Graph,
-        OutputTypeLink = "https://docs.microsoft.com/graph/api/group-delete-owners",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Clear-PnPUnifiedGroupOwner -Identity ""Project Team""",
+       Code = @"PS:> Clear-PnPMicrosoft365GroupOwner -Identity ""Project Team""",
        Remarks = @"Removes all the current owners from the Microsoft 365 Group named ""Project Team""",
        SortOrder = 1)]
+    [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-delete-owners")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
-    public class ClearUnifiedGroupOwner : PnPGraphCmdlet
+    public class ClearMicrosoft365GroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group to remove all owners from")]
         public UnifiedGroupPipeBind Identity;
