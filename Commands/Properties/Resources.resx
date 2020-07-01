@@ -339,4 +339,7 @@
   <data name="ParameterSetNotImplemented" xml:space="preserve">
     <value>Parameter set {0} has not yet been implemented. Please create an issue for this on GitHub.</value>
   </data>
+  <data name="WebhooksOnlySupportsLists" xml:space="preserve">
+    <value>This Cmdlet currently only supports List Webhooks</value>
+  </data>
 </root>
