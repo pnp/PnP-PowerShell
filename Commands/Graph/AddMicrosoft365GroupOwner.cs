@@ -23,8 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Remarks = @"Sets the provided two users as the only owners of the Microsoft 365 Group named ""Project Team"" by removing any current existing owners first",
        SortOrder = 2)]
     [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-post-owners")]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.User_ReadWrite_All)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.None, MicrosoftGraphApiPermission.User_ReadWrite_All | MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class AddMicrosoft365GroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group to add owners to")]
