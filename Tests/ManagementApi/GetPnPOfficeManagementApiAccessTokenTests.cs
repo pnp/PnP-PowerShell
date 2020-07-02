@@ -4,11 +4,27 @@ using System.Management.Automation.Runspaces;
 
 namespace SharePointPnP.PowerShell.Tests.ManagementApi
 {
-
     [TestClass]
     public class GetOfficeManagementApiAccessTokenTests
     {
         #region Test Setup/CleanUp
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            // This runs on class level once before all tests run
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
+
+        [ClassCleanup]
+        public static void Cleanup(TestContext testContext)
+        {
+            // This runs on class level once
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +43,7 @@ namespace SharePointPnP.PowerShell.Tests.ManagementApi
             {
                 try
                 {
-
+                    // Do Test Setup - Note, this runs PER test
                 }
                 catch (Exception)
                 {
@@ -35,28 +51,26 @@ namespace SharePointPnP.PowerShell.Tests.ManagementApi
                 }
             }
         }
-
         #endregion
 
         #region Scaffolded Cmdlet Tests
-
-        
-
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
         public void GetPnPOfficeManagementApiAccessTokenTest()
         {
-                                
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
-                var results = scope.ExecuteCommand("Get-PnPOfficeManagementApiAccessToken",new CommandParameter("Decoded", "null"));
+
+				// From Cmdlet Help: Returns the access token in a decoded manner
+				var decoded = "";
+
+                var results = scope.ExecuteCommand("Get-PnPOfficeManagementApiAccessToken",
+					new CommandParameter("Decoded", decoded));
+                
                 Assert.IsNotNull(results);
             }
-
         }
-            
-
         #endregion
     }
 }

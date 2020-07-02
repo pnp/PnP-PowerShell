@@ -4,11 +4,27 @@ using System.Management.Automation.Runspaces;
 
 namespace SharePointPnP.PowerShell.Tests.Lists
 {
-
     [TestClass]
     public class SetDefaultColumnValuesTests
     {
         #region Test Setup/CleanUp
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            // This runs on class level once before all tests run
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
+
+        [ClassCleanup]
+        public static void Cleanup(TestContext testContext)
+        {
+            // This runs on class level once
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +43,7 @@ namespace SharePointPnP.PowerShell.Tests.Lists
             {
                 try
                 {
-
+                    // Do Test Setup - Note, this runs PER test
                 }
                 catch (Exception)
                 {
@@ -35,28 +51,38 @@ namespace SharePointPnP.PowerShell.Tests.Lists
                 }
             }
         }
-
         #endregion
 
         #region Scaffolded Cmdlet Tests
-
-        
-
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
         public void SetPnPDefaultColumnValuesTest()
         {
-                                
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
-                var results = scope.ExecuteCommand("Set-PnPDefaultColumnValues",new CommandParameter("List", "null"),new CommandParameter("Field", "null"),new CommandParameter("Value", "null"),new CommandParameter("Folder", "null"));
+
+				// This is a mandatory parameter
+				// From Cmdlet Help: The ID, Name or Url of the list.
+				var list = "";
+				// This is a mandatory parameter
+				// From Cmdlet Help: The internal name, id or a reference to a field
+				var field = "";
+				// This is a mandatory parameter
+				// From Cmdlet Help: A list of values. In case of a text field the values will be concatenated, separated by a semi-colon. In case of a taxonomy field multiple values will added. In case of people field multiple values will be added.
+				var value = "";
+				// From Cmdlet Help: A library relative folder path, if not specified it will set the default column values on the root folder of the library ('/')
+				var folder = "";
+
+                var results = scope.ExecuteCommand("Set-PnPDefaultColumnValues",
+					new CommandParameter("List", list),
+					new CommandParameter("Field", field),
+					new CommandParameter("Value", value),
+					new CommandParameter("Folder", folder));
+                
                 Assert.IsNotNull(results);
             }
-
         }
-            
-
         #endregion
     }
 }

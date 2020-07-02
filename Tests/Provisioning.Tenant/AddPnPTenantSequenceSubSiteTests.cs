@@ -4,11 +4,27 @@ using System.Management.Automation.Runspaces;
 
 namespace SharePointPnP.PowerShell.Tests.Provisioning.Tenant
 {
-
     [TestClass]
     public class AddTenantSequenceSubSiteTests
     {
         #region Test Setup/CleanUp
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            // This runs on class level once before all tests run
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
+
+        [ClassCleanup]
+        public static void Cleanup(TestContext testContext)
+        {
+            // This runs on class level once
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +43,7 @@ namespace SharePointPnP.PowerShell.Tests.Provisioning.Tenant
             {
                 try
                 {
-
+                    // Do Test Setup - Note, this runs PER test
                 }
                 catch (Exception)
                 {
@@ -35,28 +51,31 @@ namespace SharePointPnP.PowerShell.Tests.Provisioning.Tenant
                 }
             }
         }
-
         #endregion
 
         #region Scaffolded Cmdlet Tests
-
-        
-
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
         public void AddPnPTenantSequenceSubSiteTest()
         {
-                                
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
-                var results = scope.ExecuteCommand("Add-PnPTenantSequenceSubSite",new CommandParameter("SubSite", "null"),new CommandParameter("Site", "null"));
+
+				// This is a mandatory parameter
+				// From Cmdlet Help: The subsite to add
+				var subSite = "";
+				// This is a mandatory parameter
+				// From Cmdlet Help: The site to add the subsite to
+				var site = "";
+
+                var results = scope.ExecuteCommand("Add-PnPTenantSequenceSubSite",
+					new CommandParameter("SubSite", subSite),
+					new CommandParameter("Site", site));
+                
                 Assert.IsNotNull(results);
             }
-
         }
-            
-
         #endregion
     }
 }

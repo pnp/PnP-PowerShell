@@ -4,11 +4,27 @@ using System.Management.Automation.Runspaces;
 
 namespace SharePointPnP.PowerShell.Tests.Principals
 {
-
     [TestClass]
     public class SetGroupPermissionsTests
     {
         #region Test Setup/CleanUp
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            // This runs on class level once before all tests run
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
+
+        [ClassCleanup]
+        public static void Cleanup(TestContext testContext)
+        {
+            // This runs on class level once
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +43,7 @@ namespace SharePointPnP.PowerShell.Tests.Principals
             {
                 try
                 {
-
+                    // Do Test Setup - Note, this runs PER test
                 }
                 catch (Exception)
                 {
@@ -35,28 +51,36 @@ namespace SharePointPnP.PowerShell.Tests.Principals
                 }
             }
         }
-
         #endregion
 
         #region Scaffolded Cmdlet Tests
-
-        
-
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
         public void SetPnPGroupPermissionsTest()
         {
-                                
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
-                var results = scope.ExecuteCommand("Set-PnPGroupPermissions",new CommandParameter("Identity", "null"),new CommandParameter("List", "null"),new CommandParameter("AddRole", "null"),new CommandParameter("RemoveRole", "null"));
+
+				// This is a mandatory parameter
+				// From Cmdlet Help: Get the permissions of a specific group by name
+				var identity = "";
+				// From Cmdlet Help: The list to apply the command to.
+				var list = "";
+				// From Cmdlet Help: Name of the permission set to add to this SharePoint group
+				var addRole = "";
+				// From Cmdlet Help: Name of the permission set to remove from this SharePoint group
+				var removeRole = "";
+
+                var results = scope.ExecuteCommand("Set-PnPGroupPermissions",
+					new CommandParameter("Identity", identity),
+					new CommandParameter("List", list),
+					new CommandParameter("AddRole", addRole),
+					new CommandParameter("RemoveRole", removeRole));
+                
                 Assert.IsNotNull(results);
             }
-
         }
-            
-
         #endregion
     }
 }

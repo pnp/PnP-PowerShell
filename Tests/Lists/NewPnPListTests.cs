@@ -4,11 +4,27 @@ using System.Management.Automation.Runspaces;
 
 namespace SharePointPnP.PowerShell.Tests.Lists
 {
-
     [TestClass]
     public class NewListTests
     {
         #region Test Setup/CleanUp
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            // This runs on class level once before all tests run
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
+
+        [ClassCleanup]
+        public static void Cleanup(TestContext testContext)
+        {
+            // This runs on class level once
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +43,7 @@ namespace SharePointPnP.PowerShell.Tests.Lists
             {
                 try
                 {
-
+                    // Do Test Setup - Note, this runs PER test
                 }
                 catch (Exception)
                 {
@@ -35,28 +51,49 @@ namespace SharePointPnP.PowerShell.Tests.Lists
                 }
             }
         }
-
         #endregion
 
         #region Scaffolded Cmdlet Tests
-
-        
-
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
         public void NewPnPListTest()
         {
-                                
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
-                var results = scope.ExecuteCommand("New-PnPList",new CommandParameter("Title", "null"),new CommandParameter("Template", "null"),new CommandParameter("Url", "null"),new CommandParameter("Hidden", "null"),new CommandParameter("EnableVersioning", "null"),new CommandParameter("QuickLaunchOptions", "null"),new CommandParameter("EnableContentTypes", "null"),new CommandParameter("OnQuickLaunch", "null"));
+
+				// This is a mandatory parameter
+				// From Cmdlet Help: The Title of the list
+				var title = "";
+				// This is a mandatory parameter
+				// From Cmdlet Help: The type of list to create.
+				var template = "";
+				// From Cmdlet Help: If set, will override the url of the list.
+				var url = "";
+				// From Cmdlet Help: Switch parameter if list should be hidden from the SharePoint UI
+				var hidden = "";
+				// From Cmdlet Help: Switch parameter if versioning should be enabled
+				var enableVersioning = "";
+				// From Cmdlet Help: Obsolete
+				var quickLaunchOptions = "";
+				// From Cmdlet Help: Switch parameter if content types should be enabled on this list
+				var enableContentTypes = "";
+				// From Cmdlet Help: Switch parameter if this list should be visible on the QuickLaunch
+				var onQuickLaunch = "";
+
+                var results = scope.ExecuteCommand("New-PnPList",
+					new CommandParameter("Title", title),
+					new CommandParameter("Template", template),
+					new CommandParameter("Url", url),
+					new CommandParameter("Hidden", hidden),
+					new CommandParameter("EnableVersioning", enableVersioning),
+					new CommandParameter("QuickLaunchOptions", quickLaunchOptions),
+					new CommandParameter("EnableContentTypes", enableContentTypes),
+					new CommandParameter("OnQuickLaunch", onQuickLaunch));
+                
                 Assert.IsNotNull(results);
             }
-
         }
-            
-
         #endregion
     }
 }

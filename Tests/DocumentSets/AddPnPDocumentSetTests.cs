@@ -4,11 +4,27 @@ using System.Management.Automation.Runspaces;
 
 namespace SharePointPnP.PowerShell.Tests.DocumentSets
 {
-
     [TestClass]
     public class AddDocumentSetTests
     {
         #region Test Setup/CleanUp
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            // This runs on class level once before all tests run
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
+
+        [ClassCleanup]
+        public static void Cleanup(TestContext testContext)
+        {
+            // This runs on class level once
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +43,7 @@ namespace SharePointPnP.PowerShell.Tests.DocumentSets
             {
                 try
                 {
-
+                    // Do Test Setup - Note, this runs PER test
                 }
                 catch (Exception)
                 {
@@ -35,28 +51,35 @@ namespace SharePointPnP.PowerShell.Tests.DocumentSets
                 }
             }
         }
-
         #endregion
 
         #region Scaffolded Cmdlet Tests
-
-        
-
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
         public void AddPnPDocumentSetTest()
         {
-                                
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
-                var results = scope.ExecuteCommand("Add-PnPDocumentSet",new CommandParameter("List", "null"),new CommandParameter("Name", "null"),new CommandParameter("ContentType", "null"));
+
+				// This is a mandatory parameter
+				// From Cmdlet Help: The name of the list, its ID or an actual list object from where the document set needs to be added
+				var list = "";
+				// This is a mandatory parameter
+				// From Cmdlet Help: The name of the document set
+				var name = "";
+				// This is a mandatory parameter
+				// From Cmdlet Help: The name of the content type, its ID or an actual content object referencing to the document set
+				var contentType = "";
+
+                var results = scope.ExecuteCommand("Add-PnPDocumentSet",
+					new CommandParameter("List", list),
+					new CommandParameter("Name", name),
+					new CommandParameter("ContentType", contentType));
+                
                 Assert.IsNotNull(results);
             }
-
         }
-            
-
         #endregion
     }
 }

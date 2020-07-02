@@ -4,11 +4,27 @@ using System.Management.Automation.Runspaces;
 
 namespace SharePointPnP.PowerShell.Tests.Base
 {
-
     [TestClass]
     public class RemoveStoredCredentialTests
     {
         #region Test Setup/CleanUp
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            // This runs on class level once before all tests run
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
+
+        [ClassCleanup]
+        public static void Cleanup(TestContext testContext)
+        {
+            // This runs on class level once
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +43,7 @@ namespace SharePointPnP.PowerShell.Tests.Base
             {
                 try
                 {
-
+                    // Do Test Setup - Note, this runs PER test
                 }
                 catch (Exception)
                 {
@@ -35,28 +51,30 @@ namespace SharePointPnP.PowerShell.Tests.Base
                 }
             }
         }
-
         #endregion
 
         #region Scaffolded Cmdlet Tests
-
-        
-
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
         public void RemovePnPStoredCredentialTest()
         {
-                                
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
-                var results = scope.ExecuteCommand("Remove-PnPStoredCredential",new CommandParameter("Name", "null"),new CommandParameter("Force", "null"));
+
+				// This is a mandatory parameter
+				// From Cmdlet Help: The credential to remove
+				var name = "";
+				// From Cmdlet Help: If specified you will not be asked for confirmation
+				var force = "";
+
+                var results = scope.ExecuteCommand("Remove-PnPStoredCredential",
+					new CommandParameter("Name", name),
+					new CommandParameter("Force", force));
+                
                 Assert.IsNotNull(results);
             }
-
         }
-            
-
         #endregion
     }
 }

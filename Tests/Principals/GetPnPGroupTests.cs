@@ -4,11 +4,27 @@ using System.Management.Automation.Runspaces;
 
 namespace SharePointPnP.PowerShell.Tests.Principals
 {
-
     [TestClass]
     public class GetGroupTests
     {
         #region Test Setup/CleanUp
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            // This runs on class level once before all tests run
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
+
+        [ClassCleanup]
+        public static void Cleanup(TestContext testContext)
+        {
+            // This runs on class level once
+            //using (var ctx = TestCommon.CreateClientContext())
+            //{
+            //}
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +43,7 @@ namespace SharePointPnP.PowerShell.Tests.Principals
             {
                 try
                 {
-
+                    // Do Test Setup - Note, this runs PER test
                 }
                 catch (Exception)
                 {
@@ -35,28 +51,35 @@ namespace SharePointPnP.PowerShell.Tests.Principals
                 }
             }
         }
-
         #endregion
 
         #region Scaffolded Cmdlet Tests
-
-        
-
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
         public void GetPnPGroupTest()
         {
-                                
             using (var scope = new PSTestScope(true))
             {
                 // Complete writing cmd parameters
-                var results = scope.ExecuteCommand("Get-PnPGroup",new CommandParameter("Identity", "null"),new CommandParameter("AssociatedMemberGroup", "null"),new CommandParameter("AssociatedVisitorGroup", "null"),new CommandParameter("AssociatedOwnerGroup", "null"));
+
+				// From Cmdlet Help: Get a specific group by name
+				var identity = "";
+				// From Cmdlet Help: Retrieve the associated member group
+				var associatedMemberGroup = "";
+				// From Cmdlet Help: Retrieve the associated visitor group
+				var associatedVisitorGroup = "";
+				// From Cmdlet Help: Retrieve the associated owner group
+				var associatedOwnerGroup = "";
+
+                var results = scope.ExecuteCommand("Get-PnPGroup",
+					new CommandParameter("Identity", identity),
+					new CommandParameter("AssociatedMemberGroup", associatedMemberGroup),
+					new CommandParameter("AssociatedVisitorGroup", associatedVisitorGroup),
+					new CommandParameter("AssociatedOwnerGroup", associatedOwnerGroup));
+                
                 Assert.IsNotNull(results);
             }
-
         }
-            
-
         #endregion
     }
 }
