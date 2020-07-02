@@ -623,6 +623,7 @@
     <Compile Include="Base\GetPowerShellTelemetryEnabled.cs" />
     <Compile Include="Base\EnablePowerShellTelemetry.cs" />
     <Compile Include="Base\PipeBinds\TeamsAppPipeBind.cs" />
+    <Compile Include="Base\PipeBinds\TeamsChannelPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TeamsTabPipeBind.cs" />
     <Compile Include="Base\PipeBinds\TeamsTeamPipeBind.cs" />
     <Compile Include="Base\PnPConnectedCmdlet.cs" />
