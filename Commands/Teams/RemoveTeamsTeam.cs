@@ -1,11 +1,9 @@
 ﻿#if !ONPREMISES
-using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
-using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph

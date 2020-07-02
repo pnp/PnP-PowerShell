@@ -1,15 +1,10 @@
 ﻿#if !ONPREMISES
-using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Teams
 {
@@ -18,14 +13,14 @@ namespace SharePointPnP.PowerShell.Commands.Teams
        Category = CmdletHelpCategory.Teams,
        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-      Code = "PS:> Remove-PnPTeamsChannel -GroupId 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName \"My Channel\"",
+      Code = "PS:> Remove-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName \"My Channel\"",
       Remarks = "Removes the channel specified from the team specified",
       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveTeamsChannel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
-        public TeamsTeamPipeBind TeamIdentity;
+        public TeamsTeamPipeBind Team;
 
         [Parameter(Mandatory = true)]
         public string DisplayName;
@@ -37,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
         {
             if (Force || ShouldContinue("Removing the channel will also remove all the messages in the channel.", Properties.Resources.Confirm))
             {
-                var groupId = TeamIdentity.GetGroupId(HttpClient, AccessToken);
+                var groupId = Team.GetGroupId(HttpClient, AccessToken);
                 if (groupId != null)
                 {
                     if (!TeamsUtility.DeleteChannel(AccessToken, HttpClient, groupId, DisplayName))

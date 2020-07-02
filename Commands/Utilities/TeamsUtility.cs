@@ -1,13 +1,10 @@
-﻿using Microsoft.BusinessData.MetadataModel;
-using Microsoft.IdentityModel.Tokens;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
+﻿using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
-using System.Web;
 
 namespace SharePointPnP.PowerShell.Commands.Utilities
 {
@@ -270,6 +267,12 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 DisplayName = displayName,
             };
             return GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+        }
+
+        public static void PostMessage(HttpClient httpClient, string accessToken, string groupId, string channelId, string message)
+        {
+            var channelMessage = new TeamChannelMessage() { Body = new TeamChannelMessageBody() { Content = message } };
+            GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", channelMessage, accessToken).GetAwaiter().GetResult();
         }
         #endregion
 

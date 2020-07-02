@@ -927,6 +927,7 @@
     <Compile Include="Teams\RemoveTeamsChannel.cs" />
     <Compile Include="Teams\RemoveTeamsTab.cs" />
     <Compile Include="Teams\RemoveTeamsTeam.cs" />
+    <Compile Include="Teams\SubmitTeamsChannelMessage.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />
     <Compile Include="UserProfiles\SetUserOneDriveQuota.cs" />
     <Compile Include="UserProfiles\ResetUserOneDriveQuotaToDefault.cs" />

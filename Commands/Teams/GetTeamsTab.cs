@@ -1,12 +1,8 @@
 ﻿#if !ONPREMISES
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml.V201807;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
-using System;
-using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
@@ -16,13 +12,21 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype",
-       Remarks = "Retrieves the tabs for  the Microsoft Teams instances",
+       Code = "PS:> Get-PnPTeamsTab -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype",
+       Remarks = "Retrieves the tabs for the specified Microsoft Teams instance and channel",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity \"Wiki\"",
+       Code = "PS:> Get-PnPTeamsTab -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Channel 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity \"Wiki\"",
        Remarks = "Retrieves a tab with the display name 'Wiki' from the specified team and channel",
        SortOrder = 2)]
+    [CmdletExample(
+       Code = "PS:> Get-PnPTeamsTab -Team \"My Team\" -Channel \"My Channel\"",
+       Remarks = "Retrieves the tabs for the specified Microsoft Teams instance and channel",
+       SortOrder = 3)]
+    [CmdletExample(
+       Code = "PS:> Get-PnPTeamsTab \"My Team\" -Channel \"My Channel\" -Identity \"Wiki\"",
+       Remarks = "Retrieves a tab with the display name 'Wiki' from the specified team and channel",
+       SortOrder = 4)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class GetTeamsTab : PnPGraphCmdlet

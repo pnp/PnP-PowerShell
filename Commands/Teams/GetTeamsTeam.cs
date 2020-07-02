@@ -2,9 +2,7 @@
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
-using System.Linq;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
@@ -18,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Remarks = "Retrieves all the Microsoft Teams instances",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTeam -GroupId $groupId",
+       Code = "PS:> Get-PnPTeamsTeam -Identity $groupId",
        Remarks = "Retrieves a specific Microsoft Teams instance",
        SortOrder = 2)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]

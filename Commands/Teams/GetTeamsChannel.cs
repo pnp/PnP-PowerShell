@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharePointPnP.PowerShell.Commands.Teams
 {
@@ -33,11 +31,11 @@ namespace SharePointPnP.PowerShell.Commands.Teams
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class GetTeamsChannel : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.")]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = false)]
-        public string Identity;
+        [Parameter(Mandatory = false, HelpMessage = "")]
+        public TeamsChannelPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
@@ -46,8 +44,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
             {
                 if (ParameterSpecified(nameof(Identity)))
                 {
-                    var channels = TeamsUtility.GetChannels(AccessToken, HttpClient, groupId);
-                    WriteObject(channels.FirstOrDefault(c => c.DisplayName.Equals(Identity, StringComparison.OrdinalIgnoreCase) || c.Id.Equals(Identity, StringComparison.OrdinalIgnoreCase)));
+                    WriteObject(Identity.GetChannel(HttpClient, AccessToken, groupId));
                 }
                 else
                 {

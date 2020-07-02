@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
@@ -48,6 +49,22 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                 var channels = TeamsUtility.GetChannels(accessToken, httpClient, groupId);
                 return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase)).Id;
             }
+        }
+
+        public TeamChannel GetChannel(HttpClient httpClient, string accessToken, string groupId)
+        {
+            var channels = TeamsUtility.GetChannels(accessToken, httpClient, groupId);
+            if(channels != null && channels.Any())
+            {
+                if(!string.IsNullOrEmpty(_id))
+                {
+                    return channels.FirstOrDefault(c => c.Id.Equals(_id, StringComparison.OrdinalIgnoreCase));
+                } else
+                {
+                    return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            return null;
         }
 
     }

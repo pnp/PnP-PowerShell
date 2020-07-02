@@ -8,13 +8,11 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
 {
     public partial class TeamChannelMessage
     {
-        #region Public Members
+        public TeamChannelMessageBody Body { get; set; }
+    }
 
-        /// <summary>
-        /// Defines a Message for a Channel in a Team
-        /// </summary>
-        public string Message { get; set; }
-
-        #endregion
+    public class TeamChannelMessageBody
+    {
+        public string Content { get; set; }
     }
 }

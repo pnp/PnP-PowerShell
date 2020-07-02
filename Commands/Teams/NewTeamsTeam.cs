@@ -2,14 +2,10 @@
 using OfficeDevPnP.Core.Framework.Provisioning.Model.Teams;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
