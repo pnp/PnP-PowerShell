@@ -1,4 +1,5 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Model.Teams;
@@ -55,3 +56,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Graph;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -24,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
     public class RemoveTeamsChannel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
-        public GuidPipeBind GroupId;
+        public TeamsTeamPipeBind TeamIdentity;
 
         [Parameter(Mandatory = true)]
         public string DisplayName;
@@ -36,11 +37,19 @@ namespace SharePointPnP.PowerShell.Commands.Teams
         {
             if (Force || ShouldContinue("Removing the channel will also remove all the messages in the channel.", Properties.Resources.Confirm))
             {
-                if (!TeamsUtility.DeleteChannel(AccessToken, HttpClient, GroupId.Id.ToString(), DisplayName))
+                var groupId = TeamIdentity.GetGroupId(HttpClient, AccessToken);
+                if (groupId != null)
                 {
-                    WriteError(new ErrorRecord(new Exception($"Channel remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                    if (!TeamsUtility.DeleteChannel(AccessToken, HttpClient, groupId, DisplayName))
+                    {
+                        WriteError(new ErrorRecord(new Exception($"Channel remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                    }
+                } else
+                {
+                    throw new PSArgumentException("Team not found");
                 }
             }
         }
     }
 }
+#endif

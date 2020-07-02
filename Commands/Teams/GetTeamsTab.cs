@@ -1,4 +1,6 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml.V201807;
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Model.Teams;
@@ -26,38 +28,50 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     public class GetTeamsTab : PnPGraphCmdlet
     {
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of the team to retrieve.")]
-        public GuidPipeBind GroupId;
+        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of the team to retrieve.", ValueFromPipeline = true)]
+        public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the channel id of the team to retrieve.")]
-        public string ChannelId;
+        [Parameter(Mandatory = true, HelpMessage = "Specify the channel id of the team to retrieve.", ValueFromPipeline = true)]
+        public TeamsChannelPipeBind Channel;
 
         [Parameter(Mandatory = false, HelpMessage = "Identity")]
         public TeamsTabPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(Identity)))
+            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            if (groupId != null)
             {
-                var tabs = TeamsUtility.GetTabs(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId);
-                if (tabs != null)
+                var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+                if (!string.IsNullOrEmpty(channelId))
                 {
-                    TeamTab tab = null;
-                    if (Identity.Id != Guid.Empty)
+                    if (ParameterSpecified(nameof(Identity)))
                     {
-                        tab = tabs.FirstOrDefault(t => t.Id == Identity.Id.ToString());
+
+                        if (string.IsNullOrEmpty(Identity.Id))
+                        {
+                            WriteObject(Identity.GetTab(HttpClient, AccessToken, groupId, channelId));
+                        }
+                        else
+                        {
+                            WriteObject(Identity.GetTabById(HttpClient, AccessToken, groupId, channelId));
+                        }
                     }
                     else
                     {
-                        tab = tabs.FirstOrDefault(t => t.DisplayName.Equals(Identity.DisplayName, System.StringComparison.OrdinalIgnoreCase));
+                        WriteObject(TeamsUtility.GetTabs(AccessToken, HttpClient, groupId, channelId));
                     }
-                    WriteObject(tab);
+                }
+                else
+                {
+                    throw new PSArgumentException("Channel not found");
                 }
             }
             else
             {
-                WriteObject(TeamsUtility.GetTabs(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId));
+                throw new PSArgumentException("Team not found");
             }
         }
     }
 }
+#endif

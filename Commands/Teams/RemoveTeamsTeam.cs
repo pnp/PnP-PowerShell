@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿#if !ONPREMISES
+using Microsoft.SharePoint.Client;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -24,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveTeamsTeam : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of the team to retrieve.")]
+        [Parameter(Mandatory = true, HelpMessage = "Either the group id or the mailnickname of the group to remove.")]
         public TeamsTeamPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
@@ -34,27 +35,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         {
             if (Force || ShouldContinue("Removing the team will remove all messages in all channels in the team.", Properties.Resources.Confirm))
             {
-                var groupId = string.Empty;
-                if (Identity.Id != Guid.Empty)
+                var groupId = Identity.GetGroupId(HttpClient, AccessToken);
+                if (groupId != null)
                 {
-                    groupId = Identity.Id.ToString();
-                }
-                else
-                {
-                    var groups = TeamsUtility.GetGroupsWithTeam(HttpClient, AccessToken);
-                    var groupCollection = groups.Where(t => t.DisplayName.Equals(Identity.StringValue, StringComparison.OrdinalIgnoreCase));
-                    if (groupCollection.Any() && groupCollection.Count() == 1)
-                    {
-                        groupId = groupCollection.First().Id;
-                    }
-                    else
-                    {
-                        throw new PSArgumentException("Found multiple Teams with the same display name. Specify the group id to remove the correct Teams instance, e.g. Remove-PnPTeamsTeam -Identity <guid>. Use Get-PnPTeamsTeam to list all teams.");
-                    }
-                }
-                if (groupId != string.Empty)
-                {
-                    if (!TeamsUtility.DeleteTeam(AccessToken, HttpClient, groupId.ToString()))
+                    if (!TeamsUtility.DeleteTeam(AccessToken, HttpClient, groupId))
                     {
                         WriteError(new ErrorRecord(new Exception($"Team remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
                     }
@@ -67,3 +51,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif

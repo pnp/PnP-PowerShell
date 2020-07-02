@@ -1,4 +1,5 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.PowerShell.Commands.Utilities;
@@ -23,13 +24,13 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveTeamsTab : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of the team to retrieve.")]
-        public GuidPipeBind GroupId;
+        [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.")]
+        public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the channel id of the team to retrieve.")]
-        public string ChannelId;
+        [Parameter(Mandatory = true, HelpMessage = "Specify the channel id or display name of the channel to use.")]
+        public TeamsChannelPipeBind Channel;
 
-        [Parameter(Mandatory = true, HelpMessage = "Identity")]
+        [Parameter(Mandatory = true, HelpMessage = "Specify the id of the tab ")]
         public TeamsTabPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
@@ -39,27 +40,45 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         {
             if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
             {
-                var tabId = string.Empty;
-                if(Identity.Id != Guid.Empty)
+                var groupId = Team.GetGroupId(HttpClient, AccessToken);
+                if (groupId != null)
                 {
-                    tabId = Identity.Id.ToString();
-                } else
-                {
-                    var tabs = TeamsUtility.GetTabs(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId);
-                    var tab = tabs.FirstOrDefault(t => t.DisplayName.Equals(Identity.DisplayName, StringComparison.OrdinalIgnoreCase));
-                    if(tab != null)
+                    var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+                    if (channelId != null)
                     {
-                        tabId = tab.Id;
-                    } else
+                        var tabId = string.Empty;
+                        if (string.IsNullOrEmpty(Identity.Id))
+                        {
+                            tabId = Identity.Id.ToString();
+                        }
+                        else
+                        {
+                            var tab = Identity.GetTab(HttpClient, AccessToken, groupId, channelId);
+                            if (tab != null)
+                            {
+                                tabId = tab.Id;
+                            }
+                            else
+                            {
+                                throw new PSArgumentException("Cannot find tab");
+                            }
+                        }
+                        if (!TeamsUtility.DeleteTab(AccessToken, HttpClient, groupId, channelId, tabId))
+                        {
+                            throw new PSInvalidOperationException("Tab remove failed");
+                        }
+                    }
+                    else
                     {
-                        throw new PSArgumentException("Cannot find tab");
+                        throw new PSArgumentException("Cannot find channel");
                     }
                 }
-                if (!TeamsUtility.DeleteTab(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId, tabId))
+                else
                 {
-                    throw new PSInvalidOperationException("Tab remove failed");
+                    throw new PSArgumentException("Team not found", nameof(Team));
                 }
             }
         }
     }
 }
+#endif

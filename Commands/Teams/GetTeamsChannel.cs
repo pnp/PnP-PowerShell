@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Graph;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -17,38 +18,46 @@ namespace SharePointPnP.PowerShell.Commands.Teams
        Category = CmdletHelpCategory.Teams,
        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-      Code = "PS:> Get-PnPTeamsChannel -GroupId a6c1e0d7-f579-4993-81ab-4b666f8edea8",
+      Code = "PS:> Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8",
       Remarks = "Retrieves all channels for the specified team",
       SortOrder = 1)]
     [CmdletExample(
-      Code = "PS:> Get-PnPTeamsChannel -GroupId a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity \"Test Channel\"",
+      Code = "PS:> Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity \"Test Channel\"",
       Remarks = "Retrieves the channel called 'Test Channel'",
       SortOrder = 2)]
     [CmdletExample(
-      Code = "PS:> Get-PnPTeamsChannel -GroupId a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity \"19:796d063b63e34497aeaf092c8fb9b44e@thread.skype\"",
+      Code = "PS:> Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity \"19:796d063b63e34497aeaf092c8fb9b44e@thread.skype\"",
       Remarks = "Retrieves the channel specified by its channel id",
       SortOrder = 3)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class GetTeamsChannel : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true)]
-        public GuidPipeBind GroupId;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        public TeamsTeamPipeBind Team;
 
         [Parameter(Mandatory = false)]
         public string Identity;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(Identity)))
+            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            if (groupId != null)
             {
-                var channels = TeamsUtility.GetChannels(AccessToken, HttpClient, GroupId.Id.ToString());
-                WriteObject(channels.FirstOrDefault(c => c.DisplayName.Equals(Identity, StringComparison.OrdinalIgnoreCase) || c.Id.Equals(Identity, StringComparison.OrdinalIgnoreCase)));
-            }
-            else
+                if (ParameterSpecified(nameof(Identity)))
+                {
+                    var channels = TeamsUtility.GetChannels(AccessToken, HttpClient, groupId);
+                    WriteObject(channels.FirstOrDefault(c => c.DisplayName.Equals(Identity, StringComparison.OrdinalIgnoreCase) || c.Id.Equals(Identity, StringComparison.OrdinalIgnoreCase)));
+                }
+                else
+                {
+                    WriteObject(TeamsUtility.GetChannels(AccessToken, HttpClient, groupId));
+                }
+            } else
             {
-                WriteObject(TeamsUtility.GetChannels(AccessToken, HttpClient, GroupId.Id.ToString()));
+                throw new PSArgumentException("Cannot find team", nameof(Team));
             }
         }
     }
 }
+#endif

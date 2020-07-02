@@ -1,4 +1,5 @@
-﻿using OfficeDevPnP.Core.Framework.Provisioning.Model.Teams;
+﻿#if !ONPREMISES
+using OfficeDevPnP.Core.Framework.Provisioning.Model.Teams;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
@@ -28,7 +29,6 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPTeamsTeam -Visibility Public",
        Remarks = "Retrieves all Microsoft Teams instances which are public visible",
        SortOrder = 2)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class NewTeamsTeam : PnPGraphCmdlet
     {
@@ -141,3 +141,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif

@@ -33,6 +33,11 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return groups;
         }
 
+        public static Group GetGroupWithTeam(HttpClient httpClient, string accessToken, string mailNickname)
+        {
+            return GraphHelper.GetAsync<Group>(httpClient, $"beta/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken).GetAwaiter().GetResult();
+
+        }
         public static List<Team> GetTeams(string accessToken, HttpClient httpClient)
         {
             List<Team> teams = new List<Team>();
@@ -277,6 +282,11 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 return collection.Items;
             }
             return null;
+        }
+
+        public static TeamTab GetTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
+        {
+            return GraphHelper.GetAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
         }
 
         public static bool DeleteTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
