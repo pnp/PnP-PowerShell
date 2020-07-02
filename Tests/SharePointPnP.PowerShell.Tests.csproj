@@ -734,6 +734,24 @@
     <Compile Include="PSTestScope.cs" />
     <Compile Include="TestCommon.cs" />
     <Compile Include="OriginalTests\BrandingTests.cs" />
+    <Compile Include="Webs\AddPnPIndexedPropertyTests.cs" />
+    <Compile Include="Webs\GetPnPAvailableLanguageTests.cs" />
+    <Compile Include="Webs\GetPnPIndexedPropertyKeysTests.cs" />
+    <Compile Include="Webs\GetPnPPropertyBagTests.cs" />
+    <Compile Include="Webs\GetPnPRequestAccessEmailsTests.cs" />
+    <Compile Include="Webs\GetPnPWebTemplatesTests.cs" />
+    <Compile Include="Webs\GetPnPWebTests.cs" />
+    <Compile Include="Webs\InvokePnPWebActionTests.cs" />
+    <Compile Include="Webs\NewPnPWebTests.cs" />
+    <Compile Include="Webs\RemovePnPIndexedPropertyTests.cs" />
+    <Compile Include="Webs\RemovePnPPropertyBagValueTests.cs" />
+    <Compile Include="Webs\RemovePnPWebTests.cs" />
+    <Compile Include="Webs\RequestPnPReIndexWebTests.cs" />
+    <Compile Include="Webs\SetPnPIndexedPropertiesTests.cs" />
+    <Compile Include="Webs\SetPnPPropertyBagValueTests.cs" />
+    <Compile Include="Webs\SetPnPRequestAccessEmailsTests.cs" />
+    <Compile Include="Webs\SetPnPWebPermissionTests.cs" />
+    <Compile Include="Webs\SetPnPWebTests.cs" />
     <Compile Include="Workflows\AddPnPWorkflowDefinitionTests.cs" />
     <Compile Include="Workflows\AddPnPWorkflowSubscriptionTests.cs" />
     <Compile Include="Workflows\GetPnPWorkflowDefinitionTests.cs" />
@@ -765,9 +783,7 @@
       <Name>SharePointPnP.PowerShell.Commands</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Web\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
