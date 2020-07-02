@@ -3,12 +3,14 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Extensions;
 using SharePointPnP.PowerShell.Commands.Enums;
 using SharePointPnP.PowerShell.Commands.Model;
+using SharePointPnP.PowerShell.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
@@ -28,6 +30,19 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         #region Properties
 
+        private HttpClient httpClient;
+
+        public HttpClient HttpClient
+        {
+            get
+            {
+                if (httpClient == null)
+                {
+                    httpClient = new HttpClient();
+                }
+                return httpClient;
+            }
+        }
         /// <summary>
         /// User Agent identifier to use on all connections being made to the APIs
         /// </summary>
@@ -80,6 +95,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// </summary>
         public X509Certificate2 Certificate { get; internal set; }
 
+        /// <summary>
+        /// Boolean indicating if when using Disconnect-PnPOnline to destruct this PnPConnection instance, if the certificate file should be deleted from C:\ProgramData\Microsoft\Crypto\RSA\MachineKeys
+        /// </summary>
+        public bool DeleteCertificateFromCacheOnDisconnect { get; internal set; }
+
         public ClientContext Context { get; set; }
 
         /// <summary>
@@ -115,9 +135,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// Tries to get a token for the provided audience
         /// </summary>
         /// <param name="tokenAudience">Audience to try to get a token for</param>
-        /// <param name="roles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
+        /// <param name="orRoles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
         /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, string[] roles = null)
+        internal GenericToken TryGetToken(TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
         {
             GenericToken token = null;
 
@@ -129,17 +149,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
                 if (token.ExpiresOn > DateTime.Now)
                 {
-                    // Token is still valid, ensure we dont have specific roles to check for or the requested roles to execute the command are present in the token
-                    if (roles == null || roles.Length == 0 || roles.Any(r => token.Roles.Contains(r)))
+                    var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
+                    if (validationResults.valid)
                     {
                         return token;
                     }
-
-                    if (roles != null)
-                    {
-                        // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
-                        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {(roles.Length != 1 ? "any of " : string.Empty)}the permission{(roles.Length != 1 ? "s" : string.Empty)} {string.Join(", ", roles).TrimEnd(new[] { ',', ' ' })}");
-                    }
+                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
                 }
 
                 // Token was no longer valid, proceed with trying to create a new token
@@ -153,11 +168,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         if (Certificate != null)
                         {
-                            token = GraphToken.AcquireToken(Tenant, ClientId, Certificate);
+                            token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
                         }
                         else if (ClientSecret != null)
                         {
-                            token = GraphToken.AcquireToken(Tenant, ClientId, ClientSecret);
+                            token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
                         }
                     }
                     break;
@@ -167,11 +182,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
                         if (Certificate != null)
                         {
-                            token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, Certificate);
+                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
                         }
                         else if (ClientSecret != null)
                         {
-                            token = OfficeManagementApiToken.AcquireToken(Tenant, ClientId, ClientSecret);
+                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
                         }
                     }
                     break;
@@ -183,6 +198,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
             if (token != null)
             {
+                var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
+                if (!validationResults.valid)
+                {
+                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
+                }
                 // Managed to create a token for the requested audience, add it to our collection with tokens
                 AccessTokens[tokenAudience] = token;
                 return token;
@@ -208,6 +228,58 @@ namespace SharePointPnP.PowerShell.Commands.Base
         internal void ClearTokens()
         {
             AccessTokens.Clear();
+        }
+
+        private (bool valid, string message) ValidateTokenForPermissions(GenericToken token, TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
+        {
+            bool valid = false;
+            var message = string.Empty;
+            if (tokenType != TokenType.All && token.TokenType != tokenType)
+            {
+                throw new PSSecurityException($"Access to {tokenAudience} failed because the API requires {(tokenType == TokenType.Application ? "an" : "a")} {tokenType} token while you currently use {(token.TokenType == TokenType.Application ? "an" : "a")} {token.TokenType} token.");
+            }
+            var andRolesMatched = false;
+            if (andRoles != null && andRoles.Length != 0)
+            {
+                // we have explicitely required roles
+                andRolesMatched = andRoles.All(r => token.Roles.Contains(r));
+            }
+            else
+            {
+                andRolesMatched = true;
+            }
+
+            var orRolesMatched = false;
+            if (orRoles != null && orRoles.Length != 0)
+            {
+                orRolesMatched = orRoles.Any(r => token.Roles.Contains(r));
+            }
+            else
+            {
+                orRolesMatched = true;
+            }
+
+            if (orRolesMatched && andRolesMatched)
+            {
+                valid = true;
+            }
+
+            if (orRoles != null || andRoles != null)
+            {
+                if (!valid)
+                {                // Requested role was not part of the access token, throw an exception explaining which application registration is missing which role
+                    if (!orRolesMatched)
+                    {
+                        message += "for one of the following roles: " + string.Join(", ", orRoles);
+                    }
+                    if (!andRolesMatched)
+                    {
+                        message += (message != string.Empty ? ", and " : ", ") + "for all of the following roles: " + string.Join(", ", andRoles);
+                    }
+                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {message}");
+                }
+            }
+            return (valid, message);
         }
 
         #endregion
@@ -413,7 +485,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         #endregion
 
         internal PnPConnection(ClientContext context, ConnectionType connectionType, int minimalHealthScore, int retryCount, int retryWait, PSCredential credential, string clientId, string clientSecret, string url, string tenantAdminUrl, string pnpVersionTag, PSHost host, bool disableTelemetry, InitializationType initializationType)
-            : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
+        : this(context, connectionType, minimalHealthScore, retryCount, retryWait, credential, url, tenantAdminUrl, pnpVersionTag, host, disableTelemetry, initializationType)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -563,7 +635,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     else
                     {
 #endif
-                        throw;
+                    throw;
 #if !ONPREMISES && !NETSTANDARD2_1
                     }
 #endif
