@@ -8,7 +8,8 @@ Unit tests for PnP Powershell are undergoing a revamp, this area may grow or cha
 
 * The tests are organised in a subfolder and namespace that matches the cmdlets in the main project for easy findability and association of tests.
 * Each cmdlet should have its own test class.
-* A test placeholder has been pre-generated for 
+* A test placeholder has been pre-generated for cmdlet, a cmdlet may have multiple combinations of test inputs, 
+copy the placeholder as required for each combination ensuring the each execution is a test
 
 ### Performance
 
@@ -18,9 +19,16 @@ should be added to the test suite setup as a one time setup.
 
 ### Sites
 
-When writing your tests ensure that you utilise the existing sites set out by the requirements for running the suite of tests.
-Site creation for certiain template types can take a long time to execute and risk timing out the test run.
+* When writing your tests ensure that you utilise the existing sites set out by the requirements for running the suite of tests.
+* Site creation for certiain template types can take a long time to execute and risk timing out the test run.
 
+### Distructive Tests
+
+> Important!
+
+* Ensure that for tests the are deletions create the objects requied first, do not assume or use existing assets.
+* Be vary careful with the tenant level global settings - if there is potential of losing access to the tenant - mark test and inconclusive. 
+These ideally should be run on a demo tenant, an area that does not contain your work
 
 # Notes
 

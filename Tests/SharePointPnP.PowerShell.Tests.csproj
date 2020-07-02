@@ -344,6 +344,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Admin\ClearPnPTenantAppCatalogUrlTests.cs" />
+    <Compile Include="Admin\GetPnPStorageEntityTests.cs" />
+    <Compile Include="Admin\GetPnPTenantAppCatalogUrlTests.cs" />
+    <Compile Include="Admin\GetPnPTenantSiteTests.cs" />
+    <Compile Include="Admin\GetPnPTimeZoneIdTests.cs" />
+    <Compile Include="Admin\NewPnPTenantSiteTests.cs" />
+    <Compile Include="Admin\RemovePnPStorageEntityTests.cs" />
+    <Compile Include="Admin\RemovePnPTenantSiteTests.cs" />
+    <Compile Include="Admin\SetPnPStorageEntityTests.cs" />
+    <Compile Include="Admin\SetPnPTenantAppCatalogUrlTests.cs" />
+    <Compile Include="Admin\SetPnPTenantSiteTests.cs" />
+    <Compile Include="Base\GetPnPAuthenticationRealmTests.cs" />
+    <Compile Include="Branding\GetPnPMasterPageTests.cs" />
     <Compile Include="OriginalTests\AdminTests.cs" />
     <Compile Include="Admin\AddPnPHubSiteAssociationTests.cs" />
     <Compile Include="Admin\AddPnPOffice365GroupToSiteTests.cs" />
@@ -664,20 +677,37 @@
     <Compile Include="Search\SetPnPSearchSettingsTests.cs" />
     <Compile Include="Search\SubmitPnPSearchQueryTests.cs" />
     <Compile Include="SiteDesigns\AddPnPSiteDesignTaskTests.cs" />
+    <Compile Include="SiteDesigns\AddPnPSiteDesignTests.cs" />
+    <Compile Include="SiteDesigns\AddPnPSiteScriptTests.cs" />
+    <Compile Include="SiteDesigns\GetPnPSiteDesignRightsTests.cs" />
     <Compile Include="SiteDesigns\GetPnPSiteDesignRunStatusTests.cs" />
     <Compile Include="SiteDesigns\GetPnPSiteDesignRunTests.cs" />
     <Compile Include="SiteDesigns\GetPnPSiteDesignTaskTests.cs" />
+    <Compile Include="SiteDesigns\GetPnPSiteDesignTests.cs" />
+    <Compile Include="SiteDesigns\GetPnPSiteScriptFromListTests.cs" />
+    <Compile Include="SiteDesigns\GetPnPSiteScriptFromWebTests.cs" />
+    <Compile Include="SiteDesigns\GetPnPSiteScriptTests.cs" />
+    <Compile Include="SiteDesigns\GrantPnPSiteDesignRightsTests.cs" />
+    <Compile Include="SiteDesigns\InvokePnPSiteDesignTests.cs" />
+    <Compile Include="SiteDesigns\RemovePnPSiteDesignTaskTests.cs" />
+    <Compile Include="SiteDesigns\RemovePnPSiteDesignTests.cs" />
+    <Compile Include="SiteDesigns\RemovePnPSiteScriptTests.cs" />
+    <Compile Include="SiteDesigns\RevokePnPSiteDesignRightsTests.cs" />
+    <Compile Include="SiteDesigns\SetPnPSiteDesignTests.cs" />
+    <Compile Include="SiteDesigns\SetPnPSiteScriptTests.cs" />
     <Compile Include="Site\AddPnPRoleDefinitionTests.cs" />
     <Compile Include="Site\AddPnPSiteCollectionAdminTests.cs" />
     <Compile Include="Site\AddPnPTeamsTeamTests.cs" />
     <Compile Include="Site\DisablePnPSharingForNonOwnersOfSiteTests.cs" />
     <Compile Include="Site\EnablePnPCommSiteTests.cs" />
     <Compile Include="Site\GetPnPAuditingTests.cs" />
+    <Compile Include="Site\GetPnPIsSiteAliasAvailableTests.cs" />
     <Compile Include="Site\GetPnPRoleDefinitionTests.cs" />
     <Compile Include="Site\GetPnPSharingForNonOwnersOfSiteTests.cs" />
     <Compile Include="Site\GetPnPSiteCollectionAdminTests.cs" />
     <Compile Include="Site\GetPnPSiteTests.cs" />
     <Compile Include="Site\InstallPnPSolutionTests.cs" />
+    <Compile Include="Site\NewPnPSiteTests.cs" />
     <Compile Include="Site\RemovePnPRoleDefinitionTests.cs" />
     <Compile Include="Site\RemovePnPSiteCollectionAdminTests.cs" />
     <Compile Include="Site\SetPnPAppSideLoadingTests.cs" />
@@ -739,6 +769,7 @@
     <Compile Include="Webs\GetPnPIndexedPropertyKeysTests.cs" />
     <Compile Include="Webs\GetPnPPropertyBagTests.cs" />
     <Compile Include="Webs\GetPnPRequestAccessEmailsTests.cs" />
+    <Compile Include="Webs\GetPnPSubWebsTests.cs" />
     <Compile Include="Webs\GetPnPWebTemplatesTests.cs" />
     <Compile Include="Webs\GetPnPWebTests.cs" />
     <Compile Include="Webs\InvokePnPWebActionTests.cs" />
