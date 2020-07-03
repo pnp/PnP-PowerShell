@@ -18,9 +18,10 @@ using System.Web.UI.WebControls;
 #endif
 using SharePointPnP.PowerShell.Commands.Model;
 using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using System.Collections.Generic;
 #if !NETSTANDARD2_1
 using System.Security.Cryptography;
-#endif 
+#endif
 using System.Reflection;
 #if !ONPREMISES
 #endif
@@ -786,7 +787,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
         }
 
-#region Connect Types
+        #region Connect Types
 
         /// <summary>
         /// Connect using the paramater set TOKEN
@@ -1074,7 +1075,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #if !NETSTANDARD2_1
             return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
-            throw new NotImplementedException();	
+            throw new NotImplementedException();
 #endif
 #else
             return null;
@@ -1101,7 +1102,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             if (officeManagementApiScopes.Length > 0)
             {
                 var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(MSALPnPPowerShellClientId, officeManagementApiScopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(MSALPnPPowerShellClientId, graphScopes, credentials.UserName, credentials.Password);
-                connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, Host, InitializationType.InteractiveLogin, disableTelemetry: NoTelemetry.ToBool());
+                connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, Host, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
             }
 
             // If we have Graph scopes, get a token for it
@@ -1112,12 +1113,13 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
                 if (connection != null)
                 {
-                    connection.AddToken(TokenAudience.MicrosoftGraph, graphToken);
+                    //connection.AddToken(TokenAudience.MicrosoftGraph, graphToken);
                 }
                 else
                 {
-                    connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, Host, InitializationType.InteractiveLogin, disableTelemetry: NoTelemetry.ToBool());
+                    connection = PnPConnection.GetConnectionWithToken(graphToken, TokenAudience.MicrosoftGraph, Host, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
                 }
+                connection.Scopes = graphScopes;
             }
             return connection;
 #else
@@ -1140,13 +1142,13 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             switch (url.ToLower())
             {
                 case GraphToken.ResourceIdentifier:
-                    return PnPConnection.GetConnectionWithToken(new GraphToken(AccessToken), TokenAudience.MicrosoftGraph, Host, InitializationType.Token, disableTelemetry: NoTelemetry.ToBool());
+                    return PnPConnection.GetConnectionWithToken(new GraphToken(AccessToken), TokenAudience.MicrosoftGraph, Host, InitializationType.Token, null, disableTelemetry: NoTelemetry.ToBool());
 
                 case OfficeManagementApiToken.ResourceIdentifier:
-                    return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, Host, InitializationType.Token, disableTelemetry: NoTelemetry.ToBool());
+                    return PnPConnection.GetConnectionWithToken(new OfficeManagementApiToken(AccessToken), TokenAudience.OfficeManagementApi, Host, InitializationType.Token, null, disableTelemetry: NoTelemetry.ToBool());
 
                 default:
-                    return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, Host, InitializationType.Token, Url, disableTelemetry: NoTelemetry.ToBool());
+                    return PnPConnection.GetConnectionWithToken(new SharePointToken(AccessToken), TokenAudience.SharePointOnline, Host, InitializationType.Token, null, Url, disableTelemetry: NoTelemetry.ToBool());
             }
 #else
             return null;
@@ -1239,7 +1241,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                                                                  SkipTenantAdminCheck,
                                                                  LoginProviderName);
 #else
-                throw new NotImplementedException();
+            throw new NotImplementedException();
 #endif
         }
 
@@ -1351,9 +1353,9 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
 #endif
         }
 
-#endregion
+        #endregion
 
-#region Helper methods
+        #region Helper methods
         private PSCredential GetCredentials()
         {
             var connectionUri = new Uri(Url);
@@ -1426,6 +1428,6 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 WriteWarning(message);
             }
         }
-#endregion
+        #endregion
     }
 }

@@ -207,7 +207,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 if (tokenResult != null)
                 {
                     progressCallback("Token received");
-                    spoConnection = PnPConnection.GetConnectionWithToken(tokenResult, TokenAudience.SharePointOnline, host, InitializationType.DeviceLogin, url, context, minimalHealthScore, PnPPSVersionTag, disableTelemetry);
+                    spoConnection = PnPConnection.GetConnectionWithToken(tokenResult, TokenAudience.SharePointOnline, host, InitializationType.DeviceLogin, null, url, context, minimalHealthScore, PnPPSVersionTag, disableTelemetry);
                 }
                 else
                 {
