@@ -1,5 +1,9 @@
 ﻿using Microsoft.Identity.Client;
+using SharePointPnP.PowerShell.Commands.Base;
+using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -11,6 +15,8 @@ namespace SharePointPnP.PowerShell.Commands.Model
     /// </summary>
     public class GraphToken : GenericToken
     {
+        private static IPublicClientApplication publicClientApplication;
+        private static IConfidentialClientApplication confidentialClientApplication;
         /// <summary>
         /// The resource identifier for Microsoft Graph API tokens
         /// </summary>
@@ -56,9 +62,23 @@ namespace SharePointPnP.PowerShell.Commands.Model
             {
                 throw new ArgumentNullException(nameof(certificate));
             }
+            AuthenticationResult tokenResult = null;
 
-            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}{tenant}").WithCertificate(certificate).Build();
-            var tokenResult = app.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
+            if (confidentialClientApplication == null)
+            {
+                confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}{tenant}").WithCertificate(certificate).Build();
+            }
+
+            var account = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+
+            try
+            {
+                tokenResult = confidentialClientApplication.AcquireTokenSilent(new[] { $"{ResourceIdentifier}/{DefaultScope}" }, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+            }
+            catch
+            {
+                tokenResult = confidentialClientApplication.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
+            }
 
             return new GraphToken(tokenResult.AccessToken);
         }
@@ -85,8 +105,23 @@ namespace SharePointPnP.PowerShell.Commands.Model
                 throw new ArgumentNullException(nameof(clientSecret));
             }
 
-            var app = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}{tenant}").WithClientSecret(clientSecret).Build();
-            var tokenResult = app.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
+            AuthenticationResult tokenResult = null;
+
+            if (confidentialClientApplication == null)
+            {
+                confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}{tenant}").WithClientSecret(clientSecret).Build();
+            }
+
+            var account = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+
+            try
+            {
+                tokenResult = confidentialClientApplication.AcquireTokenSilent(new[] { $"{ResourceIdentifier}/{DefaultScope}" }, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+            }
+            catch
+            {
+                tokenResult = confidentialClientApplication.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
+            }
 
             return new GraphToken(tokenResult.AccessToken);
         }
@@ -108,8 +143,29 @@ namespace SharePointPnP.PowerShell.Commands.Model
                 throw new ArgumentNullException(nameof(scopes));
             }
 
-            var app = PublicClientApplicationBuilder.Create(clientId).Build();
-            var tokenResult = app.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync().GetAwaiter().GetResult();
+
+            if (publicClientApplication == null)
+            {
+                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).Build();
+            }
+
+            AuthenticationResult tokenResult = null;
+
+            if (publicClientApplication == null)
+            {
+                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").Build();
+
+            }
+            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+
+            try
+            {
+                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+            }
+            catch
+            {
+                tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync().GetAwaiter().GetResult();
+            }
 
             return new GraphToken(tokenResult.AccessToken);
         }
@@ -141,12 +197,22 @@ namespace SharePointPnP.PowerShell.Commands.Model
                 throw new ArgumentNullException(nameof(securePassword));
             }
 
-            var app = PublicClientApplicationBuilder.Create(clientId)
-                // Delegated Graph token using credentials is only possible against organizational tenants
-                .WithAuthority($"{OAuthBaseUrl}organizations/")
-                .Build();
+            AuthenticationResult tokenResult = null;
 
-            var tokenResult = app.AcquireTokenByUsernamePassword(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), username, securePassword).ExecuteAsync().GetAwaiter().GetResult();
+            if (publicClientApplication == null)
+            {
+                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").Build();
+
+            }
+            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+            try
+            {
+                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+            }
+            catch
+            {
+                tokenResult = publicClientApplication.AcquireTokenByUsernamePassword(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), username, securePassword).ExecuteAsync().GetAwaiter().GetResult();
+            }
 
             return new GraphToken(tokenResult.AccessToken);
         }

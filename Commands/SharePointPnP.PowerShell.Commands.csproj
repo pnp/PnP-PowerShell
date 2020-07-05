@@ -921,6 +921,7 @@
     <Compile Include="Teams\AddTeamsChannel.cs" />
     <Compile Include="Teams\GetTeamsApp.cs" />
     <Compile Include="Teams\GetTeamsChannel.cs" />
+    <Compile Include="Teams\GetTeamsChannelMessage.cs" />
     <Compile Include="Teams\GetTeamsTab.cs" />
     <Compile Include="Teams\GetTeamsTeam.cs" />
     <Compile Include="Teams\NewTeamsTeam.cs" />

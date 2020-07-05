@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.")]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = false, HelpMessage = "")]
+        [Parameter(Mandatory = false, HelpMessage = "The identity of the channel to retrieve.")]
         public TeamsChannelPipeBind Identity;
 
         protected override void ExecuteCmdlet()

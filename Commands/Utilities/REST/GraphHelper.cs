@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
 
             var message = new HttpRequestMessage();
             message.Method = method;
-            message.RequestUri = new Uri($"https://graph.microsoft.com/{url}");
+            message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://graph.microsoft.com/{url}") : new Uri(url);
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
             if (method == HttpMethod.Post || method == HttpMethod.Put)
             {
@@ -87,10 +87,11 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var message = GetMessage(url, HttpMethod.Post, accessToken, requestContent);
             var returnValue = await SendMessageAsync(httpClient, message);
-            if(!string.IsNullOrEmpty(returnValue))
+            if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonConvert.DeserializeObject<T>(returnValue);
-            } else
+            }
+            else
             {
                 return default;
             }

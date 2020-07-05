@@ -1,4 +1,5 @@
 ﻿using Microsoft.ApplicationInsights;
+using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Extensions;
 using SharePointPnP.PowerShell.Commands.Enums;
@@ -25,6 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// ClientId of the application registered in Azure Active Directory which should be used for the device oAuth flow
         /// </summary>
         internal const string DeviceLoginClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
+        private const string MSALPnPPowerShellClientId = "bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71";
 
         #endregion
 
@@ -48,6 +50,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// </summary>
         internal string UserAgent { get; set; }
 
+
         internal ConnectionMethod ConnectionMethod { get; set; }
 
         /// <summary>
@@ -60,10 +63,18 @@ namespace SharePointPnP.PowerShell.Commands.Base
         public static PnPConnection CurrentConnection { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
 
+        public IPublicClientApplication PublicClientApp { get; internal set; }
+        public IConfidentialClientApplication ConfidentialClientApp { get; internal set; }
+
         /// <summary>
         /// Indication for telemetry through which method a connection has been established
         /// </summary>
         public InitializationType InitializationType { get; protected set; }
+
+        /// <summary>
+        /// used to retrieve a new token in case the current token expires
+        /// </summary>
+        public string[] Scopes { get; internal set; }
 
         /// <summary>
         /// If provided, it defines the minimal health score the SharePoint server should return back before executing requests on it. Use scale 0 - 10 where 0 is most health and 10 is least healthy. If set to NULL, no health score check will take place.
@@ -141,24 +152,24 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             GenericToken token = null;
 
-            // Validate if we have a token already
-            if (AccessTokens.ContainsKey(tokenAudience))
-            {
-                // We have a token already, ensure it is still valid
-                token = AccessTokens[tokenAudience];
+            //Validate if we have a token already
+            //if (AccessTokens.ContainsKey(tokenAudience))
+            //{
+            //    // We have a token already, ensure it is still valid
+            //    token = AccessTokens[tokenAudience];
 
-                if (token.ExpiresOn > DateTime.Now)
-                {
-                    var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
-                    if (validationResults.valid)
-                    {
-                        return token;
-                    }
-                    throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
-                }
+            //    if (token.ExpiresOn > DateTime.Now)
+            //    {
+            //        var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
+            //        if (validationResults.valid)
+            //        {
+            //            return token;
+            //        }
+            //        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
+            //    }
 
-                // Token was no longer valid, proceed with trying to create a new token
-            }
+            //    // Token was no longer valid, proceed with trying to create a new token
+            //}
 
             // We do not have a token for the requested audience yet or it was no longer valid, try to create (a new) one
             switch (tokenAudience)
@@ -173,6 +184,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         else if (ClientSecret != null)
                         {
                             token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
+                        }
+                        else if (Scopes != null)
+                        {
+                            token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(MSALPnPPowerShellClientId, Scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(MSALPnPPowerShellClientId, Scopes, PSCredential.UserName, PSCredential.Password);
                         }
                     }
                     break;
@@ -204,7 +219,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
                 }
                 // Managed to create a token for the requested audience, add it to our collection with tokens
-                AccessTokens[tokenAudience] = token;
+                //AccessTokens[tokenAudience] = token;
                 return token;
             }
 
@@ -466,6 +481,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                                                            TokenAudience tokenAudience,
                                                            PSHost host,
                                                            InitializationType initializationType,
+                                                           PSCredential credentials,
                                                            string url = null,
                                                            ClientContext clientContext = null,
                                                            int? minimalHealthScore = null,
@@ -478,7 +494,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 Tenant = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("tid", StringComparison.InvariantCultureIgnoreCase))?.Value,
                 ClientId = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("appid", StringComparison.InvariantCultureIgnoreCase))?.Value
             };
-
+            connection.PSCredential = credentials;
             return connection;
         }
 

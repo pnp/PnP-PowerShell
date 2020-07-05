@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
+#if !NETSTANDARD2_1
+using System.Web;
+#endif
 
 namespace SharePointPnP.PowerShell.Commands.Utilities
 {
@@ -269,10 +272,34 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
         }
 
-        public static void PostMessage(HttpClient httpClient, string accessToken, string groupId, string channelId, string message)
+        public static void PostMessage(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannelMessage message)
         {
-            var channelMessage = new TeamChannelMessage() { Body = new TeamChannelMessageBody() { Content = message } };
-            GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", channelMessage, accessToken).GetAwaiter().GetResult();
+            GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", message, accessToken).GetAwaiter().GetResult();
+        }
+
+        public static List<TeamChannelMessage> GetMessages(HttpClient httpClient, string accessToken, string groupId, string channelId, bool includeDeleted = false)
+        {
+            List<TeamChannelMessage> messages = new List<TeamChannelMessage>();
+            var collection = GraphHelper.GetAsync<GraphCollection<TeamChannelMessage>>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/messages", accessToken).GetAwaiter().GetResult();
+            if(collection != null)
+            {
+                messages.AddRange(collection.Items);
+                while(collection != null && !string.IsNullOrEmpty(collection.NextLink))
+                {
+                    collection = GraphHelper.GetAsync<GraphCollection<TeamChannelMessage>>(httpClient, collection.NextLink, accessToken).GetAwaiter().GetResult();
+                    if (collection != null)
+                    {
+                        messages.AddRange(collection.Items);
+                    }
+                }
+            }
+            if (includeDeleted)
+            {
+                return messages;
+            } else
+            {
+                return messages.Where(m => !m.DeletedDateTime.HasValue).ToList();
+            }
         }
         #endregion
 
