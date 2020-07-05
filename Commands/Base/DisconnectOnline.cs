@@ -32,7 +32,10 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if(Connection?.Certificate != null)
             {
 #if !NETSTANDARD2_1
-                PnPConnectionHelper.CleanupCryptoMachineKey(Connection.Certificate);
+                if (Connection != null && Connection.DeleteCertificateFromCacheOnDisconnect)
+                {
+                    PnPConnectionHelper.CleanupCryptoMachineKey(Connection.Certificate);
+                }
 #endif
                 Connection.Certificate = null;
             }
@@ -69,7 +72,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 
         internal static bool DisconnectProvidedService(PnPConnection connection)
         {
-            connection.ClearTokens();
+            //connection.ClearTokens();
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
             if (connection == null)
