@@ -8,37 +8,30 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTeamsChannel")]
+    [Cmdlet(VerbsCommon.Add, "PnPTeamsUser")]
     [CmdletHelp("Adds a channel to an existing Microsoft Teams instance.",
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName \"My Channel\"",
-       Remarks = "Adds a new channel to the specified Teams instance",
+       Code = "PS:> Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner",
+       Remarks = "Adds a user as an owner to the team",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\"",
-       Remarks = "Adds a new channel to the specified Teams instance",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\" -Private",
-       Remarks = "Adds a new private channel to the specified Teams instance",
-       SortOrder = 3)]
+       Code = "PS:> Add-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Member",
+       Remarks = "Adds a user as a member to the team",
+       SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    public class AddTeamsChannel : PnPGraphCmdlet
+    public class AddTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.")]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "The display name of the new channel. Letters, numbers and spaces are allowed.")]
-        public string DisplayName;
+        [Parameter(Mandatory = true, HelpMessage = "Specify the UPN (e.g. john@doe.com)")]
+        public string User;
 
-        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel.")]
-        public string Description;
-
-        [Parameter(Mandatory = false, HelpMessage = "Specify to mark the channel as private.")]
-        public SwitchParameter Private;
-
+        [Parameter(Mandatory = true, HelpMessage = "Specify the role of the user")]
+        [ValidateSet(new[] { "Owner", "Member" })]
+        public string Role;
         protected override void ExecuteCmdlet()
         {
             Model.Teams.TeamChannel channel = null;
@@ -48,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    channel = TeamsUtility.AddChannel(AccessToken, HttpClient, groupId, DisplayName, Description, Private);
+                    TeamsUtility.AddUser(HttpClient, AccessToken, groupId, User, Role);
                     WriteObject(channel);
                 }
                 catch (GraphException ex)

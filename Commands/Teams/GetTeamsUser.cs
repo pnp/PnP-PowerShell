@@ -8,48 +8,43 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTeamsChannel")]
-    [CmdletHelp("Adds a channel to an existing Microsoft Teams instance.",
+    [Cmdlet(VerbsCommon.Get, "PnPTeamsUser")]
+    [CmdletHelp("Returns owners, members or guests from a team.",
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName \"My Channel\"",
-       Remarks = "Adds a new channel to the specified Teams instance",
+       Code = "PS:> Get-PnPTeamsUser -Team MyTeam",
+       Remarks = "Returns all owners, members or guests from the specified team.",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\"",
-       Remarks = "Adds a new channel to the specified Teams instance",
+       Code = "PS:> Get-PnPTeamsUser -Team MyTeam -Role Owner",
+       Remarks = "Returns all owners from the specified team.",
        SortOrder = 2)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\" -Private",
-       Remarks = "Adds a new private channel to the specified Teams instance",
+       Code = "PS:> Get-PnPTeamsUser -Team MyTeam -Role Member",
+       Remarks = "Returns all members from the specified team.",
        SortOrder = 3)]
+    [CmdletExample(
+       Code = "PS:> Get-PnPTeamsUser -Team MyTeam -Role Guest",
+       Remarks = "Returns all guestss from the specified team.",
+       SortOrder = 4)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    public class AddTeamsChannel : PnPGraphCmdlet
+    public class GetTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.")]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "The display name of the new channel. Letters, numbers and spaces are allowed.")]
-        public string DisplayName;
-
-        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel.")]
-        public string Description;
-
-        [Parameter(Mandatory = false, HelpMessage = "Specify to mark the channel as private.")]
-        public SwitchParameter Private;
-
+        [Parameter(Mandatory = false, HelpMessage = "Specify to filter on the role of the user")]
+        [ValidateSet(new[] { "Owner", "Member", "Guest" })]
+        public string Role;
         protected override void ExecuteCmdlet()
         {
-            Model.Teams.TeamChannel channel = null;
-
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
             if (groupId != null)
             {
                 try
                 {
-                    channel = TeamsUtility.AddChannel(AccessToken, HttpClient, groupId, DisplayName, Description, Private);
-                    WriteObject(channel);
+                    WriteObject(TeamsUtility.GetUsers(HttpClient, AccessToken, groupId, Role), true);
                 }
                 catch (GraphException ex)
                 {

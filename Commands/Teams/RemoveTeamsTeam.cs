@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 }
                 else
                 {
-                    throw new PSArgumentException("Cannot find team");
+                    throw new PSArgumentException("Team not found");
                 }
             }
         }

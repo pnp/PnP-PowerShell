@@ -8,48 +8,40 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTeamsChannel")]
-    [CmdletHelp("Adds a channel to an existing Microsoft Teams instance.",
+    [Cmdlet(VerbsCommon.Remove, "PnPTeamsUser")]
+    [CmdletHelp("Removes users from a team.",
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName \"My Channel\"",
-       Remarks = "Adds a new channel to the specified Teams instance",
+       Code = "PS:> Remove-PnPTeamsUser -Team MyTeam -User john@doe.com",
+       Remarks = "Removes the user specified from both owners and members of the team.",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\"",
-       Remarks = "Adds a new channel to the specified Teams instance",
+       Code = "PS:> Get-PnPTeamsUser -Team MyTeam -User john@doe.com -Owner",
+       Remarks = "Removes the user john@doe.com from the owners of the team, but retains the user as a member.",
        SortOrder = 2)]
-    [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\" -Private",
-       Remarks = "Adds a new private channel to the specified Teams instance",
-       SortOrder = 3)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    public class AddTeamsChannel : PnPGraphCmdlet
+    public class RemoveTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.")]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "The display name of the new channel. Letters, numbers and spaces are allowed.")]
-        public string DisplayName;
+        [Parameter(Mandatory = true, HelpMessage = "Specify the UPN (e.g. john@doe.com)")]
+        public string User;
 
-        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel.")]
-        public string Description;
-
-        [Parameter(Mandatory = false, HelpMessage = "Specify to mark the channel as private.")]
-        public SwitchParameter Private;
-
+        [Parameter(Mandatory = false, HelpMessage = @"Specify the role of the user you are removing from the team. Accepts ""Owner"" and ""Member"" as possible values.
+        If specified as ""Member"" then the specified user is removed from the Team completely even if they were the owner of the Team. If ""Owner"" is specified in the -Role parameter then the
+        specified user is removed as an owner of the team but stays as a team member. Defaults to ""Member"". Note: The last owner cannot be removed from the team.")]
+        [ValidateSet(new[] { "Owner", "Member" })]
+        public string Role = "Member";
         protected override void ExecuteCmdlet()
         {
-            Model.Teams.TeamChannel channel = null;
-
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
             if (groupId != null)
             {
                 try
                 {
-                    channel = TeamsUtility.AddChannel(AccessToken, HttpClient, groupId, DisplayName, Description, Private);
-                    WriteObject(channel);
+                    TeamsUtility.DeleteUser(HttpClient, AccessToken, groupId, User, Role);
                 }
                 catch (GraphException ex)
                 {

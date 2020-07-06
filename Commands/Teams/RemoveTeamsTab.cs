@@ -68,7 +68,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     }
                     else
                     {
-                        throw new PSArgumentException("Cannot find channel");
+                        throw new PSArgumentException("Channel not found");
                     }
                 }
                 else
