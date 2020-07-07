@@ -2129,7 +2129,7 @@
       </TableControl>
     </View>
     <View>
-      <Name>TeamTab</Name>
+      <Name>TeamApp</Name>
       <ViewSelectedBy>
         <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamApp</TypeName>
       </ViewSelectedBy>
@@ -2169,7 +2169,7 @@
       </TableControl>
     </View>
     <View>
-      <Name>TeamTab</Name>
+      <Name>TeamChannelMessage</Name>
       <ViewSelectedBy>
         <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamChannelMessage</TypeName>
       </ViewSelectedBy>
@@ -2205,7 +2205,7 @@
       </TableControl>
     </View>
     <View>
-      <Name>TeamTab</Name>
+      <Name>User</Name>
       <ViewSelectedBy>
         <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.User</TypeName>
       </ViewSelectedBy>
