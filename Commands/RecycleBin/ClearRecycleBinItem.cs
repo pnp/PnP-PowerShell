@@ -67,7 +67,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
                     }
                     break;
                 case PARAMETERSET_ALL:
-#if !SP2013
+#if !ONPREMISES
                     if (ParameterSpecified(nameof(RowLimit)))
                     {
                         if (Force || ShouldContinue(SecondStageOnly ? Resources.ClearSecondStageRecycleBin : Resources.ClearBothRecycleBins, Resources.Confirm))

@@ -130,6 +130,12 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                 additionalDescriptionInfo.AppendLine();
             }
 
+            // Notice if the cmdlet is a PnPAdminCmdlet that access to the SharePoint Tenant Admin site is needed
+            if (cmdletInfo.CmdletType.BaseType.Name.Equals("PnPAdminCmdlet"))
+            {
+                additionalDescriptionInfo.AppendLine("* Required SharePoint permissions: Access to the SharePoint Tenant Administration site");
+            }
+
             // Validate if additional information should be prepended to the description
             if (additionalDescriptionInfo.Length > 0)
             {
@@ -314,8 +320,13 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
         private XElement GetRelatedLinksElement(Model.CmdletInfo cmdletInfo)
         {
             var relatedLinksElement = new XElement(maml + "relatedLinks");
-            cmdletInfo.RelatedLinks.Insert(0, new CmdletRelatedLinkAttribute() { Text = "SharePoint Developer Patterns and Practices", Url = "http://aka.ms/sppnp" });
-
+            cmdletInfo.RelatedLinks.Insert(0, new CmdletRelatedLinkAttribute { Text = "SharePoint Developer Patterns and Practices", Url = "http://aka.ms/sppnp" });
+            
+            if(!string.IsNullOrEmpty(cmdletInfo.OutputTypeLink))
+            {
+                cmdletInfo.RelatedLinks.Insert(1, new CmdletRelatedLinkAttribute { Text = "Output type documentation", Url = cmdletInfo.OutputTypeLink });
+            }
+            
             foreach (var link in cmdletInfo.RelatedLinks)
             {
                 var navigationLinksElement = new XElement(maml + "navigationLink");

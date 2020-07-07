@@ -1,16 +1,22 @@
 ﻿using Microsoft.SharePoint.Client;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
+using SharePointPnP.PowerShell.Commands.Utilities;
 using System;
+using System.Linq;
+using System.Management.Automation;
+using System.Net;
+using System.Net.Http;
+using System.Web;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class TeamsTabPipeBind
     {
-        private readonly Guid _id;
+        private readonly string _id;
         private readonly string _displayName;
 
         public TeamsTabPipeBind()
         {
-            _id = Guid.Empty;
         }
 
         public TeamsTabPipeBind(string input)
@@ -21,7 +27,7 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             }
             if (Guid.TryParse(input, out Guid tabId))
             {
-                _id = tabId;
+                _id = input;
             }
             else
             {
@@ -29,9 +35,31 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
+        public string Id => _id;
 
-        public Guid Id => _id;
+        public TeamTab GetTab(HttpClient httpClient, string accessToken, string groupId, string channelId)
+        {
+            // find the tab by the displayName
+            var tabs = TeamsUtility.GetTabs(accessToken, httpClient, groupId, channelId);
+            if (tabs != null)
+            {
+                var tab = tabs.FirstOrDefault(t => t.DisplayName.Equals(_displayName, System.StringComparison.OrdinalIgnoreCase));
+                if (tab != null)
+                {
+                    return tab;
+                }
+                else
+                {
+                    throw new PSArgumentException("Cannot find tab");
+                }
+            }
+            return null;
+        }
 
-        public string DisplayName => _displayName;
+        public TeamTab GetTabById(HttpClient httpClient, string accessToken, string groupId, string channelId)
+        {
+            return TeamsUtility.GetTab(accessToken, httpClient, groupId, channelId, _id);
+        }
     }
 }
+

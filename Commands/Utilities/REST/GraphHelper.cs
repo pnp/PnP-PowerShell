@@ -1,6 +1,8 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.Graph;
+using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,30 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
 {
     internal static class GraphHelper
     {
+        public static bool TryGetGraphException(HttpResponseMessage responseMessage, out GraphException exception)
+        {
+            if (responseMessage == null)
+            {
+                exception = null;
+                return false;
+            }
+            var content = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            if (string.IsNullOrEmpty(content))
+            {
+                exception = null;
+                return false;
+            }
+            try
+            {
+                exception = JsonConvert.DeserializeObject<GraphException>(content);
+                return true;
+            }
+            catch
+            {
+                exception = null;
+                return false;
+            }
+        }
 
         private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, HttpContent content = null)
         {
@@ -24,9 +50,13 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
 
             var message = new HttpRequestMessage();
             message.Method = method;
-            message.RequestUri = new Uri($"https://graph.microsoft.com/{url}");
+            message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://graph.microsoft.com/{url}") : new Uri(url);
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-            if (method == HttpMethod.Post || method == HttpMethod.Put)
+#if NETSTANDARD2_1
+            if (method == HttpMethod.Post || method == HttpMethod.Put || method == HttpMethod.Patch)
+#else
+            if (method == HttpMethod.Post || method == HttpMethod.Put || method.Method == "PATCH")
+#endif
             {
                 message.Content = content;
             }
@@ -57,15 +87,63 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-        public static async Task<string> PostAsync(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        public static async Task<HttpResponseMessage> PostAsync(HttpClient httpClient, string url, string accessToken, HttpContent content)
         {
             var message = GetMessage(url, HttpMethod.Post, accessToken, content);
-            return await SendMessageAsync(httpClient, message);
+            return await GetResponseMessageAsync(httpClient, message);
         }
+
+        public static async Task<HttpResponseMessage> PutAsync(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        {
+            var message = GetMessage(url, HttpMethod.Put, accessToken, content);
+            return await GetResponseMessageAsync(httpClient, message);
+        }
+
+
+
+        public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content)
+        {
+            var requestContent = new StringContent(JsonConvert.SerializeObject(content, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+#if NETSTANDARD2_1
+            var message = GetMessage(url, HttpMethod.Patch, accessToken, requestContent);
+#else
+            var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, requestContent);
+#endif
+            var returnValue = await SendMessageAsync(httpClient, message);
+            if (!string.IsNullOrEmpty(returnValue))
+            {
+                return JsonConvert.DeserializeObject<T>(returnValue);
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+
 
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken)
         {
             var message = GetMessage(url, HttpMethod.Post, accessToken, content);
+            var stringContent = await SendMessageAsync(httpClient, message);
+            if (stringContent != null)
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(stringContent);
+                }
+                catch
+                {
+                    return default;
+                }
+            }
+            return default;
+        }
+
+        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        {
+            var message = GetMessage(url, HttpMethod.Put, accessToken, content);
             var stringContent = await SendMessageAsync(httpClient, message);
             if (stringContent != null)
             {
@@ -87,32 +165,40 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var message = GetMessage(url, HttpMethod.Post, accessToken, requestContent);
             var returnValue = await SendMessageAsync(httpClient, message);
-            if(!string.IsNullOrEmpty(returnValue))
+            if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonConvert.DeserializeObject<T>(returnValue);
-            } else
+            }
+            else
             {
                 return default;
             }
         }
 
-        public static async Task<bool> DeleteAsync(HttpClient httpClient, string url, string accessToken)
+        public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, T content, string accessToken)
         {
-            var message = GetMessage(url, HttpMethod.Delete, accessToken);
-            var response = await GetResponseMessageAsync(httpClient, message);
-            if (response.IsSuccessStatusCode)
+            var requestContent = new StringContent(JsonConvert.SerializeObject(content, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var message = GetMessage(url, HttpMethod.Put, accessToken, requestContent);
+            var returnValue = await SendMessageAsync(httpClient, message);
+            if (!string.IsNullOrEmpty(returnValue))
             {
-                return true;
+                return JsonConvert.DeserializeObject<T>(returnValue);
             }
             else
             {
-                return false;
+                return default;
             }
         }
 
+        public static async Task<HttpResponseMessage> DeleteAsync(HttpClient httpClient, string url, string accessToken)
+        {
+            var message = GetMessage(url, HttpMethod.Delete, accessToken);
+            var response = await GetResponseMessageAsync(httpClient, message);
+            return response;
+        }
 
-
-        public static async Task<string> SendMessageAsync(HttpClient httpClient, HttpRequestMessage message)
+        private static async Task<string> SendMessageAsync(HttpClient httpClient, HttpRequestMessage message)
         {
             var response = await httpClient.SendAsync(message);
             while (response.StatusCode == (HttpStatusCode)429)
@@ -128,9 +214,13 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             }
             else
             {
-                return null;
+                var errorContent = await response.Content.ReadAsStringAsync();
+                var exception = JsonConvert.DeserializeObject<GraphException>(errorContent);
+                throw exception;
             }
         }
+
+
 
         public static async Task<HttpResponseMessage> GetResponseMessageAsync(HttpClient httpClient, HttpRequestMessage message)
         {
@@ -142,14 +232,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
                 response = await httpClient.SendAsync(CloneMessage(message));
             }
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                return null;
-            }
+            return response;
         }
 
         private static HttpRequestMessage CloneMessage(HttpRequestMessage req)
