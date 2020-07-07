@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All | MicrosoftGraphApiPermission.User_Read_All | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.User_ReadWrite_All)]
     public class GetUnifiedGroupOwners : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group.")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group")]
         public UnifiedGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
@@ -39,12 +39,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                // Get Owners of the group.
-
+                // Get Owners of the group
                 List<UnifiedGroupUser> owners = UnifiedGroupsUtility.GetUnifiedGroupOwners(group, AccessToken);
                 WriteObject(owners);
             }
-
         }
     }
 }

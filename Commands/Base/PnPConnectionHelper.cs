@@ -445,6 +445,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintNotFound, thumbprint));
             }
 
+            // Ensure the private key of the certificate is available
+            if (!certificate.HasPrivateKey)
+            {
+                throw new PSArgumentOutOfRangeException(nameof(thumbprint), null, string.Format(Resources.CertificateWithThumbprintDoesNotHavePrivateKey, thumbprint));
+            }
+
             return InitiateAzureAdAppOnlyConnectionWithCert(url, clientId, tenant, minimalHealthScore, retryCount, retryWait, requestTimeout, tenantAdminUrl, host, disableTelemetry, skipAdminCheck, azureEnvironment, certificate, false);
         }
 
@@ -564,11 +570,17 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Verifies if a local copy of the certificate has been stored in the machinekeys cache of Windows and if so, will remove it to avoid the cache from growing over time
+        /// Tries to remove the local cached machine copy of the private key
         /// </summary>
-        /// <param name="certificate">Certificate to validate if there is a local cached copy for and if so, delete it</param>
+        /// <param name="certificate">Certificate to try to clean up the local cached copy of the private key of</param>
         internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
         {
+            if(!certificate.HasPrivateKey)
+            {
+                // If somehow a public key certificate was passed in, we can't clean it up, thus we have nothing to do here
+                return;
+            }
+
             var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
             string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
             certificate.Reset();

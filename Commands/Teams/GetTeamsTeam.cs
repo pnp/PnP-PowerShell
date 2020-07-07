@@ -19,6 +19,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPTeamsTeam -Identity $groupId",
        Remarks = "Retrieves a specific Microsoft Teams instance",
        SortOrder = 2)]
+    [CmdletExample(
+       Code = "PS:> Get-PnPTeamsTeam -Identity $groupId",
+       Remarks = "Retrieves a specific Microsoft Teams instance",
+       SortOrder = 2)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class GetTeamsTeam : PnPGraphCmdlet

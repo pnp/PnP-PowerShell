@@ -1,4 +1,7 @@
-﻿using SharePointPnP.PowerShell.Commands.Model.Teams;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
+using SharePointPnP.PowerShell.Commands.Site;
 using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
@@ -77,7 +80,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static bool DeleteTeam(string accessToken, HttpClient httpClient, string groupId)
+        public static HttpResponseMessage DeleteTeam(string accessToken, HttpClient httpClient, string groupId)
         {
             return GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}", accessToken).GetAwaiter().GetResult();
         }
@@ -231,12 +234,175 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             } while (teamName == string.Empty);
             return teamName;
         }
+
+        public static Team UpdateTeam(HttpClient httpClient, string accessToken, string groupId, Team team)
+        {
+            return GraphHelper.PatchAsync<Team>(httpClient, accessToken, $"v1.0/teams/{groupId}", team).GetAwaiter().GetResult();
+        }
+
+        public static Group UpdateGroup(HttpClient httpClient, string accessToken, string groupId, Group group)
+        {
+            return GraphHelper.PatchAsync<Group>(httpClient, accessToken, $"v1.0/groups/{groupId}", group).GetAwaiter().GetResult();
+        }
+
+        public static void SetTeamPicture(HttpClient httpClient, string accessToken, string groupId, byte[] bytes, string contentType)
+        {
+            var byteArrayContent = new ByteArrayContent(bytes);
+            byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+            GraphHelper.PutAsync<string>(httpClient, $"v1.0/groups/{groupId}/photo/$value", accessToken, byteArrayContent).GetAwaiter().GetResult();
+        }
+
+        public static HttpResponseMessage SetTeamArchivedState(HttpClient httpClient, string accessToken, string groupId, bool archived, bool? setSiteReadOnly)
+        {
+            if (archived)
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(setSiteReadOnly.HasValue ? new { shouldSetSpoSiteReadOnlyForMembers = setSiteReadOnly } : null));
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                return GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/archive", accessToken, content).GetAwaiter().GetResult();
+            }
+            else
+            {
+                StringContent content = new StringContent("");
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                return GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/unarchive", accessToken, content).GetAwaiter().GetResult();
+            }
+        }
+        #endregion
+
+        #region Users
+        public static void AddUser(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
+        {
+            var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{upn}", accessToken).GetAwaiter().GetResult();
+
+            // check if the user is a member
+            bool isMember = false;
+            try
+            {
+                var members = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/members?$filter=Id eq '{user.Id}'&$select=Id", accessToken).GetAwaiter().GetResult();
+                isMember = members.Items.Any();
+            }
+            catch (GraphException)
+            { }
+
+            bool isOwner = false;
+            try
+            {
+                var owners = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$filter=Id eq '{user.Id}'&$select=Id", accessToken).GetAwaiter().GetResult();
+                isOwner = owners.Items.Any();
+            }
+            catch (GraphException)
+            {
+
+            }
+
+            var value = new Dictionary<string, object>
+            {
+                {
+                    "@odata.id",
+                    $"https://graph.microsoft.com/v1.0/directoryObjects/{user.Id}"
+                }
+            };
+            var stringContent = new StringContent(JsonConvert.SerializeObject(value));
+            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            if (role == "Owner")
+            {
+                if (!isMember)
+                {
+                    GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/members/$ref", accessToken, stringContent).GetAwaiter().GetResult();
+                }
+                GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/owners/$ref", accessToken, stringContent).GetAwaiter().GetResult();
+            }
+            else
+            {
+                GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/members/$ref", accessToken, stringContent).GetAwaiter().GetResult();
+            }
+        }
+
+        public static List<User> GetUsers(HttpClient httpClient, string accessToken, string groupId, string role)
+        {
+            var selectedRole = role != null ? role.ToLower() : null;
+            var owners = new List<User>();
+            var guests = new List<User>();
+            var members = new List<User>();
+            if (selectedRole != "guest")
+            {
+                owners = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$select=Id,displayName,userPrincipalName,userType", accessToken).GetAwaiter().GetResult().Items.Select(t => new User()
+                {
+                    Id = t.Id,
+                    DisplayName = t.DisplayName,
+                    UserPrincipalName = t.UserPrincipalName,
+                    UserType = "Owner"
+                }).ToList();
+            }
+            if (selectedRole != "owner")
+            {
+                var users = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/members?$select=Id,displayName,userPrincipalName,userType", accessToken).GetAwaiter().GetResult().Items;
+                HashSet<string> hashSet = new HashSet<string>(owners.Select(u => u.Id));
+                foreach (var user in users)
+                {
+                    if (!hashSet.Contains(user.Id))
+                    {
+                        if (user.UserType != null && user.UserType.ToLower().Equals("guest"))
+                        {
+                            guests.Add(new User() { DisplayName = user.DisplayName, Id = user.Id, UserPrincipalName = user.UserPrincipalName, UserType = "Guest" });
+                        }
+                        else
+                        {
+                            members.Add(new User() { DisplayName = user.DisplayName, Id = user.Id, UserPrincipalName = user.UserPrincipalName, UserType = "Member" });
+                        }
+                    }
+                }
+            }
+            var finalList = new List<User>();
+            if (string.IsNullOrEmpty(selectedRole))
+            {
+                finalList.AddRange(owners);
+                finalList.AddRange(members);
+                finalList.AddRange(guests);
+            }
+            else if (selectedRole == "owner")
+            {
+                finalList.AddRange(owners);
+            }
+            else if (selectedRole == "member")
+            {
+                finalList.AddRange(members);
+            }
+            else if (selectedRole == "guest")
+            {
+                finalList.AddRange(guests);
+            }
+            return finalList;
+        }
+
+        public static void DeleteUser(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
+        {
+            var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{upn}?$select=Id", accessToken).GetAwaiter().GetResult();
+            if (user != null)
+            {
+                // check if the user is an owner
+                var owners = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$select=Id", accessToken).GetAwaiter().GetResult();
+                if (owners.Items.Any() && owners.Items.FirstOrDefault(u => u.Id.Equals(user.Id, StringComparison.OrdinalIgnoreCase)) != null)
+                {
+                    if (owners.Items.Count() == 1)
+                    {
+                        throw new PSInvalidOperationException("Last owner cannot be removed");
+                    }
+                    GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/owners/{user.Id}/$ref", accessToken).GetAwaiter().GetResult();
+                }
+                if (!role.Equals("owner", StringComparison.OrdinalIgnoreCase))
+                {
+                    GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/members/{user.Id}/$ref", accessToken).GetAwaiter().GetResult();
+                }
+            }
+        }
+
         #endregion
 
         #region Channel
         public static IEnumerable<TeamChannel> GetChannels(string accessToken, HttpClient httpClient, string groupId)
         {
-            var collection = GraphHelper.GetAsync<GraphCollection<TeamChannel>>(httpClient, $"v1.0/teams/{groupId}/channels", accessToken).GetAwaiter().GetResult();
+            var collection = GraphHelper.GetAsync<GraphCollection<TeamChannel>>(httpClient, $"beta/teams/{groupId}/channels", accessToken).GetAwaiter().GetResult();
             if (collection != null)
             {
                 return collection.Items;
@@ -247,29 +413,23 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static bool DeleteChannel(string accessToken, HttpClient httpClient, string groupId, string displayName)
+        public static HttpResponseMessage DeleteChannel(string accessToken, HttpClient httpClient, string groupId, string channelId)
         {
-            // find the channel
-            var channels = GetChannels(accessToken, httpClient, groupId);
-            var channel = channels.FirstOrDefault(c => c.DisplayName.Equals(displayName, StringComparison.OrdinalIgnoreCase));
-            if (channel != null)
-            {
-                return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channel.Id}", accessToken).GetAwaiter().GetResult();
-            }
-            else
-            {
-                return false;
-            }
+            return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken).GetAwaiter().GetResult();
         }
 
-        public static TeamChannel AddChannel(string accessToken, HttpClient httpClient, string groupId, string displayName, string description)
+        public static TeamChannel AddChannel(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate)
         {
             var channel = new TeamChannel()
             {
                 Description = description,
                 DisplayName = displayName,
             };
-            return GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+            if (isPrivate)
+            {
+                channel.MembershipType = "private";
+            }
+            return GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
         }
 
         public static void PostMessage(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannelMessage message)
@@ -281,10 +441,10 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         {
             List<TeamChannelMessage> messages = new List<TeamChannelMessage>();
             var collection = GraphHelper.GetAsync<GraphCollection<TeamChannelMessage>>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/messages", accessToken).GetAwaiter().GetResult();
-            if(collection != null)
+            if (collection != null)
             {
                 messages.AddRange(collection.Items);
-                while(collection != null && !string.IsNullOrEmpty(collection.NextLink))
+                while (collection != null && !string.IsNullOrEmpty(collection.NextLink))
                 {
                     collection = GraphHelper.GetAsync<GraphCollection<TeamChannelMessage>>(httpClient, collection.NextLink, accessToken).GetAwaiter().GetResult();
                     if (collection != null)
@@ -296,10 +456,16 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             if (includeDeleted)
             {
                 return messages;
-            } else
+            }
+            else
             {
                 return messages.Where(m => !m.DeletedDateTime.HasValue).ToList();
             }
+        }
+
+        public static TeamChannel UpdateChannel(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannel channel)
+        {
+            return GraphHelper.PatchAsync(httpClient, accessToken, $"beta/teams/{groupId}/channels/{channelId}", channel).GetAwaiter().GetResult();
         }
         #endregion
 
@@ -319,11 +485,126 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return GraphHelper.GetAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
         }
 
-        public static bool DeleteTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
+        public static HttpResponseMessage DeleteTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
         {
             return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
         }
 
+        public static void UpdateTab(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamTab tab)
+        {
+            tab.Configuration = null;
+            GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tab.Id}", tab).GetAwaiter().GetResult();
+        }
+
+        public static TeamTab AddTab(HttpClient httpClient, string accessToken, string groupId, string channelId, string displayName, TeamTabType tabType, string teamsAppId, string entityId, string contentUrl, string removeUrl, string websiteUrl)
+        {
+            TeamTab tab = new TeamTab();
+            tab.Configuration = new TeamTabConfiguration();
+            switch (tabType)
+            {
+                case TeamTabType.Custom:
+                    {
+                        tab.TeamsAppId = teamsAppId;
+                        tab.Configuration.EntityId = entityId;
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.RemoveUrl = removeUrl;
+                        tab.Configuration.WebsiteUrl = websiteUrl;
+                        break;
+                    }
+                case TeamTabType.DocumentLibrary:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.files.sharepoint";
+                        tab.Configuration.EntityId = "";
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.RemoveUrl = null;
+                        tab.Configuration.WebsiteUrl = null;
+                        break;
+                    }
+                case TeamTabType.WebSite:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.web";
+                        tab.Configuration.EntityId = null;
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.RemoveUrl = null;
+                        tab.Configuration.WebsiteUrl = contentUrl;
+                        break;
+                    }
+                case TeamTabType.Word:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.file.staticviewer.word";
+                        tab.Configuration.EntityId = entityId;
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.RemoveUrl = null;
+                        tab.Configuration.WebsiteUrl = null;
+                        break;
+                    }
+                case TeamTabType.Excel:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.file.staticviewer.excel";
+                        tab.Configuration.EntityId = entityId;
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.RemoveUrl = null;
+                        tab.Configuration.WebsiteUrl = null;
+                        break;
+                    }
+                case TeamTabType.PowerPoint:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.file.staticviewer.powerpoint";
+                        tab.Configuration.EntityId = entityId;
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.RemoveUrl = null;
+                        tab.Configuration.WebsiteUrl = null;
+                        break;
+                    }
+                case TeamTabType.PDF:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.file.staticviewer.pdf";
+                        tab.Configuration.EntityId = entityId;
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.RemoveUrl = null;
+                        tab.Configuration.WebsiteUrl = null;
+                        break;
+                    }
+                case TeamTabType.Wiki:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.wiki";
+                        break;
+                    }
+                case TeamTabType.Planner:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.planner";
+                        break;
+                    }
+                case TeamTabType.MicrosoftStream:
+                    {
+                        tab.TeamsAppId = "com.microsoftstream.embed.skypeteamstab";
+                        break;
+                    }
+                case TeamTabType.MicrosoftForms:
+                    {
+                        tab.TeamsAppId = "81fef3a6-72aa-4648-a763-de824aeafb7d";
+                        break;
+                    }
+                case TeamTabType.OneNote:
+                    {
+                        tab.TeamsAppId = "0d820ecd-def2-4297-adad-78056cde7c78";
+                        break;
+                    }
+                case TeamTabType.PowerBI:
+                    {
+                        tab.TeamsAppId = "com.microsoft.teamspace.tab.powerbi";
+                        break;
+                    }
+                case TeamTabType.SharePointPageAndList:
+                    {
+                        tab.TeamsAppId = "2a527703-1f6f-4559-a332-d8a7d288cd88";
+                        break;
+                    }
+            }
+            tab.DisplayName = displayName;
+            tab.TeamsApp = $"https://graph.microsoft.com/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
+            return GraphHelper.PostAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs", tab, accessToken).GetAwaiter().GetResult();
+        }
         #endregion
 
         #region Apps
@@ -335,6 +616,38 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 return collection.Items;
             }
             return null;
+        }
+
+        public static TeamApp AddApp(HttpClient httpClient, string accessToken, byte[] bytes)
+        {
+            var byteArrayContent = new ByteArrayContent(bytes);
+            byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
+            var response = GraphHelper.PostAsync(httpClient, "v1.0/appCatalogs/teamsApps", accessToken, byteArrayContent).GetAwaiter().GetResult();
+            if (!response.IsSuccessStatusCode)
+            {
+                if (GraphHelper.TryGetGraphException(response, out GraphException exception))
+                {
+                    throw exception;
+                }
+            }
+            else
+            {
+                var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                return JsonConvert.DeserializeObject<TeamApp>(content);
+            }
+            return null;
+        }
+
+        public static HttpResponseMessage UpdateApp(HttpClient httpClient, string accessToken, byte[] bytes, string appId)
+        {
+            var byteArrayContent = new ByteArrayContent(bytes);
+            byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
+            return GraphHelper.PutAsync(httpClient, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken, byteArrayContent).GetAwaiter().GetResult();
+        }
+
+        public static HttpResponseMessage DeleteApp(HttpClient httpClient, string accessToken, string appId)
+        {
+            return GraphHelper.DeleteAsync(httpClient, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken).GetAwaiter().GetResult();
         }
         #endregion
     }
