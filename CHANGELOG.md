@@ -75,11 +75,13 @@ Intermediate release due to a fix in the underlying Core Library.
 ## [3.21.2005.0]
 
 ### Added
+- Added `-WithRightsAssignedDetailed` parameter to `Get-PnPUser` allowing for fine grained (broken) permissions on item, list and site level to be shown [PR #2754](https://github.com/pnp/PnP-PowerShell/pull/2754)
 
 ### Changed
 - Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
 
 ### Contributors
+- Robin Meure [robinmeure]
 
 ## [3.20.2004.0]
 
