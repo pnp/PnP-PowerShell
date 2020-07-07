@@ -16,6 +16,8 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
     {
         #region Public Members
         public string DisplayName { get; set; }
+
+        public string Classification { get; set; }
         /// <summary>
         /// The Fun Settings for the Team
         /// </summary>
@@ -71,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
         /// <summary>
         /// Declares whether the Team is archived or not
         /// </summary>
-        public bool Archived { get; set; }
+        public bool? IsArchived { get; set; }
 
         /// <summary>
         /// Declares the nickname for the Team, optional attribute
@@ -85,7 +87,6 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
 
         public GroupVisibility? Visibility { get; set; }
 
-        public bool IsArchived { get; set; }
         #endregion
 
     }

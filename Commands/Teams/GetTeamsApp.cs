@@ -1,8 +1,9 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Core.Attributes;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -25,24 +26,22 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPTeamsApp -Identity \"MyTeamsApp\"",
        Remarks = "Retrieves a specific Microsoft Teams App",
        SortOrder = 3)]
-    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.AppCatalog_Read_All)]
-    public class GetTeamsApp: PnPGraphCmdlet
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.AppCatalog_Read_All)]
+    [CmdletTokenType(TokenType = TokenType.Delegate)]
+    public class GetTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "Specify the name, id or external id of the app.")]
         public TeamsAppPipeBind Identity;
-        
+
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var apps = TeamsUtility.GetApps(AccessToken, HttpClient);
-                if (Identity.Id != Guid.Empty)
+                var app = Identity.GetApp(HttpClient, AccessToken);
+                if (app != null)
                 {
-                    WriteObject(apps.FirstOrDefault(a => a.Id == Identity.Id.ToString() || a.ExternalId == a.Id.ToString()));
-                }
-                else
-                {
-                    WriteObject(apps.FirstOrDefault(a => a.DisplayName.Equals(Identity.StringValue, StringComparison.OrdinalIgnoreCase)));
+                    WriteObject(app);
                 }
             }
             else
@@ -52,3 +51,4 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         }
     }
 }
+#endif
