@@ -1,20 +1,35 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SharePointPnP.PowerShell.Commands.Model.Teams
 {
     public partial class TeamTab
     {
+        private string _displayName;
         #region Public Members
 
         /// <summary>
         /// Defines the Display Name of the Channel
         /// </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return _displayName;
+            }
+            set
+            {
+                _displayName = HttpUtility.UrlDecode(value);
+            }
+        }
 
+        [JsonProperty("teamsApp@odata.bind")]
+        public string TeamsApp { get; set; }
         /// <summary>
         /// App definition identifier of the tab
         /// </summary>

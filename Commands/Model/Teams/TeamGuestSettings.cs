@@ -13,12 +13,12 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
         /// <summary>
         /// Defines whether Guests are allowed to create Channels or not
         /// </summary>
-        public bool AllowCreateUpdateChannels { get; set; }
+        public bool? AllowCreateUpdateChannels { get; set; }
 
         /// <summary>
         /// Defines whether Guests are allowed to delete Channels or not
         /// </summary>
-        public bool AllowDeleteChannels { get; set; }
+        public bool? AllowDeleteChannels { get; set; }
 
         #endregion
     }

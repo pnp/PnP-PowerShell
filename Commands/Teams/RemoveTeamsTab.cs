@@ -1,9 +1,10 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES
+using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
-using System;
-using System.Linq;
+using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
@@ -13,23 +14,23 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -TabId ",
-       Remarks = "Retrieves the tabs for  the Microsoft Teams instances",
+       Code = "PS:> Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity Wiki",
+       Remarks = "Removes the tab with the display name 'Wiki' from the channel",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -DisplayName \"Wiki\"",
-       Remarks = "Retrieves a tab with the display name 'Wiki' from the specified team and channel",
+       Code = "PS:> Remove-PnPTeamsTab -GroupId 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -ChannelId 19:796d063b63e34497aeaf092c8fb9b44e@thread.skype -Identity fcef815d-2e8e-47a5-b06b-9bebba5c7852",
+       Remarks = "Removes a tab with the specified id from the channel",
        SortOrder = 2)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class RemoveTeamsTab : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id of the team to retrieve.")]
-        public GuidPipeBind GroupId;
+        [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.")]
+        public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "Specify the channel id of the team to retrieve.")]
-        public string ChannelId;
+        [Parameter(Mandatory = true, HelpMessage = "Specify the channel id or display name of the channel to use.")]
+        public TeamsChannelPipeBind Channel;
 
-        [Parameter(Mandatory = true, HelpMessage = "Identity")]
+        [Parameter(Mandatory = true, HelpMessage = "Specify the id of the tab ")]
         public TeamsTabPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
@@ -37,29 +38,59 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
+
+            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            if (groupId != null)
             {
-                var tabId = string.Empty;
-                if(Identity.Id != Guid.Empty)
+                var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+                if (channelId != null)
                 {
-                    tabId = Identity.Id.ToString();
-                } else
-                {
-                    var tabs = TeamsUtility.GetTabs(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId);
-                    var tab = tabs.FirstOrDefault(t => t.DisplayName.Equals(Identity.DisplayName, StringComparison.OrdinalIgnoreCase));
-                    if(tab != null)
+                    var tabId = string.Empty;
+                    if (string.IsNullOrEmpty(Identity.Id))
                     {
-                        tabId = tab.Id;
-                    } else
+                        tabId = Identity.Id.ToString();
+                    }
+                    else
                     {
-                        throw new PSArgumentException("Cannot find tab");
+                        var tab = Identity.GetTab(HttpClient, AccessToken, groupId, channelId);
+                        if (tab != null)
+                        {
+                            tabId = tab.Id;
+                        }
+                        else
+                        {
+                            throw new PSArgumentException("Cannot find tab");
+                        }
+                    }
+                    if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
+                    {
+                        var response = TeamsUtility.DeleteTab(AccessToken, HttpClient, groupId, channelId, tabId);
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                            {
+                                if (ex.Error != null)
+                                {
+                                    throw new PSInvalidOperationException(ex.Error.Message);
+                                }
+                            }
+                            else
+                            {
+                                throw new PSInvalidOperationException("Tab remove failed");
+                            }
+                        }
                     }
                 }
-                if (!TeamsUtility.DeleteTab(AccessToken, HttpClient, GroupId.Id.ToString(), ChannelId, tabId))
+                else
                 {
-                    throw new PSInvalidOperationException("Tab remove failed");
+                    throw new PSArgumentException("Channel not found");
                 }
+            }
+            else
+            {
+                throw new PSArgumentException("Team not found", nameof(Team));
             }
         }
     }
 }
+#endif
