@@ -21,12 +21,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Invoke-PnPSPRestMethod -Method Merge` not passing in the `If-Match: *` header and thereby causing failed requests [PR #2764](https://github.com/pnp/PnP-PowerShell/pull/2764)
 - If a certain PnP PowerShell cmdlet needs access to the SharePoint Admin Center site in order to function correctly, it will now list this in the Synopsis section of the Get-Help for the cmdlet 
 - Fixed issue where using `Connect-PnPOnline` using `-Thumbnail` would delete the private key on some devices when running `Disconnect-PnPOnline` [PR #2759](https://github.com/pnp/PnP-PowerShell/pull/2759)
+- Fixed timeouts on `Get-PnPSiteCollectionAdmin` when the site has a lot of users [PR #2769](https://github.com/pnp/PnP-PowerShell/pull/2769)
 - Updated test project structure [PR #2767](https://github.com/pnp/PnP-PowerShell/pull/2767)
 
 ### Contributors
 - Erwin van Hunen [erwinvanhunen]
 - Gautam Sheth [gautamdsheth]
 - Koen Zomers [koenzomers]
+- Maximilian L. [MrTantum]
 - Ellie Hussey [Professr]
 - Todd Klindt [ToddKlindt]
 - Jens Otto Hatlevold [jensotto]
