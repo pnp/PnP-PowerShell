@@ -771,5 +771,14 @@ namespace SharePointPnP.PowerShell.Commands.Properties {
                 return ResourceManager.GetString("Web0CreatedAt1", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This Cmdlet currently only supports List Webhooks.
+        /// </summary>
+        internal static string WebhooksOnlySupportsLists {
+            get {
+                return ResourceManager.GetString("WebhooksOnlySupportsLists", resourceCulture);
+            }
+        }
     }
 }
