@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Maximilian L. [MrTantum]
 - Ellie Hussey [Professr]
 - Todd Klindt [ToddKlindt]
+- Marc D Anderson [sympmarc]
 - Jens Otto Hatlevold [jensotto]
 - Robin Meure [robinmeure]
 - Paul Bullock [pkbullock]
