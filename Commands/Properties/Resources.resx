@@ -328,7 +328,7 @@
     <value>No URL specified nor does the provided access token contain an audience</value>
   </data>
   <data name="CertificateWithThumbprintNotFound" xml:space="preserve">
-    <value>No certificate with the thumbprint '{0}' has been found in the Windows certificate store</value>
+    <value>No certificate with the thumbprint '{0}' has been found in the Windows Certificate Store</value>
   </data>
   <data name="ClientCertificateInvalid" xml:space="preserve">
     <value>The client certificate is invalid</value>
@@ -350,5 +350,8 @@
   </data>
   <data name="PrivateKeyCertificateImportFailedPasswordMissing" xml:space="preserve">
     <value>Reading of the private key certificate failed as the password with which it has been signed has not been provided. Use {0} to provide the password.</value>
+  </data>
+  <data name="CertificateWithThumbprintDoesNotHavePrivateKey" xml:space="preserve">
+    <value>The provided certificate with the thumbprint '{0}' does not have a private key which is required for a connection to be established. Ensure you have imported the certificate containing the private key, typically the .pfx file, into the Windows Certificate Store.</value>
   </data>
 </root>
