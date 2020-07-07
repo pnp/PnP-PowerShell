@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Updated implementation of `Move-PnPFile` to now also support moving of files and folders accross site collections [PR #2749](https://github.com/pnp/PnP-PowerShell/pull/2749)
 - Fixed issue where using `Disconnect-PnPOnline -Connection $variable` after having connected using `$variable = Connect-PnPOnline -CertificatePath <path> -ReturnConnection`, it would not clean up the certificate on that connection instance passed in by $variable, but instead try to do it on the current connection context [PR #2755](https://github.com/pnp/PnP-PowerShell/pull/2755)
+- Fixed `Invoke-PnPSPRestMethod -Method Merge` not passing in the `If-Match: *` header and thereby causing failed requests [PR #2764](https://github.com/pnp/PnP-PowerShell/pull/2764)
 - If a certain PnP PowerShell cmdlet needs access to the SharePoint Admin Center site in order to function correctly, it will now list this in the Synopsis section of the Get-Help for the cmdlet 
 - Fixed issue where using `Connect-PnPOnline` using `-Thumbnail` would delete the private key on some devices when running `Disconnect-PnPOnline` [PR #2759](https://github.com/pnp/PnP-PowerShell/pull/2759)
 - Updated test project structure [PR #2767](https://github.com/pnp/PnP-PowerShell/pull/2767)
