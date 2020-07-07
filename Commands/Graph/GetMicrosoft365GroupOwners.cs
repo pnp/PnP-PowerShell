@@ -40,12 +40,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                // Get Owners of the group.
-
+                // Get Owners of the group
                 List<UnifiedGroupUser> owners = UnifiedGroupsUtility.GetUnifiedGroupOwners(group, AccessToken);
                 WriteObject(owners);
             }
-
         }
     }
 }
