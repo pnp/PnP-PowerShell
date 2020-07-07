@@ -2,7 +2,9 @@
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
@@ -31,20 +33,31 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue("Removing the team will remove all messages in all channels in the team.", Properties.Resources.Confirm))
+            var groupId = Identity.GetGroupId(HttpClient, AccessToken);
+            if (groupId != null)
             {
-                var groupId = Identity.GetGroupId(HttpClient, AccessToken);
-                if (groupId != null)
+                if (Force || ShouldContinue("Removing the team will remove all messages in all channels in the team.", Properties.Resources.Confirm))
                 {
-                    if (!TeamsUtility.DeleteTeam(AccessToken, HttpClient, groupId))
+                    var response = TeamsUtility.DeleteTeam(AccessToken, HttpClient, groupId);
+                    if (!response.IsSuccessStatusCode)
                     {
-                        WriteError(new ErrorRecord(new Exception($"Team remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                        if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                        {
+                            if (ex.Error != null)
+                            {
+                                throw new PSInvalidOperationException(ex.Error.Message);
+                            }
+                        }
+                        else
+                        {
+                            WriteError(new ErrorRecord(new Exception($"Team remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                        }
                     }
                 }
-                else
-                {
-                    throw new PSArgumentException("Cannot find team");
-                }
+            }
+            else
+            {
+                throw new PSArgumentException("Team not found");
             }
         }
     }

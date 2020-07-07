@@ -12,15 +12,15 @@ namespace SharePointPnP.PowerShell.Tests
     [TestClass]
     public class FilesTests
     {
-        private string _site1Id;
-        private string _site2Id;
-        private string _site1Url;
-        private string _site2Url;
-        private string _site1RelativeUrl;
-        private string _site2RelativeUrl;
+        private static string _site1Id;
+        private static string _site2Id;
+        private static string _site1Url;
+        private static string _site2Url;
+        private static string _site1RelativeUrl;
+        private static string _site2RelativeUrl;
 
 
-        private string Site1RelativeFolderUrl
+        private static string Site1RelativeFolderUrl
         {
             get
             {
@@ -52,12 +52,13 @@ namespace SharePointPnP.PowerShell.Tests
         private const string EmptyFolderName = "EmptyFolder";
         private const string TargetFileNameWithAmpersand = "Test & file.txt";
         private const string TargetFileNameWithHashtag = "Test & file.txt";
-
-        [TestInitialize]
-        public void Initialize()
+        
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
         {
             using (var ctx = TestCommon.CreateClientContext())
             {
+                
                 _site1Id = Guid.NewGuid().ToString();
                 _site2Id = Guid.NewGuid().ToString();
 
@@ -130,15 +131,16 @@ namespace SharePointPnP.PowerShell.Tests
         }
 
 
-        [TestCleanup]
-        public void Cleanup()
+        [ClassCleanup]
+        public static void Cleanup()
         {
 
             using (var ctx = TestCommon.CreateTenantClientContext())
             {
                 Tenant tenant = new Tenant(ctx);
-                tenant.DeleteSiteCollection(_site1Url, false);
-                tenant.DeleteSiteCollection(_site2Url, false);
+                // For any accidents lets allow for recoverability
+                tenant.DeleteSiteCollection(_site1Url, true);
+                tenant.DeleteSiteCollection(_site2Url, true);
             }
         }
 

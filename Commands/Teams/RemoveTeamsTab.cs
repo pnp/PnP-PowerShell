@@ -2,7 +2,9 @@
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
@@ -36,45 +38,57 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
+
+            var groupId = Team.GetGroupId(HttpClient, AccessToken);
+            if (groupId != null)
             {
-                var groupId = Team.GetGroupId(HttpClient, AccessToken);
-                if (groupId != null)
+                var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
+                if (channelId != null)
                 {
-                    var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
-                    if (channelId != null)
+                    var tabId = string.Empty;
+                    if (string.IsNullOrEmpty(Identity.Id))
                     {
-                        var tabId = string.Empty;
-                        if (string.IsNullOrEmpty(Identity.Id))
-                        {
-                            tabId = Identity.Id.ToString();
-                        }
-                        else
-                        {
-                            var tab = Identity.GetTab(HttpClient, AccessToken, groupId, channelId);
-                            if (tab != null)
-                            {
-                                tabId = tab.Id;
-                            }
-                            else
-                            {
-                                throw new PSArgumentException("Cannot find tab");
-                            }
-                        }
-                        if (!TeamsUtility.DeleteTab(AccessToken, HttpClient, groupId, channelId, tabId))
-                        {
-                            throw new PSInvalidOperationException("Tab remove failed");
-                        }
+                        tabId = Identity.Id.ToString();
                     }
                     else
                     {
-                        throw new PSArgumentException("Cannot find channel");
+                        var tab = Identity.GetTab(HttpClient, AccessToken, groupId, channelId);
+                        if (tab != null)
+                        {
+                            tabId = tab.Id;
+                        }
+                        else
+                        {
+                            throw new PSArgumentException("Cannot find tab");
+                        }
+                    }
+                    if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
+                    {
+                        var response = TeamsUtility.DeleteTab(AccessToken, HttpClient, groupId, channelId, tabId);
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                            {
+                                if (ex.Error != null)
+                                {
+                                    throw new PSInvalidOperationException(ex.Error.Message);
+                                }
+                            }
+                            else
+                            {
+                                throw new PSInvalidOperationException("Tab remove failed");
+                            }
+                        }
                     }
                 }
                 else
                 {
-                    throw new PSArgumentException("Team not found", nameof(Team));
+                    throw new PSArgumentException("Channel not found");
                 }
+            }
+            else
+            {
+                throw new PSArgumentException("Team not found", nameof(Team));
             }
         }
     }

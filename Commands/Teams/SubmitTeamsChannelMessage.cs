@@ -52,7 +52,13 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     channelMessage.Body.ContentType = ContentType;
 
                     TeamsUtility.PostMessage(HttpClient, AccessToken, groupId, channel.Id, channelMessage);
+                } else
+                {
+                    throw new PSArgumentException("Channel not found");
                 }
+            } else
+            {
+                throw new PSArgumentException("Team not found");
             }
             
         }

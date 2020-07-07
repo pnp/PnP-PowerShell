@@ -36,7 +36,13 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 if (channel != null)
                 {
                     WriteObject(TeamsUtility.GetMessages(HttpClient, AccessToken, groupId, channel.Id, IncludeDeleted), true);
+                } else
+                {
+                    throw new PSArgumentException("Channel not found");
                 }
+            } else
+            {
+                throw new PSArgumentException("Team not found");
             }
 
         }
