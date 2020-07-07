@@ -19,32 +19,22 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
         /// <summary>
         /// Defines whether Giphys are consented or not
         /// </summary>
-        public bool AllowGiphy { get; set; }
+        public bool? AllowGiphy { get; set; }
 
         /// <summary>
         /// Defines the Content Rating for Giphys
         /// </summary>
-        public string GiphyContentRating
-        {
-            get
-            {
-                return (_giphyContentRating);
-            }
-            set
-            {
-                _giphyContentRating = value?.ToLower();
-            }
-        }
+        public TeamGiphyContentRating GiphyContentRating { get; set; }
 
         /// <summary>
         /// Defines whether Stickers and Memes are consented or not
         /// </summary>
-        public bool AllowStickersAndMemes { get; set; }
+        public bool? AllowStickersAndMemes { get; set; }
 
         /// <summary>
         /// Defines whether Custom Memes are consented or not
         /// </summary>
-        public bool AllowCustomMemes { get; set; }
+        public bool? AllowCustomMemes { get; set; }
 
         #endregion
     }
@@ -52,15 +42,9 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
     /// <summary>
     /// Defines the Content Rating for Giphys
     /// </summary>
-    public static class TeamGiphyContentRating
+    public enum TeamGiphyContentRating
     {
-        /// <summary>
-        /// Moderate Content Rating
-        /// </summary>
-        public const string Moderate = "moderate";
-        /// <summary>
-        /// Strict Content Rating
-        /// </summary>
-        public const string Strict = "strict";
+        moderate,
+        strict
     }
 }

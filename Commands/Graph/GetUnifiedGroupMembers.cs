@@ -39,12 +39,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                // Get members of the group.
-
+                // Get members of the group
                 List<UnifiedGroupUser> members = UnifiedGroupsUtility.GetUnifiedGroupMembers(group, AccessToken);
                 WriteObject(members);
             }
-
         }
     }
 }

@@ -42,10 +42,10 @@ namespace SharePointPnP.PowerShell.Commands.Site
                     g => g.LoginName)
            };
 
-            ClientContext.Load(SelectedWeb.SiteUsers, users => users.Include(retrievalExpressions));
+            var siteCollectionAdminUsersQuery = SelectedWeb.SiteUsers.Where(u => u.IsSiteAdmin);
+            var siteCollectionAdminUsers = ClientContext.LoadQuery(siteCollectionAdminUsersQuery.Include(retrievalExpressions));
             ClientContext.ExecuteQueryRetry();
 
-            var siteCollectionAdminUsers = SelectedWeb.SiteUsers.Where(su => su.IsSiteAdmin);
             WriteObject(siteCollectionAdminUsers, true);
         }
     }
