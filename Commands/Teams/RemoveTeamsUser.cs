@@ -34,6 +34,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         specified user is removed as an owner of the team but stays as a team member. Defaults to ""Member"". Note: The last owner cannot be removed from the team.")]
         [ValidateSet(new[] { "Owner", "Member" })]
         public string Role = "Member";
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
+        public SwitchParameter Force;
+
         protected override void ExecuteCmdlet()
         {
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
@@ -41,7 +45,10 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    TeamsUtility.DeleteUser(HttpClient, AccessToken, groupId, User, Role);
+                    if (Force || ShouldContinue($"Remove user with UPN {User}?", Properties.Resources.Confirm))
+                    {
+                        TeamsUtility.DeleteUser(HttpClient, AccessToken, groupId, User, Role);
+                    }
                 }
                 catch (GraphException ex)
                 {

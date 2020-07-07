@@ -38,28 +38,35 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
 
                 }
-                var contentType = "";
-                var fileInfo = new FileInfo(Path);
-                switch (fileInfo.Extension)
+                if (System.IO.File.Exists(Path))
                 {
-                    case ".jpg":
-                    case ".jpeg":
-                        {
-                            contentType = "image/jpeg";
-                            break;
-                        }
-                    case ".png":
-                        {
-                            contentType = "image/png";
-                            break;
-                        }
+                    var contentType = "";
+                    var fileInfo = new FileInfo(Path);
+                    switch (fileInfo.Extension)
+                    {
+                        case ".jpg":
+                        case ".jpeg":
+                            {
+                                contentType = "image/jpeg";
+                                break;
+                            }
+                        case ".png":
+                            {
+                                contentType = "image/png";
+                                break;
+                            }
+                    }
+                    if (string.IsNullOrEmpty(contentType))
+                    {
+                        throw new PSArgumentException("File is not of a supported content type (jpg/png)");
+                    }
+                    var byteArray = System.IO.File.ReadAllBytes(Path);
+                    TeamsUtility.SetTeamPicture(HttpClient, AccessToken, groupId, byteArray, contentType);
                 }
-                if (string.IsNullOrEmpty(contentType))
+                else
                 {
-                    throw new PSArgumentException("File is not of a supported content type (jpg/png)");
+                    throw new PSArgumentException("File not found");
                 }
-                var byteArray = System.IO.File.ReadAllBytes(Path);
-                TeamsUtility.SetTeamPicture(HttpClient, AccessToken, groupId, byteArray, contentType);
             }
             else
             {

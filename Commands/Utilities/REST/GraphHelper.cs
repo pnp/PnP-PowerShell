@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.Graph;
+using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SharePointPnP.PowerShell.Commands.Model.Teams;
@@ -15,6 +16,30 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
 {
     internal static class GraphHelper
     {
+        public static bool TryGetGraphException(HttpResponseMessage responseMessage, out GraphException exception)
+        {
+            if (responseMessage == null)
+            {
+                exception = null;
+                return false;
+            }
+            var content = responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            if (string.IsNullOrEmpty(content))
+            {
+                exception = null;
+                return false;
+            }
+            try
+            {
+                exception = JsonConvert.DeserializeObject<GraphException>(content);
+                return true;
+            }
+            catch
+            {
+                exception = null;
+                return false;
+            }
+        }
 
         private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, HttpContent content = null)
         {
@@ -62,11 +87,19 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-        public static async Task<string> PostAsync(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        public static async Task<HttpResponseMessage> PostAsync(HttpClient httpClient, string url, string accessToken, HttpContent content)
         {
             var message = GetMessage(url, HttpMethod.Post, accessToken, content);
-            return await SendMessageAsync(httpClient, message);
+            return await GetResponseMessageAsync(httpClient, message);
         }
+
+        public static async Task<HttpResponseMessage> PutAsync(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        {
+            var message = GetMessage(url, HttpMethod.Put, accessToken, content);
+            return await GetResponseMessageAsync(httpClient, message);
+        }
+
+
 
         public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content)
         {
@@ -87,6 +120,8 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
                 return default;
             }
         }
+
+
 
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken)
         {
@@ -156,18 +191,11 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        public static async Task<bool> DeleteAsync(HttpClient httpClient, string url, string accessToken)
+        public static async Task<HttpResponseMessage> DeleteAsync(HttpClient httpClient, string url, string accessToken)
         {
             var message = GetMessage(url, HttpMethod.Delete, accessToken);
             var response = await GetResponseMessageAsync(httpClient, message);
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return response;
         }
 
         private static async Task<string> SendMessageAsync(HttpClient httpClient, HttpRequestMessage message)
@@ -204,14 +232,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
                 response = await httpClient.SendAsync(CloneMessage(message));
             }
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                return null;
-            }
+            return response;
         }
 
         private static HttpRequestMessage CloneMessage(HttpRequestMessage req)

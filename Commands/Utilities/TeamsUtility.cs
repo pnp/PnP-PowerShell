@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using SharePointPnP.PowerShell.Commands.Model.Teams;
+using SharePointPnP.PowerShell.Commands.Site;
 using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
@@ -78,7 +80,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static bool DeleteTeam(string accessToken, HttpClient httpClient, string groupId)
+        public static HttpResponseMessage DeleteTeam(string accessToken, HttpClient httpClient, string groupId)
         {
             return GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}", accessToken).GetAwaiter().GetResult();
         }
@@ -249,6 +251,22 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
             GraphHelper.PutAsync<string>(httpClient, $"v1.0/groups/{groupId}/photo/$value", accessToken, byteArrayContent).GetAwaiter().GetResult();
         }
+
+        public static HttpResponseMessage SetTeamArchivedState(HttpClient httpClient, string accessToken, string groupId, bool archived, bool? setSiteReadOnly)
+        {
+            if (archived)
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(setSiteReadOnly.HasValue ? new { shouldSetSpoSiteReadOnlyForMembers = setSiteReadOnly } : null));
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                return GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/archive", accessToken, content).GetAwaiter().GetResult();
+            }
+            else
+            {
+                StringContent content = new StringContent("");
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                return GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/unarchive", accessToken, content).GetAwaiter().GetResult();
+            }
+        }
         #endregion
 
         #region Users
@@ -380,6 +398,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         }
 
         #endregion
+
         #region Channel
         public static IEnumerable<TeamChannel> GetChannels(string accessToken, HttpClient httpClient, string groupId)
         {
@@ -394,19 +413,9 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static bool DeleteChannel(string accessToken, HttpClient httpClient, string groupId, string displayName)
+        public static HttpResponseMessage DeleteChannel(string accessToken, HttpClient httpClient, string groupId, string channelId)
         {
-            // find the channel
-            var channels = GetChannels(accessToken, httpClient, groupId);
-            var channel = channels.FirstOrDefault(c => c.DisplayName.Equals(displayName, StringComparison.OrdinalIgnoreCase));
-            if (channel != null)
-            {
-                return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channel.Id}", accessToken).GetAwaiter().GetResult();
-            }
-            else
-            {
-                return false;
-            }
+            return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken).GetAwaiter().GetResult();
         }
 
         public static TeamChannel AddChannel(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate)
@@ -476,7 +485,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return GraphHelper.GetAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
         }
 
-        public static bool DeleteTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
+        public static HttpResponseMessage DeleteTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
         {
             return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
         }
@@ -607,6 +616,38 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
                 return collection.Items;
             }
             return null;
+        }
+
+        public static TeamApp AddApp(HttpClient httpClient, string accessToken, byte[] bytes)
+        {
+            var byteArrayContent = new ByteArrayContent(bytes);
+            byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
+            var response = GraphHelper.PostAsync(httpClient, "v1.0/appCatalogs/teamsApps", accessToken, byteArrayContent).GetAwaiter().GetResult();
+            if (!response.IsSuccessStatusCode)
+            {
+                if (GraphHelper.TryGetGraphException(response, out GraphException exception))
+                {
+                    throw exception;
+                }
+            }
+            else
+            {
+                var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                return JsonConvert.DeserializeObject<TeamApp>(content);
+            }
+            return null;
+        }
+
+        public static HttpResponseMessage UpdateApp(HttpClient httpClient, string accessToken, byte[] bytes, string appId)
+        {
+            var byteArrayContent = new ByteArrayContent(bytes);
+            byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
+            return GraphHelper.PutAsync(httpClient, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken, byteArrayContent).GetAwaiter().GetResult();
+        }
+
+        public static HttpResponseMessage DeleteApp(HttpClient httpClient, string accessToken, string appId)
+        {
+            return GraphHelper.DeleteAsync(httpClient, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken).GetAwaiter().GetResult();
         }
         #endregion
     }

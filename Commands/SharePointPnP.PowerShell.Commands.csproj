@@ -930,7 +930,9 @@
     <Compile Include="Teams\GetTeamsTab.cs" />
     <Compile Include="Teams\GetTeamsTeam.cs" />
     <Compile Include="Teams\GetTeamsUser.cs" />
+    <Compile Include="Teams\NewTeamsApp.cs" />
     <Compile Include="Teams\NewTeamsTeam.cs" />
+    <Compile Include="Teams\RemoveTeamsApp.cs" />
     <Compile Include="Teams\RemoveTeamsChannel.cs" />
     <Compile Include="Teams\RemoveTeamsTab.cs" />
     <Compile Include="Teams\RemoveTeamsTeam.cs" />
@@ -938,8 +940,10 @@
     <Compile Include="Teams\SetTeamsChannel .cs" />
     <Compile Include="Teams\SetTeamsTab.cs" />
     <Compile Include="Teams\SetTeamsTeam.cs" />
+    <Compile Include="Teams\SetTeamsTeamArchivedState.cs" />
     <Compile Include="Teams\SetTeamsTeamPicture.cs" />
     <Compile Include="Teams\SubmitTeamsChannelMessage.cs" />
+    <Compile Include="Teams\UpdateTeamsApp.cs" />
     <Compile Include="UserProfiles\GetUPABulkImportStatus.cs" />
     <Compile Include="UserProfiles\SetUserOneDriveQuota.cs" />
     <Compile Include="UserProfiles\ResetUserOneDriveQuotaToDefault.cs" />

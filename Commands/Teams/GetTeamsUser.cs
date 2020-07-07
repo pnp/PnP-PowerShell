@@ -28,6 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
        Code = "PS:> Get-PnPTeamsUser -Team MyTeam -Role Guest",
        Remarks = "Returns all guestss from the specified team.",
        SortOrder = 4)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class GetTeamsUser : PnPGraphCmdlet
     {

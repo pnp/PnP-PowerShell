@@ -2,7 +2,9 @@
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using SharePointPnP.PowerShell.Commands.Model.Teams;
 using SharePointPnP.PowerShell.Commands.Utilities;
+using SharePointPnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
@@ -23,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
         public TeamsTeamPipeBind Team;
 
         [Parameter(Mandatory = true)]
-        public string DisplayName;
+        public TeamsChannelPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifying the Force parameter will skip the confirmation question.")]
         public SwitchParameter Force;
@@ -35,13 +37,33 @@ namespace SharePointPnP.PowerShell.Commands.Teams
                 var groupId = Team.GetGroupId(HttpClient, AccessToken);
                 if (groupId != null)
                 {
-                    if (!TeamsUtility.DeleteChannel(AccessToken, HttpClient, groupId, DisplayName))
+                    var channel = Identity.GetChannel(HttpClient, AccessToken, groupId);
+                    if (channel != null)
                     {
-                        WriteError(new ErrorRecord(new Exception($"Channel remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                        var response = TeamsUtility.DeleteChannel(AccessToken, HttpClient, groupId, channel.Id);
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                            {
+                                if (ex.Error != null)
+                                {
+                                    throw new PSInvalidOperationException(ex.Error.Message);
+                                }
+                            }
+                            else
+                            {
+                                WriteError(new ErrorRecord(new Exception($"Channel remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                            }
+                        }
+                        else
+                        {
+                            throw new PSArgumentException("Channel not found");
+                        }
                     }
-                } else
-                {
-                    throw new PSArgumentException("Team not found");
+                    else
+                    {
+                        throw new PSArgumentException("Team not found");
+                    }
                 }
             }
         }
