@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     /// <summary>
     /// Information regarding one Office 365 service feature

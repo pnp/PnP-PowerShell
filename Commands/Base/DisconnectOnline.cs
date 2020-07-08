@@ -1,11 +1,11 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
-using SharePointPnP.PowerShell.Commands.Provider;
+using PnP.PowerShell.Commands.Provider;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
     [CmdletHelp("Disconnects the context",

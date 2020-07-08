@@ -6,7 +6,7 @@ using System.Management.Automation.Provider;
 using Microsoft.SharePoint.Client;
 using File = Microsoft.SharePoint.Client.File;
 
-namespace SharePointPnP.PowerShell.Commands.Provider
+namespace PnP.PowerShell.Commands.Provider
 {
     internal class SPOContentReaderWriter : IContentReader, IContentWriter
     {

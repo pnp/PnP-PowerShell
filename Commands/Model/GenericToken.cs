@@ -5,9 +5,9 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.Core.Attributes;
+using PnP.PowerShell.Core.Attributes;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     /// <summary>
     /// Contains a JWT oAuth token

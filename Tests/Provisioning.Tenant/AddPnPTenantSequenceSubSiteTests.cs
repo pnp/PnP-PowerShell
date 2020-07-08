@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Provisioning.Tenant
+namespace PnP.PowerShell.Tests.Provisioning.Tenant
 {
     [TestClass]
     public class AddTenantSequenceSubSiteTests

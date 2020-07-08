@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 #endif
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Enums;
 using System;
 using System.Management.Automation;
 using System.Management.Automation.Host;
@@ -15,8 +15,8 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Net.Http;
 using Newtonsoft.Json;
-using SharePointPnP.PowerShell.Commands.Utilities;
-using SharePointPnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Model;
 using System.Security.Cryptography.X509Certificates;
 using System.Security;
 using System.IO;
@@ -25,9 +25,9 @@ using Microsoft.Identity.Client;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Graph;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     internal class PnPConnectionHelper
     {
@@ -376,7 +376,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
             {
                 string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                string configFile = Path.Combine(appDataFolder, "SharePointPnP.PowerShell\\tokencache.dat");
+                string configFile = Path.Combine(appDataFolder, "PnP.PowerShell\\tokencache.dat");
                 FileTokenCache cache = new FileTokenCache(configFile);
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache, azureEnvironment), retryCount, retryWait * 10000);
                 var connectionType = ConnectionType.OnPrem;

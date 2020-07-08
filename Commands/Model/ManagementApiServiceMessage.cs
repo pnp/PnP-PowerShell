@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     /// <summary>
     /// Information regarding a message concerning a service in Office 365

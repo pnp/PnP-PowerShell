@@ -5,10 +5,10 @@ using System.Management.Automation;
 using System.Configuration;
 using System.Linq.Expressions;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities;
 using System.Linq;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class BaseTests
@@ -137,7 +137,7 @@ namespace SharePointPnP.PowerShell.Tests
 
                 var type = typeof(List);
 
-                var exp2 = (Expression<Func<List,object>>)SharePointPnP.PowerShell.Commands.Utilities.DynamicExpression.ParseLambda(type, typeof(object), "RootFolder.ServerRelativeUrl", null);
+                var exp2 = (Expression<Func<List,object>>)PnP.PowerShell.Commands.Utilities.DynamicExpression.ParseLambda(type, typeof(object), "RootFolder.ServerRelativeUrl", null);
                 //var exp = Expression.Lambda<Func<List, object>>(Expression.Convert(body, typeof(object)), exp2);
 
              

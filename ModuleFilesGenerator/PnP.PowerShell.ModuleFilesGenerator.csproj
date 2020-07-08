@@ -7,8 +7,8 @@
     <ProjectGuid>{DF6DEB88-12E0-48FA-A717-9404832E52CC}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.ModuleFilesGenerator</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.ModuleFilesGenerator</AssemblyName>
+    <RootNamespace>PnP.PowerShell.ModuleFilesGenerator</RootNamespace>
+    <AssemblyName>PnP.PowerShell.ModuleFilesGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -138,9 +138,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HelpAttributes\SharePointPnP.PowerShell.CmdletHelpAttributes.csproj">
+    <ProjectReference Include="..\HelpAttributes\PnP.PowerShell.CmdletHelpAttributes.csproj">
       <Project>{FDD50BBD-AE78-4B10-9549-0566686719AB}</Project>
-      <Name>SharePointPnP.PowerShell.CmdletHelpAttributes</Name>
+      <Name>PnP.PowerShell.CmdletHelpAttributes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

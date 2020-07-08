@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Lists
+namespace PnP.PowerShell.Tests.Lists
 {
     [TestClass]
     public class MoveListItemToRecycleBinTests

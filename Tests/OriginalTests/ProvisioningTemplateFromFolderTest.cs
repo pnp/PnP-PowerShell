@@ -5,7 +5,7 @@ using System.Management.Automation.Runspaces;
 using Microsoft.SharePoint.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     /// <summary>
     /// Class used to test .pnp generation commandlets

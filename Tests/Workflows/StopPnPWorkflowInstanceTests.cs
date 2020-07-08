@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Workflows
+namespace PnP.PowerShell.Tests.Workflows
 {
     [TestClass]
     public class StopWorkflowInstanceTests

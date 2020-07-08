@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.RecycleBin
+namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsData.Restore, "PnPRecycleBinItem", DefaultParameterSetName = PARAMETERSET_ALL)]
     [CmdletHelp("Restores the provided recycle bin item to its original location",

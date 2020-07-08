@@ -7,7 +7,7 @@ using System.Linq;
 using OfficeDevPnP.Core.Pages;
 using System.Collections;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class ClientSidePagesTests

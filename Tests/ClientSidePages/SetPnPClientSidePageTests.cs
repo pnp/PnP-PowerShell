@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.ClientSidePages
+namespace PnP.PowerShell.Tests.ClientSidePages
 {
     [TestClass]
     public class SetClientSidePageTests

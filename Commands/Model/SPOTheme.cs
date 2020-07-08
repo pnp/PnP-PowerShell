@@ -3,7 +3,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     public class SPOTheme
     {

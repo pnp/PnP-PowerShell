@@ -5,7 +5,7 @@ using System.Net.Http;
 using Microsoft.SharePoint.Client;
 using Newtonsoft.Json;
 
-namespace SharePointPnP.PowerShell.Commands.Utilities.REST
+namespace PnP.PowerShell.Commands.Utilities.REST
 {
     internal static class RestHelper
     {

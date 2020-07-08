@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace SharePointPnP.PowerShell.Commands.Model.Teams
+namespace PnP.PowerShell.Commands.Model.Teams
 {
     public partial class TeamTab
     {

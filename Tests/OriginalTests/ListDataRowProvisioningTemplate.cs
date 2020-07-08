@@ -7,7 +7,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     /// <summary>
     /// Class used to test pulling datarows from a list into a template file

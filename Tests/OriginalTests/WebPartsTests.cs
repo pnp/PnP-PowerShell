@@ -6,7 +6,7 @@ using System.Linq;
 using System.Xml.Linq;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class WebPartsTests

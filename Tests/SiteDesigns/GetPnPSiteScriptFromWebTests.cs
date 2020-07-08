@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.SiteDesigns
+namespace PnP.PowerShell.Tests.SiteDesigns
 {
     [TestClass]
     public class GetSiteScriptFromWebTests

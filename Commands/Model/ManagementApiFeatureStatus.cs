@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     /// <summary>
     /// Information regarding the current status of a specific feature in an Office 365 service

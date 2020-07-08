@@ -826,7 +826,7 @@
     <View>
       <Name>ProvisioningTemplateInformation</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Components.ProvisioningTemplateInformation</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Components.ProvisioningTemplateInformation</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1309,7 +1309,7 @@
     <View>
       <Name>PnPException</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.PnPException</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.PnPException</TypeName>
       </ViewSelectedBy>
       <ListControl>
         <ListEntries>

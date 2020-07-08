@@ -1,8 +1,8 @@
 ﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Provider;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Provider;
 using System;
 using System.IO;
 using System.Linq;
@@ -12,12 +12,12 @@ using System.Security;
 using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
 using System.IdentityModel.Tokens.Jwt;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Enums;
 #if !NETSTANDARD2_1
 using System.Web.UI.WebControls;
 #endif
-using SharePointPnP.PowerShell.Commands.Model;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.Commands.Model;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections.Generic;
 #if !NETSTANDARD2_1
 using System.Security.Cryptography;
@@ -26,7 +26,7 @@ using System.Reflection;
 #if !ONPREMISES
 #endif
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false, DefaultParameterSetName = ParameterSet_MAIN)]
     [CmdletHelp("Connect to a SharePoint site",
@@ -977,7 +977,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         {
 #if !ONPREMISES
             string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string configFolder = Path.Combine(appDataFolder, "SharePointPnP.PowerShell");
+            string configFolder = Path.Combine(appDataFolder, "PnP.PowerShell");
             Directory.CreateDirectory(configFolder); // Ensure folder exists
             if (ClearTokenCache)
             {

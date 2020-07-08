@@ -5,7 +5,7 @@ using Microsoft.SharePoint.Client;
 using System.Linq;
 using OfficeDevPnP.Core.Entities;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class FieldsTests

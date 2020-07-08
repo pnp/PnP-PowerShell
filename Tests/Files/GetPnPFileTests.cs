@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Files
+namespace PnP.PowerShell.Tests.Files
 {
     [TestClass]
     public class GetFileTests

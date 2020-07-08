@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
-using SharePointPnP.PowerShell.Commands.Site;
-using SharePointPnP.PowerShell.Commands.Utilities.REST;
+using PnP.PowerShell.Commands.Model.Teams;
+using PnP.PowerShell.Commands.Site;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Net.Http;
 using System.Web;
 #endif
 
-namespace SharePointPnP.PowerShell.Commands.Utilities
+namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class TeamsUtility
     {

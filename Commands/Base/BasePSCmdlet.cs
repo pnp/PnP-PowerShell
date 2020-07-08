@@ -3,7 +3,7 @@ using System.IO;
 using System.Management.Automation;
 using System.Reflection;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     /// <summary>
     /// Base class for all the PnP Cmdlets

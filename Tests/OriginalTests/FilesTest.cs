@@ -7,7 +7,7 @@ using System.Collections;
 using System.Linq;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class FilesTests

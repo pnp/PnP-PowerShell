@@ -4,12 +4,12 @@ using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.CmdletHelpAttributes;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using OfficeDevPnP.Core.Utilities;
 using File = Microsoft.SharePoint.Client.File;
 
-namespace SharePointPnP.PowerShell.Commands.Files
+namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true)]
     [CmdletHelp("Copies a file or folder to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Currently there is a 200MB file size limit for the file or folder to be copied.",

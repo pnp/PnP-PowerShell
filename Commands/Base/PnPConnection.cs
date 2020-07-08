@@ -2,9 +2,9 @@
 using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Extensions;
-using SharePointPnP.PowerShell.Commands.Enums;
-using SharePointPnP.PowerShell.Commands.Model;
-using SharePointPnP.PowerShell.Core.Attributes;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     public class PnPConnection
     {

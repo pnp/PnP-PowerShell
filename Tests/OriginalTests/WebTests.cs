@@ -3,10 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.SharePoint.Client;
 using System.Management.Automation.Runspaces;
 using System.Linq;
-using SharePointPnP.PowerShell.Commands.Principals;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Principals;
+using PnP.PowerShell.Commands.Enums;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class WebTests

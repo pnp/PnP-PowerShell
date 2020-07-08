@@ -135,7 +135,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
@@ -162,6 +162,9 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>PnP.PowerShell.Online.Commands</AssemblyName>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
@@ -1148,10 +1151,10 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ModuleFiles\SharePointPnP.PowerShell.2019.Commands.Format.ps1xml">
+    <None Include="ModuleFiles\PnP.PowerShell.2019.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ModuleFiles\SharePointPnP.PowerShell.Online.Commands.Format.ps1xml">
+    <None Include="ModuleFiles\PnP.PowerShell.Online.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
@@ -1234,9 +1237,9 @@
     <None Include="Samples\ProvisionSite.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HelpAttributes\SharePointPnP.PowerShell.CmdletHelpAttributes.csproj">
+    <ProjectReference Include="..\HelpAttributes\PnP.PowerShell.CmdletHelpAttributes.csproj">
       <Project>{fdd50bbd-ae78-4b10-9549-0566686719ab}</Project>
-      <Name>SharePointPnP.PowerShell.CmdletHelpAttributes</Name>
+      <Name>PnP.PowerShell.CmdletHelpAttributes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -1250,10 +1253,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ModuleFiles\SharePointPnP.PowerShell.2016.Commands.Format.ps1xml">
+    <None Include="ModuleFiles\PnP.PowerShell.2016.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ModuleFiles\SharePointPnP.PowerShell.2013.Commands.Format.ps1xml">
+    <None Include="ModuleFiles\PnP.PowerShell.2013.Commands.Format.ps1xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -1276,7 +1279,7 @@
     <Exec Command="del $(ProjectDir)\obj\*.json" />
   </Target>
   <Target Name="AfterBuild">
-    <Exec Command="&quot;$(SolutionDir)ModuleFilesGenerator\bin\$(ConfigurationName)\SharePointPnP.PowerShell.ModuleFilesGenerator.exe&quot; &quot;$(TargetPath)&quot; &quot;$(ConfigurationName)&quot; &quot;$(SolutionDir)" />
+    <Exec Command="&quot;$(SolutionDir)ModuleFilesGenerator\bin\$(ConfigurationName)\PnP.PowerShell.ModuleFilesGenerator.exe&quot; &quot;$(TargetPath)&quot; &quot;$(ConfigurationName)&quot; &quot;$(SolutionDir)" />
     <Exec Command="powershell.exe -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)PostBuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" />
   </Target>
 </Project>

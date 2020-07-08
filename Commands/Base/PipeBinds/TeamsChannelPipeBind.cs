@@ -1,12 +1,12 @@
 ﻿using Microsoft.Graph;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Model.Teams;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 
-namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
+namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class TeamsChannelPipeBind
     {

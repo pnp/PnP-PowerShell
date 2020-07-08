@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.WebParts
+namespace PnP.PowerShell.Tests.WebParts
 {
     [TestClass]
     public class AddWebPartToWikiPageTests

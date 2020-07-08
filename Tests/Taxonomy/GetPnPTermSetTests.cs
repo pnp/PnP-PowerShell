@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Taxonomy
+namespace PnP.PowerShell.Tests.Taxonomy
 {
     [TestClass]
     public class GetTermSetTests

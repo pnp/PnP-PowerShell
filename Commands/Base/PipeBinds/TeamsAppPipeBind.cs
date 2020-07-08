@@ -1,11 +1,11 @@
-﻿using SharePointPnP.PowerShell.Commands.Model.Teams;
-using SharePointPnP.PowerShell.Commands.Utilities.REST;
+﻿using PnP.PowerShell.Commands.Model.Teams;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 
-namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
+namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class TeamsAppPipeBind
     {

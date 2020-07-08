@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Events
+namespace PnP.PowerShell.Tests.Events
 {
     [TestClass]
     public class RemoveEventReceiverTests

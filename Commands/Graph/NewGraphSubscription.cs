@@ -1,11 +1,11 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Graph;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPGraphSubscription")]
     [CmdletHelp("Creates a new Microsof Graph Subscription which allows your webhook API to be called when a change occurs in Microsoft Graph",

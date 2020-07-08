@@ -4,11 +4,11 @@ using OfficeDevPnP.Core.Utilities;
 #if !NETSTANDARD2_1
 using SharePointPnP.Modernization.Framework.Transform;
 #endif
-using SharePointPnP.PowerShell.Commands.ClientSidePages;
+using PnP.PowerShell.Commands.ClientSidePages;
 using System;
 using System.Text.Encodings.Web;
 
-namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
+namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class PagePipeBind
     {

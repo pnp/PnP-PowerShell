@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using OfficeDevPnP.Core.Utilities;
 using System.Web;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
 #if !ONPREMISES
     internal static class TokenHandler
