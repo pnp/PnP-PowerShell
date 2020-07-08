@@ -26,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     public class AddMicrosoft365GroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group to add members to")]
-        public UnifiedGroupPipeBind Identity;
+        public Microsoft365GroupPipeBind Identity;
 
         [Parameter(Mandatory = true, HelpMessage = "The UPN(s) of the user(s) to add to the Microsoft 365 Group as a member")]
         public string[] Users;
