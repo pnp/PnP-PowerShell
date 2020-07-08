@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue where using `Connect-PnPOnline` using `-Thumbnail` would delete the private key on some devices when running `Disconnect-PnPOnline` [PR #2759](https://github.com/pnp/PnP-PowerShell/pull/2759)
 - Fixed timeouts on `Get-PnPSiteCollectionAdmin` when the site has a lot of users [PR #2769](https://github.com/pnp/PnP-PowerShell/pull/2769)
 - Updated test project structure [PR #2767](https://github.com/pnp/PnP-PowerShell/pull/2767)
+- All UnifiedGroup cmdlets have been renamed to Microsoft365Group. I.e. `New-PnPUnifiedGroup` -> `New-PnPMicrosoft365Group`. An alias has been added to provide for backwards compatibility [PR #2771](https://github.com/pnp/PnP-PowerShell/pull/2771)
 
 ### Contributors
 - Erwin van Hunen [erwinvanhunen]
