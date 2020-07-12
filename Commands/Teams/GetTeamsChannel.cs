@@ -52,7 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
                 }
             } else
             {
-                throw new PSArgumentException("Cannot find team", nameof(Team));
+                throw new PSArgumentException("Team not found", nameof(Team));
             }
         }
     }

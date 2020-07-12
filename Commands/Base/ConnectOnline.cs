@@ -121,7 +121,7 @@ PS:> dir",
         SortOrder = 18)]
     [CmdletExample(
         Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -Thumbprint 34CFAA860E5FB8C44335A38A097C1E41EEA206AA",
-        Remarks = "Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started.",
+        Remarks = "Connects to SharePoint using app-only tokens via an app's declared permission scopes. See https://github.com/SharePoint/PnP-PowerShell/tree/master/Samples/SharePoint.ConnectUsingAppPermissions for a sample on how to get started. Ensure you have imported the private key certificate, typically the .pfx file, into the Windows Certificate Store for the certificate with the provided thumbprint.",
         SortOrder = 19)]
     [CmdletExample(
         Code = "PS:> Connect-PnPOnline -Url https://contoso.sharepoint.com -ClientId '<id>' -Tenant 'contoso.onmicrosoft.com' -PEMCertificate <PEM string> -PEMPrivateKey <PEM string> -CertificatePassword <if needed>",
@@ -507,7 +507,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADPEM, HelpMessage = "PEM encoded private key for the certificate")]
         public string PEMPrivateKey;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Certificate thumbprint")]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "The thumbprint of the certificate containing the private key registered with the application in Azure Active Directory")]
         public string Thumbprint;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NATIVEAAD, HelpMessage = "Clears the token cache.")]
@@ -658,6 +658,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             {
                 credentials = Credentials.Credential;
             }
+
+            WriteVerbose($"Using parameter set '{ParameterSetName}'");
 
             // Connect using the used set parameters
             switch (ParameterSetName)

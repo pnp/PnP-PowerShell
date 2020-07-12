@@ -1879,6 +1879,9 @@
           <TableColumnHeader>
             <Label>Description</Label>
           </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>MembershipType</Label>
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -1891,6 +1894,9 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Description</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>MembershipType</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>
@@ -1926,7 +1932,7 @@
       </TableControl>
     </View>
     <View>
-      <Name>TeamTab</Name>
+      <Name>TeamApp</Name>
       <ViewSelectedBy>
         <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamApp</TypeName>
       </ViewSelectedBy>
@@ -1966,7 +1972,7 @@
       </TableControl>
     </View>
     <View>
-      <Name>TeamTab</Name>
+      <Name>TeamChannelMessage</Name>
       <ViewSelectedBy>
         <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamChannelMessage</TypeName>
       </ViewSelectedBy>
@@ -1978,9 +1984,9 @@
           <TableColumnHeader>
             <Label>Body.Content</Label>
           </TableColumnHeader>
-          <TableColumnHeadeR>
+          <TableColumnHeader>
             <Label>CreatedDateTime</Label>
-          </TableColumnHeadeR>
+          </TableColumnHeader>
         </TableHeaders>
         <TableRowEntries>
           <TableRowEntry>
@@ -1995,6 +2001,46 @@
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>CreatedDateTime</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>User</Name>
+      <ViewSelectedBy>
+        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.User</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Id</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>UserPrincipalName</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DisplayName</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>UserType</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Id</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>UserPrincipalName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DisplayName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>UserType</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

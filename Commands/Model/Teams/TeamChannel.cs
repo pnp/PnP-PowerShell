@@ -32,6 +32,10 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// Defines the type of the Channel
+        /// </summary>
+        public string MembershipType { get; set; }
+        /// <summary>
         /// Defines the Description of the Channel
         /// </summary>
         public string Description { get; set; }
