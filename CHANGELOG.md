@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue where using `Connect-PnPOnline` using `-Thumbnail` would delete the private key on some devices when running `Disconnect-PnPOnline` [PR #2759](https://github.com/pnp/PnP-PowerShell/pull/2759)
 - Fixed timeouts on `Get-PnPSiteCollectionAdmin` when the site has a lot of users [PR #2769](https://github.com/pnp/PnP-PowerShell/pull/2769)
 - Updated test project structure [PR #2767](https://github.com/pnp/PnP-PowerShell/pull/2767)
-- Updated the Microsoft Authentication Library (MSAL) to 4.16 which resolves an [issue in the MSAL library](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/pull/1891) which caused many of the `Connect-PnPOnline` options not to work in Azure Runbooks anymore [PR #2735](https://github.com/pnp/PnP-PowerShell/pull/2735)
+- Updated the Microsoft Authentication Library (MSAL) to 4.16.1 which resolves an [issue in the MSAL library](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/pull/1891) which caused many of the `Connect-PnPOnline` options not to work in Azure Runbooks anymore [PR #2735](https://github.com/pnp/PnP-PowerShell/pull/2735)
 
 ### Contributors
 - Erwin van Hunen [erwinvanhunen]
