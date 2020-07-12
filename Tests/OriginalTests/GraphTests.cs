@@ -16,14 +16,14 @@ namespace SharePointPnP.PowerShell.Tests
             {
                 var random = new Random();
 
-                var group = scope.ExecuteCommand("New-PnPUnifiedGroup",
-                        new CommandParameter("DisplayName", "PnPDeletedUnifiedGroup test"),
-                        new CommandParameter("Description", "PnPDeletedUnifiedGroup test"),
+                var group = scope.ExecuteCommand("New-PnPMicrosoft365Group",
+                        new CommandParameter("DisplayName", "PnPDeletedMicrosoft365Group test"),
+                        new CommandParameter("Description", "PnPDeletedMicrosoft365Group test"),
                         new CommandParameter("MailNickname", $"pnp-unit-test-{random.Next(1, 1000)}"),
                         new CommandParameter("Force"));
                 _groupId = group[0].Properties["GroupId"].Value.ToString();
 
-                scope.ExecuteCommand("Remove-PnPUnifiedGroup", new CommandParameter("Identity", _groupId));
+                scope.ExecuteCommand("Remove-PnPMicrosoft365Group", new CommandParameter("Identity", _groupId));
             }
         }
 
@@ -34,7 +34,7 @@ namespace SharePointPnP.PowerShell.Tests
             {
                 try
                 {
-                    scope.ExecuteCommand("Remove-PnPUnifiedGroup", new CommandParameter("Identity", _groupId));
+                    scope.ExecuteCommand("Remove-PnPMicrosoft365Group", new CommandParameter("Identity", _groupId));
                 }
                 catch (Exception)
                 {
@@ -42,7 +42,7 @@ namespace SharePointPnP.PowerShell.Tests
                 }
                 try
                 {
-                    scope.ExecuteCommand("Remove-PnPDeletedUnifiedGroup", new CommandParameter("Identity", _groupId));
+                    scope.ExecuteCommand("Remove-PnPDeletedMicrosoft365Group", new CommandParameter("Identity", _groupId));
                 }
                 catch (Exception)
                 {
@@ -52,49 +52,49 @@ namespace SharePointPnP.PowerShell.Tests
         }
 
         [TestMethod]
-        public void GetDeletedUnifiedGroups()
+        public void GetDeletedMicrosoft365Groups()
         {
             using (var scope = new PSTestScope())
             {
-                var results = scope.ExecuteCommand("Get-PnPDeletedUnifiedGroup");
+                var results = scope.ExecuteCommand("Get-PnPDeletedMicrosoft365Group");
                 Assert.IsTrue(results.Count > 0);
             }
         }
 
         [TestMethod]
-        public void GetDeletedUnifiedGroup()
+        public void GetDeletedMicrosoft365Group()
         {
             using (var scope = new PSTestScope())
             {
-                var results = scope.ExecuteCommand("Get-PnPDeletedUnifiedGroup", new CommandParameter("Identity", _groupId));
+                var results = scope.ExecuteCommand("Get-PnPDeletedMicrosoft365Group", new CommandParameter("Identity", _groupId));
 
                 Assert.IsTrue(results != null && results[0].Properties["GroupId"].Value.ToString() == _groupId);
             }
         }
 
         [TestMethod]
-        public void RestoreDeletedUnifiedGroup()
+        public void RestoreDeletedMicrosoft365Group()
         {
             using (var scope = new PSTestScope())
             {
-                scope.ExecuteCommand("Restore-PnPDeletedUnifiedGroup", new CommandParameter("Identity", _groupId));
-                var results = scope.ExecuteCommand("Get-PnPUnifiedGroup", new CommandParameter("Identity", _groupId));
+                scope.ExecuteCommand("Restore-PnPDeletedMicrosoft365Group", new CommandParameter("Identity", _groupId));
+                var results = scope.ExecuteCommand("Get-PnPMicrosoft365Group", new CommandParameter("Identity", _groupId));
 
                 Assert.IsTrue(results != null && results[0].Properties["GroupId"].Value.ToString() == _groupId);
             }
         }
 
         [TestMethod]
-        public void RemoveDeletedUnifiedGroup()
+        public void RemoveDeletedMicrosoft365Group()
         {
             using (var scope = new PSTestScope())
             {
-                scope.ExecuteCommand("Remove-PnPDeletedUnifiedGroup", new CommandParameter("Identity", _groupId));
+                scope.ExecuteCommand("Remove-PnPDeletedMicrosoft365Group", new CommandParameter("Identity", _groupId));
 
                 // The group should no longer be found in deleted groups
                 try
                 {
-                    var results = scope.ExecuteCommand("Get-PnPDeletedUnifiedGroup", new CommandParameter("Identity", _groupId));
+                    var results = scope.ExecuteCommand("Get-PnPDeletedMicrosoft365Group", new CommandParameter("Identity", _groupId));
                     Assert.IsFalse(results != null);
                 }
                 catch (Exception)

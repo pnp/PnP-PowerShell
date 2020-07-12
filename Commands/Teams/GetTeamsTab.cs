@@ -63,7 +63,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetTabs(AccessToken, HttpClient, groupId, channelId));
+                        WriteObject(TeamsUtility.GetTabs(AccessToken, HttpClient, groupId, channelId), true);
                     }
                 }
                 else

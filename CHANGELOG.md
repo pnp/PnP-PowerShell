@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for enabling and disabling fields using `Set-PnPField -Identity FieldName -Values @{AllowDeletion=$false}` [PR #2766](https://github.com/pnp/PnP-PowerShell/pull/2766)
 - Added the following cmdlets to add/remove/clear owners and members of Microsoft 365 Groups: `Add-PnPMicrosoft365GroupMember`, `Add-PnPMicrosoft365GroupOwner`, `Remove-PnPMicrosoft365GroupMember`, `Remove-PnPMicrosoft365GroupOwner`, `Clear-PnPMicrosoft365GroupMember`, `Clear-PnPMicrosoft365GroupOwner` [PR #2750](https://github.com/pnp/PnP-PowerShell/pull/2750)
 - Added Add-PnPTeamsChannel, Add-PnPTeamsTab, Add-PnPTeamsUser, Get-PnPTeamsApp, Get-PnPTeamsChannel, Get-PnPTeamsChannelMessage, Get-PnPTeamsTab, Get-PnPTeamsTeam, Get-PnPTeamsUser, New-PnPTeamsApp, New-PnPTeamsTeam, Remove-PnPTeamsChannel, Remove-PnPTeamsTab, Remove-PnPTeamsTeam, Remove-PnPTeamsUser, Set-PnPTeamsChannel, Set-PnPTeamsTab, Set-PnPTeamsTeam, Set-PnPTeamsPicture, Submit-PnPTeamsChannelMessage, Update-PnPTeamsApp cmdlets
+- Added Get-PnPFileVersion, Remove-PnPFileVersion, Restore-PnPFileVersion cmdlets
 - Added `-HideFromAddressLists` and `-HideFromOutlookClients` to `Set-PnPUnifiedGroup` to allow for setting the visibility of Microsoft 365 Groups [PR #2717](https://github.com/pnp/PnP-PowerShell/pull/2717)
 
 ### Changed
@@ -24,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue where using `Connect-PnPOnline` using `-Thumbnail` would delete the private key on some devices when running `Disconnect-PnPOnline` [PR #2759](https://github.com/pnp/PnP-PowerShell/pull/2759)
 - Fixed timeouts on `Get-PnPSiteCollectionAdmin` when the site has a lot of users [PR #2769](https://github.com/pnp/PnP-PowerShell/pull/2769)
 - Updated test project structure [PR #2767](https://github.com/pnp/PnP-PowerShell/pull/2767)
+- All UnifiedGroup cmdlets have been renamed to Microsoft365Group. I.e. `New-PnPUnifiedGroup` -> `New-PnPMicrosoft365Group`. An alias has been added to provide for backwards compatibility [PR #2771](https://github.com/pnp/PnP-PowerShell/pull/2771)
 
 ### Contributors
 - Erwin van Hunen [erwinvanhunen]
