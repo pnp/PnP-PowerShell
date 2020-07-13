@@ -63,7 +63,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType) is GraphToken token)
                     {
                         // Microsoft Graph Access Token available, return it
-                        return token;
+                        return (GraphToken)token;
                     }
                 }
 

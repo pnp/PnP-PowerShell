@@ -4,6 +4,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
 using SharePointPnP.PowerShell.Commands.Provider;
+using SharePointPnP.PowerShell.Commands.Model;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -79,7 +80,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             {
                 return false;
             }
-
+            GraphToken.ClearCaches();
             connection.Context = null;
             connection = null;
             return true;
@@ -99,6 +100,8 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 PnPConnection.CurrentConnection.ClearTokens();
                 PnPConnection.CurrentConnection.Context = null;
                 PnPConnection.CurrentConnection = null;
+                
+                
                 return true;
             }            
         }

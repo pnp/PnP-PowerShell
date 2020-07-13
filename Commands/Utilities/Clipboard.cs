@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SharePointPnP.PowerShell.Commands.Utilities
 {
@@ -26,6 +27,28 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
             System.IO.File.Delete(tempfile);
 #endif
+        }
+
+        public static void CopyNew(string value)
+        {
+            Exception threadEx = null;
+            Thread staThread = new Thread(
+
+             delegate ()
+             {
+                 try
+                 {
+                     System.Windows.Forms.Clipboard.SetText(value);
+                 }
+
+                 catch (Exception ex)
+                 {
+                     threadEx = ex;
+                 }
+             });
+            staThread.SetApartmentState(ApartmentState.STA);
+            staThread.Start();
+            staThread.Join();
         }
     }
 }
