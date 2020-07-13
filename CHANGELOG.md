@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added the following cmdlets to add/remove/clear owners and members of Microsoft 365 Groups: `Add-PnPMicrosoft365GroupMember`, `Add-PnPMicrosoft365GroupOwner`, `Remove-PnPMicrosoft365GroupMember`, `Remove-PnPMicrosoft365GroupOwner`, `Clear-PnPMicrosoft365GroupMember`, `Clear-PnPMicrosoft365GroupOwner` [PR #2750](https://github.com/pnp/PnP-PowerShell/pull/2750)
 - Added Add-PnPTeamsChannel, Add-PnPTeamsTab, Add-PnPTeamsUser, Get-PnPTeamsApp, Get-PnPTeamsChannel, Get-PnPTeamsChannelMessage, Get-PnPTeamsTab, Get-PnPTeamsTeam, Get-PnPTeamsUser, New-PnPTeamsApp, New-PnPTeamsTeam, Remove-PnPTeamsChannel, Remove-PnPTeamsTab, Remove-PnPTeamsTeam, Remove-PnPTeamsUser, Set-PnPTeamsChannel, Set-PnPTeamsTab, Set-PnPTeamsTeam, Set-PnPTeamsPicture, Submit-PnPTeamsChannelMessage, Update-PnPTeamsApp cmdlets
 - Added Get-PnPFileVersion, Remove-PnPFileVersion, Restore-PnPFileVersion cmdlets
+- Added `-HideFromAddressLists` and `-HideFromOutlookClients` to `Set-PnPUnifiedGroup` to allow for setting the visibility of Microsoft 365 Groups [PR #2717](https://github.com/pnp/PnP-PowerShell/pull/2717)
 
 ### Changed
 - Updated implementation of `Move-PnPFile` to now also support moving of files and folders accross site collections [PR #2749](https://github.com/pnp/PnP-PowerShell/pull/2749)
