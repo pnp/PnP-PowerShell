@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointPnP.PowerShell.Commands", "Commands\SharePointPnP.PowerShell.Commands.csproj", "{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		CHANGELOG.md = CHANGELOG.md
 		CONTRIBUTING.md = CONTRIBUTING.md
 		readme.md = readme.md
+		Tests\UnitTests-Readme.md = Tests\UnitTests-Readme.md
 		version.txt = version.txt
 	EndProjectSection
 EndProject
