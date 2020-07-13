@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.23.2007.0] (not yet released)
 
 ### Added
-- Added `-WithRightsAssignedDetailed` parameter to `Get-PnPUser` allowing for fine grained (broken) permissions on item, list and site level to be shown [PR #2754](https://github.com/pnp/PnP-PowerShell/pull/2754)
+- Added `-WithRightsAssignedDetailed` parameter to `Get-PnPUser` when used against SharePoint Online allowing for fine grained (broken) permissions on item, list and site level to be shown [PR #2754](https://github.com/pnp/PnP-PowerShell/pull/2754)
 - Added a `-RowLimit` parameter to `Clear-PnPRecycleBinItem` and `Restore-PnPRecycleBinItem` so that it can be used on recycle bins which hold more than 5000 items [PR #2760](https://github.com/pnp/PnP-PowerShell/pull/2760)
 - Added connection option to `Connect-PnPOnline` taking `-Scopes` and `-Credentials` to allow setting up a delegated permission token for use with Microsoft Graph and the Office 365 Management API. See [this wiki page](https://github.com/pnp/PnP-PowerShell/wiki/Connect-options#connect-using-scopes-and-credentials) for more details. [PR #2746](https://github.com/pnp/PnP-PowerShell/pull/2746)
 - Added support for enabling and disabling fields using `Set-PnPField -Identity FieldName -Values @{AllowDeletion=$false}` [PR #2766](https://github.com/pnp/PnP-PowerShell/pull/2766)
