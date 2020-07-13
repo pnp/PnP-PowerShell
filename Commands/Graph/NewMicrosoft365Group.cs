@@ -9,29 +9,30 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.New, "PnPUnifiedGroup")]
-    [CmdletHelp("Creates a new Microsoft 365 Group (aka Unified Group). Requires the Azure Active Directory application permission 'Group.ReadWrite.All'.",
+    [Cmdlet(VerbsCommon.New, "PnPMicrosoft365Group")]
+    [Alias("New-PnPUnifiedGroup")]
+    [CmdletHelp("Creates a new Microsoft 365 Group",
         Category = CmdletHelpCategory.Graph,
-        OutputTypeLink = "https://docs.microsoft.com/graph/api/group-post-groups",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> New-PnPUnifiedGroup -DisplayName $displayName -Description $description -MailNickname $nickname",
+       Code = "PS:> New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname",
        Remarks = "Creates a public Microsoft 365 Group with all the required properties",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> New-PnPUnifiedGroup -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers",
+       Code = "PS:> New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers",
        Remarks = "Creates a public Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members",
        SortOrder = 2)]
     [CmdletExample(
-       Code = "PS:> New-PnPUnifiedGroup -DisplayName $displayName -Description $description -MailNickname $nickname -IsPrivate",
+       Code = "PS:> New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -IsPrivate",
        Remarks = "Creates a private Microsoft 365 Group with all the required properties",
        SortOrder = 3)]
     [CmdletExample(
-       Code = "PS:> New-PnPUnifiedGroup -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate",
+       Code = "PS:> New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate",
        Remarks = "Creates a private Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members",
        SortOrder = 4)]
+    [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-post-groups")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Create | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
-    public class NewPnPUnifiedGroup : PnPGraphCmdlet
+    public class NewPnPMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The Display Name of the Microsoft 365 Group")]
         public String DisplayName;

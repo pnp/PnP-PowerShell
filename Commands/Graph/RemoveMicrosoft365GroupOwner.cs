@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     public class RemoveMicrosoft365GroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The Identity of the Microsoft 365 Group to remove owners from")]
-        public UnifiedGroupPipeBind Identity;
+        public Microsoft365GroupPipeBind Identity;
 
         [Parameter(Mandatory = true, HelpMessage = "The UPN(s) of the user(s) to remove as owners from the Microsoft 365 Group")]
         public string[] Users;

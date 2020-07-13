@@ -5,22 +5,22 @@ using System.Linq;
 
 namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
 {
-    public class UnifiedGroupPipeBind
+    public class Microsoft365GroupPipeBind
     {
         private readonly UnifiedGroupEntity _group;
         private readonly String _groupId;
         private readonly String _displayName;
 
-        public UnifiedGroupPipeBind()
+        public Microsoft365GroupPipeBind()
         {
         }
 
-        public UnifiedGroupPipeBind(UnifiedGroupEntity group)
+        public Microsoft365GroupPipeBind(UnifiedGroupEntity group)
         {
             _group = group;
         }
 
-        public UnifiedGroupPipeBind(String input)
+        public Microsoft365GroupPipeBind(String input)
         {
             Guid idValue;
             if (Guid.TryParse(input, out idValue))

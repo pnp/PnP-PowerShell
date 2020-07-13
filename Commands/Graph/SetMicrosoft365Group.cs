@@ -10,36 +10,37 @@ using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Set, "PnPUnifiedGroup")]
-    [CmdletHelp("Sets Microsoft 365 Group (aka Unified Group) properties",
+    [Cmdlet(VerbsCommon.Set, "PnPMicrosoft365Group")]
+    [Alias("Set-PnPUnifiedGroup")]
+    [CmdletHelp("Sets Microsoft 365 Group properties",
         Category = CmdletHelpCategory.Graph,
-        OutputTypeLink = "https://docs.microsoft.com/graph/api/group-update",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -DisplayName ""My Displayname""",
+       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -DisplayName ""My Displayname""",
        Remarks = "Sets the display name of the group where $group is a Group entity",
        SortOrder = 1)]
     [CmdletExample(
-       Code = @"PS:> Set-PnPUnifiedGroup -Identity $groupId -Descriptions ""My Description"" -DisplayName ""My DisplayName""",
+       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $groupId -Descriptions ""My Description"" -DisplayName ""My DisplayName""",
        Remarks = "Sets the display name and description of a group based upon its ID",
        SortOrder = 2)]
     [CmdletExample(
-       Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -GroupLogoPath "".\MyLogo.png""",
+       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -GroupLogoPath "".\MyLogo.png""",
        Remarks = "Sets a specific Microsoft 365 Group logo",
        SortOrder = 3)]
     [CmdletExample(
-       Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -IsPrivate:$false",
+       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -IsPrivate:$false",
        Remarks = "Sets a group to be Public if previously Private",
        SortOrder = 4)]
     [CmdletExample(
-       Code = @"PS:> Set-PnPUnifiedGroup -Identity $group -Owners demo@contoso.com",
+       Code = @"PS:> Set-PnPMicrosoft365Group -Identity $group -Owners demo@contoso.com",
        Remarks = "Sets demo@contoso.com as owner of the group",
        SortOrder = 5)]
+    [CmdletRelatedLink(Text = "Documentation", Url = "https://docs.microsoft.com/graph/api/group-update")]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
-    public class SetUnifiedGroup : PnPGraphCmdlet
+    public class SetMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The Identity of the Microsoft 365 Group", ValueFromPipeline = true)]
-        public UnifiedGroupPipeBind Identity;
+        public Microsoft365GroupPipeBind Identity;
 
         [Parameter(Mandatory = false, HelpMessage = "The DisplayName of the group to set")]
         public string DisplayName;
