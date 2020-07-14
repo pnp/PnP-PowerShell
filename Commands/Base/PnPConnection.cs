@@ -16,6 +16,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
+using TextCopy;
 
 namespace SharePointPnP.PowerShell.Commands.Base
 {
@@ -144,30 +145,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             return deviceCodeResult =>
             {
+
                 if (launchBrowser)
                 {
-                    Utilities.Clipboard.CopyNew(deviceCodeResult.UserCode);
+                    ClipboardService.SetText(deviceCodeResult.UserCode);
                     host?.UI.WriteLine($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
-#if !NETSTANDARD2_1
-                    BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl, (success) =>
-                    {
-                    });
-#else
-                OpenBrowser(returnData["verification_url"]);
-                messageCallback(returnData["message"]);
-
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-
-                if (tokenResult != null)
-                {
-                    progressCallback("Token received");
-                    spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
-                }
-                else
-                {
-                    progressCallback("No token received.");
-                }
-#endif
+                    BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl);
                 }
                 else
                 {
@@ -185,26 +168,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             GenericToken token = null;
 
-            //Validate if we have a token already
-            //if (AccessTokens.ContainsKey(tokenAudience))
-            //{
-            //    // We have a token already, ensure it is still valid
-            //    token = AccessTokens[tokenAudience];
-
-            //    if (token.ExpiresOn > DateTime.Now)
-            //    {
-            //        var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
-            //        if (validationResults.valid)
-            //        {
-            //            return token;
-            //        }
-            //        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
-            //    }
-
-            //    // Token was no longer valid, proceed with trying to create a new token
-            //}
-
-            // We do not have a token for the requested audience yet or it was no longer valid, try to create (a new) one
             switch (tokenAudience)
             {
                 case TokenAudience.MicrosoftGraph:
@@ -258,8 +221,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
                 }
-                // Managed to create a token for the requested audience, add it to our collection with tokens
-                //AccessTokens[tokenAudience] = token;
                 return token;
             }
 
