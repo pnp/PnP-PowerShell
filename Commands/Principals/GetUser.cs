@@ -41,15 +41,19 @@ namespace PnP.PowerShell.Commands.Principals
         Code = @"PS:> Get-PnPUser -WithRightsAssigned -Web subsite1",
         Remarks = "Returns only those users from the User Information List of the current site collection who currently have any kind of access rights given either directly to the user or Active Directory Group or given to the user or Active Directory Group via membership of a SharePoint Group to subsite 'subsite1'",
         SortOrder = 6)]
+#if !ONPREMISES
     [CmdletExample(
         Code = @"PS:> Get-PnPUser -WithRightsAssignedDetailed",
         Remarks = "Returns all users who have been granted explicit access to the current site, lists and listitems",
         SortOrder = 7)]
+#endif
     public class GetUser : PnPWebCmdlet
     {
         private const string PARAMETERSET_IDENTITY = "Identity based request";
         private const string PARAMETERSET_WITHRIGHTSASSIGNED = "With rights assigned";
+#if !ONPREMISES
         private const string PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED = "With rights assigned detailed";
+#endif
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_IDENTITY, HelpMessage = "User ID or login name")]
         public UserPipeBind Identity;
@@ -57,8 +61,10 @@ namespace PnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNED, HelpMessage = "If provided, only users that currently have any kinds of access rights assigned to the current site collection will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.")]
         public SwitchParameter WithRightsAssigned;
 
+#if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_WITHRIGHTSASSIGNEDDETAILED, HelpMessage = "If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or listitems/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.")]
         public SwitchParameter WithRightsAssignedDetailed;
+#endif
 
         /// <summary>
         /// Output type used with parameter WithRightsAssignedDetailed
@@ -103,7 +109,11 @@ namespace PnP.PowerShell.Commands.Principals
 
                 List<DetailedUser> users = new List<DetailedUser>();
 
-                if (WithRightsAssigned || WithRightsAssignedDetailed)
+                if (WithRightsAssigned
+#if !ONPREMISES
+                    || WithRightsAssignedDetailed
+#endif
+                    )
                 {
                     // Get all the role assignments and role definition bindings to be able to see which users have been given rights directly on the site level
                     SelectedWeb.Context.Load(SelectedWeb.RoleAssignments, ac => ac.Include(a => a.RoleDefinitionBindings, a => a.Member));
@@ -125,6 +135,7 @@ namespace PnP.PowerShell.Commands.Principals
                     allUsersWithPermissions.AddRange(usersWithDirectPermissions);
                     allUsersWithPermissions.AddRange(usersWithGroupPermissions);
 
+#if !ONPREMISES
                     // Add the found users and add them to the custom object
                     if (WithRightsAssignedDetailed)
                     {
@@ -144,6 +155,7 @@ namespace PnP.PowerShell.Commands.Principals
                         }
                     }
                     else
+#endif
                     {
                         // Filter out the users that have been given rights at both places so they will only be returned once
                         WriteObject(allUsersWithPermissions.GroupBy(u => u.Id).Select(u => u.First()), true);
@@ -155,6 +167,7 @@ namespace PnP.PowerShell.Commands.Principals
                     WriteObject(SelectedWeb.SiteUsers, true);
                 }
 
+#if !ONPREMISES
                 if (WithRightsAssignedDetailed)
                 {
                     SelectedWeb.Context.Load(SelectedWeb.Lists, l => l.Include(li => li.ItemCount, li => li.IsSystemList, li=>li.IsCatalog, li => li.RootFolder.ServerRelativeUrl, li => li.RoleAssignments, li => li.Title, li => li.HasUniqueRoleAssignments));
@@ -310,6 +323,7 @@ namespace PnP.PowerShell.Commands.Principals
                         WriteObject(new { userInformation.Title, userInformation.LoginName, userInformation.Email, Groups, Permissions }, true);
                     }
                 }
+#endif
             }
             else
             {
@@ -335,6 +349,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
         }
 
+#if !ONPREMISES
         private void WriteProgress(ProgressRecord record, string message, int step, int count)
         {
             var percentage = Convert.ToInt32((100 / Convert.ToDouble(count)) * Convert.ToDouble(step));
@@ -373,5 +388,6 @@ namespace PnP.PowerShell.Commands.Principals
             }
             return users;
         }
+#endif
     }
 }

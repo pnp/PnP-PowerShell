@@ -155,65 +155,13 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
-            PnPConnection spoConnection = null;
             var connectionUri = new Uri(url);
-            HttpClient client = new HttpClient();
-            var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={PnPConnection.DeviceLoginClientId}").GetAwaiter().GetResult();
-            var returnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+            var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Host}//.default" }; // the second double slash is not a typo.
             var context = new ClientContext(url);
-            messageCallback(returnData["message"]);
 
-            if (launchBrowser)
-            {
-                Utilities.Clipboard.Copy(returnData["user_code"]);
-                messageCallback("Code has been copied to clipboard");
-#if !NETSTANDARD2_1
-                BrowserHelper.OpenBrowser(returnData["verification_url"], (success) =>
-                {
-                    if (success)
-                    {
-                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-                        if (tokenResult != null)
-                        {
-                            progressCallback("Token received");
-                            spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
-                        }
-                        else
-                        {
-                            progressCallback("No token received.");
-                        }
-                    }
-                });
-#else
-                OpenBrowser(returnData["verification_url"]);
-                messageCallback(returnData["message"]);
-
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-
-                if (tokenResult != null)
-                {
-                    progressCallback("Token received");
-                    spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
-                }
-                else
-                {
-                    progressCallback("No token received.");
-                }
-#endif
-            }
-            else
-            {
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-                if (tokenResult != null)
-                {
-                    progressCallback("Token received");
-                    spoConnection = PnPConnection.GetConnectionWithToken(tokenResult, TokenAudience.SharePointOnline, host, InitializationType.DeviceLogin, null, url, context, minimalHealthScore, PnPPSVersionTag, disableTelemetry);
-                }
-                else
-                {
-                    progressCallback("No token received.");
-                }
-            }
+            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, scopes, PnPConnection.DeviceLoginCallback(host, launchBrowser));
+            var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
+            spoConnection.Scopes = scopes;
 
             if (spoConnection != null)
             {
@@ -232,72 +180,11 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
-            var connectionUri = new Uri("https://graph.microsoft.com");
-            HttpClient client = new HttpClient();
-            var result = client.GetStringAsync($"https://login.microsoftonline.com/common/oauth2/devicecode?resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={PnPConnection.DeviceLoginClientId}").GetAwaiter().GetResult();
-            var returnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-
-            PnPConnection spoConnection = null;
-
-            if (launchBrowser)
-            {
-                Utilities.Clipboard.Copy(returnData["user_code"]);
-                messageCallback("Code has been copied to clipboard");
-#if !NETSTANDARD2_1
-                BrowserHelper.OpenBrowser(returnData["verification_url"], (success) =>
-                {
-                    if (success)
-                    {
-                        var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-                        if (tokenResult != null)
-                        {
-                            progressCallback("Token received");
-                            spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
-                        }
-                        else
-                        {
-                            progressCallback("No token received.");
-                        }
-                    }
-                });
-#else
-                OpenBrowser(returnData["verification_url"]);
-                messageCallback(returnData["message"]);
-
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-
-                if (tokenResult != null)
-                {
-                    progressCallback("Token received");
-                    spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
-                }
-                else
-                {
-                    progressCallback("No token received.");
-                }
-#endif
-            }
-            else
-            {
-                messageCallback(returnData["message"]);
-
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-
-                if (tokenResult != null)
-                {
-                    progressCallback("Token received");
-                    spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
-                    spoConnection.ConnectionMethod = ConnectionMethod.GraphDeviceLogin;
-                }
-                else
-                {
-                    progressCallback("No token received.");
-                }
-            }
+            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" }, PnPConnection.DeviceLoginCallback(host, launchBrowser));
+            var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
+            spoConnection.Scopes = new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" };
             return spoConnection;
         }
-
-
 
         private static GenericToken GetTokenResult(Uri connectionUri, Dictionary<string, string> returnData, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest)
         {
@@ -575,7 +462,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="certificate">Certificate to try to clean up the local cached copy of the private key of</param>
         internal static void CleanupCryptoMachineKey(X509Certificate2 certificate)
         {
-            if(!certificate.HasPrivateKey)
+            if (!certificate.HasPrivateKey)
             {
                 // If somehow a public key certificate was passed in, we can't clean it up, thus we have nothing to do here
                 return;
@@ -584,7 +471,7 @@ namespace PnP.PowerShell.Commands.Base
             var privateKey = (RSACryptoServiceProvider)certificate.PrivateKey;
             string uniqueKeyContainerName = privateKey.CspKeyContainerInfo.UniqueKeyContainerName;
             certificate.Reset();
-            
+
             var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
             if (string.IsNullOrEmpty(programDataPath))
             {

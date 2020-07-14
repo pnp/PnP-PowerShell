@@ -5,8 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Management.Automation;
+using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -122,7 +125,6 @@ namespace PnP.PowerShell.Commands.Model
             {
                 tokenResult = confidentialClientApplication.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
             }
-
             return new GraphToken(tokenResult.AccessToken);
         }
 
@@ -133,6 +135,43 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="scopes">Array with scopes that should be requested access to. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
         public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
+        {
+            if (string.IsNullOrEmpty(clientId))
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
+            if (scopes == null || scopes.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(scopes));
+            }
+
+
+            if (publicClientApplication == null)
+            {
+                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithDefaultRedirectUri().Build();
+            }
+
+            AuthenticationResult tokenResult = null;
+
+            //if (publicClientApplication == null)
+            //{
+            //    publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").WithDefaultRedirectUri().Build();
+
+            //}
+            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+
+            try
+            {
+                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+            }
+            catch
+            {
+                tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync().GetAwaiter().GetResult();
+            }
+            return new GraphToken(tokenResult.AccessToken);
+        }
+
+        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)
         {
             if (string.IsNullOrEmpty(clientId))
             {
@@ -164,12 +203,18 @@ namespace PnP.PowerShell.Commands.Model
             }
             catch
             {
-                tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync().GetAwaiter().GetResult();
+                var builder = publicClientApplication.AcquireTokenWithDeviceCode(scopes, result =>
+                {
+                    if (callBackAction != null)
+                    {
+                        callBackAction(result);
+                    }
+                    return Task.FromResult(0);
+                });
+                tokenResult = builder.ExecuteAsync().GetAwaiter().GetResult();
             }
-
             return new GraphToken(tokenResult.AccessToken);
         }
-
         /// <summary>
         /// Tries to acquire a delegated Microsoft Graph Access Token for the provided scopes using the provided credentials
         /// </summary>
@@ -215,6 +260,12 @@ namespace PnP.PowerShell.Commands.Model
             }
 
             return new GraphToken(tokenResult.AccessToken);
+        }
+
+        public static void ClearCaches()
+        {
+            GraphToken.publicClientApplication = null;
+            GraphToken.confidentialClientApplication = null;
         }
     }
 }

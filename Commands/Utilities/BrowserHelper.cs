@@ -1,25 +1,24 @@
-﻿#if !NETSTANDARD2_1
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+#if !NETSTANDARD2_1
 using System.Windows.Forms;
+#endif
 
 namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class BrowserHelper
     {
-        public static void OpenBrowser(string url, Action<bool> success, System.Drawing.Icon icon = null)
+#if !NETSTANDARD2_1
+        public static void LaunchBrowser(string url)
         {
             var thread = new Thread(() =>
             {
                 var form = new System.Windows.Forms.Form();
-                if (icon != null)
-                {
-                    form.Icon = icon;
-                }
                 var browser = new System.Windows.Forms.WebBrowser
                 {
                     ScriptErrorsSuppressed = true,
@@ -32,16 +31,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 form.Text = $"Authenticate";
                 form.Controls.Add(browser);
                 form.ResumeLayout(false);
-                form.FormClosed += (sender, args) =>
-                {
-                    success(false);
-                };
                 browser.Navigated += (sender, args) =>
                 {
-                    if(browser.Url.AbsoluteUri.Equals("https://login.microsoftonline.com/common/login", StringComparison.InvariantCultureIgnoreCase) || browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/reprocess", StringComparison.InvariantCultureIgnoreCase))
+                    if (browser.Url.AbsoluteUri.Equals("https://login.microsoftonline.com/common/login", StringComparison.InvariantCultureIgnoreCase) || browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/reprocess", StringComparison.InvariantCultureIgnoreCase))
                     {
                         form.Close();
-                        success(true);
                     }
                 };
                 browser.Navigate(url);
@@ -55,6 +49,22 @@ namespace PnP.PowerShell.Commands.Utilities
             thread.Start();
             thread.Join();
         }
+#else
+        public static void LaunchBrowser(string url)
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true }); // Works ok on windows
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                Process.Start("xdg-open", url);  // Works ok on linux
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                Process.Start("open", url); // Not tested
+            }
+        }
+#endif
     }
 }
-#endif

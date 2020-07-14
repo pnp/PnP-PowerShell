@@ -14,6 +14,7 @@ namespace PnP.PowerShell.Commands.Files
     [Cmdlet(VerbsCommon.Copy, "PnPFile", SupportsShouldProcess = true)]
     [CmdletHelp("Copies a file or folder to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Currently there is a 200MB file size limit for the file or folder to be copied.",
         Category = CmdletHelpCategory.Files)]
+#if !ONPREMISES
     [CmdletExample(
         Remarks = "Copies a file named company.docx located in a document library called Shared Documents in the site collection project to the Shared Documents library in the site collection otherproject. If a file named company.docx already exists, it won't perform the copy.",
         Code = @"PS:>Copy-PnPFile -ServerRelativeUrl ""/sites/project/Shared Documents/company.docx"" -TargetServerRelativeLibrary ""/sites/otherproject/Shared Documents""",
@@ -22,6 +23,7 @@ namespace PnP.PowerShell.Commands.Files
         Remarks = "Copies a folder named Archive located in a document library called Shared Documents in the site collection project to the Shared Documents library in the site collection otherproject. If a folder named Archive already exists, it will overwrite it.",
         Code = @"PS:>Copy-PnPFile -ServerRelativeUrl ""/sites/project/Shared Documents/Archive"" -TargetServerRelativeLibrary ""/sites/otherproject/Shared Documents"" -OverwriteIfAlreadyExists",
         SortOrder = 2)]
+#endif
     [CmdletExample(
         Remarks = "Copies a file named company.docx located in a document library called Documents to a new document named company2.docx in the same library.",
         Code = @"PS:>Copy-PnPFile -SourceUrl Documents/company.docx -TargetUrl Documents/company2.docx",
@@ -75,7 +77,9 @@ namespace PnP.PowerShell.Commands.Files
         public string SourceUrl = string.Empty;
 
         [Parameter(Mandatory = true, Position = 1, HelpMessage = "Server relative Url where to copy the file or folder to. Must not include the file name.")]
+#if !ONPREMISES
         [Alias(nameof(MoveFile.TargetServerRelativeLibrary))] // Aliases is present to allow for switching between Move-PnPFile and Copy-PnPFile keeping the same parameters.
+#endif
         public string TargetUrl = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.")]
@@ -113,14 +117,18 @@ namespace PnP.PowerShell.Commands.Files
 
             if (Force || ShouldContinue(string.Format(Resources.CopyFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
             {
+#if !ONPREMISES
                 if (sourceWebUri != targetWebUri)
                 {
                     CopyToOtherSiteCollection(sourceUri, targetUri);
                 }
                 else
                 {
+#endif
                     CopyWithinSameSiteCollection(currentContextUri, sourceWebUri, targetWebUri);
+#if !ONPREMISES
                 }
+#endif
             }
         }
 
@@ -271,6 +279,7 @@ namespace PnP.PowerShell.Commands.Files
             }
         }
 
+#if !ONPREMISES
         /// <summary>
         /// Allows copying to another site collection
         /// </summary>
@@ -284,6 +293,7 @@ namespace PnP.PowerShell.Commands.Files
             });
             ClientContext.ExecuteQueryRetry();
         }
+#endif
 
         private void CopyFolder(Folder sourceFolder, Folder targetFolder)
         {

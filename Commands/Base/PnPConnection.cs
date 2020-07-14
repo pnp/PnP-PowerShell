@@ -5,6 +5,7 @@ using OfficeDevPnP.Core.Extensions;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Core.Attributes;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
+using TextCopy;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -26,8 +28,8 @@ namespace PnP.PowerShell.Commands.Base
         /// ClientId of the application registered in Azure Active Directory which should be used for the device oAuth flow
         /// </summary>
         internal const string DeviceLoginClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
-        private const string MSALPnPPowerShellClientId = "bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71";
-
+        //private const string MSALPnPPowerShellClientId = "bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71";
+        //private const string MSALPnPPowerShellClientId = DeviceLoginClientId;
         #endregion
 
         #region Properties
@@ -62,9 +64,6 @@ namespace PnP.PowerShell.Commands.Base
 
         public static PnPConnection CurrentConnection { get; internal set; }
         public ConnectionType ConnectionType { get; protected set; }
-
-        public IPublicClientApplication PublicClientApp { get; internal set; }
-        public IConfidentialClientApplication ConfidentialClientApp { get; internal set; }
 
         /// <summary>
         /// Indication for telemetry through which method a connection has been established
@@ -142,6 +141,23 @@ namespace PnP.PowerShell.Commands.Base
             return TryGetToken(tokenAudience, roles)?.AccessToken;
         }
 
+        internal static Action<DeviceCodeResult> DeviceLoginCallback(PSHost host, bool launchBrowser)
+        {
+            return deviceCodeResult =>
+            {
+
+                if (launchBrowser)
+                {
+                    ClipboardService.SetText(deviceCodeResult.UserCode);
+                    host?.UI.WriteLine($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
+                    BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl);
+                }
+                else
+                {
+                    host?.UI.WriteLine(deviceCodeResult.Message);
+                }
+            };
+        }
         /// <summary>
         /// Tries to get a token for the provided audience
         /// </summary>
@@ -152,42 +168,29 @@ namespace PnP.PowerShell.Commands.Base
         {
             GenericToken token = null;
 
-            //Validate if we have a token already
-            //if (AccessTokens.ContainsKey(tokenAudience))
-            //{
-            //    // We have a token already, ensure it is still valid
-            //    token = AccessTokens[tokenAudience];
-
-            //    if (token.ExpiresOn > DateTime.Now)
-            //    {
-            //        var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
-            //        if (validationResults.valid)
-            //        {
-            //            return token;
-            //        }
-            //        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
-            //    }
-
-            //    // Token was no longer valid, proceed with trying to create a new token
-            //}
-
-            // We do not have a token for the requested audience yet or it was no longer valid, try to create (a new) one
             switch (tokenAudience)
             {
                 case TokenAudience.MicrosoftGraph:
-                    if (!string.IsNullOrEmpty(Tenant))
+                    if (ConnectionMethod == ConnectionMethod.DeviceLogin || ConnectionMethod == ConnectionMethod.GraphDeviceLogin)
                     {
-                        if (Certificate != null)
+                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, Scopes, DeviceLoginCallback(null, false));
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Tenant))
                         {
-                            token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
-                        }
-                        else if (ClientSecret != null)
-                        {
-                            token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
-                        }
-                        else if (Scopes != null)
-                        {
-                            token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(MSALPnPPowerShellClientId, Scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(MSALPnPPowerShellClientId, Scopes, PSCredential.UserName, PSCredential.Password);
+                            if (Certificate != null)
+                            {
+                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
+                            }
+                            else if (ClientSecret != null)
+                            {
+                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
+                            }
+                            else if (Scopes != null)
+                            {
+                                token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, Scopes, PSCredential.UserName, PSCredential.Password);
+                            }
                         }
                     }
                     break;
@@ -218,8 +221,6 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
                 }
-                // Managed to create a token for the requested audience, add it to our collection with tokens
-                //AccessTokens[tokenAudience] = token;
                 return token;
             }
 
@@ -651,7 +652,7 @@ namespace PnP.PowerShell.Commands.Base
                     else
                     {
 #endif
-                    throw;
+                        throw;
 #if !ONPREMISES && !NETSTANDARD2_1
                     }
 #endif
