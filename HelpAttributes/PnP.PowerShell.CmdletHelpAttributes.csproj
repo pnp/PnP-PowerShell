@@ -7,8 +7,8 @@
     <ProjectGuid>{FDD50BBD-AE78-4B10-9549-0566686719AB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.CmdletHelpAttributes</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.CmdletHelpAttributes</AssemblyName>
+    <RootNamespace>PnP.PowerShell.CmdletHelpAttributes</RootNamespace>
+    <AssemblyName>PnP.PowerShell.CmdletHelpAttributes</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
