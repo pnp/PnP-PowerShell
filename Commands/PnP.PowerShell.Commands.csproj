@@ -643,6 +643,7 @@
     <Compile Include="Files\RestoreFileVersion.cs" />
     <Compile Include="Files\RemoveFileVersion.cs" />
     <Compile Include="Files\GetFileVersion.cs" />
+    <Compile Include="Graph\AddMicrosoft365GroupOwner.cs" />
     <Compile Include="Graph\ClearMicrosoft365GroupMember.cs" />
     <Compile Include="Graph\ClearMicrosoft365GroupOwner.cs" />
     <Compile Include="Graph\RemoveMicrosoft365GroupOwner.cs" />

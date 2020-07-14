@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupOwner")]
     [Alias("Add-PnPUnifiedGroupOwner")]
