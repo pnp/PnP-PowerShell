@@ -5,7 +5,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AssemblyName>PnP.PowerShell.Core</AssemblyName>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PackageId>PnP.PowerShell.Core</PackageId>
     <Authors>PnP.PowerShell.Core</Authors>
@@ -57,7 +57,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\HelpAttributes\SharePointPnP.PowerShell.Core.Attributes.csproj" />
+    <ProjectReference Include="..\HelpAttributes\PnP.PowerShell.Core.Attributes.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -123,7 +123,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet &quot;$(ProjectDir)..\ModuleFilesGenerator\bin\$(ConfigurationName)\netcoreapp3.0\SharePointPnP.PowerShell.ModuleFilesGenerator.dll&quot; &quot;$(TargetPath)&quot; &quot;$(ConfigurationName)&quot; &quot;$(SolutionDir)" />
+    <Exec Command="dotnet &quot;$(ProjectDir)..\ModuleFilesGenerator\bin\$(ConfigurationName)\netcoreapp3.0\PnP.PowerShell.ModuleFilesGenerator.dll&quot; &quot;$(TargetPath)&quot; &quot;$(ConfigurationName)&quot; &quot;$(SolutionDir)" />
     <Exec Command="&quot;c:\program files\powershell\7\pwsh.exe&quot; -ExecutionPolicy bypass -NoLogo -NonInteractive -Command .'$(SolutionDir)postbuild.ps1' -ProjectDir:'$(ProjectDir)' -ConfigurationName:'$(ConfigurationName)' -TargetDir:'$(TargetDir)' -TargetFileName:'$(TargetFileName)' -TargetName:'$(TargetName)' -SolutionDir:'$(SolutionDir)'" />
   </Target>
 
