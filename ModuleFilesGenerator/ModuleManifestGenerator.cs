@@ -68,11 +68,8 @@ namespace PnP.PowerShell.ModuleFilesGenerator
             }
 
             // Create Module Manifest
-#if !NETCOREAPP3_0
             var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\PnPPowerShell{spVersion}.psd1";
-#else
-            var psd1Path = $"{new FileInfo(_assemblyPath).Directory}\\ModuleFiles\\PnPPowerShellCore.psd1";
-#endif
+
             var cmdletsToExportString = string.Join(",", _cmdlets.Select(c => "'" + c.FullCommand + "'"));
             string aliasesToExportString = null;
             if (aliasesToExport.Any())
