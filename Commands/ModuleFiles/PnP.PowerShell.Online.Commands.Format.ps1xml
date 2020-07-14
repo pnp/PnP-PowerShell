@@ -2103,7 +2103,7 @@
     <View>
       <Name>TeamTab</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamTab</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.Teams.TeamTab</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
