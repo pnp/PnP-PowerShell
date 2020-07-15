@@ -633,7 +633,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 if (!ex.Data.Contains("TimeStampUtc"))
                 {
                     ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
-                } else
+                }
+                else
                 {
                     ex.Data["TimeStampUtc"] = DateTime.UtcNow;
                 }
@@ -1304,7 +1305,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private PnPConnection ConnectWebLogin()
         {
 #if !PNPPSCORE
-            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
+            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
 #else
             WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPO365ManagementShell instead");
             return null;
