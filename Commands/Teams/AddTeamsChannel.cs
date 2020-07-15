@@ -43,7 +43,6 @@ namespace PnP.PowerShell.Commands.Graph
         public string Description;
 
         [Parameter(Mandatory = true, HelpMessage = "Specify to mark the channel as private.", ParameterSetName = ParameterSET_PRIVATE)]
-        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel.", ParameterSetName = ParameterSET_PUBLIC)]
         public SwitchParameter Private;
 
         [Parameter(Mandatory = true, HelpMessage = "The UPN/email of the owner", ParameterSetName = ParameterSET_PRIVATE)]
