@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
+using System.Configuration;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
@@ -45,40 +46,31 @@ namespace PnP.PowerShell.Commands.Graph
                 var channelId = Channel.GetId(HttpClient, AccessToken, groupId);
                 if (channelId != null)
                 {
-                    var tabId = string.Empty;
-                    if (string.IsNullOrEmpty(Identity.Id))
+                    var tab = Identity.GetTab(HttpClient, AccessToken, groupId, channelId);
+                    if (tab != null)
                     {
-                        tabId = Identity.Id.ToString();
+                        if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
+                        {
+                            var response = TeamsUtility.DeleteTab(AccessToken, HttpClient, groupId, channelId, tab.Id);
+                            if (!response.IsSuccessStatusCode)
+                            {
+                                if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                                {
+                                    if (ex.Error != null)
+                                    {
+                                        throw new PSInvalidOperationException(ex.Error.Message);
+                                    }
+                                }
+                                else
+                                {
+                                    throw new PSInvalidOperationException("Tab remove failed");
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        var tab = Identity.GetTab(HttpClient, AccessToken, groupId, channelId);
-                        if (tab != null)
-                        {
-                            tabId = tab.Id;
-                        }
-                        else
-                        {
-                            throw new PSArgumentException("Cannot find tab");
-                        }
-                    }
-                    if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
-                    {
-                        var response = TeamsUtility.DeleteTab(AccessToken, HttpClient, groupId, channelId, tabId);
-                        if (!response.IsSuccessStatusCode)
-                        {
-                            if (GraphHelper.TryGetGraphException(response, out GraphException ex))
-                            {
-                                if (ex.Error != null)
-                                {
-                                    throw new PSInvalidOperationException(ex.Error.Message);
-                                }
-                            }
-                            else
-                            {
-                                throw new PSInvalidOperationException("Tab remove failed");
-                            }
-                        }
+                        throw new PSArgumentException("Tab not found");
                     }
                 }
                 else

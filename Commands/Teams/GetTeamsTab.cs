@@ -51,15 +51,7 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-
-                        if (string.IsNullOrEmpty(Identity.Id))
-                        {
-                            WriteObject(Identity.GetTab(HttpClient, AccessToken, groupId, channelId));
-                        }
-                        else
-                        {
-                            WriteObject(Identity.GetTabById(HttpClient, AccessToken, groupId, channelId));
-                        }
+                        WriteObject(Identity.GetTab(HttpClient, AccessToken, groupId, channelId));
                     }
                     else
                     {

@@ -1,11 +1,11 @@
 ﻿#if !ONPREMISES
 using System.Collections.Generic;
 using System.Management.Automation;
-using Newtonsoft.Json.Linq;
 using OfficeDevPnP.Core.Framework.Graph;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.ManagementApi
 {
@@ -24,11 +24,12 @@ namespace PnP.PowerShell.Commands.ManagementApi
     {
         protected override void ExecuteCmdlet()
         {
-            var response = GraphHttpClient.MakeGetRequestForString($"{ApiRootUrl}ServiceComms/Services", AccessToken);
-            var servicesJson = JObject.Parse(response);
-            var services = servicesJson["value"].ToObject<IEnumerable<ManagementApiService>>();
+            var collection = GraphHelper.GetAsync<GraphCollection<ManagementApiService>>(HttpClient, $"{ApiRootUrl}ServiceComms/Services", AccessToken, false).GetAwaiter().GetResult();
 
-            WriteObject(services, true);
+            if(collection != null)
+            {
+                WriteObject(collection.Items, true);
+            }
         }
     }
 }

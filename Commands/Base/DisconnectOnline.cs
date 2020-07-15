@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Base
 #if !ONPREMISES
             if(Connection?.Certificate != null)
             {
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 if (Connection != null && Connection.DeleteCertificateFromCacheOnDisconnect)
                 {
                     PnPConnectionHelper.CleanupCryptoMachineKey(Connection.Certificate);
@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Base
             if (provider != null)
             {
                 //ImplementingAssembly was introduced in Windows PowerShell 5.0.
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.ImplementingAssembly.FullName == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
 #else
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.Name == Assembly.GetExecutingAssembly().FullName) : provider.Drives;

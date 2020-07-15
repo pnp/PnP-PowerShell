@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using OfficeDevPnP.Core.Entities;
 using PnP.PowerShell.Commands.Model.Teams;
-using PnP.PowerShell.Commands.Site;
+using PnP.PowerShell.Commands.Principals;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
-#if !NETSTANDARD2_1
+using System.Text.Json;
+#if !PNPPSCORE
 using System.Web;
 #endif
 
@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             List<Group> groups = new List<Group>();
             string url = string.Empty;
-            var collection = GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, $"beta/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken).GetAwaiter().GetResult(); ;
+            var collection = GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, $"beta/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken).GetAwaiter().GetResult();
             if (collection != null)
             {
                 groups.AddRange(collection.Items);
@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             catch (ApplicationException ex)
             {
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 if (ex.InnerException is HttpException)
                 {
                     if (((HttpException)ex.InnerException).GetHttpCode() == 404)
@@ -256,7 +256,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             if (archived)
             {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(setSiteReadOnly.HasValue ? new { shouldSetSpoSiteReadOnlyForMembers = setSiteReadOnly } : null));
+                StringContent content = new StringContent(JsonSerializer.Serialize(setSiteReadOnly.HasValue ? new { shouldSetSpoSiteReadOnlyForMembers = setSiteReadOnly } : null));
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 return GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/archive", accessToken, content).GetAwaiter().GetResult();
             }
@@ -302,7 +302,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     $"https://graph.microsoft.com/v1.0/directoryObjects/{user.Id}"
                 }
             };
-            var stringContent = new StringContent(JsonConvert.SerializeObject(value));
+            var stringContent = new StringContent(JsonSerializer.Serialize(value));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             if (role == "Owner")
             {
@@ -418,7 +418,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken).GetAwaiter().GetResult();
         }
 
-        public static TeamChannel AddChannel(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate)
+        public static TeamChannel AddChannel(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate, string ownerUPN)
         {
             var channel = new TeamChannel()
             {
@@ -429,7 +429,18 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 channel.MembershipType = "private";
             }
-            return GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+            if (isPrivate)
+            {
+                channel.Type = "#Microsoft.Teams.Core.channel";
+                var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{ownerUPN}", accessToken).GetAwaiter().GetResult();
+                channel.Members = new List<TeamChannelMember>();
+                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://graph.microsoft.com/beta/users/('{user.Id}')" });
+                return GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+            }
+            else
+            {
+                return GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+            }
         }
 
         public static void PostMessage(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannelMessage message)
@@ -499,12 +510,12 @@ namespace PnP.PowerShell.Commands.Utilities
         public static TeamTab AddTab(HttpClient httpClient, string accessToken, string groupId, string channelId, string displayName, TeamTabType tabType, string teamsAppId, string entityId, string contentUrl, string removeUrl, string websiteUrl)
         {
             TeamTab tab = new TeamTab();
-            tab.Configuration = new TeamTabConfiguration();
             switch (tabType)
             {
                 case TeamTabType.Custom:
                     {
                         tab.TeamsAppId = teamsAppId;
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.EntityId = entityId;
                         tab.Configuration.ContentUrl = contentUrl;
                         tab.Configuration.RemoveUrl = removeUrl;
@@ -514,6 +525,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.DocumentLibrary:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.files.sharepoint";
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.EntityId = "";
                         tab.Configuration.ContentUrl = contentUrl;
                         tab.Configuration.RemoveUrl = null;
@@ -523,6 +535,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.WebSite:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.web";
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.EntityId = null;
                         tab.Configuration.ContentUrl = contentUrl;
                         tab.Configuration.RemoveUrl = null;
@@ -532,6 +545,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.Word:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.file.staticviewer.word";
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.EntityId = entityId;
                         tab.Configuration.ContentUrl = contentUrl;
                         tab.Configuration.RemoveUrl = null;
@@ -541,6 +555,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.Excel:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.file.staticviewer.excel";
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.EntityId = entityId;
                         tab.Configuration.ContentUrl = contentUrl;
                         tab.Configuration.RemoveUrl = null;
@@ -550,6 +565,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.PowerPoint:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.file.staticviewer.powerpoint";
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.EntityId = entityId;
                         tab.Configuration.ContentUrl = contentUrl;
                         tab.Configuration.RemoveUrl = null;
@@ -559,6 +575,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.PDF:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.file.staticviewer.pdf";
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.EntityId = entityId;
                         tab.Configuration.ContentUrl = contentUrl;
                         tab.Configuration.RemoveUrl = null;
@@ -633,7 +650,7 @@ namespace PnP.PowerShell.Commands.Utilities
             else
             {
                 var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                return JsonConvert.DeserializeObject<TeamApp>(content);
+                return JsonSerializer.Deserialize<TeamApp>(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             }
             return null;
         }

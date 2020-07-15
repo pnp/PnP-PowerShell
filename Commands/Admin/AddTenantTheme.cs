@@ -8,8 +8,8 @@ using OfficeDevPnP.Core.Sites;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using PnP.PowerShell.Commands.Model;
-using Newtonsoft.Json;
 using System.Linq;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -73,14 +73,17 @@ PS:>Add-PnPTenantTheme -Identity ""MyCompanyTheme"" -Palette $themepalette -IsIn
             {
                 if (Overwrite.ToBool())
                 {
-                    Tenant.UpdateTenantTheme(Identity.Name, JsonConvert.SerializeObject(theme));
+                    Tenant.UpdateTenantTheme(Identity.Name, JsonSerializer.Serialize(theme));
                     ClientContext.ExecuteQueryRetry();
-                } else
+                }
+                else
                 {
                     WriteError(new ErrorRecord(new Exception($"Theme exists"), "THEMEEXISTS", ErrorCategory.ResourceExists, Identity.Name));
                 }
-            } else {
-                Tenant.AddTenantTheme(Identity.Name, JsonConvert.SerializeObject(theme));
+            }
+            else
+            {
+                Tenant.AddTenantTheme(Identity.Name, JsonSerializer.Serialize(theme));
                 ClientContext.ExecuteQueryRetry();
             }
         }

@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD2_1
+﻿#if !PNPPSCORE
 using Microsoft.Azure.ActiveDirectory.GraphClient;
 using Microsoft.Azure.ActiveDirectory.GraphClient.Internal;
 using Microsoft.Identity.Client;

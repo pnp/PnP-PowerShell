@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model.Teams
@@ -11,6 +12,8 @@ namespace PnP.PowerShell.Commands.Model.Teams
     {
         #region Public Members
 
+        [JsonPropertyName("@odata.type")]
+        public string Type { get; set; }
         /// <summary>
         /// Defines a collection of Tabs for a Channel in a Team
         /// </summary>
@@ -50,6 +53,22 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// </summary>
         public string Id { get; set; }
 
+        public List<TeamChannelMember> Members { get; set; }
+
         #endregion
     }
+
+    public class TeamChannelMember
+    {
+        [JsonPropertyName("@odata.type")]
+        public string Type { get; set; } = "#microsoft.graph.aadUserConversationMember";
+
+        [JsonPropertyName("user@odata.bind")]
+        public string UserIdentifier { get; set; }
+
+        [JsonPropertyName("roles")]
+        public List<string> Roles { get; set; } = new List<string>();
+    }
+
+
 }

@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using System.Web;
 
 namespace PnP.PowerShell.Commands.Model.Teams
@@ -28,7 +23,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
             }
         }
 
-        [JsonProperty("teamsApp@odata.bind")]
+        [JsonPropertyName("teamsApp@odata.bind")]
         public string TeamsApp { get; set; }
         /// <summary>
         /// App definition identifier of the tab

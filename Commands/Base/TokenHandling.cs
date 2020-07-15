@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
-using Newtonsoft.Json.Linq;
 using OfficeDevPnP.Core.Utilities;
+using System.Text.Json;
 using System.Web;
 
 namespace PnP.PowerShell.Commands.Base
@@ -10,9 +10,9 @@ namespace PnP.PowerShell.Commands.Base
     {
         internal static string AcquireToken(string resource, string scope = null)
         {
-            if(PnPConnection.CurrentConnection == null)
+            if (PnPConnection.CurrentConnection == null)
             {
-                return null;            
+                return null;
             }
 
             var tenantId = TenantExtensions.GetTenantIdByUrl(PnPConnection.CurrentConnection.Url);
@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Base
 
             string body = "";
             if (PnPConnection.CurrentConnection.PSCredential != null)
-            { 
+            {
                 var clientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
                 var username = PnPConnection.CurrentConnection.PSCredential.UserName;
                 var password = EncryptionUtility.ToInsecureString(PnPConnection.CurrentConnection.PSCredential.Password);
@@ -41,8 +41,10 @@ namespace PnP.PowerShell.Commands.Base
             var response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenantId}/oauth2/token", body, "application/x-www-form-urlencoded");
             try
             {
-                var json = JToken.Parse(response);
-                return json["access_token"].ToString();
+                using (var jdoc = JsonDocument.Parse(response))
+                {
+                    return jdoc.RootElement.GetProperty("access_token").GetString();
+                }
             }
             catch
             {

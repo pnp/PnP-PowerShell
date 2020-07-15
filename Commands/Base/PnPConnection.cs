@@ -639,7 +639,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
-#if !ONPREMISES && !NETSTANDARD2_1
+#if !ONPREMISES && !PNPPSCORE
                     if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
                     {
                         // legacy auth?
@@ -653,7 +653,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
 #endif
                         throw;
-#if !ONPREMISES && !NETSTANDARD2_1
+#if !ONPREMISES && !PNPPSCORE
                     }
 #endif
                 }
@@ -734,7 +734,7 @@ namespace PnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
                 TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
                 TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("ServerLibraryVersion", serverLibraryVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ServerVersion", serverVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ConnectionMethod", initializationType.ToString());
@@ -744,7 +744,7 @@ namespace PnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Properties.Add("ConnectionMethod", initializationType.ToString());
 #endif
                 var coreAssembly = Assembly.GetExecutingAssembly();
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
 #else
                 TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
@@ -757,7 +757,7 @@ namespace PnP.PowerShell.Commands.Base
 #elif SP2019
             TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2019");
 #else
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("Platform", "SPO");
 #else
                 TelemetryClient.Context.Properties.Add("Platform", "SPO");

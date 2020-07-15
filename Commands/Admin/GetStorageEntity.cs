@@ -7,8 +7,7 @@ using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands
 {
@@ -62,7 +61,7 @@ namespace PnP.PowerShell.Commands
 
             if (!string.IsNullOrEmpty(storageEntitiesIndex))
             {
-                var storageEntitiesDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(storageEntitiesIndex);
+                var storageEntitiesDict = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(storageEntitiesIndex);
 
                 var storageEntities = new List<StorageEntity>();
                 foreach (var key in storageEntitiesDict.Keys)

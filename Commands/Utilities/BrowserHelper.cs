@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
 using System.Windows.Forms;
 #endif
 
@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class BrowserHelper
     {
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         public static void LaunchBrowser(string url)
         {
             var thread = new Thread(() =>

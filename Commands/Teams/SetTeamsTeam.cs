@@ -136,7 +136,7 @@ namespace PnP.PowerShell.Commands.Graph
                         teamCI.AllowCreateUpdateRemoveTabs = ParameterSpecified(nameof(AllowCreateUpdateRemoveTabs)) ? AllowCreateUpdateRemoveTabs : null;
                         teamCI.AllowCustomMemes = ParameterSpecified(nameof(AllowCustomMemes)) ? AllowCustomMemes : null;
                         teamCI.AllowDeleteChannels = ParameterSpecified(nameof(AllowDeleteChannels)) ? AllowDeleteChannels : null;
-                        teamCI.AllowGiphy = ParameterSpecified(nameof(AllowGiphy)) ? AllowGiphy : null; ;
+                        teamCI.AllowGiphy = ParameterSpecified(nameof(AllowGiphy)) ? AllowGiphy : null;
                         teamCI.AllowGuestCreateUpdateChannels = ParameterSpecified(nameof(AllowGuestCreateUpdateChannels)) ? AllowGuestCreateUpdateChannels : null;
                         teamCI.AllowGuestDeleteChannels = ParameterSpecified(nameof(AllowGuestDeleteChannels)) ? AllowGuestDeleteChannels : null;
                         teamCI.AllowOwnerDeleteMessages = ParameterSpecified(nameof(AllowOwnerDeleteMessages)) ? AllowOwnerDeleteMessages : null;

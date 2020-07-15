@@ -101,7 +101,7 @@ PS:> Save-PnPTenantTemplate -Template $template -Out .\template.pnp -Schema V202
 
             if (extension == ".pnp")
             {
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 IsolatedStorage.InitializeIsolatedStorage();
 #endif
                 var templateFileName = outFileName.Substring(0, outFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";

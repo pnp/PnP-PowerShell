@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {
@@ -30,7 +26,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
     public class TeamChannelMessageBody
     {
 
-        [JsonProperty("contentType")]
+        [JsonPropertyName("contentType")]
         private string contentType { get; set; }
 
         [JsonIgnore]

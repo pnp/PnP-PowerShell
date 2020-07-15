@@ -537,7 +537,7 @@ namespace PnP.PowerShell.Commands.Provider
                 if (ShouldProcess($"Clear content from {GetServerRelativePath(path)}"))
                 {
                     var file = obj as File;
-#if NETSTANDARD2_1
+#if PNPPSCORE
                     file.SaveBinary(new FileSaveBinaryInformation());
 #else
                     File.SaveBinaryDirect(file.Context as ClientContext, file.ServerRelativeUrl, Stream.Null, true);

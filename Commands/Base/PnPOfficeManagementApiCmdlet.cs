@@ -6,6 +6,7 @@ using PnP.PowerShell.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
+using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -82,6 +83,9 @@ namespace PnP.PowerShell.Commands.Base
         /// Root URL to the Office 365 Management API
         /// </summary>
         protected string ApiRootUrl => $"https://manage.office.com/api/v1.0/{Token.TenantId}/";
+
+        public HttpClient HttpClient => PnPConnection.CurrentConnection.HttpClient;
+
     }
 }
 #endif

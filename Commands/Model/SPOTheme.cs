@@ -1,7 +1,7 @@
 ﻿#if !ONPREMISES
 using Microsoft.Online.SharePoint.TenantManagement;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -24,13 +24,13 @@ namespace PnP.PowerShell.Commands.Model
             this.IsInverted = isInverted;
         }
 
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; private set; }
 
-        [JsonProperty("palette")]
+        [JsonPropertyName("palette")]
         public IDictionary<string, string> Palette { get; private set; }
 
-        [JsonProperty("isInverted")]
+        [JsonPropertyName("isInverted")]
         public bool IsInverted { get; private set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES && !NETSTANDARD2_1
+﻿#if !ONPREMISES && !PNPPSCORE
 using OfficeDevPnP.Core.Framework.Graph;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;

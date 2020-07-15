@@ -167,7 +167,7 @@ namespace PnP.PowerShell.Commands.Site
                     if (System.IO.File.Exists(LogoFilePath))
                     {
                         var bytes = System.IO.File.ReadAllBytes(LogoFilePath);
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                         var mimeType = System.Web.MimeMapping.GetMimeMapping(LogoFilePath);
 #else
                         var mimeType = "";

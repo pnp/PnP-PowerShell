@@ -1,7 +1,7 @@
 ﻿#if !SP2013 && !SP2016 && !SP2019
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
 using SharePointPnP.Modernization.Framework.Transform;
 #endif
 using PnP.PowerShell.Commands.ClientSidePages;
@@ -115,7 +115,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             var listServerRelativeUrl = UrlUtility.Combine(web.ServerRelativeUrl, listToLoad);
 
             List libraryContainingPage = null;
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             if (BaseTransform.GetVersion(web.Context) == SPVersion.SP2010)
             {
                 libraryContainingPage = web.GetListByName(listToLoad);

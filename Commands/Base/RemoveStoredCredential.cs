@@ -5,14 +5,14 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Remove, "PnPStoredCredential")]
     [CmdletHelp("Removes a credential",
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         "Removes a stored credential from the Windows Credential Manager",
 #else
         "Removes a stored credential from the Windows Credential Manager or the MacOS KeyChain",
 #endif
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(Code = "PS:> Remove-PnPStoredCredential -Name https://tenant.sharepoint.com",
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         Remarks = "Removes the specified credential from the Windows Credential Manager",
 #else
           Remarks = "Removes the specified credential from the Windows Credential Manager or the MacOS KeyChain",

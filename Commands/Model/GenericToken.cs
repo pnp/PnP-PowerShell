@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using OfficeDevPnP.Core.Utilities;
+﻿using OfficeDevPnP.Core.Utilities;
 using System;
 using System.Linq;
 using System.Web;
 using System.Collections.Generic;
 using PnP.PowerShell.Core.Attributes;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -17,13 +17,13 @@ namespace PnP.PowerShell.Commands.Model
         /// <summary>
         /// Token which can be used to access the API
         /// </summary>
-        [JsonProperty("access_token")]
+        [JsonPropertyName("access_token")]
         public string AccessToken { get; private set; }
 
         /// <summary>
         /// Token that can be used to retrieve a new access token
         /// </summary>
-        [JsonProperty("refresh_token")]
+        [JsonPropertyName("refresh_token")]
         public string RefreshToken { get; protected set; }
 
         /// <summary>
@@ -105,10 +105,14 @@ namespace PnP.PowerShell.Commands.Model
         {
             var body = $"grant_type=password&client_id={clientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&resource={resource}";
             var response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenant}/oauth2/token", body, "application/x-www-form-urlencoded");
-            var json = JToken.Parse(response);
-            var accessToken = json["access_token"].ToString();
+            using(var jdoc = JsonDocument.Parse(response))
+            {
+                return new GenericToken(jdoc.RootElement.GetProperty("access_token").GetString());
+            }
+            //var json = JToken.Parse(response);
+            //var accessToken = json["access_token"].ToString();
 
-            return new GenericToken(accessToken);
+            //return new GenericToken(accessToken);
         }
 
         /// <summary>
@@ -124,10 +128,15 @@ namespace PnP.PowerShell.Commands.Model
         {
             var body = $"grant_type=password&client_id={clientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&scope={string.Join(" ", scopes)}";
             var response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token", body, "application/x-www-form-urlencoded");
-            var json = JToken.Parse(response);
-            var accessToken = json["access_token"].ToString();
 
-            return new GenericToken(accessToken);
+            using (var jdoc = JsonDocument.Parse(response))
+            {
+                return new GenericToken(jdoc.RootElement.GetProperty("access_token").GetString());
+            }
+            //var json = JToken.Parse(response);
+            //var accessToken = json["access_token"].ToString();
+
+            //return new GenericToken(accessToken);
         }
     }
 }

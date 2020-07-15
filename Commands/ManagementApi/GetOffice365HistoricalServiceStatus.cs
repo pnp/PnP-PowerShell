@@ -1,11 +1,11 @@
 ﻿#if !ONPREMISES
 using System.Collections.Generic;
 using System.Management.Automation;
-using Newtonsoft.Json.Linq;
 using OfficeDevPnP.Core.Framework.Graph;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.ManagementApi
 {
@@ -31,11 +31,17 @@ namespace PnP.PowerShell.Commands.ManagementApi
 
         protected override void ExecuteCmdlet()
         {
-            var response = GraphHttpClient.MakeGetRequestForString($"{ApiRootUrl}ServiceComms/HistoricalStatus{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken);
-            var serviceStatusesJson = JObject.Parse(response);
-            var serviceStatuses = serviceStatusesJson["value"].ToObject<IEnumerable<ManagementApiServiceStatus>>();
+            var collection = GraphHelper.GetAsync<GraphCollection<ManagementApiServiceStatus>>(HttpClient, $"{ApiRootUrl}ServiceComms/HistoricalStatus{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken, false).GetAwaiter().GetResult();
 
-            WriteObject(serviceStatuses, true);
+            if (collection != null)
+            {
+                WriteObject(collection.Items, true);
+            }
+            //var response = GraphHttpClient.MakeGetRequestForString($"{ApiRootUrl}ServiceComms/HistoricalStatus{(ParameterSpecified(nameof(Workload)) ? $"?$filter=Workload eq '{Workload.Value}'" : "")}", AccessToken);
+            //var serviceStatusesJson = JObject.Parse(response);
+            //var serviceStatuses = serviceStatusesJson["value"].ToObject<IEnumerable<ManagementApiServiceStatus>>();
+
+            //WriteObject(serviceStatuses, true);
         }
     }
 }

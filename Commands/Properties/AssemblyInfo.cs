@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("PnP.PowerShell.SP2016.Commands")]
 #elif SP2019
 [assembly: AssemblyProduct("PnP.PowerShell.SP2019.Commands")]
-#elif NETSTANDARD2_1
+#elif PNPPSCORE
 [assembly: AssemblyProduct("PnP.PowerShell.Online.Commands")]
 #else
 [assembly: AssemblyProduct("PnP.PowerShell.Online.Commands")]
@@ -50,7 +50,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
 [assembly: AssemblyVersion("3.24.2008.0")]
 [assembly: AssemblyFileVersion("3.24.2008.0")]
 #else

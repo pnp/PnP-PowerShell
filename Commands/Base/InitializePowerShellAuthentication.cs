@@ -1,5 +1,4 @@
-﻿#if !ONPREMISES && !NETSTANDARD2_1
-using Newtonsoft.Json;
+﻿#if !ONPREMISES && !PNPPSCORE
 using OfficeDevPnP.Core.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Model;
@@ -13,6 +12,7 @@ using System.Management.Automation.Host;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
@@ -234,7 +234,7 @@ namespace PnP.PowerShell.Commands.Base
                     requiredResourceAccess = scopesPayload
                 };
                 var postResult = HttpHelper.MakePostRequestForString("https://graph.microsoft.com/beta/applications", payload, "application/json", token);
-                var azureApp = JsonConvert.DeserializeObject<AzureApp>(postResult);
+                var azureApp = JsonSerializer.Deserialize<AzureApp>(postResult);
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
                 var waitTime = 60;
