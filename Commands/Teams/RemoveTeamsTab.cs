@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Graph
                 if (channelId != null)
                 {
                     var tabId = string.Empty;
-                    if (string.IsNullOrEmpty(Identity.Id))
+                    if (!string.IsNullOrEmpty(Identity.Id))
                     {
                         tabId = Identity.Id.ToString();
                     }
