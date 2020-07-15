@@ -418,7 +418,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken).GetAwaiter().GetResult();
         }
 
-        public static TeamChannel AddChannel(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate)
+        public static TeamChannel AddChannel(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate, string ownerUPN)
         {
             var channel = new TeamChannel()
             {
@@ -429,7 +429,18 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             {
                 channel.MembershipType = "private";
             }
-            return GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+            if (isPrivate)
+            {
+                channel.Type = "#Microsoft.Teams.Core.channel";
+                var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{ownerUPN}", accessToken).GetAwaiter().GetResult();
+                channel.Members = new List<TeamChannelMember>();
+                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://graph.microsoft.com/beta/users/('{user.Id}')" });
+                return GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+            }
+            else
+            {
+                return GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+            }
         }
 
         public static void PostMessage(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannelMessage message)

@@ -1,6 +1,4 @@
 ﻿#if !ONPREMISES
-using Microsoft.BusinessData.MetadataModel;
-using Microsoft.Graph;
 using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using SharePointPnP.PowerShell.Commands.Base;
 using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
