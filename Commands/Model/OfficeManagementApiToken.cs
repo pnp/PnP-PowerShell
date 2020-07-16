@@ -145,7 +145,7 @@ namespace PnP.PowerShell.Commands.Model
                 publicClientApplication = PublicClientApplicationBuilder.Create(clientId).Build();
             }
 
-            var accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+            var accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
 
             AuthenticationResult tokenResult = null;
 
