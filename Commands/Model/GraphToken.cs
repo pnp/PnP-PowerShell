@@ -1,4 +1,5 @@
 ﻿using Microsoft.Identity.Client;
+using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System;
@@ -136,6 +137,11 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
         public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
         {
+            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+                        // Take the remaining scopes and try requesting them from the Microsoft Graph API
+            scopes = scopes.Except(officeManagementApiScopes).ToArray();
+
+
             if (string.IsNullOrEmpty(clientId))
             {
                 throw new ArgumentNullException(nameof(clientId));
@@ -173,6 +179,10 @@ namespace PnP.PowerShell.Commands.Model
 
         public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)
         {
+            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+            // Take the remaining scopes and try requesting them from the Microsoft Graph API
+            scopes = scopes.Except(officeManagementApiScopes).ToArray();
+
             if (string.IsNullOrEmpty(clientId))
             {
                 throw new ArgumentNullException(nameof(clientId));
@@ -225,6 +235,10 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
         public static GenericToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string username, SecureString securePassword)
         {
+            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+            // Take the remaining scopes and try requesting them from the Microsoft Graph API
+            scopes = scopes.Except(officeManagementApiScopes).ToArray();
+
             if (string.IsNullOrEmpty(clientId))
             {
                 throw new ArgumentNullException(nameof(clientId));
