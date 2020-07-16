@@ -206,6 +206,11 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
                         }
+                        else if (Scopes != null)
+                        {
+                            token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, Scopes, PSCredential.UserName, PSCredential.Password);
+                        }
+
                     }
                     break;
 

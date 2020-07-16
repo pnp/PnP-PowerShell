@@ -142,7 +142,7 @@ namespace PnP.PowerShell.Commands.Model
 
             if (publicClientApplication == null)
             {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).Build();
+                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
             }
 
             var accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
@@ -209,7 +209,7 @@ namespace PnP.PowerShell.Commands.Model
             {
                 tokenResult = publicClientApplication.AcquireTokenByUsernamePassword(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), username, securePassword).ExecuteAsync().GetAwaiter().GetResult();
             }
-            return new GraphToken(tokenResult.AccessToken);
+            return new OfficeManagementApiToken(tokenResult.AccessToken);
         }
     }
 }
