@@ -630,7 +630,14 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
             catch (Exception ex)
             {
-                ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
+                if (!ex.Data.Contains("TimeStampUtc"))
+                {
+                    ex.Data.Add("TimeStampUtc", DateTime.UtcNow);
+                }
+                else
+                {
+                    ex.Data["TimeStampUtc"] = DateTime.UtcNow;
+                }
                 throw ex;
             }
         }
