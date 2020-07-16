@@ -9,7 +9,6 @@ using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
 using OfficeDevPnP.Core;
-using OfficeDevPnP.Core.Utilities;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
@@ -18,14 +17,12 @@ using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Model;
 using System.Security.Cryptography.X509Certificates;
 using System.Security;
-using System.IO;
 using System.Security.Cryptography;
 using Microsoft.Identity.Client;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Microsoft.Graph;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Text.Json;
+using OfficeDevPnP.Core.Utilities;
+using System.IO;
 
 namespace PnP.PowerShell.Commands.Base
 {

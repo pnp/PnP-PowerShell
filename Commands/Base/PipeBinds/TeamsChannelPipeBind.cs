@@ -1,10 +1,8 @@
-﻿using Microsoft.Graph;
-using PnP.PowerShell.Commands.Model.Teams;
+﻿using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {

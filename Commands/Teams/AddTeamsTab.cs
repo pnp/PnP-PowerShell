@@ -1,6 +1,4 @@
 ﻿#if !ONPREMISES
-using Microsoft.BusinessData.MetadataModel;
-using Microsoft.Graph;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
