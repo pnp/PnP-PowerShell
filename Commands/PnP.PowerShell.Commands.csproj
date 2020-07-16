@@ -747,6 +747,7 @@
     <Compile Include="Model\Teams\TeamApp.cs" />
     <Compile Include="Model\Teams\TeamAppInstance.cs" />
     <Compile Include="Model\Teams\TeamChannel.cs" />
+    <Compile Include="Model\Teams\TeamChannelMember.cs" />
     <Compile Include="Model\Teams\TeamChannelMessage.cs" />
     <Compile Include="Model\Teams\TeamChannelType.cs" />
     <Compile Include="Model\Teams\TeamDiscoverySettings.cs" />

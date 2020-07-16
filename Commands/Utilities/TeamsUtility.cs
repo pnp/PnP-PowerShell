@@ -8,6 +8,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 #if !PNPPSCORE
 using System.Web;
 #endif
@@ -373,6 +374,34 @@ namespace PnP.PowerShell.Commands.Utilities
                 finalList.AddRange(guests);
             }
             return finalList;
+        }
+
+        public static async Task<IEnumerable<User>> GetUsersAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string role)
+        {
+            List<User> users = new List<User>();
+            var selectedRole = role != null ? role.ToLower() : null;
+
+            var collection = await GraphHelper.GetAsync<GraphCollection<TeamChannelMember>>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/members", accessToken);
+            if (collection != null && collection.Items.Any())
+            {
+                users.AddRange(collection.Items.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles[0].ToLower() }));
+            }
+            while (collection.NextLink != null)
+            {
+                collection = await GraphHelper.GetAsync<GraphCollection<TeamChannelMember>>(httpClient, collection.NextLink, accessToken);
+                if (collection != null && collection.Items.Any())
+                {
+                    users.AddRange(collection.Items.Select(m => new User() { DisplayName = m.DisplayName, Id = m.UserId, UserPrincipalName = m.email, UserType = m.Roles[0].ToLower() }));
+                }
+            }
+            if (selectedRole != null)
+            {
+                return users.Where(u => u.UserType == selectedRole);
+            }
+            else
+            {
+                return users;
+            }
         }
 
         public static void DeleteUser(HttpClient httpClient, string accessToken, string groupId, string upn, string role)

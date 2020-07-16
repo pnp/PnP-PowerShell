@@ -58,18 +58,4 @@ namespace PnP.PowerShell.Commands.Model.Teams
 
         #endregion
     }
-
-    public class TeamChannelMember
-    {
-        [JsonPropertyName("@odata.type")]
-        public string Type { get; set; } = "#microsoft.graph.aadUserConversationMember";
-
-        [JsonPropertyName("user@odata.bind")]
-        public string UserIdentifier { get; set; }
-
-        [JsonPropertyName("roles")]
-        public List<string> Roles { get; set; } = new List<string>();
-    }
-
-
 }
