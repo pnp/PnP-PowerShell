@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.24.2008.0]
+## [3.24.2008.0] not yet released
+
+
+## [3.23.2007.1]
+
+### Changed
+- Fixed issue with Remove-PnPTeamsTab not working as intended
+- Fixed issue with Add-PnPTeamsChannel -Private not working as intended. We now require you to specify an owner.
+- Fixed authentication issues when using Connect-PnPOnline and mixed Resource permissions scopes (e.g. Graph and Office 365 Management API)
+- Fixed issue where Disconnect-PnPOnline would not clear the in memory token cache when using Disconnect-PnPOnline
 
 ## [3.23.2007.0]
 

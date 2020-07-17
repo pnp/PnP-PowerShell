@@ -273,8 +273,28 @@ namespace SharePointPnP.PowerShell.Commands.Model
 
         public static void ClearCaches()
         {
-            GraphToken.publicClientApplication = null;
-            GraphToken.confidentialClientApplication = null;
+            if (publicClientApplication != null)
+            {
+                var accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
+
+                // clear the cache
+                while (accounts.Any())
+                {
+                    publicClientApplication.RemoveAsync(accounts.First());
+                    accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
+                }
+            }
+            if(confidentialClientApplication != null)
+            {
+                var accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
+
+                // clear the cache
+                while (accounts.Any())
+                {
+                    confidentialClientApplication.RemoveAsync(accounts.First());
+                    accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
+                }
+            }
         }
     }
 }

@@ -187,26 +187,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             GenericToken token = null;
 
-            //Validate if we have a token already
-            //if (AccessTokens.ContainsKey(tokenAudience))
-            //{
-            //    // We have a token already, ensure it is still valid
-            //    token = AccessTokens[tokenAudience];
-
-            //    if (token.ExpiresOn > DateTime.Now)
-            //    {
-            //        var validationResults = ValidateTokenForPermissions(token, tokenAudience, orRoles, andRoles, tokenType);
-            //        if (validationResults.valid)
-            //        {
-            //            return token;
-            //        }
-            //        throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
-            //    }
-
-            //    // Token was no longer valid, proceed with trying to create a new token
-            //}
-
-            // We do not have a token for the requested audience yet or it was no longer valid, try to create (a new) one
             switch (tokenAudience)
             {
                 case TokenAudience.MicrosoftGraph:
