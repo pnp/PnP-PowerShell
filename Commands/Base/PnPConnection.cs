@@ -199,7 +199,7 @@ namespace PnP.PowerShell.Commands.Base
                                 var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
                                 if (scopes.Length > 0)
                                 {
-                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
+                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
                                 }
                                 else
                                 {
@@ -227,7 +227,7 @@ namespace PnP.PowerShell.Commands.Base
                             // Take the remaining scopes and try requesting them from the Microsoft Graph API
                             if (scopes.Length > 0)
                             {
-                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
+                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
                             }
                             else
                             {
