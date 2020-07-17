@@ -1,10 +1,8 @@
 ﻿using Microsoft.Identity.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model
 {

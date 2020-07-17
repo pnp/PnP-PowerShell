@@ -1,6 +1,5 @@
 ﻿using Microsoft.ApplicationInsights;
 using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.SecurityTokenService;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Extensions;
 using PnP.PowerShell.Commands.Enums;
@@ -18,6 +17,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using TextCopy;
+using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands.Base
 {

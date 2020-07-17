@@ -148,30 +148,24 @@ namespace PnP.PowerShell.Commands.Model
             }
 
 
-                if (publicClientApplication == null)
-                {
-                    publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithDefaultRedirectUri().Build();
-                }
-
-                AuthenticationResult tokenResult = null;
-
-                //if (publicClientApplication == null)
-                //{
-                //    publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").WithDefaultRedirectUri().Build();
-
-                //}
-                var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-                try
-                {
-                    tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
-                }
-                catch
-                {
-                    tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
-                }
-                return new GraphToken(tokenResult.AccessToken);
+            if (publicClientApplication == null)
+            {
+                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithDefaultRedirectUri().Build();
             }
+
+            AuthenticationResult tokenResult = null;
+
+            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+
+            try
+            {
+                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+            }
+            catch
+            {
+                tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync().GetAwaiter().GetResult();
+            }
+            return new GraphToken(tokenResult.AccessToken);
         }
 
         public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)
