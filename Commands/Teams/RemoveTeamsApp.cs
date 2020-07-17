@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
             if (Force || ShouldContinue($"Do you want to remove {app.DisplayName}?", Properties.Resources.Confirm))
             {
-                var response = TeamsUtility.DeleteApp(HttpClient, AccessToken, app.Id);
+                var response = TeamsUtility.DeleteAppAsync(HttpClient, AccessToken, app.Id).GetAwaiter().GetResult();
                 if (!response.IsSuccessStatusCode)
                 {
                     if (GraphHelper.TryGetGraphException(response, out GraphException ex))

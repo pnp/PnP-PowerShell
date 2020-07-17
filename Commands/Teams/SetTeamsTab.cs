@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Graph
                         {
                             tab.DisplayName = DisplayName;
                         }
-                        TeamsUtility.UpdateTab(HttpClient, AccessToken, groupId, channelId, tab);
+                        TeamsUtility.UpdateTabAsync(HttpClient, AccessToken, groupId, channelId, tab).GetAwaiter().GetResult();
                     }
                     else
                     {

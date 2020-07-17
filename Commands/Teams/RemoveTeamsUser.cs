@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     if (Force || ShouldContinue($"Remove user with UPN {User}?", Properties.Resources.Confirm))
                     {
-                        TeamsUtility.DeleteUser(HttpClient, AccessToken, groupId, User, Role);
+                        TeamsUtility.DeleteUserAsync(HttpClient, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
                     }
                 }
                 catch (GraphException ex)

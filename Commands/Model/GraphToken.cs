@@ -10,6 +10,7 @@ using System.Management.Automation;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model
@@ -137,44 +138,49 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
         public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
         {
-            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
-                        // Take the remaining scopes and try requesting them from the Microsoft Graph API
-            scopes = scopes.Except(officeManagementApiScopes).ToArray();
-
-
-            if (string.IsNullOrEmpty(clientId))
+            using (var cancellationTokenSource = new CancellationTokenSource(5000))
             {
-                throw new ArgumentNullException(nameof(clientId));
+                var cancellationToken = cancellationTokenSource.Token;
+
+                var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+                // Take the remaining scopes and try requesting them from the Microsoft Graph API
+                scopes = scopes.Except(officeManagementApiScopes).ToArray();
+
+
+                if (string.IsNullOrEmpty(clientId))
+                {
+                    throw new ArgumentNullException(nameof(clientId));
+                }
+                if (scopes == null || scopes.Length == 0)
+                {
+                    throw new ArgumentNullException(nameof(scopes));
+                }
+
+
+                if (publicClientApplication == null)
+                {
+                    publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithDefaultRedirectUri().Build();
+                }
+
+                AuthenticationResult tokenResult = null;
+
+                //if (publicClientApplication == null)
+                //{
+                //    publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").WithDefaultRedirectUri().Build();
+
+                //}
+                var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
+
+                try
+                {
+                    tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+                }
+                catch
+                {
+                    tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
+                }
+                return new GraphToken(tokenResult.AccessToken);
             }
-            if (scopes == null || scopes.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
-
-
-            if (publicClientApplication == null)
-            {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithDefaultRedirectUri().Build();
-            }
-
-            AuthenticationResult tokenResult = null;
-
-            //if (publicClientApplication == null)
-            //{
-            //    publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").WithDefaultRedirectUri().Build();
-
-            //}
-            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            try
-            {
-                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            return new GraphToken(tokenResult.AccessToken);
         }
 
         public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)

@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System.IO;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -59,7 +60,7 @@ namespace PnP.PowerShell.Commands.Graph
                         throw new PSArgumentException("File is not of a supported content type (jpg/png)");
                     }
                     var byteArray = System.IO.File.ReadAllBytes(Path);
-                    TeamsUtility.SetTeamPicture(HttpClient, AccessToken, groupId, byteArray, contentType);
+                    TeamsUtility.SetTeamPictureAsync(HttpClient, AccessToken, groupId, byteArray, contentType).GetAwaiter().GetResult();
                 }
                 else
                 {

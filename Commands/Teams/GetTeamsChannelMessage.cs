@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Graph
                 var channel = Channel.GetChannel(HttpClient, AccessToken, groupId);
                 if (channel != null)
                 {
-                    WriteObject(TeamsUtility.GetMessages(HttpClient, AccessToken, groupId, channel.Id, IncludeDeleted), true);
+                    WriteObject(TeamsUtility.GetMessagesAsync(HttpClient, AccessToken, groupId, channel.Id, IncludeDeleted).GetAwaiter().GetResult(), true);
                 } else
                 {
                     throw new PSArgumentException("Channel not found");

@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands.Graph
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetTabs(AccessToken, HttpClient, groupId, channelId), true);
+                        WriteObject(TeamsUtility.GetTabsAsync(AccessToken, HttpClient, groupId, channelId).GetAwaiter().GetResult(), true);
                     }
                 }
                 else

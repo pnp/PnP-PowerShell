@@ -118,20 +118,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken)
         {
             return await PostInternalAsync<T>(httpClient, url, accessToken, content);
-            //var message = GetMessage(url, HttpMethod.Post, accessToken, content);
-            //var stringContent = await SendMessageAsync(httpClient, message);
-            //if (stringContent != null)
-            //{
-            //    try
-            //    {
-            //        return JsonSerializer.Deserialize<T>(stringContent);
-            //    }
-            //    catch
-            //    {
-            //        return default;
-            //    }
-            //}
-            //return default;
         }
 
         public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content)
@@ -158,16 +144,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             return await PostInternalAsync<T>(httpClient, url, accessToken, requestContent);
-            //var message = GetMessage(url, HttpMethod.Post, accessToken, requestContent);
-            //var returnValue = await SendMessageAsync(httpClient, message);
-            //if (!string.IsNullOrEmpty(returnValue))
-            //{
-            //    return JsonSerializer.Deserialize<T>(returnValue);
-            //}
-            //else
-            //{
-            //    return default;
-            //}
         }
 
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, string accessToken)

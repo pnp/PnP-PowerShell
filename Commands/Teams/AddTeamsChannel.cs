@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    var channel = TeamsUtility.AddChannel(AccessToken, HttpClient, groupId, DisplayName, Description, Private, OwnerUPN);
+                    var channel = TeamsUtility.AddChannelAsync(AccessToken, HttpClient, groupId, DisplayName, Description, Private, OwnerUPN).GetAwaiter().GetResult();
                     WriteObject(channel);
                 }
                 catch (GraphException ex)

@@ -133,7 +133,7 @@ namespace PnP.PowerShell.Commands.Graph
                 ShowInTeamsSearchAndSuggestions = ShowInTeamsSearchAndSuggestions,
                 Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()),
             };
-            WriteObject(TeamsUtility.NewTeam(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI));
+            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI).GetAwaiter().GetResult());
         }
     }
 }

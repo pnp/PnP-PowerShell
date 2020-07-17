@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -56,7 +57,7 @@ namespace PnP.PowerShell.Commands.Graph
                     teamChannel.MembershipType = null;
                     try 
                     {
-                        var updated = TeamsUtility.UpdateChannel(HttpClient, AccessToken, groupId, teamChannel.Id, teamChannel);
+                        var updated = TeamsUtility.UpdateChannelAsync(HttpClient, AccessToken, groupId, teamChannel.Id, teamChannel).GetAwaiter().GetResult();
                         WriteObject(updated);
                     }
                     catch (GraphException ex)

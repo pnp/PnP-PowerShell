@@ -111,7 +111,7 @@ namespace PnP.PowerShell.Commands.Graph
                                     break;
                                 }
                         }
-                        TeamsUtility.AddTab(HttpClient, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl);
+                        TeamsUtility.AddTabAsync(HttpClient, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl).GetAwaiter().GetResult();
                     }
                     catch (GraphException ex)
                     {

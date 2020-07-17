@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                WriteObject(TeamsUtility.GetApps(AccessToken, HttpClient), true);
+                WriteObject(TeamsUtility.GetAppsAsync(AccessToken, HttpClient).GetAwaiter().GetResult(), true);
             }
         }
     }

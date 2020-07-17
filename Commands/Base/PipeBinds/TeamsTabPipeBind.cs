@@ -52,10 +52,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var tab = TeamsUtility.GetTab(accessToken, httpClient, groupId, channelId, _id);
+                var tab = TeamsUtility.GetTabAsync(accessToken, httpClient, groupId, channelId, _id).GetAwaiter().GetResult();
                 if (string.IsNullOrEmpty(tab.Id))
                 {
-                    var tabs = TeamsUtility.GetTabs(accessToken, httpClient, groupId, channelId);
+                    var tabs = TeamsUtility.GetTabsAsync(accessToken, httpClient, groupId, channelId).GetAwaiter().GetResult();
                     if (tabs != null)
                     {
                         // find the tab by id

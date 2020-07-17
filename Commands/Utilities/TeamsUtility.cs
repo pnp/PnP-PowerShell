@@ -20,36 +20,36 @@ namespace PnP.PowerShell.Commands.Utilities
         private const int PageSize = 100;
 
         #region Team
-        public static List<Group> GetGroupsWithTeam(HttpClient httpClient, string accessToken)
+        public static async Task<List<Group>> GetGroupsWithTeamAsync(HttpClient httpClient, string accessToken)
         {
             List<Group> groups = new List<Group>();
             string url = string.Empty;
-            var collection = GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, $"beta/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken).GetAwaiter().GetResult();
+            var collection = await GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, $"beta/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
             if (collection != null)
             {
                 groups.AddRange(collection.Items);
                 while (!string.IsNullOrEmpty(collection.NextLink))
                 {
-                    collection = GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, collection.NextLink, accessToken).GetAwaiter().GetResult();
+                    collection = await GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, collection.NextLink, accessToken);
                     groups.AddRange(collection.Items);
                 }
             }
             return groups;
         }
 
-        public static Group GetGroupWithTeam(HttpClient httpClient, string accessToken, string mailNickname)
+        public static async Task<Group> GetGroupWithTeamAsync(HttpClient httpClient, string accessToken, string mailNickname)
         {
-            return GraphHelper.GetAsync<Group>(httpClient, $"beta/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.GetAsync<Group>(httpClient, $"beta/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken);
 
         }
-        public static List<Team> GetTeams(string accessToken, HttpClient httpClient)
+        public static async Task<List<Team>> GetTeamsAsync(string accessToken, HttpClient httpClient)
         {
             List<Team> teams = new List<Team>();
 
-            var groups = GetGroupsWithTeam(httpClient, accessToken);
+            var groups = await GetGroupsWithTeamAsync(httpClient, accessToken);
             foreach (var group in groups)
             {
-                Team team = ParseTeamJson(accessToken, httpClient, group.Id);
+                Team team = await ParseTeamJsonAsync(accessToken, httpClient, group.Id);
 
                 if (team != null)
                 {
@@ -62,12 +62,12 @@ namespace PnP.PowerShell.Commands.Utilities
             return teams;
         }
 
-        public static Team GetTeam(string accessToken, HttpClient httpClient, string groupId)
+        public static async Task<Team> GetTeamAsync(string accessToken, HttpClient httpClient, string groupId)
         {
             // get the group
-            var group = GraphHelper.GetAsync<Group>(httpClient, $"v1.0/groups/{groupId}?$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken).GetAwaiter().GetResult();
+            var group = await GraphHelper.GetAsync<Group>(httpClient, $"v1.0/groups/{groupId}?$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken);
 
-            Team team = ParseTeamJson(accessToken, httpClient, group.Id);
+            Team team = await ParseTeamJsonAsync(accessToken, httpClient, group.Id);
             if (team != null)
             {
                 team.DisplayName = group.DisplayName;
@@ -81,17 +81,17 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static HttpResponseMessage DeleteTeam(string accessToken, HttpClient httpClient, string groupId)
+        public static async Task<HttpResponseMessage> DeleteTeamAsync(string accessToken, HttpClient httpClient, string groupId)
         {
-            return GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}", accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}", accessToken);
         }
 
-        private static Team ParseTeamJson(string accessToken, HttpClient httpClient, string groupId)
+        private static async Task<Team> ParseTeamJsonAsync(string accessToken, HttpClient httpClient, string groupId)
         {
             // Get Settings
             try
             {
-                var team = GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{groupId}", accessToken).GetAwaiter().GetResult();
+                var team = await GraphHelper.GetAsync<Team>(httpClient, $"v1.0/teams/{groupId}", accessToken);
                 if (team != null)
                 {
                     team.GroupId = groupId;
@@ -101,11 +101,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     return null;
                 }
-
-                //team = GetTeamChannels(configuration, accessToken, groupId, team, scope);
-                //team = GetTeamApps(accessToken, groupId, team, scope);
-                //team = GetTeamSecurity(accessToken, groupId, team, scope);
-                //GetTeamPhoto(configuration, accessToken, groupId, team, scope);
             }
             catch (ApplicationException ex)
             {
@@ -141,18 +136,18 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static Team NewTeam(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI)
+        public static async Task<Team> NewTeamAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility, TeamCreationInformation teamCI)
         {
             Group group = null;
             Team returnTeam = null;
             // Create group
             if (string.IsNullOrEmpty(groupId))
             {
-                group = CreateGroup(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility);
+                group = await CreateGroupAsync(accessToken, httpClient, displayName, description, classification, mailNickname, owner, visibility);
             }
             else
             {
-                group = GraphHelper.GetAsync<Group>(httpClient, $"v1.0/groups/{groupId}", accessToken).GetAwaiter().GetResult();
+                group = await GraphHelper.GetAsync<Group>(httpClient, $"v1.0/groups/{groupId}", accessToken);
                 if (group == null)
                 {
                     throw new PSArgumentException($"Cannot find group with id {groupId}");
@@ -163,28 +158,28 @@ namespace PnP.PowerShell.Commands.Utilities
             if (group != null)
             {
                 Team team = teamCI.ToTeam();
-                var teamSettings = GraphHelper.PutAsync(httpClient, $"v1.0/groups/{group.Id}/team", team, accessToken).GetAwaiter().GetResult();
+                var teamSettings = await GraphHelper.PutAsync(httpClient, $"v1.0/groups/{group.Id}/team", team, accessToken);
                 if (teamSettings != null)
                 {
-                    returnTeam = TeamsUtility.GetTeam(accessToken, httpClient, group.Id);
+                    returnTeam = await TeamsUtility.GetTeamAsync(accessToken, httpClient, group.Id);
                 }
             }
             return returnTeam;
         }
 
-        private static Group CreateGroup(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility)
+        private static async Task<Group> CreateGroupAsync(string accessToken, HttpClient httpClient, string displayName, string description, string classification, string mailNickname, string owner, GroupVisibility visibility)
         {
             Group group = new Group();
             // get the owner if no owner was specified
             var ownerId = string.Empty;
             if (string.IsNullOrEmpty(owner))
             {
-                var user = GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken).GetAwaiter().GetResult();
+                var user = await GraphHelper.GetAsync<User>(httpClient, "v1.0/me?$select=Id", accessToken);
                 ownerId = user.Id;
             }
             else
             {
-                var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owner}?$select=Id", accessToken).GetAwaiter().GetResult();
+                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{owner}?$select=Id", accessToken);
                 if (user != null)
                 {
                     ownerId = user.Id;
@@ -192,7 +187,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 else
                 {
                     // find the user in the organization
-                    var collection = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, "v1.0/myorganization/users?$filter=mail eq '{owner}'&$select=Id", accessToken).GetAwaiter().GetResult();
+                    var collection = await GraphHelper.GetAsync<GraphCollection<User>>(httpClient, "v1.0/myorganization/users?$filter=mail eq '{owner}'&$select=Id", accessToken);
                     if (collection != null)
                     {
                         if (collection.Items.Any())
@@ -207,18 +202,18 @@ namespace PnP.PowerShell.Commands.Utilities
             group.Description = description;
             group.Classification = classification;
             group.MailEnabled = true;
-            group.MailNickname = mailNickname ?? CreateAlias(httpClient, accessToken);
+            group.MailNickname = mailNickname ?? await CreateAliasAsync(httpClient, accessToken);
             group.GroupTypes = new List<string>() { "Unified" };
             group.SecurityEnabled = false;
             group.Owners = new List<string>() { $"https://graph.microsoft.com/v1.0/users/{ownerId}" };
             group.Members = new List<string>() { $"https://graph.microsoft.com/v1.0/users/{ownerId}" };
             group.Visibility = visibility == GroupVisibility.NotSpecified ? GroupVisibility.Private : visibility;
 
-            return GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.PostAsync<Group>(httpClient, "v1.0/groups", group, accessToken);
 
         }
 
-        private static string CreateAlias(HttpClient httpClient, string accessToken)
+        private static async Task<string> CreateAliasAsync(HttpClient httpClient, string accessToken)
         {
             var guid = Guid.NewGuid().ToString();
             var teamName = string.Empty;
@@ -226,7 +221,7 @@ namespace PnP.PowerShell.Commands.Utilities
             do
             {
                 var teamNameTemp = $"msteams_{guid.Substring(0, 8)}{guid.Substring(9, 4)}";
-                var collection = GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (mailNickname eq '{teamNameTemp}')", accessToken).GetAwaiter().GetResult();
+                var collection = await GraphHelper.GetAsync<GraphCollection<Group>>(httpClient, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (mailNickname eq '{teamNameTemp}')", accessToken);
                 if (collection != null)
                 {
                     if (!collection.Items.Any()) teamName = teamNameTemp;
@@ -236,50 +231,50 @@ namespace PnP.PowerShell.Commands.Utilities
             return teamName;
         }
 
-        public static Team UpdateTeam(HttpClient httpClient, string accessToken, string groupId, Team team)
+        public static async Task<Team> UpdateTeamAsync(HttpClient httpClient, string accessToken, string groupId, Team team)
         {
-            return GraphHelper.PatchAsync<Team>(httpClient, accessToken, $"v1.0/teams/{groupId}", team).GetAwaiter().GetResult();
+            return await GraphHelper.PatchAsync<Team>(httpClient, accessToken, $"v1.0/teams/{groupId}", team);
         }
 
-        public static Group UpdateGroup(HttpClient httpClient, string accessToken, string groupId, Group group)
+        public static async Task<Group> UpdateGroupAsync(HttpClient httpClient, string accessToken, string groupId, Group group)
         {
-            return GraphHelper.PatchAsync<Group>(httpClient, accessToken, $"v1.0/groups/{groupId}", group).GetAwaiter().GetResult();
+            return await GraphHelper.PatchAsync<Group>(httpClient, accessToken, $"v1.0/groups/{groupId}", group);
         }
 
-        public static void SetTeamPicture(HttpClient httpClient, string accessToken, string groupId, byte[] bytes, string contentType)
+        public static async Task SetTeamPictureAsync(HttpClient httpClient, string accessToken, string groupId, byte[] bytes, string contentType)
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
-            GraphHelper.PutAsync<string>(httpClient, $"v1.0/groups/{groupId}/photo/$value", accessToken, byteArrayContent).GetAwaiter().GetResult();
+            await GraphHelper.PutAsync<string>(httpClient, $"v1.0/groups/{groupId}/photo/$value", accessToken, byteArrayContent);
         }
 
-        public static HttpResponseMessage SetTeamArchivedState(HttpClient httpClient, string accessToken, string groupId, bool archived, bool? setSiteReadOnly)
+        public static async Task<HttpResponseMessage> SetTeamArchivedStateAsync(HttpClient httpClient, string accessToken, string groupId, bool archived, bool? setSiteReadOnly)
         {
             if (archived)
             {
                 StringContent content = new StringContent(JsonSerializer.Serialize(setSiteReadOnly.HasValue ? new { shouldSetSpoSiteReadOnlyForMembers = setSiteReadOnly } : null));
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                return GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/archive", accessToken, content).GetAwaiter().GetResult();
+                return await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/archive", accessToken, content);
             }
             else
             {
                 StringContent content = new StringContent("");
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                return GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/unarchive", accessToken, content).GetAwaiter().GetResult();
+                return await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/unarchive", accessToken, content);
             }
         }
         #endregion
 
         #region Users
-        public static void AddUser(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
+        public static async Task AddUserAsync(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
         {
-            var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{upn}", accessToken).GetAwaiter().GetResult();
+            var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{upn}", accessToken);
 
             // check if the user is a member
             bool isMember = false;
             try
             {
-                var members = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/members?$filter=Id eq '{user.Id}'&$select=Id", accessToken).GetAwaiter().GetResult();
+                var members = await GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/members?$filter=Id eq '{user.Id}'&$select=Id", accessToken);
                 isMember = members.Items.Any();
             }
             catch (GraphException)
@@ -288,7 +283,7 @@ namespace PnP.PowerShell.Commands.Utilities
             bool isOwner = false;
             try
             {
-                var owners = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$filter=Id eq '{user.Id}'&$select=Id", accessToken).GetAwaiter().GetResult();
+                var owners = await GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$filter=Id eq '{user.Id}'&$select=Id", accessToken);
                 isOwner = owners.Items.Any();
             }
             catch (GraphException)
@@ -309,17 +304,17 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (!isMember)
                 {
-                    GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/members/$ref", accessToken, stringContent).GetAwaiter().GetResult();
+                    await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/members/$ref", accessToken, stringContent);
                 }
-                GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/owners/$ref", accessToken, stringContent).GetAwaiter().GetResult();
+                await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/owners/$ref", accessToken, stringContent);
             }
             else
             {
-                GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/members/$ref", accessToken, stringContent).GetAwaiter().GetResult();
+                await GraphHelper.PostAsync(httpClient, $"v1.0/groups/{groupId}/members/$ref", accessToken, stringContent);
             }
         }
 
-        public static List<User> GetUsers(HttpClient httpClient, string accessToken, string groupId, string role)
+        public static async Task<List<User>> GetUsersAsync(HttpClient httpClient, string accessToken, string groupId, string role)
         {
             var selectedRole = role != null ? role.ToLower() : null;
             var owners = new List<User>();
@@ -327,7 +322,7 @@ namespace PnP.PowerShell.Commands.Utilities
             var members = new List<User>();
             if (selectedRole != "guest")
             {
-                owners = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$select=Id,displayName,userPrincipalName,userType", accessToken).GetAwaiter().GetResult().Items.Select(t => new User()
+                owners = (await GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$select=Id,displayName,userPrincipalName,userType", accessToken)).Items.Select(t => new User()
                 {
                     Id = t.Id,
                     DisplayName = t.DisplayName,
@@ -337,7 +332,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             if (selectedRole != "owner")
             {
-                var users = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/members?$select=Id,displayName,userPrincipalName,userType", accessToken).GetAwaiter().GetResult().Items;
+                var users = (await GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/members?$select=Id,displayName,userPrincipalName,userType", accessToken)).Items;
                 HashSet<string> hashSet = new HashSet<string>(owners.Select(u => u.Id));
                 foreach (var user in users)
                 {
@@ -404,24 +399,24 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static void DeleteUser(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
+        public static async Task DeleteUserAsync(HttpClient httpClient, string accessToken, string groupId, string upn, string role)
         {
-            var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{upn}?$select=Id", accessToken).GetAwaiter().GetResult();
+            var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{upn}?$select=Id", accessToken);
             if (user != null)
             {
                 // check if the user is an owner
-                var owners = GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$select=Id", accessToken).GetAwaiter().GetResult();
+                var owners = await GraphHelper.GetAsync<GraphCollection<User>>(httpClient, $"v1.0/groups/{groupId}/owners?$select=Id", accessToken);
                 if (owners.Items.Any() && owners.Items.FirstOrDefault(u => u.Id.Equals(user.Id, StringComparison.OrdinalIgnoreCase)) != null)
                 {
                     if (owners.Items.Count() == 1)
                     {
                         throw new PSInvalidOperationException("Last owner cannot be removed");
                     }
-                    GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/owners/{user.Id}/$ref", accessToken).GetAwaiter().GetResult();
+                    await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/owners/{user.Id}/$ref", accessToken);
                 }
                 if (!role.Equals("owner", StringComparison.OrdinalIgnoreCase))
                 {
-                    GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/members/{user.Id}/$ref", accessToken).GetAwaiter().GetResult();
+                    await GraphHelper.DeleteAsync(httpClient, $"v1.0/groups/{groupId}/members/{user.Id}/$ref", accessToken);
                 }
             }
         }
@@ -429,9 +424,9 @@ namespace PnP.PowerShell.Commands.Utilities
         #endregion
 
         #region Channel
-        public static IEnumerable<TeamChannel> GetChannels(string accessToken, HttpClient httpClient, string groupId)
+        public static async Task<IEnumerable<TeamChannel>> GetChannelsAsync(string accessToken, HttpClient httpClient, string groupId)
         {
-            var collection = GraphHelper.GetAsync<GraphCollection<TeamChannel>>(httpClient, $"beta/teams/{groupId}/channels", accessToken).GetAwaiter().GetResult();
+            var collection = await GraphHelper.GetAsync<GraphCollection<TeamChannel>>(httpClient, $"beta/teams/{groupId}/channels", accessToken);
             if (collection != null)
             {
                 return collection.Items;
@@ -442,12 +437,12 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static HttpResponseMessage DeleteChannel(string accessToken, HttpClient httpClient, string groupId, string channelId)
+        public static async Task<HttpResponseMessage> DeleteChannelAsync(string accessToken, HttpClient httpClient, string groupId, string channelId)
         {
-            return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken);
         }
 
-        public static TeamChannel AddChannel(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate, string ownerUPN)
+        public static async Task<TeamChannel> AddChannelAsync(string accessToken, HttpClient httpClient, string groupId, string displayName, string description, bool isPrivate, string ownerUPN)
         {
             var channel = new TeamChannel()
             {
@@ -461,32 +456,32 @@ namespace PnP.PowerShell.Commands.Utilities
             if (isPrivate)
             {
                 channel.Type = "#Microsoft.Teams.Core.channel";
-                var user = GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{ownerUPN}", accessToken).GetAwaiter().GetResult();
+                var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{ownerUPN}", accessToken);
                 channel.Members = new List<TeamChannelMember>();
                 channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://graph.microsoft.com/beta/users/('{user.Id}')" });
-                return GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+                return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken);
             }
             else
             {
-                return GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken).GetAwaiter().GetResult();
+                return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
         }
 
-        public static void PostMessage(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannelMessage message)
+        public static async Task PostMessageAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannelMessage message)
         {
-            GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", message, accessToken).GetAwaiter().GetResult();
+            await GraphHelper.PostAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/messages", message, accessToken);
         }
 
-        public static List<TeamChannelMessage> GetMessages(HttpClient httpClient, string accessToken, string groupId, string channelId, bool includeDeleted = false)
+        public static async Task<List<TeamChannelMessage>> GetMessagesAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, bool includeDeleted = false)
         {
             List<TeamChannelMessage> messages = new List<TeamChannelMessage>();
-            var collection = GraphHelper.GetAsync<GraphCollection<TeamChannelMessage>>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/messages", accessToken).GetAwaiter().GetResult();
+            var collection = await GraphHelper.GetAsync<GraphCollection<TeamChannelMessage>>(httpClient, $"beta/teams/{groupId}/channels/{channelId}/messages", accessToken);
             if (collection != null)
             {
                 messages.AddRange(collection.Items);
                 while (collection != null && !string.IsNullOrEmpty(collection.NextLink))
                 {
-                    collection = GraphHelper.GetAsync<GraphCollection<TeamChannelMessage>>(httpClient, collection.NextLink, accessToken).GetAwaiter().GetResult();
+                    collection = await GraphHelper.GetAsync<GraphCollection<TeamChannelMessage>>(httpClient, collection.NextLink, accessToken);
                     if (collection != null)
                     {
                         messages.AddRange(collection.Items);
@@ -503,16 +498,16 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static TeamChannel UpdateChannel(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannel channel)
+        public static async Task<TeamChannel> UpdateChannelAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamChannel channel)
         {
-            return GraphHelper.PatchAsync(httpClient, accessToken, $"beta/teams/{groupId}/channels/{channelId}", channel).GetAwaiter().GetResult();
+            return await GraphHelper.PatchAsync(httpClient, accessToken, $"beta/teams/{groupId}/channels/{channelId}", channel);
         }
         #endregion
 
         #region Tabs
-        public static IEnumerable<TeamTab> GetTabs(string accessToken, HttpClient httpClient, string groupId, string channelId)
+        public static async Task<IEnumerable<TeamTab>> GetTabsAsync(string accessToken, HttpClient httpClient, string groupId, string channelId)
         {
-            var collection = GraphHelper.GetAsync<GraphCollection<TeamTab>>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs", accessToken).GetAwaiter().GetResult();
+            var collection = await GraphHelper.GetAsync<GraphCollection<TeamTab>>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs", accessToken);
             if (collection != null)
             {
                 return collection.Items;
@@ -520,23 +515,23 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        public static TeamTab GetTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
+        public static async Task<TeamTab> GetTabAsync(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
         {
-            return GraphHelper.GetAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.GetAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken);
         }
 
-        public static HttpResponseMessage DeleteTab(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
+        public static async Task<HttpResponseMessage> DeleteTabAsync(string accessToken, HttpClient httpClient, string groupId, string channelId, string tabId)
         {
-            return GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.DeleteAsync(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}", accessToken);
         }
 
-        public static void UpdateTab(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamTab tab)
+        public static async Task UpdateTabAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, TeamTab tab)
         {
             tab.Configuration = null;
-            GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tab.Id}", tab).GetAwaiter().GetResult();
+            await GraphHelper.PatchAsync(httpClient, accessToken, $"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tab.Id}", tab);
         }
 
-        public static TeamTab AddTab(HttpClient httpClient, string accessToken, string groupId, string channelId, string displayName, TeamTabType tabType, string teamsAppId, string entityId, string contentUrl, string removeUrl, string websiteUrl)
+        public static async Task<TeamTab> AddTabAsync(HttpClient httpClient, string accessToken, string groupId, string channelId, string displayName, TeamTabType tabType, string teamsAppId, string entityId, string contentUrl, string removeUrl, string websiteUrl)
         {
             TeamTab tab = new TeamTab();
             switch (tabType)
@@ -649,14 +644,14 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             tab.DisplayName = displayName;
             tab.TeamsApp = $"https://graph.microsoft.com/v1.0/appCatalogs/teamsApps/{tab.TeamsAppId}";
-            return GraphHelper.PostAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs", tab, accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.PostAsync<TeamTab>(httpClient, $"v1.0/teams/{groupId}/channels/{channelId}/tabs", tab, accessToken);
         }
         #endregion
 
         #region Apps
-        public static IEnumerable<TeamApp> GetApps(string accessToken, HttpClient httpClient)
+        public static async Task<IEnumerable<TeamApp>> GetAppsAsync(string accessToken, HttpClient httpClient)
         {
-            var collection = GraphHelper.GetAsync<GraphCollection<TeamApp>>(httpClient, $"v1.0/appCatalogs/teamsApps", accessToken).GetAwaiter().GetResult();
+            var collection = await GraphHelper.GetAsync<GraphCollection<TeamApp>>(httpClient, $"v1.0/appCatalogs/teamsApps", accessToken);
             if (collection != null)
             {
                 return collection.Items;
@@ -664,11 +659,11 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        public static TeamApp AddApp(HttpClient httpClient, string accessToken, byte[] bytes)
+        public static async Task<TeamApp> AddAppAsync(HttpClient httpClient, string accessToken, byte[] bytes)
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
-            var response = GraphHelper.PostAsync(httpClient, "v1.0/appCatalogs/teamsApps", accessToken, byteArrayContent).GetAwaiter().GetResult();
+            var response = await GraphHelper.PostAsync(httpClient, "v1.0/appCatalogs/teamsApps", accessToken, byteArrayContent);
             if (!response.IsSuccessStatusCode)
             {
                 if (GraphHelper.TryGetGraphException(response, out GraphException exception))
@@ -684,16 +679,16 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        public static HttpResponseMessage UpdateApp(HttpClient httpClient, string accessToken, byte[] bytes, string appId)
+        public static async Task<HttpResponseMessage> UpdateAppAsync(HttpClient httpClient, string accessToken, byte[] bytes, string appId)
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
-            return GraphHelper.PutAsync(httpClient, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken, byteArrayContent).GetAwaiter().GetResult();
+            return await GraphHelper.PutAsync(httpClient, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken, byteArrayContent);
         }
 
-        public static HttpResponseMessage DeleteApp(HttpClient httpClient, string accessToken, string appId)
+        public static async Task<HttpResponseMessage> DeleteAppAsync(HttpClient httpClient, string accessToken, string appId)
         {
-            return GraphHelper.DeleteAsync(httpClient, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken).GetAwaiter().GetResult();
+            return await GraphHelper.DeleteAsync(httpClient, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken);
         }
         #endregion
     }

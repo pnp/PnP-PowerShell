@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    TeamsUtility.AddUser(HttpClient, AccessToken, groupId, User, Role);
+                    TeamsUtility.AddUserAsync(HttpClient, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
                     WriteObject(channel);
                 }
                 catch (GraphException ex)

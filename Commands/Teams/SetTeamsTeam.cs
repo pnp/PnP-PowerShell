@@ -7,6 +7,7 @@ using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -93,7 +94,7 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    var team = TeamsUtility.GetTeam(AccessToken, HttpClient, groupId);
+                    var team = TeamsUtility.GetTeamAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult();
                     var updateGroup = false;
                     var group = new Group();
                     if (team != null)
@@ -125,7 +126,7 @@ namespace PnP.PowerShell.Commands.Graph
 
                         if(updateGroup)
                         {
-                            TeamsUtility.UpdateGroup(HttpClient, AccessToken, groupId, group);
+                            TeamsUtility.UpdateGroupAsync(HttpClient, AccessToken, groupId, group).GetAwaiter().GetResult();
                         }
 
                         var teamCI = new TeamCreationInformation();
@@ -145,8 +146,8 @@ namespace PnP.PowerShell.Commands.Graph
                         teamCI.AllowUserDeleteMessages = ParameterSpecified(nameof(AllowUserDeleteMessages)) ? AllowUserDeleteMessages : null;
                         teamCI.AllowUserEditMessages = ParameterSpecified(nameof(AllowUserEditMessages)) ? AllowUserEditMessages : null;
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
-                        
-                        var updated = TeamsUtility.UpdateTeam(HttpClient, AccessToken, groupId, teamCI.ToTeam());
+
+                        var updated = TeamsUtility.UpdateTeamAsync(HttpClient, AccessToken, groupId, teamCI.ToTeam()).GetAwaiter().GetResult();
                         WriteObject(updated);
                     }
                 }

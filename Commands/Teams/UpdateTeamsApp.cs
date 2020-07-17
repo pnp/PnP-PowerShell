@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -40,7 +41,7 @@ namespace PnP.PowerShell.Commands.Graph
                 {
 
                     var bytes = System.IO.File.ReadAllBytes(Path);
-                    var response = TeamsUtility.UpdateApp(HttpClient, AccessToken, bytes, app.Id);
+                    var response = TeamsUtility.UpdateAppAsync(HttpClient, AccessToken, bytes, app.Id).GetAwaiter().GetResult();
                     if (!response.IsSuccessStatusCode)
                     {
                         if (GraphHelper.TryGetGraphException(response, out GraphException ex))

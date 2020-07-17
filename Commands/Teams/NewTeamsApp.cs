@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Graph
                 try
                 {
                     var bytes = System.IO.File.ReadAllBytes(Path);
-                    TeamsUtility.AddApp(HttpClient, AccessToken, bytes);
+                    TeamsUtility.AddAppAsync(HttpClient, AccessToken, bytes).GetAwaiter().GetResult();
                 }
                 catch (GraphException ex)
                 {

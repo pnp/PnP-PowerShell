@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.Graph
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetUsers(HttpClient, AccessToken, groupId, Role), true);
+                        WriteObject(TeamsUtility.GetUsersAsync(HttpClient, AccessToken, groupId, Role).GetAwaiter().GetResult(), true);
                     }
                 }
                 catch (GraphException ex)
