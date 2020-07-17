@@ -138,23 +138,14 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
         public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
         {
-            using (var cancellationTokenSource = new CancellationTokenSource(5000))
+            if (string.IsNullOrEmpty(clientId))
             {
-                var cancellationToken = cancellationTokenSource.Token;
-
-                var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
-                // Take the remaining scopes and try requesting them from the Microsoft Graph API
-                scopes = scopes.Except(officeManagementApiScopes).ToArray();
-
-
-                if (string.IsNullOrEmpty(clientId))
-                {
-                    throw new ArgumentNullException(nameof(clientId));
-                }
-                if (scopes == null || scopes.Length == 0)
-                {
-                    throw new ArgumentNullException(nameof(scopes));
-                }
+                throw new ArgumentNullException(nameof(clientId));
+            }
+            if (scopes == null || scopes.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(scopes));
+            }
 
 
                 if (publicClientApplication == null)

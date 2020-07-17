@@ -1,5 +1,6 @@
 ﻿using Microsoft.ApplicationInsights;
 using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.SecurityTokenService;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Extensions;
 using PnP.PowerShell.Commands.Enums;
@@ -171,9 +172,13 @@ namespace PnP.PowerShell.Commands.Base
             switch (tokenAudience)
             {
                 case TokenAudience.MicrosoftGraph:
+
                     if (ConnectionMethod == ConnectionMethod.DeviceLogin || ConnectionMethod == ConnectionMethod.GraphDeviceLogin)
                     {
-                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, Scopes, DeviceLoginCallback(null, false));
+                        var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+                        // Take the remaining scopes and try requesting them from the Microsoft Graph API
+                        var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
+                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, scopes, DeviceLoginCallback(null, false));
                     }
                     else
                     {
@@ -189,7 +194,17 @@ namespace PnP.PowerShell.Commands.Base
                             }
                             else if (Scopes != null)
                             {
-                                token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, Scopes, PSCredential.UserName, PSCredential.Password);
+                                var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+                                // Take the remaining scopes and try requesting them from the Microsoft Graph API
+                                var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
+                                if (scopes.Length > 0)
+                                {
+                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
+                                }
+                                else
+                                {
+                                    throw new PSSecurityException($"Access to {tokenAudience} failed because you did not connect with any permission scopes related to this service (for instance 'Group.Read.All').");
+                                }
                             }
                         }
                     }
@@ -208,7 +223,16 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else if (Scopes != null)
                         {
-                            token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, Scopes, PSCredential.UserName, PSCredential.Password);
+                            var scopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+                            // Take the remaining scopes and try requesting them from the Microsoft Graph API
+                            if (scopes.Length > 0)
+                            {
+                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
+                            }
+                            else
+                            {
+                                throw new PSSecurityException($"Access to {tokenAudience} failed because you did not connect with any permission scopes related to this service (for instance 'ServiceHealth.Read').");
+                            }
                         }
 
                     }
