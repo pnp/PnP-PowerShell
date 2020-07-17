@@ -25,12 +25,12 @@ namespace PnP.PowerShell.Commands.Base
         protected override void ProcessRecord()
         {
             // If no specific connection has been passed in, take the connection from the current context
-            if(Connection == null)
+            if (Connection == null)
             {
                 Connection = PnPConnection.CurrentConnection;
             }
 #if !ONPREMISES
-            if(Connection?.Certificate != null)
+            if (Connection?.Certificate != null)
             {
 #if !PNPPSCORE
                 if (Connection != null && Connection.DeleteCertificateFromCacheOnDisconnect)
@@ -80,14 +80,17 @@ namespace PnP.PowerShell.Commands.Base
             {
                 return false;
             }
+
             GraphToken.ClearCaches();
+            OfficeManagementApiToken.ClearCaches();
+
             connection.Context = null;
             connection = null;
             return true;
         }
 
         internal static bool DisconnectCurrentService()
-        {            
+        {
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
 
@@ -100,10 +103,10 @@ namespace PnP.PowerShell.Commands.Base
                 PnPConnection.CurrentConnection.ClearTokens();
                 PnPConnection.CurrentConnection.Context = null;
                 PnPConnection.CurrentConnection = null;
-                
-                
+
+
                 return true;
-            }            
+            }
         }
     }
 }

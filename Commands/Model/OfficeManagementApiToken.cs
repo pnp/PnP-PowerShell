@@ -211,6 +211,32 @@ namespace PnP.PowerShell.Commands.Model
             }
             return new OfficeManagementApiToken(tokenResult.AccessToken);
         }
+
+        public static void ClearCaches()
+        {
+            if (publicClientApplication != null)
+            {
+                var accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
+
+                // clear the cache
+                while (accounts.Any())
+                {
+                    publicClientApplication.RemoveAsync(accounts.First());
+                    accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
+                }
+            }
+            if (confidentialClientApplication != null)
+            {
+                var accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
+
+                // clear the cache
+                while (accounts.Any())
+                {
+                    confidentialClientApplication.RemoveAsync(accounts.First());
+                    accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
+                }
+            }
+        }
     }
 }
 
