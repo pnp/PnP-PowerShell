@@ -1,9 +1,8 @@
-﻿#if !ONPREMISES && !NETSTANDARD2_1
-using Newtonsoft.Json;
+﻿#if !ONPREMISES && !PNPPSCORE
 using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Model;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,9 +12,10 @@ using System.Management.Automation.Host;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using System.Text.Json;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsData.Initialize, "PnPPowerShellAuthentication")]
     [CmdletHelp(@"Initializes a Azure AD App and optionally creates a new self-signed certificate to use with the application registration.",
@@ -234,7 +234,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     requiredResourceAccess = scopesPayload
                 };
                 var postResult = HttpHelper.MakePostRequestForString("https://graph.microsoft.com/beta/applications", payload, "application/json", token);
-                var azureApp = JsonConvert.DeserializeObject<AzureApp>(postResult);
+                var azureApp = JsonSerializer.Deserialize<AzureApp>(postResult);
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
                 var waitTime = 60;

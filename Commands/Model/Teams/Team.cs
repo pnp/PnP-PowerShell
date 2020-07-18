@@ -1,13 +1,6 @@
-﻿using Microsoft.Graph;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.Commands.Model.Teams
+namespace PnP.PowerShell.Commands.Model.Teams
 {
     /// <summary>
     /// Defines Team for automated provisiong/update of Microsoft Teams

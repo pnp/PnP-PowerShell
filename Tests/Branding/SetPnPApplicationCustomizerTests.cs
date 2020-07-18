@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Branding
+namespace PnP.PowerShell.Tests.Branding
 {
     [TestClass]
     public class SetApplicationCustomizerTests

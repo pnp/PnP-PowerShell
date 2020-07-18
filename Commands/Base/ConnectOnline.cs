@@ -1,8 +1,8 @@
 ﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Provider;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Provider;
 using System;
 using System.IO;
 using System.Linq;
@@ -12,21 +12,21 @@ using System.Security;
 using File = System.IO.File;
 using System.Security.Cryptography.X509Certificates;
 using System.IdentityModel.Tokens.Jwt;
-using SharePointPnP.PowerShell.Commands.Enums;
-#if !NETSTANDARD2_1
+using PnP.PowerShell.Commands.Enums;
+#if !PNPPSCORE
 using System.Web.UI.WebControls;
 #endif
-using SharePointPnP.PowerShell.Commands.Model;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.Commands.Model;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections.Generic;
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
 using System.Security.Cryptography;
 #endif
 using System.Reflection;
 #if !ONPREMISES
 #endif
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Connect, "PnPOnline", SupportsShouldProcess = false, DefaultParameterSetName = ParameterSet_MAIN)]
     [CmdletHelp("Connect to a SharePoint site",
@@ -52,7 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -Credentials (Get-Credential) -UseAdfs",
         Remarks = @"Connect to SharePoint through ADFS prompting for the username and password to authenticate with",
         SortOrder = 5)]
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
     [CmdletExample(
         Code = @"PS:> Connect-PnPOnline -Url http://yourlocalserver -UseAdfsCert",
         Remarks = @"Connect to SharePoint through ADFS using client certificate allowing you to select the client certificate to use for authentication",
@@ -380,7 +380,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN, HelpMessage = "If you want to connect to SharePoint with browser based login. This is required when you have multi-factor authentication (MFA) enabled.")]
         public SwitchParameter UseWebLogin;
 
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MAIN, HelpMessage = "Specify to use for instance use forms based authentication (FBA)")]
         public ClientAuthenticationMode AuthenticationMode = ClientAuthenticationMode.Default;
 #endif
@@ -587,7 +587,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADThumb, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCER, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting to a SharePoint farm using self signed certificates or using a certificate authority not trusted by this machine.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHWITHAAD, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AADWITHSCOPE, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
 #endif
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GRAPHDEVICELOGIN, HelpMessage = "Ignores any SSL errors. To be used i.e. when connecting through a proxy to the Microsoft Graph API which has SSL interception enabled.")]
@@ -984,7 +984,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         {
 #if !ONPREMISES
             string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string configFolder = Path.Combine(appDataFolder, "SharePointPnP.PowerShell");
+            string configFolder = Path.Combine(appDataFolder, "PnP.PowerShell");
             Directory.CreateDirectory(configFolder); // Ensure folder exists
             if (ClearTokenCache)
             {
@@ -995,7 +995,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                     File.Delete(configFile);
                 }
             }
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             return PnPConnectionHelper.InitiateAzureADNativeApplicationConnection(
                 new Uri(Url), clientId, new Uri(redirectUrl), MinimalHealthScore, RetryCount,
                 RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
@@ -1014,7 +1014,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private PnPConnection ConnectAppOnlyAad()
         {
 #if !ONPREMISES
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             if (ParameterSpecified(nameof(CertificatePath)))
             {
                 WriteWarning(@"Your certificate is copied by the operating system to c:\ProgramData\Microsoft\Crypto\RSA\MachineKeys. Over time this folder may increase heavily in size. Use Disconnect-PnPOnline in your scripts remove the certificate from this folder to clean up. Consider using -Thumbprint instead of -CertificatePath.");
@@ -1047,7 +1047,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private PnPConnection ConnectAppOnlyAadPem()
         {
 #if !ONPREMISES
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
             return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, PEMCertificate, PEMPrivateKey, CertificatePassword, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
@@ -1064,7 +1064,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private PnPConnection ConnectAppOnlyAadThumb()
         {
 #if !ONPREMISES
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
             return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Thumbprint, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
@@ -1081,7 +1081,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private PnPConnection ConnectAppOnlyAadCer()
         {
 #if !ONPREMISES
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             return PnPConnectionHelper.InitiateAzureADAppOnlyConnection(new Uri(Url), ClientId, Tenant, Certificate, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry, SkipTenantAdminCheck, AzureEnvironment);
 #else
             throw new NotImplementedException();
@@ -1236,7 +1236,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                     }
                 }
             }
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             return PnPConnectionHelper.InstantiateAdfsConnection(new Uri(Url),
                                                                  Kerberos,
                                                                  credentials,
@@ -1260,7 +1260,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         /// <returns>PnPConnection based on ADFS Client Certificate authentication</returns>
         private PnPConnection ConnectAdfsCertificate()
         {
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             // Check if we already have a client certificate, if not, ask for selecting one
             if (ClientCertificate == null)
             {
@@ -1304,8 +1304,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         /// <returns>PnPConnection based on WebLogin authentication</returns>
         private PnPConnection ConnectWebLogin()
         {
-#if !NETSTANDARD2_1
-            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
+#if !PNPPSCORE
+            return PnPConnectionHelper.InstantiateWebloginConnection(new Uri(Url.ToLower()), MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, SkipTenantAdminCheck);
 #else
             WriteWarning(@"-UseWebLogin is not implemented, due to restrictions of the .NET Standard framework. Use -PnPO365ManagementShell instead");
             return null;
@@ -1334,7 +1334,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 }
             }
 
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             return PnPConnectionHelper.InstantiateSPOnlineConnection(new Uri(Url),
                                                                      credentials,
                                                                      Host,

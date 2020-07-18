@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace SharePointPnP.PowerShell.Commands.Model.Teams
+namespace PnP.PowerShell.Commands.Model.Teams
 {
     public class GraphException : Exception
     {

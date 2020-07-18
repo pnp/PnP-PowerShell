@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Model.Teams
+namespace PnP.PowerShell.Commands.Model.Teams
 {
     public partial class TeamMemberSettings
     {

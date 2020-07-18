@@ -3,7 +3,7 @@ using OfficeDevPnP.Core.Framework.Graph;
 using System;
 using System.Linq;
 
-namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
+namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public class Microsoft365GroupPipeBind
     {

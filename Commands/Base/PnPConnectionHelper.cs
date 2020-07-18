@@ -1,33 +1,30 @@
-﻿#if !NETSTANDARD2_1
+﻿#if !PNPPSCORE
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 #endif
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Enums;
 using System;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Net;
 using OfficeDevPnP.Core;
-using OfficeDevPnP.Core.Utilities;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
 using System.Net.Http;
-using Newtonsoft.Json;
-using SharePointPnP.PowerShell.Commands.Utilities;
-using SharePointPnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Model;
 using System.Security.Cryptography.X509Certificates;
 using System.Security;
-using System.IO;
 using System.Security.Cryptography;
 using Microsoft.Identity.Client;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Microsoft.Graph;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using System.Text.Json;
+using OfficeDevPnP.Core.Utilities;
+using System.IO;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     internal class PnPConnectionHelper
     {
@@ -39,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #endif
         private static bool VersionChecked;
 
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         public static AuthenticationContext AuthContext { get; set; }
 #endif
         static PnPConnectionHelper()
@@ -100,7 +97,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
 #if ONPREMISES
         internal static PnPConnection InstantiateHighTrustConnection(string url, string clientId, string hightrustCertificatePath, string hightrustCertificatePassword, string hightrustCertificateIssuerId, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck, string loginName)
         {
@@ -211,7 +208,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             }
             if (responseMessage.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<SharePointToken>(responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+                return JsonSerializer.Deserialize<SharePointToken>(responseMessage.Content.ReadAsStringAsync().GetAwaiter().GetResult());
             }
             else
             {
@@ -257,13 +254,13 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 
 #if !ONPREMISES
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         internal static PnPConnection InitiateAzureADNativeApplicationConnection(Uri url, string clientId, Uri redirectUri, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
             {
                 string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                string configFile = Path.Combine(appDataFolder, "SharePointPnP.PowerShell\\tokencache.dat");
+                string configFile = Path.Combine(appDataFolder, "PnP.PowerShell\\tokencache.dat");
                 FileTokenCache cache = new FileTokenCache(configFile);
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache, azureEnvironment), retryCount, retryWait * 10000);
                 var connectionType = ConnectionType.OnPrem;
@@ -513,7 +510,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 #endif
 
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         internal static PnPConnection InstantiateWebloginConnection(Uri url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false)
         {
             using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
@@ -550,7 +547,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 #endif
 
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
@@ -662,7 +659,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 #endif
 
-#if NETSTANDARD2_1
+#if PNPPSCORE
         internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
@@ -708,7 +705,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         }
 #endif
 
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
         internal static PnPConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
         {
             using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())

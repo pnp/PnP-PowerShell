@@ -1,11 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-namespace SharePointPnP.PowerShell.Commands.Model.Teams
+namespace PnP.PowerShell.Commands.Model.Teams
 {
     public class TeamCreationInformation
     {
@@ -15,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
 
         public string Description { get; set; }
 
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public GroupVisibility Visibility { get; set; }
 
         public string Classification { get; set; }
@@ -24,6 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
 
         public bool? AllowGiphy { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TeamGiphyContentRating GiphyContentRating { get; set; }
 
         public bool? AllowStickersAndMemes { get; set; }
@@ -128,10 +128,10 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
 
         public string ToJsonString()
         {
-            return JsonConvert.SerializeObject(this, new JsonSerializerSettings
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions()
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                NullValueHandling = NullValueHandling.Ignore
+                IgnoreNullValues = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
         }
     }

@@ -1,14 +1,11 @@
 ﻿#if !ONPREMISES
-using Microsoft.Graph;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
-using SharePointPnP.PowerShell.Commands.Utilities;
-using System.IO;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTab")]
     [CmdletHelp("Updates Teams Tab settings",
@@ -48,7 +45,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                         {
                             tab.DisplayName = DisplayName;
                         }
-                        TeamsUtility.UpdateTab(HttpClient, AccessToken, groupId, channelId, tab);
+                        TeamsUtility.UpdateTabAsync(HttpClient, AccessToken, groupId, channelId, tab).GetAwaiter().GetResult();
                     }
                     else
                     {

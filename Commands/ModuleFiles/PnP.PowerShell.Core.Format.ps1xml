@@ -832,7 +832,7 @@
     <View>
       <Name>ProvisioningTemplateInformation</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Components.ProvisioningTemplateInformation</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Components.ProvisioningTemplateInformation</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1610,7 +1610,7 @@
     <View>
       <Name>SPOTheme</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.SPOTheme</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.SPOTheme</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1797,7 +1797,7 @@
     <View>
       <Name>PnPException</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.PnPException</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.PnPException</TypeName>
       </ViewSelectedBy>
       <ListControl>
         <ListEntries>
@@ -1820,7 +1820,7 @@
     <View>
       <Name>Team</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.Team</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.Teams.Team</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1866,7 +1866,7 @@
     <View>
       <Name>TeamChannel</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamChannel</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.Teams.TeamChannel</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1906,7 +1906,7 @@
     <View>
       <Name>TeamTab</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamTab</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.Teams.TeamTab</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1934,7 +1934,7 @@
     <View>
       <Name>TeamApp</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamApp</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.Teams.TeamApp</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -1974,7 +1974,7 @@
     <View>
       <Name>TeamChannelMessage</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.TeamChannelMessage</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.Teams.TeamChannelMessage</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
@@ -2010,7 +2010,7 @@
     <View>
       <Name>User</Name>
       <ViewSelectedBy>
-        <TypeName>SharePointPnP.PowerShell.Commands.Model.Teams.User</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.Teams.User</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>

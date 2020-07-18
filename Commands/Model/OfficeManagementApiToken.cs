@@ -1,12 +1,10 @@
 ﻿using Microsoft.Identity.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     /// <summary>
     /// Contains an Office 365 Management API JWT oAuth token

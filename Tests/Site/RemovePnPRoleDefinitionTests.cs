@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Site
+namespace PnP.PowerShell.Tests.Site
 {
     [TestClass]
     public class RemoveRoleDefinitionTests

@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Search
+namespace PnP.PowerShell.Tests.Search
 {
     [TestClass]
     public class RemoveSearchConfigurationTests

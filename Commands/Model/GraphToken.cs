@@ -1,7 +1,7 @@
 ﻿using Microsoft.Identity.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,9 +10,10 @@ using System.Management.Automation;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     /// <summary>
     /// Contains a Graph JWT oAuth token
@@ -154,11 +155,6 @@ namespace SharePointPnP.PowerShell.Commands.Model
 
             AuthenticationResult tokenResult = null;
 
-            //if (publicClientApplication == null)
-            //{
-            //    publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").WithDefaultRedirectUri().Build();
-
-            //}
             var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
 
             try

@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Graph
+namespace PnP.PowerShell.Tests.Graph
 {
     [TestClass]
     public class GetDeletedUnifiedGroupTests

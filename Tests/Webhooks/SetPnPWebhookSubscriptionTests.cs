@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Webhooks
+namespace PnP.PowerShell.Tests.Webhooks
 {
     [TestClass]
     public class SetWebhookSubscriptionTests

@@ -5,7 +5,7 @@ using System.Management.Automation.Runspaces;
 using System.Linq;
 using Core = OfficeDevPnP.Core;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class FeatureTests

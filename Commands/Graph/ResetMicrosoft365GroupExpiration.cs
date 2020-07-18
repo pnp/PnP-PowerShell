@@ -1,11 +1,11 @@
-﻿#if !ONPREMISES && !NETSTANDARD2_1
+﻿#if !ONPREMISES && !PNPPSCORE
 using OfficeDevPnP.Core.Framework.Graph;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Reset, "PnPMicrosoft365GroupExpiration")]
     [Alias("Reset-PnPUnifiedGroupExpiration")]

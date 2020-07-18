@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Webs
+namespace PnP.PowerShell.Tests.Webs
 {
     [TestClass]
     public class InvokeWebActionTests

@@ -6,27 +6,27 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 #if SP2013
-[assembly: AssemblyTitle("SharePointPnP.PowerShell.SP2013.Commands")]
+[assembly: AssemblyTitle("PnP.PowerShell.SP2013.Commands")]
 #elif SP2016
-[assembly: AssemblyTitle("SharePointPnP.PowerShell.SP2016.Commands")]
+[assembly: AssemblyTitle("PnP.PowerShell.SP2016.Commands")]
 #elif SP2019
-[assembly: AssemblyTitle("SharePointPnP.PowerShell.SP2019.Commands")]
+[assembly: AssemblyTitle("PnP.PowerShell.SP2019.Commands")]
 #else
-[assembly: AssemblyTitle("SharePointPnP.PowerShell.Online.Commands")]
+[assembly: AssemblyTitle("PnP.PowerShell.Online.Commands")]
 #endif
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 #if SP2013
-[assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2013.Commands")]
+[assembly: AssemblyProduct("PnP.PowerShell.SP2013.Commands")]
 #elif SP2016
-[assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2016.Commands")]
+[assembly: AssemblyProduct("PnP.PowerShell.SP2016.Commands")]
 #elif SP2019
-[assembly: AssemblyProduct("SharePointPnP.PowerShell.SP2019.Commands")]
-#elif NETSTANDARD2_1
+[assembly: AssemblyProduct("PnP.PowerShell.SP2019.Commands")]
+#elif PNPPSCORE
 [assembly: AssemblyProduct("PnP.PowerShell.Online.Commands")]
 #else
-[assembly: AssemblyProduct("SharePointPnP.PowerShell.Online.Commands")]
+[assembly: AssemblyProduct("PnP.PowerShell.Online.Commands")]
 #endif
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
@@ -50,11 +50,11 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-#if !NETSTANDARD2_1
-[assembly: AssemblyVersion("3.23.2007.1")]
-[assembly: AssemblyFileVersion("3.23.2007.1")]
+#if !PNPPSCORE
+[assembly: AssemblyVersion("3.24.2008.0")]
+[assembly: AssemblyFileVersion("3.24.2008.0")]
 #else
 [assembly: AssemblyVersion("4.0.0.0")]
 [assembly: AssemblyFileVersion("4.0.0.0")]
 #endif
-[assembly: InternalsVisibleTo("SharePointPnP.PowerShell.Tests")]
+[assembly: InternalsVisibleTo("PnP.PowerShell.Tests")]

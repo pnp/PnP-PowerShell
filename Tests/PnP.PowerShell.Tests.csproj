@@ -6,8 +6,8 @@
     <ProjectGuid>{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Tests</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.Tests</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Tests</RootNamespace>
+    <AssemblyName>PnP.PowerShell.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -809,9 +809,9 @@
     <None Include="UnitTests-Readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Commands\SharePointPnP.PowerShell.Commands.csproj">
+    <ProjectReference Include="..\Commands\PnP.PowerShell.Commands.csproj">
       <Project>{1dde6f0a-ca49-419a-9ce8-a6ca02f43ce0}</Project>
-      <Name>SharePointPnP.PowerShell.Commands</Name>
+      <Name>PnP.PowerShell.Commands</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

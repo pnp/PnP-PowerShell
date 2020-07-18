@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.UserProfiles
+namespace PnP.PowerShell.Tests.UserProfiles
 {
     [TestClass]
     public class GetUserOneDriveQuotaTests

@@ -1,12 +1,12 @@
 ﻿#if !ONPREMISES
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.Teams;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelMessage")]
     [CmdletHelp("Sends a message to a Microsoft Teams Channel.",
@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 var channel = Channel.GetChannel(HttpClient, AccessToken, groupId);
                 if (channel != null)
                 {
-                    WriteObject(TeamsUtility.GetMessages(HttpClient, AccessToken, groupId, channel.Id, IncludeDeleted), true);
+                    WriteObject(TeamsUtility.GetMessagesAsync(HttpClient, AccessToken, groupId, channel.Id, IncludeDeleted).GetAwaiter().GetResult(), true);
                 } else
                 {
                     throw new PSArgumentException("Channel not found");

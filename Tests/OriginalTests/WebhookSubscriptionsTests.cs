@@ -9,7 +9,7 @@ using System.Management.Automation.Runspaces;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class WebhookSubscriptionsTests

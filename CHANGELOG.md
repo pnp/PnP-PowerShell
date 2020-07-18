@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [3.24.2008.0] not yet released
 
+### Changed
+
+
+### Added
+
+
+### Contributors
+
 
 ## [3.23.2007.1]
 

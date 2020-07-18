@@ -1,12 +1,12 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
-using SharePointPnP.PowerShell.Commands.Provider;
-using SharePointPnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Provider;
+using PnP.PowerShell.Commands.Model;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
     [CmdletHelp("Disconnects the context",
@@ -32,7 +32,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #if !ONPREMISES
             if (Connection?.Certificate != null)
             {
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 if (Connection != null && Connection.DeleteCertificateFromCacheOnDisconnect)
                 {
                     PnPConnectionHelper.CleanupCryptoMachineKey(Connection.Certificate);
@@ -59,7 +59,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if (provider != null)
             {
                 //ImplementingAssembly was introduced in Windows PowerShell 5.0.
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.ImplementingAssembly.FullName == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
 #else
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.Name == Assembly.GetExecutingAssembly().FullName) : provider.Drives;

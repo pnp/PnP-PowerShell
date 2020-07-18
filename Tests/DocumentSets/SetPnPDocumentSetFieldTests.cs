@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.DocumentSets
+namespace PnP.PowerShell.Tests.DocumentSets
 {
     [TestClass]
     public class SetFieldInDocumentSetTests
