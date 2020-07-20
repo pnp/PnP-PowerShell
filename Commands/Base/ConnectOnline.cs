@@ -174,8 +174,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         private const string ParameterSet_APPONLYAADCER = "App-Only with Azure Active Directory using X502 certificates";
         private const string ParameterSet_APPONLYAADThumb = "App-Only with Azure Active Directory using certificate from certificate store by thumbprint";
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
-        private const string ParameterSet_DEVICELOGIN = "PnP O365 Management Shell / DeviceLogin";
-        private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Office 365 Management Shell to the Microsoft Graph";
+        private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
+        private const string ParameterSet_GRAPHDEVICELOGIN = "PnP Management Shell to the Microsoft Graph";
         private const string ParameterSet_AADWITHSCOPE = "Azure Active Directory using Scopes";
         private const string ParameterSet_GRAPHWITHAAD = "Microsoft Graph using Azure Active Directory";
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
@@ -1110,15 +1110,22 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             // If we have Office 365 scopes, get a token for those first
             if (officeManagementApiScopes.Length > 0)
             {
+#if !PNPPSCORE
                 var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
+#else
+                var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this.Host, true)) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
+#endif
                 connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, Host, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
             }
 
             // If we have Graph scopes, get a token for it
             if (graphScopes.Length > 0)
             {
+#if !PNPPSCORE
                 var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenInteractive(PnPConnection.PnPManagementShellClientId, graphScopes) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password);
-
+#else
+                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, graphScopes, PnPConnection.DeviceLoginCallback(this.Host, true)) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password);
+#endif
                 // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
                 if (connection != null)
                 {
@@ -1132,7 +1139,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             connection.Scopes = Scopes;
             return connection;
 #else
-            return null;
+                return null;
 #endif
         }
 

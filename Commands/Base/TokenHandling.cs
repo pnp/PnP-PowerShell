@@ -1,8 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.SharePoint.Client;
-using OfficeDevPnP.Core.Utilities;
+﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Model;
-using System.Text.Json;
 using System.Web;
 
 namespace PnP.PowerShell.Commands.Base

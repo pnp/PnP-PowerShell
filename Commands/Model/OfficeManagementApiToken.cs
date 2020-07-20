@@ -70,6 +70,11 @@ namespace PnP.PowerShell.Commands.Model
             return new OfficeManagementApiToken(GenericToken.AcquireApplicationTokenInteractive(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).AccessToken);
         }
 
+        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)
+        {
+            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{OAuthBaseUrl}organizations", callBackAction).AccessToken);
+        }
+
         /// <summary>
         /// Tries to acquire a delegated Office 365 Management API Access Token for the provided scopes using the provided credentials
         /// </summary>
