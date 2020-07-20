@@ -156,7 +156,7 @@ namespace PnP.PowerShell.Commands.Base
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Host}//.default" }; // the second double slash is not a typo.
             var context = new ClientContext(url);
 
-            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, scopes, PnPConnection.DeviceLoginCallback(host, launchBrowser));
+            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(host, launchBrowser));
             var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
             spoConnection.Scopes = scopes;
 
@@ -177,7 +177,7 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
         {
-            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" }, PnPConnection.DeviceLoginCallback(host, launchBrowser));
+            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" }, PnPConnection.DeviceLoginCallback(host, launchBrowser));
             var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
             spoConnection.Scopes = new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" };
             return spoConnection;
@@ -186,7 +186,7 @@ namespace PnP.PowerShell.Commands.Base
         private static GenericToken GetTokenResult(Uri connectionUri, Dictionary<string, string> returnData, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest)
         {
             HttpClient client = new HttpClient();
-            var body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={PnPConnection.DeviceLoginClientId}&grant_type=device_code&code={returnData["device_code"]}");
+            var body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={PnPConnection.PnPManagementShellClientId}&grant_type=device_code&code={returnData["device_code"]}");
             body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
 
             var responseMessage = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
@@ -201,7 +201,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 progressCallback(".");
                 System.Threading.Thread.Sleep(1000);
-                body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={PnPConnection.DeviceLoginClientId}&grant_type=device_code&code={returnData["device_code"]}");
+                body = new StringContent($"resource={connectionUri.Scheme}://{connectionUri.Host}&client_id={PnPConnection.PnPManagementShellClientId}&grant_type=device_code&code={returnData["device_code"]}");
                 body.Headers.ContentType.MediaType = "application/x-www-form-urlencoded";
                 responseMessage = client.PostAsync("https://login.microsoftonline.com/common/oauth2/token", body).GetAwaiter().GetResult();
                 shouldCancel = cancelRequest();

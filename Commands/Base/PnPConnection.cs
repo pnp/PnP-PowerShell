@@ -28,9 +28,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// ClientId of the application registered in Azure Active Directory which should be used for the device oAuth flow
         /// </summary>
-        internal const string DeviceLoginClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
-        //private const string MSALPnPPowerShellClientId = "bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71";
-        //private const string MSALPnPPowerShellClientId = DeviceLoginClientId;
+        internal const string PnPManagementShellClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
         #endregion
 
         #region Properties
@@ -178,7 +176,7 @@ namespace PnP.PowerShell.Commands.Base
                         var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
                         // Take the remaining scopes and try requesting them from the Microsoft Graph API
                         var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
-                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, scopes, DeviceLoginCallback(null, false));
+                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false));
                     }
                     else
                     {
@@ -199,7 +197,7 @@ namespace PnP.PowerShell.Commands.Base
                                 var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
                                 if (scopes.Length > 0)
                                 {
-                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
+                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password);
                                 }
                                 else
                                 {
@@ -227,7 +225,7 @@ namespace PnP.PowerShell.Commands.Base
                             // Take the remaining scopes and try requesting them from the Microsoft Graph API
                             if (scopes.Length > 0)
                             {
-                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
+                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password);
                             }
                             else
                             {
@@ -596,7 +594,7 @@ namespace PnP.PowerShell.Commands.Base
             PnPVersionTag = pnpVersionTag;
             Url = (new Uri(url)).AbsoluteUri;
             ConnectionMethod = ConnectionMethod.AccessToken;
-            ClientId = DeviceLoginClientId;
+            ClientId = PnPManagementShellClientId;
             Tenant = tokenResult.ParsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
             context.ExecutingWebRequest += (sender, args) =>
             {

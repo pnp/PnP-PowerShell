@@ -299,12 +299,15 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 // Get Azure AD Token
                 if (PnPConnection.CurrentConnection != null)
                 {
-                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
-                    if (graphAccessToken != null)
+                    if (resource.Equals("graph.microsoft.com", StringComparison.OrdinalIgnoreCase))
                     {
-                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                        return Task.FromResult(graphAccessToken);
-                    }
+                        var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                        if (graphAccessToken != null)
+                        {
+                            // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                            return Task.FromResult(graphAccessToken);
+                        }
+                    } 
                 }
 
                 if (PnPConnection.CurrentConnection.PSCredential != null)

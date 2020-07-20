@@ -1110,14 +1110,14 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             // If we have Office 365 scopes, get a token for those first
             if (officeManagementApiScopes.Length > 0)
             {
-                var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPConnection.DeviceLoginClientId, officeManagementApiScopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.DeviceLoginClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
+                var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
                 connection = PnPConnection.GetConnectionWithToken(officeManagementApiToken, TokenAudience.OfficeManagementApi, Host, InitializationType.InteractiveLogin, credentials, disableTelemetry: NoTelemetry.ToBool());
             }
 
             // If we have Graph scopes, get a token for it
             if (graphScopes.Length > 0)
             {
-                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenInteractive(PnPConnection.DeviceLoginClientId, graphScopes) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.DeviceLoginClientId, graphScopes, credentials.UserName, credentials.Password);
+                var graphToken = credentials == null ? GraphToken.AcquireApplicationTokenInteractive(PnPConnection.PnPManagementShellClientId, graphScopes) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, graphScopes, credentials.UserName, credentials.Password);
 
                 // If there's a connection already, add the AAD token to it, otherwise set up a new connection with it
                 if (connection != null)
