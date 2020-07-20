@@ -83,8 +83,8 @@ namespace PnP.PowerShell.Commands.Base
             {
                 return false;
             }
-            GraphToken.ClearCaches();
-            OfficeManagementApiToken.ClearCaches();
+            //GraphToken.ClearCaches();
+            //OfficeManagementApiToken.ClearCaches();
             GenericToken.ClearCaches();
             connection.Context = null;
             connection = null;

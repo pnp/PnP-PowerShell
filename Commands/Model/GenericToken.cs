@@ -239,7 +239,7 @@ namespace PnP.PowerShell.Commands.Model
 
             if (publicClientApplication == null)
             {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithDefaultRedirectUri().Build();
+                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
             }
 
             AuthenticationResult tokenResult = null;
@@ -360,6 +360,7 @@ namespace PnP.PowerShell.Commands.Model
                     publicClientApplication.RemoveAsync(accounts.First());
                     accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
                 }
+                publicClientApplication = null;
             }
             if (confidentialClientApplication != null)
             {
@@ -371,6 +372,7 @@ namespace PnP.PowerShell.Commands.Model
                     confidentialClientApplication.RemoveAsync(accounts.First());
                     accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
                 }
+                confidentialClientApplication = null;
             }
         }
     }
