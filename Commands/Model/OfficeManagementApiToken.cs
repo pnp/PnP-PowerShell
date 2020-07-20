@@ -17,16 +17,6 @@ namespace PnP.PowerShell.Commands.Model
         public const string ResourceIdentifier = "https://manage.office.com";
 
         /// <summary>
-        /// The name of the default scope
-        /// </summary>
-        private const string DefaultScope = ".default";
-
-        /// <summary>
-        /// The base URL to request a token from
-        /// </summary>
-        private const string OAuthBaseUrl = "https://login.microsoftonline.com/";
-
-        /// <summary>
         /// Instantiates a new Office 365 Management API token
         /// </summary>
         /// <param name="accesstoken">Accesstoken of which to instantiate a new token</param>
@@ -44,7 +34,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
         public static GenericToken AcquireApplicationToken(string tenant, string clientId, X509Certificate2 certificate)
         {
-            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{OAuthBaseUrl}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
+            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{BaseAuthority}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
         }
 
         /// <summary>
@@ -56,7 +46,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
         public static GenericToken AcquireApplicationToken(string tenant, string clientId, string clientSecret)
         {
-            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{OAuthBaseUrl}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, clientSecret).AccessToken);
+            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{BaseAuthority}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, clientSecret).AccessToken);
         }
 
         /// <summary>
@@ -72,7 +62,7 @@ namespace PnP.PowerShell.Commands.Model
 
         public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)
         {
-            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{OAuthBaseUrl}organizations", callBackAction).AccessToken);
+            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{BaseAuthority}organizations", callBackAction).AccessToken);
         }
 
         /// <summary>
@@ -85,7 +75,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
         public static GenericToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string username, SecureString securePassword)
         {
-            return new OfficeManagementApiToken(GenericToken.AcquireDelegatedTokenWithCredentials(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{OAuthBaseUrl}organizations/", username, securePassword).AccessToken);
+            return new OfficeManagementApiToken(GenericToken.AcquireDelegatedTokenWithCredentials(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{BaseAuthority}organizations/", username, securePassword).AccessToken);
         }
     }
 }

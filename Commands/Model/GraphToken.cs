@@ -26,16 +26,6 @@ namespace PnP.PowerShell.Commands.Model
         public const string ResourceIdentifier = "https://graph.microsoft.com";
 
         /// <summary>
-        /// The name of the default scope
-        /// </summary>
-        private const string DefaultScope = ".default";
-
-        /// <summary>
-        /// The base URL to request a token from
-        /// </summary>
-        private const string OAuthBaseUrl = "https://login.microsoftonline.com/";
-
-        /// <summary>
         /// Instantiates a new Graph token
         /// </summary>
         /// <param name="accesstoken">Accesstoken of which to instantiate a new token</param>
@@ -53,7 +43,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
         public static GraphToken AcquireApplicationToken(string tenant, string clientId, X509Certificate2 certificate)
         {
-            return new GraphToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{OAuthBaseUrl}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
+            return new GraphToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{BaseAuthority}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
         }
 
         /// <summary>
@@ -65,7 +55,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
         public static GraphToken AcquireApplicationToken(string tenant, string clientId, string clientSecret)
         {
-            return new GraphToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{OAuthBaseUrl}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, clientSecret).AccessToken);
+            return new GraphToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{BaseAuthority}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, clientSecret).AccessToken);
         }
 
         /// <summary>
@@ -85,7 +75,7 @@ namespace PnP.PowerShell.Commands.Model
             // Take the remaining scopes and try requesting them from the Microsoft Graph API
             scopes = scopes.Except(officeManagementApiScopes).ToArray();
 
-            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes, $"{OAuthBaseUrl}organizations", callBackAction).AccessToken);
+            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes, $"{BaseAuthority}organizations", callBackAction).AccessToken);
         }
         /// <summary>
         /// Tries to acquire a delegated Microsoft Graph Access Token for the provided scopes using the provided credentials
@@ -101,7 +91,7 @@ namespace PnP.PowerShell.Commands.Model
             // Take the remaining scopes and try requesting them from the Microsoft Graph API
             scopes = scopes.Except(officeManagementApiScopes).ToArray();
             
-            return new GraphToken(AcquireDelegatedTokenWithCredentials(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{OAuthBaseUrl}organizations/", username, securePassword).AccessToken);
+            return new GraphToken(AcquireDelegatedTokenWithCredentials(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{BaseAuthority}organizations/", username, securePassword).AccessToken);
         }
     }
 }

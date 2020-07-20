@@ -22,6 +22,16 @@ namespace PnP.PowerShell.Commands.Model
         private static IConfidentialClientApplication confidentialClientApplication;
 
         /// <summary>
+        /// The default authority
+        /// </summary>
+        public static string BaseAuthority = "https://login.microsoftonline.com/";
+
+        /// <summary>
+        /// The name of the default scope
+        /// </summary>
+        public static string DefaultScope = ".default";
+
+        /// <summary>
         /// Token which can be used to access the API
         /// </summary>
         [JsonPropertyName("access_token")]
