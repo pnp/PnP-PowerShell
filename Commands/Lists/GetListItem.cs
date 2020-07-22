@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items",
         SortOrder = 7)]
     [CmdletExample(
-        Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | % { $_.BreakRoleInheritance($true, $true) }",
+        Code = "PS:> Get-PnPListItem -List Tasks -PageSize 1000 -ScriptBlock { Param($items) $items.Context.ExecuteQuery() } | ForEach-Object { $_.BreakRoleInheritance($true, $true) }",
         Remarks = "Retrieves all list items from the Tasks list in pages of 1000 items and breaks permission inheritance on each item",
         SortOrder = 8)]
     [CmdletExample(
