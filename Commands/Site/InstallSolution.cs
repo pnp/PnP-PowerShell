@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using File = System.IO.File;
 
-namespace SharePointPnP.PowerShell.Commands.Site
+namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsLifecycle.Install, "PnPSolution")]
     [CmdletHelp("Installs a sandboxed solution to a site collection. WARNING! This method can delete your composed look gallery due to the method used to activate the solution. We recommend you to only to use this cmdlet if you are okay with that.",
@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Install-PnPSolution -PackageId c2f5b025-7c42-4d3a-b579-41da3b8e7254 -SourceFilePath mypackage.wsp",
         Remarks = "Installs the package to the current site",
         SortOrder = 1)]
-    public class InstallSolution : PnPCmdlet
+    public class InstallSolution : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage="ID of the solution, from the solution manifest")]
         public GuidPipeBind PackageId;

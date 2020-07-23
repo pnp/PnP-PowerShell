@@ -6,12 +6,12 @@ using System.Text;
 using Microsoft.Win32.SafeHandles;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-namespace SharePointPnP.PowerShell.Commands.Utilities
+namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class CredentialManager
     {
 
-#if NETSTANDARD2_0
+#if PNPPSCORE
         public static bool AddCredential(string name, string username, SecureString password, bool overwrite)
 #else
         public static bool AddCredential(string name, string username, SecureString password)
@@ -21,7 +21,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             {
                 name = $"PnPPS:{name}";
             }
-#if !NETSTANDARD2_0
+#if !PNPPSCORE
             WriteWindowsCredentialManagerEntry(name, username, password);
             return true;
 #else
@@ -39,7 +39,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 
         public static PSCredential GetCredential(string name)
         {
-#if !NETSTANDARD2_0
+#if !PNPPSCORE
             var cred = ReadWindowsCredentialManagerEntry(name);
             if (cred == null)
             {
@@ -71,7 +71,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 
         public static bool RemoveCredential(string name)
         {
-#if !NETSTANDARD2_0
+#if !PNPPSCORE
             var success = DeleteWindowsCredentialManagerEntry(name);
             if(!success)
             {
@@ -167,7 +167,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             }
         }
 
-#if NETSTANDARD2_0
+#if PNPPSCORE
         private static PSCredential ReadMacOSKeyChainEntry(string name)
         {
             var cmd = $"/usr/bin/security find-generic-password -s '{name}'";
@@ -196,7 +196,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         }
 #endif
 
-#if NETSTANDARD2_0
+#if PNPPSCORE
         private static void WriteMacOSKeyChainEntry(string applicationName, string username, SecureString password, bool overwrite)
         {
             var pw = SecureStringToString(password);
@@ -209,7 +209,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         }
 #endif
 
-#if NETSTANDARD2_0
+#if PNPPSCORE
         private static bool DeleteMacOSKeyChainEntry(string name)
         {
             var cmd = $"/usr/bin/security delete-generic-password -s '{name}'";
@@ -298,10 +298,13 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 
         public enum CRED_PERSIST : uint
         {
+#pragma warning disable CA1712 // Do not prefix enum values with type name
             CRED_PERSIST_SESSION = 1,
+
             CRED_PERSIST_LOCAL_MACHINE = 2,
 
             CRED_PERSIST_ENTERPRISE = 3
+#pragma warning restore CA1712 // Do not prefix enum values with type name
         }
         public enum CRED_TYPE : uint
         {

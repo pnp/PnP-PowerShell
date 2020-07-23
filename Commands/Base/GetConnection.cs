@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
-using SharePointPnP.PowerShell.Commands.Properties;
+using PnP.PowerShell.Commands.Properties;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPConnection")]
     [CmdletHelp("Returns the current context",
@@ -20,19 +20,19 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             base.BeginProcessing();
 
-            if (SPOnlineConnection.CurrentConnection == null)
+            if (PnPConnection.CurrentConnection == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
-            if (SPOnlineConnection.CurrentConnection.Context == null)
+            if (PnPConnection.CurrentConnection.Context == null)
             {
-                throw new InvalidOperationException(Resources.NoConnection);
+                throw new InvalidOperationException(Resources.NoSharePointConnection);
             }
         }
 
         protected override void ProcessRecord()
         {
-            WriteObject(SPOnlineConnection.CurrentConnection);
+            WriteObject(PnPConnection.CurrentConnection);
         }
     }
 }

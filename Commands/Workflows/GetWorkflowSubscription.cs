@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.WorkflowServices;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Workflows
+namespace PnP.PowerShell.Commands.Workflows
 {
     [Cmdlet(VerbsCommon.Get, "PnPWorkflowSubscription")]
     [CmdletHelp("Return a workflow subscription",
@@ -37,6 +37,8 @@ namespace SharePointPnP.PowerShell.Commands.Workflows
             if (List != null)
             {
                 var list = List.GetList(SelectedWeb);
+                if (list == null)
+                    throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
                 if (string.IsNullOrEmpty(Name))
                 {

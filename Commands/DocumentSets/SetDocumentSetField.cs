@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.DocumentSets
+namespace PnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Set, "PnPDocumentSetField")]
     [CmdletHelp("Sets a site column from the available content types to a document set", 
@@ -40,12 +40,12 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("SetSharedField") && MyInvocation.BoundParameters.ContainsKey("RemoveSharedField"))
+            if (ParameterSpecified(nameof(SetSharedField)) && ParameterSpecified(nameof(RemoveSharedField)))
             {
                 WriteWarning("Cannot set and remove a shared field at the same time");
                 return;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("SetWelcomePageField") && MyInvocation.BoundParameters.ContainsKey("RemoveWelcomePageField"))
+            if (ParameterSpecified(nameof(SetWelcomePageField)) && ParameterSpecified(nameof(RemoveWelcomePageField)))
             {
                 WriteWarning("Cannot set and remove a welcome page field at the same time");
                 return;

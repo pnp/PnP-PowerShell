@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Site
+namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPAppSideLoading")]
     [CmdletHelp("Enables the App SideLoading Feature on a site",
@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Set-PnPAppSideLoading -Off",
         Remarks = @"This will turn off App side loading",
         SortOrder = 1)]
-    public class SetAppSideLoading : PnPCmdlet
+    public class SetAppSideLoading : PnPSharePointCmdlet
     {
         [Parameter(ParameterSetName = "On", Mandatory = true)]
         public SwitchParameter On;

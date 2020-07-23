@@ -1,18 +1,18 @@
 ﻿using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.IO;
 using System.Management.Automation;
 using File = Microsoft.SharePoint.Client.File;
 
-namespace SharePointPnP.PowerShell.Commands.Files
+namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFile", DefaultParameterSetName = "Return as file object")]
     [CmdletHelp("Downloads a file.",
         Category = CmdletHelpCategory.Files,
         OutputType = typeof(File),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.file.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539248(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor",
         Remarks = "Retrieves the file and downloads it to the current folder",
@@ -72,6 +72,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false, ParameterSetName = URLTOPATH, HelpMessage = "Overwrites the file if it exists.")]
         public SwitchParameter Force;
+        
+        [Parameter(Mandatory = false, ParameterSetName = URLASFILEOBJECT, HelpMessage = "Retrieve the file contents as a file object.")]
+        public SwitchParameter AsFileObject;
 
         protected override void ExecuteCmdlet()
         {
@@ -120,11 +123,17 @@ namespace SharePointPnP.PowerShell.Commands.Files
 #else
                     file = SelectedWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 #endif
-                    ClientContext.Load(file, f => f.Author, f => f.Length,
-                        f => f.ModifiedBy, f => f.Name, f => f.TimeCreated,
-                        f => f.TimeLastModified, f => f.Title);
-
-                    ClientContext.ExecuteQueryRetry();
+                    try
+                    {
+                        ClientContext.Load(file, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        ClientContext.ExecuteQueryRetry();
+                    }                    
+                    catch (ServerException e) when (e.Message == "User cannot be found.")
+                    {
+                        // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
+                        ClientContext.Load(file, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        ClientContext.ExecuteQueryRetry();
+                    }                    
 
                     WriteObject(file);
                     break;

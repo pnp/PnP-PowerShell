@@ -3,14 +3,13 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPStorageEntity", SupportsShouldProcess = true)]
     [CmdletHelp(@"Retrieve Storage Entities / Farm Properties from either the Tenant App Catalog or from the current site if it has a site scope app catalog.",
@@ -20,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands
     [CmdletExample(Code = @"PS:> Get-PnPStorageEntity -Key MyKey", Remarks = "Returns the storage entity/farm property with the given key.", SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Get-PnPStorageEntity -Scope Site", Remarks = "Returns all site collection scoped storage entities", SortOrder = 2)]
     [CmdletExample(Code = @"PS:> Get-PnPStorageEntity -Key MyKey -Scope Site", Remarks = "Returns the storage entity from the site collection with the given key", SortOrder = 3)]
-    public class GetPnPStorageEntity : PnPCmdlet
+    public class GetPnPStorageEntity : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The key of the value to retrieve.")]
         public string Key;
@@ -62,7 +61,7 @@ namespace SharePointPnP.PowerShell.Commands
 
             if (!string.IsNullOrEmpty(storageEntitiesIndex))
             {
-                var storageEntitiesDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(storageEntitiesIndex);
+                var storageEntitiesDict = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(storageEntitiesIndex);
 
                 var storageEntities = new List<StorageEntity>();
                 foreach (var key in storageEntitiesDict.Keys)
@@ -76,7 +75,7 @@ namespace SharePointPnP.PowerShell.Commands
                     };
                     storageEntities.Add(storageEntity);
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Key"))
+                if (ParameterSpecified(nameof(Key)))
                 {
                     WriteObject(storageEntities.Where(k => k.Key == Key));
                 }

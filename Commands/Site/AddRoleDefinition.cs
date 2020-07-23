@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 
-namespace SharePointPnP.PowerShell.Commands.Site
+namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPRoleDefinition")]
     [CmdletHelp("Adds a Role Defintion (Permission Level) to the site collection in the current context",
@@ -25,7 +25,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
 PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone $roleDefinition -Exclude DeleteListItems, EditListItems",
         Remarks = @"Creates additional permission level by cloning ""Contribute"" and removes flags DeleteListItems and EditListItems", SortOrder = 4)]
 
-    public class AddRoleDefinition : PnPCmdlet
+    public class AddRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name of new permission level.")]
         public string RoleName;
@@ -55,24 +55,24 @@ PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone $roleDefinition -Exclude
             catch { }
             if (roleDefinition.ServerObjectIsNull == null)
             {
-                var spRoleDef = new Microsoft.SharePoint.Client.RoleDefinitionCreationInformation();
-                var spBasePerm = new Microsoft.SharePoint.Client.BasePermissions();
+                var spRoleDef = new RoleDefinitionCreationInformation();
+                var spBasePerm = new BasePermissions();
 
-                if (MyInvocation.BoundParameters.ContainsKey("Clone"))
+                if (ParameterSpecified(nameof(Clone)))
                 {
                     var clonePerm = Clone.GetRoleDefinition(ClientContext.Site);
                     spBasePerm = clonePerm.BasePermissions;
                 }
 
                 // Include and Exclude Flags
-                if (MyInvocation.BoundParameters.ContainsKey("Include"))
+                if (ParameterSpecified(nameof(Include)))
                 {
                     foreach (var flag in Include)
                     {
                         spBasePerm.Set(flag);
                     }
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Exclude"))
+                if (ParameterSpecified(nameof(Exclude)))
                 {
                     foreach (var flag in Exclude)
                     {

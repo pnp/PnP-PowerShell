@@ -5,9 +5,9 @@ using System.Management.Automation;
 using System.Web;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Search
+namespace PnP.PowerShell.Commands.Search
 {
     public enum LogLevel
     {
@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
     }
 
     [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog", DefaultParameterSetName = "Xml")]
-    [CmdletHelp("Returns entries from the SharePoint search crawl log",
+    [CmdletHelp("Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.Search)]
     [CmdletExample(
@@ -55,7 +55,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         Remarks = @"Returns the last 100 crawl log entries for user profiles with the term ""mikael"" in the user principal name.",
         SortOrder = 4)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPSearchCrawlLog -ContentSource Sites LogLevel Error -RowLimit 10",
+        Code = @"PS:> Get-PnPSearchCrawlLog -ContentSource Sites -LogLevel Error -RowLimit 10",
         Remarks = @"Returns the last 10 crawl log entries with a state of Error for site content.",
         SortOrder = 5)]
     [CmdletExample(
@@ -170,7 +170,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
             }
             catch (Exception e)
             {
-                WriteError(new ErrorRecord(new Exception("Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/TA_searchadministration.aspx"), e.Message, ErrorCategory.AuthenticationError, null));
+                WriteError(new ErrorRecord(new Exception("Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx"), e.Message, ErrorCategory.AuthenticationError, null));
             }
         }
 
@@ -220,7 +220,8 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
             entry.Status = dictionary["StatusMessage"] + "";
             entry.Status += dictionary["ErrorDesc"] + "";
-            if (!string.IsNullOrWhiteSpace(entry.Status))
+            var errorCode = int.Parse(dictionary["ErrorCode"]+"");
+            if (!string.IsNullOrWhiteSpace(entry.Status) || errorCode != 0)
             {
                 entry.LogLevel = LogLevel.Warning;
             }

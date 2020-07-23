@@ -1,14 +1,13 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
+namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSubSite", SupportsShouldProcess = true)]
-    [Alias("New-PnPProvisioningTeamNoGroupSubSite")]
-    [CmdletHelp("Creates a team site subsite with no Office 365 group object",
+    [CmdletHelp("Creates a team site subsite with no Microsoft 365 group object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> $site = New-PnPTenantSequenceTeamNoGroupSubSite -Url ""MyTeamSubsite"" -Title ""My Team Site"" -TimeZoneId 4",
@@ -43,11 +42,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningteamnogroupsubsite")
-            {
-                WriteWarning("New-PnPProvisioningTeamNoGroupSubSite has been deprecated. Use New-PnPTenantSequenceTeamNoGroupSubSite instead.");
-            }
-
             var site = new TeamNoGroupSubSite()
             {
                 Url = Url,

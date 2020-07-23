@@ -1,10 +1,10 @@
-﻿#if !ONPREMISES
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿#if !ONPREMISES && !PNPPSCORE
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Management.Automation;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using SharePointPnP.Modernization.Framework.Transform;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities;
 using System.Reflection;
 using SharePointPnP.Modernization.Framework.Cache;
 using Microsoft.SharePoint.Client;
@@ -13,9 +13,10 @@ using SharePointPnP.Modernization.Framework;
 using System.IO;
 using SharePointPnP.Modernization.Framework.Telemetry.Observers;
 using SharePointPnP.Modernization.Framework.Publishing;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base;
+using SharePointPnP.Modernization.Framework.Delve;
 
-namespace SharePointPnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.ClientSidePages
 {
 
     [Cmdlet(VerbsData.ConvertTo, "PnPClientSidePage")]
@@ -23,19 +24,19 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page",
     SortOrder = 1)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -WebPartMappingFile c:\contoso\webpartmapping.xml",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page using a custom provided mapping file",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page using a custom provided mapping file",
     SortOrder = 2)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -AddPageAcceptBanner",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page and adds the page accept banner web part on top of the page. This requires that the SPFX solution holding the web part (https://github.com/SharePoint/sp-dev-modernization/blob/master/Solutions/PageTransformationUI/assets/sharepointpnp-pagetransformation-client.sppkg?raw=true) has been installed to the tenant app catalog",
     SortOrder = 3)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -CopyPageMetadata",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page, including the copying of the page metadata (if any)",
     SortOrder = 4)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
@@ -55,16 +56,28 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
     SortOrder = 8)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
-    Remarks = "Converts a wiki page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
+    Remarks = "Converts a wiki/web part page named 'somepage' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
     SortOrder = 9)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType File -LogFolder c:\temp -LogVerbose -Overwrite",
-    Remarks = "Converts a web part page named 'somepage' and creates a log file in c:\temp using verbose logging",
+    Remarks = "Converts a wiki/web part page named 'somepage' and creates a log file in c:\\temp using verbose logging",
     SortOrder = 10)]
     [CmdletExample(
     Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -LogType SharePoint -LogSkipFlush",
-    Remarks = "Converts a web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log",
+    Remarks = "Converts a wiki/web part page named 'somepage' and creates a log file in SharePoint but skip the actual write. Use this option to make multiple ConvertTo-PnPClientSidePage invocations create a single log",
     SortOrder = 11)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""My post title"" -BlogPage -LogType Console -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
+    Remarks = "Converts a blog page with a title starting with 'my post title' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
+    SortOrder = 12)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""My post title"" -DelveBlogPage -LogType Console -Overwrite -TargetWebUrl https://contoso.sharepoint.com/sites/targetmodernsite",
+    Remarks = "Converts a Delve blog page with a title starting with 'my post title' to a client side page in the https://contoso.sharepoint.com/sites/targetmodernsite site",
+    SortOrder = 13)]
+    [CmdletExample(
+    Code = @"PS:> ConvertTo-PnPClientSidePage -Identity ""somepage.aspx"" -PublishingPage -Overwrite -TargetConnection $target -UserMappingFile c:\\temp\user_mapping_file.csv",
+    Remarks = "Converts a publishing page named 'somepage' to a client side page in the site specified by the TargetConnection connection. This allows to read a page in on-premises environment and create in another online locations including using specific user mappings between the two environments.",
+    SortOrder = 14)]
     public class ConvertToClientSidePage : PnPWebCmdlet
     {
         private static string rootFolder = "<root>";
@@ -114,6 +127,9 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Copies the page metadata to the created modern page")]
         public SwitchParameter CopyPageMetadata = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "When an image lives inside a table/list then it's also created as separate image web part underneath that table/list by default. Use this switch set to $false to change that")]
+        public SwitchParameter AddTableListImageAsImageWebPart = true;
+
         [Parameter(Mandatory = false, HelpMessage = "Uses the community script editor (https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-script-editor) as replacement for the classic script editor web part")]
         public SwitchParameter UseCommunityScriptEditor = false;
 
@@ -138,11 +154,29 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Don't publish the created modern page")]
         public SwitchParameter DontPublish = false;
 
+        [Parameter(Mandatory = false, HelpMessage = "Keep the author, editor, created and modified information from the source page (when source page lives in SPO)")]
+        public SwitchParameter KeepPageCreationModificationInformation = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Set's the author of the source page as author in the modern page header (when source page lives in SPO)")]
+        public SwitchParameter SetAuthorInPageHeader = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Post the created, and published, modern page as news")]
+        public SwitchParameter PostAsNews = false;
+
         [Parameter(Mandatory = false, HelpMessage = "Disable comments for the created modern page")]
         public SwitchParameter DisablePageComments = false;
 
         [Parameter(Mandatory = false, HelpMessage = "I'm transforming a publishing page")]
         public SwitchParameter PublishingPage = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "I'm transforming a blog page")]
+        public SwitchParameter BlogPage = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "I'm transforming a Delve blog page")]
+        public SwitchParameter DelveBlogPage = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Transform the possible sub title as topic header on the modern page")]
+        public SwitchParameter DelveKeepSubTitle = false;
 
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path and name of the page layout mapping file driving the publishing page transformation")]
         public string PageLayoutMapping;
@@ -150,8 +184,35 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies to publishing page transformation)")]
         public string PublishingTargetPageName = "";
 
+        [Parameter(Mandatory = false, HelpMessage = "Name for the target page (only applies when doing cross site page transformation)")]
+        public string TargetPageName = "";
+
+        [Parameter(Mandatory = false, HelpMessage = "Folder to create the target page in (will be used in conjunction with auto-generated folders that ensure page name uniqueness)")]
+        public string TargetPageFolder = "";
+
+        [Parameter(Mandatory = false, HelpMessage = "When setting a target page folder then the target page folder overrides possibly default folder path (e.g. in the source page lived in a folder) instead of being appended to it")]
+        public SwitchParameter TargetPageFolderOverridesDefaultFolder = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Remove empty sections and columns after transformation of the page")]
+        public SwitchParameter RemoveEmptySectionsAndColumns = true;
+
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")] // do not remove '#!#99'
-        public SPOnlineConnection TargetConnection = null;
+        public PnPConnection TargetConnection = null;
+
+        [Parameter(Mandatory = false, HelpMessage = "Disables user mapping during transformation")]
+        public SwitchParameter SkipUserMapping = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies a user mapping file")]
+        public string UserMappingFile = "";
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies a taxonomy term mapping file")]
+        public string TermMappingFile = "";
+
+        [Parameter(Mandatory = false, HelpMessage = "Disables term mapping during transformation")]
+        public SwitchParameter SkipTermStoreMapping = false;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specifies a LDAP connection string e.g. LDAP://OU=Users,DC=Contoso,DC=local")]
+        public string LDAPConnectionString = "";
 
         protected override void ExecuteCmdlet()
         {
@@ -161,11 +222,34 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             // Load the page to transform
             Identity.Library = this.Library;
             Identity.Folder = this.Folder;
+            Identity.BlogPage = this.BlogPage;
+            Identity.DelveBlogPage = this.DelveBlogPage;
 
+            if ((this.PublishingPage && this.BlogPage) ||
+                (this.PublishingPage && this.DelveBlogPage) ||
+                (this.BlogPage && this.DelveBlogPage))
+            {
+                throw new Exception($"The page is either a blog page, a publishing page or a Delve blog page. Setting PublishingPage, BlogPage and DelveBlogPage to true is not valid.");
+            }
+            
             ListItem page = null;
             if (this.PublishingPage)
             {
                 page = Identity.GetPage(this.ClientContext.Web, CacheManager.Instance.GetPublishingPagesLibraryName(this.ClientContext));
+            }
+            else if (this.BlogPage)
+            {
+                // Blogs don't live in other libraries or sub folders
+                Identity.Library = null;
+                Identity.Folder = null;
+                page = Identity.GetPage(this.ClientContext.Web, CacheManager.Instance.GetBlogListName(this.ClientContext));
+            }
+            else if (this.DelveBlogPage)
+            {
+                // Blogs don't live in other libraries or sub folders
+                Identity.Library = null;
+                Identity.Folder = null;
+                page = Identity.GetPage(this.ClientContext.Web, "pPg");
             }
             else
             {
@@ -175,7 +259,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
-            if (page == null && !this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase))
+            if (page == null && (Folder == null || !this.Folder.Equals(rootFolder, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
             }
@@ -186,21 +270,17 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 throw new Exception($"Publishing page transformation is only supported when transformating into another site collection. Use the -TargetWebUrl to specify a modern target site.");
             }
 
+            // Blog specific validation
+            if ((this.BlogPage || this.DelveBlogPage) && string.IsNullOrEmpty(this.TargetWebUrl) && TargetConnection == null)
+            {
+                throw new Exception($"Blog and Delve blog page transformation is only supported when transformating into another site collection. Use the -TargetWebUrl to specify a modern target site.");
+            }
+
             // Load transformation models
             PageTransformation webPartMappingModel = null;
             if (string.IsNullOrEmpty(this.WebPartMappingFile))
             {
-                // Load xml mapping data
-                XmlSerializer xmlMapping = new XmlSerializer(typeof(PageTransformation));
-
-                // Load the default one from resources into a model, no need for persisting this file
-                string webpartMappingFileContents = WebPartMappingLoader.LoadFile("SharePointPnP.PowerShell.Commands.ClientSidePages.webpartmapping.xml");
-
-                using (var stream = GenerateStreamFromString(webpartMappingFileContents))
-                {
-                    webPartMappingModel = (PageTransformation)xmlMapping.Deserialize(stream);
-                }
-
+                webPartMappingModel = PageTransformator.LoadDefaultWebPartMapping();
                 this.WriteVerbose("Using embedded webpartmapping file. Use Export-PnPClientSidePageMapping to get that file in case you want to base your version of the embedded version.");
             }
 
@@ -217,6 +297,8 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             {
                 throw new Exception($"Provided pagelayout mapping file {this.PageLayoutMapping} does not exist");
             }
+
+            bool crossSiteTransformation = TargetConnection != null || !string.IsNullOrEmpty(TargetWebUrl);
 
             // Create target client context (when needed)
             ClientContext targetContext = null;
@@ -236,6 +318,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             // Create transformator instance
             PageTransformator pageTransformator = null;
             PublishingPageTransformator publishingPageTransformator = null;
+            DelvePageTransformator delvePageTransformator = null;
 
             if (!string.IsNullOrEmpty(this.WebPartMappingFile))
             {
@@ -252,6 +335,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                         // Using default page layout mapping file
                         publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile, null);
                     }
+                }
+                else if (this.DelveBlogPage)
+                {
+                    delvePageTransformator = new DelvePageTransformator(this.ClientContext, targetContext, this.WebPartMappingFile);
                 }
                 else
                 {
@@ -279,6 +366,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                         publishingPageTransformator = new PublishingPageTransformator(this.ClientContext, targetContext, webPartMappingModel, null);
                     }
                 }
+                else if (this.DelveBlogPage)
+                {
+                    delvePageTransformator = new DelvePageTransformator(this.ClientContext, targetContext, webPartMappingModel);
+                }
                 else
                 {
                     // Use web part mapping model loaded from embedded mapping file
@@ -293,6 +384,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 {
                     publishingPageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose:this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
+                else if (this.DelveBlogPage)
+                {
+                    delvePageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
+                }
                 else
                 {
                     pageTransformator.RegisterObserver(new MarkdownObserver(folder: this.LogFolder, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
@@ -304,9 +399,28 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 {
                     publishingPageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
                 }
+                else if (this.DelveBlogPage)
+                {
+                    delvePageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
+                }
                 else
                 {
                     pageTransformator.RegisterObserver(new MarkdownToSharePointObserver(targetContext ?? this.ClientContext, includeVerbose: this.LogVerbose, includeDebugEntries: this.LogVerbose));
+                }
+            }
+            else if (this.LogType == ClientSidePageTransformatorLogType.Console)
+            {
+                if (this.PublishingPage)
+                {
+                    publishingPageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
+                }
+                else if (this.DelveBlogPage)
+                {
+                    delvePageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
+                }
+                else
+                {
+                    pageTransformator.RegisterObserver(new ConsoleObserver(includeDebugEntries: this.LogVerbose));
                 }
             }
 
@@ -325,18 +439,82 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     Overwrite = this.Overwrite,
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     PublishCreatedPage = !this.DontPublish,
-                    DisablePageComments = this.DisablePageComments,     
-                    TargetPageName = this.PublishingTargetPageName,
+                    KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
+                    PostAsNews = this.PostAsNews,
+                    DisablePageComments = this.DisablePageComments,
+                    TargetPageName = !string.IsNullOrEmpty(this.PublishingTargetPageName) ? this.PublishingTargetPageName : this.TargetPageName,
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
+                    AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
+                    SkipUserMapping = this.SkipUserMapping,
+                    UserMappingFile = this.UserMappingFile,
+                    LDAPConnectionString = this.LDAPConnectionString,
+                    TargetPageFolder = this.TargetPageFolder,
+                    TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
+                    TermMappingFile = TermMappingFile,
+                    SkipTermStoreMapping = SkipTermStoreMapping,
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
                 };
 
                 // Set mapping properties
                 pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
                 pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
 
-                serverRelativeClientPageUrl = publishingPageTransformator.Transform(pti);
+                try
+                {
+                    serverRelativeClientPageUrl = publishingPageTransformator.Transform(pti);
+                }
+                finally
+                {
+                    // Flush log
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
+                    {
+                        publishingPageTransformator.FlushObservers();
+                    }
+                }
+            }
+            else if (this.DelveBlogPage)
+            {
+                // Setup Transformation information
+                DelvePageTransformationInformation pti = new DelvePageTransformationInformation(page)
+                {
+                    Overwrite = this.Overwrite,
+                    KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
+                    PublishCreatedPage = !this.DontPublish,
+                    KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
+                    SetAuthorInPageHeader = this.SetAuthorInPageHeader,
+                    PostAsNews = this.PostAsNews,
+                    DisablePageComments = this.DisablePageComments,
+                    TargetPageName = crossSiteTransformation ? this.TargetPageName : "",
+                    SkipUrlRewrite = this.SkipUrlRewriting,
+                    SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
+                    UrlMappingFile = this.UrlMappingFile,
+                    AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
+                    SkipUserMapping = this.SkipUserMapping,
+                    UserMappingFile = this.UserMappingFile,
+                    LDAPConnectionString = this.LDAPConnectionString,
+                    TargetPageFolder = this.TargetPageFolder,
+                    TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
+                };
+
+                // Set mapping properties
+                pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
+                pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
+
+                try
+                {
+                    serverRelativeClientPageUrl = delvePageTransformator.Transform(pti);
+                }
+                finally
+                {
+                    // Flush log
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
+                    {
+                        pageTransformator.FlushObservers();
+                    }
+                }
             }
             else
             {
@@ -360,33 +538,41 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     KeepPageSpecificPermissions = !this.SkipItemLevelPermissionCopyToClientSidePage,
                     CopyPageMetadata = this.CopyPageMetadata,
                     PublishCreatedPage = !this.DontPublish,
+                    KeepPageCreationModificationInformation = this.KeepPageCreationModificationInformation,
+                    SetAuthorInPageHeader = this.SetAuthorInPageHeader,
+                    PostAsNews = this.PostAsNews,
                     DisablePageComments = this.DisablePageComments,
+                    TargetPageName = crossSiteTransformation ? this.TargetPageName : "",
                     SkipUrlRewrite = this.SkipUrlRewriting,
                     SkipDefaultUrlRewrite = this.SkipDefaultUrlRewriting,
                     UrlMappingFile = this.UrlMappingFile,
+                    AddTableListImageAsImageWebPart = this.AddTableListImageAsImageWebPart,
+                    SkipUserMapping = this.SkipUserMapping,
+                    UserMappingFile = this.UserMappingFile,
+                    LDAPConnectionString = this.LDAPConnectionString,
+                    TargetPageFolder = this.TargetPageFolder,
+                    TargetPageFolderOverridesDefaultFolder = this.TargetPageFolderOverridesDefaultFolder,
                     ModernizationCenterInformation = new ModernizationCenterInformation()
                     {
                         AddPageAcceptBanner = this.AddPageAcceptBanner
                     },
+                    TermMappingFile = TermMappingFile,
+                    SkipTermStoreMapping = SkipTermStoreMapping,
+                    RemoveEmptySectionsAndColumns = this.RemoveEmptySectionsAndColumns
                 };
 
                 // Set mapping properties
                 pti.MappingProperties["SummaryLinksToQuickLinks"] = (!SummaryLinksToHtml).ToString().ToLower();
                 pti.MappingProperties["UseCommunityScriptEditor"] = UseCommunityScriptEditor.ToString().ToLower();
 
-                serverRelativeClientPageUrl = pageTransformator.Transform(pti);
-            }
-
-            // Flush log
-            if (this.LogType != ClientSidePageTransformatorLogType.None)
-            {
-                if (!this.LogSkipFlush)
+                try
                 {
-                    if (this.PublishingPage)
-                    {
-                        publishingPageTransformator.FlushObservers();
-                    }
-                    else
+                    serverRelativeClientPageUrl = pageTransformator.Transform(pti);
+                }
+                finally
+                {
+                    // Flush log
+                    if (this.LogType != ClientSidePageTransformatorLogType.None && this.LogType != ClientSidePageTransformatorLogType.Console && !this.LogSkipFlush)
                     {
                         pageTransformator.FlushObservers();
                     }

@@ -1,12 +1,12 @@
 ﻿#if !SP2013 && !SP2016
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Pages;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Add, "PnPClientSidePage")]
     [CmdletHelp("Adds a Client-Side Page",
@@ -23,6 +23,16 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         Code = @"PS:> Add-PnPClientSidePage -Name ""NewPageTemplate"" -PromoteAs Template",
         Remarks = "Creates a new Client-Side page named 'NewPage' and saves as a template to the site.",
         SortOrder = 2)]
+    [CmdletExample(
+        Code = @"PS:> Add-PnPClientSidePage -Name ""Folder/NewPage""",
+        Remarks = "Creates a new Client-Side page named 'NewPage' under 'Folder' folder and saves as a template to the site.",
+        SortOrder = 3)]
+#if !ONPREMISES
+    [CmdletExample(
+        Code = @"PS:> Add-PnPClientSidePage -Name ""NewPage"" -HeaderLayoutType ColorBlock",
+        Remarks = "Creates a new Client-Side page named 'NewPage' using the ColorBlock header layout",
+        SortOrder = 4)]
+#endif
     public class AddClientSidePage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the name of the page.")]
@@ -43,17 +53,19 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Publishes the page once it is saved. Applicable to libraries set to create major and minor versions.")]
         public SwitchParameter Publish;
 
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "Type of layout used for the header")]
+        public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
+#endif
         [Obsolete("This parameter will be ignored")]
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
         public string PublishMessage = string.Empty;
 
         protected override void ExecuteCmdlet()
         {
-
             ClientSidePage clientSidePage = null;
 
             // Check if the page exists
-
             string name = ClientSidePageUtilities.EnsureCorrectPageName(Name);
 
             bool pageExists = false;
@@ -72,6 +84,10 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
             // Create a page that persists immediately
             clientSidePage = SelectedWeb.AddClientSidePage(name);
             clientSidePage.LayoutType = LayoutType;
+
+#if !ONPREMISES
+            clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
+#endif
             if (PromoteAs == ClientSidePagePromoteType.Template)
             {
                 clientSidePage.SaveAsTemplate(name);
@@ -81,7 +97,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 clientSidePage.Save(name);
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("ContentType"))
+            if (ParameterSpecified(nameof(ContentType)))
             {
                 ContentType ct = null;
                 if (ContentType.ContentType == null)
@@ -123,8 +139,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     break;
             }
 
-
-            if (MyInvocation.BoundParameters.ContainsKey("CommentsEnabled"))
+            if (ParameterSpecified(nameof(CommentsEnabled)))
             {
                 if (CommentsEnabled)
                 {

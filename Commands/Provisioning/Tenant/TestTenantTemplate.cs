@@ -1,33 +1,27 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
+namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsDiagnostic.Test, "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [Alias("Test-PnPProvisioningHierarchy")]
     [CmdletHelp("Tests a tenant template for invalid references",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Test-PnPTenantTemplate -Template $myTemplate",
        Remarks = "Checks for valid template references",
        SortOrder = 1)]
-    public class TestTenantTemplate : PnPCmdlet
+    public class TestTenantTemplate : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "The in-memory template to test", ParameterSetName = ParameterAttribute.AllParameterSets)]
-        [Alias("Hierarchy")]
         public ProvisioningHierarchy Template;
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.InvocationName.ToLower() == "test-pnpprovisioninghierarchy")
-            {
-                WriteWarning("Test-PnPProvisioningHierarchy has been deprecated. Use Test-PnPTenantTemplate instead.");
-            }
             List<string> issues = new List<string>();
             foreach(var sequence in Template.Sequences)
             {

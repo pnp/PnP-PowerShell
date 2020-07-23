@@ -1,11 +1,11 @@
 ﻿#if !SP2013 && !SP2016
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Move, "PnPClientSideComponent")]
     [CmdletHelp("Moves a Client-Side Component to a different section/column",
@@ -70,7 +70,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var column = control.Section.Columns[Column - 1];
                             if (column != control.Column)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
+                                if (ParameterSpecified(nameof(Position)))
                                 {
                                     control.MovePosition(column, Position);
                                 }
@@ -87,7 +87,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var section = clientSidePage.Sections[Section - 1];
                             if (section != control.Section)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
+                                if (ParameterSpecified(nameof(Position)))
                                 {
                                     control.MovePosition(section, Position);
                                 }
@@ -110,7 +110,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                             var column = section.Columns[Column - 1];
                             if (column != control.Column)
                             {
-                                if (MyInvocation.BoundParameters.ContainsKey(nameof(Position)))
+                                if (ParameterSpecified(nameof(Position)))
                                 {
                                     control.MovePosition(column, Position);
                                 }

@@ -1,13 +1,13 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using PnP.PowerShell.CmdletHelpAttributes;
 using System;
-#if NETSTANDARD2_0
+#if PNPPSCORE
 using System.IdentityModel.Tokens.Jwt;
 #else
 using System.IdentityModel.Tokens;
 #endif
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPPowerShellTelemetry")]
     [CmdletHelp("Disables PnP PowerShell telemetry tracking",
@@ -33,9 +33,9 @@ namespace SharePointPnP.PowerShell.Commands.Base
             if (Force || ShouldContinue("Do you want to disable telemetry for PnP PowerShell?", "Confirm"))
             {
                 System.IO.File.WriteAllText(telemetryFile, "disallow");
-                if (SPOnlineConnection.CurrentConnection != null)
+                if (PnPConnection.CurrentConnection != null)
                 {
-                    SPOnlineConnection.CurrentConnection.TelemetryClient = null;
+                    PnPConnection.CurrentConnection.TelemetryClient = null;
                 }
                 WriteObject("Telemetry disabled");
             }

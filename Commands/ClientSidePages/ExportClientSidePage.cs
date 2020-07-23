@@ -1,13 +1,16 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Properties;
+using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
+using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Properties;
+using System;
 using System.IO;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
+namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsData.Export, "PnPClientSidePage", SupportsShouldProcess = true)]
     [CmdletHelp("Exports a Client Side Page to a PnP Provisioning Template",
@@ -30,8 +33,17 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
         [Parameter(Mandatory = false, HelpMessage = "Specify to override the question to overwrite a file if it already exists.")]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
+        public ExtractConfigurationPipeBind Configuration;
+
         protected override void ProcessRecord()
         {
+            ExtractConfiguration extractConfiguration = null;
+            if (ParameterSpecified(nameof(Configuration)))
+            {
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+            }
+
             if (!string.IsNullOrEmpty(Out))
             {
                 if (!Path.IsPathRooted(Out))
@@ -42,29 +54,39 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 {
                     if (Force || ShouldContinue(string.Format(Resources.File0ExistsOverwrite, Out), Resources.Confirm))
                     {
-                        ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                        ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
                     }
                 }
                 else
                 {
-                    ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                    ExtractTemplate(new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
                 }
             }
             else
             {
-                ExtractTemplate(null, null);
+                ExtractTemplate(null, null, extractConfiguration);
             }
         }
 
 
-        private void ExtractTemplate(string dirName, string fileName)
+        private void ExtractTemplate(string dirName, string fileName, ExtractConfiguration configuration)
         {
             var outputTemplate = new ProvisioningTemplate();
-
+            outputTemplate.Id = $"TEMPLATE-{Guid.NewGuid():N}".ToUpper();
             var helper = new OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers.Utilities.ClientSidePageContentsHelper();
-
-            var ci = new OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers.ProvisioningTemplateCreationInformation(SelectedWeb);
-            ci.PersistBrandingFiles = PersistBrandingFiles;
+            ProvisioningTemplateCreationInformation ci = null;
+            if (configuration != null)
+            {
+                ci = configuration.ToCreationInformation(SelectedWeb);
+            }
+            else
+            {
+                ci = new ProvisioningTemplateCreationInformation(SelectedWeb);
+            }
+            if (ParameterSpecified(nameof(PersistBrandingFiles)))
+            {
+                ci.PersistBrandingFiles = PersistBrandingFiles;
+            }
             if (!string.IsNullOrEmpty(dirName))
             {
                 var fileSystemConnector = new FileSystemConnector(dirName, "");

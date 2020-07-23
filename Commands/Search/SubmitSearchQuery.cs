@@ -3,11 +3,11 @@ using System.Collections;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Query;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SharePointPnP.PowerShell.Commands.Search
+namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsLifecycle.Submit, "PnPSearchQuery", DefaultParameterSetName = "Limit")]
     [Alias("Invoke-PnPSearchQuery")]
@@ -73,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
         public string RankingModelId;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the name of the client which issued the query.", ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public string ClientType = "ContentSearchLow";
+        public string ClientType = "PnP";
 
         [Parameter(Mandatory = false, HelpMessage = "Limit the number of items per the collapse specification. See https://docs.microsoft.com/en-us/sharepoint/dev/general-development/customizing-search-results-in-sharepoint#collapse-similar-search-results-using-the-collapsespecification-property for more information.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string CollapseSpecification;
@@ -113,6 +113,10 @@ namespace SharePointPnP.PowerShell.Commands.Search
             {
                 startRow = 0;
                 rowLimit = 500;
+                SortList = new Hashtable()
+                    {
+                        {"IndexDocId", "ascending"}
+                    };
             }
 
             var currentCount = 0;
@@ -185,9 +189,9 @@ namespace SharePointPnP.PowerShell.Commands.Search
         private object ConvertToPSObject(IDictionary<string, object> r)
         {
             PSObject res = new PSObject();
-            if(r != null)
+            if (r != null)
             {
-                foreach(var kvp in r)
+                foreach (var kvp in r)
                 {
                     res.Properties.Add(new PSNoteProperty(kvp.Key, kvp.Value));
                 }
@@ -208,20 +212,20 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
             keywordQuery.QueryText = query;
             keywordQuery.ClientType = ClientType;
-            if (MyInvocation.BoundParameters.ContainsKey("TrimDuplicates")) keywordQuery.TrimDuplicates = TrimDuplicates;
-            if (MyInvocation.BoundParameters.ContainsKey("Refiners")) keywordQuery.Refiners = Refiners;
-            if (MyInvocation.BoundParameters.ContainsKey("Culture")) keywordQuery.Culture = Culture;
-            if (MyInvocation.BoundParameters.ContainsKey("QueryTemplate")) keywordQuery.QueryTemplate = QueryTemplate;
-            if (MyInvocation.BoundParameters.ContainsKey("RankingModelId")) keywordQuery.RankingModelId = RankingModelId;
-            if (MyInvocation.BoundParameters.ContainsKey("HiddenConstraints")) keywordQuery.HiddenConstraints = HiddenConstraints;
-            if (MyInvocation.BoundParameters.ContainsKey("TimeZoneId")) keywordQuery.TimeZoneId = TimeZoneId;
-            if (MyInvocation.BoundParameters.ContainsKey("EnablePhonetic")) keywordQuery.EnablePhonetic = EnablePhonetic;
-            if (MyInvocation.BoundParameters.ContainsKey("EnableStemming")) keywordQuery.EnableStemming = EnableStemming;
-            if (MyInvocation.BoundParameters.ContainsKey("EnableQueryRules")) keywordQuery.EnableQueryRules = EnableQueryRules;
-            if (MyInvocation.BoundParameters.ContainsKey("SourceId")) keywordQuery.SourceId = SourceId;
-            if (MyInvocation.BoundParameters.ContainsKey("ProcessBestBets")) keywordQuery.ProcessBestBets = ProcessBestBets;
-            if (MyInvocation.BoundParameters.ContainsKey("ProcessPersonalFavorites")) keywordQuery.ProcessPersonalFavorites = ProcessPersonalFavorites;
-            if (MyInvocation.BoundParameters.ContainsKey("CollapseSpecification")) keywordQuery.CollapseSpecification = CollapseSpecification;
+            if (ParameterSpecified(nameof(TrimDuplicates))) keywordQuery.TrimDuplicates = TrimDuplicates;
+            if (ParameterSpecified(nameof(Refiners))) keywordQuery.Refiners = Refiners;
+            if (ParameterSpecified(nameof(Culture))) keywordQuery.Culture = Culture;
+            if (ParameterSpecified(nameof(QueryTemplate))) keywordQuery.QueryTemplate = QueryTemplate;
+            if (ParameterSpecified(nameof(RankingModelId))) keywordQuery.RankingModelId = RankingModelId;
+            if (ParameterSpecified(nameof(HiddenConstraints))) keywordQuery.HiddenConstraints = HiddenConstraints;
+            if (ParameterSpecified(nameof(TimeZoneId))) keywordQuery.TimeZoneId = TimeZoneId;
+            if (ParameterSpecified(nameof(EnablePhonetic))) keywordQuery.EnablePhonetic = EnablePhonetic;
+            if (ParameterSpecified(nameof(EnableStemming))) keywordQuery.EnableStemming = EnableStemming;
+            if (ParameterSpecified(nameof(EnableQueryRules))) keywordQuery.EnableQueryRules = EnableQueryRules;
+            if (ParameterSpecified(nameof(SourceId))) keywordQuery.SourceId = SourceId;
+            if (ParameterSpecified(nameof(ProcessBestBets))) keywordQuery.ProcessBestBets = ProcessBestBets;
+            if (ParameterSpecified(nameof(ProcessPersonalFavorites))) keywordQuery.ProcessPersonalFavorites = ProcessPersonalFavorites;
+            if (ParameterSpecified(nameof(CollapseSpecification))) keywordQuery.CollapseSpecification = CollapseSpecification;
 
             if (SortList != null)
             {
@@ -235,11 +239,16 @@ namespace SharePointPnP.PowerShell.Commands.Search
             }
             if (SelectProperties != null)
             {
+                keywordQuery.SelectProperties.Clear();
                 var selectProperties = keywordQuery.SelectProperties;
-                selectProperties.Clear();
+                if (SelectProperties.Length == 1 && SelectProperties[0].Contains(","))
+                {
+                    SelectProperties = SelectProperties[0].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                }
+                
                 foreach (string property in SelectProperties)
                 {
-                    selectProperties.Add(property);
+                    selectProperties.Add(property.Trim());
                 }
             }
             if (RefinementFilters != null)

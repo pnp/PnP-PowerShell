@@ -6,15 +6,15 @@ using System.Management.Automation;
 using System.Threading;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 
-namespace SharePointPnP.PowerShell.Commands
+namespace PnP.PowerShell.Commands
 {
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Includes", HelpMessage = "Specify properties to include when retrieving objects from the server.")]
-    public abstract class PnPRetrievalsCmdlet<TType> : PnPCmdlet, IDynamicParameters where TType : ClientObject
+    public abstract class PnPRetrievalsCmdlet<TType> : PnPSharePointCmdlet, IDynamicParameters where TType : ClientObject
     {
         public object GetDynamicParameters()
         {
@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             get
             {
-                if (MyInvocation.BoundParameters.ContainsKey("Includes") && MyInvocation.BoundParameters["Includes"] != null)
+                if (ParameterSpecified(nameof(Includes)) && MyInvocation.BoundParameters["Includes"] != null)
                 {
                     return MyInvocation.BoundParameters["Includes"] as string[];
                 }
@@ -67,7 +67,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             var fieldsToLoad = new List<string>();
 
-            if (MyInvocation.BoundParameters.ContainsKey("Includes"))
+            if (ParameterSpecified(nameof(Includes)))
             {
                 var values = MyInvocation.BoundParameters["Includes"] as string[];
 

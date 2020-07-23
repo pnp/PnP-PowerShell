@@ -2,10 +2,10 @@
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.New, "PnPTermGroup", SupportsShouldProcess = false)]
     [CmdletHelp(@"Creates a taxonomy term group",
@@ -16,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         (Code = @"PS:> New-PnPTermGroup -GroupName ""Countries""",
         Remarks = @"Creates a new taxonomy term group named ""Countries""",
         SortOrder = 1)]
-    public class NewTermGroup : PnPCmdlet
+    public class NewTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name of the taxonomy term group to create.")]
         [Alias("GroupName")]

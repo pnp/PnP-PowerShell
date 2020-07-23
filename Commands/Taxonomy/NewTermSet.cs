@@ -6,10 +6,10 @@ using System.Management.Automation;
 using System.Runtime.InteropServices;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.New, "PnPTermSet", SupportsShouldProcess = false)]
     [CmdletHelp(@"Creates a taxonomy term set",
@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         (Code = @"PS:> New-PnPTermSet -Name ""Department"" -TermGroup ""Corporate""",
         Remarks = @"Creates a new termset named ""Department"" in the group named ""Corporate""",
         SortOrder = 1)]
-    public class NewTermSet : PnPCmdlet
+    public class NewTermSet : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "The name of the termset.")]
         public string Name;

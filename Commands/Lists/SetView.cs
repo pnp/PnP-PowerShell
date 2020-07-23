@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 
-namespace SharePointPnP.PowerShell.Commands.Fields
+namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Set, "PnPView")]
     [CmdletHelp("Change view properties",
@@ -24,7 +24,11 @@ namespace SharePointPnP.PowerShell.Commands.Fields
     [CmdletExample(
         Code = @"PS:> Set-PnPView -List ""Documents"" -Identity ""Corporate Documents"" -Fields ""Title"",""Created""",
         Remarks = @"Updates the Corporate Documents view on the Documents library to have two fields",
-        SortOrder = 2)]
+        SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Set-PnPView -List ""Documents"" -Identity ""Corporate Documents"" -Fields ""Title"",""Created"" -Aggregations ""<FieldRef Name='Title' Type='COUNT'/>""",
+        Remarks = @"Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field",
+        SortOrder = 4)]
     public class SetView : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, HelpMessage = "The Id, Title or Url of the list")]
@@ -38,6 +42,9 @@ namespace SharePointPnP.PowerShell.Commands.Fields
 
         [Parameter(Mandatory = false, HelpMessage = "An array of fields to use in the view. Notice that specifying this value will remove the existing fields")]
         public string[] Fields;
+
+        [Parameter(Mandatory = false, HelpMessage = "A valid XML fragment containing one or more Aggregations")]
+        public string Aggregations;
 
         protected override void ExecuteCmdlet()
         {
@@ -77,7 +84,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 throw new PSArgumentException("View provided in the Identity argument could not be found", "Identity");
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Values)))
+            if (ParameterSpecified(nameof(Values)))
             {
                 bool atLeastOnePropertyChanged = false;
                 foreach (string key in Values.Keys)
@@ -109,7 +116,7 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                     ClientContext.ExecuteQueryRetry();
                 }
             }
-            if(MyInvocation.BoundParameters.ContainsKey(nameof(Fields)))
+            if(ParameterSpecified(nameof(Fields)))
             {
                 view.ViewFields.RemoveAll();
                 foreach(var viewField in Fields)
@@ -119,7 +126,14 @@ namespace SharePointPnP.PowerShell.Commands.Fields
                 view.Update();
                 ClientContext.ExecuteQueryRetry();
             }
-            
+            if(ParameterSpecified(nameof(Aggregations)))
+            {
+                view.Aggregations = Aggregations;
+                view.Update();
+                ClientContext.Load(view);
+                ClientContext.ExecuteQueryRetry();
+            }
+            WriteObject(view);
         }
     }
 }

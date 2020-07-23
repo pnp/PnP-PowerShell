@@ -3,8 +3,8 @@ using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.AppModelExtensions;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SharePoint.Client;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPListFoldersToProvisioningTemplate")]
     [CmdletHelp("Adds folders to a list in a PnP Provisioning Template",
@@ -61,7 +61,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             // Load the template
             var template = ReadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
-                TemplateProviderExtensions);
+                TemplateProviderExtensions, (e) =>
+                {
+                    WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                });
 
             if (template == null)
             {

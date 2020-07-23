@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Set, "PnPTaxonomyFieldValue", DefaultParameterSetName = "ITEM")]
     [CmdletHelp("Sets a taxonomy term value in a listitem field",
@@ -23,7 +23,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
      Code = @"PS:> Set-PnPTaxonomyFieldValue -ListItem $item -InternalFieldName 'Department' -Terms @{""TermId1""=""Label1"";""TermId2""=""Label2""}",
      Remarks = @"Sets the field called 'Department' with multiple terms by ID and label. You can refer to those terms with the {ID:label} token.",
         SortOrder = 3)]
-    public class SetTaxonomyFieldValue : PnPCmdlet
+    public class SetTaxonomyFieldValue : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "The list item to set the field value to")]
         public ListItem ListItem;

@@ -3,17 +3,16 @@ using OfficeDevPnP.Core;
 #if ONPREMISES
 using OfficeDevPnP.Core.Entities;
 #endif
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-
-namespace SharePointPnP.PowerShell.Commands
+namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSite")]
-    [CmdletHelp("Creates a new site collection for the current tenant",
+    [CmdletHelp("Creates a new (classic) site collection for the current tenant",
         @"The New-PnPTenantSite cmdlet creates a new site collection for the current company. However, creating a new SharePoint
 Online site collection fails if a deleted site with the same URL exists in the Recycle Bin. If you want to use this command for an on-premises farm, please refer to http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx ",
         Category = CmdletHelpCategory.TenantAdmin)]
@@ -27,10 +26,10 @@ Online site collection fails if a deleted site with the same URL exists in the R
         SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "Locale IDs",
-        Url = "http://go.microsoft.com/fwlink/p/?LinkId=242911Id=242911")]
+        Url = "https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint")]
     [CmdletRelatedLink(
         Text = "Resource Usage Limits on Sandboxed Solutions in SharePoint 2010",
-        Url = "http://msdn.microsoft.com/en-us/library/gg615462.aspx.")]
+        Url = "https://docs.microsoft.com/previous-versions/office/developer/sharepoint-2010/gg615462(v=office.14)")]
     [CmdletRelatedLink(
         Text = "Creating on-premises site collections using CSOM",
         Url = "http://blogs.msdn.com/b/vesku/archive/2014/06/09/provisioning-site-collections-using-sp-app-model-in-on-premises-with-just-csom.aspx")]
@@ -49,13 +48,17 @@ Online site collection fails if a deleted site with the same URL exists in the R
         [Parameter(Mandatory = true, HelpMessage = @"Specifies the user name of the site collection's primary owner. The owner must be a user instead of a security group or an email-enabled security group.")]
         public string Owner = string.Empty;
 
-        [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection. For more information, see Locale IDs Assigned by Microsoft: https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.splanguage.lcid.aspx. To get the list of supported languages use: (Get-PnPWeb -Includes RegionalSettings.InstalledLanguages).RegionalSettings.InstalledLanguages ")]
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies the language of this site collection. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.")]
         public uint Lcid = 1033;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the site collection template type. Use the Get-PnPWebTemplates cmdlet to get the list of valid templates. If no template is specified, one can be added later. The Template and LocaleId parameters must be a valid combination as returned from the Get-PnPWebTemplates cmdlet.")]
         public string Template = "STS#0";
 
+#if ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "Use Get-PnPTimeZoneId to retrieve possible timezone values")]
+#else
         [Parameter(Mandatory = true, HelpMessage = "Use Get-PnPTimeZoneId to retrieve possible timezone values")]
+#endif
         public int TimeZone;
 
         [Parameter(Mandatory = false, HelpMessage = @"Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : http://msdn.microsoft.com/en-us/library/gg615462.aspx.")]
@@ -110,7 +113,9 @@ Online site collection fails if a deleted site with the same URL exists in the R
 #else
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-                if (MyInvocation.BoundParameters.ContainsKey("Description"))
+#pragma warning disable CS0618 // Type or member is obsolete
+                if (ParameterSpecified(nameof(Description)))
+#pragma warning restore CS0618 // Type or member is obsolete
                 {
                     // We have to fall back to synchronous behaviour as we have to wait for the site to be present in order to set the description.
                     Wait = true;

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using OfficeDevPnP.Core.ALM;
 using System;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Enums;
 using OfficeDevPnP.Core.Enums;
 using Microsoft.SharePoint.Client;
 
-namespace SharePointPnP.PowerShell.Commands.Apps
+namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPApp")]
     [CmdletHelp("Returns the available apps from the app catalog",
@@ -28,7 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         Code = @"PS:> Get-PnPApp -Identity 2646ccc3-6a2b-46ef-9273-81411cbbb60f", 
         Remarks = @"This will retrieve the specific app from the app catalog.", 
         SortOrder = 3)]
-    public class GetApp : PnPCmdlet
+    public class GetApp : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Id of an app which is available in the app catalog")]
         public AppMetadataPipeBind Identity;
@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         {
             var manager = new AppManager(ClientContext);
 
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var app = Identity.GetAppMetadata(ClientContext, Scope);
                 if (app != null)

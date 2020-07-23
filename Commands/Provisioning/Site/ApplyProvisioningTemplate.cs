@@ -3,25 +3,19 @@ using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
 using System.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using SharePointPnP.PowerShell.Commands.Components;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Utilities;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Base;
 using System.Threading.Tasks;
-using OfficeDevPnP.Core;
-using Newtonsoft.Json.Linq;
-using System.Net;
-using System.Security;
-using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet("Apply", "PnPProvisioningTemplate")]
     [CmdletHelp("Applies a site template to a web",
@@ -122,7 +116,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             ProvisioningTemplate provisioningTemplate;
 
             FileConnectorBase fileConnector;
-            if (MyInvocation.BoundParameters.ContainsKey("Path"))
+            if (ParameterSpecified(nameof(Path)))
             {
                 bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
                 string templateFileName = System.IO.Path.GetFileName(Path);
@@ -191,7 +185,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                     }
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey(nameof(TemplateId)))
+                if (ParameterSpecified(nameof(TemplateId)))
                 {
                     provisioningTemplate = provider.GetTemplate(templateFileName, TemplateId, null, TemplateProviderExtensions);
                 }
@@ -248,7 +242,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                         Path = SessionState.Path.CurrentFileSystemLocation.Path;
                     }
                     var fileInfo = new FileInfo(Path);
-                    fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                    fileConnector = new FileSystemConnector(System.IO.Path.IsPathRooted(fileInfo.FullName) ? fileInfo.FullName : fileInfo.DirectoryName, "");
                     provisioningTemplate.Connector = fileConnector;
                 }
             }
@@ -270,11 +264,11 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
 
-            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (ParameterSpecified(nameof(Handlers)))
             {
                 applyingInformation.HandlersToProcess = Handlers;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (ParameterSpecified(nameof(ExcludeHandlers)))
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
@@ -376,12 +370,17 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
              {
                  // Get Azure AD Token
-                 if (AccessToken != null)
+                 if (PnPConnection.CurrentConnection != null)
                  {
-                     // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                     return Task.FromResult(AccessToken);
+                     var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                     if(graphAccessToken != null)
+                     {
+                         // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                         return Task.FromResult(graphAccessToken);
+                     }
                  }
-                 else if (SPOnlineConnection.CurrentConnection.PSCredential != null)
+                 
+                 if (PnPConnection.CurrentConnection.PSCredential != null)
                  {
                      // Using normal credentials
                      return Task.FromResult(TokenHandler.AcquireToken(resource, null));
@@ -400,38 +399,6 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 #endif
 
             WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
-        }
-
-        private string AccessToken
-        {
-            get
-            {
-                if (SPOnlineConnection.AuthenticationResult != null)
-                {
-                    if (SPOnlineConnection.AuthenticationResult.ExpiresOn < DateTimeOffset.Now)
-                    {
-                        WriteWarning(Properties.Resources.MicrosoftGraphOAuthAccessTokenExpired);
-                        SPOnlineConnection.AuthenticationResult = null;
-                        return null;
-                    }
-                    else
-                    {
-#if !NETSTANDARD2_0
-                        return (SPOnlineConnection.AuthenticationResult.Token);
-#else
-                        return SPOnlineConnection.AuthenticationResult.AccessToken;
-#endif
-                    }
-                }
-                else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)
-                {
-                    return SPOnlineConnection.CurrentConnection.AccessToken;
-                }
-                else
-                {
-                    return null;
-                }
-            }
         }
     }
 }

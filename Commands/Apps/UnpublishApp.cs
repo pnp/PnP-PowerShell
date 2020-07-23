@@ -1,11 +1,11 @@
 ﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Enums;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Apps
+namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsData.Unpublish, "PnPApp")]
     [CmdletHelp("Unpublishes/retracts an available add-in from the app catalog",
@@ -18,7 +18,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
         Code = @"PS:> Unpublish-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site",
         Remarks = @"This will retract, but not remove, the specified app from the site collection app catalog",
         SortOrder = 2)]
-    public class UnpublishApp : PnPCmdlet
+    public class UnpublishApp : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Id of the Addin Instance")]
         public AppMetadataPipeBind Identity;

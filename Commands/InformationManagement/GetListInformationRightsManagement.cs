@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.InformationManagement
+namespace PnP.PowerShell.Commands.InformationManagement
 {
 
     [Cmdlet(VerbsCommon.Get, "PnPListInformationRightsManagement")]
@@ -19,6 +19,8 @@ namespace SharePointPnP.PowerShell.Commands.InformationManagement
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb, l => l.IrmEnabled, l => l.IrmExpire, l => l.IrmReject);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
             ClientContext.Load(list.InformationRightsManagementSettings);
             ClientContext.ExecuteQueryRetry();

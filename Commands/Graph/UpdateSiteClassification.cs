@@ -1,35 +1,30 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Graph.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsData.Update, "PnPSiteClassification")]
-    [CmdletHelp("Updates Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
+    [CmdletHelp("Updates Site Classifications for the tenant",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassification -Classifications ""HBI"",""Top Secret""",
+        Code = @"PS:> Update-PnPSiteClassification -Classifications ""HBI"",""Top Secret""",
         Remarks = @"Replaces the existing values of the site classification settings",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassification -DefaultClassification ""LBI""",
+        Code = @"PS:> Update-PnPSiteClassification -DefaultClassification ""LBI""",
         Remarks = @"Sets the default classification value to ""LBI"". This value needs to be present in the list of classification values.",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
-        Remarks = @"sets the usage guideliness URL to the specified URL.",
+        Code = @"PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
+        Remarks = @"sets the usage guideliness URL to the specified URL",
         SortOrder = 3)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class UpdateSiteClassification : PnPGraphCmdlet
     {
         const string ParameterSet_SETTINGS = "Settings";
@@ -53,7 +48,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
             {
                 var changed = false;
                 var settings = OfficeDevPnP.Core.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);
-                if (MyInvocation.BoundParameters.ContainsKey("Classifications"))
+                if (ParameterSpecified(nameof(Classifications)))
                 {
                     if (settings.Classifications != Classifications)
                     {
@@ -61,7 +56,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
                         changed = true;
                     }
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("DefaultClassification"))
+                if (ParameterSpecified(nameof(DefaultClassification)))
                 {
                     if (settings.Classifications.Contains(DefaultClassification))
                     {
@@ -72,7 +67,7 @@ PS:> Update-PnPSiteClassification -UsageGuidelinesUrl https://aka.ms/sppnp",
                         }
                     }
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("UsageGuidelinesUrl"))
+                if (ParameterSpecified(nameof(UsageGuidelinesUrl)))
                 {
                     if (settings.UsageGuidelinesUrl != UsageGuidelinesUrl)
                     {

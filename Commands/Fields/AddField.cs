@@ -2,25 +2,25 @@
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System.Collections;
-using Newtonsoft.Json;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.Commands.Fields
+namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "Add field to list")]
     [CmdletHelp("Add a field",
         "Adds a field to a list or as a site column",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.field.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee545882(v=office.15)",
+        SupportedPlatform = CmdletSupportedPlatform.All)]
     [CmdletExample(
-     Code = @"PS:> Add-PnPField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
-     Remarks = @"This will add a field of type Choice to the list ""Demo List"".", SortOrder = 1)]
+        Code = @"PS:> Add-PnPField -List ""Demo list"" -DisplayName ""Location"" -InternalName ""SPSLocation"" -Type Choice -Group ""Demo Group"" -AddToDefaultView -Choices ""Stockholm"",""Helsinki"",""Oslo""",
+        Remarks = @"This will add a field of type Choice to the list ""Demo List"".", SortOrder = 1)]
     [CmdletExample(
-     Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
-Remarks = @"This will add a field of type Multiple Choice to the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
+        Code = @"PS:>Add-PnPField -List ""Demo list"" -DisplayName ""Speakers"" -InternalName ""SPSSpeakers"" -Type MultiChoice -Group ""Demo Group"" -AddToDefaultView -Choices ""Obiwan Kenobi"",""Darth Vader"", ""Anakin Skywalker""",
+        Remarks = @"This will add a field of type Multiple Choice to the list ""Demo List"". (you can pick several choices for the same item)", SortOrder = 2)]
     [CmdletExample(
         Code = @"PS:> Add-PnPField -Type Calculated -InternalName ""C1"" -DisplayName ""C1"" -Formula =""[Title]""",
         Remarks = @"Adds a new calculated site column with the formula specified")]
@@ -80,10 +80,6 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
         public string ClientSideComponentProperties;
 #endif
 
-        [Parameter(Mandatory = false)]
-        [Obsolete("Not in use")]
-        public AddFieldOptions FieldOptions = AddFieldOptions.DefaultValue;
-
         public object GetDynamicParameters()
         {
             if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
@@ -113,6 +109,8 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
             if (List != null)
             {
                 var list = List.GetList(SelectedWeb);
+                if (list == null)
+                    throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
                 Field f;
                 if (ParameterSetName != ParameterSet_ADDFIELDREFERENCETOLIST)
                 {
@@ -143,10 +141,28 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
                     }
                     else if (Type == FieldType.Calculated)
                     {
+                        // Either set the ResultType as input parameter or set it to the default Text
+                        if (!string.IsNullOrEmpty(calculatedFieldParameters.ResultType))
+                        {
+                            fieldCI.AdditionalAttributes = new List<KeyValuePair<string, string>>()
+                            {
+                                new KeyValuePair<string, string>("ResultType", calculatedFieldParameters.ResultType)
+                            };
+                        }
+                        else
+                        {
+                            fieldCI.AdditionalAttributes = new List<KeyValuePair<string, string>>()
+                            {
+                                new KeyValuePair<string, string>("ResultType", "Text")
+                            };
+                        }
+
+                        fieldCI.AdditionalChildNodes = new List<KeyValuePair<string, string>>()
+                        {
+                            new KeyValuePair<string, string>("Formula", calculatedFieldParameters.Formula)
+                        };
+
                         f = list.CreateField<FieldCalculated>(fieldCI);
-                        ((FieldCalculated)f).Formula = calculatedFieldParameters.Formula;
-                        f.Update();
-                        ClientContext.ExecuteQueryRetry();
                     }
                     else
                     {
@@ -341,8 +357,9 @@ Remarks = @"This will add a field of type Multiple Choice to the list ""Demo Lis
         {
             [Parameter(Mandatory = true)]
             public string Formula;
+
+            [Parameter(Mandatory = false)]
+            public string ResultType;
         }
-
     }
-
 }

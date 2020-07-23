@@ -6,24 +6,24 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.Commands.Utilities;
 using System.Collections.Generic;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsData.Export, "PnPListToProvisioningTemplate", SupportsShouldProcess = true)]
     [CmdletHelp("Exports one or more lists to provisioning template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
-        Code = @"PS:> Export-PnPProvisioningTemplate -Out template.xml -List ""Documents""",
+        Code = @"PS:> Export-PnPListToProvisioningTemplate -Out template.xml -List ""Documents""",
         Remarks = "Extracts a list to a new provisioning template including the list specified by title or ID.",
         SortOrder = 1)]
     [CmdletExample(
-        Code = @"PS:> Export-PnPProvisioningTemplate -Out template.pnp -List ""Documents"",""Events""",
+        Code = @"PS:> Export-PnPListToProvisioningTemplate -Out template.pnp -List ""Documents"",""Events""",
         Remarks = "Extracts a list to a new provisioning template Office Open XML file, including the lists specified by title or ID.",
         SortOrder = 2)]
     public class ExportListToProvisioningTemplate : PnPWebCmdlet
@@ -173,80 +173,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
       
             if (!OutputInstance)
             {
-                ITemplateFormatter formatter = null;
-                switch (schema)
-                {
-                    case XMLPnPSchemaVersion.LATEST:
-                        {
-                            formatter = XMLPnPSchemaFormatter.LatestFormatter;
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201503:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201505:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201508:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201512:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201605:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201705:
-                        {
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05);
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201801:
-                        {
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01);
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201805:
-                        {
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201807:
-                        {
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_07);
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201903:
-                        {
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03);
-                            break;
-                        }
-                }
+                var formatter = ProvisioningHelper.GetFormatter(schema);
 
                 if (extension == ".pnp")
                 {
+#if !PNPPSCORE
                     IsolatedStorage.InitializeIsolatedStorage();
-
+#endif
                     XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
                           creationInformation.FileConnector as OpenXMLConnector);
                     var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";

@@ -3,15 +3,15 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTermGroup", SupportsShouldProcess = false)]
     [CmdletHelp(@"Removes a taxonomy term group and all its containing termsets",
         Category = CmdletHelpCategory.Taxonomy)]
-    public class RemoveTermGroup : PnPCmdlet
+    public class RemoveTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0,
             HelpMessage = "Name of the taxonomy term group to delete.")]
