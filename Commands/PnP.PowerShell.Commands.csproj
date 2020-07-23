@@ -944,6 +944,7 @@
     <Compile Include="ClientSidePages\SetClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
     <Compile Include="Site\AddRoleDefinition.cs" />
+    <Compile Include="Site\SetTeamifyPromptHidden.cs" />
     <Compile Include="Site\AddTeamsTeam.cs" />
     <Compile Include="Site\GetSharingForNonOwnersOfSite.cs" />
     <Compile Include="Site\EnableCommSite.cs" />

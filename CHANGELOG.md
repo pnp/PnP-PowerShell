@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 
 ### Added
-
+- Added Set-PnPTeamifyPromptHidden to hide the teamify prompt on a group connected Team Site (modern team site)
 
 ### Contributors
 
