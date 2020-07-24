@@ -367,30 +367,31 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             applyingInformation.ProvisionFieldsToSubWebs = ProvisionFieldsToSubWebs;
 
 #if !ONPREMISES
-            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
-             {
-                 // Get Azure AD Token
-                 if (PnPConnection.CurrentConnection != null)
-                 {
-                     var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
-                     if(graphAccessToken != null)
-                     {
-                         // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                         return Task.FromResult(graphAccessToken);
-                     }
-                 }
-                 
-                 if (PnPConnection.CurrentConnection.PSCredential != null)
-                 {
-                     // Using normal credentials
-                     return Task.FromResult(TokenHandler.AcquireToken(resource, null));
-                 }
-                 else
-                 {
-                     // No token...
-                     return null;
-                 }
-             }))
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
+            {
+                // Get Azure AD Token
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    if (graphAccessToken != null)
+                    {
+                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                        return await Task.FromResult(graphAccessToken);
+                        
+                    }
+                }
+
+                if (PnPConnection.CurrentConnection.PSCredential != null)
+                {
+                    // Using normal credentials
+                    return await Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                }
+                else
+                {
+                    // No token...
+                    return await Task.FromResult<string>(null);
+                }
+            }))
             {
 #endif
                 SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
