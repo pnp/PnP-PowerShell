@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.24.2008.0]
 
 ### Added
+- Updated `Get/Set-PnPSearchSettings` with an option `-SearchBoxPlaceholderText` to set search placeholder text for the SPO nav bar search box 
 - Added Set-PnPTermGroup cmdlet to update an existing taxonomy term group.
 - Added Set-PnPTeamifyPromptHidden to hide the teamify prompt on a group connected Team Site (modern team site)
 
