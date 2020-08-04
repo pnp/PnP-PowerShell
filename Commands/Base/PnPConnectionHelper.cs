@@ -150,14 +150,26 @@ namespace PnP.PowerShell.Commands.Base
 #endif
 #endif
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry)
         {
             var connectionUri = new Uri(url);
-            var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Host}//.default" }; // the second double slash is not a typo.
+            var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
             var context = new ClientContext(url);
-
-            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(host, launchBrowser));
+            GenericToken tokenResult = null;
+            try
+            {
+                tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(host, launchBrowser));
+            }
+            catch (MsalUiRequiredException ex)
+            {
+                if (ex.Classification == UiRequiredExceptionClassification.ConsentRequired)
+                {
+                    host.UI.WriteLine("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as a Azure administrator allowing to provide consent to the application. Follow the steps provided.");
+                    throw ex;
+                }
+            }
             var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
+            //var spoConnection = new PnPConnection(context, ConnectionType.O365, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
             spoConnection.Scopes = scopes;
 
             if (spoConnection != null)
@@ -581,11 +593,31 @@ namespace PnP.PowerShell.Commands.Base
                     catch (NotSupportedException)
                     {
                         // legacy auth?
-                        using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+                        // acquire a token through the credential flow
+                        var scopes = new[] { $"{url.Scheme}://{url.Authority}//.default" };
+                        try
                         {
-                            context = PnPClientContext.ConvertFrom(authManager.GetAzureADCredentialsContext(url.ToString(), credentials.UserName, credentials.Password));
-                            context.ExecuteQueryRetry();
+                            var genericToken = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, $"{GenericToken.BaseAuthority}organizations/", credentials.UserName, credentials.Password);
+                            context.ExecutingWebRequest += (sender, args) =>
+                            {
+                                var accessToken = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, $"{GenericToken.BaseAuthority}organizations/", credentials.UserName, credentials.Password).AccessToken;
+                                args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + accessToken;
+                            };
+                            context.Credentials = null;
                         }
+                        catch (MsalUiRequiredException ex)
+                        {
+                            if (ex.Classification == UiRequiredExceptionClassification.ConsentRequired)
+                            {
+                                host.UI.WriteLine("You need to provide consent to the PnP Management Shell application for your tenant. The easiest way to do this is by issueing: 'Connect-PnPOnline -Url [yoursiteur] -PnPManagementShell -LaunchBrowser'. Make sure to authenticate as an user with appropriate access rights to to provide consent to the application. Follow the steps provided.");
+                                throw ex;
+                            }
+                        }
+                        //using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
+                        //{
+                        //    context = PnPClientContext.ConvertFrom(authManager.GetAzureADCredentialsContext(url.ToString(), credentials.UserName, credentials.Password, AzureEnvironment.Production, KnownClientId.PnPManagementShell));
+                        //    context.ExecuteQueryRetry();
+                        //}
                     }
 #endif
                     catch (ClientRequestException)

@@ -132,7 +132,6 @@ namespace PnP.PowerShell.Commands.Utilities
                     throw ex;
                 }
 #endif
-                return null;
             }
         }
 

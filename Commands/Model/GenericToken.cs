@@ -278,12 +278,6 @@ namespace PnP.PowerShell.Commands.Model
                 throw new ArgumentNullException(nameof(scopes));
             }
 
-
-            if (publicClientApplication == null)
-            {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).Build();
-            }
-
             AuthenticationResult tokenResult = null;
 
             if (publicClientApplication == null)

@@ -19,6 +19,7 @@ using System.Web.UI.WebControls;
 using PnP.PowerShell.Commands.Model;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections.Generic;
+using OfficeDevPnP.Core.Utilities;
 #if !PNPPSCORE
 using System.Security.Cryptography;
 #endif
@@ -888,29 +889,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             {
                 Url += "/";
             }
-            var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, (message) =>
-            {
-                WriteWarning(message);
-            },
-            (progress) =>
-            {
-                Host.UI.Write(progress);
-            },
-            () =>
-            {
-                if (Host.Name == "ConsoleHost")
-                {
-                    if (Console.KeyAvailable)
-                    {
-                        var cki = Console.ReadKey(true);
-                        if (cki.Key == ConsoleKey.C && cki.Modifiers == ConsoleModifiers.Control)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }, Host, NoTelemetry);
+            var connection = PnPConnectionHelper.InstantiateDeviceLoginConnection(Url, LaunchBrowser, MinimalHealthScore, RetryCount, RetryWait, RequestTimeout, TenantAdminUrl, Host, NoTelemetry);
+
             if (Host.Name == "ConsoleHost")
             {
                 Console.TreatControlCAsInput = ctrlCAsInput;
@@ -1111,6 +1091,15 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             if (officeManagementApiScopes.Length > 0)
             {
 #if !PNPPSCORE
+                //if (credentials == null)
+                //{
+                //    TokenManager.InitializeAsync(TokenManager.CLIENTID_PNPMANAGEMENTSHELL, officeManagementApiScopes.Select(s => $"https://manage.office.com/{s}").ToArray(), cacheIdentifierName: "OfficeManagementApi").GetAwaiter().GetResult();
+                //}
+                //else
+                //{
+                //    TokenManager.InitializeAsync(TokenManager.CLIENTID_PNPMANAGEMENTSHELL, officeManagementApiScopes.Select(s => $"https://manage.office.com/{s}").ToArray(), credentials.UserName, credentials.Password, cacheIdentifierName: "OfficeManagementApi").GetAwaiter().GetResult();
+                //}
+
                 var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);
 #else
                 var officeManagementApiToken = credentials == null ? OfficeManagementApiToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, PnPConnection.DeviceLoginCallback(this.Host, true)) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, officeManagementApiScopes, credentials.UserName, credentials.Password);

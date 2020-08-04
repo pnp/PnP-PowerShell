@@ -151,7 +151,7 @@
     <value>No list found with id, title or url '{0}'</value>
   </data>
   <data name="NoSharePointConnection" xml:space="preserve">
-    <value>The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument but not -SPOManagementShell or -PnPOManagementShell to connect.</value>
+    <value>The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect.</value>
   </data>
   <data name="NoConnectionToDisconnect" xml:space="preserve">
     <value>No connection to disconnect</value>

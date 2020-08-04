@@ -5,13 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.24.2008.0] not yet released
-
-### Changed
-
+## [3.24.2008.0]
 
 ### Added
+- Added Set-PnPTermGroup cmdlet to update an existing taxonomy term group.
 - Added Set-PnPTeamifyPromptHidden to hide the teamify prompt on a group connected Team Site (modern team site)
+
+### Changed
+- Changed the client id of the application used behind the scenes when authenticating to a tenant where Legacy Authentication has been turned off. We now by default utilize the PnP Management Shell application. If you have not provided consent you will be prompted with a message on how to provide consent.
 
 ### Contributors
 
