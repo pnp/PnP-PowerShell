@@ -2,7 +2,6 @@
 using OfficeDevPnP.Core.Sites;
 using PnP.PowerShell.CmdletHelpAttributes;
 using System.Management.Automation;
-using System.Runtime.Remoting.Contexts;
 
 namespace PnP.PowerShell.Commands.Site
 {
