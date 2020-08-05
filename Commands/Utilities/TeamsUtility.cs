@@ -131,6 +131,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     throw ex;
                 }
+                return null;
 #endif
             }
         }
