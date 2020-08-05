@@ -30,9 +30,9 @@ namespace PnP.PowerShell.Commands.Base
     {
 
 #if DEBUG
-        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/dev/version.txt");
+        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/PnP-PowerShell/dev/version.txt");
 #else
-        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/SharePoint/PnP-PowerShell/master/version.txt");
+        private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/PnP-PowerShell/master/version.txt");
 #endif
         private static bool VersionChecked;
 
