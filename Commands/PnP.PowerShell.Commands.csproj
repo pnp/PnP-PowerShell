@@ -11,8 +11,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.Online.Commands</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>PnP.PowerShell.Online.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -30,8 +30,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.2013.Commands</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>PnP.PowerShell.2013.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -49,8 +49,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.2016.Commands</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>PnP.PowerShell.2016.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -68,8 +68,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.2019.Commands</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>PnP.PowerShell.2019.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -135,14 +135,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug19|AnyCPU'">
@@ -162,9 +154,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyName>PnP.PowerShell.Online.Commands</AssemblyName>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
