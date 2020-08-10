@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Base
+namespace PnP.PowerShell.Tests.Base
 {
     [TestClass]
     public class GetPnPAppAuthAccessTokenTests

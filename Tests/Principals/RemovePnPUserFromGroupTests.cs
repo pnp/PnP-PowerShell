@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Principals
+namespace PnP.PowerShell.Tests.Principals
 {
     [TestClass]
     public class RemoveUserFromGroupTests

@@ -1,14 +1,14 @@
 ﻿#if !ONPREMISES
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
-using SharePointPnP.PowerShell.Commands.Utilities;
-using SharePointPnP.PowerShell.Commands.Utilities.REST;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.Teams;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Teams
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsChannel")]
     [CmdletHelp("Removes a channel from a Microsoft Teams instance.",
@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
                     var channel = Identity.GetChannel(HttpClient, AccessToken, groupId);
                     if (channel != null)
                     {
-                        var response = TeamsUtility.DeleteChannel(AccessToken, HttpClient, groupId, channel.Id);
+                        var response = TeamsUtility.DeleteChannelAsync(AccessToken, HttpClient, groupId, channel.Id).GetAwaiter().GetResult();
                         if (!response.IsSuccessStatusCode)
                         {
                             if (GraphHelper.TryGetGraphException(response, out GraphException ex))

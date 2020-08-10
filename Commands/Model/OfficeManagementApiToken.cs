@@ -1,35 +1,20 @@
 ﻿using Microsoft.Identity.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     /// <summary>
     /// Contains an Office 365 Management API JWT oAuth token
     /// </summary>
     public class OfficeManagementApiToken : GenericToken
     {
-        private static IPublicClientApplication publicClientApplication;
-        private static IConfidentialClientApplication confidentialClientApplication;
-
         /// <summary>
         /// The resource identifier for Microsoft Office 365 Management API tokens
         /// </summary>
         public const string ResourceIdentifier = "https://manage.office.com";
-
-        /// <summary>
-        /// The name of the default scope
-        /// </summary>
-        private const string DefaultScope = ".default";
-
-        /// <summary>
-        /// The base URL to request a token from
-        /// </summary>
-        private const string OAuthBaseUrl = "https://login.microsoftonline.com/";
 
         /// <summary>
         /// Instantiates a new Office 365 Management API token
@@ -37,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
         /// <param name="accesstoken">Accesstoken of which to instantiate a new token</param>
         public OfficeManagementApiToken(string accesstoken) : base(accesstoken)
         {
-            TokenAudience = Enums.TokenAudience.MicrosoftGraph;
+            TokenAudience = Enums.TokenAudience.OfficeManagementApi;
         }
 
         /// <summary>
@@ -49,37 +34,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
         public static GenericToken AcquireApplicationToken(string tenant, string clientId, X509Certificate2 certificate)
         {
-            if (string.IsNullOrEmpty(tenant))
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (certificate == null)
-            {
-                throw new ArgumentNullException(nameof(certificate));
-            }
-
-            if (confidentialClientApplication == null)
-            {
-                confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}{tenant}").WithCertificate(certificate).Build();
-            }
-            var accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            AuthenticationResult tokenResult = null;
-
-            try
-            {
-                tokenResult = confidentialClientApplication.AcquireTokenSilent(new[] { $"{ResourceIdentifier}/{DefaultScope}" }, accounts.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = confidentialClientApplication.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
-            }
-
-            return new OfficeManagementApiToken(tokenResult.AccessToken);
+            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{BaseAuthority}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
         }
 
         /// <summary>
@@ -91,38 +46,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
         public static GenericToken AcquireApplicationToken(string tenant, string clientId, string clientSecret)
         {
-            if (string.IsNullOrEmpty(tenant))
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (string.IsNullOrEmpty(clientSecret))
-            {
-                throw new ArgumentNullException(nameof(clientSecret));
-            }
-
-            if (confidentialClientApplication == null)
-            {
-                confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}{tenant}").WithClientSecret(clientSecret).Build();
-            }
-
-            var accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            AuthenticationResult tokenResult = null;
-
-            try
-            {
-                tokenResult = confidentialClientApplication.AcquireTokenSilent(new[] { $"{ResourceIdentifier}/{DefaultScope}" }, accounts.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = confidentialClientApplication.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
-            }
-
-            return new OfficeManagementApiToken(tokenResult.AccessToken);
+            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{BaseAuthority}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, clientSecret).AccessToken);
         }
 
         /// <summary>
@@ -131,36 +55,14 @@ namespace SharePointPnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="scopes">Array with scopes that should be requested access to. Required.</param>
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
+        public static new GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
         {
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (scopes == null || scopes.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
+            return new OfficeManagementApiToken(GenericToken.AcquireApplicationTokenInteractive(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).AccessToken);
+        }
 
-            if (publicClientApplication == null)
-            {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
-            }
-
-            var accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            AuthenticationResult tokenResult = null;
-
-            try
-            {
-                tokenResult = publicClientApplication.AcquireTokenSilent(new[] { $"{ResourceIdentifier}/{DefaultScope}" }, accounts.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-
-            return new OfficeManagementApiToken(tokenResult.AccessToken);
+        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)
+        {
+            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{BaseAuthority}organizations", callBackAction).AccessToken);
         }
 
         /// <summary>
@@ -173,71 +75,7 @@ namespace SharePointPnP.PowerShell.Commands.Model
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
         public static GenericToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string username, SecureString securePassword)
         {
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (scopes == null || scopes.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
-            if (string.IsNullOrEmpty(username))
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (securePassword == null || securePassword.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(securePassword));
-            }
-
-
-            if (publicClientApplication == null)
-            {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId)
-                // Delegated Graph token using credentials is only possible against organizational tenants
-                .WithAuthority($"{OAuthBaseUrl}organizations/")
-                .Build();
-            }
-
-            var accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            AuthenticationResult tokenResult = null;
-
-            try
-            {
-                tokenResult = publicClientApplication.AcquireTokenSilent(new[] { $"{ResourceIdentifier}/{DefaultScope}" }, accounts.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = publicClientApplication.AcquireTokenByUsernamePassword(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), username, securePassword).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            return new OfficeManagementApiToken(tokenResult.AccessToken);
-        }
-
-        public static void ClearCaches()
-        {
-            if (publicClientApplication != null)
-            {
-                var accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
-
-                // clear the cache
-                while (accounts.Any())
-                {
-                    publicClientApplication.RemoveAsync(accounts.First());
-                    accounts = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
-                }
-            }
-            if (confidentialClientApplication != null)
-            {
-                var accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
-
-                // clear the cache
-                while (accounts.Any())
-                {
-                    confidentialClientApplication.RemoveAsync(accounts.First());
-                    accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
-                }
-            }
+            return new OfficeManagementApiToken(GenericToken.AcquireDelegatedTokenWithCredentials(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{BaseAuthority}organizations/", username, securePassword).AccessToken);
         }
     }
 }

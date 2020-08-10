@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Admin
+namespace PnP.PowerShell.Tests.Admin
 {
     [TestClass]
     public class AddOrgNewsSiteTests

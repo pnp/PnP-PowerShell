@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.Diagnostic
+namespace PnP.PowerShell.Tests.Diagnostic
 {
     [TestClass]
     public class MeasureResponseTimeTests

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Management.Automation.Runspaces;
 using System.Xml;
 
-namespace SharePointPnP.PowerShell.Tests
+namespace PnP.PowerShell.Tests
 {
     [TestClass]
     public class ProvisioningTemplateTests

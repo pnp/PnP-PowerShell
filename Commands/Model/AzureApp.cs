@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     internal class AzureApp
     {
@@ -19,9 +16,9 @@ namespace SharePointPnP.PowerShell.Commands.Model
     {
         [JsonIgnore]
         public string resourceAppId { get; set; }
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; } = "Role";
         [JsonIgnore]
         public string Identifier { get; set; }
@@ -200,9 +197,9 @@ namespace SharePointPnP.PowerShell.Commands.Model
 
     public class AppResource
     {
-        [JsonProperty("resourceAppId")]
+        [JsonPropertyName("resourceAppId")]
         public string Id { get; set; }
-        [JsonProperty("resourceAccess")]
+        [JsonPropertyName("resourceAccess")]
         public List<PermissionScope> ResourceAccess { get; set; } = new List<PermissionScope>();
     }
 }

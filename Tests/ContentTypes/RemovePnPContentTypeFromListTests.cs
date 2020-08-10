@@ -2,7 +2,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 
-namespace SharePointPnP.PowerShell.Tests.ContentTypes
+namespace PnP.PowerShell.Tests.ContentTypes
 {
     [TestClass]
     public class RemoveContentTypeFromListTests

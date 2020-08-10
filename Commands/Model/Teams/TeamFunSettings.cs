@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Model.Teams
+namespace PnP.PowerShell.Commands.Model.Teams
 {
     public partial class TeamFunSettings
     {
-        #region Private Members
-
-        private string _giphyContentRating;
-
-        #endregion
-
         #region Public Members
 
         /// <summary>
@@ -24,6 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
         /// <summary>
         /// Defines the Content Rating for Giphys
         /// </summary>
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TeamGiphyContentRating GiphyContentRating { get; set; }
 
         /// <summary>

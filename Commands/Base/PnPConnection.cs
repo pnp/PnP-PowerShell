@@ -1,13 +1,11 @@
 ﻿using Microsoft.ApplicationInsights;
 using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.SecurityTokenService;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Extensions;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Enums;
-using SharePointPnP.PowerShell.Commands.Model;
-using SharePointPnP.PowerShell.Commands.Utilities;
-using SharePointPnP.PowerShell.Core.Attributes;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Core.Attributes;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +16,10 @@ using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
+using TextCopy;
+using PnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     public class PnPConnection
     {
@@ -28,9 +28,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
         /// <summary>
         /// ClientId of the application registered in Azure Active Directory which should be used for the device oAuth flow
         /// </summary>
-        internal const string DeviceLoginClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
-        //private const string MSALPnPPowerShellClientId = "bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71";
-        //private const string MSALPnPPowerShellClientId = DeviceLoginClientId;
+        internal const string PnPManagementShellClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
         #endregion
 
         #region Properties
@@ -146,30 +144,12 @@ namespace SharePointPnP.PowerShell.Commands.Base
         {
             return deviceCodeResult =>
             {
+
                 if (launchBrowser)
                 {
-                    Utilities.Clipboard.CopyNew(deviceCodeResult.UserCode);
+                    ClipboardService.SetText(deviceCodeResult.UserCode);
                     host?.UI.WriteLine($"Code {deviceCodeResult.UserCode} has been copied to clipboard");
-#if !NETSTANDARD2_1
-                    BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl, (success) =>
-                    {
-                    });
-#else
-                OpenBrowser(returnData["verification_url"]);
-                messageCallback(returnData["message"]);
-
-                var tokenResult = GetTokenResult(connectionUri, returnData, messageCallback, progressCallback, cancelRequest);
-
-                if (tokenResult != null)
-                {
-                    progressCallback("Token received");
-                    spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
-                }
-                else
-                {
-                    progressCallback("No token received.");
-                }
-#endif
+                    BrowserHelper.LaunchBrowser(deviceCodeResult.VerificationUrl);
                 }
                 else
                 {
@@ -196,7 +176,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                         var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
                         // Take the remaining scopes and try requesting them from the Microsoft Graph API
                         var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
-                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, scopes, DeviceLoginCallback(null, false));
+                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false));
                     }
                     else
                     {
@@ -217,7 +197,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                                 var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
                                 if (scopes.Length > 0)
                                 {
-                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
+                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password);
                                 }
                                 else
                                 {
@@ -245,7 +225,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                             // Take the remaining scopes and try requesting them from the Microsoft Graph API
                             if (scopes.Length > 0)
                             {
-                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, scopes, PSCredential.UserName, PSCredential.Password);
+                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password);
                             }
                             else
                             {
@@ -268,8 +248,6 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 {
                     throw new PSSecurityException($"Access to {tokenAudience} failed because the app registration {ClientId} in tenant {Tenant} is not granted {validationResults.message}");
                 }
-                // Managed to create a token for the requested audience, add it to our collection with tokens
-                //AccessTokens[tokenAudience] = token;
                 return token;
             }
 
@@ -616,7 +594,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
             PnPVersionTag = pnpVersionTag;
             Url = (new Uri(url)).AbsoluteUri;
             ConnectionMethod = ConnectionMethod.AccessToken;
-            ClientId = DeviceLoginClientId;
+            ClientId = PnPManagementShellClientId;
             Tenant = tokenResult.ParsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
             context.ExecutingWebRequest += (sender, args) =>
             {
@@ -688,7 +666,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
-#if !ONPREMISES && !NETSTANDARD2_1
+#if !ONPREMISES && !PNPPSCORE
                     if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
                     {
                         // legacy auth?
@@ -702,7 +680,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                     {
 #endif
                         throw;
-#if !ONPREMISES && !NETSTANDARD2_1
+#if !ONPREMISES && !PNPPSCORE
                     }
 #endif
                 }
@@ -783,7 +761,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
                 TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
                 TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("ServerLibraryVersion", serverLibraryVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ServerVersion", serverVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ConnectionMethod", initializationType.ToString());
@@ -793,7 +771,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Properties.Add("ConnectionMethod", initializationType.ToString());
 #endif
                 var coreAssembly = Assembly.GetExecutingAssembly();
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
 #else
                 TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
@@ -806,7 +784,7 @@ namespace SharePointPnP.PowerShell.Commands.Base
 #elif SP2019
             TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2019");
 #else
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("Platform", "SPO");
 #else
                 TelemetryClient.Context.Properties.Add("Platform", "SPO");

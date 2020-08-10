@@ -1,18 +1,13 @@
-﻿using Microsoft.Graph;
-using Microsoft.Identity.Client;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
+﻿using PnP.PowerShell.Commands.Model.Teams;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Utilities.REST
+namespace PnP.PowerShell.Commands.Utilities.REST
 {
     internal static class GraphHelper
     {
@@ -31,7 +26,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             }
             try
             {
-                exception = JsonConvert.DeserializeObject<GraphException>(content);
+                exception = JsonSerializer.Deserialize<GraphException>(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 return true;
             }
             catch
@@ -52,11 +47,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             message.Method = method;
             message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://graph.microsoft.com/{url}") : new Uri(url);
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-#if NETSTANDARD2_1
-            if (method == HttpMethod.Post || method == HttpMethod.Put || method == HttpMethod.Patch)
-#else
             if (method == HttpMethod.Post || method == HttpMethod.Put || method.Method == "PATCH")
-#endif
             {
                 message.Content = content;
             }
@@ -70,16 +61,21 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             return await SendMessageAsync(httpClient, message);
         }
 
-        public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, string accessToken)
+        public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, string accessToken, bool camlCasePolicy = true)
         {
             var stringContent = await GetAsync(httpClient, url, accessToken);
             if (stringContent != null)
             {
+                var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                if (camlCasePolicy)
+                {
+                    options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                }
                 try
                 {
-                    return JsonConvert.DeserializeObject<T>(stringContent);
+                    return JsonSerializer.Deserialize<T>(stringContent, options);
                 }
-                catch
+                catch (Exception ex)
                 {
                     return default(T);
                 }
@@ -103,17 +99,13 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PatchAsync<T>(HttpClient httpClient, string accessToken, string url, T content)
         {
-            var requestContent = new StringContent(JsonConvert.SerializeObject(content, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-#if NETSTANDARD2_1
-            var message = GetMessage(url, HttpMethod.Patch, accessToken, requestContent);
-#else
             var message = GetMessage(url, new HttpMethod("PATCH"), accessToken, requestContent);
-#endif
             var returnValue = await SendMessageAsync(httpClient, message);
             if (!string.IsNullOrEmpty(returnValue))
             {
-                return JsonConvert.DeserializeObject<T>(returnValue);
+                return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             }
             else
             {
@@ -125,20 +117,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, HttpContent content, string accessToken)
         {
-            var message = GetMessage(url, HttpMethod.Post, accessToken, content);
-            var stringContent = await SendMessageAsync(httpClient, message);
-            if (stringContent != null)
-            {
-                try
-                {
-                    return JsonConvert.DeserializeObject<T>(stringContent);
-                }
-                catch
-                {
-                    return default;
-                }
-            }
-            return default;
+            return await PostInternalAsync<T>(httpClient, url, accessToken, content);
         }
 
         public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content)
@@ -149,7 +128,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             {
                 try
                 {
-                    return JsonConvert.DeserializeObject<T>(stringContent);
+                    return JsonSerializer.Deserialize<T>(stringContent);
                 }
                 catch
                 {
@@ -161,29 +140,44 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, T content, string accessToken)
         {
-            var requestContent = new StringContent(JsonConvert.SerializeObject(content, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var message = GetMessage(url, HttpMethod.Post, accessToken, requestContent);
-            var returnValue = await SendMessageAsync(httpClient, message);
-            if (!string.IsNullOrEmpty(returnValue))
+
+            return await PostInternalAsync<T>(httpClient, url, accessToken, requestContent);
+        }
+
+        public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, string accessToken)
+        {
+            return await PostInternalAsync<T>(httpClient, url, accessToken, null);
+        }
+
+        private static async Task<T> PostInternalAsync<T>(HttpClient httpClient, string url, string accessToken, HttpContent content)
+        {
+            var message = GetMessage(url, HttpMethod.Post, accessToken, content);
+            var stringContent = await SendMessageAsync(httpClient, message);
+            if (stringContent != null)
             {
-                return JsonConvert.DeserializeObject<T>(returnValue);
+                try
+                {
+                    return JsonSerializer.Deserialize<T>(stringContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                }
+                catch
+                {
+                    return default;
+                }
             }
-            else
-            {
-                return default;
-            }
+            return default;
         }
 
         public static async Task<T> PutAsync<T>(HttpClient httpClient, string url, T content, string accessToken)
         {
-            var requestContent = new StringContent(JsonConvert.SerializeObject(content, new JsonSerializerSettings() { DefaultValueHandling = DefaultValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() }));
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var message = GetMessage(url, HttpMethod.Put, accessToken, requestContent);
             var returnValue = await SendMessageAsync(httpClient, message);
             if (!string.IsNullOrEmpty(returnValue))
             {
-                return JsonConvert.DeserializeObject<T>(returnValue);
+                return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             }
             else
             {
@@ -215,7 +209,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities.REST
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                var exception = JsonConvert.DeserializeObject<GraphException>(errorContent);
+                var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 throw exception;
             }
         }

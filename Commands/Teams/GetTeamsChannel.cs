@@ -1,15 +1,15 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Graph;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Teams
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannel")]
     [CmdletHelp("Gets the channels for a specified Team.",
@@ -48,7 +48,7 @@ namespace SharePointPnP.PowerShell.Commands.Teams
                 }
                 else
                 {
-                    WriteObject(TeamsUtility.GetChannels(AccessToken, HttpClient, groupId));
+                    WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult());
                 }
             } else
             {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointPnP.PowerShell.Commands", "Commands\SharePointPnP.PowerShell.Commands.csproj", "{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PnP.PowerShell.Commands", "Commands\PnP.PowerShell.Commands.csproj", "{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DF6DEB88-12E0-48FA-A717-9404832E52CC} = {DF6DEB88-12E0-48FA-A717-9404832E52CC}
 	EndProjectSection
@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{8F9F
 		PostBuild.ps1 = PostBuild.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointPnP.PowerShell.CmdletHelpAttributes", "HelpAttributes\SharePointPnP.PowerShell.CmdletHelpAttributes.csproj", "{FDD50BBD-AE78-4B10-9549-0566686719AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PnP.PowerShell.CmdletHelpAttributes", "HelpAttributes\PnP.PowerShell.CmdletHelpAttributes.csproj", "{FDD50BBD-AE78-4B10-9549-0566686719AB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{AB70588E-5972-4D9B-9342-C8CA3275F80A}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,9 +25,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		version.txt = version.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointPnP.PowerShell.Tests", "Tests\SharePointPnP.PowerShell.Tests.csproj", "{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PnP.PowerShell.Tests", "Tests\PnP.PowerShell.Tests.csproj", "{AD2E3CF9-65C7-40FD-9F52-CE8259031C6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharePointPnP.PowerShell.ModuleFilesGenerator", "ModuleFilesGenerator\SharePointPnP.PowerShell.ModuleFilesGenerator.csproj", "{DF6DEB88-12E0-48FA-A717-9404832E52CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PnP.PowerShell.ModuleFilesGenerator", "ModuleFilesGenerator\PnP.PowerShell.ModuleFilesGenerator.csproj", "{DF6DEB88-12E0-48FA-A717-9404832E52CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

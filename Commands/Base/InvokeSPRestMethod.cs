@@ -1,9 +1,8 @@
-﻿#if !NETSTANDARD2_1
+﻿#if !PNPPSCORE
 using Microsoft.SharePoint.Client;
-using Newtonsoft.Json;
 using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +12,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
 using System.Web.Script.Serialization;
 #endif
 
-namespace SharePointPnP.PowerShell.Commands.Admin
+namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSPRestMethod")]
     [CmdletHelp("Invokes a REST request towards a SharePoint site",
@@ -116,7 +116,7 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
                             ContentType = "application/json";
                         }
                         var contentString = Content is string ? Content.ToString() :
-                            JsonConvert.SerializeObject(Content, Formatting.None);
+                            JsonSerializer.Serialize(Content);
                         request.Content = new StringContent(contentString, System.Text.Encoding.UTF8);
                         request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(ContentType);
                     }
@@ -128,7 +128,7 @@ PS:> Invoke-PnPSPRestMethod -Method Post -Url ""/_api/web/lists/GetByTitle('Test
                         var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                         if (responseString != null)
                         {
-#if NETSTANDARD2_1
+#if PNPPSCORE
                             WriteObject(System.Text.Json.JsonSerializer.Deserialize<object>(responseString));
 #else
                             WriteObject(new JavaScriptSerializer().DeserializeObject(responseString));

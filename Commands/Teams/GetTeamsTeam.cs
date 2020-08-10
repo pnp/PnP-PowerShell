@@ -1,11 +1,12 @@
 ﻿#if !ONPREMISES
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam")]
     [CmdletHelp("Gets one Microsoft Teams Team or a list of Teams.",
@@ -39,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 var groupId = Identity.GetGroupId(HttpClient, AccessToken);
                 if (groupId != null)
                 {
-                    WriteObject(TeamsUtility.GetTeam(AccessToken, HttpClient, groupId));
+                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult());
                 }
                 else
                 {
@@ -48,7 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeams(AccessToken, HttpClient), true);
+                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, HttpClient).GetAwaiter().GetResult(), true);
             }
         }
     }

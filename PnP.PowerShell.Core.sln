@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnPPowerShell", "Commands\PnPPowerShell.csproj", "{F91159F1-31F8-47CF-B546-9487F9EF8426}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell.Core", "Commands\PnP.PowerShell.Core.csproj", "{F91159F1-31F8-47CF-B546-9487F9EF8426}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharePointPnP.PowerShell.Core.Attributes", "HelpAttributes\SharePointPnP.PowerShell.Core.Attributes.csproj", "{2F4E9C95-E61A-44AB-8983-108ADCFE23F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell.Core.Attributes", "HelpAttributes\PnP.PowerShell.Core.Attributes.csproj", "{2F4E9C95-E61A-44AB-8983-108ADCFE23F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{55B21B7C-D936-4411-B03C-6030A7C826A1}"
 	ProjectSection(SolutionItems) = preProject
 		PostBuild.ps1 = PostBuild.ps1
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharePointPnP.PowerShell.Core.ModuleFilesGenerator", "ModuleFilesGenerator\SharePointPnP.PowerShell.Core.ModuleFilesGenerator.csproj", "{2B367283-B36E-43BB-9325-7D2DF675906D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell.Core.ModuleFilesGenerator", "ModuleFilesGenerator\PnP.PowerShell.Core.ModuleFilesGenerator.csproj", "{2B367283-B36E-43BB-9325-7D2DF675906D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{6D788265-F91C-4E2E-AEEE-23A012871023}"
 	ProjectSection(SolutionItems) = preProject

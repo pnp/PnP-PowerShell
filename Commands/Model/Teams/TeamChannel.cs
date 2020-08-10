@@ -1,20 +1,14 @@
-﻿using Microsoft.Graph;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace SharePointPnP.PowerShell.Commands.Model.Teams
+namespace PnP.PowerShell.Commands.Model.Teams
 {
     public partial class TeamChannel
     {
         #region Public Members
 
-        [JsonProperty("@odata.type")]
+        [JsonPropertyName("@odata.type")]
         public string Type { get; set; }
-
         /// <summary>
         /// Defines a collection of Tabs for a Channel in a Team
         /// </summary>
@@ -57,18 +51,5 @@ namespace SharePointPnP.PowerShell.Commands.Model.Teams
         public List<TeamChannelMember> Members { get; set; }
 
         #endregion
-    }
-
-
-    public class TeamChannelMember
-    {
-        [JsonProperty("@odata.type")]
-        public string Type { get; set; } = "#microsoft.graph.aadUserConversationMember";
-
-        [JsonProperty("user@odata.bind")]
-        public string UserIdentifier { get; set; }
-
-        [JsonProperty("roles")]
-        public List<string> Roles { get; set; } = new List<string>();
     }
 }

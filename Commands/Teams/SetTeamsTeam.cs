@@ -1,14 +1,15 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Model.Teams;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Model.Teams;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.Teams;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTeam")]
     [CmdletHelp("Updates an existing Team.",
@@ -93,7 +94,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             {
                 try
                 {
-                    var team = TeamsUtility.GetTeam(AccessToken, HttpClient, groupId);
+                    var team = TeamsUtility.GetTeamAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult();
                     var updateGroup = false;
                     var group = new Group();
                     if (team != null)
@@ -125,7 +126,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
                         if(updateGroup)
                         {
-                            TeamsUtility.UpdateGroup(HttpClient, AccessToken, groupId, group);
+                            TeamsUtility.UpdateGroupAsync(HttpClient, AccessToken, groupId, group).GetAwaiter().GetResult();
                         }
 
                         var teamCI = new TeamCreationInformation();
@@ -136,7 +137,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                         teamCI.AllowCreateUpdateRemoveTabs = ParameterSpecified(nameof(AllowCreateUpdateRemoveTabs)) ? AllowCreateUpdateRemoveTabs : null;
                         teamCI.AllowCustomMemes = ParameterSpecified(nameof(AllowCustomMemes)) ? AllowCustomMemes : null;
                         teamCI.AllowDeleteChannels = ParameterSpecified(nameof(AllowDeleteChannels)) ? AllowDeleteChannels : null;
-                        teamCI.AllowGiphy = ParameterSpecified(nameof(AllowGiphy)) ? AllowGiphy : null; ;
+                        teamCI.AllowGiphy = ParameterSpecified(nameof(AllowGiphy)) ? AllowGiphy : null;
                         teamCI.AllowGuestCreateUpdateChannels = ParameterSpecified(nameof(AllowGuestCreateUpdateChannels)) ? AllowGuestCreateUpdateChannels : null;
                         teamCI.AllowGuestDeleteChannels = ParameterSpecified(nameof(AllowGuestDeleteChannels)) ? AllowGuestDeleteChannels : null;
                         teamCI.AllowOwnerDeleteMessages = ParameterSpecified(nameof(AllowOwnerDeleteMessages)) ? AllowOwnerDeleteMessages : null;
@@ -145,8 +146,8 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                         teamCI.AllowUserDeleteMessages = ParameterSpecified(nameof(AllowUserDeleteMessages)) ? AllowUserDeleteMessages : null;
                         teamCI.AllowUserEditMessages = ParameterSpecified(nameof(AllowUserEditMessages)) ? AllowUserEditMessages : null;
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
-                        
-                        var updated = TeamsUtility.UpdateTeam(HttpClient, AccessToken, groupId, teamCI.ToTeam());
+
+                        var updated = TeamsUtility.UpdateTeamAsync(HttpClient, AccessToken, groupId, teamCI.ToTeam()).GetAwaiter().GetResult();
                         WriteObject(updated);
                     }
                 }

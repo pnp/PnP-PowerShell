@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharePointPnP.PowerShell.Core.Attributes
+namespace PnP.PowerShell.Core.Attributes
 {
     public enum TokenType : short
     {
