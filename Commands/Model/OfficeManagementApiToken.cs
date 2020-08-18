@@ -1,4 +1,5 @@
 ﻿using Microsoft.Identity.Client;
+using OfficeDevPnP.Core;
 using System;
 using System.Linq;
 using System.Security;
@@ -32,9 +33,10 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="certificate">Certificate to use to acquire the token. Required.</param>
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationToken(string tenant, string clientId, X509Certificate2 certificate)
+        public static GenericToken AcquireApplicationToken(string tenant, string clientId, X509Certificate2 certificate, AzureEnvironment azureEnvironment)
         {
-            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{BaseAuthority}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
+            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{endPoint}/{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
         }
 
         /// <summary>
@@ -44,9 +46,10 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="clientSecret">Client Secret to use to acquire the token. Required.</param>
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationToken(string tenant, string clientId, string clientSecret)
+        public static GenericToken AcquireApplicationToken(string tenant, string clientId, string clientSecret, AzureEnvironment azureEnvironment)
         {
-            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{BaseAuthority}{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, clientSecret).AccessToken);
+            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+            return new OfficeManagementApiToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{endPoint}/{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, clientSecret).AccessToken);
         }
 
         /// <summary>
@@ -55,14 +58,15 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="scopes">Array with scopes that should be requested access to. Required.</param>
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
-        public static new GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
+        public static new GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes, AzureEnvironment azureEnvironment)
         {
-            return new OfficeManagementApiToken(GenericToken.AcquireApplicationTokenInteractive(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).AccessToken);
+            return new OfficeManagementApiToken(GenericToken.AcquireApplicationTokenInteractive(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), azureEnvironment).AccessToken);
         }
 
-        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)
+        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction, AzureEnvironment azureEnvironment)
         {
-            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{BaseAuthority}organizations", callBackAction).AccessToken);
+            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{endPoint}/organizations", callBackAction).AccessToken);
         }
 
         /// <summary>
@@ -73,9 +77,10 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="username">The username to authenticate with. Required.</param>
         /// <param name="securePassword">The password to authenticate with. Required.</param>
         /// <returns><see cref="OfficeManagementApiToken"/> instance with the token</returns>
-        public static GenericToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string username, SecureString securePassword)
+        public static GenericToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string username, SecureString securePassword, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            return new OfficeManagementApiToken(GenericToken.AcquireDelegatedTokenWithCredentials(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{BaseAuthority}organizations/", username, securePassword).AccessToken);
+            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+            return new OfficeManagementApiToken(GenericToken.AcquireDelegatedTokenWithCredentials(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{endPoint}/organizations/", username, securePassword).AccessToken);
         }
     }
 }

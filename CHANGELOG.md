@@ -9,10 +9,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added -AzureEnvironment parameter to `Initialize-PnPPowerShellAuthentication` to create an Azure AD App in other Azure environments than the default one. 
+- Added -AzureEnvironment parameter to all Connect-PnPOnline options which result in an OAuth based authentication connection, supporting the various Azure Environments available. 
 
 ### Changed
 - Fixed issue with Submit-PnPTeamsChannelMessage not posting HTML message when setting the content type to Html.
 - The content type that Submit-PnPTeamsChannelMessage uses defaults now to HTML.
+- Fixed an issue with the PnP Provisioning Engine not being able to correctly acquire a token for the Microsoft Graph when provisioning a tenant template containing a Team.
 
 ### Contributors
 

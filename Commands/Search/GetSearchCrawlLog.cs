@@ -6,6 +6,7 @@ using System.Web;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
 using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Search
 {
@@ -114,14 +115,14 @@ namespace PnP.PowerShell.Commands.Search
                 string postFilter = string.Empty;
                 if (string.IsNullOrWhiteSpace(Filter) && ContentSource == ContentSource.Sites)
                 {
-                    Filter = $"https://{GetHostName()}.sharepoint.com";
+                    Filter = $"https://{GetHostName()}.sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(PnPConnection.CurrentConnection.AzureEnvironment)}";
                 }
 
                 int origLimit = RowLimit;
                 if (ContentSource == ContentSource.UserProfiles)
                 {
                     postFilter = Filter;
-                    Filter = $"https://{GetHostName()}-my.sharepoint.com";
+                    Filter = $"https://{GetHostName()}-my.sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(PnPConnection.CurrentConnection.AzureEnvironment)}";
                     RowLimit = MaxRows;
                 }
 
@@ -178,13 +179,13 @@ namespace PnP.PowerShell.Commands.Search
 
         private string GetHostName()
         {
-            return new Uri(ClientContext.Url).Host.Replace("-admin", "").Replace("-public", "").Replace("-my", "").Replace(".sharepoint.com", "");
+            return new Uri(ClientContext.Url).Host.Replace("-admin", "").Replace("-public", "").Replace("-my", "").Replace($".sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(PnPConnection.CurrentConnection.AzureEnvironment)}", "");
         }
 
         private int GetContentSourceIdForSites(DocumentCrawlLog crawlLog)
         {
             var hostName = GetHostName();
-            var spContent = crawlLog.GetCrawledUrls(false, 10, $"https://{hostName}.sharepoint.com/sites", true, -1, (int)LogLevel.All, -1, DateTime.Now.AddDays(-100), DateTime.Now.AddDays(1));
+            var spContent = crawlLog.GetCrawledUrls(false, 10, $"https://{hostName}.sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(PnPConnection.CurrentConnection.AzureEnvironment)}/sites", true, -1, (int)LogLevel.All, -1, DateTime.Now.AddDays(-100), DateTime.Now.AddDays(1));
             ClientContext.ExecuteQueryRetry();
             if (spContent.Value.Rows.Count > 0) return (int)spContent.Value.Rows.First()["ContentSourceID"];
             return -1;
@@ -193,7 +194,7 @@ namespace PnP.PowerShell.Commands.Search
         private int GetContentSourceIdForUserProfiles(DocumentCrawlLog crawlLog)
         {
             var hostName = GetHostName();
-            var peopleContent = crawlLog.GetCrawledUrls(false, 100, $"sps3s://{hostName}-my.sharepoint.com", true, -1, (int)LogLevel.All, -1, DateTime.Now.AddDays(-100), DateTime.Now.AddDays(1));
+            var peopleContent = crawlLog.GetCrawledUrls(false, 100, $"sps3s://{hostName}-my.sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(PnPConnection.CurrentConnection.AzureEnvironment)}", true, -1, (int)LogLevel.All, -1, DateTime.Now.AddDays(-100), DateTime.Now.AddDays(1));
             ClientContext.ExecuteQueryRetry();
             if (peopleContent.Value.Rows.Count > 0) return (int)peopleContent.Value.Rows.First()["ContentSourceID"];
             return -1;

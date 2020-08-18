@@ -10,6 +10,7 @@ using Microsoft.Identity.Client;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Security;
+using OfficeDevPnP.Core;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -118,10 +119,12 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="password">Password to use to acquire the token</param>
         /// <param name="resource">Resource to acquire the token for (i.e. AllSites.FullControl)</param>
         /// <returns></returns>
-        public static GenericToken AcquireV1Token(string tenant, string clientId, string username, string password, string resource)
+        public static GenericToken AcquireV1Token(string tenant, string clientId, string username, string password, string resource, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
+            var endPoint = GetAzureADLoginEndPoint(azureEnvironment);
+
             var body = $"grant_type=password&client_id={clientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&resource={resource}";
-            var response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenant}/oauth2/token", body, "application/x-www-form-urlencoded");
+            var response = HttpHelper.MakePostRequestForString($"{endPoint}/{tenant}/oauth2/token", body, "application/x-www-form-urlencoded");
             using (var jdoc = JsonDocument.Parse(response))
             {
                 return new GenericToken(jdoc.RootElement.GetProperty("access_token").GetString());
@@ -141,10 +144,11 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="password">Password to use to acquire the token</param>
         /// <param name="scopes">One or more scopes to acquire the token for (i.e. AllSites.FullControl)</param>
         /// <returns></returns>
-        public static GenericToken AcquireV2Token(string tenant, string clientId, string username, string password, string[] scopes)
+        public static GenericToken AcquireV2Token(string tenant, string clientId, string username, string password, string[] scopes, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
+            var endPoint = GetAzureADLoginEndPoint(azureEnvironment);
             var body = $"grant_type=password&client_id={clientId}&username={HttpUtility.UrlEncode(username)}&password={HttpUtility.UrlEncode(password)}&scope={string.Join(" ", scopes)}";
-            var response = HttpHelper.MakePostRequestForString($"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token", body, "application/x-www-form-urlencoded");
+            var response = HttpHelper.MakePostRequestForString($"{endPoint}/{tenant}/oauth2/v2.0/token", body, "application/x-www-form-urlencoded");
 
             using (var jdoc = JsonDocument.Parse(response))
             {
@@ -235,8 +239,9 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="scopes">Array with scopes that should be requested access to. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
+        public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes, AzureEnvironment azureEnvironment)
         {
+            var endPoint = GetAzureADLoginEndPoint(azureEnvironment);
             if (string.IsNullOrEmpty(clientId))
             {
                 throw new ArgumentNullException(nameof(clientId));
@@ -249,7 +254,7 @@ namespace PnP.PowerShell.Commands.Model
 
             if (publicClientApplication == null)
             {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
+                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithRedirectUri($"{endPoint}/common/oauth2/nativeclient").Build();
             }
 
             AuthenticationResult tokenResult = null;
@@ -377,6 +382,37 @@ namespace PnP.PowerShell.Commands.Model
                     accounts = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult().ToList();
                 }
                 confidentialClientApplication = null;
+            }
+        }
+
+        internal static string GetAzureADLoginEndPoint(AzureEnvironment environment)
+        {
+            switch (environment)
+            {
+                case AzureEnvironment.Production:
+                    {
+                        return "https://login.microsoftonline.com";
+                    }
+                case AzureEnvironment.Germany:
+                    {
+                        return "https://login.microsoftonline.de";
+                    }
+                case AzureEnvironment.China:
+                    {
+                        return "https://login.chinacloudapi.cn";
+                    }
+                case AzureEnvironment.USGovernment:
+                    {
+                        return "https://login.microsoftonline.us";
+                    }
+                case AzureEnvironment.PPE:
+                    {
+                        return "https://login.windows-ppe.net";
+                    }
+                default:
+                    {
+                        return "https://login.microsoftonline.com";
+                    }
             }
         }
     }
