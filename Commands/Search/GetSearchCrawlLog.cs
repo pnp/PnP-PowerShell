@@ -115,14 +115,22 @@ namespace PnP.PowerShell.Commands.Search
                 string postFilter = string.Empty;
                 if (string.IsNullOrWhiteSpace(Filter) && ContentSource == ContentSource.Sites)
                 {
+#if !ONPREMISES
                     Filter = $"https://{GetHostName()}.sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(PnPConnection.CurrentConnection.AzureEnvironment)}";
+#else
+                    Filter = $"https://{GetHostName()}.sharepoint.com";
+#endif
                 }
 
                 int origLimit = RowLimit;
                 if (ContentSource == ContentSource.UserProfiles)
                 {
                     postFilter = Filter;
+#if !ONPREMISES
                     Filter = $"https://{GetHostName()}-my.sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(PnPConnection.CurrentConnection.AzureEnvironment)}";
+#else
+                    Filter = $"https://{GetHostName()}-my.sharepoint.com";
+#endif
                     RowLimit = MaxRows;
                 }
 
@@ -175,7 +183,7 @@ namespace PnP.PowerShell.Commands.Search
             }
         }
 
-        #region Helper functions
+#region Helper functions
 
         private string GetHostName()
         {
@@ -241,6 +249,6 @@ namespace PnP.PowerShell.Commands.Search
             }
             return res;
         }
-        #endregion
+#endregion
     }
 }

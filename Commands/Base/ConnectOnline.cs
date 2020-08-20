@@ -1344,7 +1344,11 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                                                                      RequestTimeout,
                                                                      TenantAdminUrl,
                                                                      NoTelemetry,
+#if !ONPREMISES
                                                                      AzureEnvironment,
+#else
+                                                                     AzureEnvironment.Production,
+#endif
                                                                      SkipTenantAdminCheck,
                                                                      AuthenticationMode);
 #else

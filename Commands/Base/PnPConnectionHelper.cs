@@ -563,7 +563,19 @@ namespace PnP.PowerShell.Commands.Base
 #endif
 
 #if !PNPPSCORE
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, AzureEnvironment azureEnvironment, bool skipAdminCheck = false, ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, 
+            PSCredential credentials, 
+            PSHost host, 
+            bool currentCredentials, 
+            int minimalHealthScore, 
+            int retryCount, 
+            int retryWait, 
+            int requestTimeout, 
+            string tenantAdminUrl, 
+            bool disableTelemetry,
+            AzureEnvironment azureEnvironment, 
+            bool skipAdminCheck = false, 
+            ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
 
@@ -676,12 +688,12 @@ namespace PnP.PowerShell.Commands.Base
             var connectionType = ConnectionType.OnPrem;
 #else
             var connectionType = ConnectionType.O365;
-#endif
+
             if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
             {
                 connectionType = ConnectionType.O365;
             }
-
+#endif
             if (skipAdminCheck == false)
             {
                 if (IsTenantAdminSite(context))
@@ -744,7 +756,7 @@ namespace PnP.PowerShell.Commands.Base
 #endif
 
 #if !PNPPSCORE
-        internal static PnPConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
+            internal static PnPConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
         {
             using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
             {
