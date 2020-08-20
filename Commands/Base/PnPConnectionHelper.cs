@@ -23,6 +23,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Text.Json;
 using OfficeDevPnP.Core.Utilities;
 using System.IO;
+using System.ServiceModel.Configuration;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -71,7 +72,7 @@ namespace PnP.PowerShell.Commands.Base
                     context.DisableReturnValueCache = true;
 #endif
                     connectionType = ConnectionType.OnPrem;
-                    if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+                    if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                     {
                         connectionType = ConnectionType.O365;
                     }
@@ -150,7 +151,7 @@ namespace PnP.PowerShell.Commands.Base
 #endif
 #endif
 
-        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry)
+        internal static PnPConnection InstantiateDeviceLoginConnection(string url, bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment)
         {
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
@@ -158,7 +159,7 @@ namespace PnP.PowerShell.Commands.Base
             GenericToken tokenResult = null;
             try
             {
-                tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(host, launchBrowser));
+                tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, PnPConnection.DeviceLoginCallback(host, launchBrowser), azureEnvironment);
             }
             catch (MsalUiRequiredException ex)
             {
@@ -171,7 +172,7 @@ namespace PnP.PowerShell.Commands.Base
             var spoConnection = new PnPConnection(context, tokenResult, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
             //var spoConnection = new PnPConnection(context, ConnectionType.O365, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.DeviceLogin);
             spoConnection.Scopes = scopes;
-
+            spoConnection.AzureEnvironment = azureEnvironment;
             if (spoConnection != null)
             {
                 spoConnection.ConnectionMethod = ConnectionMethod.DeviceLogin;
@@ -187,11 +188,12 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry)
+        internal static PnPConnection InstantiateGraphDeviceLoginConnection(bool launchBrowser, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, Action<string> messageCallback, Action<string> progressCallback, Func<bool> cancelRequest, PSHost host, bool disableTelemetry, AzureEnvironment azureEnvironment)
         {
-            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" }, PnPConnection.DeviceLoginCallback(host, launchBrowser));
+            var tokenResult = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" }, PnPConnection.DeviceLoginCallback(host, launchBrowser), azureEnvironment);
             var spoConnection = new PnPConnection(tokenResult, ConnectionMethod.GraphDeviceLogin, ConnectionType.O365, minimalHealthScore, retryCount, retryWait, PnPPSVersionTag, host, disableTelemetry, InitializationType.GraphDeviceLogin);
             spoConnection.Scopes = new[] { "Group.Read.All", "openid", "email", "profile", "Group.ReadWrite.All", "User.Read.All", "Directory.ReadWrite.All" };
+            spoConnection.AzureEnvironment = azureEnvironment;
             return spoConnection;
         }
 
@@ -276,7 +278,7 @@ namespace PnP.PowerShell.Commands.Base
                 FileTokenCache cache = new FileTokenCache(configFile);
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADNativeApplicationAuthenticatedContext(url.ToString(), clientId, redirectUri, cache, azureEnvironment), retryCount, retryWait * 10000);
                 var connectionType = ConnectionType.OnPrem;
-                if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                 {
                     connectionType = ConnectionType.O365;
                 }
@@ -302,7 +304,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 var context = PnPClientContext.ConvertFrom(authManager.GetAzureADAppOnlyAuthenticatedContext(url.ToString(), clientId, tenant, certificate, azureEnvironment), retryCount, retryWait * 1000);
                 var connectionType = ConnectionType.OnPrem;
-                if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                 {
                     connectionType = ConnectionType.O365;
                 }
@@ -419,7 +421,7 @@ namespace PnP.PowerShell.Commands.Base
                 var context = PnPClientContext.ConvertFrom(clientContext, retryCount, retryWait * 1000);
                 context.RequestTimeout = requestTimeout;
                 var connectionType = ConnectionType.OnPrem;
-                if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+                if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                 {
                     connectionType = ConnectionType.O365;
                 }
@@ -523,7 +525,7 @@ namespace PnP.PowerShell.Commands.Base
 #endif
 
 #if !PNPPSCORE
-        internal static PnPConnection InstantiateWebloginConnection(Uri url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false)
+        internal static PnPConnection InstantiateWebloginConnection(Uri url, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, PSHost host, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
             {
@@ -539,7 +541,7 @@ namespace PnP.PowerShell.Commands.Base
                     context.DisableReturnValueCache = true;
 #endif
                     var connectionType = ConnectionType.OnPrem;
-                    if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+                    if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
                     {
                         connectionType = ConnectionType.O365;
                     }
@@ -552,6 +554,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     var spoConnection = new PnPConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, null, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.InteractiveLogin);
                     spoConnection.ConnectionMethod = Model.ConnectionMethod.WebLogin;
+                    spoConnection.AzureEnvironment = azureEnvironment;
                     return spoConnection;
                 }
             }
@@ -560,7 +563,19 @@ namespace PnP.PowerShell.Commands.Base
 #endif
 
 #if !PNPPSCORE
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, 
+            PSCredential credentials, 
+            PSHost host, 
+            bool currentCredentials, 
+            int minimalHealthScore, 
+            int retryCount, 
+            int retryWait, 
+            int requestTimeout, 
+            string tenantAdminUrl, 
+            bool disableTelemetry,
+            AzureEnvironment azureEnvironment, 
+            bool skipAdminCheck = false, 
+            ClientAuthenticationMode authenticationMode = ClientAuthenticationMode.Default)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
 
@@ -597,10 +612,11 @@ namespace PnP.PowerShell.Commands.Base
                         var scopes = new[] { $"{url.Scheme}://{url.Authority}//.default" };
                         try
                         {
-                            var genericToken = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, $"{GenericToken.BaseAuthority}organizations/", credentials.UserName, credentials.Password);
+                            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+                            var genericToken = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, $"{endPoint}/organizations/", credentials.UserName, credentials.Password);
                             context.ExecutingWebRequest += (sender, args) =>
                             {
-                                var accessToken = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, $"{GenericToken.BaseAuthority}organizations/", credentials.UserName, credentials.Password).AccessToken;
+                                var accessToken = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, $"{endPoint}/organizations/", credentials.UserName, credentials.Password).AccessToken;
                                 args.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + accessToken;
                             };
                             context.Credentials = null;
@@ -672,12 +688,12 @@ namespace PnP.PowerShell.Commands.Base
             var connectionType = ConnectionType.OnPrem;
 #else
             var connectionType = ConnectionType.O365;
-#endif
-            if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+
+            if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
             {
                 connectionType = ConnectionType.O365;
             }
-
+#endif
             if (skipAdminCheck == false)
             {
                 if (IsTenantAdminSite(context))
@@ -687,12 +703,13 @@ namespace PnP.PowerShell.Commands.Base
             }
             var spoConnection = new PnPConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.Credentials);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.Credentials;
+            spoConnection.AzureEnvironment = azureEnvironment;
             return spoConnection;
         }
 #endif
 
 #if PNPPSCORE
-        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false)
+        internal static PnPConnection InstantiateSPOnlineConnection(Uri url, PSCredential credentials, PSHost host, bool currentCredentials, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var context = new PnPClientContext(url.AbsoluteUri);
 
@@ -719,7 +736,7 @@ namespace PnP.PowerShell.Commands.Base
                 context.Credentials = new NetworkCredential(credentials.UserName, credentials.Password);
             }
             var connectionType = ConnectionType.O365;
-            if (url.Host.ToUpperInvariant().EndsWith("SHAREPOINT.COM"))
+            if (url.Host.ToLowerInvariant().EndsWith($"sharepoint.{OfficeDevPnP.Core.AuthenticationManager.GetSharePointDomainSuffix(azureEnvironment)}"))
             {
                 connectionType = ConnectionType.O365;
             }
@@ -733,12 +750,13 @@ namespace PnP.PowerShell.Commands.Base
             }
             var spoConnection = new PnPConnection(context, connectionType, minimalHealthScore, retryCount, retryWait, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, host, disableTelemetry, InitializationType.Credentials);
             spoConnection.ConnectionMethod = Model.ConnectionMethod.Credentials;
+            spoConnection.AzureEnvironment = azureEnvironment;
             return spoConnection;
         }
 #endif
 
 #if !PNPPSCORE
-        internal static PnPConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
+            internal static PnPConnection InstantiateAdfsConnection(Uri url, bool useKerberos, PSCredential credentials, PSHost host, int minimalHealthScore, int retryCount, int retryWait, int requestTimeout, string tenantAdminUrl, bool disableTelemetry, bool skipAdminCheck = false, string loginProviderName = null)
         {
             using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
             {

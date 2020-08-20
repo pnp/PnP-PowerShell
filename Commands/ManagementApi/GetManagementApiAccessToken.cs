@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
 
         protected override void ExecuteCmdlet()
         {
-            var officeManagementApiToken = OfficeManagementApiToken.AcquireApplicationToken(TenantId, ClientId, ClientSecret);
+            var officeManagementApiToken = OfficeManagementApiToken.AcquireApplicationToken(TenantId, ClientId, ClientSecret, PnPConnection.CurrentConnection.AzureEnvironment);
             WriteObject(officeManagementApiToken.AccessToken);
         }
     }

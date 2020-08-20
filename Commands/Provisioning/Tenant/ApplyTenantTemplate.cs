@@ -294,8 +294,43 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 }
             }
 #if !ONPREMISES
+
+            // check if consent is needed and in place
+            var consentRequired = false;
+            if (hierarchyToApply.Teams != null)
+            {
+                consentRequired = true;
+            }
+            if(hierarchyToApply.AzureActiveDirectory != null)
+            {
+                consentRequired = true;
+            }
+            if (consentRequired)
+            {
+                // try to retrieve an access token for the Microsoft Graph:
+
+                var accessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                if (accessToken == null)
+                {
+                    if (PnPConnection.CurrentConnection.PSCredential != null)
+                    {
+                        // Using normal credentials
+                        accessToken = TokenHandler.AcquireToken("graph.microsoft.com", null);
+                    }
+                    if (accessToken == null)
+                    {
+                        throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Connect-PnPOnline -Graph -LaunchBrowser");
+                    }
+                }
+            }
+
             using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
             {
+                if(resource.ToLower().StartsWith("https://"))
+                {
+                    var uri = new Uri(resource);
+                    resource = uri.Authority;
+                }
                 // Get Azure AD Token
                 if (PnPConnection.CurrentConnection != null)
                 {
@@ -307,7 +342,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                             // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
                             return Task.FromResult(graphAccessToken);
                         }
-                    } 
+                    }
                 }
 
                 if (PnPConnection.CurrentConnection.PSCredential != null)
@@ -318,8 +353,8 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                 else
                 {
                     // No token...
-                    return null;
-                }
+                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Connect-PnPOnline -Graph -LaunchBrowser");
+                 }
             }))
             {
 #endif

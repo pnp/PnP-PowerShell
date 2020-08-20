@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (PnPConnection.CurrentConnection != null)
                 {
                     // There is an active connection, try to get a Microsoft Graph Token on the active connection
-                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType) is GraphToken token)
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType) is GraphToken token)
                     {
                         // Microsoft Graph Access Token available, return it
                         return (GraphToken)token;

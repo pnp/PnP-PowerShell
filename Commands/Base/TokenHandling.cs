@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Application;
 using PnP.PowerShell.Commands.Model;
 using System.Web;
 
@@ -17,15 +18,14 @@ namespace PnP.PowerShell.Commands.Base
             var tenantId = TenantExtensions.GetTenantIdByUrl(PnPConnection.CurrentConnection.Url);
             if (PnPConnection.CurrentConnection.PSCredential != null)
             {
-                if (scope == null && !resource.Equals("graph.microsoft.com", System.StringComparison.OrdinalIgnoreCase))
+                if (scope == null)
                 {
-                    // SharePoint token
+                    // SharePoint or Graph V1 resource
                     var scopes = new[] { $"https://{resource}//.default" };
                     token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
                 }
                 else
                 {
-
                     token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, new[] { scope }, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
                 }
             }

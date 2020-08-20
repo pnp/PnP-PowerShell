@@ -18,42 +18,18 @@ namespace PnP.PowerShell.Commands.Utilities
     public static class AzureAuthHelper
     {
         private static string CLIENTID = "1950a258-227b-4e31-a9cf-717495945fc2"; // Well-known Azure Management App Id
-        internal static async Task<string> AuthenticateAsync(string tenantId)
+        internal static async Task<string> AuthenticateAsync(string tenantId, string loginEndPoint = "https://login.microsoftonline.com" )
         {
             if (string.IsNullOrEmpty(tenantId))
             {
                 throw new ArgumentException($"{nameof(tenantId)} is required");
             }
 
-            var authority = $"https://login.microsoftonline.com/{tenantId}";
+            var authority = $"{loginEndPoint}/{tenantId}";
             var scopes = new string[] { "https://graph.microsoft.com/.default" };
             var app = PublicClientApplicationBuilder.Create(CLIENTID).WithAuthority(authority).Build();
             var result = await app.AcquireTokenInteractive(scopes).ExecuteAsync();
             return result.AccessToken;
-        }
-
-        internal static void UploadCert(string accessToken, string appId, string certPath)
-        {
-            var cert = new X509Certificate();
-            cert.Import(certPath);// the path fo cert file
-            var expirationDate = DateTime.Parse(cert.GetExpirationDateString()).ToUniversalTime();
-            var startDate = DateTime.Parse(cert.GetEffectiveDateString()).ToUniversalTime();
-            var binCert = cert.GetRawCertData();
-            var activeDirectoryClient = new ActiveDirectoryClient(new Uri("https://graph.windows.net/erwinmcm.com"), async () => { return await Task.Run(() => { return accessToken; }); });
-            var keyCredential = new Microsoft.Azure.ActiveDirectory.GraphClient.KeyCredential
-            {
-                CustomKeyIdentifier = cert.GetCertHash(),
-                EndDate = expirationDate,
-                KeyId = Guid.NewGuid(),
-                StartDate = startDate,
-                Type = "AsymmetricX509Cert",
-                Usage = "Verify",
-                Value = binCert
-            };
-
-            var application = activeDirectoryClient.Applications[appId].ExecuteAsync().Result;
-            application.KeyCredentials.Add(keyCredential);
-            application.UpdateAsync().Wait();
         }
 
         internal static void OpenConsentFlow(string url, Action<string> messageAction)
