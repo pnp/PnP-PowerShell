@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with Submit-PnPTeamsChannelMessage not posting HTML message when setting the content type to Html.
 - The content type that Submit-PnPTeamsChannelMessage uses defaults now to HTML.
 - Fixed an issue with the PnP Provisioning Engine not being able to correctly acquire a token for the Microsoft Graph when provisioning a tenant template containing a Team.
+- Optimized Submit-PnPSearchQuery and Get-PnPSiteSearchQueryResults cmdlets when using the -All parameter.
+- Fixed TrimDuplicates to be default off for Submit-PnPSearchQuery
 
 ### Contributors
 
