@@ -87,6 +87,11 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
+            if(this.ClientContext.Url.ToLower().Contains("-my."))
+            {
+                throw new InvalidOperationException("This cmdlet does not work for OneDrive for Business sites");
+            }
+
             bool hasSearchPageUrl = ParameterSpecified(nameof(SearchPageUrl));
             if (hasSearchPageUrl && SearchPageUrl == null)
             {
