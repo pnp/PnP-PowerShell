@@ -202,15 +202,6 @@ namespace PnP.PowerShell.Commands.Site
                     throw new Exception("Not an Office365 group enabled site.");
                 }
             }
-            if (ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)))
-            {
-                // TODO
-            }
-            if (ParameterSpecified(nameof(AnonymousLinkExpirationInDays)))
-            {
-                // TODO
-                //site.over
-            }
 #endif
             if (executeQueryRequired)
             {
@@ -244,6 +235,16 @@ namespace PnP.PowerShell.Commands.Site
                 var siteProperties = tenant.GetSitePropertiesByUrl(siteUrl, false);
 
 #if !ONPREMISES
+                if (ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)))
+                {
+                    siteProperties.OverrideTenantAnonymousLinkExpirationPolicy = OverrideTenantAnonymousLinkExpirationPolicy.ToBool();
+                    executeQueryRequired = true;
+                }
+                if (ParameterSpecified(nameof(AnonymousLinkExpirationInDays)) && AnonymousLinkExpirationInDays.HasValue)
+                {
+                    siteProperties.AnonymousLinkExpirationInDays = AnonymousLinkExpirationInDays.Value;
+                    executeQueryRequired = true;
+                }
                 if (LockState.HasValue)
                 {
                     tenant.SetSiteLockState(siteUrl, LockState.Value, Wait, Wait ? timeoutFunction : null);
@@ -412,6 +413,8 @@ namespace PnP.PowerShell.Commands.Site
                 RestrictedToGeo.HasValue ||
                 SocialBarOnSitePagesDisabled.HasValue ||
 #endif
-                LocaleId.HasValue;
+                LocaleId.HasValue ||
+                AnonymousLinkExpirationInDays.HasValue ||
+                ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy));
     }
 }
