@@ -105,34 +105,43 @@ namespace PnP.PowerShell.Commands.Search
         [Parameter(Mandatory = false, HelpMessage = "Specifies whether only relevant results are returned", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter RelevantResults;
 
-        protected override void ExecuteCmdlet()
+        internal IEnumerable<object> Run()
         {
             int startRow = StartRow;
             int rowLimit = MaxResults;
+            // Used for internal Microsoft telemetry
+            string clientFunction = "Search";
             if (All.IsPresent)
             {
+                clientFunction = "Scanner";
                 startRow = 0;
                 rowLimit = 500;
                 SortList = new Hashtable()
                     {
-                        {"IndexDocId", "ascending"}
+                        {"[DocId]", "ascending"}    // Special optimized sorting when iterating all items
                     };
             }
 
             var currentCount = 0;
+            string lastDocId = "0";
             PnPResultTableCollection finalResults = null;
             do
             {
-                KeywordQuery keywordQuery = CreateKeywordQuery();
+                KeywordQuery keywordQuery = CreateKeywordQuery(clientFunction);
                 keywordQuery.StartRow = startRow;
                 keywordQuery.RowLimit = rowLimit;
 
-                var searchExec = new SearchExecutor(ClientContext);
-                if (startRow > 0 && All.IsPresent)
+                if (All.IsPresent)
                 {
-                    keywordQuery.Refiners = null; // Only need to set on first page for auto paging
+                    if (currentCount != 0)
+                    {
+                        keywordQuery.Refiners = null; // Only need to set on first page for auto paging
+                    }
+                    keywordQuery.StartRow = 0;
+                    keywordQuery.QueryText += " IndexDocId>" + lastDocId;
                 }
 
+                var searchExec = new SearchExecutor(ClientContext);
                 var results = searchExec.ExecuteQuery(keywordQuery);
                 ClientContext.ExecuteQueryRetry();
 
@@ -146,6 +155,7 @@ namespace PnP.PowerShell.Commands.Search
                             if (resultTable.TableType == "RelevantResults")
                             {
                                 currentCount = resultTable.RowCount;
+                                lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
                             }
                         }
                     }
@@ -167,6 +177,10 @@ namespace PnP.PowerShell.Commands.Search
                             if (pnpResultTable.TableType == "RelevantResults")
                             {
                                 currentCount = resultTable.RowCount;
+                                if (currentCount > 0)
+                                {
+                                    lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                }
                             }
                         }
                     }
@@ -174,16 +188,23 @@ namespace PnP.PowerShell.Commands.Search
                 }
                 startRow += rowLimit;
             } while (currentCount == rowLimit && All.IsPresent);
+
             if (!RelevantResults.IsPresent)
             {
-                WriteObject(finalResults, true);
+                return finalResults;
             }
             else
             {
                 var results = finalResults.FirstOrDefault(t => t.TableType == "RelevantResults")?
                     .ResultRows.Select(r => ConvertToPSObject(r));
-                WriteObject(results, true);
+                return results;
             }
+        }
+
+        protected override void ExecuteCmdlet()
+        {
+            var results = Run();
+            WriteObject(results, true);
         }
 
         private object ConvertToPSObject(IDictionary<string, object> r)
@@ -199,7 +220,7 @@ namespace PnP.PowerShell.Commands.Search
             return res;
         }
 
-        private KeywordQuery CreateKeywordQuery()
+        private KeywordQuery CreateKeywordQuery(string clientFunction)
         {
             var keywordQuery = new KeywordQuery(ClientContext);
 
@@ -212,7 +233,7 @@ namespace PnP.PowerShell.Commands.Search
 
             keywordQuery.QueryText = query;
             keywordQuery.ClientType = ClientType;
-            if (ParameterSpecified(nameof(TrimDuplicates))) keywordQuery.TrimDuplicates = TrimDuplicates;
+            keywordQuery.TrimDuplicates = TrimDuplicates;
             if (ParameterSpecified(nameof(Refiners))) keywordQuery.Refiners = Refiners;
             if (ParameterSpecified(nameof(Culture))) keywordQuery.Culture = Culture;
             if (ParameterSpecified(nameof(QueryTemplate))) keywordQuery.QueryTemplate = QueryTemplate;
@@ -245,7 +266,7 @@ namespace PnP.PowerShell.Commands.Search
                 {
                     SelectProperties = SelectProperties[0].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 }
-                
+
                 foreach (string property in SelectProperties)
                 {
                     selectProperties.Add(property.Trim());
@@ -289,6 +310,12 @@ namespace PnP.PowerShell.Commands.Search
                     keywordQuery.Properties.SetQueryPropertyValue(key, propVal);
                 }
             }
+
+            QueryPropertyValue clientFuncPropVal = new QueryPropertyValue();
+            clientFuncPropVal.StrVal = clientFunction;
+            clientFuncPropVal.QueryPropertyValueTypeIndex = 1;
+
+            keywordQuery.Properties.SetQueryPropertyValue("ClientFunction", clientFuncPropVal);
             return keywordQuery;
         }
     }

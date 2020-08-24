@@ -9,15 +9,15 @@ if($ConfigurationName -like "Debug*")
 	} else {
 		if($ConfigurationName -like "Debug15")
 		{
-			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnPPowerShell2013"
+			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShell2013"
 		} elseif($ConfigurationName -like "Debug16")
 		{
-			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnPPowerShell2016"
+			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShell2016"
 		} elseif($ConfigurationName -like "Debug19")
 		{
-			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnPPowerShell2019"
+			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShell2019"
 		} else {
-			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnPPowerShellOnline"
+			$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShellOnline"
 		}
 	}
 	# Module folder there?
@@ -42,19 +42,19 @@ if($ConfigurationName -like "Debug*")
 			switch($ConfigurationName)
 			{
 				"Debug15" {
-					Copy-Item "$TargetDir\ModuleFiles\PnPPowerShell2013.psd1" -Destination  "$DestinationFolder"
+					Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2013.psd1" -Destination  "$DestinationFolder"
 					Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.2013.Commands.Format.ps1xml" -Destination "$DestinationFolder"
 				} 
 				"Debug16" {
-					Copy-Item "$TargetDir\ModuleFiles\PnPPowerShell2016.psd1" -Destination  "$DestinationFolder"
+					Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2016.psd1" -Destination  "$DestinationFolder"
 					Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.2016.Commands.Format.ps1xml" -Destination "$DestinationFolder"
 				} 
 				"Debug19" {
-					Copy-Item "$TargetDir\ModuleFiles\PnPPowerShell2019.psd1" -Destination  "$DestinationFolder"
+					Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShell2019.psd1" -Destination  "$DestinationFolder"
 					Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.2019.Commands.Format.ps1xml" -Destination "$DestinationFolder"
 				} 
 				"Debug" {
-					Copy-Item "$TargetDir\ModuleFiles\PnPPowerShellOnline.psd1" -Destination  "$DestinationFolder"
+					Copy-Item "$TargetDir\ModuleFiles\SharePointPnPPowerShellOnline.psd1" -Destination  "$DestinationFolder"
 					Copy-Item "$TargetDir\ModuleFiles\PnP.PowerShell.Online.Commands.Format.ps1xml" -Destination "$DestinationFolder"
 				}
 			}
@@ -75,19 +75,19 @@ if($ConfigurationName -like "Debug*")
 		{
 			"Release15" 
 			{
-				$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnPPowerShell2013"
+				$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShell2013"
 			}
 			"Release16"
 			{
-				$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnPPowerShell2016"
+				$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShell2016"
 			}
 			"Release19"
 			{
-				$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnPPowerShell2019"
+				$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShell2019"
 			}
 			"Release"
 			{
-				$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\PnPPowerShellOnline"
+				$DestinationFolder = "$documentsFolder\WindowsPowerShell\Modules\SharePointPnPPowerShellOnline"
 			}
 		}
 	}

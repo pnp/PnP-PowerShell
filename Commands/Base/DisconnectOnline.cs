@@ -55,6 +55,9 @@ namespace PnP.PowerShell.Commands.Base
                 throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
             }
 
+            // clear credentials
+            PnPConnection.CurrentConnection = null;
+
             var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
             if (provider != null)
             {
@@ -80,10 +83,9 @@ namespace PnP.PowerShell.Commands.Base
             {
                 return false;
             }
-
-            GraphToken.ClearCaches();
-            OfficeManagementApiToken.ClearCaches();
-
+            //GraphToken.ClearCaches();
+            //OfficeManagementApiToken.ClearCaches();
+            GenericToken.ClearCaches();
             connection.Context = null;
             connection = null;
             return true;

@@ -11,8 +11,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.Online.Commands</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>PnP.PowerShell.Online.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -30,8 +30,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.2013.Commands</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>PnP.PowerShell.2013.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -49,8 +49,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.2016.Commands</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>PnP.PowerShell.2016.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -68,8 +68,8 @@
     <ProjectGuid>{1DDE6F0A-CA49-419A-9CE8-A6CA02F43CE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharePointPnP.PowerShell.Commands</RootNamespace>
-    <AssemblyName>SharePointPnP.PowerShell.2019.Commands</AssemblyName>
+    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
+    <AssemblyName>PnP.PowerShell.2019.Commands</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -135,14 +135,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>PnP.PowerShell.Commands</RootNamespace>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug19|AnyCPU'">
@@ -162,9 +154,6 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyName>PnP.PowerShell.Online.Commands</AssemblyName>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(Configuration)' == 'debug' Or '$(Configuration)' == 'release' ">
@@ -459,8 +448,8 @@
     <Reference Include="Microsoft.Graph.Core, Version=1.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Graph.Core.1.9.0\lib\net45\Microsoft.Graph.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Identity.Client, Version=4.16.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Identity.Client.4.16.1\lib\net45\Microsoft.Identity.Client.dll</HintPath>
+    <Reference Include="Microsoft.Identity.Client, Version=4.17.0.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Identity.Client.4.17.0\lib\net461\Microsoft.Identity.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.6.1.7600.16394\lib\net35\Microsoft.IdentityModel.dll</HintPath>
@@ -944,6 +933,7 @@
     <Compile Include="ClientSidePages\SetClientSidePage.cs" />
     <Compile Include="ClientSidePages\AddClientSideText.cs" />
     <Compile Include="Site\AddRoleDefinition.cs" />
+    <Compile Include="Site\SetTeamifyPromptHidden.cs" />
     <Compile Include="Site\AddTeamsTeam.cs" />
     <Compile Include="Site\GetSharingForNonOwnersOfSite.cs" />
     <Compile Include="Site\EnableCommSite.cs" />
@@ -952,6 +942,8 @@
     <Compile Include="Site\RemoveRoleDefinition.cs" />
     <Compile Include="Site\DisableSharingForNonOwnersOfSite.cs" />
     <Compile Include="Site\TestOffice365GroupAliasIsUsed.cs" />
+    <Compile Include="Taxonomy\SetTermSet.cs" />
+    <Compile Include="Taxonomy\SetTermGroup.cs" />
     <Compile Include="Taxonomy\NewTermLabel.cs" />
     <Compile Include="Teams\AddTeamsChannel.cs" />
     <Compile Include="Teams\AddTeamsTab.cs" />

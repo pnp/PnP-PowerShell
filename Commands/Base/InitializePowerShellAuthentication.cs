@@ -1,14 +1,17 @@
 ﻿#if !ONPREMISES && !PNPPSCORE
+using OfficeDevPnP.Core;
 using OfficeDevPnP.Core.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
+using System.Net.Http;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -87,10 +90,18 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, HelpMessage = "Local Certificate Store to add the certificate to", ParameterSetName = ParameterSet_NEWCERT)]
         public StoreLocation Store;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specify the Azure environment to use to setup the Azure AD app. Defaults to 'Production'.")]
+        public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
+
         protected override void ProcessRecord()
         {
+            var loginEndPoint = string.Empty;
             var record = new PSObject();
-            var token = AzureAuthHelper.AuthenticateAsync(Tenant).GetAwaiter().GetResult();
+            using (var authenticationManager = new AuthenticationManager())
+            {
+                loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
+            }
+            var token = AzureAuthHelper.AuthenticateAsync(Tenant, loginEndPoint).GetAwaiter().GetResult();
 
             var cert = new X509Certificate2();
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
@@ -104,7 +115,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (ParameterSpecified(nameof(CertificatePassword)))
                 {
                     try
-                    { 
+                    {
                         cert.Import(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable);
                     }
                     catch (CryptographicException e) when (e.Message.Contains("The specified network password is not correct"))
@@ -118,7 +129,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         cert.Import(CertificatePath);
                     }
-                    catch(CryptographicException e) when (e.Message.Contains("The specified network password is not correct"))
+                    catch (CryptographicException e) when (e.Message.Contains("The specified network password is not correct"))
                     {
                         throw new PSArgumentNullException(nameof(CertificatePassword), string.Format(Resources.PrivateKeyCertificateImportFailedPasswordMissing, nameof(CertificatePassword)));
                     }
@@ -177,7 +188,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 if (ParameterSpecified(nameof(Store)))
                 {
-                    using (var store = new X509Store("My",Store))
+                    using (var store = new X509Store("My", Store))
                     {
                         store.Open(OpenFlags.ReadWrite);
                         store.Add(cert);
@@ -228,20 +239,21 @@ namespace PnP.PowerShell.Commands.Base
                     publicClient = new
                     {
                         redirectUris = new[] {
-                        "https://login.microsoftonline.com/common/oauth2/nativeclient",
+                            $"{loginEndPoint}/common/oauth2/nativeclient"
                         }
                     },
                     requiredResourceAccess = scopesPayload
                 };
-                var postResult = HttpHelper.MakePostRequestForString("https://graph.microsoft.com/beta/applications", payload, "application/json", token);
-                var azureApp = JsonSerializer.Deserialize<AzureApp>(postResult);
+                var requestContent = new StringContent(JsonSerializer.Serialize(payload));
+                requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                var azureApp = GraphHelper.PostAsync<AzureApp>(new System.Net.Http.HttpClient(), "/beta/applications", requestContent, token).GetAwaiter().GetResult();
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
                 var waitTime = 60;
                 Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
-                
+
                 Console.TreatControlCAsInput = true;
-               
+
                 for (var i = 0; i < waitTime; i++)
                 {
                     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
@@ -251,16 +263,16 @@ namespace PnP.PowerShell.Commands.Base
                     if (Host.UI.RawUI.KeyAvailable)
                     {
                         var key = Host.UI.RawUI.ReadKey(ReadKeyOptions.AllowCtrlC | ReadKeyOptions.NoEcho | ReadKeyOptions.IncludeKeyUp);
-                        if((key.ControlKeyState.HasFlag(ControlKeyStates.LeftCtrlPressed) || key.ControlKeyState.HasFlag(ControlKeyStates.RightCtrlPressed)) && key.VirtualKeyCode == 67)
+                        if ((key.ControlKeyState.HasFlag(ControlKeyStates.LeftCtrlPressed) || key.ControlKeyState.HasFlag(ControlKeyStates.RightCtrlPressed)) && key.VirtualKeyCode == 67)
                         {
-                            
+
                             break;
                         }
                     }
                 }
                 Host.UI.WriteLine();
 
-                var consentUrl = $"https://login.microsoftonline.com/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default";
+                var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope=https://microsoft.sharepoint-df.com/.default";
                 record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
 
                 WriteObject(record);
@@ -268,7 +280,7 @@ namespace PnP.PowerShell.Commands.Base
                 AzureAuthHelper.OpenConsentFlow(consentUrl, (message) =>
                 {
                     Host.UI.WriteLine(ConsoleColor.Red, Host.UI.RawUI.BackgroundColor, message);
-                });                
+                });
             }
         }
 

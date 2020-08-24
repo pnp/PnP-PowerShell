@@ -33,8 +33,8 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, HelpMessage = "The message to send to the channel.")]
         public string Message;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify to set the content type of the message, either Text or Html.")]
-        public TeamChannelMessageContentType ContentType;
+        [Parameter(Mandatory = false, HelpMessage = "Specify to set the content type of the message, either Text or Html. Defaults to Html.")]
+        public TeamChannelMessageContentType ContentType = TeamChannelMessageContentType.Html;
 
         [Parameter(Mandatory = false, HelpMessage = "Specify to make this an important message.")]
         public SwitchParameter Important;
@@ -50,18 +50,20 @@ namespace PnP.PowerShell.Commands.Graph
                     var channelMessage = new TeamChannelMessage();
                     channelMessage.Importance = Important ? "high" : "normal";
                     channelMessage.Body.Content = Message;
-                    channelMessage.Body.ContentType = ContentType;
+                    channelMessage.Body.ContentType = ContentType == TeamChannelMessageContentType.Html ? "html" : "text";
 
                     TeamsUtility.PostMessageAsync(HttpClient, AccessToken, groupId, channel.Id, channelMessage).GetAwaiter().GetResult();
-                } else
+                }
+                else
                 {
                     throw new PSArgumentException("Channel not found");
                 }
-            } else
+            }
+            else
             {
                 throw new PSArgumentException("Team not found");
             }
-            
+
         }
     }
 }
