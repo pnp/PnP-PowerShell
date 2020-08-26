@@ -1,10 +1,10 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Site
+namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteCollectionAdmin")]
     [CmdletHelp("Adds one or more users as site collection administrators to the site collection in the current context",
@@ -19,7 +19,7 @@ namespace SharePointPnP.PowerShell.Commands.Site
     [CmdletExample(
         Code = @"PS:> Get-PnPUser | ? Title -Like ""*Doe"" | Add-PnPSiteCollectionAdmin",
         Remarks = @"This will add all users with their title ending with ""Doe"" as additional site collection owners to the site collection in the current context", SortOrder = 3)]
-    public class AddSiteCollectionAdmin : PnPCmdlet
+    public class AddSiteCollectionAdmin : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.")]
         public List<UserPipeBind> Owners;

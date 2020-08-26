@@ -1,13 +1,11 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Enums;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using Newtonsoft.Json;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Add, "PnPCustomAction")]
     [CmdletHelp("Adds a custom action",
@@ -19,26 +17,26 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
     Remarks = @"Adds a new custom action to the custom list template, and sets the Title, Name and other fields with the specified values. On click it shows the number of items in that list. Notice: escape quotes in CommandUIExtension.",
     SortOrder = 1)]
     [CmdletExample(Code = @"Add-PnPCustomAction -Title ""CollabFooter"" -Name ""CollabFooter"" -Location ""ClientSideExtension.ApplicationCustomizer"" -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties ""{`""sourceTermSet`"":`""PnP-CollabFooter-SharedLinks`"",`""personalItemsStorageProperty`"":`""PnP-CollabFooter-MyLinks`""}",
-    Remarks = @"Adds a new application customizer to the site. This requires that an SPFX solution has been deployed containing the application customizer specified.",
+    Remarks = @"Adds a new application customizer to the site. This requires that an SPFX solution has been deployed containing the application customizer specified. Be sure to run Install-PnPApp before trying this cmdlet on a site.",
     SortOrder = 2)]
     [CmdletRelatedLink(
         Text = "UserCustomAction",
-        Url = "https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.usercustomaction.aspx")]
+        Url = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539583(v=office.15)")]
     [CmdletRelatedLink(
         Text = "BasePermissions",
-        Url = "https://msdn.microsoft.com/en-us/library/office/microsoft.sharepoint.client.basepermissions.aspx")]
+        Url = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee543321(v=office.15)")]
     public class AddCustomAction : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";
         private const string ParameterSet_CLIENTSIDECOMPONENTID = "Client Side Component Id";
         [Parameter(Mandatory = true, HelpMessage = "The name of the custom action", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The name of the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Name = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The title of the custom action", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The title of the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Title = string.Empty;
@@ -50,12 +48,15 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         public string Group = string.Empty;
 
         [Parameter(Mandatory = true, HelpMessage = "The actual location where this custom action need to be added like 'CommandUI.Ribbon'", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = true, HelpMessage = "The actual location where this custom action need to be added like 'CommandUI.Ribbon'", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string Location = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "Sequence of this CustomAction being injected. Use when you have a specific sequence with which to have multiple CustomActions being added to the page.", ParameterSetName = ParameterSet_DEFAULT)]
+#if !SP2013 && !SP2016
+        [Parameter(Mandatory = false, HelpMessage = "Optional activation sequence order for the extensions. Used if multiple extensions are activated on a same scope.", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
+#endif
         public int Sequence = 0;
 
         [Parameter(Mandatory = false, HelpMessage = "The URL, URI or ECMAScript (JScript, JavaScript) function associated with the action", ParameterSetName = ParameterSet_DEFAULT)]
@@ -68,7 +69,7 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         public string CommandUIExtension = string.Empty;
 
         [Parameter(Mandatory = false, HelpMessage = "The identifier of the object associated with the custom action.", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = false, HelpMessage = "The identifier of the object associated with the custom action.", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public string RegistrationId = string.Empty;
@@ -77,13 +78,13 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         public PermissionKind[] Rights;
 
         [Parameter(Mandatory = false, HelpMessage = "Specifies the type of object associated with the custom action", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = false, HelpMessage = "Specifies the type of object associated with the custom action", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public UserCustomActionRegistrationType RegistrationType;
 
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.", ParameterSetName = ParameterSet_DEFAULT)]
-#if !ONPREMISES
+#if !SP2013 && !SP2016
         [Parameter(Mandatory = false, HelpMessage = "The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
 #endif
         public CustomActionScope Scope = CustomActionScope.Web;
@@ -94,6 +95,11 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
         [Parameter(Mandatory = false, HelpMessage = "The Client Side Component Properties of the custom action. Specify values as a json string : \"{Property1 : 'Value1', Property2: 'Value2'}\"", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
         public string ClientSideComponentProperties;
 #endif
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "The Client Side Host Properties of the custom action. Specify values as a json string : \"{'preAllocatedApplicationCustomizerTopHeight': '50', 'preAllocatedApplicationCustomizerBottomHeight': '50'}\"", ParameterSetName = ParameterSet_CLIENTSIDECOMPONENTID)]
+        public string ClientSideHostProperties;
+#endif
+
         protected override void ExecuteCmdlet()
         {
             var permissions = new BasePermissions();
@@ -126,22 +132,26 @@ Add-PnPCustomAction -Name 'GetItemsCount' -Title 'Invoke GetItemsCount Action' -
             }
             else
             {
-#if !ONPREMISES
+#if !SP2013 && !SP2016
                 ca = new CustomActionEntity()
                 {
                     Name = Name,
                     Title = Title,
                     Location = Location,
+                    Sequence = Sequence,
                     ClientSideComponentId = ClientSideComponentId.Id,
-                    ClientSideComponentProperties = ClientSideComponentProperties
+                    ClientSideComponentProperties = ClientSideComponentProperties,
+#if !ONPREMISES
+                    ClientSideHostProperties = ClientSideHostProperties
+#endif
                 };
 
-                if (MyInvocation.BoundParameters.ContainsKey("RegistrationId"))
+                if (ParameterSpecified(nameof(RegistrationId)))
                 {
                     ca.RegistrationId = RegistrationId;
                 }
 
-                if (MyInvocation.BoundParameters.ContainsKey("RegistrationType"))
+                if (ParameterSpecified(nameof(RegistrationType)))
                 {
                     ca.RegistrationType = RegistrationType;
                 }

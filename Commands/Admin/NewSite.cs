@@ -1,16 +1,17 @@
 ﻿#if !ONPREMISES
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 using System;
+using PnP.PowerShell.Commands.Base;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPSite")]
-    [CmdletHelp("Creates a new site collection",
-        "The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Team Site are supported. If you want to create a classic site, use New-PnPTenantSite.",
+    [CmdletHelp("Creates either a communication site or a Microsoft 365 group-connected team site",
+        "The New-PnPSite cmdlet creates a new site collection for the current tenant. Currently only 'modern' sites like Communication Site and the Modern Microsoft 365 group-connected team sites are supported. If you want to create a classic site, use New-PnPTenantSite.",
         OutputType = typeof(string),
         OutputTypeDescription = "Returns the url of the newly created site collection",
         Category = CmdletHelpCategory.TenantAdmin, SupportedPlatform = CmdletSupportedPlatform.Online)]
@@ -35,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands
         Remarks = @"This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso'. Allows owners to invite users outside of the organization.",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1044",
+        Code = @"PS:> New-PnPSite -Type CommunicationSite -Title Contoso -Url https://tenant.sharepoint.com/sites/contoso -Lcid 1040",
         Remarks = @"This will create a new Communications Site collection with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the default language to Italian.",
         SortOrder = 6)]
     [CmdletExample(
@@ -52,26 +53,34 @@ namespace SharePointPnP.PowerShell.Commands
         SortOrder = 9)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Title", Mandatory = true, HelpMessage = @"Specifies the title of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Title", Mandatory = true, HelpMessage = @"Specifies the title of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Url", Mandatory = true, HelpMessage = @"Specifies the full url of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Url", Mandatory = true, HelpMessage = @"Specifies the full url of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Url", Mandatory = true, HelpMessage = @"Specifies the full url of the new site collection, this parameter only applies to Communications Sites", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Url", Mandatory = true, HelpMessage = @"Specifies the full url of the new site collection, this parameter only applies to Communications Sites", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]    
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "SensitivityLabel", Mandatory = false, HelpMessage = @"Specifies the sensitivity label of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "SensitivityLabel", Mandatory = false, HelpMessage = @"Specifies the sensitivity label of the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Owner", Mandatory = false, HelpMessage = @"Specifies the owner of the site. Specify the value as a string array: ""user@domain.com""", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Owner", Mandatory = false, HelpMessage = @"Specifies the owner of the site. Specify the value as a string array: ""user@domain.com""", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(OfficeDevPnP.Core.Enums.Office365Geography), ParameterName = "PreferredDataLocation", Mandatory = false, HelpMessage = @"Allows specifying in which geography the SharePoint site collection should be created. I.e. NAM, EUR, APC. For a full list of available regions, see https://docs.microsoft.com/office365/enterprise/multi-geo-add-group-with-pdl#geo-location-codes. Only supported on multi-geo enabled tenants.", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(OfficeDevPnP.Core.Enums.Office365Geography), ParameterName = "PreferredDataLocation", Mandatory = false, HelpMessage = @"Allows specifying in which geography the SharePoint site collection should be created. I.e. NAM, EUR, APC. For a full list of available regions, see https://docs.microsoft.com/office365/enterprise/multi-geo-add-group-with-pdl#geo-location-codes. Only supported on multi-geo enabled tenants.", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "AllowFileSharingForGuestUsers", Mandatory = false, HelpMessage = @"Specifies if guest users can share files in the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "AllowFileSharingForGuestUsers", Mandatory = false, HelpMessage = @"Specifies if guest users can share files in the new site collection", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(OfficeDevPnP.Core.Sites.CommunicationSiteDesign), ParameterName = "SiteDesign", Mandatory = false, HelpMessage = @"Specifies the site design of the new site collection. Defaults to 'Topic'", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
     [CmdletAdditionalParameter(ParameterType = typeof(GuidPipeBind), ParameterName = "SiteDesignId", Mandatory = true, HelpMessage = @"Specifies the site design id to use for the new site collection. If specified will override SiteDesign", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
-    [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to.", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
-    [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to.", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
-    [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to.", ParameterSetName = ParameterSet_TEAM)]
+    [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.", ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.", ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+    [CmdletAdditionalParameter(ParameterType = typeof(uint), ParameterName = "Lcid", Mandatory = false, HelpMessage = @"Specifies the language of the new site collection. Defaults to the current language of the web connected to. For more information, see Locale IDs supported by SharePoint at https://github.com/pnp/PnP-PowerShell/wiki/Supported-LCIDs-by-SharePoint. To get the list of supported languages on a SharePoint environment use: Get-PnPAvailableLanguage.", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Title", Mandatory = true, HelpMessage = @"Specifies the title of the new site collection", ParameterSetName = ParameterSet_TEAM)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Alias", Mandatory = true, HelpMessage = @"Specifies the alias of the new site collection which represents the part of the URL that will be assigned to the site behind 'https://tenant.sharepoint.com/sites/' or 'https://tenant.sharepoint.com/teams/' based on the managed path configuration in the SharePoint Online Admin portal", ParameterSetName = ParameterSet_TEAM)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Alias", Mandatory = true, HelpMessage = @"Specifies the alias of the new site collection which represents the part of the URL that will be assigned to the site behind 'https://tenant.sharepoint.com/sites/' or 'https://tenant.sharepoint.com/teams/' based on the managed path configuration in the SharePoint Online Admin portal, this parameter only applies to Modern Team Sites", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Description", Mandatory = false, HelpMessage = @"Specifies the description of the new site collection", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "Classification", Mandatory = false, HelpMessage = @"Specifies the classification of the new site collection", ParameterSetName = ParameterSet_TEAM)]
-    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "IsPublic", Mandatory = false, HelpMessage = @"Specifies if new site collection is public. Defaults to false.", ParameterSetName = ParameterSet_TEAM)]
+    [CmdletAdditionalParameter(ParameterType = typeof(string), ParameterName = "SensitivityLabel", Mandatory = false, HelpMessage = @"Specifies the sensitivity label of the new site collection", ParameterSetName = ParameterSet_TEAM)]
+    [CmdletAdditionalParameter(ParameterType = typeof(SwitchParameter), ParameterName = "IsPublic", Mandatory = false, HelpMessage = @"Specifies if the Office 365 Group should be public. Defaults to private.", ParameterSetName = ParameterSet_TEAM)]
     [CmdletAdditionalParameter(ParameterType = typeof(string[]), ParameterName = "Owners", Mandatory = false, HelpMessage = @"Specifies the owners of the site. Specify the value as a string array: ""user@domain.com"",""anotheruser@domain.com""", ParameterSetName = ParameterSet_TEAM)]
-    public class NewSite : PnPCmdlet, IDynamicParameters
+    [CmdletAdditionalParameter(ParameterType = typeof(OfficeDevPnP.Core.Enums.Office365Geography), ParameterName = "PreferredDataLocation", Mandatory = false, HelpMessage = @"Allows specifying in which geography the SharePoint site collection should be created. I.e. NAM, EUR, APC. For a full list of available regions, see https://docs.microsoft.com/office365/enterprise/multi-geo-add-group-with-pdl#geo-location-codes. Only supported on multi-geo enabled tenants.", ParameterSetName = ParameterSet_TEAM)]
+    public class NewSite : PnPSharePointCmdlet, IDynamicParameters
     {
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";
         private const string ParameterSet_COMMUNICATIONCUSTOMDESIGN = "Communication Site with Custom Design";
@@ -86,7 +95,8 @@ namespace SharePointPnP.PowerShell.Commands
         private CommunicationSiteParameters _communicationSiteParameters;
         private TeamSiteParameters _teamSiteParameters;
 
-
+        [Parameter(Mandatory = false, HelpMessage = "If specified the cmdlet will wait until the site has been fully created and all site artifacts have been provisioned by SharePoint. Notice that this can take a while.")]
+        public SwitchParameter Wait;
 
         public object GetDynamicParameters()
         {
@@ -110,7 +120,7 @@ namespace SharePointPnP.PowerShell.Commands
         {
             if (Type == SiteType.CommunicationSite)
             {
-                if (!MyInvocation.BoundParameters.ContainsKey("Lcid"))
+                if (!ParameterSpecified("Lcid"))
                 {
                     ClientContext.Web.EnsureProperty(w => w.Language);
                     _communicationSiteParameters.Lcid = ClientContext.Web.Language;
@@ -124,11 +134,11 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.ShareByEmailEnabled = _communicationSiteParameters.AllowFileSharingForGuestUsers || _communicationSiteParameters.ShareByEmailEnabled;
 #pragma warning restore CS0618 // Type or member is obsolete
                 creationInformation.Lcid = _communicationSiteParameters.Lcid;
-                if (MyInvocation.BoundParameters.ContainsKey("HubSiteId"))
+                if (ParameterSpecified(nameof(HubSiteId)))
                 {
                     creationInformation.HubSiteId = HubSiteId.Id;
                 }
-                if (ParameterSetName == "CommunicationCustomInDesign")
+                if (ParameterSetName == ParameterSet_COMMUNICATIONCUSTOMDESIGN)
                 {
                     creationInformation.SiteDesignId = _communicationSiteParameters.SiteDesignId.Id;
                 }
@@ -136,7 +146,11 @@ namespace SharePointPnP.PowerShell.Commands
                 {
                     creationInformation.SiteDesign = _communicationSiteParameters.SiteDesign;
                 }
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation);
+                creationInformation.Owner = _communicationSiteParameters.Owner;
+                creationInformation.PreferredDataLocation = _communicationSiteParameters.PreferredDataLocation;
+                creationInformation.SensitivityLabel = _communicationSiteParameters.SensitivityLabel;
+
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait);
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
@@ -150,13 +164,15 @@ namespace SharePointPnP.PowerShell.Commands
                 creationInformation.Description = _teamSiteParameters.Description;
                 creationInformation.IsPublic = _teamSiteParameters.IsPublic;
                 creationInformation.Lcid = _teamSiteParameters.Lcid;
-                if (MyInvocation.BoundParameters.ContainsKey("HubSiteId"))
+                if (ParameterSpecified(nameof(HubSiteId)))
                 {
                     creationInformation.HubSiteId = HubSiteId.Id;
                 }
                 creationInformation.Owners = _teamSiteParameters.Owners;
+                creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
+                creationInformation.SensitivityLabel = _teamSiteParameters.SensitivityLabel;
 
-                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation);
+                var returnedContext = OfficeDevPnP.Core.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: PnPConnection.CurrentConnection.TryGetAccessToken(TokenAudience.MicrosoftGraph));
                 //var results = ClientContext.CreateSiteAsync(creationInformation);
                 //var returnedContext = results.GetAwaiter().GetResult();
                 WriteObject(returnedContext.Url);
@@ -181,7 +197,6 @@ namespace SharePointPnP.PowerShell.Commands
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
             public string Classification;
 
-
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
             [Obsolete("Use ShareByEmailEnabled instead.")]
@@ -200,6 +215,18 @@ namespace SharePointPnP.PowerShell.Commands
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
             public uint Lcid;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+            public string Owner;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+            public OfficeDevPnP.Core.Enums.Office365Geography? PreferredDataLocation;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONBUILTINDESIGN)]
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_COMMUNICATIONCUSTOMDESIGN)]
+            public string SensitivityLabel;
         }
 
         public class TeamSiteParameters
@@ -224,6 +251,12 @@ namespace SharePointPnP.PowerShell.Commands
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
             public string[] Owners;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public OfficeDevPnP.Core.Enums.Office365Geography? PreferredDataLocation;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public string SensitivityLabel;
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System.Management.Automation;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureCertificate")]
     [CmdletHelp(@"Generate a new 2048bit self-signed certificate and manifest settings for use when using CSOM via an app-only ADAL application.
@@ -21,8 +21,8 @@ Certificate contains the PEM encoded certificate.
 PrivateKey contains the PEM encoded private key of the certificate.",
         Category = CmdletHelpCategory.Base)]
     [CmdletExample(
-        Code = @"PS:> New-PnPAzureCertificate",
-        Remarks = @"This will generate a default self-signed certificate named ""pnp.contoso.com"" valid for 10 years.",
+        Code = @"PS:> New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer",
+        Remarks = @"This will generate a default self-signed certificate named ""pnp.contoso.com"" valid for 10 years and output a pfx and cer file.",
         SortOrder = 1)]
     [CmdletExample(
         Code = @"PS:> New-PnPAzureCertificate -CommonName ""My Certificate"" -ValidYears 30 ",
@@ -48,8 +48,15 @@ PrivateKey contains the PEM encoded private key of the certificate.",
         [Parameter(Mandatory = false, HelpMessage = "Organizational Unit Name (eg, section)", Position = 5)]
         public string OrganizationUnit = string.Empty;
 
+        [Obsolete("Use OutPfx parameter")]
         [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.pfx)", Position = 6)]
         public string Out;
+
+        [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.pfx)", Position = 6)]
+        public string OutPfx;
+
+        [Parameter(Mandatory = false, HelpMessage = "Filename to write to, optionally including full path (.cer)", Position = 6)]
+        public string OutCert;
 
         [Parameter(Mandatory = false, HelpMessage = "Number of years until expiration (default is 10, max is 30)", Position = 7)]
         public int ValidYears = 10;
@@ -78,14 +85,30 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
             var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable);
 
+#pragma warning disable CS0618 // Type or member is obsolete
             if (!string.IsNullOrWhiteSpace(Out))
             {
-                if (!Path.IsPathRooted(Out))
+                OutPfx = Out;
+#pragma warning restore CS0618 // Type or member is obsolete
+            }
+            if (!string.IsNullOrWhiteSpace(OutPfx))
+            {
+                if (!Path.IsPathRooted(OutPfx))
                 {
-                    Out = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Out);
+                    OutPfx = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutPfx);
                 }
                 byte[] certData = certificate.Export(X509ContentType.Pfx, CertificatePassword);
-                File.WriteAllBytes(Out, certData);
+                File.WriteAllBytes(OutPfx, certData);
+            }
+
+            if (!string.IsNullOrWhiteSpace(OutCert))
+            {
+                if (!Path.IsPathRooted(OutCert))
+                {
+                    OutCert = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutCert);
+                }
+                byte[] certData = certificate.Export(X509ContentType.Cert);
+                File.WriteAllBytes(OutCert, certData);
             }
 
             var rawCert = certificate.GetRawCertData();

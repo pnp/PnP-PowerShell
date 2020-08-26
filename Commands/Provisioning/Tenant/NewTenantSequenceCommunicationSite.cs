@@ -1,20 +1,20 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
+namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceCommunicationSite", SupportsShouldProcess = true)]
-    [Alias("New-PnPProvisioningCommunicationSite")]
     [CmdletHelp("Creates a communication site object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> $site = New-PnPTenantSequenceCommunicationSite -Url ""/sites/mycommunicationsite"" -Title ""My Team Site""",
        Remarks = "Creates a new communication site object with the specified variables",
        SortOrder = 1)]
-    public class NewTenantSequenceCommunicationSite : PSCmdlet
+    public class NewTenantSequenceCommunicationSite : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Url;
@@ -48,11 +48,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioningcommunicationsite")
-            {
-                WriteWarning("New-PnPProvisioningCommunicationSite has been deprecated. Use New-PnPTenantSequenceCommunicationSite instead.");
-            }
-
             var site = new CommunicationSiteCollection
             {
                 Url = Url,
@@ -64,7 +59,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
                 IsHubSite = HubSite.IsPresent,
                 Title = Title,
             };
-            if(MyInvocation.BoundParameters.ContainsKey("SiteDesignId"))
+            if(ParameterSpecified(nameof(SiteDesignId)))
             {
                 site.SiteDesign = SiteDesignId;
             }

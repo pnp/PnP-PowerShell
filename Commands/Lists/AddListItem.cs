@@ -4,23 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Taxonomy;
-using OfficeDevPnP.Core.Utilities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Enums;
-using SharePointPnP.PowerShell.Commands.Taxonomy;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Utilities;
 
 // IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Set-PnPListItem Cmdlet
 
-namespace SharePointPnP.PowerShell.Commands.Lists
+namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Add, "PnPListItem")]
     [CmdletHelp("Adds an item to a list",
+        Description = "Adds an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.",
         Category = CmdletHelpCategory.Lists,
         OutputType = typeof(ListItem),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.listitem.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee539951(v=office.15)")]
     [CmdletExample(
         Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title"" = ""Test Title""; ""Category""=""Test Category""}",
         Remarks = @"Adds a new list item to the ""Demo List"", and sets both the Title and Category fields with the specified values. Notice, use the internal names of fields.",
@@ -37,6 +35,10 @@ namespace SharePointPnP.PowerShell.Commands.Lists
         Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Folder ""projects/europe""",
         Remarks = @"Adds a new list item to the ""Demo List"". It will add the list item to the europe folder which is located in the projects folder. Folders will be created if needed.",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"Add-PnPListItem -List ""Demo List"" -Values @{""Title""=""Sales Report""} -Label ""Public""",
+        Remarks = @"Adds a new list item to the ""Demo List"". Sets the retention label to ""Public"" if it exists on the site.",
+        SortOrder = 4)]
     public class AddListItem : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
@@ -69,6 +71,11 @@ namespace SharePointPnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false, HelpMessage = @"The list relative URL of a folder. E.g. ""MyFolder"" for a folder located in the root of the list, or ""MyFolder/SubFolder"" for a folder located in the MyFolder folder which is located in the root of the list.")]
         public string Folder;
+
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "The name of the retention label.")]
+        public String Label;
+#endif
 
         protected override void ExecuteCmdlet()
         {
@@ -132,6 +139,25 @@ namespace SharePointPnP.PowerShell.Commands.Lists
                         });
                 }
 
+#if !ONPREMISES
+                if (!String.IsNullOrEmpty(Label))
+                {
+                    IList<Microsoft.SharePoint.Client.CompliancePolicy.ComplianceTag> tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+                    ClientContext.ExecuteQueryRetry();
+
+                    var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
+
+                    if (tag != null)
+                    {
+                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock);
+                    }
+                    else
+                    {
+                        WriteWarning("Can not find compliance tag with value: " + Label);
+                    }
+                }
+#endif
+
                 item.Update();
                 ClientContext.Load(item);
                 ClientContext.ExecuteQueryRetry();
@@ -139,5 +165,4 @@ namespace SharePointPnP.PowerShell.Commands.Lists
             }
         }
     }
-
 }

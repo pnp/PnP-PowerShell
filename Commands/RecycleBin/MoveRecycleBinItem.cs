@@ -2,11 +2,11 @@
 using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.RecycleBin
+namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsCommon.Move, "PnPRecycleBinItem")]
     [CmdletHelp("Moves all items or a specific item in the first stage recycle bin of the current site collection to the second stage recycle bin",
@@ -24,7 +24,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
         Code = @"PS:> Move-PnpRecycleBinItem -Force",
         Remarks = "Moves all the items in the first stage recycle bin of the current context to the second stage recycle bin without asking for confirmation first",
         SortOrder = 3)]
-    public class MoveRecycleBinItems : PnPCmdlet
+    public class MoveRecycleBinItems : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "If provided, moves the item with the specific ID to the second stage recycle bin", ValueFromPipeline = true)]
         public RecycleBinItemPipeBind Identity;
@@ -33,7 +33,7 @@ namespace SharePointPnP.PowerShell.Commands.RecycleBin
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var item = Identity.GetRecycleBinItem(ClientContext.Site);
                 if (Force || ShouldContinue(string.Format(Resources.MoveRecycleBinItemWithLeaf0ToSecondStage, item.LeafName), Resources.Confirm))

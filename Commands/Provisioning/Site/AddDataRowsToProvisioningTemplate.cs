@@ -3,9 +3,9 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,18 +15,18 @@ using System.Text;
 using System.Text.RegularExpressions;
 using SPSite = Microsoft.SharePoint.Client.Site;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPDataRowsToProvisioningTemplate")]
     [CmdletHelp("Adds datarows to a list inside a PnP Provisioning Template",
         Category = CmdletHelpCategory.Provisioning)]
     [CmdletExample(
        Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice'",
-       Remarks = "Adds datarows to a list in an in-memory PnP Provisioning Template",
+       Remarks = "Adds datarows from the provided list to the PnP Provisioning Template at the provided location",
        SortOrder = 1)]
     [CmdletExample(
        Code = @"PS:> Add-PnPDataRowsToProvisioningTemplate -Path template.pnp -List 'PnPTestList' -Query '<View></View>' -Fields 'Title','Choice' -IncludeSecurity",
-      Remarks = "Adds datarows to a list in an in-memory PnP Provisioning Template",
+      Remarks = "Adds datarows from the provided list to the PnP Provisioning Template at the provided location",
        SortOrder = 2)]
     public class AddDataRowsToProvisioningTemplate : PnPWebCmdlet
     {
@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = true, HelpMessage = "The list to query")]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, HelpMessage = "The CAML query to execute against the list")]
+        [Parameter(Mandatory = false, HelpMessage = "The CAML query to execute against the list. Defaults to all items.")]
         public string Query;
 
         [Parameter(Mandatory = false, HelpMessage = "The fields to retrieve. If not specified all fields will be loaded in the returned list object.")]
@@ -66,7 +66,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 
             var template = ReadProvisioningTemplate
                     .LoadProvisioningTemplateFromFile(Path,
-                    TemplateProviderExtensions);
+                    TemplateProviderExtensions, (e) =>
+                    {
+                        WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                    });
 
             if (template == null)
             {
@@ -255,6 +258,13 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
                         return string.Join(",", multipleUserValue.Select(lv => GetLoginName(web,lv.LookupId)));
                     }
                     throw new Exception("Invalid data in field");
+                case FieldType.MultiChoice:
+                    var multipleChoiceValue = rawValue as string[];
+                    if (multipleChoiceValue != null)
+                    {
+                        return string.Join(";#", multipleChoiceValue);
+                    }
+                    return Convert.ToString(rawValue);
                 default:
                     return Convert.ToString(rawValue);
             }

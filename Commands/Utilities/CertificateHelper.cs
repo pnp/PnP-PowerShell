@@ -8,7 +8,7 @@ using System.Text;
 using SecureString = System.Security.SecureString;
 using RuntimeHelpers = System.Runtime.CompilerServices.RuntimeHelpers;
 
-namespace SharePointPnP.PowerShell.Commands.Utilities
+namespace PnP.PowerShell.Commands.Utilities
 {
     internal class CertificateHelper
     {
@@ -83,6 +83,49 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             return sb.ToString();
         }
 
+        internal static X509Certificate2 GetCertificatFromStore(string thumbprint)
+        {
+            List<StoreLocation> locations = new List<StoreLocation>
+            {
+                StoreLocation.CurrentUser,
+                StoreLocation.LocalMachine
+            };
+
+            foreach (var location in locations)
+            {
+                X509Store store = new X509Store("My", location);
+                try
+                {
+                    store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+                    X509Certificate2Collection certificates = store.Certificates.Find(
+                        X509FindType.FindByThumbprint, thumbprint, false);
+                    if (certificates.Count == 1)
+                    {
+                        return certificates[0];
+                    }
+                }
+                finally
+                {
+                    store.Close();
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts a public key certificate stored in Base64 encoding such as retrieved from Azure KeyVault to a X509Certificate2
+        /// </summary>
+        /// <param name="publicCert">Public key certificate endoded with Base64</param>
+        /// <returns>X509Certificate2 certificate</returns>
+        internal static X509Certificate2 GetCertificateFromBase64Encodedstring(string publicCert)
+        {
+            var certificateBytes = Convert.FromBase64String(publicCert);
+            var certificate = new X509Certificate2(certificateBytes);
+
+            return certificate;
+        }
+
         internal static X509Certificate2 GetCertificateFromPEMstring(string publicCert, string privateKey, string password)
         {
             if (string.IsNullOrWhiteSpace(password)) password = "";
@@ -96,6 +139,22 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
 
             return certificate;
         }
+
+        internal static X509Certificate2 GetCertificateFromPath(string certificatePath, SecureString certificatePassword)
+        {
+            var certFile = System.IO.File.OpenRead(certificatePath);
+            var certificateBytes = new byte[certFile.Length];
+            certFile.Read(certificateBytes, 0, (int)certFile.Length);
+            var certificate = new X509Certificate2(
+                certificateBytes,
+                certificatePassword,
+                X509KeyStorageFlags.Exportable |
+                X509KeyStorageFlags.MachineKeySet |
+                X509KeyStorageFlags.PersistKeySet);
+            return certificate;
+        }
+
+
 
         #region certificate manipulation
         private static void EncodeLength(BinaryWriter stream, int length)

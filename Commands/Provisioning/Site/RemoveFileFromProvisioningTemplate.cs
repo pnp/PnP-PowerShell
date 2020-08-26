@@ -2,13 +2,13 @@
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFileFromProvisioningTemplate")]
     [CmdletHelp("Removes a file from a PnP Provisioning Template",
@@ -37,7 +37,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             // Load the template
             ProvisioningTemplate template = ReadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
-                TemplateProviderExtensions);
+                TemplateProviderExtensions, (e) =>
+                {
+                    WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                });
 
             if (template == null)
             {

@@ -1,10 +1,10 @@
 ﻿#if !ONPREMISES
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.RecordsManagement
+namespace PnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Clear, "PnPListItemAsRecord")]
     [CmdletHelp("Undeclares a list item as a record",
@@ -24,6 +24,8 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
             var item = Identity.GetListItem(list);
 

@@ -1,11 +1,11 @@
 ﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.ALM;
 using OfficeDevPnP.Core.Enums;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Enums;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Apps
+namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Add, "PnPApp")]
     [CmdletHelp("Add/uploads an available app to the app catalog",
@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletExample(
         Code = @"PS:> Add-PnPApp -Path ./myapp.sppkg -Scope Site -Publish",
         Remarks = @"This will upload the specified app package to the site collection app catalog and deploy/trust it at the same time.", SortOrder = 2)]
-    public class AddApp : PnPCmdlet
+    public class AddApp : PnPSharePointCmdlet
     {
         private const string ParameterSet_ADD = "Add only";
         private const string ParameterSet_PUBLISH = "Add and Publish";

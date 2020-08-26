@@ -1,14 +1,14 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq.Expressions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base;
 
-namespace SharePointPnP.PowerShell.Commands.RecordsManagement
+namespace PnP.PowerShell.Commands.RecordsManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPInPlaceRecordsManagement")]
     [CmdletHelp("Activates or deactivates in the place records management feature.",
@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Enabled"))
+            if (ParameterSpecified(nameof(Enabled)))
             {
                 if (Enabled)
                 {
@@ -50,7 +50,9 @@ namespace SharePointPnP.PowerShell.Commands.RecordsManagement
             else
             {
                 // obsolete
-                if (MyInvocation.BoundParameters.ContainsKey("On"))
+#pragma warning disable CS0618 // Type or member is obsolete
+                if (ParameterSpecified(nameof(On)))
+#pragma warning restore CS0618 // Type or member is obsolete
                 {
                     ClientContext.Site.ActivateInPlaceRecordsManagementFeature();
                 }

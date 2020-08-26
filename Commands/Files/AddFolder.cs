@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Files
+namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Add, "PnPFolder")]
     [CmdletHelp("Creates a folder within a parent folder",
@@ -28,7 +28,9 @@ namespace SharePointPnP.PowerShell.Commands.Files
             ClientContext.Load(folder, f => f.ServerRelativeUrl);
             ClientContext.ExecuteQueryRetry();
 
-            folder.CreateFolder(Name);
+            var result = folder.CreateFolder(Name);
+
+            WriteObject(result);
         }
     }
 }

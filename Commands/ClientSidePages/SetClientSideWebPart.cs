@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Set, "PnPClientSideWebPart")]
     [CmdletHelp("Set Client-Side Web Part properties",
@@ -47,12 +47,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 var webpart = controls.First();
                 bool updated = false;
 
-                if (MyInvocation.BoundParameters.ContainsKey("PropertiesJson"))
+                if (ParameterSpecified(nameof(PropertiesJson)))
                 {
                     webpart.PropertiesJson = PropertiesJson;
                     updated = true;
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Title"))
+                if (ParameterSpecified(nameof(Title)))
                 {
                     webpart.Title = Title;
                     updated = true;

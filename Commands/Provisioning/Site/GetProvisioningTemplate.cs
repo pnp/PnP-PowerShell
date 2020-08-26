@@ -7,14 +7,17 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using File = System.IO.File;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities;
+using System.Collections.Generic;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using OfficeDevPnP.Core.Framework.Provisioning.Model.Configuration;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPProvisioningTemplate", SupportsShouldProcess = true)]
     [CmdletHelp("Generates a provisioning site template from a web",
@@ -40,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
         Remarks = "Extracts a provisioning template in Office Open XML from the current web and includes the term group currently (if set) assigned to the site collection.",
         SortOrder = 5)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistComposedLookFiles",
+        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -PersistBrandingFiles",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web and saves the files that make up the composed look to the same folder as where the template is saved.",
         SortOrder = 6)]
     [CmdletExample(
@@ -50,7 +53,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
     [CmdletExample(
         Code = @"
 PS:> $handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
-PS:> $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler2
 PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
         Remarks = @"This will create two new ExtensibilityHandler objects that are run during extraction of the template",
         SortOrder = 8)]
@@ -78,6 +81,10 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ExcludeContentTypesFromSyndication",
         Remarks = "Extracts a provisioning template in Office Open XML from the current web, excluding content types provisioned through content type syndication (content type hub), in order to prevent provisioning errors if the target also provision the content type using syndication.",
         SortOrder = 13)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPProvisioningTemplate -Out template.pnp -ListsToExtract ""Title of List One"",""95c4efd6-08f4-4c67-94ae-49d696ba1298"",""Title of List Three""",
+        Remarks = "Extracts a provisioning template in Office Open XML from the current web, including only the lists specified by title or ID.",
+        SortOrder = 14)]
     [CmdletRelatedLink(
         Text = "Encoding",
         Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
@@ -123,6 +130,9 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified hidden lists will be included in the template")]
         public SwitchParameter IncludeHiddenLists;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified all client side pages will be included")]
+        public SwitchParameter IncludeAllClientSidePages;
+
         [Parameter(Mandatory = false, HelpMessage = "During extraction the version of the server will be checked for certain actions. If you specify this switch, this check will be skipped.")]
         public SwitchParameter SkipVersionCheck;
 
@@ -133,13 +143,13 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "If specified, resource files will be saved with the specified prefix instead of using the template name specified. If no template name is specified the files will be called PnP-Resources.<language>.resx. See examples for more info.")]
         public string ResourceFilePrefix;
 #endif
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting.")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://docs.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers")]
         public Handlers Handlers;
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.")]
         public Handlers ExcludeHandlers;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensbilityHandlers to execute while extracting a template.")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ExtensibilityHandlers to execute while extracting a template.")]
         public ExtensibilityHandler[] ExtensibilityHandlers;
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify ITemplateProviderExtension to execute while extracting a template.")]
@@ -173,8 +183,19 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
         [Parameter(Mandatory = false, HelpMessage = "Specify whether or not content types issued from a content hub should be exported. By default, these content types are included.")]
         public SwitchParameter ExcludeContentTypesFromSyndication;
 
+        [Parameter(Mandatory = false, HelpMessage = "Specify the lists to extract, either providing their ID or their Title.")]
+        public List<string> ListsToExtract;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specify a JSON configuration file to configure the extraction progress.")]
+        public ExtractConfigurationPipeBind Configuration;
+
         protected override void ExecuteCmdlet()
         {
+            ExtractConfiguration extractConfiguration = null;
+            if (ParameterSpecified(nameof(Configuration)))
+            {
+                extractConfiguration = Configuration.GetConfiguration(SessionState.Path.CurrentFileSystemLocation.Path);
+            }
 #if !SP2013
             if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
@@ -191,31 +212,38 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 {
                     if (Force || ShouldContinue(string.Format(Resources.File0ExistsOverwrite, Out), Resources.Confirm))
                     {
-                        ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                        ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
                     }
                 }
                 else
                 {
-                    ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name);
+                    ExtractTemplate(Schema, new FileInfo(Out).DirectoryName, new FileInfo(Out).Name, extractConfiguration);
                 }
             }
             else
             {
-                ExtractTemplate(Schema, SessionState.Path.CurrentFileSystemLocation.Path, null);
+                ExtractTemplate(Schema, SessionState.Path.CurrentFileSystemLocation.Path, null, extractConfiguration);
             }
         }
 
-        private void ExtractTemplate(XMLPnPSchemaVersion schema, string path, string packageName)
+        private void ExtractTemplate(XMLPnPSchemaVersion schema, string path, string packageName, ExtractConfiguration configuration)
         {
             SelectedWeb.EnsureProperty(w => w.Url);
+            ProvisioningTemplateCreationInformation creationInformation = null;
+            if (configuration != null)
+            {
+                creationInformation = configuration.ToCreationInformation(SelectedWeb);
+            }
+            else
+            {
+                creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
+            }
 
-            var creationInformation = new ProvisioningTemplateCreationInformation(SelectedWeb);
-
-            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (ParameterSpecified(nameof(Handlers)))
             {
                 creationInformation.HandlersToProcess = Handlers;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (ParameterSpecified(nameof(ExcludeHandlers)))
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
@@ -251,22 +279,37 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 creationInformation.FileConnector = fileSystemConnector;
             }
 #pragma warning disable 618
-            creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
+            if (ParameterSpecified(nameof(PersistBrandingFiles)) || ParameterSpecified(nameof(PersistComposedLookFiles)))
+            {
+                creationInformation.PersistBrandingFiles = PersistBrandingFiles || PersistComposedLookFiles;
+            }
 #pragma warning restore 618
             creationInformation.PersistPublishingFiles = PersistPublishingFiles;
             creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
-            creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+            if (ParameterSpecified(nameof(IncludeSiteGroups)))
+            {
+                creationInformation.IncludeSiteGroups = IncludeSiteGroups;
+            }
             creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
             creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
-            creationInformation.IncludeHiddenLists = IncludeHiddenLists;
+            if(ParameterSpecified(nameof(IncludeHiddenLists)))
+            {
+                creationInformation.IncludeHiddenLists = IncludeHiddenLists;
+            }
+#if !SP2013 && !SP2016
+            if (ParameterSpecified(nameof(IncludeAllClientSidePages)))
+            {
+                creationInformation.IncludeAllClientSidePages = IncludeAllClientSidePages;
+            }
+#endif
             creationInformation.SkipVersionCheck = SkipVersionCheck;
-            if (ContentTypeGroups != null)
+            if (ParameterSpecified(nameof(ContentTypeGroups)) && ContentTypeGroups != null)
             {
                 creationInformation.ContentTypeGroupsToInclude = ContentTypeGroups.ToList();
             }
 #if !SP2013
             creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
-            if(extension == ".pnp")
+            if (extension == ".pnp")
             {
                 // if file is of pnp format, persist all files
                 creationInformation.PersistBrandingFiles = true;
@@ -282,7 +325,13 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 if (Out != null)
                 {
                     FileInfo fileInfo = new FileInfo(Out);
-                    var prefix = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf(".", StringComparison.Ordinal));
+                    var prefix = fileInfo.Name;
+                    // strip extension, if there is any
+                    var indexOfLastDot = prefix.LastIndexOf(".", StringComparison.Ordinal);
+                    if (indexOfLastDot > -1)
+                    {
+                        prefix = prefix.Substring(0, indexOfLastDot);
+                    }
                     creationInformation.ResourceFilePrefix = prefix;
                 }
 
@@ -305,11 +354,12 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 #pragma warning restore CS0618 // Type or member is obsolete
 
             creationInformation.ProgressDelegate = (message, step, total) =>
-                {
-                    var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
+            {
+                var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
 
-                    WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = percentage });
-                };
+                WriteProgress(new ProgressRecord(0, $"Extracting Template from {SelectedWeb.Url}", message) { PercentComplete = percentage });
+                WriteProgress(new ProgressRecord(1, " ", " ") { RecordType = ProgressRecordType.Completed });
+            };
             creationInformation.MessagesDelegate = (message, type) =>
             {
                 switch (type)
@@ -374,7 +424,15 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
                 }
             }
 
-            creationInformation.IncludeContentTypesFromSyndication = !ExcludeContentTypesFromSyndication.ToBool();
+            if (ParameterSpecified(nameof(ExcludeContentTypesFromSyndication)))
+            {
+                creationInformation.IncludeContentTypesFromSyndication = !ExcludeContentTypesFromSyndication.ToBool();
+            }
+
+            if (ListsToExtract != null && ListsToExtract.Count > 0)
+            {
+                creationInformation.ListsToExtract.AddRange(ListsToExtract);
+            }
 
             var template = SelectedWeb.GetProvisioningTemplate(creationInformation);
 
@@ -383,72 +441,14 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
             if (!OutputInstance)
             {
-                ITemplateFormatter formatter = null;
-                switch (schema)
-                {
-                    case XMLPnPSchemaVersion.LATEST:
-                        {
-                            formatter = XMLPnPSchemaFormatter.LatestFormatter;
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201503:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201505:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201508:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201512:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201605:
-                        {
-#pragma warning disable CS0618 // Type or member is obsolete
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
-#pragma warning restore CS0618 // Type or member is obsolete
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201705:
-                        {
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05);
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201801:
-                        {
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01);
-                            break;
-                        }
-                    case XMLPnPSchemaVersion.V201805:
-                        {
-                            formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
-                            break;
-                        }
-                }
+                var formatter = ProvisioningHelper.GetFormatter(schema);
 
                 if (extension == ".pnp")
                 {
+#if !PNPPSCORE
                     IsolatedStorage.InitializeIsolatedStorage();
-
+#endif
                     XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(
-
                           creationInformation.FileConnector as OpenXMLConnector);
                     var templateFileName = packageName.Substring(0, packageName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
 

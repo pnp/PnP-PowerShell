@@ -4,9 +4,9 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Enums;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "PnPNavigationNode", DefaultParameterSetName = ParameterSet_ALLBYLOCATION)]
     [CmdletHelp("Returns all or a specific navigation node",
@@ -20,7 +20,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         Remarks = @"Returns all navigation nodes in the quicklaunch navigation",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Get-PnPNavigationNode -TopNavigationBar",
+        Code = @"PS:> Get-PnPNavigationNode -Location TopNavigationBar",
         Remarks = @"Returns all navigation nodes in the top navigation bar",
         SortOrder = 3)]
     [CmdletExample(
@@ -33,7 +33,7 @@ PS> $children = $node.Children",
         private const string ParameterSet_ALLBYLOCATION = "All nodes by location";
         private const string ParameterSet_BYID = "A single node by ID";
 
-        [Parameter(Mandatory = false, HelpMessage = "The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch", ParameterSetName = ParameterSet_ALLBYLOCATION)]
+        [Parameter(Mandatory = false, HelpMessage = "The location of the nodes to retrieve. Either TopNavigationBar, QuickLaunch, SearchNav or Footer.", ParameterSetName = ParameterSet_ALLBYLOCATION)]
         public NavigationType Location = NavigationType.QuickLaunch;
 
         [Parameter(Mandatory = false, HelpMessage = "The Id of the node to retrieve", ParameterSetName = ParameterSet_BYID)]
@@ -44,7 +44,6 @@ PS> $children = $node.Children",
 
         protected override void ExecuteCmdlet()
         {
-
             if (ParameterSetName == ParameterSet_ALLBYLOCATION)
             {
                 if (Tree.IsPresent)
@@ -53,14 +52,23 @@ PS> $children = $node.Children",
                     if (Location == NavigationType.SearchNav)
                     {
                         navigationNodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
+#if !ONPREMISES
+                    }
+                    else if (Location == NavigationType.Footer)
+                    {
+                        navigationNodes = SelectedWeb.LoadFooterNavigation();
+#endif
                     }
                     else
                     {
                         navigationNodes = Location == NavigationType.QuickLaunch ? SelectedWeb.Navigation.QuickLaunch : SelectedWeb.Navigation.TopNavigationBar;
                     }
-                    var nodesCollection = ClientContext.LoadQuery(navigationNodes);
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(GetTree(nodesCollection, 0));
+                    if (navigationNodes != null)
+                    {
+                        var nodesCollection = ClientContext.LoadQuery(navigationNodes);
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(GetTree(nodesCollection, 0));
+                    }
                 }
                 else
                 {
@@ -82,13 +90,23 @@ PS> $children = $node.Children",
                                 nodes = SelectedWeb.Navigation.GetNodeById(1040).Children;
                                 break;
                             }
+#if !ONPREMISES
+                        case NavigationType.Footer:
+                            {
+                                nodes = SelectedWeb.LoadFooterNavigation();
+                                break;
+                            }
+#endif
                     }
-                    ClientContext.Load(nodes);
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(nodes, true);
+                    if (nodes != null)
+                    {
+                        ClientContext.Load(nodes);
+                        ClientContext.ExecuteQueryRetry();
+                        WriteObject(nodes, true);
+                    }
                 }
             }
-            if (MyInvocation.BoundParameters.ContainsKey("Id"))
+            if (ParameterSpecified(nameof(Id)))
             {
                 var node = SelectedWeb.Navigation.GetNodeById(Id);
                 ClientContext.Load(node);

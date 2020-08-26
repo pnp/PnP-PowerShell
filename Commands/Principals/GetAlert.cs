@@ -1,13 +1,12 @@
 ﻿#if !SP2013 && !SP2016
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Principals
+namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPAlert")]
     [CmdletHelp("Returns registered alerts for a user.",
@@ -25,6 +24,10 @@ namespace SharePointPnP.PowerShell.Commands.Principals
         Code = @"PS:> Get-PnPAlert -List ""Demo List"" -User ""i:0#.f|membership|Alice@contoso.onmicrosoft.com""",
         Remarks = @"Returns all alerts registered on the given list for the specified user.",
         SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPAlert -Title ""Demo Alert""",
+        Remarks = @"Returns all alerts with the given title for the current user. Title comparison is case sensitive.",
+        SortOrder = 4)]
     public class GetAlert : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "The ID, Title or Url of the list.")]
@@ -32,6 +35,9 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 
         [Parameter(Mandatory = false, HelpMessage = "User to retrieve the alerts for (User ID, login name or actual User object). Skip this parameter to retrieve the alerts for the current user. Note: Only site owners can retrieve alerts for other users.")]
         public UserPipeBind User;
+
+        [Parameter(Mandatory = false, HelpMessage = "Retrieve alerts with this title. Title comparison is case sensitive.")]
+        public string Title;
 
         protected override void ExecuteCmdlet()
         {
@@ -58,9 +64,17 @@ namespace SharePointPnP.PowerShell.Commands.Principals
             }
 
             user.EnsureProperty(u => u.Alerts.IncludeWithDefaultProperties(a => a.ListID));
-            if (list != null)
+            if (list != null && !string.IsNullOrWhiteSpace(Title))
+            {
+                WriteObject(user.Alerts.Where(l => l.ListID == list.Id && l.Title == Title), true);
+            }
+            else if (list != null)
             {
                 WriteObject(user.Alerts.Where(l => l.ListID == list.Id), true);
+            }
+            else if (!string.IsNullOrWhiteSpace(Title))
+            {
+                WriteObject(user.Alerts.Where(l => l.Title == Title), true);
             }
             else
             {

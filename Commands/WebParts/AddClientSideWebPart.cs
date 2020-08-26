@@ -1,16 +1,16 @@
-﻿#if !ONPREMISES
+﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Pages;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.WebParts
+namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Add, "PnPClientSideWebPart")]
     [CmdletHelp("Adds a Client-Side Web Part to a client-side page",
         "Adds a client-side web part to an existing client-side page.",
-      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online)]
+      Category = CmdletHelpCategory.ClientSidePages, SupportedPlatform = CmdletSupportedPlatform.Online | CmdletSupportedPlatform.SP2019)]
     [CmdletExample(
         Code = @"PS:> Add-PnPClientSideWebPart -Page ""MyPage"" -DefaultWebPartType BingMap",
         Remarks = "Adds a built-in Client-Side component 'BingMap' to the page called 'MyPage'",
@@ -65,12 +65,12 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Section") && Section == 0)
+            if (ParameterSpecified(nameof(Section)) && Section == 0)
             {
                 throw new Exception("Section value should be at least 1 or higher");
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Column") && Column == 0)
+            if (ParameterSpecified(nameof(Column)) && Column == 0)
             {
                 throw new Exception("Column value should be at least 1 or higher");
             }
@@ -83,7 +83,7 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
             }
 
             ClientSideWebPart webpart = null;
-            if (MyInvocation.BoundParameters.ContainsKey("DefaultWebPartType"))
+            if (ParameterSpecified(nameof(DefaultWebPartType)))
             {
                 webpart = clientSidePage.InstantiateDefaultWebPart(DefaultWebPartType);
             }
@@ -104,9 +104,9 @@ namespace SharePointPnP.PowerShell.Commands.WebParts
                 }
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("Section"))
+            if (ParameterSpecified(nameof(Section)))
             {
-                if (MyInvocation.BoundParameters.ContainsKey("Column"))
+                if (ParameterSpecified(nameof(Column)))
                 {
                     clientSidePage.AddControl(webpart,
                                 clientSidePage.Sections[Section - 1].Columns[Column - 1], Order);

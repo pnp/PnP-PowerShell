@@ -1,148 +1,85 @@
-﻿#if !NETSTANDARD2_0
-using Microsoft.Graph;
-#endif
-using SharePointPnP.PowerShell.Commands.Properties;
+﻿#if !ONPREMISES
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Properties;
+using PnP.PowerShell.Core.Attributes;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Management.Automation;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     /// <summary>
     /// Base class for all the PnP Microsoft Graph related cmdlets
     /// </summary>
-    public abstract class PnPGraphCmdlet : PSCmdlet
+    public abstract class PnPGraphCmdlet : PnPConnectedCmdlet
     {
-        private Assembly newtonsoftAssembly;
-        public String AccessToken
+        [Parameter(Mandatory = false, HelpMessage = "Allows the check for required permissions in the access token to be bypassed when set to $true")]
+        public SwitchParameter ByPassPermissionCheck;
+
+        /// <summary>
+        /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
+        /// </summary>
+        public GraphToken Token
         {
             get
             {
-                if (SPOnlineConnection.AuthenticationResult != null)
+                var tokenType = TokenType.All;
+
+                // Collect, if present, the token type attribute
+                var tokenTypeAttribute = (CmdletTokenTypeAttribute)Attribute.GetCustomAttribute(GetType(), typeof(CmdletTokenTypeAttribute));
+                if(tokenTypeAttribute != null)
                 {
-                    if (SPOnlineConnection.AuthenticationResult.ExpiresOn < DateTimeOffset.Now)
+                    tokenType = tokenTypeAttribute.TokenType;
+                }
+                // Collect the permission attributes to discover required roles
+                var requiredRoleAttributes = (CmdletMicrosoftGraphApiPermission[])Attribute.GetCustomAttributes(GetType(), typeof(CmdletMicrosoftGraphApiPermission));
+                var orRequiredRoles = new List<string>(requiredRoleAttributes.Length);
+                var andRequiredRoles = new List<string>(requiredRoleAttributes.Length);
+                foreach (var requiredRoleAttribute in requiredRoleAttributes)
+                {
+
+                    foreach (MicrosoftGraphApiPermission role in Enum.GetValues(typeof(MicrosoftGraphApiPermission)))
                     {
-                        WriteWarning(Resources.MicrosoftGraphOAuthAccessTokenExpired);
-                        SPOnlineConnection.AuthenticationResult = null;
-                        return (null);
+                        if (role != MicrosoftGraphApiPermission.None)
+                        {
+                            if (requiredRoleAttribute.OrApiPermissions.HasFlag(role))
+                            {
+                                orRequiredRoles.Add(role.ToString().Replace("_", "."));
+                            }
+                            if (requiredRoleAttribute.AndApiPermissions.HasFlag(role))
+                            {
+                                andRequiredRoles.Add(role.ToString().Replace("_", "."));
+                            }
+                        }
                     }
-                    else
+                }
+
+                // Ensure we have an active connection
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    // There is an active connection, try to get a Microsoft Graph Token on the active connection
+                    if (PnPConnection.CurrentConnection.TryGetToken(Enums.TokenAudience.MicrosoftGraph, PnPConnection.CurrentConnection.AzureEnvironment, ByPassPermissionCheck.ToBool() ? null : orRequiredRoles.ToArray(), ByPassPermissionCheck.ToBool() ? null : andRequiredRoles.ToArray(), tokenType) is GraphToken token)
                     {
-#if !NETSTANDARD2_0
-                        return (SPOnlineConnection.AuthenticationResult.Token);
-#else
-                        return SPOnlineConnection.AuthenticationResult.AccessToken;
-#endif
+                        // Microsoft Graph Access Token available, return it
+                        return (GraphToken)token;
                     }
                 }
-                else if (SPOnlineConnection.CurrentConnection.AccessToken != null)
-                {
-                    return SPOnlineConnection.CurrentConnection.AccessToken;
-                }
-                else
-                {
-                    ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(Resources.NoAzureADAccessToken), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
-                    return (null);
-                }
+
+                // No valid Microsoft Graph Access Token available, throw an error
+                ThrowTerminatingError(new ErrorRecord(new InvalidOperationException(string.Format(Resources.NoApiAccessToken, Enums.TokenAudience.MicrosoftGraph)), "NO_OAUTH_TOKEN", ErrorCategory.ConnectionError, null));
+                return null;
+
             }
         }
 
-        private string AssemblyDirectory
-        {
-            get
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
-        }
+        /// <summary>
+        /// Returns an Access Token for Microsoft Graph, if available, otherwise NULL
+        /// </summary>
+        public string AccessToken => Token?.AccessToken;
 
-        private void FixAssemblyResolving()
-        {
-            newtonsoftAssembly = System.Reflection.Assembly.LoadFrom(Path.Combine(AssemblyDirectory, "NewtonSoft.Json.dll"));
-            System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-        }
-
-        private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-
-            if (args.Name.StartsWith("Newtonsoft.Json"))
-            {
-                return newtonsoftAssembly;
-            }
-            foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
-            {
-                if (assembly.FullName == args.Name)
-                {
-                    return assembly;
-                }
-            }
-            return null;
-        }
-
-        protected override void BeginProcessing()
-        {
-
-            base.BeginProcessing();
-
-            FixAssemblyResolving();
-
-#if !NETSTANDARD2_0
-
-            if (SPOnlineConnection.CurrentConnection != null && SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin)
-            {
-                if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))
-                {
-                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
-                }
-            }
-            else
-            {
-                if (SPOnlineConnection.AuthenticationResult == null ||
-                String.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.Token))
-                {
-                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
-                }
-            }
-#else
-            if (SPOnlineConnection.CurrentConnection != null && (SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.GraphDeviceLogin || SPOnlineConnection.CurrentConnection.ConnectionMethod == Model.ConnectionMethod.AccessToken))
-            {
-                // Graph Connection
-                if (string.IsNullOrEmpty(SPOnlineConnection.CurrentConnection.AccessToken))
-                {
-                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
-                }
-            }
-            else
-            {
-                //Normal connection
-                if (SPOnlineConnection.AuthenticationResult == null ||
-                string.IsNullOrEmpty(SPOnlineConnection.AuthenticationResult.AccessToken))
-                {
-                    throw new InvalidOperationException(Resources.NoAzureADAccessToken);
-                }
-            }
-#endif
-        }
-
-        protected virtual void ExecuteCmdlet()
-        { }
-
-        protected override void ProcessRecord()
-        {
-            ExecuteCmdlet();
-        }
-
-        protected override void EndProcessing()
-        {
-            System.AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
-        }
+        public HttpClient HttpClient => PnPConnection.CurrentConnection.HttpClient;
     }
 }
+#endif

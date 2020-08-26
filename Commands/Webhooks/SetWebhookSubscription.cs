@@ -2,12 +2,12 @@
 
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Webhooks
+namespace PnP.PowerShell.Commands.Webhooks
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebhookSubscription")]
     [CmdletHelp("Updates a Webhook subscription",
@@ -52,7 +52,7 @@ Note: The date will be converted to Universal Time",
             if (Subscription != null)
             {
                 // NOTE: Currently only supports List Webhooks
-                if (MyInvocation.BoundParameters.ContainsKey("List"))
+                if (ParameterSpecified(nameof(List)))
                 {
                     // Get the list from the currently selected web
                     List list = List.GetList(SelectedWeb);
@@ -62,12 +62,12 @@ Note: The date will be converted to Universal Time",
                         list.EnsureProperty(l => l.Id);
 
                         // If the notification Url is specified, override the property of the subscription object
-                        if (MyInvocation.BoundParameters.ContainsKey(nameof(NotificationUrl)))
+                        if (ParameterSpecified(nameof(NotificationUrl)))
                         {
                             Subscription.Subscription.NotificationUrl = NotificationUrl;
                         }
                         // If the expiration date is specified, override the property of the subscription object
-                        if (MyInvocation.BoundParameters.ContainsKey(nameof(ExpirationDate)))
+                        if (ParameterSpecified(nameof(ExpirationDate)))
                         {
                             Subscription.Subscription.ExpirationDateTime = ExpirationDate;
                         }

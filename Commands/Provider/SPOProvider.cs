@@ -7,14 +7,14 @@ using System.Management.Automation.Provider;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Extensions;
-using SharePointPnP.PowerShell.Commands.Provider.Parameters;
-using SharePointPnP.PowerShell.Commands.Provider.SPOProxy;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Extensions;
+using PnP.PowerShell.Commands.Provider.Parameters;
+using PnP.PowerShell.Commands.Provider.SPOProxy;
 using File = Microsoft.SharePoint.Client.File;
-using PnPResources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnPResources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.Provider
+namespace PnP.PowerShell.Commands.Provider
 {
     [CmdletProvider(PSProviderName, ProviderCapabilities.ShouldProcess)]
     public class SPOProvider : NavigationCmdletProvider, IContentCmdletProvider
@@ -54,14 +54,14 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 var webUrl = spoParametes.Url ?? spoParametes.Web.EnsureProperty(w => w.Url);
                 web = spoParametes.Web.Context.Clone(webUrl).Web;
             }
-            else if (SPOnlineConnection.CurrentConnection != null)
+            else if (PnPConnection.CurrentConnection != null)
             {
-                var webUrl = spoParametes?.Url ?? SPOnlineConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
-                web = SPOnlineConnection.CurrentConnection.Context.Clone(webUrl).Web;
+                var webUrl = spoParametes?.Url ?? PnPConnection.CurrentConnection.Context.Web.EnsureProperty(w => w.Url);
+                web = PnPConnection.CurrentConnection.Context.Clone(webUrl).Web;
             }
             else
             {
-                WriteErrorInternal(PnPResources.NoConnection, drive.Root, ErrorCategory.ConnectionError);
+                WriteErrorInternal(PnPResources.NoSharePointConnection, drive.Root, ErrorCategory.ConnectionError);
             }
 
             if (web != null)
@@ -537,7 +537,11 @@ namespace SharePointPnP.PowerShell.Commands.Provider
                 if (ShouldProcess($"Clear content from {GetServerRelativePath(path)}"))
                 {
                     var file = obj as File;
+#if PNPPSCORE
+                    file.SaveBinary(new FileSaveBinaryInformation());
+#else
                     File.SaveBinaryDirect(file.Context as ClientContext, file.ServerRelativeUrl, Stream.Null, true);
+#endif
                 }
             }
         }
@@ -547,7 +551,7 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             return null;
         }
 
-        #region Helpers
+#region Helpers
 
         //Get helpers
         private object GetFileOrFolder(string path, bool throwError = true, bool useCache = true)
@@ -1144,6 +1148,6 @@ namespace SharePointPnP.PowerShell.Commands.Provider
             });
         }
 
-        #endregion
+#endregion
     }
 }

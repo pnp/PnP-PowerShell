@@ -1,12 +1,11 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
+namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantTemplate", SupportsShouldProcess = true)]
-    [Alias("New-PnPProvisioningHierarchy")]
     [CmdletHelp("Creates a new tenant template object",
         Category = CmdletHelpCategory.Provisioning, SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
@@ -29,10 +28,6 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            if (MyInvocation.InvocationName.ToLower() == "new-pnpprovisioninghierarchy")
-            {
-                WriteWarning("New-PnPProvisioningHierarchy has been deprecated. Use New-PnPTenantTemplate instead.");
-            }
             var result = new ProvisioningHierarchy();
             result.Author = Author;
             result.Description = Description;

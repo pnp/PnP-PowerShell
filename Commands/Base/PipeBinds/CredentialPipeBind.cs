@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
+namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class CredentialPipeBind
     {
@@ -28,7 +28,12 @@ namespace SharePointPnP.PowerShell.Commands.Base.PipeBinds
                 }
                 else if (_storedcredential != null)
                 {
-                    return CredentialManager.GetCredential(_storedcredential);
+                    var credentialsFromStore = CredentialManager.GetCredential(_storedcredential);
+                    if(credentialsFromStore == null)
+                    {
+                        throw new PSArgumentException($"No credential store entry named '{_storedcredential}' exists", nameof(Credential));
+                    }
+                    return credentialsFromStore;
                 }
                 else
                 {

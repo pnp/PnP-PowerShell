@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 
-namespace SharePointPnP.PowerShell.Commands.Site
+namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPRoleDefinition")]
     [CmdletHelp("Adds a Role Defintion (Permission Level) to the site collection in the current context",
@@ -21,11 +21,11 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone ""Contribute"" -Exclude DeleteListItems, EditListItems",
         Remarks = @"Creates additional permission level by cloning ""Contribute"" and removes flags DeleteListItems and EditListItems", SortOrder = 3)]
     [CmdletExample(
-        Code = @"PS> $roleDefinition = Get-PnPRoleDefinition -Identity ""Contribute""
+        Code = @"PS:> $roleDefinition = Get-PnPRoleDefinition -Identity ""Contribute""
 PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone $roleDefinition -Exclude DeleteListItems, EditListItems",
         Remarks = @"Creates additional permission level by cloning ""Contribute"" and removes flags DeleteListItems and EditListItems", SortOrder = 4)]
 
-    public class AddRoleDefinition : PnPCmdlet
+    public class AddRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, HelpMessage = "Name of new permission level.")]
         public string RoleName;
@@ -33,10 +33,10 @@ PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone $roleDefinition -Exclude
         [Parameter(Mandatory = false, HelpMessage = "An existing permission level or the name of an permission level to clone as base template.")]
         public RoleDefinitionPipeBind Clone;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies permission flags(s) to enable.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies permission flags(s) to enable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum")]
         public PermissionKind[] Include;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specifies permission flags(s) to disable.")]
+        [Parameter(Mandatory = false, HelpMessage = "Specifies permission flags(s) to disable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum")]
         public PermissionKind[] Exclude;
 
         [Parameter(Mandatory = false, HelpMessage = "Optional description for the new permission level.")]
@@ -55,24 +55,24 @@ PS:> Add-PnPRoleDefinition -RoleName ""AddOnly"" -Clone $roleDefinition -Exclude
             catch { }
             if (roleDefinition.ServerObjectIsNull == null)
             {
-                var spRoleDef = new Microsoft.SharePoint.Client.RoleDefinitionCreationInformation();
-                var spBasePerm = new Microsoft.SharePoint.Client.BasePermissions();
+                var spRoleDef = new RoleDefinitionCreationInformation();
+                var spBasePerm = new BasePermissions();
 
-                if (MyInvocation.BoundParameters.ContainsKey("Clone"))
+                if (ParameterSpecified(nameof(Clone)))
                 {
                     var clonePerm = Clone.GetRoleDefinition(ClientContext.Site);
                     spBasePerm = clonePerm.BasePermissions;
                 }
 
                 // Include and Exclude Flags
-                if (MyInvocation.BoundParameters.ContainsKey("Include"))
+                if (ParameterSpecified(nameof(Include)))
                 {
                     foreach (var flag in Include)
                     {
                         spBasePerm.Set(flag);
                     }
                 }
-                if (MyInvocation.BoundParameters.ContainsKey("Exclude"))
+                if (ParameterSpecified(nameof(Exclude)))
                 {
                     foreach (var flag in Exclude)
                     {

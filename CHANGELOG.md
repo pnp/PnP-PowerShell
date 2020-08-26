@@ -5,13 +5,545 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.8.1904.0] - unreleased 
+## [3.25.2009.0] (not yet released)
+
+### Added
+
+
+### Changed
+
+
+### Contributors
+
+
+## [3.24.2008.1]
+
+### Added
+- Added -AzureEnvironment parameter to `Initialize-PnPPowerShellAuthentication` to create an Azure AD App in other Azure environments than the default one. 
+- Added -AzureEnvironment parameter to all Connect-PnPOnline options which result in an OAuth based authentication connection, supporting the various Azure Environments available. 
+
+### Changed
+- Fixed issue with Submit-PnPTeamsChannelMessage not posting HTML message when setting the content type to Html.
+- The content type that Submit-PnPTeamsChannelMessage uses defaults now to HTML.
+- Fixed an issue with the PnP Provisioning Engine not being able to correctly acquire a token for the Microsoft Graph when provisioning a tenant template containing a Team.
+- Optimized Submit-PnPSearchQuery and Get-PnPSiteSearchQueryResults cmdlets when using the -All parameter.
+- Fixed TrimDuplicates to be default off for Submit-PnPSearchQuery
+
+### Contributors
+
+
+## [3.24.2008.0]
+
+### Added
+- Updated `Get/Set-PnPSearchSettings` with an option `-SearchBoxPlaceholderText` to set search placeholder text for the SPO nav bar search box 
+- Added Set-PnPTermGroup cmdlet to update an existing taxonomy term group.
+- Added Set-PnPTeamifyPromptHidden to hide the teamify prompt on a group connected Team Site (modern team site)
+
+### Changed
+- Changed the client id of the application used behind the scenes when authenticating to a tenant where Legacy Authentication has been turned off. We now by default utilize the PnP Management Shell application. If you have not provided consent you will be prompted with a message on how to provide consent.
+
+### Contributors
+
+
+## [3.23.2007.1]
+
+### Changed
+- Fixed issue with Remove-PnPTeamsTab not working as intended
+- Fixed issue with Add-PnPTeamsChannel -Private not working as intended. We now require you to specify an owner.
+- Fixed authentication issues when using Connect-PnPOnline and mixed Resource permissions scopes (e.g. Graph and Office 365 Management API)
+- Fixed issue where Disconnect-PnPOnline would not clear the in memory token cache when using Disconnect-PnPOnline
+
+## [3.23.2007.0]
+
+### Added
+- Added `-WithRightsAssignedDetailed` parameter to `Get-PnPUser` when used against SharePoint Online allowing for fine grained (broken) permissions on item, list and site level to be shown [PR #2754](https://github.com/pnp/PnP-PowerShell/pull/2754)
+- Added a `-RowLimit` parameter to `Clear-PnPRecycleBinItem` and `Restore-PnPRecycleBinItem` so that it can be used on recycle bins which hold more than 5000 items [PR #2760](https://github.com/pnp/PnP-PowerShell/pull/2760)
+- Added connection option to `Connect-PnPOnline` taking `-Scopes` and `-Credentials` to allow setting up a delegated permission token for use with Microsoft Graph and the Office 365 Management API. See [this wiki page](https://github.com/pnp/PnP-PowerShell/wiki/Connect-options#connect-using-scopes-and-credentials) for more details. [PR #2746](https://github.com/pnp/PnP-PowerShell/pull/2746)
+- Added support for enabling and disabling fields using `Set-PnPField -Identity FieldName -Values @{AllowDeletion=$false}` [PR #2766](https://github.com/pnp/PnP-PowerShell/pull/2766)
+- Added the following cmdlets to add/remove/clear owners and members of Microsoft 365 Groups: `Add-PnPMicrosoft365GroupMember`, `Add-PnPMicrosoft365GroupOwner`, `Remove-PnPMicrosoft365GroupMember`, `Remove-PnPMicrosoft365GroupOwner`, `Clear-PnPMicrosoft365GroupMember`, `Clear-PnPMicrosoft365GroupOwner` [PR #2750](https://github.com/pnp/PnP-PowerShell/pull/2750)
+- Added Add-PnPTeamsChannel, Add-PnPTeamsTab, Add-PnPTeamsUser, Get-PnPTeamsApp, Get-PnPTeamsChannel, Get-PnPTeamsChannelMessage, Get-PnPTeamsTab, Get-PnPTeamsTeam, Get-PnPTeamsUser, New-PnPTeamsApp, New-PnPTeamsTeam, Remove-PnPTeamsChannel, Remove-PnPTeamsTab, Remove-PnPTeamsTeam, Remove-PnPTeamsUser, Set-PnPTeamsChannel, Set-PnPTeamsTab, Set-PnPTeamsTeam, Set-PnPTeamsPicture, Submit-PnPTeamsChannelMessage, Update-PnPTeamsApp cmdlets
+- Added Get-PnPFileVersion, Remove-PnPFileVersion, Restore-PnPFileVersion cmdlets
+- Added `-HideFromAddressLists` and `-HideFromOutlookClients` to `Set-PnPUnifiedGroup` to allow for setting the visibility of Microsoft 365 Groups [PR #2717](https://github.com/pnp/PnP-PowerShell/pull/2717)
+
+### Changed
+- Updated implementation of `Move-PnPFile` to now also support moving of files and folders accross site collections [PR #2749](https://github.com/pnp/PnP-PowerShell/pull/2749)
+- Fixed issue where using `Disconnect-PnPOnline -Connection $variable` after having connected using `$variable = Connect-PnPOnline -CertificatePath <path> -ReturnConnection`, it would not clean up the certificate on that connection instance passed in by $variable, but instead try to do it on the current connection context [PR #2755](https://github.com/pnp/PnP-PowerShell/pull/2755)
+- Fixed `Invoke-PnPSPRestMethod -Method Merge` not passing in the `If-Match: *` header and thereby causing failed requests [PR #2764](https://github.com/pnp/PnP-PowerShell/pull/2764)
+- If a certain PnP PowerShell cmdlet needs access to the SharePoint Admin Center site in order to function correctly, it will now list this in the Synopsis section of the Get-Help for the cmdlet 
+- Fixed issue where using `Connect-PnPOnline` using `-Thumbnail` would delete the private key on some devices when running `Disconnect-PnPOnline` [PR #2759](https://github.com/pnp/PnP-PowerShell/pull/2759)
+- Fixed timeouts on `Get-PnPSiteCollectionAdmin` when the site has a lot of users [PR #2769](https://github.com/pnp/PnP-PowerShell/pull/2769)
+- Updated test project structure [PR #2767](https://github.com/pnp/PnP-PowerShell/pull/2767)
+- Updated the Microsoft Authentication Library (MSAL) to 4.16.1 which resolves an [issue in the MSAL library](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/pull/1891) which caused many of the `Connect-PnPOnline` options not to work in Azure Runbooks anymore [PR #2735](https://github.com/pnp/PnP-PowerShell/pull/2735)
+- All UnifiedGroup cmdlets have been renamed to Microsoft365Group. I.e. `New-PnPUnifiedGroup` -> `New-PnPMicrosoft365Group`. An alias has been added to provide for backwards compatibility [PR #2771](https://github.com/pnp/PnP-PowerShell/pull/2771)
+
+### Contributors
+- Erwin van Hunen [erwinvanhunen]
+- Gautam Sheth [gautamdsheth]
+- Koen Zomers [koenzomers]
+- Maximilian L. [MrTantum]
+- Ellie Hussey [Professr]
+- Todd Klindt [ToddKlindt]
+- Marc D Anderson [sympmarc]
+- Jens Otto Hatlevold [jensotto]
+- Robin Meure [robinmeure]
+- Paul Bullock [pkbullock]
+
+## [3.22.2006.2]
+
+Intermediate release due to a fix in the underlying Core Library and the Connect-PnPOnline cmdlet.
+
+## [3.22.2006.1]
+
+Intermediate release due to a fix in the underlying Core Library.
+
+## [3.22.2006.0]
+
+### Added
+- Added `-ValuesOnly` option to `Get-PnPLabel` which will return more detailed information regarding the retention label set on a list or library and return the information as properties instead of written text [PR #2710](https://github.com/pnp/PnP-PowerShell/pull/2710)
+- Added `-PreferredDataLocation` option to `New-PnPSite` which allows for providing a geography in which the new SharePoint sitecollection should be created. Only applicable on multi-geo enabled tenants. [PR #2708](https://github.com/pnp/PnP-PowerShell/pull/2708)
+- Added `EnableAIPIntegration` option to `Set-PnPTenant` which allows enabling Azure Information Protection integration with SharePoint Online and OneDrive for Business on your tenant [PR #2703](https://github.com/pnp/PnP-PowerShell/pull/2703)
+- Added `Get-PnPAADUser` cmdlet which allows retrieval of users from Azure Active Directory through the Microsoft Graph API [PR #2626](https://github.com/pnp/PnP-PowerShell/pull/2626)
+- Added `Add-PnPGraphSubscription`, `Get-PnPGraphSubscription`, `Remove-PnPGraphSubscription` and `Set-PnPGraphSubscription` to work with Microsoft Graph Subscriptions [PR #2673](https://github.com/SharePoint/PnP-PowerShell/pull/2673)
+- Added `Reset-PnPUnifiedGroupExpiration` which allows the expiration date of an Office 365 Group to be extended by the number of days defined in the Azure Active Directory Group Expiration policy [PR #2655](https://github.com/pnp/PnP-PowerShell/pull/2655)
+- Added following arguments to `Set-PnPWeb` allowing them to be set: `CommentsOnSitePagesDisabled`, `DisablePowerAutomate`, `MegaMenuEnabled`, `MembersCanShare`, `NavAudienceTargetingEnabled`, `QuickLaunchEnabled` and `NoCrawl` [PR #2633](https://github.com/pnp/PnP-PowerShell/pull/2633)
+- Added `Set-PnPUserOneDriveQuota`, `Reset-PnPUserOneDriveQuotaToDefault` and `Get-PnPUserOneDriveQuota` commands to work with quotas on OneDrive for Business sites [PR #2630](https://github.com/SharePoint/PnP-PowerShell/pull/2630)
+- Added `Get-PnPTenantSyncClientRestriction` and `Set-PnPTenantSyncClientRestriction` cmdlets to allow configuring tenant wide OneDrive sync restriction settings [PR #2649](https://github.com/pnp/PnP-PowerShell/pull/2649)
+- Added `Disable-PnPSharingForNonOwnersOfSite` and `Get-PnPSharingForNonOwnersOfSite` cmdlets to control disabling the ability for only owners of the site to be allowed to share the site or its files and folders with others [PR #2641](https://github.com/pnp/PnP-PowerShell/pull/2641)
+- Added `Get-PnPIsSiteAliasAvailable` which allows checking if a certain alias is still available to create a new site collection with [PR #2698](https://github.com/pnp/PnP-PowerShell/pull/2698)
+- Added `Get-PnPFooter` and `Set-PnPFooter` to work with the footer shown on Modern Communication pages [PR #2634](https://github.com/pnp/PnP-PowerShell/pull/2634)
+- Added ability to getting and setting the title and logo shown in the footer of a Modern Communication site [PR #2715](https://github.com/pnp/PnP-PowerShell/pull/2715)
+- Added `-SensitivityLabel` option to `New-PnPSite` which allows for directly assigning a sensitivity label to a SharePoint sitecollection when creating it. Requires modern sensitivity labels and E5 licenses to be enabled on the tenant. [PR #2713](https://github.com/pnp/PnP-PowerShell/pull/2713)
+- Added `Get-PnPOffice365CurrentServiceStatus`, `Get-PnPOffice365HistoricalServiceStatus`, `Get-PnPOffice365ServiceMessage` and `Get-PnPOffice365Services` to retrieve information from the Office 365 Management API regarding the Office 365 services [PR #2684](https://github.com/pnp/PnP-PowerShell/pull/2684)
+- Added `Get-PnPAvailableLanguage` which returns a list of all supported languages on the SharePoint web [PR #2716](https://github.com/pnp/PnP-PowerShell/pull/2716)
+
+### Changed
+- Fixed uploading a file using `Add-PnPFile` using `-ContentType` throwing an exception [PR #2619](https://github.com/pnp/PnP-PowerShell/pull/2619)
+- Fixed using `Connect-PnPOnline -AppId <appid> -AppSecret <appsecret> -AADDomain` not actually authenticating to Microsoft Graph [PR #2624](https://github.com/pnp/PnP-PowerShell/pull/2624)
+- Updated `Get-PnPWorkflowInstance` to allow passing in a workflow subscription to list all running instances of a specific workflow [PR #2636](https://github.com/pnp/PnP-PowerShell/pull/2636)
+- Implementation of `Move-PnPFile` has been changed adding `-TargetServerRelativeLibrary` for SharePoint Online to allow moving files to other site collections [PR #2688](https://github.com/pnp/PnP-PowerShell/pull/2688)
+
+### Contributors
+- Alberto Suarez [holylander]
+- Rune Sperre [rsperre]
+- Nik Charlebois [NikCharlebois]
+- Eduardo Garcia-Prieto [egarcia74]
+- Koen Zomers [koenzomers]
+- James May [fowl2]
+- Marc D Anderson [sympmarc]
+- Kunj Balkrishna Sangani [kunj-sangani]
+- Gautam Sheth [gautamdsheth]
+
+## [3.21.2005.0]
+
+### Added
+
+### Changed
+- Invoke-PnPSearchQuery: Allow SelectProperties to take a comma separated string as well as an array
+
+### Contributors
+
+
+## [3.20.2004.0]
+
+### Added
+- Added Set-PnPKnowledgeHubSite, Get-PnPKnowledgeHubSite and Remove-PnPKnowledgeHubSite cmdlets
+- Added Register-PnPTenantAppCatalog to create and register a new Tenant App Catalog
+- Added `IncludeHasTeam` flag to `Get-PnPUnifiedGroup` to include a `HasTeam` flag for each returned Office 365 Group indicating if a Microsoft Team has been set up for it [PR #2612](https://github.com/SharePoint/PnP-PowerShell/pull/2612)
+- Added Initialize-PnPPowerShellAuthentication to create a new Azure AD App, self-signed certificate and set the appropriate permission scopes.
+
+### Changed
+- Connect-PnPOnline with clientid and certificate will now, if API permissions have been granted for the Graph work with the PnP Graph Cmdlets. [PR #2515](https://github.com/SharePoint/PnP-PowerShell/pull/2515)
+- Save-PnPProvisioningTemplate and Save-PnPTenantTemplate now support XML file as input without the need to first read them into a variable with Read-PnPProvisioningTemplate or Read-PnPTenantTemplate
+- Added -Schema parameter to Save-PnPProvisioningTemplate and Save-PnPTenantTemplate to force a specific schema for the embedded template. If not specified it defaults always to the latest released template.
+- Fixed using `Connect-PnPOnline -PnPO365ManagementShell` only working if your default system language is English [PR #2613](https://github.com/SharePoint/PnP-PowerShell/pull/2613)
+- Updated help text of 'Get-PnPClientSidePage' and 'Get-PnPClientSideComponent' to indicate that the out of the box homepage of a modern site will not return its contents as designed [PR #2592](https://github.com/SharePoint/PnP-PowerShell/pull/2592)
+- Fixed using `Connect-PnPOnline -PnPO365ManagementShell` not working in PowerShell ISE [PR #2590](https://github.com/SharePoint/PnP-PowerShell/pull/2590)
+- Uploading files using `Add-PnPFile` no longer requires Site Owner rights on the entire site. Read rights on the site and at least contribute rights on the document library where the file needs to be uploaded to will suffice as long as the target folder already exists. [PR #2478](https://github.com/SharePoint/PnP-PowerShell/pull/2478)
+- Use of `Set-PnPSite` in combination with `-Owners`, `-NoScriptSite`, `-LocaleId` and/or `-AllowSelfServiceUpgrade` is now possible on SharePoint 2013, 2016 and 2019 as well [PR #2293](https://github.com/SharePoint/PnP-PowerShell/pull/2293)
+- Using `Connect-PnPOnline -CurrentCredentials` against an on-premises SharePoint farm having more than one authentication provider configured on the webapplication no longer causes an access denied [PR #2571](https://github.com/SharePoint/PnP-PowerShell/pull/2571)
+- Fixed `Add-PnPSiteDesignTask` not actually applying the Site Design to the site [PR #2542](https://github.com/SharePoint/PnP-PowerShell/pull/2542)
+- Fixed `Get-PnPSiteDesignTask` throwing a collection not initialized error [PR #2545](https://github.com/SharePoint/PnP-PowerShell/pull/2545)
+
+### Contributors
+- Lane Blundell [fastlaneb]
+- Markus Hanisch [Markus-Hanisch]
+- Dan Myhre [danmyhre]
+- Jens Otto Hatlevold [jensotto]
+- Raphael [PowershellNinja]
+- Razvan Hrestic [CodingSinceThe80s]
+- Giacomo Pozzoni [jackpoz]
+- [victorbutuza]
+- Koen Zomers [koenzomers]
+
+## [3.19.2003.0]
+
+### Added
+- Added `-HeaderLayoutType` option to `Add-PnPClientSidePage` which allows setting the header layout of a new Site Page [PR # 2514](https://github.com/SharePoint/PnP-PowerShell/pull/2514)
+- Added `TermMappingFile` and `SkipTermStoreMapping` parameters to the `ConvertTo-PnPClientSidePage` cmdlet for supporting managed metadata mapping
+- Added `AsFileObject` parameter to `Get-PnPFile` which allows the result to be returned as file objects instead of list iems [PR # 2550](https://github.com/SharePoint/PnP-PowerShell/pull/2550)
+- Added `RemoveEmptySectionsAndColumns` parameter to the `ConvertTo-PnPClientSidePage` cmdlet for allowing for empty sections and columns to stay after conversion [PR # 2539](https://github.com/SharePoint/PnP-PowerShell/pull/2539)
+
+### Changed
+- Fixed issue where downloading a file using `Get-PnPFile` would throw an user not found exception if the user having created or having last modified the file no longer existed [PR #2504](https://github.com/SharePoint/PnP-PowerShell/pull/2504)
+- Removed `FieldOptions` argument from `Add-PnPField` as it was marked as obsolete since 2015 already and wasn't used anymore [PR # 2497](https://github.com/SharePoint/PnP-PowerShell/pull/2497)
+- Marked the -Rights parameter as obsolete on Grant-PnPHubSiteRights. Use Revoke-PnPHubSiteRights to revoke rights for specific users to join sites ot the hubsite
+- Output just the URL for the Redirect url in Get-PnPSearchSettings. Return web setting on sc root as fallback if sc setting is missing (via core).
+- Made it possible to set property bag value on a NoScript site using `Set-PnPPropertyBagValue` by providing the argument `Folder` and specifying something other than the root folder [PR # 2544](https://github.com/SharePoint/PnP-PowerShell/pull/2544)
+- The February 2020 release of PnP PowerShell was throwing an error on not being able to find and load the Newtonsoft assembly when used in an Azure Function. Fixed in this release.
+
+### Contributors
+- Arun Kumar Perumal [arunkumarperumal]
+- Paul Bullock [pkbullock]
+- Jens Otto Hatlevold [jensotto]
+- Pepe [ingepepe]
+- [bjdekker]
+- [N4TheKing]
+- Koen Zomers [koenzomers]
+- kadu-jr
+- [a1mery]
+
+## [3.18.2002.0]
+
+### Added
+- Fixed issue with access token forcing site connection url to be the the value of the Audience in the token
+- Added ability to set HostProperties to Add-PnPCustomAction.
+- `Get-PnPManagementApiAccessToken` to retrieve access token for the Office 365 Management API using app credentials, app should be registered in AAD and assigned to interact with Management API
+- `Get-PnPUnifiedAuditLog` to retrieve unified audit logs from the Office 365 Management API
+- Added ability to connect to an on-premises SharePoint 2013/2016/2019 farm using a High Trust Server 2 Server App + User context by providing the username using `-Username`. Before only a High Trust App Only context was possible. [PR #2213](https://github.com/SharePoint/PnP-PowerShell/pull/2213)
+- Added ability to use `Set-PnPRequestAccessEmails` with `-Disabled` to disable requesting access to a site and `-Disabled:$false` to set the access requests to be sent to the default owners of the site [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
+- Added `Get-PnPSiteScriptFromList` and `Get-PnPSiteScriptFromWeb` commands which allow generation of Site Script JSON based off of existing lists or an entire site [PR # 2459](https://github.com/SharePoint/PnP-PowerShell/pull/2459)
+- Added `-Aggregations` argument to `Add-PnPView` and `Set-PnPView` to allow for creating a Totals count in a view [PR #2257](https://github.com/SharePoint/PnP-PowerShell/pull/2257)
+- Added `New-PnPTermLabel` to add a localized label to an existing taxonomy term [PR #2475](https://github.com/SharePoint/PnP-PowerShell/pull/2475)
+- Deprecated old tenant level `Enable-PnPCommSite` cmdlet and added new `Enable-PnPCommSite` command to enable the modern communication site experience on an classic team site. This one can be applied by non tenant admins as well
+- Added `Clear-PnPTenantAppCatalogUrl` to remove the tenant configuration for the tenant scoped app catalog [PR # 2485](https://github.com/SharePoint/PnP-PowerShell/pull/2485)
+- Added `Set-PnPTenantAppCatalogUrl` to configure the tenant for the site collection to use for the tenant scoped app catalog [PR # 2485](https://github.com/SharePoint/PnP-PowerShell/pull/2485)
+
+### Changed
+- Fixed samples on Set-PnPRequestAccessEmail, added ability to revert back to default owners group, added ability to disable requesting access [PR #2456](https://github.com/SharePoint/PnP-PowerShell/pull/2456)
+- Optimized Invoke-PnPSearchQuery when using the -All parameter to ensure all results are returned by ordering on IndexDocId, and changed the default ClientType to 'PnP'
+- `Add-PnPFolder` will now return the newly created folder instance [PR #2463](https://github.com/SharePoint/PnP-PowerShell/pull/2463)
+- Using `Set-PnPSite -LogoFilePath` now checks if the site collection has a GroupId set instead of validating if the site template name starts with Group to determine if the site is a modern site [PR # 2328](https://github.com/SharePoint/PnP-PowerShell/pull/2328)
+- Fixed using `Import-Module` to the PnP PowerShell Module located on a UNC fileshare path resulting in an error [PR # 2490](https://github.com/SharePoint/PnP-PowerShell/pull/2490)
+- `New-PnPList` will now return the newly created list instance [PR # 2481](https://github.com/SharePoint/PnP-PowerShell/pull/2481)
+- Fixed documentation for Export-PnPTaxonomy [PR #2462](https://github.com/SharePoint/PnP-PowerShell/pull/2462)
+- Connect-PnPOnline can now use different Azure Authentication endpoints when using App Only auth. [PR #2355](https://github.com/SharePoint/PnP-PowerShell/pull/2355)
+- Fix examples in Start-PnPWorkflowInstance [PR #2483](https://github.com/SharePoint/PnP-PowerShell/pull/2483)
+
+### Contributors
+- Ivan Vagunin [ivanvagunin]
+- Thomas Meckel [tmeckel]
+- Koen Zomers [koenzomers]
+- Giacomo Pozzoni [jackpoz]
+- Jarbas Horst [JarbasHorst]
+- Gautam Sheth [gautamdsheth]
+- Craig Hair [MacsInSpace]
+- Dan Cecil [danielcecil]
+- gobigfoot [gobigfoot]
+- Markus Hanisch [Markus-Hanisch]
+- Raphael [PowershellNinja]
+
+## [3.17.2001.2]
+
+### 
+- No changed to PnP PowerShell but an updated reference to an updated intermediate release of PnP Sites Core which fixes an issue with PnP Provisioning.
+
+## [3.17.2001.1]
+
+### Changed 
+- Fixed issue with not correctly identifying framework version and not including required assemblies in packaging.
+
+## [3.17.2001.0]
+
+### Added
+- Add/Remove/Set/Get-PnPApplicationCustomizer commands to allow working with SharePoint Framework Application Customizer Extensions
+- Ability to pipe in a result from Get-PnPFolder to Get-PnPFolderItem using the -Identity parameter
+- Added ability to pipe Get-PnPUnifiedGroup to Get-PnPUnifiedGroupOwners and Get-PnPUnifiedGroupMembers
+- Added permissions required for each of the \*-PnPUnifiedGroup\* commands in the Azure Active Directory App Registration to the help text of the commands
+- Added option to use Connect-PnPOnline with a base64 encoded private key for use in i.e. PnP PowerShell within an Azure Function v1 and an option to provide a certificate reference for use in i.e. Azure Function v2
+- Added option to use Connect-PnPOnline with a public key certificate for use in i.e. Azure Runbooks
+- Added option -RowLimit to Get-PnPRecycleBinItem to avoid getting throttled on full recycle bins
+- Added `-WriteToConsole` option to `Set-PnPTraceLog` to allow writing trace listener output from the PnP Templating commands to both the console and to a file. Doesn't work for .NET Core.
+- Added `Reset-PnPLabel` command to allow removal of an Office 365 Retention Label from a list
+- Add/Remove/Get-PnPOrgNewsSite commands to set site collections as authoritive news sources to SharePoint Online
+- Add/Remove/Get-PnPOrgAssetsLibrary commands to set document libraries as organizational asset sources on SharePoint Online
+- `-Recursive` option to `Get-PnPFolderItem` to allow retrieving all files and folders recursively
+
+### Changed 
+- Marked Get-PnPHealthScore as obsolete for SharePoint Online.
+- Fixes issues with connections not properly closing under some conditions when using Disconnect-PnPOnline
+- When using commands that utilize the Graph API but not being connected to one of the Graph API Connect-PnPOnline methods, it would throw a NullReferenceException. It will now throw a cleaner exception indicating you should connect with the Graph API first.
+- Fixed an issue where using Get-PnPUser -WithRightsAssigned would not return the proper users with actually having access to that site
+- Fixed an issue when using ConvertTo-PnPClientSidePage to convert Delve Blog posts that it would throw a nullreference exception in some scenarios
+- Fixed an issue using `Add-PnPDataRowsToProvisioningTemp` to add data from a list containing a multi choice to a PnP Provisioning Template where the data would be shown as `System.String[]` instead of the actual data
+- Bumped to .Net 4.6.1 as minimal .Net runtime version
+- Changed the way properties are being set in Set-PnPField to support setting field specific properties such as the Lookup list on a Lookup field
+- Fixed an issue where using Apply-PnPProvisioningTemplate -InputInstance $instance would throw a connectionString error if being executed from the root of a drive, i.e. c:\ or d:\
+- Fixed issue with access token not returning correctly after update to newer version of NewtonSoft JSON.
+- Fixes issue with pipeline not returning object correctly.
+
+### Contributors
+- Koen Zomers [koenzomers]
+- Robin Meure [robinmeure]
+- Michael Rees Pullen [mrpullen]
+- Giacomo Pozzoni [jackpoz]
+- Rene Modery [modery]
+- Krystian Niepsuj [MrDoNotBreak]
+- Piotr Siatka [siata13]
+- Heinrich Ulbricht [heinrich-ulbricht]
+- Dan Cecil [danielcecil]
+- Gautam Sheth [gautamdsheth]
+- Giacomo Pozzoni [jackpoz]
+- Will Holland [willholland]
+- Ivan Vagunin [ivanvagunin]
+
+## [3.16.1912.0]
+
+### Added
+
+- Add-PnPTeamsTeam: new cmdlet that creates a Teams team for the current, Office 365 group connected, site collection
+- Added Get-PnPTenantId to retrieve the current tenant id.
+- ConvertTo-PnPClientSidePage: Added support for enforcing the specified target page folder via `-TargetPageFolderOverridesDefaultFolder`
+- ConvertTo-PnPClientSidePage: Added support for Delve blog page modernization via the `-DelveBlogPage` and `-DelveKeepSubTitle ` parameters
+
+### Changed 
+
+- Added various additional switches and options to Set-PnPTenantSite
+- Added -Wait parameter to New-PnPSite which will wait until the site creation process has been completely finished and all artifacts are present.
+- Fixes issue with App Only with certificate and context cloning. Now Apply-PnPTenantTemplate works as expected.
+- Added CorrelationId and TimeStampUtc to output of Get-PnPException which can help in analyzing ULS entries.
+- ConvertTo-PnPClientSidePage: The `-Identity` parameter now also accepts the item id as value to find a page
+
+### Contributors
+
+## [3.15.1911.0]
+
+### Added
+
+- Added Request-PnPAccessToken to retrieve an OAuth2 access token using the password grant.
+- Added additional properties to Set-PnPHubSite
+- Added Get-PnPHubSiteChild cmdlet to list all child sites of a hubsite
+- ConvertTo-PnPClientSidePage: Added support for user mapping via `-UserMappingFile, `-LDAPConnectionString` and `-SkipUserMapping` parameters  #2340
+- ConvertTo-PnPClientSidePage: Added support for defining the target folder of a transformed page via `-TargetPageFolder`
+- Added Get-PnPSearchSettings to retreive current search settings for a site
+- Added Set-PnPSearchSettings to set search related settings on a site
+
+### Changed
+
+- Cmdlets related to provisioning and tenant templates now output more detailed error information in case of a schema issue.
+- Fixes issue where site design was not being applied when using New-PnPSite
+- Fixed incorrect usage of SwitchParameter in Set-PnPSite cmdlet
+- Fixed issue when connecting to single level domain URLs
+- Disabled TimeZone as mandatory parameter for New-PnPTenantSite when using an on-premises version of PnP PowerShell
+
+### Contributors
+
+- Gautam Sheth [gautamdsheth]
+- Koen Zomers [KoenZomers]
+- Laurens Hoogendoorn [laurens1984]
+- Jens Otto Hatlevold [jensotto]
+- Paul Bullock [pkbullock]
+
+## [3.14.1910.1]
+
+### Added
+
+- ConvertTo-PnPClientSidePage: Added support for logging to console via `-LogType Console`
+- Copy-PnPFile: Fixes (#2300)
+- ConvertTo-PnPClientSidePage: Added support for controlling the target page name is any cross site transformation (so wiki, web part, blog in addition the already existing option for publishing pages) via the `-TargetPageName` parameter
+
+### Changed
+
+### Contributors
+
+## [3.14.1910.0]
+
+### Added
+
+- Added Set-PnPFolderPermission to set specific folder permissions
+- ConvertTo-PnPClientSidePage: Added support for keeping the source page Author, (Editor), Created and Modified page properties (only when source page lives in SPO) (KeepPageCreationModificationInformation parameter)
+- ConvertTo-PnPClientSidePage: Added support for posting the created page as news (PostAsNews parameter)
+- ConvertTo-PnPClientSidePage: Added support for modernizing blog pages (BlogPage parameter)
+- ConvertTo-PnPClientSidePage: Added option to populate the author in the modern page header based upon the author of the source page (only when source page lives in SPO) (SetAuthorInPageHeader parameter)
+- Export-ClientSidePageMappings: Added logging support (#2272)
+
+### Changed
+
+- Several documentation fixes
+- Add-PnPClientSideWebPart now also works for SP2019
+- Added -List parameter to Get-PnPFolder to retrieve all folders in a list
+- Added owner paramter to New-PnPSite when create Communications site
+- Fixed issues after static code analysis
+- Added -ThumbnailUrl parameter to Set-PnPClientSidePage
+- ConvertTo-PnPClientSidePage: AddTableListImageAsImageWebPart default set to true to align with similar change in the page transformation framework
+- ConvertTo-PnPClientSidePage: moved log flushing to finally block to ensure it happens in case of something unexpected
+
+### Contributors
+
+- Aleksandr SaPozhkov [shurick81]
+- Garry Trinder [garrytrinder]
+- Koen Zomers [KoenZomers]
+- Gautam Sheth [gautamdsheth]
+- Giacomo Pozzoni [jackpoz]
+- Paul Bullock [pkbullock]
+- Andres Mariano Gorzelany [get-itips]
+
+## [3.13.1909.0]
 
 ### Added
 
 ### Changed
 
+- Added -Label parameter to Add-PnPList and Set-PnPListItem to allow setting a retention label
+- ConvertTo-PnPClientSidePage: Added support for skipping the default URL rewriting while still applying any custom URL rewriting if specified (SkipDefaultUrlRewriting parameter)
+- ConvertTo-PnPClientSidePage: Added support reverting to the pre September 2019 behaviour for images insides tables/lists. As of September 2019 these images are not created anymore as additional separate image web part since the modern text editor is not dropping the embedded images anymore on edit (AddTableListImageAsImageWebPart parameter)
+- Get-PnPSearchCrawlLog: Added switch to show raw crawl log data, as data can change in the back-end. Fixed to show log message.
+- Set-PnPTenant: Added switch to set disabled 1st party web parts
+
 ### Contributors
+
+- Dan Cecil [danielcecil]
+- Koen zomers [KoenZomers]
+
+## [3.12.1908.0]
+
+### Added
+- Added -ResetRoleInheritance to Set-PnPList
+- Documentation updates
+- Added a TemplateId parameter to Apply-PnPProvisioningTemplate to allow to apply a specific template in case multiple templates exist in a single file.
+
+### Changed
+
+- Fixed potential issue when using -CurrentCredentials with Connect-PnPOnline in an on-premises context
+- Fixed bug in Set-PnPListItem when using SystemUpdate and setting a content type.
+- Grant-PnPTenantServicePrincipalPermission now handles multi-language environments where the Tenant App Catalog is in a different language than English.
+- Save-PnPProvisioningTemplate, if saving an instance to a PnP file, will now store referenced files etc in the PnP file.
+
+### Contributors
+
+- Lars Fernhomberg [lafe]
+- Chris O'Connor [kachihro]
+- Koen Zomers [KoenZomers]
+- Gautam Sheth [gautamdsheth]
+- Andres Mariano Gorzelany [get-itips]
+
+## [3.11.1907.0]
+
+### Added
+
+- Added Export-PnPListToProvisioningTemplate cmdlet to export one or more lists to a provisioning template skipping all other artifacts.
+
+### Changed
+
+- ConvertTo-PnPClientSidePage: Added support for specifying a custom URL mapping file (UrlMappingFile parameter)
+- Get-PnPField: Return managed metadata fields as TaxonomyField instead of generic Field (#2130)
+- Submit-PnPSearchQuery: Added alias Invoke-PnPSearchQuery for semantic aligning the verbs (#2168)
+- Copy-PnPFile: Bugfix (#2103 #2148)
+
+### Contributors
+- Andi Krüger [andikrueger]
+
+## [3.10.1906.0]
+
+### Added
+
+- Several bugfixes
+- Save-PnPClientSidePageConversionLog: use this cmdlet to save the pending page transformation logs. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPClientSidePage cmdlet.
+
+### Changed
+
+- Updated documentation for several cmdlets
+- Cleanup private key only for file or pem based certificate login (#2101)
+- ConvertTo-PnPClientSidePage: Added support to transform web part pages that live outside of a library (so in the root of the site)
+- ConvertTo-PnPClientSidePage: Added support to specify the target site as a connection using the TargetConnection parameter. This allows to read a page in one environment (on-premises, tenant A) and create in another online location (tenant B). (#2098)
+
+### Contributors
+
+- Paul Bullock [pkbullock]
+- Andres Mariano Gorzelany [get-itips]
+- Koen Zomers [KoenZomers]
+- Giacomo Pozzoni [jackpoz]
+- Tom Resing [tomresing]
+
+## [3.9.1905.3 - May 2019 Intermediate Release 3]
+
+### Changed
+
+- Updated core provisioning to handle token issue during extraction and reintroduced content type fieldlink reordering in the engine.
+
+## [3.9.1905.2 - May 2019 Intermediate Release 2]
+
+### Changed
+- Updated core provisioning to handle token parser issue
+
+## [3.9.1905.1 - May 2019 Intermediate Release]
+
+### Added
+
+### Changed
+- Updated core provisioning engine to handle a server side issue.
+- Added support for certificate thumbprint login with ADAL and updated connection sample
+- Added support for outputting .cer file from New-PnPAzureCertificate
+
+### Deprecated
+- Out parameter for New-PnPAzureCertificate replaced with OutPfx
+
+### Contributors
+
+## [3.9.1905.0 - May 2019 Release]
+
+### Added
+
+- Added Template as a possible PromoteAs value for a Add-PnPClientSidePage and Set-PnPClientSidePage
+- Added -HeaderLayout and -HeaderEmphasis parameters to Set-PnPWeb
+- Support to specify lcid for Export-PnPTaxonomy for a particular termset
+- Added support in the Navigation cmdlets to manage the site footer on modern sites.
+- Added Invoke-PnPSPRestMethod cmdlet to execute REST requests towards a SharePoint site.
+- Added Enable-PnPCommSite cmdlet to convert the root site collection of a tenant into a communication site.
+
+### Changed
+
+- Updated documentation
+- ConvertTo-PnPClientSidePage: modernize the first page in case there's multiple pages matching the provided pattern (parameters identity, folder and library)
+- ConvertTo-PnPClientSidePage: added parameter `-PublishingTargetPageName` parameter that allows one to override the name of the target publishing page. This is needed for some pages like default.aspx
+- ConvertTo-PnPClientSidePage: added parameter `-SkipUrlRewrite` to prevent URL rewriting in cross site transformation scenarios
+- Export-PnPClientSidePageMapping: added parameter `-PublishingPage` to scope the page layout analysis to the page layout of the provided file
+- Export-PnPClientSidePageMapping: added parameter `-AnalyzeOOBPageLayouts` to allow analysis of OOB page layouts. By default OOB page layouts will be skipped
+- Fix to allow setting list property bag values on NoScript sites
+
+### Deprecated
+- Removed support for the Template Gallery as the gallery itself is not online anymore.
+
+### Contributors
+- Heinrich Ulbricht [heinrich-ulbricht] 
+- Andres Mariano Gorzelany [get-itips]
+
+## [3.8.1904.0]
+
+### Added
+
+- Added Sync-PnPAppToTeams to synchronize an app from the tenant app catalog to the Microsoft Teams App Catalog
+- Added Export-PnPClientSidePageMapping to export the mapping files needed during publishing page transformation
+
+### Changed
+
+- Added a -Kerberos switch to Connect-PnPOnline to facility authentication using Kerberos
+- Added the ability to set the view fields using Set-PnPView -Fields
+- Added the ability to add and removed indexed property keys to lists
+- Added the option to search by title on Get-PnPAlert
+- Added -CreateTeam to New-PnPUnifiedGroup and Set-PnPUnifiedGroup
+- Added -ContentType parameter to Add-PnPClientSidePage and Set-PnPClientSidePage
+- ConvertTo-PnPClientSidePage: added -Library and -Folder parameters to support modernization of pages living outside of the SitePages folder
+- ConvertTo-PnPClientSidePage: added -LogType, -LogFolder, -LogSkipFlush and -LogVerbose parameters to support log generation to an md file or SharePoint page
+- ConvertTo-PnPClientSidePage: added -DontPublish and -DisablePageComments parameters to control the page publishing and commenting
+- ConvertTo-PnPClientSidePage: added -PublishingPage and -PageLayoutMapping to support publishing page transformation
+
+### Contributors
+
+- Heinrich Ulbricht [heinrich-ulbricht] 
+- Gautam Sheth [gautamdsheth]
+- Thomas Meckel [tmeckel]
+- Jose Gabriel Ortega Castro [j0rt3g4]
+- Fabian Seither [fabianseither]
 
 ## [3.7.1903.0]
 

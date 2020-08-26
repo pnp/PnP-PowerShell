@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionTermStore", SupportsShouldProcess = true)]
     [CmdletHelp(@"Returns the site collection term store", 
@@ -14,7 +14,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         (Code = @"PS:> Get-PnPSiteCollectionTermStore",
         Remarks = "Returns the site collection term store.",
         SortOrder = 1)]
-    public class GetPnPSiteCollectionTermStore : PnPCmdlet
+    public class GetPnPSiteCollectionTermStore : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {

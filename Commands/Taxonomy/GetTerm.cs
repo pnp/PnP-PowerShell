@@ -1,13 +1,13 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Get, "PnPTerm", SupportsShouldProcess = false)]
     [CmdletHelp(@"Returns a taxonomy term",
@@ -29,7 +29,12 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
     [CmdletExample(
         Code = @"PS:> Get-PnPTerm -Identity ""Small Finance"" -TermSet ""Departments"" -TermGroup ""Corporate"" -Recursive",
         Remarks = @"Returns the term named ""Small Finance"", from the ""Departments"" termset in a term group called ""Corporate"" from the site collection termstore even if it's a subterm below ""Finance""",
-        SortOrder = 2)]
+        SortOrder = 3)]
+    [CmdletExample(
+        Code = @"PS:> $term = Get-PnPTerm -Identity ""Small Finance"" -TermSet ""Departments"" -TermGroup ""Corporate"" -Include Labels
+PS:> $term.Labels",
+        Remarks = @"Returns all the localized labels for the term named ""Small Finance"", from the ""Departments"" termset in a term group called ""Corporate""",
+        SortOrder = 4)]
     public class GetTerm : PnPRetrievalsCmdlet<Term>
     {
         private const string ParameterSet_TERM = "By Term Id";

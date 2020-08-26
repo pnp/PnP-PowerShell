@@ -1,11 +1,8 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Search.Query;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace SharePointPnP.PowerShell.Commands.Search
+namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteSearchQueryResults", DefaultParameterSetName = "Limit")]
     [CmdletHelp("Executes a search query to retrieve indexed site collections",
@@ -52,68 +49,40 @@ namespace SharePointPnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            int startRow = StartRow;
-            int rowLimit = MaxResults;
-            if (All.IsPresent)
-            {
-                startRow = 0;
-                rowLimit = 500;
-            }
-            int currentCount = 0;
-            var dynamicList = new List<dynamic>();
-            do
-            {
-                var keywordQuery = GetKeywordQuery();
-                keywordQuery.StartRow = startRow;
-                keywordQuery.RowLimit = rowLimit;
-
-                var searchExec = new SearchExecutor(ClientContext);
-                var results = searchExec.ExecuteQuery(keywordQuery);
-                ClientContext.ExecuteQueryRetry();
-
-                if (results?.Value[0].RowCount > 0)
-                {
-                    var result = results.Value[0];
-                    currentCount = result.ResultRows.Count();
-
-                    foreach (var row in result.ResultRows)
-                    {
-                        dynamicList.Add(
-                            new
-                            {
-                                Title = row["Title"]?.ToString() ?? "",
-                                Url = row["SPSiteUrl"]?.ToString() ?? "",
-                                Description = row["Description"]?.ToString() ?? "",
-                                WebTemplate = row["WebTemplate"]?.ToString() ?? ""
-                            });
-                    }
-                }
-                startRow += rowLimit;
-
-            } while (currentCount == rowLimit && All.IsPresent);
-            WriteObject(dynamicList, true);
-        }
-
-        private KeywordQuery GetKeywordQuery()
-        {
-            var keywordQuery = new KeywordQuery(ClientContext);
-
-            // Construct query to execute
+            var queryCmdLet = new SubmitSearchQuery();
+            queryCmdLet.StartRow = StartRow;
+            queryCmdLet.MaxResults = MaxResults;
             var query = "contentclass:STS_Site";
             if (!string.IsNullOrEmpty(Query))
             {
                 query = query + " AND " + Query;
             }
+            queryCmdLet.Query = query;
 
-            keywordQuery.QueryText = query;
-            keywordQuery.SelectProperties.Add("Title");
-            keywordQuery.SelectProperties.Add("SPSiteUrl");
-            keywordQuery.SelectProperties.Add("Description");
-            keywordQuery.SelectProperties.Add("WebTemplate");
-            keywordQuery.SortList.Add("SPSiteUrl", SortDirection.Ascending);
-            // Important to avoid trimming "similar" site collections
-            keywordQuery.TrimDuplicates = false;
-            return keywordQuery;
+            queryCmdLet.SelectProperties = new[] {"Title","SPSiteUrl","Description","WebTemplate"};
+            queryCmdLet.SortList = new System.Collections.Hashtable
+            {
+                { "SPSiteUrl", "ascending" }
+            };
+            queryCmdLet.RelevantResults = true;
+
+            var res = queryCmdLet.Run();
+
+            var dynamicList = new List<dynamic>();
+            foreach (var row in res)
+            {
+                var obj = row as PSObject;                
+                dynamicList.Add(
+                    new
+                    {
+                        Title = obj.Properties["Title"]?.Value ?? "",
+                        Url = obj.Properties["SPSiteUrl"]?.Value ?? "",
+                        Description = obj.Properties["Description"]?.Value ?? "",
+                        WebTemplate = obj.Properties["WebTemplate"]?.Value ?? ""
+                    });
+            }
+
+            WriteObject(dynamicList, true);
         }
     }
 }

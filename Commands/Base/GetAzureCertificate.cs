@@ -1,13 +1,13 @@
 ﻿using System.Management.Automation;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureCertificate", DefaultParameterSetName = "SELF")]
     [CmdletHelp(@"Get PEM values and manifest settings for an existing certificate (.pfx) for use when using CSOM via an app-only ADAL application.
@@ -46,8 +46,7 @@ PrivateKey contains the PEM encoded private key of the certificate.",
             {
                 CertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, CertificatePath);
             }
-
-            var certificate = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable);
+            var certificate = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet);
             var rawCert = certificate.GetRawCertData();
             var base64Cert = Convert.ToBase64String(rawCert);
             var rawCertHash = certificate.GetCertHash();

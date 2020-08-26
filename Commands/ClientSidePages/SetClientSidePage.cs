@@ -1,11 +1,12 @@
 ﻿#if !SP2013 && !SP2016
 using OfficeDevPnP.Core.Pages;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 
-namespace SharePointPnP.PowerShell.Commands.ClientSidePages
+namespace PnP.PowerShell.Commands.ClientSidePages
 {
     [Cmdlet(VerbsCommon.Set, "PnPClientSidePage")]
     [CmdletHelp("Sets parameters of a Client-Side Page",
@@ -53,7 +54,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Sets the layout type of the page. (Default = Article)")]
         public ClientSidePageLayoutType LayoutType = ClientSidePageLayoutType.Article;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows to promote the page for a specific purpose (HomePage | NewsPage)")]
+        [Parameter(Mandatory = false, HelpMessage = "Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template)")]
         public ClientSidePagePromoteType PromoteAs = ClientSidePagePromoteType.None;
 
         [Parameter(Mandatory = false, HelpMessage = "Enables or Disables the comments on the page")]
@@ -64,6 +65,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
 
         [Parameter(Mandatory = false, HelpMessage = "Sets the page header type")]
         public ClientSidePageHeaderType HeaderType;
+
+        [Parameter(Mandatory = false, HelpMessage = "Specify either the name, ID or an actual content type.")]
+        public ContentTypePipeBind ContentType;
+
+        [Parameter(Mandatory = false, HelpMessage = "Thumbnail Url")]
+        public string ThumbnailUrl;
 
         [Obsolete("This parameter value will be ignored")]
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
@@ -102,7 +109,12 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 clientSidePage.PageTitle = Title;
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("HeaderType"))
+            if(ThumbnailUrl != null)
+            {
+                clientSidePage.ThumbnailUrl = ThumbnailUrl;
+            }
+
+            if (ParameterSpecified(nameof(HeaderType)))
             {
                 switch (HeaderType)
                 {
@@ -124,7 +136,13 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 }
             }
 
-            clientSidePage.Save(name);
+            if (PromoteAs == ClientSidePagePromoteType.Template)
+            {
+                clientSidePage.SaveAsTemplate(name);
+            } else
+            {
+                clientSidePage.Save(name);
+            }
 
             // If a specific promote type is specified, promote the page as Home or Article or ...
             switch (PromoteAs)
@@ -140,7 +158,7 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                     break;
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("CommentsEnabled"))
+            if (ParameterSpecified(nameof(CommentsEnabled)))
             {
                 if (CommentsEnabled)
                 {
@@ -149,6 +167,34 @@ namespace SharePointPnP.PowerShell.Commands.ClientSidePages
                 else
                 {
                     clientSidePage.DisableComments();
+                }
+            }
+
+            if(ParameterSpecified(nameof(ContentType)))
+            {
+                ContentType ct = null;
+                if (ContentType.ContentType == null)
+                {
+                    if (ContentType.Id != null)
+                    {
+                        ct = SelectedWeb.GetContentTypeById(ContentType.Id, true);
+                    }
+                    else if (ContentType.Name != null)
+                    {
+                        ct = SelectedWeb.GetContentTypeByName(ContentType.Name, true);
+                    }
+                }
+                else
+                {
+                    ct = ContentType.ContentType;
+                }
+                if (ct != null)
+                {
+                    ct.EnsureProperty(w => w.StringId);
+
+                    clientSidePage.PageListItem["ContentTypeId"] = ct.StringId;
+                    clientSidePage.PageListItem.SystemUpdate();
+                    ClientContext.ExecuteQueryRetry();
                 }
             }
 

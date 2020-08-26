@@ -1,17 +1,17 @@
 ﻿#if !ONPREMISES
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.SiteDesigns
+namespace PnP.PowerShell.Commands.SiteDesigns
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteDesignTask", SupportsShouldProcess = false)]
-    [CmdletHelp(@"This cmdlet retrieves a scheduled site design script.",
+    [CmdletHelp(@"This cmdlet retrieves a scheduled site design task.",
        Category = CmdletHelpCategory.TenantAdmin,
-        Description = @"Used to retrieve a scheduled site design script. It takes the ID of the scheduled site design and the URL for the site where the site design is scheduled to be applied. ",
+        Description = @"Used to retrieve a scheduled site design script. It takes the ID of the scheduled site design task and the URL for the site where the site design is scheduled to be applied.",
        SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
        Code = @"PS:> Get-PnPSiteDesignTask -Identity 501z8c32-4147-44d4-8607-26c2f67cae82",
@@ -19,18 +19,18 @@ namespace SharePointPnP.PowerShell.Commands.SiteDesigns
        SortOrder = 1)]
     [CmdletExample(
        Code = @"PS:> Get-PnPSiteDesignTask",
-       Remarks = "This example retrieves all site design tasks currently scheduled on the current site.",
+       Remarks = "This example retrieves all site design tasks currently scheduled on the current site",
        SortOrder = 2)]
     [CmdletExample(
        Code = @"PS:> Get-PnPSiteDesignTask -WebUrl ""https://contoso.sharepoint.com/sites/project""",
-       Remarks = "This example retrieves all site design tasks currently scheduled on the provided site.",
+       Remarks = "This example retrieves all site design tasks currently scheduled on the provided site",
        SortOrder = 3)]
     public class GetSiteDesignTask : PnPWebCmdlet
     {
-        [Parameter(Mandatory = false, HelpMessage = "The ID of the site design to apply.")]
+        [Parameter(Mandatory = false, HelpMessage = "The ID of the site design task to retrieve.")]
         public TenantSiteDesignTaskPipeBind Identity;
 
-        [Parameter(Mandatory = false, HelpMessage = "The URL of the site collection where the site design will be applied. If not specified the design will be applied to the site you connected to with Connect-PnPOnline.")]
+        [Parameter(Mandatory = false, HelpMessage = "The URL of the site collection where the site design will be applied. If not specified the site design tasks will be returned for the site you connected to with Connect-PnPOnline.")]
         public string WebUrl;
 
         protected override void ExecuteCmdlet()
@@ -42,8 +42,8 @@ namespace SharePointPnP.PowerShell.Commands.SiteDesigns
                 if (Identity != null)
                 {
                     var task = Tenant.GetSiteDesignTask(tenantContext, Identity.Id);
-                    ClientContext.Load(task);
-                    ClientContext.ExecuteQueryRetry();
+                    tenantContext.Load(task);
+                    tenantContext.ExecuteQueryRetry();
                     WriteObject(task);
                 }
                 else
@@ -63,6 +63,8 @@ namespace SharePointPnP.PowerShell.Commands.SiteDesigns
                         }
                     }
                     var tasks = tenant.GetSiteDesignTasks(webUrl);
+                    tenantContext.Load(tasks);
+                    tenantContext.ExecuteQueryRetry();
                     WriteObject(tasks, true);
                 }
             }

@@ -4,7 +4,7 @@ using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.IO;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Management.Automation;
 using System.Net;
 using PnPFileLevel = OfficeDevPnP.Core.Framework.Provisioning.Model.FileLevel;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPFileToProvisioningTemplate")]
     [CmdletHelp("Adds a file to a PnP Provisioning Template",
@@ -75,7 +75,10 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             // Load the template
             var template = ReadProvisioningTemplate
                 .LoadProvisioningTemplateFromFile(Path,
-                TemplateProviderExtensions);
+                TemplateProviderExtensions, (e) =>
+                {
+                    WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                });
 
             if (template == null)
             {
@@ -94,7 +97,11 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
 
                 var fileName = file.EnsureProperty(f => f.Name);
                 var folderRelativeUrl = serverRelativeUrl.Substring(0, serverRelativeUrl.Length - fileName.Length - 1);
+#if !PNPPSCORE
                 var folderWebRelativeUrl = HttpUtility.UrlKeyValueDecode(folderRelativeUrl.Substring(SelectedWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
+#else
+                var folderWebRelativeUrl = System.Web.HttpUtility.UrlDecode(folderRelativeUrl.Substring(SelectedWeb.ServerRelativeUrl.TrimEnd('/').Length + 1));
+#endif
                 if (ClientContext.HasPendingRequest) ClientContext.ExecuteQuery();
                 try
                 {

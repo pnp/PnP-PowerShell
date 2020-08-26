@@ -1,14 +1,14 @@
 ﻿#if !ONPREMISES
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteScript", SupportsShouldProcess = true)]
     [CmdletHelp(@"Retrieve Site Scripts that have been registered on the current tenant.",
@@ -32,13 +32,13 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Identity)))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var script = Tenant.GetSiteScript(ClientContext, Identity.Id);
                 script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version);
                 WriteObject(script);
             }
-            else if (MyInvocation.BoundParameters.ContainsKey(nameof(SiteDesign)))
+            else if (ParameterSpecified(nameof(SiteDesign)))
             {
                 var scripts = new List<TenantSiteScript>();
                 var design = Tenant.GetSiteDesign(ClientContext, SiteDesign.Id);

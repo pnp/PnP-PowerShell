@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 
-namespace SharePointPnP.PowerShell.Commands.Principals
+namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Set, "PnPGroup")]
     [CmdletHelp("Updates a group",
@@ -143,23 +143,23 @@ namespace SharePointPnP.PowerShell.Commands.Principals
                     dirty = true;
                 }
             }
-            if (MyInvocation.BoundParameters.ContainsKey("AllowRequestToJoinLeave") && AllowRequestToJoinLeave != group.AllowRequestToJoinLeave)
+            if (ParameterSpecified(nameof(AllowRequestToJoinLeave)) && AllowRequestToJoinLeave != group.AllowRequestToJoinLeave)
             {
                 group.AllowRequestToJoinLeave = AllowRequestToJoinLeave;
                 dirty = true;
             }
 
-            if (MyInvocation.BoundParameters.ContainsKey("AutoAcceptRequestToJoinLeave") && AutoAcceptRequestToJoinLeave != group.AutoAcceptRequestToJoinLeave)
+            if (ParameterSpecified(nameof(AutoAcceptRequestToJoinLeave)) && AutoAcceptRequestToJoinLeave != group.AutoAcceptRequestToJoinLeave)
             {
                 group.AutoAcceptRequestToJoinLeave = AutoAcceptRequestToJoinLeave;
                 dirty = true;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("AllowMembersEditMembership") && AllowMembersEditMembership != group.AllowMembersEditMembership)
+            if (ParameterSpecified(nameof(AllowMembersEditMembership)) && AllowMembersEditMembership != group.AllowMembersEditMembership)
             {
                 group.AllowMembersEditMembership = AllowMembersEditMembership;
                 dirty = true;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("OnlyAllowMembersViewMembership") && OnlyAllowMembersViewMembership != group.OnlyAllowMembersViewMembership)
+            if (ParameterSpecified(nameof(OnlyAllowMembersViewMembership)) && OnlyAllowMembersViewMembership != group.OnlyAllowMembersViewMembership)
             {
                 group.OnlyAllowMembersViewMembership = OnlyAllowMembersViewMembership;
                 dirty = true;

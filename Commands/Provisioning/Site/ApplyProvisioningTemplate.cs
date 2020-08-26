@@ -3,18 +3,19 @@ using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
 using System.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using SharePointPnP.PowerShell.Commands.Components;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Base;
+using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet("Apply", "PnPProvisioningTemplate")]
     [CmdletHelp("Applies a site template to a web",
@@ -48,7 +49,7 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
     [CmdletExample(
         Code = @"
 PS:> $handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
-PS:> $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
+PS:> $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler2
 PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2",
         Remarks = @"This will create two new ExtensibilityHandler objects that are run while provisioning the template",
         SortOrder = 7)]
@@ -56,6 +57,10 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
      Code = @"PS:> Apply-PnPProvisioningTemplate -Path .\ -InputInstance $template",
      Remarks = @"Applies a site template from an in-memory instance of a ProvisioningTemplate type of the PnP Core Component, reading the supporting files, if any, from the current (.\) path. The syntax can be used together with any other supported parameters.",
      SortOrder = 8)]
+    [CmdletExample(
+     Code = @"PS:> Apply-PnPProvisioningTemplate -Path .\template.xml -TemplateId ""MyTemplate""",
+     Remarks = @"Applies the ProvisioningTemplate with the ID ""MyTemplate"" located in the template definition file template.xml.",
+     SortOrder = 9)]
 
     public class ApplyProvisioningTemplate : PnPWebCmdlet
     {
@@ -65,6 +70,9 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning template.", ParameterSetName = "Path")]
         public string Path;
+
+        [Parameter(Mandatory = false, HelpMessage = "ID of the template to use from the xml file containing the provisioning template. If not specified and multiple ProvisioningTemplate elements exist, the last one will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public string TemplateId;
 
         [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ResourceFolder;
@@ -87,7 +95,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to specify parameters that can be referred to in the template by means of the {parameter:<Key>} token. See examples on how to use this parameter.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Hashtable Parameters;
 
-        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [Parameter(Mandatory = false, HelpMessage = "Allows you to only process a specific part of the template. Notice that this might fail, as some of the handlers require other artifacts in place if they are not part of what your applying. Visit https://docs.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers for possible values.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public Handlers Handlers;
 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to run all handlers, excluding the ones specified.", ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -102,16 +110,13 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
         [Parameter(Mandatory = false, HelpMessage = "Allows you to provide an in-memory instance of the ProvisioningTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.", ParameterSetName = "Instance")]
         public ProvisioningTemplate InputInstance;
 
-        [Parameter(Mandatory = false, ParameterSetName = "Gallery")]
-        public Guid GalleryTemplateId;
-
         protected override void ExecuteCmdlet()
         {
             SelectedWeb.EnsureProperty(w => w.Url);
             ProvisioningTemplate provisioningTemplate;
 
             FileConnectorBase fileConnector;
-            if (MyInvocation.BoundParameters.ContainsKey("Path"))
+            if (ParameterSpecified(nameof(Path)))
             {
                 bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
                 string templateFileName = System.IO.Path.GetFileName(Path);
@@ -157,8 +162,16 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                 XMLTemplateProvider provider;
                 if (isOpenOfficeFile)
                 {
-                    provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
-                    templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+                    var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                    provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
+                    if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
+                    {
+                        templateFileName = openXmlConnector.Info.Properties.TemplateFileName;
+                    }
+                    else
+                    {
+                        templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+                    }
                 }
                 else
                 {
@@ -171,7 +184,15 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                         throw new NotSupportedException("Only .pnp package files are supported from a SharePoint library");
                     }
                 }
-                provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
+
+                if (ParameterSpecified(nameof(TemplateId)))
+                {
+                    provisioningTemplate = provider.GetTemplate(templateFileName, TemplateId, null, TemplateProviderExtensions);
+                }
+                else
+                {
+                    provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
+                }
 
                 if (provisioningTemplate == null)
                 {
@@ -200,14 +221,8 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             else
             {
-                if (MyInvocation.BoundParameters.ContainsKey("GalleryTemplateId"))
-                {
-                    provisioningTemplate = GalleryHelper.GetTemplate(GalleryTemplateId);
-                }
-                else
-                {
-                    provisioningTemplate = InputInstance;
-                }
+                provisioningTemplate = InputInstance;
+
                 if (ResourceFolder != null)
                 {
                     var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
@@ -227,7 +242,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                         Path = SessionState.Path.CurrentFileSystemLocation.Path;
                     }
                     var fileInfo = new FileInfo(Path);
-                    fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                    fileConnector = new FileSystemConnector(System.IO.Path.IsPathRooted(fileInfo.FullName) ? fileInfo.FullName : fileInfo.DirectoryName, "");
                     provisioningTemplate.Connector = fileConnector;
                 }
             }
@@ -249,11 +264,11 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
 
-            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (ParameterSpecified(nameof(Handlers)))
             {
                 applyingInformation.HandlersToProcess = Handlers;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (ParameterSpecified(nameof(ExcludeHandlers)))
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
@@ -351,11 +366,45 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             applyingInformation.ProvisionContentTypesToSubWebs = ProvisionContentTypesToSubWebs;
             applyingInformation.ProvisionFieldsToSubWebs = ProvisionFieldsToSubWebs;
 
-            SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
+#if !ONPREMISES
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
+            {
+                if (resource.ToLower().StartsWith("https://"))
+                {
+                    var uri = new Uri(resource);
+                    resource = uri.Authority;
+                }
+                // Get Azure AD Token
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    if (graphAccessToken != null)
+                    {
+                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                        return await Task.FromResult(graphAccessToken);
+
+                    }
+                }
+
+                if (PnPConnection.CurrentConnection.PSCredential != null)
+                {
+                    // Using normal credentials
+                    return await Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                }
+                else
+                {
+                    // No token...
+                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Connect-PnPOnline -Graph -LaunchBrowser");
+                }
+            }))
+            {
+#endif
+                SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
+#if !ONPREMISES
+            }
+#endif
 
             WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
         }
-
-     
     }
 }

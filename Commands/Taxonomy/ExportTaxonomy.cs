@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 using File = System.IO.File;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Export, "PnPTaxonomy", SupportsShouldProcess = true)]
     [CmdletHelp("Exports a taxonomy to either the output or to a file.",
@@ -23,10 +23,14 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Remarks = "Exports the full taxonomy the file output.txt",
         SortOrder = 2)]
     [CmdletExample(
-        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSet f6f43025-7242-4f7a-b739-41fa32847254",
+        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSetId f6f43025-7242-4f7a-b739-41fa32847254",
         Remarks = "Exports the term set with the specified id",
         SortOrder = 3)]
-    public class ExportTaxonomy : PnPCmdlet
+    [CmdletExample(
+        Code = @"PS:> Export-PnPTaxonomy -Path c:\output.txt -TermSetId f6f43025-7242-4f7a-b739-41fa32847254 -Lcid 1044",
+        Remarks = "Exports the term set with the specified id using Norwegian labels",
+        SortOrder = 4)]
+    public class ExportTaxonomy : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "If specified, will export the specified termset only")]
         public GuidPipeBind TermSetId = new GuidPipeBind();
@@ -46,6 +50,9 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, HelpMessage = "The path delimiter to be used, by default this is '|'")]
         public string Delimiter = "|";
 
+        [Parameter(Mandatory = false, ParameterSetName = "TermSet", HelpMessage = "Specify the language code for the exported terms")]
+        public int Lcid = 0;
+
         [Parameter(Mandatory = false, HelpMessage = "Defaults to Unicode")]
         public Encoding Encoding = Encoding.Unicode;
 
@@ -63,11 +70,11 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
                 {
                     var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
                     var termStore = taxSession.TermStores.GetByName(TermStoreName);
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, termStore, Delimiter);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, termStore, Delimiter, Lcid);
                 }
                 else
                 {
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, Delimiter);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId.Id, IncludeID, Delimiter, Lcid);
                 }
             }
             else

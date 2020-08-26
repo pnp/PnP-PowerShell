@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.DocumentSet;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
 
-namespace SharePointPnP.PowerShell.Commands.DocumentSets
+namespace PnP.PowerShell.Commands.DocumentSets
 {
     [Cmdlet(VerbsCommon.Add, "PnPDocumentSet")]
     [CmdletHelp("Creates a new document set in a library.",
@@ -29,6 +29,8 @@ namespace SharePointPnP.PowerShell.Commands.DocumentSets
         protected override void ExecuteCmdlet()
         {
             var list = List.GetList(SelectedWeb);
+            if (list == null)
+                throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
             list.EnsureProperties(l => l.RootFolder, l => l.ContentTypes);
 
             // Try getting the content type from the Web

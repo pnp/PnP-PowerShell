@@ -1,27 +1,22 @@
 ﻿#if !ONPREMISES
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassification")]
-    [CmdletHelp("Disables Site Classifications for the tenant. Requires a connection to the Microsoft Graph.",
+    [CmdletHelp("Disables Site Classifications for the tenant",
         Category = CmdletHelpCategory.Graph,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-        Code = @"PS:> Connect-PnPOnline -Scopes ""Directory.ReadWrite.All""
-PS:> Disable-PnPSiteClassification",
+        Code = @"PS:> Disable-PnPSiteClassification",
        Remarks = @"Disables Site Classifications for your tenant.",
        SortOrder = 1)]
+    [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
     public class DisableSiteClassification : PnPGraphCmdlet
     {
-
         protected override void ExecuteCmdlet()
         {
             try

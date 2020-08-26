@@ -1,7 +1,7 @@
-﻿using SharePointPnP.PowerShell.CmdletHelpAttributes;
+﻿using PnP.PowerShell.CmdletHelpAttributes;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPPowerShellTelemetryEnabled")]
     [CmdletHelp("Returns true if the PnP PowerShell Telemetry has been enabled.",
@@ -11,11 +11,11 @@ namespace SharePointPnP.PowerShell.Commands.Base
        Code = "PS:> Get-PnPPowerShellTelemetryEnabled",
        Remarks = "Will return true of false.",
        SortOrder = 1)]
-    public class GetPowerShellTelemetryEnabled : PnPCmdlet
+    public class GetPowerShellTelemetryEnabled : PnPSharePointCmdlet
     {
         protected override void ProcessRecord()
         {
-            WriteObject(SPOnlineConnection.CurrentConnection.TelemetryClient != null);
+            WriteObject(PnPConnection.CurrentConnection.TelemetryClient != null);
         }
     }
 }

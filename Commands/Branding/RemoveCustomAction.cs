@@ -1,13 +1,13 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using SharePointPnP.PowerShell.Commands.Enums;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Remove, "PnPCustomAction", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true)]
     [CmdletHelp("Removes a custom action", 
@@ -71,7 +71,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 }
             }
 
-            foreach (var action in actions.Where(action => Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Resources.RemoveCustomAction, action.Name, action.Id, action.Scope), Resources.Confirm)))
+            foreach (var action in actions.Where(action => Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Resources.RemoveCustomAction, action.Name, action.Id, action.Scope), Resources.Confirm)))
             {
                 switch (action.Scope)
                 {

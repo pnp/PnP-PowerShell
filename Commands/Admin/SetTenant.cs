@@ -1,20 +1,20 @@
 ﻿#if !ONPREMISES
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using System;
 using Microsoft.Online.SharePoint.TenantManagement;
 
-namespace SharePointPnP.PowerShell.Commands.Admin
+namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
     [CmdletHelp(@"Sets organization-level site collection properties",
         DetailedDescription = @"Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
 ResourceQuotaAllocated, and SiteCreationMode.
 
-You must be a SharePoint Online global administrator to run the cmdlet.",
+You must have the SharePoint Online admin or Global admin role to run the cmdlet.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.TenantAdmin)]
     [CmdletExample(
@@ -32,8 +32,6 @@ Set-PnPTenant -NoAccessRedirectUrl 'http://www.contoso.com'",
         Remarks = @"This example enables the use of special persisted cookie for Open with Explorer.", SortOrder = 3)]
     public class SetTenant : PnPAdminCmdlet
     {
-        const string ParameterSet_COMPATIBILITYLEVEL = "Compatibility Level";
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets, HelpMessage = "Specifies the lower bound on the compatibility level for new sites.")]
         public int MinCompatibilityLevel;
 
@@ -401,6 +399,12 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
 
         [Parameter(Mandatory = false, HelpMessage = "Defines if the default themes are visible or hidden")]
         public bool? HideDefaultThemes;
+
+        [Parameter(Mandatory = false, HelpMessage = "Guids of out of the box modern web part id's to hide")]
+        public Guid[] DisabledWebPartIds;
+
+        [Parameter(Mandatory = false, HelpMessage = "Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels")]
+        public bool? EnableAIPIntegration;
 
         protected override void ExecuteCmdlet()
         {
@@ -956,6 +960,16 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
             if(HideDefaultThemes.HasValue)
             {
                 Tenant.HideDefaultThemes = HideDefaultThemes.Value;
+                isDirty = true;
+            }
+            if (DisabledWebPartIds != null)
+            {
+                Tenant.DisabledWebPartIds = DisabledWebPartIds;
+                isDirty = true;
+            }
+            if(EnableAIPIntegration.HasValue)
+            {
+                Tenant.EnableAIPIntegration = EnableAIPIntegration.Value;
                 isDirty = true;
             }
             if (isDirty)

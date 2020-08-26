@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using File = System.IO.File;
 using System.Linq;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Import, "PnPTaxonomy", SupportsShouldProcess = true)]
     [CmdletHelp("Imports a taxonomy from either a string array or a file",
@@ -22,7 +22,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
         Code = @"PS:> Import-PnPTaxonomy -Path ./mytaxonomyterms.txt",
         Remarks = "Imports the taxonomy from the file specified. Each line has to be in the format TERMGROUP|TERMSET|TERM. See example 2 for examples of the format.",
         SortOrder = 3)]
-    public class ImportTaxonomy : PnPCmdlet
+    public class ImportTaxonomy : PnPSharePointCmdlet
     {
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = "Direct", HelpMessage = "An array of strings describing termgroup, termset, term, subterms using a default delimiter of '|'.")]

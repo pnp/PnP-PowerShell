@@ -3,14 +3,14 @@ using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using System.Collections;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using SharePointPnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPProvisioningTemplateMetadata")]
     [CmdletHelp("Sets metadata of a provisioning template",
@@ -90,8 +90,16 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
             var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
             if (isOpenOfficeFile)
             {
-                provider = new XMLOpenXMLTemplateProvider(new OpenXMLConnector(templateFileName, fileConnector));
-                templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+                var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
+                provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
+                if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
+                {
+                    templateFileName = openXmlConnector.Info.Properties.TemplateFileName;
+                }
+                else
+                {
+                    templateFileName = templateFileName.Substring(0, templateFileName.LastIndexOf(".", StringComparison.Ordinal)) + ".xml";
+                }
             }
             else
             {
