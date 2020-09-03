@@ -64,10 +64,7 @@ namespace PnP.PowerShell.Commands
                     else
                     {
                         // Enable requesting access and set it to the default owners group
-                        // Code can be replaced by SelectedWeb.EnableRequestAccess(); once https://github.com/SharePoint/PnP-Sites-Core/pull/2533 has been accepted for merge.
-                        SelectedWeb.SetUseAccessRequestDefaultAndUpdate(true);
-                        SelectedWeb.Update();
-                        SelectedWeb.Context.ExecuteQueryRetry();
+                        SelectedWeb.EnableRequestAccess();
                     }
                 }
             }
