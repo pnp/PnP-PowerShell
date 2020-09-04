@@ -1,13 +1,12 @@
 ﻿#if !ONPREMISES
-using System;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.UserProfiles
+namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUPABulkImportStatus")]
     [CmdletHelp(@"Get user profile bulk import status.",
@@ -39,7 +38,7 @@ namespace SharePointPnP.PowerShell.Commands.UserProfiles
         {
             var o365 = new Office365Tenant(ClientContext);
 
-            if (MyInvocation.BoundParameters.ContainsKey("JobId"))
+            if (ParameterSpecified(nameof(JobId)))
             {
                 var job = o365.GetImportProfilePropertyJob(JobId.Id);
                 ClientContext.Load(job);

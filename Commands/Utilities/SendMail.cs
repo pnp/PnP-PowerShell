@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Utilities
+namespace PnP.PowerShell.Commands.Utilities
 {
     [Cmdlet(VerbsCommunications.Send, "PnPMail")]
     [CmdletHelp("Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.",
@@ -36,7 +36,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         [Parameter(Mandatory = true, HelpMessage = @"Subject of the email")]
         public string Subject;
 
-        [Parameter(Mandatory = true, HelpMessage = @"Body of the email")]
+        [Parameter(Mandatory = true, HelpMessage = @"Body of the email. Accepts simple HTML as `<h1></h1>`, `<br/>` etc.")]
         public string Body;
         
         protected override void ExecuteCmdlet()

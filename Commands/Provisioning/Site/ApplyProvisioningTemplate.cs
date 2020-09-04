@@ -3,25 +3,19 @@ using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using System.Collections;
 using System.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
-using SharePointPnP.PowerShell.Commands.Components;
 using System.Collections.Generic;
-using SharePointPnP.PowerShell.Commands.Utilities;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Base;
 using System.Threading.Tasks;
-using OfficeDevPnP.Core;
-using Newtonsoft.Json.Linq;
-using System.Net;
-using System.Security;
-using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning.Site
+namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet("Apply", "PnPProvisioningTemplate")]
     [CmdletHelp("Applies a site template to a web",
@@ -63,6 +57,10 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
      Code = @"PS:> Apply-PnPProvisioningTemplate -Path .\ -InputInstance $template",
      Remarks = @"Applies a site template from an in-memory instance of a ProvisioningTemplate type of the PnP Core Component, reading the supporting files, if any, from the current (.\) path. The syntax can be used together with any other supported parameters.",
      SortOrder = 8)]
+    [CmdletExample(
+     Code = @"PS:> Apply-PnPProvisioningTemplate -Path .\template.xml -TemplateId ""MyTemplate""",
+     Remarks = @"Applies the ProvisioningTemplate with the ID ""MyTemplate"" located in the template definition file template.xml.",
+     SortOrder = 9)]
 
     public class ApplyProvisioningTemplate : PnPWebCmdlet
     {
@@ -72,6 +70,9 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, HelpMessage = "Path to the xml or pnp file containing the provisioning template.", ParameterSetName = "Path")]
         public string Path;
+
+        [Parameter(Mandatory = false, HelpMessage = "ID of the template to use from the xml file containing the provisioning template. If not specified and multiple ProvisioningTemplate elements exist, the last one will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public string TemplateId;
 
         [Parameter(Mandatory = false, HelpMessage = "Root folder where resources/files that are being referenced in the template are located. If not specified the same folder as where the provisioning template is located will be used.", ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string ResourceFolder;
@@ -115,7 +116,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             ProvisioningTemplate provisioningTemplate;
 
             FileConnectorBase fileConnector;
-            if (MyInvocation.BoundParameters.ContainsKey("Path"))
+            if (ParameterSpecified(nameof(Path)))
             {
                 bool templateFromFileSystem = !Path.ToLower().StartsWith("http");
                 string templateFileName = System.IO.Path.GetFileName(Path);
@@ -183,7 +184,15 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                         throw new NotSupportedException("Only .pnp package files are supported from a SharePoint library");
                     }
                 }
-                provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
+
+                if (ParameterSpecified(nameof(TemplateId)))
+                {
+                    provisioningTemplate = provider.GetTemplate(templateFileName, TemplateId, null, TemplateProviderExtensions);
+                }
+                else
+                {
+                    provisioningTemplate = provider.GetTemplate(templateFileName, TemplateProviderExtensions);
+                }
 
                 if (provisioningTemplate == null)
                 {
@@ -233,7 +242,7 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
                         Path = SessionState.Path.CurrentFileSystemLocation.Path;
                     }
                     var fileInfo = new FileInfo(Path);
-                    fileConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
+                    fileConnector = new FileSystemConnector(System.IO.Path.IsPathRooted(fileInfo.FullName) ? fileInfo.FullName : fileInfo.DirectoryName, "");
                     provisioningTemplate.Connector = fileConnector;
                 }
             }
@@ -255,11 +264,11 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 
             var applyingInformation = new ProvisioningTemplateApplyingInformation();
 
-            if (MyInvocation.BoundParameters.ContainsKey("Handlers"))
+            if (ParameterSpecified(nameof(Handlers)))
             {
                 applyingInformation.HandlersToProcess = Handlers;
             }
-            if (MyInvocation.BoundParameters.ContainsKey("ExcludeHandlers"))
+            if (ParameterSpecified(nameof(ExcludeHandlers)))
             {
                 foreach (var handler in (Handlers[])Enum.GetValues(typeof(Handlers)))
                 {
@@ -358,25 +367,36 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
             applyingInformation.ProvisionFieldsToSubWebs = ProvisionFieldsToSubWebs;
 
 #if !ONPREMISES
-            using (var provisioningContext = new PnPProvisioningContext((resource, scope) =>
-             {
-                 // Get Azure AD Token
-                 if (AccessToken != null)
-                 {
-                     // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
-                     return Task.FromResult(AccessToken);
-                 }
-                 else if (SPOnlineConnection.CurrentConnection.PSCredential != null)
-                 {
-                     // Using normal credentials
-                     return Task.FromResult(TokenHandler.AcquireToken(resource, null));
-                 }
-                 else
-                 {
-                     // No token...
-                     return null;
-                 }
-             }))
+            using (var provisioningContext = new PnPProvisioningContext(async (resource, scope) =>
+            {
+                if (resource.ToLower().StartsWith("https://"))
+                {
+                    var uri = new Uri(resource);
+                    resource = uri.Authority;
+                }
+                // Get Azure AD Token
+                if (PnPConnection.CurrentConnection != null)
+                {
+                    var graphAccessToken = PnPConnection.CurrentConnection.TryGetAccessToken(Enums.TokenAudience.MicrosoftGraph);
+                    if (graphAccessToken != null)
+                    {
+                        // Authenticated using -Graph or using another way to retrieve the accesstoken with Connect-PnPOnline
+                        return await Task.FromResult(graphAccessToken);
+
+                    }
+                }
+
+                if (PnPConnection.CurrentConnection.PSCredential != null)
+                {
+                    // Using normal credentials
+                    return await Task.FromResult(TokenHandler.AcquireToken(resource, null));
+                }
+                else
+                {
+                    // No token...
+                    throw new PSInvalidOperationException("Your template contains artifacts that require an access token. Please provide consent to the PnP Management Shell application first by executing: Connect-PnPOnline -Graph -LaunchBrowser");
+                }
+            }))
             {
 #endif
                 SelectedWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
@@ -385,38 +405,6 @@ PS:> Apply-PnPProvisioningTemplate -Path NewTemplate.xml -ExtensibilityHandlers 
 #endif
 
             WriteProgress(new ProgressRecord(0, $"Applying template to {SelectedWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
-        }
-
-        private string AccessToken
-        {
-            get
-            {
-                if (SPOnlineConnection.AuthenticationResult != null)
-                {
-                    if (SPOnlineConnection.AuthenticationResult.ExpiresOn < DateTimeOffset.Now)
-                    {
-                        WriteWarning(Properties.Resources.MicrosoftGraphOAuthAccessTokenExpired);
-                        SPOnlineConnection.AuthenticationResult = null;
-                        return null;
-                    }
-                    else
-                    {
-#if !NETSTANDARD2_0
-                        return (SPOnlineConnection.AuthenticationResult.Token);
-#else
-                        return SPOnlineConnection.AuthenticationResult.AccessToken;
-#endif
-                    }
-                }
-                else if (SPOnlineConnection.CurrentConnection?.AccessToken != null)
-                {
-                    return SPOnlineConnection.CurrentConnection.AccessToken;
-                }
-                else
-                {
-                    return null;
-                }
-            }
         }
     }
 }

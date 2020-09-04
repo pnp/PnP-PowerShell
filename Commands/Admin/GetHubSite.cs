@@ -1,13 +1,11 @@
 ﻿#if !ONPREMISES
-using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
-using System;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Admin
+namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPHubSite")]
     [CmdletHelp(@"Retrieve all or a specific hubsite.",
@@ -22,11 +20,10 @@ namespace SharePointPnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            if (this.Identity != null)
+            if (Identity != null)
             {
-                HubSiteProperties hubSiteProperties;
-                hubSiteProperties = base.Tenant.GetHubSitePropertiesByUrl(this.Identity.Url);
-                ClientContext.Load<HubSiteProperties>(hubSiteProperties);
+                var hubSiteProperties = Identity.GetHubSite(Tenant);
+                ClientContext.Load(hubSiteProperties);
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(hubSiteProperties);
             }

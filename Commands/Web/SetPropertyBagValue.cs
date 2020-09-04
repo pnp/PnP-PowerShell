@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands
+namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPPropertyBagValue")]
     [CmdletHelp("Sets a property bag value",
@@ -41,45 +41,59 @@ namespace SharePointPnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            if (SelectedWeb.IsNoScriptSite())
+            try
             {
-                ThrowTerminatingError(new ErrorRecord(new Exception("Site has NoScript enabled, and setting property bag values is not supported"), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
-                return;
-            }
-            if (!MyInvocation.BoundParameters.ContainsKey("Folder"))
-            {
-                if (!Indexed)
+                if (!ParameterSpecified(nameof(Folder)))
                 {
-                    // If it is already an indexed property we still have to add it back to the indexed properties
-                    Indexed = !string.IsNullOrEmpty(SelectedWeb.GetIndexedPropertyBagKeys().FirstOrDefault(k => k == Key));
-                }
+                    if (!Indexed)
+                    {
+                        // If it is already an indexed property we still have to add it back to the indexed properties
+                        Indexed = !string.IsNullOrEmpty(SelectedWeb.GetIndexedPropertyBagKeys().FirstOrDefault(k => k == Key));
+                    }
 
-                SelectedWeb.SetPropertyBagValue(Key, Value);
-                if (Indexed)
-                {
-                    SelectedWeb.AddIndexedPropertyBagKey(Key);
+                    SelectedWeb.SetPropertyBagValue(Key, Value);
+                    if (Indexed)
+                    {
+                        SelectedWeb.AddIndexedPropertyBagKey(Key);
+                    }
+                    else
+                    {
+                        SelectedWeb.RemoveIndexedPropertyBagKey(Key);
+                    }
                 }
                 else
                 {
-                    SelectedWeb.RemoveIndexedPropertyBagKey(Key);
-                }
-            }
-            else
-            {
-                SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                    SelectedWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-                var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
+                    var folderUrl = UrlUtility.Combine(SelectedWeb.ServerRelativeUrl, Folder);
 #if ONPREMISES
                 var folder = SelectedWeb.GetFolderByServerRelativeUrl(folderUrl);
 #else
-                var folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+                    var folder = SelectedWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
 #endif
 
-                folder.EnsureProperty(f => f.Properties);
+                    folder.EnsureProperty(f => f.Properties);
 
-                folder.Properties[Key] = Value;
-                folder.Update();
-                ClientContext.ExecuteQueryRetry();
+                    folder.Properties[Key] = Value;
+                    folder.Update();
+                    ClientContext.ExecuteQueryRetry();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is ServerUnauthorizedAccessException)
+                {
+                    if (SelectedWeb.IsNoScriptSite())
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new Exception($"{ex.Message} Site might have NoScript enabled, this prevents setting some property bag values.", ex), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
+                        return;
+                    }
+                    throw;
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
     }

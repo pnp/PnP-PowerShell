@@ -8,12 +8,12 @@ using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using File = System.IO.File;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsData.Export, "PnPTermGroupToXml", SupportsShouldProcess = true)]
     [CmdletHelp("Exports a taxonomy TermGroup to either the output or to an XML file.",
@@ -35,7 +35,7 @@ namespace SharePointPnP.PowerShell.Commands.Taxonomy
 PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
         Remarks = "Retrieves a termgroup and subsequently exports that term group to a the file named 'output.xml'",
         SortOrder = 4)]
-    public class ExportTermGroup : PnPCmdlet
+    public class ExportTermGroup : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, HelpMessage = "The ID or name of the termgroup",
             ValueFromPipeline = true)]
@@ -64,12 +64,7 @@ PS:> $termgroup | Export-PnPTermGroupToXml -Out c:\output.xml",
 
             var template = ClientContext.Web.GetProvisioningTemplate(templateCi);
 
-            //template.Security = null;
-            //template.Features = null;
-            //template.CustomActions = null;
-            //template.ComposedLook = null;
-
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 if (Identity.Id != Guid.Empty)
                 {

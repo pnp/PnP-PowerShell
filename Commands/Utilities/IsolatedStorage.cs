@@ -1,10 +1,11 @@
-﻿using System;
+﻿#if !PNPPSCORE
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Utilities
+namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class IsolatedStorage
     {
@@ -15,7 +16,7 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
             {
                 var usfdAttempt1 = System.IO.IsolatedStorage.IsolatedStorageFile.GetUserStoreForDomain(); // this will fail when the current AppDomain Evidence is instantiated via COM or in PowerShell
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 useNewEvidence = true;
             }
@@ -32,3 +33,4 @@ namespace SharePointPnP.PowerShell.Commands.Utilities
         }
     }
 }
+#endif

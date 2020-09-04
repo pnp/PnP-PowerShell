@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Site
+namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPRoleDefinition")]
     [CmdletHelp("Retrieves a Role Definitions of a site",
@@ -18,14 +18,14 @@ namespace SharePointPnP.PowerShell.Commands.Site
         Code = @"PS:> Get-PnPRoleDefinition -Identity Read",
         Remarks = "Retrieves the specified Role Definition (Permission Level) settings of the current site",
         SortOrder = 2)]
-    public class GetRoleDefinition : PnPCmdlet
+    public class GetRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, HelpMessage = "The name of a role definition to retrieve.")]
         public RoleDefinitionPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("Identity"))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var roleDefinition = Identity.GetRoleDefinition(ClientContext.Site);
                 ClientContext.Load(roleDefinition);

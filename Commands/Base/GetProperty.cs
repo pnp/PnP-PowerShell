@@ -1,10 +1,10 @@
 ﻿using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Linq.Expressions;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Base
+namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPProperty")]
     [CmdletHelp("Returns a previously not loaded property of a ClientObject", 
@@ -23,7 +23,7 @@ PS:> $list = Get-PnPList -Identity 'Site Assets'
 PS:> Get-PnPProperty -ClientObject $list -Property Views",
         Remarks = "Will load the views object of the specified list object and return its value to the output.",
         SortOrder = 2)]
-    public class EnsureProperty : PnPCmdlet
+    public class EnsureProperty : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, HelpMessage = "Specifies the object where the properties of should be retrieved")]
         public ClientObject ClientObject;

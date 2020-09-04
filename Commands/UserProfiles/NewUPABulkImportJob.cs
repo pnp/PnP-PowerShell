@@ -6,14 +6,14 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
 using OfficeDevPnP.Core.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.UserProfiles
+namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.New, "PnPUPABulkImportJob")]
-    [CmdletHelp(@"Submit up a new user profile bulk import job.", "See https://docs.microsoft.com/en-us/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online for information on the API and how the bulk import process works.",
+    [CmdletHelp(@"Submit up a new user profile bulk import job.", "See https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online for information on the API and how the bulk import process works.",
         SupportedPlatform = CmdletSupportedPlatform.Online,
         Category = CmdletHelpCategory.UserProfiles)]
     [CmdletExample(
@@ -63,7 +63,7 @@ PS:> New-PnPUPABulkImportJob -Folder ""Shared Documents"" -Path profiles.json -I
                 throw new InvalidEnumArgumentException(@"IdProperty cannot be empty.");
             }
             
-            var webCtx = ClientContext.Clone(SPOnlineConnection.CurrentConnection.Url);
+            var webCtx = ClientContext.Clone(PnPConnection.CurrentConnection.Url);
             var web = webCtx.Web;
             var webServerRelativeUrl = web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!Folder.ToLower().StartsWith(webServerRelativeUrl))

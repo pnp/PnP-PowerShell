@@ -3,15 +3,15 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Taxonomy
+namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTaxonomyItem", SupportsShouldProcess = true)]
     [CmdletHelp(@"Removes a taxonomy item",
          Category = CmdletHelpCategory.Taxonomy)]
-    public class RemoveTaxonomyItem : PnPCmdlet
+    public class RemoveTaxonomyItem : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true,
              HelpMessage =

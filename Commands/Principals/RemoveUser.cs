@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.CmdletHelpAttributes;
 using System.Linq.Expressions;
 using System;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Principals
+namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUser")]
     [CmdletHelp("Removes a specific user from the site collection User Information List",
@@ -73,7 +73,7 @@ namespace SharePointPnP.PowerShell.Commands.Principals
 
             if (user != null)
             {
-                if (Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveUser, user.Id, user.LoginName, user.Email), Properties.Resources.Confirm))
+                if (Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveUser, user.Id, user.LoginName, user.Email), Properties.Resources.Confirm))
                 {
                     WriteVerbose($"Removing user {user.Id} {user.LoginName} {user.Email}");
                     ClientContext.Web.SiteUsers.Remove(user);

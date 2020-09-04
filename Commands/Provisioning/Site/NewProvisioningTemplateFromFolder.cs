@@ -1,8 +1,8 @@
 ﻿using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers;
 using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +11,9 @@ using System.Management.Automation;
 using System.Xml.Linq;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML;
 using OfficeDevPnP.Core.Framework.Provisioning.Connectors.OpenXML.Model;
+using PnP.PowerShell.Commands.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Provisioning
+namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommon.New, "PnPProvisioningTemplateFromFolder")]
     [CmdletHelp("Generates a provisioning template from a given folder, including only files that are present in that folder",
@@ -51,7 +52,7 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
        SortOrder = 8)]
     [CmdletRelatedLink(
        Text ="Encoding", 
-       Url = "https://msdn.microsoft.com/en-us/library/system.text.encoding_properties.aspx")]
+       Url = "https://docs.microsoft.com/dotnet/api/system.text.encoding")]
 
     public class NewProvisioningTemplateFromFolder : PnPWebCmdlet
     {
@@ -206,7 +207,52 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
             if (!AsIncludeFile) return xml;
             XElement xElement = XElement.Parse(xml);
             // Get the Files Element
-            XNamespace pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05;
+
+            XNamespace pnp;
+            switch (Schema)
+            {
+                case XMLPnPSchemaVersion.V201503:
+#pragma warning disable CS0618 // Type or member is obsolete
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03;
+                    break;
+                case XMLPnPSchemaVersion.V201505:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05;
+                    break;
+                case XMLPnPSchemaVersion.V201508:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08;
+                    break;
+                case XMLPnPSchemaVersion.V201512:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12;
+                    break;
+                case XMLPnPSchemaVersion.V201605:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05;
+                    break;
+                case XMLPnPSchemaVersion.V201705:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05;
+                    break;
+                case XMLPnPSchemaVersion.V201801:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01;
+                    break;
+                case XMLPnPSchemaVersion.V201805:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05;
+#pragma warning restore CS0618 // Type or member is obsolete
+                    break;
+                case XMLPnPSchemaVersion.V201807:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_07;
+                    break;
+                case XMLPnPSchemaVersion.V201903:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03;
+                    break;
+                case XMLPnPSchemaVersion.V201909:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_09;
+                    break;
+                case XMLPnPSchemaVersion.V202002:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2020_02;
+                    break;
+                default:
+                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2020_02;
+                    break;
+            }
 
             var filesElement = xElement.Descendants(pnp + "Files").FirstOrDefault();
             if (filesElement != null)
@@ -218,87 +264,21 @@ namespace SharePointPnP.PowerShell.Commands.Provisioning
 
         private string GetFiles(XMLPnPSchemaVersion schema, string folder, string ctid)
         {
-            ProvisioningTemplate template = new ProvisioningTemplate();
-            template.Id = "FOLDEREXPORT";
-            template.Security = null;
-            template.Features = null;
-            template.ComposedLook = null;
+            ProvisioningTemplate template = new ProvisioningTemplate
+            {
+                Id = "FOLDEREXPORT",
+                Security = null,
+                Features = null,
+                ComposedLook = null
+            };
 
             template.Files.AddRange(EnumerateFiles(folder, ctid, Properties));
 
-            var formatter = GetTemplateFormatterFromSchema(schema);
+            var formatter = ProvisioningHelper.GetFormatter(schema);
             var outputStream = formatter.ToFormattedTemplate(template);
             StreamReader reader = new StreamReader(outputStream);
 
             return reader.ReadToEnd();
-        }
-
-        private static ITemplateFormatter GetTemplateFormatterFromSchema(XMLPnPSchemaVersion schema)
-        {
-            ITemplateFormatter formatter = null;
-            switch (schema)
-            {
-                case XMLPnPSchemaVersion.LATEST:
-                    {
-                        formatter = XMLPnPSchemaFormatter.LatestFormatter;
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201503:
-                    {
-#pragma warning disable CS0618 // Type or member is obsolete
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_03);
-#pragma warning restore CS0618 // Type or member is obsolete
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201505:
-                    {
-#pragma warning disable CS0618 // Type or member is obsolete
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_05);
-#pragma warning disable CS0618 // Type or member is obsolete
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201508:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_08);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201512:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2015_12);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201605:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2016_05);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201705:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2017_05);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201801:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_01);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201805:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_05);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201807:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2018_07);
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201903:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03);
-                        break;
-                    }
-            }
-            return formatter;
         }
 
         private List<OfficeDevPnP.Core.Framework.Provisioning.Model.File> EnumerateFiles(string folder, string ctid, Hashtable properties)

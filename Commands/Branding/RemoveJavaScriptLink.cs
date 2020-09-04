@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Enums;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Enums;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Branding
+namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Remove, "PnPJavaScriptLink", SupportsShouldProcess = true)]
     [CmdletHelp("Removes a JavaScript link or block from a web or sitecollection",
@@ -50,7 +50,9 @@ namespace SharePointPnP.PowerShell.Commands.Branding
         protected override void ExecuteCmdlet()
         {
             // Following code to handle deprecated parameter
-            if (MyInvocation.BoundParameters.ContainsKey("FromSite"))
+#pragma warning disable CS0618 // Type or member is obsolete
+            if (ParameterSpecified(nameof(FromSite)))
+#pragma warning restore CS0618 // Type or member is obsolete
             {
                 Scope = CustomActionScope.Site;
             }
@@ -89,7 +91,7 @@ namespace SharePointPnP.PowerShell.Commands.Branding
                 }
             }
 
-            foreach (var action in actions.Where(action => Force || (MyInvocation.BoundParameters.ContainsKey("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Resources.RemoveJavaScript0, action.Name, action.Id, action.Scope), Resources.Confirm)))
+            foreach (var action in actions.Where(action => Force || (ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Resources.RemoveJavaScript0, action.Name, action.Id, action.Scope), Resources.Confirm)))
             {
                 switch (action.Scope)
                 {

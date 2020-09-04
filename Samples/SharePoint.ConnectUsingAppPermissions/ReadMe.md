@@ -44,10 +44,11 @@ KeyCredentials :
 Certificate    : -----BEGIN CERTIFICATE-----MIICv...iqzrk=-----END CERTIFICATE-----
 PrivateKey     : -----BEGIN RSA PRIVATE KEY-----MIIEp...4W6g==-----END
                  RSA PRIVATE KEY-----
-.\pnp.pfx #Install certificate
+
+Import-PfxCertificate -Exportable -CertStoreLocation Cert:\LocalMachine\My -FilePath .\pnp.pfx #Install certificate
 ```
 
-For the last line which installs the certificate pick either *Current User* or *Local Machine* and *Automatically select the certificate store based on the type of certificate*. This will place the certificate in the *my* store.
+The last line installs the certificate to *Local Machine*. You may install to *Current User* if you prefer.
 
 >For further details about the `New-PnPAzureCertificate` syntax and command line parameters you can read the documentation with `Get-Help New-PnPAzureCertificate -Detailed`.
 
@@ -63,7 +64,7 @@ You'll see on the left side of the blade that you opened the Azure AD tenant cor
 ![Azure AD Main Page](./Fig-02-Azure-AD-Main-Page.png)
 
 In the "App Registrations" tab you will find the list of Azure AD applications registered in 
-your tenant. Click the "New application registraion" button in the upper left part of the blade, this will show you the following screen.
+your tenant. Click the "New application registration" button in the upper left part of the blade, this will show you the following screen.
 
 ![Azure AD - Add an Application - First Step](./Fig-03-Azure-AD-Add-Application-Step-01.png)
 
@@ -76,7 +77,7 @@ You should now be at the following screen:
 Please make sure you :
 - Copy the **Application (client) ID** value as you'll need it later in the `ClientId` parameter when connecting to SharePoint Online.
 
-Now click on "API Permissions" in the left menu, click on the "Add a permission" button, and pick SahrePoint in the pane which appears.
+Now click on "API Permissions" in the left menu, click on the "Add a permission" button, and pick SharePoint in the pane which appears.
 
 ![Azure AD - Application - Required Permissions ](./Fig-06-Azure-AD-App-Config-02.png)
 

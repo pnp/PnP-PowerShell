@@ -7,11 +7,11 @@ using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
 using Microsoft.SharePoint.Client.Search.Portability;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Enums;
-using Resources = SharePointPnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Enums;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace SharePointPnP.PowerShell.Commands.Search
+namespace PnP.PowerShell.Commands.Search
 {
     public enum OutputFormat
     {
@@ -156,6 +156,7 @@ namespace SharePointPnP.PowerShell.Commands.Search
  */
             int p;
             if (!int.TryParse(pid, out p)) return pid;
+            if (p <= 1000000000) return pid;
 
             var autoMpNum = pid.Substring(pid.Length - 2);
             var mpName = pid;

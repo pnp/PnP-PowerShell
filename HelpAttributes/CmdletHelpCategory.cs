@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace SharePointPnP.PowerShell.CmdletHelpAttributes
+namespace PnP.PowerShell.CmdletHelpAttributes
 {
     /// <summary>
     /// The available categories for cmdlet help categorization
@@ -53,7 +53,10 @@ namespace SharePointPnP.PowerShell.CmdletHelpAttributes
         [EnumMember(Value = "Diagnostic utilities")]
         Diagnostic = 28,
         [EnumMember(Value = "Site Designs")]
-        SiteDesigns = 29
-            
+        SiteDesigns = 29,
+        [EnumMember(Value = "Management API")]
+        ManagementApi = 30,
+        [EnumMember(Value = "Microsoft Teams")]
+        Teams = 31
     }
 }

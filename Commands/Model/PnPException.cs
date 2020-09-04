@@ -5,7 +5,7 @@ using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharePointPnP.PowerShell.Commands.Model
+namespace PnP.PowerShell.Commands.Model
 {
     public class PnPException
     {
@@ -13,5 +13,8 @@ namespace SharePointPnP.PowerShell.Commands.Model
         public string Stacktrace;
         public int ScriptLineNumber;
         public InvocationInfo InvocationInfo;
+        public Exception Exception;
+        public string CorrelationId;
+        public DateTime TimeStampUtc;
     }
 }

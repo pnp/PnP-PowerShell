@@ -4,12 +4,12 @@ using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
 using System.Runtime.Serialization;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.ModuleFilesGenerator.Model;
-using CmdletInfo = SharePointPnP.PowerShell.ModuleFilesGenerator.Model.CmdletInfo;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.ModuleFilesGenerator.Model;
+using CmdletInfo = PnP.PowerShell.ModuleFilesGenerator.Model.CmdletInfo;
 using System.ComponentModel;
 
-namespace SharePointPnP.PowerShell.ModuleFilesGenerator
+namespace PnP.PowerShell.ModuleFilesGenerator
 {
     internal class CmdletsAnalyzer
     {
@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     var cmdletAttribute = attribute as CmdletAttribute;
                     if (cmdletAttribute != null)
                     {
-#if !NETCOREAPP2_0
+#if !NETCOREAPP3_0
                         var a = cmdletAttribute;
                         cmdletInfo.Verb = a.VerbName;
                         cmdletInfo.Noun = a.NounName;
@@ -60,7 +60,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     var aliasAttribute = attribute as AliasAttribute;
                     if (aliasAttribute != null)
                     {
-#if !NETCOREAPP2_0
+#if !NETCOREAPP3_0
                         foreach (var name in aliasAttribute.AliasNames)
                         {
                             cmdletInfo.Aliases.Add(name);
@@ -134,6 +134,11 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
                     if (additionalParameter != null)
                     {
                         cmdletInfo.AdditionalParameters.Add(additionalParameter);
+                    }
+                    var apiPermissionAttribute = attribute as CmdletApiPermissionBase;
+                    if(apiPermissionAttribute != null)
+                    {
+                        cmdletInfo.ApiPermissions.Add(apiPermissionAttribute);
                     }
                 }
                 if (!string.IsNullOrEmpty(cmdletInfo.Verb) && !string.IsNullOrEmpty(cmdletInfo.Noun))
@@ -361,7 +366,7 @@ namespace SharePointPnP.PowerShell.ModuleFilesGenerator
 
                         if (aliases != null && aliases.Any())
                         {
-#if !NETCOREAPP2_0
+#if !NETCOREAPP3_0
                             foreach (var aliasAttribute in aliases)
                             {
                                 cmdletParameterInfo.Aliases.AddRange(aliasAttribute.AliasNames);

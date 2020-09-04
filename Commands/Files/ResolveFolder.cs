@@ -1,9 +1,8 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
+using PnP.PowerShell.CmdletHelpAttributes;
 
-namespace SharePointPnP.PowerShell.Commands.Files
+namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsDiagnostic.Resolve, "PnPFolder")]
     [Alias("Ensure-PnPFolder")]
@@ -11,7 +10,7 @@ namespace SharePointPnP.PowerShell.Commands.Files
         Category = CmdletHelpCategory.Files,
         DetailedDescription = "Returns a folder from a given site relative path, and will create it if it does not exist. If you do not want the folder to be created, for instance just to test if a folder exists, use Get-PnPFolder",
         OutputType = typeof(Folder),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.folder.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee538057(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Resolve-PnPFolder -SiteRelativePath ""demofolder/subfolder""",
         Remarks = "Creates a folder called subfolder in a folder called demofolder located in the root folder of the site. If the folder hierarchy does not exist, it will be created.",

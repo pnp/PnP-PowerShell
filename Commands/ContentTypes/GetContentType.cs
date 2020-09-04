@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 
-namespace SharePointPnP.PowerShell.Commands.ContentTypes
+namespace PnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Get, "PnPContentType")]
     [CmdletHelp("Retrieves a content type",
@@ -63,6 +63,8 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
                 else
                 {
                     List list = List.GetList(SelectedWeb);
+                    if (list == null)
+                        throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
 
                     ClientContext.ExecuteQueryRetry();
 
@@ -111,6 +113,8 @@ namespace SharePointPnP.PowerShell.Commands.ContentTypes
                 else
                 {
                     List list = List.GetList(SelectedWeb);
+                    if (list == null)
+                        throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
                     var cts = ClientContext.LoadQuery(list.ContentTypes.Include(ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group));
                     ClientContext.ExecuteQueryRetry();
                     WriteObject(cts, true);

@@ -1,11 +1,11 @@
 ﻿#if !ONPREMISES
 using OfficeDevPnP.Core.Enums;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Apps
+namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsData.Sync, "PnPAppToTeams")]
     [CmdletHelp("Synchronize an app from the tenant app catalog to the Microsoft Teams app catalog", SupportedPlatform = CmdletSupportedPlatform.Online,
@@ -13,7 +13,7 @@ namespace SharePointPnP.PowerShell.Commands.Apps
     [CmdletExample(
         Code = @"PS:> Sync-PnPAppToTeams -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe",
         Remarks = @"This will synchronize the given app with the Microsoft Teams app catalog", SortOrder = 1)]
-    public class SyncAppToTeams : PnPCmdlet
+    public class SyncAppToTeams : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, HelpMessage = "Specifies the Id of the Addin Instance")]
         public AppMetadataPipeBind Identity;

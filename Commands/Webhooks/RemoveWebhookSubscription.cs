@@ -2,12 +2,12 @@
 
 using Microsoft.SharePoint.Client;
 using OfficeDevPnP.Core.Entities;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Webhooks
+namespace PnP.PowerShell.Commands.Webhooks
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWebhookSubscription")]
     [CmdletHelp("Removes a Webhook subscription from the resource",
@@ -44,7 +44,7 @@ PS:> $subscriptions[0] | Remove-PnPWebhookSubscription -List MyList",
             if (Identity != null)
             {
                 // NOTE: Currently only supports List Webhooks
-                if (MyInvocation.BoundParameters.ContainsKey("List"))
+                if (ParameterSpecified(nameof(List)))
                 {
                     // Get the list from the currently selected web
                     List list = List.GetList(SelectedWeb);

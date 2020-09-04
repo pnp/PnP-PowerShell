@@ -1,9 +1,9 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using SharePointPnP.PowerShell.CmdletHelpAttributes;
-using SharePointPnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.CmdletHelpAttributes;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
-namespace SharePointPnP.PowerShell.Commands.Events
+namespace PnP.PowerShell.Commands.Events
 {
     [Cmdlet(VerbsCommon.Add, "PnPEventReceiver")]
     [CmdletHelp("Adds a new remote event receiver",
@@ -43,7 +43,7 @@ namespace SharePointPnP.PowerShell.Commands.Events
 
         protected override void ExecuteCmdlet()
         {
-            if (MyInvocation.BoundParameters.ContainsKey("List"))
+            if (ParameterSpecified(nameof(List)))
             {
                 var list = List.GetList(SelectedWeb);
                 WriteObject(list.AddRemoteEventReceiver(Name, Url, EventReceiverType, Synchronization, SequenceNumber, Force));
