@@ -111,6 +111,12 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = @"-", ParameterSetName = ParameterSet_PROPERTIES)]
         public FlowsPolicy DisableFlows;
 
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies all anonymous/anyone links that have been created (or will be created) will expire after the set number of days. Only applies if OverrideTenantAnonymousLinkExpirationPolicy is set to true. To remove the expiration requirement, set the value to zero (0).", ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? AnonymousLinkExpirationInDays;
+
+        [Parameter(Mandatory = false, HelpMessage = @"Choose whether to override the anonymous or anyone link expiration policy on this site. False - Respect the organization-level policy for anonymous or anyone link expiration True - Override the organization-level policy for anonymous or anyone link expiration (can be more or less restrictive).", ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter OverrideTenantAnonymousLinkExpirationPolicy;
+
         [Parameter(Mandatory = false, HelpMessage = "Wait for the operation to complete")]
         public SwitchParameter Wait;
 #endif
@@ -247,6 +253,18 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(DisableFlows)))
             {
                 props.DisableFlows = DisableFlows;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)))
+            {
+                props.OverrideTenantAnonymousLinkExpirationPolicy = OverrideTenantAnonymousLinkExpirationPolicy.ToBool();
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(AnonymousLinkExpirationInDays)) && AnonymousLinkExpirationInDays.HasValue)
+            {
+                props.AnonymousLinkExpirationInDays = AnonymousLinkExpirationInDays.Value;
                 updateRequired = true;
             }
 #endif
