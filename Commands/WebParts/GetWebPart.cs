@@ -21,6 +21,14 @@ namespace PnP.PowerShell.Commands.WebParts
     [CmdletExample(
         Code = @"PS:> Get-PnPWebPart -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" -Identity a2875399-d6ff-43a0-96da-be6ae5875f82",
         Remarks = @"Returns a specific web part defined on the given page.", SortOrder = 2)]
+        [CmdletExample(
+        Code = @"PS:> Get-PnPWebPart -ServerRelativePageUrl ""/sites/demo/sitepages/home.aspx"" | Where-Object {$_.WebPart.Title -Like ""*test*""} 
+        
+Title                          Id
+-----                          --
+Apps in Testing                a2875399-d6ff-43a0-96da-be6ae5875f82
+Test Web Part                  e97c7058-4548-4129-bfee-c71ea5015da6",
+        Remarks = @"Returns all web parts with the word ""test"" in their Title on the given page.", SortOrder = 3)]
     public class GetWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Full server relative URL of the web part page, e.g. /sites/mysite/sitepages/home.aspx")]
