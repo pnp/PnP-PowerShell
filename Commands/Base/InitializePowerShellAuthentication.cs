@@ -4,12 +4,14 @@ using OfficeDevPnP.Core.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
+using System.Net.Http;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -242,8 +244,9 @@ namespace PnP.PowerShell.Commands.Base
                     },
                     requiredResourceAccess = scopesPayload
                 };
-                var postResult = HttpHelper.MakePostRequestForString("https://graph.microsoft.com/beta/applications", payload, "application/json", token);
-                var azureApp = JsonSerializer.Deserialize<AzureApp>(postResult);
+                var requestContent = new StringContent(JsonSerializer.Serialize(payload));
+                requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                var azureApp = GraphHelper.PostAsync<AzureApp>(new System.Net.Http.HttpClient(), "/beta/applications", requestContent, token).GetAwaiter().GetResult();
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
                 var waitTime = 60;

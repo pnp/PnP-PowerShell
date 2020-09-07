@@ -16,27 +16,27 @@ namespace PnP.PowerShell.Commands.Graph
         OutputTypeLink = "https://docs.microsoft.com/graph/api/group-list",
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Get-Microsoft365Group",
+       Code = "PS:> Get-PnPMicrosoft365Group",
        Remarks = "Retrieves all the Microsoft 365 Groups",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-Microsoft365Group -Identity $groupId",
+       Code = "PS:> Get-PnPMicrosoft365Group -Identity $groupId",
        Remarks = "Retrieves a specific Microsoft 365 Group based on its ID",
        SortOrder = 2)]
     [CmdletExample(
-       Code = "PS:> Get-Microsoft365Group -Identity $groupDisplayName",
+       Code = "PS:> Get-PnPMicrosoft365Group -Identity $groupDisplayName",
        Remarks = "Retrieves a specific or list of Microsoft 365 Groups that start with the given DisplayName",
        SortOrder = 3)]
     [CmdletExample(
-       Code = "PS:> Get-Microsoft365Group -Identity $groupSiteMailNickName",
+       Code = "PS:> Get-PnPMicrosoft365Group -Identity $groupSiteMailNickName",
        Remarks = "Retrieves a specific or list of Microsoft 365 Groups for which the email starts with the provided mail nickName",
        SortOrder = 4)]
     [CmdletExample(
-       Code = "PS:> Get-Microsoft365Group -Identity $group",
+       Code = "PS:> Get-PnPMicrosoft365Group -Identity $group",
        Remarks = "Retrieves a specific Microsoft 365 Group based on its object instance",
        SortOrder = 5)]
     [CmdletExample(
-       Code = "PS:> Get-Microsoft365Group -IncludeIfHasTeam",
+       Code = "PS:> Get-PnPMicrosoft365Group -IncludeHasTeam",
        Remarks = "Retrieves all the Microsoft 365 Groups and checks for each of them if it has a Microsoft Team provisioned for it",
        SortOrder = 6)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_Read_All | MicrosoftGraphApiPermission.Group_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_ReadWrite_All | MicrosoftGraphApiPermission.GroupMember_Read_All | MicrosoftGraphApiPermission.Directory_ReadWrite_All | MicrosoftGraphApiPermission.Directory_Read_All)]
