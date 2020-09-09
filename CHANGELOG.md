@@ -8,13 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.26.2010.0] ** not yet released **
 
 ### Added
-
+- Added `Set-PnPTenant -EnableAutoNewsDigest` option to disable the automatic news digest mails sent to end users
 
 ### Changed
 
 
 ### Contributors
-
+- Koen Zomers [koenzomers]
 
 ## [3.25.2009.1]
 
