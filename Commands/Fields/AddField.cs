@@ -70,6 +70,10 @@ namespace PnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST, HelpMessage = "The group name to where this field belongs to")]
         public string Group;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "Switch Parameter if this field must be added to all content types")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDBYXMLTOLIST, HelpMessage = "Switch Parameter if this field must be added to all content types")]
+        public SwitchParameter AddToAllContentTypes;
+
 #if !ONPREMISES
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOLIST, HelpMessage = "The Client Side Component Id to set to the field")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ADDFIELDTOWEB, HelpMessage = "The Client Side Component Id to set to the field")]
@@ -122,6 +126,10 @@ namespace PnP.PowerShell.Commands.Fields
                         Group = Group,
                         AddToDefaultView = AddToDefaultView
                     };
+
+                    if (AddToAllContentTypes)
+                        fieldCI.FieldOptions |= AddFieldOptions.AddToAllContentTypes;
+
 #if !ONPREMISES
                     if (ClientSideComponentId != null)
                     {
