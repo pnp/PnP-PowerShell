@@ -11,6 +11,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Security;
 using OfficeDevPnP.Core;
+using System.Management.Automation;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -181,11 +183,28 @@ namespace PnP.PowerShell.Commands.Model
 
             try
             {
-                tokenResult = confidentialClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
+                tokenResult = confidentialClientApplication.AcquireTokenSilent(scopes, account.First()).WithForceRefresh(true).ExecuteAsync().GetAwaiter().GetResult();
             }
             catch
             {
-                tokenResult = confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync().GetAwaiter().GetResult();
+                try
+                {
+                    tokenResult = confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync().GetAwaiter().GetResult();
+                }
+                catch (MsalUiRequiredException msalEx)
+                {
+                    if (msalEx.Classification == UiRequiredExceptionClassification.ConsentRequired)
+                    {
+                        if (clientId == PnPConnection.PnPManagementShellClientId)
+                        {
+                            throw new PSInvalidOperationException("Please provide consent to the PnP Management Shell application with 'Register-PnPManagementShellAccess' and follow the steps on screen.");
+                        }
+                        else
+                        {
+                            throw msalEx;
+                        }
+                    }
+                }
             }
 
             return new GenericToken(tokenResult.AccessToken);
@@ -228,7 +247,24 @@ namespace PnP.PowerShell.Commands.Model
             }
             catch
             {
-                tokenResult = confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync().GetAwaiter().GetResult();
+                try
+                {
+                    tokenResult = confidentialClientApplication.AcquireTokenForClient(scopes).ExecuteAsync().GetAwaiter().GetResult();
+                }
+                catch (MsalUiRequiredException msalEx)
+                {
+                    if (msalEx.Classification == UiRequiredExceptionClassification.ConsentRequired)
+                    {
+                        if (clientId == PnPConnection.PnPManagementShellClientId)
+                        {
+                            throw new PSInvalidOperationException("Please provide consent to the PnP Management Shell application with 'Register-PnPManagementShellAccess' and follow the steps on screen.");
+                        }
+                        else
+                        {
+                            throw msalEx;
+                        }
+                    }
+                }
             }
             return new GenericToken(tokenResult.AccessToken);
         }
@@ -267,7 +303,24 @@ namespace PnP.PowerShell.Commands.Model
             }
             catch
             {
-                tokenResult = publicClientApplication.AcquireTokenInteractive(scopes).ExecuteAsync().GetAwaiter().GetResult();
+                try
+                {
+                    tokenResult = publicClientApplication.AcquireTokenInteractive(scopes).WithExtraScopesToConsent(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
+                }
+                catch (MsalUiRequiredException msalEx)
+                {
+                    if (msalEx.Classification == UiRequiredExceptionClassification.ConsentRequired)
+                    {
+                        if (clientId == PnPConnection.PnPManagementShellClientId)
+                        {
+                            throw new PSInvalidOperationException("Please provide consent to the PnP Management Shell application with 'Register-PnPManagementShellAccess' and follow the steps on screen.");
+                        }
+                        else
+                        {
+                            throw msalEx;
+                        }
+                    }
+                }
             }
             return new GenericToken(tokenResult.AccessToken);
         }
@@ -351,7 +404,24 @@ namespace PnP.PowerShell.Commands.Model
             }
             catch
             {
-                tokenResult = publicClientApplication.AcquireTokenByUsernamePassword(scopes, username, securePassword).ExecuteAsync().GetAwaiter().GetResult();
+                try
+                {
+                    tokenResult = publicClientApplication.AcquireTokenByUsernamePassword(scopes, username, securePassword).ExecuteAsync().GetAwaiter().GetResult();
+                }
+                catch (MsalUiRequiredException msalEx)
+                {
+                    if (msalEx.Classification == UiRequiredExceptionClassification.ConsentRequired)
+                    {
+                        if (clientId == PnPConnection.PnPManagementShellClientId)
+                        {
+                            throw new PSInvalidOperationException("Please provide consent to the PnP Management Shell application with 'Register-PnPManagementShellAccess' and follow the steps on screen.");
+                        }
+                        else
+                        {
+                            throw msalEx;
+                        }
+                    }
+                }
             }
 
             return new GenericToken(tokenResult.AccessToken);
