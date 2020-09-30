@@ -343,6 +343,28 @@ For instance with the example above, specifying {parameter:ListTitle} in your te
                             return Task.FromResult(graphAccessToken);
                         }
                     }
+                    else if (resource.EndsWith("sharepoint.com", StringComparison.OrdinalIgnoreCase))
+					{
+                        // We need the appropriate Web context for the provided resource
+                        var clientContext = PnPConnection.CurrentConnection.CloneContext($"https://{resource}").Web.Context;
+
+                        string accessToken = null;
+                        EventHandler<WebRequestEventArgs> handler = (s, e) =>
+                        {
+                            string authorization = e.WebRequestExecutor.RequestHeaders["Authorization"];
+                            if (!string.IsNullOrEmpty(authorization))
+                            {
+                                accessToken = authorization.Replace("Bearer ", string.Empty);
+                            }
+                        };
+
+                        // Issue a dummy request to get it from the Authorization header
+                        clientContext.ExecutingWebRequest += handler;
+                        clientContext.ExecuteQueryRetry();
+                        clientContext.ExecutingWebRequest -= handler;
+
+                        return Task.FromResult(accessToken);
+                    }
                 }
 
                 if (PnPConnection.CurrentConnection.PSCredential != null)
