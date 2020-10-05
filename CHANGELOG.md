@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed possible token acquisition issue when extracting a tenant template. [PR #2874](https://github.com/pnp/PnP-PowerShell/pull/2874)
 - Fixed scenario when no configuration file provided with Get-PnPTenantTemplate throws an undefined error [PR #2873](https://github.com/pnp/PnP-PowerShell/pull/2873)
 - Fixed examples for `New-PnPTeamsTeam` [PR #2870](https://github.com/pnp/PnP-PowerShell/pull/2870)
+- Updated documentation for `Get-PnPField` [PR #2856](https://github.com/pnp/PnP-PowerShell/pull/2856)
 
 ### Contributors
 - Koen Zomers [koenzomers]
@@ -27,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Aimery Thomas [a1mery]
 - Heinrich Ulbricht [heinrich-ulbricht]
 - Veronique Lengelle [veronicageek] 
+- Todd Klindt [ToddKlindt]
 
 ## [3.25.2009.1]
 
