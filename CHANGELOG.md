@@ -8,8 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [3.26.2010.0 - unreleased]
 
 ### Added
-
 - Added Register-PnPManagementShellAccess cmdlets to register correct access required for the multi-tenant application PnP Management Shell which is used behind the scenes of the Provisioning Engine for certain actions towards SharePoint Online.
+- Added the description being shown of a Site Script when running `Get-PnPSiteScript` [PR #2895](https://github.com/pnp/PnP-PowerShell/pull/2895)
+
+### Changed
+
+### Contributors
+- Gautam Sheth [gautamdsheth]
 
 ## [3.25.2009.1]
 
