@@ -14,12 +14,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added -Includes to `Get-PnPUser` [PR #2939](https://github.com/pnp/PnP-PowerShell/pull/2939)
 
 ### Changed
+- Fixed example for `Get-PnPTeamsChannel` [PR #2919](https://github.com/pnp/PnP-PowerShell/pull/2919)
 
 ### Contributors
 - Koen Zomers [koenzomers]
 - Gautam Sheth [gautamdsheth]
 - Giacomo Pozzoni [jackpoz]
 - James May [fowl2]
+- Aimery Thomas [a1mery]
 
 ## [3.25.2009.1]
 
