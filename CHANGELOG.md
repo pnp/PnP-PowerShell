@@ -12,7 +12,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Register-PnPManagementShellAccess` cmdlet to register correct access required for the multi-tenant application PnP Management Shell which is used behind the scenes of the Provisioning Engine for certain actions towards SharePoint Online.
 - Added the description being shown of a Site Script when running `Get-PnPSiteScript` [PR #2895](https://github.com/pnp/PnP-PowerShell/pull/2895)
 - Added -Includes to `Get-PnPUser` [PR #2939](https://github.com/pnp/PnP-PowerShell/pull/2939)
-- Added an sample for Azure Automation [PR #](https://github.com/pnp/PnP-PowerShell/pull/2835)
+- Added an sample for Azure Automation [PR #2835](https://github.com/pnp/PnP-PowerShell/pull/2835)
+- Added -DisableCustomAppAuthentication to `Set-PnPTenant` [PR #2923](https://github.com/pnp/PnP-PowerShell/pull/2923)
 
 ### Changed
 - Fixed example for `Get-PnPTeamsChannel` [PR #2919](https://github.com/pnp/PnP-PowerShell/pull/2919)
