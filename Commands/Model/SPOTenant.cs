@@ -339,14 +339,6 @@ namespace PnP.PowerShell.Commands.Model
             {
                 this.emailAttestationReAuthDays = 30;
             }
-            try
-            {
-                this.disableCustomAppAuthentication = tenant.DisableCustomAppAuthentication;
-            }
-            catch
-            {
-                this.disableCustomAppAuthentication = false;
-            }
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
