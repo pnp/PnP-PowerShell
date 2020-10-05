@@ -405,6 +405,9 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
 
         [Parameter(Mandatory = false, HelpMessage = "Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels")]
         public bool? EnableAIPIntegration;
+        
+        [Parameter(Mandatory = false)]
+        public bool? DisableCustomAppAuthentication;
 
         [Parameter(Mandatory = false, HelpMessage = "Boolean indicating if a news digest should automatically be sent to end users to inform them about news that they may have missed. On by default. For more information, see https://aka.ms/autonewsdigest")]
         public bool? EnableAutoNewsDigest;
@@ -973,6 +976,11 @@ Accepts a value of true (enabled) to hide the Download button or false (disabled
             if(EnableAIPIntegration.HasValue)
             {
                 Tenant.EnableAIPIntegration = EnableAIPIntegration.Value;
+                isDirty = true;
+            }
+            if (DisableCustomAppAuthentication.HasValue)
+            {
+                Tenant.DisableCustomAppAuthentication = DisableCustomAppAuthentication.Value;
                 isDirty = true;
             }
             if (EnableAutoNewsDigest.HasValue)
