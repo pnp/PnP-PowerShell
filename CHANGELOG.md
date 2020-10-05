@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Fixed example for `Get-PnPTeamsChannel` [PR #2919](https://github.com/pnp/PnP-PowerShell/pull/2919)
 - Fixed possible token acquisition issue when extracting a tenant template. [PR #2874](https://github.com/pnp/PnP-PowerShell/pull/2874)
+- Fixed scenario when no configuration file provided with Get-PnPTenantTemplate throws an undefined error [PR #2873](https://github.com/pnp/PnP-PowerShell/pull/2873)
 
 ### Contributors
 - Koen Zomers [koenzomers]
