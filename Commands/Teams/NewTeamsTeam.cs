@@ -14,8 +14,8 @@ namespace PnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> New-PnPTeamsTeam -DisplayName "myPnPDemo1" -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false",
-       Remarks = "This will create a new Team called "myPnPDemo1" and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Team will be added as Owner.",
+       Code = @"PS:> New-PnPTeamsTeam -DisplayName ""myPnPDemo1"" -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false",
+       Remarks = @"This will create a new Team called ""myPnPDemo1"" and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Team will be added as Owner.",
        SortOrder = 1)]
     [CmdletExample(
        Code = "PS:> New-PnPTeamsTeam -GroupId $groupId",
