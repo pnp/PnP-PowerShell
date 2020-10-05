@@ -250,7 +250,7 @@ namespace PnP.PowerShell.Commands.Base
                 record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId", azureApp.AppId)));
 
                 var waitTime = 60;
-                Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to launch consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
+                Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to start the consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
 
                 Console.TreatControlCAsInput = true;
 

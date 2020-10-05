@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Fields
 {
     [Cmdlet(VerbsCommon.Add, "PnPField", DefaultParameterSetName = "Add field to list")]
     [CmdletHelp("Add a field",
-        "Adds a field to a list or as a site column",
+        "Adds a field (a column) to a list or as a site column. To add a column of type Managed Metadata use the Add-PnPTaxonomyField cmdlet",
         Category = CmdletHelpCategory.Fields,
         OutputType = typeof(Field),
         OutputTypeLink = "https://docs.microsoft.com/en-us/previous-versions/office/sharepoint-server/ee545882(v=office.15)",

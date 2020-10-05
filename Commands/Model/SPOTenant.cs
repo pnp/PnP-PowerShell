@@ -1,5 +1,4 @@
-﻿#if !ONPREMISES
-using Microsoft.Online.SharePoint.TenantAdministration;
+﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using System;
@@ -37,6 +36,7 @@ namespace PnP.PowerShell.Commands.Model
             this.provisionSharedWithEveryoneFolder = tenant.ProvisionSharedWithEveryoneFolder;
             this.signInAccelerationDomain = tenant.SignInAccelerationDomain;
             this.disabledWebPartIds = tenant.DisabledWebPartIds;
+
             try
             {
                 this.enableGuestSignInAcceleration = tenant.EnableGuestSignInAcceleration;
@@ -471,6 +471,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public Guid[] DisabledWebPartIds => disabledWebPartIds;
 
+        public bool DisableCustomAppAuthentication => disableCustomAppAuthentication;
+
         private bool hideDefaultThemes;
 
         private long storageQuota;
@@ -600,6 +602,7 @@ namespace PnP.PowerShell.Commands.Model
         private int emailAttestationReAuthDays;
 
         private Guid[] disabledWebPartIds;
+
+        private bool disableCustomAppAuthentication;
     }
 }
-#endif

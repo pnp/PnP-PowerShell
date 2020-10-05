@@ -591,6 +591,7 @@
     <Compile Include="Admin\GetOrgNewsSite.cs" />
     <Compile Include="Admin\RemoveOrgNewsSite.cs" />
     <Compile Include="Admin\AddOrgNewsSite.cs" />
+    <Compile Include="Base\RegisterPnPManagementShellAccess.cs" />
     <Compile Include="Base\GetAccessToken.cs" />
     <Compile Include="Base\InitializePowerShellAuthentication.cs" />
     <Compile Include="Base\InvokeSPRestMethod.cs" />
