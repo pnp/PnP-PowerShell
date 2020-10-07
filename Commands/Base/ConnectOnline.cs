@@ -651,6 +651,11 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
         /// </summary>
         protected void Connect()
         {
+            if (!string.IsNullOrEmpty(Url) && Url.EndsWith("/"))
+            {
+                Url = Url.Substring(0, Url.Length - 1);
+            }
+
             PnPConnection connection = null;
 
             var latestVersion = PnPConnectionHelper.GetLatestVersion();

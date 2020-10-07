@@ -22,6 +22,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed examples for `New-PnPTeamsTeam` [PR #2870](https://github.com/pnp/PnP-PowerShell/pull/2870)
 - Updated documentation for `Get-PnPField` [PR #2856](https://github.com/pnp/PnP-PowerShell/pull/2856)
 - Updated documentation for `Get-PnPListItem` [PR #2806](https://github.com/pnp/PnP-PowerShell/pull/2806)
+- Improved certificate file handling and errors shown if the file does not exist, is empty or points to a folder [PR #2888](https://github.com/pnp/PnP-PowerShell/pull/2888)
+- Fixed issue with where connecting with Connect-PnPOnline to an URL ending on a slash could cause an exception when using some cmdlets.
 
 ### Contributors
 - Koen Zomers [koenzomers]
