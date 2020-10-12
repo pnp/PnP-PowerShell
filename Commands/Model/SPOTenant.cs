@@ -1,4 +1,5 @@
-﻿using Microsoft.Online.SharePoint.TenantAdministration;
+﻿#if !ONPREMISES
+using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using System;
@@ -606,3 +607,4 @@ namespace PnP.PowerShell.Commands.Model
         private bool disableCustomAppAuthentication;
     }
 }
+#endif
