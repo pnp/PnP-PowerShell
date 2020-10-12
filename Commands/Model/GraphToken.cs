@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
+using System.Management.Automation;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 
@@ -39,7 +40,7 @@ namespace PnP.PowerShell.Commands.Model
         public static GraphToken AcquireApplicationToken(string tenant, string clientId, X509Certificate2 certificate, AzureEnvironment azureEnvironment)
         {
             var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
-            return new GraphToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{endPoint}/{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
+                return new GraphToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{endPoint}/{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
         }
 
         /// <summary>
