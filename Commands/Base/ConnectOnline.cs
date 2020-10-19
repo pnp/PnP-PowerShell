@@ -656,6 +656,8 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 Url = Url.Substring(0, Url.Length - 1);
             }
 
+            WriteUpdateMessage("You are running the legacy version of PnP PowerShell.\nConsider installing the newer Multi-Platform version of PnP PowerShell:\n\nInstall-Module -Name PnP.PowerShell -AllowPrelease\n");
+
             PnPConnection connection = null;
 
             var latestVersion = PnPConnectionHelper.GetLatestVersion();
