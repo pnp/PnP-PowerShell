@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [3.26.2010.0 - unreleased]
+## [3.27.2011.0]
+
+### Added
+
+### Changed
+
+### Contributors
+
+## [3.26.2010.0]
 
 ### Added
 - Added `Set-PnPTenant -EnableAutoNewsDigest` option to disable the automatic news digest mails sent to end users [PR #2901](https://github.com/pnp/PnP-PowerShell/pull/2901)

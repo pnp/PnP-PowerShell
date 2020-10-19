@@ -20,17 +20,15 @@ namespace PnP.PowerShell.Commands.Base
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
         [Parameter(Mandatory = true)]
+        [Obsolete("This parameter will be ignored")]
         public string SiteUrl;
         protected override void ProcessRecord()
         {
             var endPoint = GenericToken.GetAzureADLoginEndPoint(AzureEnvironment);
-            var uri = new Uri(SiteUrl);
-            var scopes = new[] { $"{uri.Scheme}://{uri.Authority}//.default" };
-
+            
             var application = PublicClientApplicationBuilder.Create(PnPConnection.PnPManagementShellClientId).WithAuthority($"{endPoint}/organizations/").WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient").Build();
 
-            var result = application.AcquireTokenInteractive(scopes).ExecuteAsync().GetAwaiter().GetResult();
-            result = application.AcquireTokenInteractive(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
+            application.AcquireTokenInteractive(new[] { "https://graph.microsoft.com/.default" }).ExecuteAsync().GetAwaiter().GetResult();
 
         }
     }
