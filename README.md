@@ -6,7 +6,7 @@ This solution contains a library of PowerShell commands that allows you to perfo
 ![SharePoint Patterns and Practices](https://devofficecdn.azureedge.net/media/Default/PnP/sppnp.png)
   
 > **Important:**
-> This repository will be retired by the end of 2020. As of the GA of the Cross-Platform [PnP.PowerShell](https://github.com/pnp/pnp.powershell) we will only maintain that version going forward.
+> This repository will be retired by the end of 2020. As of the GA of the Cross-Platform [PnP.PowerShell](https://github.com/pnp/powershell) we will only maintain that version going forward.
 
 ![PnP PowerShell RoadMap](PnP_PowerShell_Roadmap.png)
 
