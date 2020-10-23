@@ -257,7 +257,6 @@ namespace PnP.PowerShell.Commands.Base
                     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
                     System.Threading.Thread.Sleep(1000);
 
-                    // Check if CTRL+C has been pressed and if so, abort the wait
                     if (Stopping)
                     {
                         break;
