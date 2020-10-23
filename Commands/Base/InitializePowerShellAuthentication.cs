@@ -252,8 +252,6 @@ namespace PnP.PowerShell.Commands.Base
                 var waitTime = 60;
                 Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Waiting {waitTime} seconds to start the consent flow in a browser window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
 
-                //Console.TreatControlCAsInput = true;
-
                 for (var i = 0; i < waitTime; i++)
                 {
                     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, ".");
@@ -262,12 +260,7 @@ namespace PnP.PowerShell.Commands.Base
                     // Check if CTRL+C has been pressed and if so, abort the wait
                     if (Stopping)
                     {
-                        //var key = Host.UI.RawUI.ReadKey(ReadKeyOptions.AllowCtrlC | ReadKeyOptions.NoEcho | ReadKeyOptions.IncludeKeyUp);
-                        //if ((key.ControlKeyState.HasFlag(ControlKeyStates.LeftCtrlPressed) || key.ControlKeyState.HasFlag(ControlKeyStates.RightCtrlPressed)) && key.VirtualKeyCode == 67)
-                        //{
-
-                            break;
-                        //}
+                        break;
                     }
                 }
                 Host.UI.WriteLine();
