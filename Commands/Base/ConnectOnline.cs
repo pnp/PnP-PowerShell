@@ -657,7 +657,7 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
 
 #if !ONPREMISES
-            WriteUpdateMessage("\nYou are running the legacy version of PnP PowerShell.\nConsider installing the newer Multi-Platform version of PnP PowerShell:\n\nUninstall-Module -Name SharePointPnPPowerShellOnline -AllVersions -Force\nInstall-Module -Name PnP.PowerShell -AllowPrelease\n");
+            WriteUpdateMessage("\nYou are running the legacy version of PnP PowerShell.\nThis version will be archived soon.\nConsider installing the newer Multi-Platform version of PnP PowerShell:\n\nUninstall-Module -Name SharePointPnPPowerShellOnline -AllVersions -Force\nInstall-Module -Name PnP.PowerShell -AllowPrerelease\n");
 #endif
 
             PnPConnection connection = null;
