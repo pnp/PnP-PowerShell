@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -39,7 +40,7 @@ namespace PnP.PowerShell.Commands.Graph
                 var groupId = Identity.GetGroupId(HttpClient, AccessToken);
                 if (groupId != null)
                 {
-                    WriteObject(TeamsUtility.GetTeam(AccessToken, HttpClient, groupId));
+                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult());
                 }
                 else
                 {
@@ -48,7 +49,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeams(AccessToken, HttpClient), true);
+                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, HttpClient).GetAwaiter().GetResult(), true);
             }
         }
     }

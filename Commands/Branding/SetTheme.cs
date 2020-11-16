@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
+using System.Text.Json;
 using Microsoft.SharePoint.Client;
-using Newtonsoft.Json;
 using OfficeDevPnP.Core.Framework.Provisioning.Model;
 using OfficeDevPnP.Core.Utilities;
 using PnP.PowerShell.CmdletHelpAttributes;
@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Branding
                 ColorPaletteUrl = UrlUtility.Combine(rootWebServerRelativeUrl, ColorPaletteUrl);
             }
 
-            if(!string.IsNullOrEmpty(FontSchemeUrl) && !FontSchemeUrl.ToLower().StartsWith(rootWebServerRelativeUrl.ToLower()))
+            if (!string.IsNullOrEmpty(FontSchemeUrl) && !FontSchemeUrl.ToLower().StartsWith(rootWebServerRelativeUrl.ToLower()))
             {
                 FontSchemeUrl = UrlUtility.Combine(rootWebServerRelativeUrl, FontSchemeUrl);
             }
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Branding
                 if (SelectedWeb.PropertyBagContainsKey(PROPBAGKEY))
                 {
                     composedLook =
-                        JsonConvert.DeserializeObject<ComposedLook>(SelectedWeb.GetPropertyBagValueString(PROPBAGKEY, ""));
+                        JsonSerializer.Deserialize<ComposedLook>(SelectedWeb.GetPropertyBagValueString(PROPBAGKEY, ""));
 
                 }
                 else
@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Branding
                 composedLook.ColorFile = ColorPaletteUrl ?? composedLook.ColorFile;
                 composedLook.FontFile = FontSchemeUrl ?? composedLook.FontFile;
                 composedLook.BackgroundFile = BackgroundImageUrl ?? composedLook.BackgroundFile;
-                var composedLookJson = JsonConvert.SerializeObject(composedLook);
+                var composedLookJson = JsonSerializer.Serialize(composedLook);
 
                 SelectedWeb.SetPropertyBagValue(PROPBAGKEY, composedLookJson);
             }

@@ -1,9 +1,5 @@
-﻿using Microsoft.Graph;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {
@@ -11,6 +7,8 @@ namespace PnP.PowerShell.Commands.Model.Teams
     {
         #region Public Members
 
+        [JsonPropertyName("@odata.type")]
+        public string Type { get; set; }
         /// <summary>
         /// Defines a collection of Tabs for a Channel in a Team
         /// </summary>
@@ -49,6 +47,8 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// Declares the ID for the Channel
         /// </summary>
         public string Id { get; set; }
+
+        public List<TeamChannelMember> Members { get; set; }
 
         #endregion
     }

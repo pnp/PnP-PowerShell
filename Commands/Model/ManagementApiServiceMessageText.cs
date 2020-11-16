@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -8,10 +7,8 @@ namespace PnP.PowerShell.Commands.Model
     /// </summary>
     public class ManagementApiServiceMessageText
     {
-        [JsonProperty("MessageText")]
         public string MessageText { get; set; }
 
-        [JsonProperty("PublishedTime")]
         public DateTime? PublishedTime { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (WriteToConsole.IsPresent || string.IsNullOrEmpty(LogFile))
                 {
                     RemoveListener(ConsoleListenername);
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                     ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
                     consoleListener.Name = ConsoleListenername;
                     Trace.Listeners.Add(consoleListener);

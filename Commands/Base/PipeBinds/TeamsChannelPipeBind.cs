@@ -1,10 +1,8 @@
-﻿using Microsoft.Graph;
-using PnP.PowerShell.Commands.Model.Teams;
+﻿using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -46,14 +44,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var channels = TeamsUtility.GetChannels(accessToken, httpClient, groupId);
+                var channels = TeamsUtility.GetChannelsAsync(accessToken, httpClient, groupId).GetAwaiter().GetResult();
                 return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase)).Id;
             }
         }
 
         public TeamChannel GetChannel(HttpClient httpClient, string accessToken, string groupId)
         {
-            var channels = TeamsUtility.GetChannels(accessToken, httpClient, groupId);
+            var channels = TeamsUtility.GetChannelsAsync(accessToken, httpClient, groupId).GetAwaiter().GetResult();
             if(channels != null && channels.Any())
             {
                 if(!string.IsNullOrEmpty(_id))

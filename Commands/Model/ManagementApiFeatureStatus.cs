@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -7,16 +7,16 @@ namespace PnP.PowerShell.Commands.Model
     /// </summary>
     public class ManagementApiFeatureStatus
     {
-        [JsonProperty("FeatureDisplayName")]
+        [JsonPropertyName("FeatureDisplayName")]
         public string FeatureDisplayName { get; set; }
 
-        [JsonProperty("FeatureName")]
+        [JsonPropertyName("FeatureName")]
         public string FeatureName { get; set; }
 
-        [JsonProperty("FeatureServiceStatusDisplayName")]
+        [JsonPropertyName("FeatureServiceStatusDisplayName")]
         public string FeatureServiceStatusDisplayName { get; set; }
 
-        [JsonProperty("FeatureServiceStatus")]
+        [JsonPropertyName("FeatureServiceStatus")]
         public string FeatureServiceStatus { get; set; }
     }
 }

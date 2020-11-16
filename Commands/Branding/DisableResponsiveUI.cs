@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !PNPPSCORE
+using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.CmdletHelpAttributes;
@@ -21,3 +22,4 @@ namespace PnP.PowerShell.Commands.Branding
         }
     }
 }
+#endif

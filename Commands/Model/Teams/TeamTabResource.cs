@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model.Teams
@@ -18,6 +19,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// <summary>
         /// Defines the Type of Resource for the Tab
         /// </summary>
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TabResourceType Type { get; set; }
 
         /// <summary>

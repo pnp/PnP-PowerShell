@@ -21,34 +21,41 @@ namespace PnP.PowerShell.Commands.Graph
        Remarks = "Adds a new channel to the specified Teams instance",
        SortOrder = 2)]
     [CmdletExample(
-       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\" -Private",
+       Code = "PS:> Add-PnPTeamsChannel -Team MyTeam -DisplayName \"My Channel\" -Private -OwnerUPN user@domain.com",
        Remarks = "Adds a new private channel to the specified Teams instance",
        SortOrder = 3)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class AddTeamsChannel : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.")]
+        private const string ParameterSET_PRIVATE = "Private channel";
+        private const string ParameterSET_PUBLIC = "Public channel";
+
+        [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.", ParameterSetName = ParameterSET_PUBLIC)]
+        [Parameter(Mandatory = true, HelpMessage = "Specify the group id, mailNickname or display name of the team to use.", ParameterSetName = ParameterSET_PRIVATE)]
         public TeamsTeamPipeBind Team;
 
-        [Parameter(Mandatory = true, HelpMessage = "The display name of the new channel. Letters, numbers and spaces are allowed.")]
+        [Parameter(Mandatory = true, HelpMessage = "The display name of the new channel. Letters, numbers and spaces are allowed.", ParameterSetName = ParameterSET_PUBLIC)]
+        [Parameter(Mandatory = true, HelpMessage = "The display name of the new channel. Letters, numbers and spaces are allowed.", ParameterSetName = ParameterSET_PRIVATE)]
         public string DisplayName;
 
-        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel.")]
+        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel.", ParameterSetName = ParameterSET_PUBLIC)]
+        [Parameter(Mandatory = false, HelpMessage = "An optional description of the channel.", ParameterSetName = ParameterSET_PRIVATE)]
         public string Description;
 
-        [Parameter(Mandatory = false, HelpMessage = "Specify to mark the channel as private.")]
+        [Parameter(Mandatory = true, HelpMessage = "Specify to mark the channel as private.", ParameterSetName = ParameterSET_PRIVATE)]
         public SwitchParameter Private;
+
+        [Parameter(Mandatory = true, HelpMessage = "The UPN/email of the owner", ParameterSetName = ParameterSET_PRIVATE)]
+        public string OwnerUPN;
 
         protected override void ExecuteCmdlet()
         {
-            Model.Teams.TeamChannel channel = null;
-
             var groupId = Team.GetGroupId(HttpClient, AccessToken);
             if (groupId != null)
             {
                 try
                 {
-                    channel = TeamsUtility.AddChannel(AccessToken, HttpClient, groupId, DisplayName, Description, Private);
+                    var channel = TeamsUtility.AddChannelAsync(AccessToken, HttpClient, groupId, DisplayName, Description, Private, OwnerUPN).GetAwaiter().GetResult();
                     WriteObject(channel);
                 }
                 catch (GraphException ex)

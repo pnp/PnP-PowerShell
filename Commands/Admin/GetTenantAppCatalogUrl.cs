@@ -5,7 +5,7 @@ using PnP.PowerShell.CmdletHelpAttributes;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantAppCatalogUrl", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantAppCatalogUrl")]
     [CmdletHelp(@"Retrieves the url of the tenant scoped app catalog",
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online)]

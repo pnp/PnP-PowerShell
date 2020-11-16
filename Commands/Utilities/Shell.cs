@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD2_1
+﻿#if PNPPSCORE
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

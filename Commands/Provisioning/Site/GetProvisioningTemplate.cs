@@ -445,7 +445,7 @@ PS:> Get-PnPProvisioningTemplate -Out NewTemplate.xml -ExtensibilityHandlers $ha
 
                 if (extension == ".pnp")
                 {
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                     IsolatedStorage.InitializeIsolatedStorage();
 #endif
                     XMLTemplateProvider provider = new XMLOpenXMLTemplateProvider(

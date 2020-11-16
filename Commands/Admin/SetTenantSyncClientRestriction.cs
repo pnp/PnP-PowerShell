@@ -41,7 +41,7 @@ You must have the SharePoint Online admin or Global admin role to run the cmdlet
         [Parameter(Mandatory = false, HelpMessage = @"Blocks certain file types from syncing with the new sync client (OneDrive.exe). Provide as one string separating the extensions using a semicolon (;). I.e. ""docx;pptx""")]
         public List<string> ExcludedFileExtensions;
 
-        [Parameter(Mandatory = false, HelpMessage = "Controls whether or not a tenant's users can sync OneDrive for Business libraries with the old OneDrive for Business sync client. The valid values are OptOut, HardOptin, and SoftOptin.")]
+        [Parameter(Mandatory = false, HelpMessage = "Controls whether or not a tenant's users can sync OneDrive for Business libraries with the old OneDrive for Business sync client. The valid values are OptOut, HardOptin, and SoftOptin. GrooveBlockOption is planned to be deprecated. Please refrain from using the parameter.")]
         public Enums.GrooveBlockOption GrooveBlockOption;
 
         protected override void ExecuteCmdlet()

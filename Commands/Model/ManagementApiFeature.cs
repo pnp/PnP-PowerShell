@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -7,10 +8,10 @@ namespace PnP.PowerShell.Commands.Model
     /// </summary>
     public class ManagementApiFeature
     {
-        [JsonProperty("Name")]
+        [JsonPropertyName("Name")]
         public string Name { get; set; }
 
-        [JsonProperty("DisplayName")]
+        [JsonPropertyName("DisplayName")]
         public string DisplayName { get; set; }
     }
 }

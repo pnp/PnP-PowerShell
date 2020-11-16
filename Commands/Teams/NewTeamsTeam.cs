@@ -14,16 +14,12 @@ namespace PnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTeam",
-       Remarks = "Retrieves all the Microsoft Teams instances",
+       Code = @"PS:> New-PnPTeamsTeam -DisplayName ""myPnPDemo1"" -Visibility Private -AllowCreateUpdateRemoveTabs $false -AllowUserDeleteMessages $false",
+       Remarks = @"This will create a new Team called ""myPnPDemo1"" and sets the privacy to Private, as well as preventing users from deleting their messages or update/remove tabs. The user creating the Team will be added as Owner.",
        SortOrder = 1)]
     [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTeam -GroupId $groupId",
-       Remarks = "Retrieves a specific Microsoft Teams instance",
-       SortOrder = 2)]
-    [CmdletExample(
-       Code = "PS:> Get-PnPTeamsTeam -Visibility Public",
-       Remarks = "Retrieves all Microsoft Teams instances which are public visible",
+       Code = "PS:> New-PnPTeamsTeam -GroupId $groupId",
+       Remarks = "This will create a new Team from a Microsoft 365 Group using the Group ID",
        SortOrder = 2)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class NewTeamsTeam : PnPGraphCmdlet
@@ -133,7 +129,7 @@ namespace PnP.PowerShell.Commands.Graph
                 ShowInTeamsSearchAndSuggestions = ShowInTeamsSearchAndSuggestions,
                 Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()),
             };
-            WriteObject(TeamsUtility.NewTeam(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI));
+            WriteObject(TeamsUtility.NewTeamAsync(AccessToken, HttpClient, GroupId, DisplayName, Description, Classification, MailNickName, Owner, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI).GetAwaiter().GetResult());
         }
     }
 }

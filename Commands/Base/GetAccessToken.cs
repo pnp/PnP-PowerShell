@@ -2,7 +2,7 @@
 using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Collections.Generic;
-#if NETSTANDARD2_1
+#if PNPPSCORE
 using System.IdentityModel.Tokens.Jwt;
 #else
 using System.IdentityModel.Tokens;

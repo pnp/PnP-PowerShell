@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES && !NETSTANDARD2_1
+﻿#if !ONPREMISES && !PNPPSCORE
 using SharePointPnP.Modernization.Framework.Cache;
 using PnP.PowerShell.CmdletHelpAttributes;
 using System;

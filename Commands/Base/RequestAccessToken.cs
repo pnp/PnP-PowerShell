@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Base
     {
 
         [Parameter(Mandatory = false, HelpMessage = "The Azure Application Client Id to use to retrieve the token. Defaults to the PnP Office 365 Management Shell")]
-        public string ClientId = PnPConnection.DeviceLoginClientId; // defaults to PnPManagementShell
+        public string ClientId = PnPConnection.PnPManagementShellClientId; // defaults to PnPManagementShell
 
         [Parameter(Mandatory = false, HelpMessage = "The scopes to retrieve the token for. Defaults to AllSites.FullControl")]
         public string Resource;

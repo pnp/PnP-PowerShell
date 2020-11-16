@@ -13,8 +13,8 @@ namespace PnP.PowerShell.Commands.Graph
         Category = CmdletHelpCategory.Teams,
         SupportedPlatform = CmdletSupportedPlatform.Online)]
     [CmdletExample(
-       Code = "PS:> Submit-PnPTeamsChannelMessage -Team MyTestTeam -Channel \"My Channel\" -Message \"A new message\"",
-       Remarks = "Sends \"A new message\" to the specified channel",
+       Code = "PS:> Get-PnPTeamsChannelMessage -Team 07d9dbfb-cbf2-4dc1-92c6-7921f5931b3d -Channel \"My Channel\"",
+       Remarks = "Gets all messages of the specified channel",
        SortOrder = 1)]
     [CmdletMicrosoftGraphApiPermission(MicrosoftGraphApiPermission.Group_ReadWrite_All)]
     public class GetTeamsChannelMessage : PnPGraphCmdlet
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Graph
                 var channel = Channel.GetChannel(HttpClient, AccessToken, groupId);
                 if (channel != null)
                 {
-                    WriteObject(TeamsUtility.GetMessages(HttpClient, AccessToken, groupId, channel.Id, IncludeDeleted), true);
+                    WriteObject(TeamsUtility.GetMessagesAsync(HttpClient, AccessToken, groupId, channel.Id, IncludeDeleted).GetAwaiter().GetResult(), true);
                 } else
                 {
                     throw new PSArgumentException("Channel not found");

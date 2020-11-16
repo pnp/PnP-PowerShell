@@ -258,7 +258,7 @@ namespace PnP.PowerShell.Commands.Utilities
         private ClassFactory()
         {
             AssemblyName name = new AssemblyName("DynamicClasses");
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
             AssemblyBuilder assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);
 #else
             AssemblyBuilder assembly = AssemblyBuilder.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);
@@ -316,7 +316,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     FieldInfo[] fields = GenerateProperties(tb, properties);
                     GenerateEquals(tb, fields);
                     GenerateGetHashCode(tb, fields);
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                     Type result = tb.CreateType();
 #else
                     Type result = tb.CreateTypeInfo().AsType();

@@ -1,4 +1,4 @@
-﻿#if !ONPREMISES && !NETSTANDARD2_1
+﻿#if !ONPREMISES && !PNPPSCORE
 using PnP.PowerShell.CmdletHelpAttributes;
 using System;
 using System.Management.Automation;

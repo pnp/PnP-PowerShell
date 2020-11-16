@@ -25,14 +25,14 @@ namespace PnP.PowerShell.Commands.Base
         protected override void ProcessRecord()
         {
             // If no specific connection has been passed in, take the connection from the current context
-            if(Connection == null)
+            if (Connection == null)
             {
                 Connection = PnPConnection.CurrentConnection;
             }
 #if !ONPREMISES
-            if(Connection?.Certificate != null)
+            if (Connection?.Certificate != null)
             {
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 if (Connection != null && Connection.DeleteCertificateFromCacheOnDisconnect)
                 {
                     PnPConnectionHelper.CleanupCryptoMachineKey(Connection.Certificate);
@@ -55,11 +55,14 @@ namespace PnP.PowerShell.Commands.Base
                 throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
             }
 
+            // clear credentials
+            PnPConnection.CurrentConnection = null;
+
             var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
             if (provider != null)
             {
                 //ImplementingAssembly was introduced in Windows PowerShell 5.0.
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.ImplementingAssembly.FullName == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
 #else
                 var drives = Host.Version.Major >= 5 ? provider.Drives.Where(d => d.Provider.Module.Name == Assembly.GetExecutingAssembly().FullName) : provider.Drives;
@@ -80,14 +83,16 @@ namespace PnP.PowerShell.Commands.Base
             {
                 return false;
             }
-            GraphToken.ClearCaches();
+            //GraphToken.ClearCaches();
+            //OfficeManagementApiToken.ClearCaches();
+            GenericToken.ClearCaches();
             connection.Context = null;
             connection = null;
             return true;
         }
 
         internal static bool DisconnectCurrentService()
-        {            
+        {
             Environment.SetEnvironmentVariable("PNPPSHOST", string.Empty);
             Environment.SetEnvironmentVariable("PNPPSSITE", string.Empty);
 
@@ -100,10 +105,10 @@ namespace PnP.PowerShell.Commands.Base
                 PnPConnection.CurrentConnection.ClearTokens();
                 PnPConnection.CurrentConnection.Context = null;
                 PnPConnection.CurrentConnection = null;
-                
-                
+
+
                 return true;
-            }            
+            }
         }
     }
 }

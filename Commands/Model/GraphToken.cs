@@ -1,15 +1,13 @@
 ﻿using Microsoft.Identity.Client;
+using OfficeDevPnP.Core;
+using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -18,22 +16,10 @@ namespace PnP.PowerShell.Commands.Model
     /// </summary>
     public class GraphToken : GenericToken
     {
-        private static IPublicClientApplication publicClientApplication;
-        private static IConfidentialClientApplication confidentialClientApplication;
         /// <summary>
         /// The resource identifier for Microsoft Graph API tokens
         /// </summary>
         public const string ResourceIdentifier = "https://graph.microsoft.com";
-
-        /// <summary>
-        /// The name of the default scope
-        /// </summary>
-        private const string DefaultScope = ".default";
-
-        /// <summary>
-        /// The base URL to request a token from
-        /// </summary>
-        private const string OAuthBaseUrl = "https://login.microsoftonline.com/";
 
         /// <summary>
         /// Instantiates a new Graph token
@@ -51,39 +37,10 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="certificate">Certificate to use to acquire the token. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationToken(string tenant, string clientId, X509Certificate2 certificate)
+        public static GraphToken AcquireApplicationToken(string tenant, string clientId, X509Certificate2 certificate, AzureEnvironment azureEnvironment)
         {
-            if (string.IsNullOrEmpty(tenant))
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (certificate == null)
-            {
-                throw new ArgumentNullException(nameof(certificate));
-            }
-            AuthenticationResult tokenResult = null;
-
-            if (confidentialClientApplication == null)
-            {
-                confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}{tenant}").WithCertificate(certificate).Build();
-            }
-
-            var account = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            try
-            {
-                tokenResult = confidentialClientApplication.AcquireTokenSilent(new[] { $"{ResourceIdentifier}/{DefaultScope}" }, account.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = confidentialClientApplication.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
-            }
-
-            return new GraphToken(tokenResult.AccessToken);
+            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+                return new GraphToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{endPoint}/{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, certificate).AccessToken);
         }
 
         /// <summary>
@@ -93,39 +50,10 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="clientSecret">Client Secret to use to acquire the token. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationToken(string tenant, string clientId, string clientSecret)
+        public static GraphToken AcquireApplicationToken(string tenant, string clientId, string clientSecret, AzureEnvironment azureEnvironment)
         {
-            if (string.IsNullOrEmpty(tenant))
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (string.IsNullOrEmpty(clientSecret))
-            {
-                throw new ArgumentNullException(nameof(clientSecret));
-            }
-
-            AuthenticationResult tokenResult = null;
-
-            if (confidentialClientApplication == null)
-            {
-                confidentialClientApplication = ConfidentialClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}{tenant}").WithClientSecret(clientSecret).Build();
-            }
-
-            var account = confidentialClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            try
-            {
-                tokenResult = confidentialClientApplication.AcquireTokenSilent(new[] { $"{ResourceIdentifier}/{DefaultScope}" }, account.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = confidentialClientApplication.AcquireTokenForClient(new[] { $"{ResourceIdentifier}/{DefaultScope}" }).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            return new GraphToken(tokenResult.AccessToken);
+            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+            return new GraphToken(GenericToken.AcquireApplicationToken(tenant, clientId, $"{endPoint}/{tenant}", new[] { $"{ResourceIdentifier}/{DefaultScope}" }, clientSecret).AccessToken);
         }
 
         /// <summary>
@@ -134,86 +62,19 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="clientId">ClientId to use to acquire the token. Required.</param>
         /// <param name="scopes">Array with scopes that should be requested access to. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static GenericToken AcquireApplicationTokenInteractive(string clientId, string[] scopes)
+        public static new GraphToken AcquireApplicationTokenInteractive(string clientId, string[] scopes, AzureEnvironment azureEnvironment)
         {
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (scopes == null || scopes.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
-
-
-            if (publicClientApplication == null)
-            {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithDefaultRedirectUri().Build();
-            }
-
-            AuthenticationResult tokenResult = null;
-
-            //if (publicClientApplication == null)
-            //{
-            //    publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").WithDefaultRedirectUri().Build();
-
-            //}
-            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            try
-            {
-                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = publicClientApplication.AcquireTokenInteractive(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            return new GraphToken(tokenResult.AccessToken);
+            return new GraphToken(GenericToken.AcquireApplicationTokenInteractive(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), azureEnvironment).AccessToken);
         }
 
-        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction)
+        public static GraphToken AcquireApplicationTokenDeviceLogin(string clientId, string[] scopes, Action<DeviceCodeResult> callBackAction, AzureEnvironment azureEnvironment)
         {
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (scopes == null || scopes.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
+            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+            // Take the remaining scopes and try requesting them from the Microsoft Graph API
+            scopes = scopes.Except(officeManagementApiScopes).ToArray();
 
-
-            if (publicClientApplication == null)
-            {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).Build();
-            }
-
-            AuthenticationResult tokenResult = null;
-
-            if (publicClientApplication == null)
-            {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").Build();
-
-            }
-            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-
-            try
-            {
-                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                var builder = publicClientApplication.AcquireTokenWithDeviceCode(scopes, result =>
-                {
-                    if (callBackAction != null)
-                    {
-                        callBackAction(result);
-                    }
-                    return Task.FromResult(0);
-                });
-                tokenResult = builder.ExecuteAsync().GetAwaiter().GetResult();
-            }
-            return new GraphToken(tokenResult.AccessToken);
+            return new GraphToken(AcquireApplicationTokenDeviceLogin(clientId, scopes, $"{endPoint}/organizations", callBackAction).AccessToken);
         }
         /// <summary>
         /// Tries to acquire a delegated Microsoft Graph Access Token for the provided scopes using the provided credentials
@@ -223,49 +84,14 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="username">The username to authenticate with. Required.</param>
         /// <param name="securePassword">The password to authenticate with. Required.</param>
         /// <returns><see cref="GraphToken"/> instance with the token</returns>
-        public static GenericToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string username, SecureString securePassword)
+        public static GraphToken AcquireDelegatedTokenWithCredentials(string clientId, string[] scopes, string username, SecureString securePassword, AzureEnvironment azureEnvironment)
         {
-            if (string.IsNullOrEmpty(clientId))
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (scopes == null || scopes.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
-            if (string.IsNullOrEmpty(username))
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (securePassword == null || securePassword.Length == 0)
-            {
-                throw new ArgumentNullException(nameof(securePassword));
-            }
+            var endPoint = GenericToken.GetAzureADLoginEndPoint(azureEnvironment);
+            var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(scopes).ToArray();
+            // Take the remaining scopes and try requesting them from the Microsoft Graph API
+            scopes = scopes.Except(officeManagementApiScopes).ToArray();
 
-            AuthenticationResult tokenResult = null;
-
-            if (publicClientApplication == null)
-            {
-                publicClientApplication = PublicClientApplicationBuilder.Create(clientId).WithAuthority($"{OAuthBaseUrl}organizations/").Build();
-
-            }
-            var account = publicClientApplication.GetAccountsAsync().GetAwaiter().GetResult();
-            try
-            {
-                tokenResult = publicClientApplication.AcquireTokenSilent(scopes, account.First()).ExecuteAsync().GetAwaiter().GetResult();
-            }
-            catch
-            {
-                tokenResult = publicClientApplication.AcquireTokenByUsernamePassword(scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), username, securePassword).ExecuteAsync().GetAwaiter().GetResult();
-            }
-
-            return new GraphToken(tokenResult.AccessToken);
-        }
-
-        public static void ClearCaches()
-        {
-            GraphToken.publicClientApplication = null;
-            GraphToken.confidentialClientApplication = null;
+            return new GraphToken(AcquireDelegatedTokenWithCredentials(clientId, scopes.Select(s => $"{ResourceIdentifier}/{s}").ToArray(), $"{endPoint}/organizations/", username, securePassword).AccessToken);
         }
     }
 }

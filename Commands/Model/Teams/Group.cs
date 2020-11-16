@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model.Teams
@@ -15,13 +15,13 @@ namespace PnP.PowerShell.Commands.Model.Teams
         public string MailNickname { get; set; }
         public string Description { get; set; }
 
-        [Newtonsoft.Json.JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public GroupVisibility Visibility { get; set; }
 
-        [JsonProperty("owners@odata.bind")]
+        [JsonPropertyName("owners@odata.bind")]
         public List<string> Owners { get; set; }
 
-        [JsonProperty("members@odata.bind")]
+        [JsonPropertyName("members@odata.bind")]
         public List<string> Members { get; set; }
 
         public string Classification { get; set; }

@@ -9,6 +9,7 @@ using PnP.PowerShell.Core.Attributes;
 using System;
 using System.Linq;
 using System.Management.Automation;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -56,7 +57,7 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     throw new PSInvalidOperationException($"Team {team.DisplayName} {(Archived ? "has already been" : "is not")} archived");
                 }
-                var response = TeamsUtility.SetTeamArchivedState(HttpClient, AccessToken, groupId, Archived, SetSiteReadOnlyForMembers);
+                var response = TeamsUtility.SetTeamArchivedStateAsync(HttpClient, AccessToken, groupId, Archived, SetSiteReadOnlyForMembers).GetAwaiter().GetResult();
                 if (!response.IsSuccessStatusCode)
                 {
                     if (GraphHelper.TryGetGraphException(response, out GraphException ex))

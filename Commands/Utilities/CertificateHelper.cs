@@ -142,16 +142,30 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static X509Certificate2 GetCertificateFromPath(string certificatePath, SecureString certificatePassword)
         {
-            var certFile = System.IO.File.OpenRead(certificatePath);
-            var certificateBytes = new byte[certFile.Length];
-            certFile.Read(certificateBytes, 0, (int)certFile.Length);
-            var certificate = new X509Certificate2(
-                certificateBytes,
-                certificatePassword,
-                X509KeyStorageFlags.Exportable |
-                X509KeyStorageFlags.MachineKeySet |
-                X509KeyStorageFlags.PersistKeySet);
-            return certificate;
+            if (System.IO.File.Exists(certificatePath))
+            {
+                var certFile = System.IO.File.OpenRead(certificatePath);
+                if (certFile.Length == 0)
+                    throw new Exception($"The specified certificate path '{certificatePath}' points to an empty file");
+
+                var certificateBytes = new byte[certFile.Length];
+                certFile.Read(certificateBytes, 0, (int)certFile.Length);
+                var certificate = new X509Certificate2(
+                    certificateBytes,
+                    certificatePassword,
+                    X509KeyStorageFlags.Exportable |
+                    X509KeyStorageFlags.MachineKeySet |
+                    X509KeyStorageFlags.PersistKeySet);
+                return certificate;
+            }
+            else if (System.IO.Directory.Exists(certificatePath))
+            {
+                throw new FileNotFoundException($"The specified certificate path '{certificatePath}' points to a folder", certificatePath);
+            }
+            else
+            {
+                throw new FileNotFoundException($"The specified certificate path '{certificatePath}' does not exist", certificatePath);
+            }
         }
 
 

@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
                     var channel = Identity.GetChannel(HttpClient, AccessToken, groupId);
                     if (channel != null)
                     {
-                        var response = TeamsUtility.DeleteChannel(AccessToken, HttpClient, groupId, channel.Id);
+                        var response = TeamsUtility.DeleteChannelAsync(AccessToken, HttpClient, groupId, channel.Id).GetAwaiter().GetResult();
                         if (!response.IsSuccessStatusCode)
                         {
                             if (GraphHelper.TryGetGraphException(response, out GraphException ex))

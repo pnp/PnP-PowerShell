@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.Globalization;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {
@@ -29,29 +27,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
 
     public class TeamChannelMessageBody
     {
-
-        [JsonProperty("contentType")]
-        private string contentType { get; set; }
-
-        [JsonIgnore]
-        public TeamChannelMessageContentType ContentType
-        {
-            get
-            {
-                if (Enum.TryParse<TeamChannelMessageContentType>(contentType, out TeamChannelMessageContentType ct))
-                {
-                    return ct;
-                }
-                else
-                {
-                    return TeamChannelMessageContentType.Text;
-                }
-            }
-            set
-            {
-                contentType = value.ToString().ToLower();
-            }
-        }
+        public string ContentType { get; set; }
 
         public string Content { get; set; }
 

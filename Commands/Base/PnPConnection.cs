@@ -17,6 +17,8 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using TextCopy;
+using PnP.PowerShell.CmdletHelpAttributes;
+using OfficeDevPnP.Core;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -27,9 +29,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// ClientId of the application registered in Azure Active Directory which should be used for the device oAuth flow
         /// </summary>
-        internal const string DeviceLoginClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
-        //private const string MSALPnPPowerShellClientId = "bb0c5778-9d5c-41ea-a4a8-8cd417b3ab71";
-        //private const string MSALPnPPowerShellClientId = DeviceLoginClientId;
+        internal const string PnPManagementShellClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
         #endregion
 
         #region Properties
@@ -117,6 +117,8 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string Tenant { get; set; }
 
+        public AzureEnvironment AzureEnvironment { get; set; } = AzureEnvironment.Production;
+
         #endregion
 
         #region Fields
@@ -138,7 +140,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>AccessToken for the audience or NULL if unable to retrieve an access token for the audience on the current connection</returns>
         internal string TryGetAccessToken(TokenAudience tokenAudience, string[] roles = null)
         {
-            return TryGetToken(tokenAudience, roles)?.AccessToken;
+            return TryGetToken(tokenAudience, AzureEnvironment, roles)?.AccessToken;
         }
 
         internal static Action<DeviceCodeResult> DeviceLoginCallback(PSHost host, bool launchBrowser)
@@ -164,16 +166,20 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tokenAudience">Audience to try to get a token for</param>
         /// <param name="orRoles">The specific roles to request access to (i.e. Group.ReadWrite.All). Optional, will use default groups assigned to clientId if not specified.</param>
         /// <returns><see cref="GenericToken"/> for the audience or NULL if unable to retrieve a token for the audience on the current connection</returns>
-        internal GenericToken TryGetToken(TokenAudience tokenAudience, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
+        internal GenericToken TryGetToken(TokenAudience tokenAudience, AzureEnvironment azureEnvironment, string[] orRoles = null, string[] andRoles = null, TokenType tokenType = TokenType.All)
         {
             GenericToken token = null;
 
             switch (tokenAudience)
             {
                 case TokenAudience.MicrosoftGraph:
+
                     if (ConnectionMethod == ConnectionMethod.DeviceLogin || ConnectionMethod == ConnectionMethod.GraphDeviceLogin)
                     {
-                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.DeviceLoginClientId, Scopes, DeviceLoginCallback(null, false));
+                        var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+                        // Take the remaining scopes and try requesting them from the Microsoft Graph API
+                        var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
+                        token = GraphToken.AcquireApplicationTokenDeviceLogin(PnPConnection.PnPManagementShellClientId, scopes, DeviceLoginCallback(null, false), AzureEnvironment);
                     }
                     else
                     {
@@ -181,15 +187,25 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             if (Certificate != null)
                             {
-                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
+                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, Certificate, AzureEnvironment);
                             }
                             else if (ClientSecret != null)
                             {
-                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
+                                token = GraphToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret, AzureEnvironment);
                             }
                             else if (Scopes != null)
                             {
-                                token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(DeviceLoginClientId, Scopes) : GraphToken.AcquireDelegatedTokenWithCredentials(DeviceLoginClientId, Scopes, PSCredential.UserName, PSCredential.Password);
+                                var officeManagementApiScopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+                                // Take the remaining scopes and try requesting them from the Microsoft Graph API
+                                var scopes = Scopes.Except(officeManagementApiScopes).ToArray();
+                                if (scopes.Length > 0)
+                                {
+                                    token = PSCredential == null ? GraphToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes, azureEnvironment) : GraphToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
+                                }
+                                else
+                                {
+                                    throw new PSSecurityException($"Access to {tokenAudience} failed because you did not connect with any permission scopes related to this service (for instance 'Group.Read.All').");
+                                }
                             }
                         }
                     }
@@ -200,12 +216,26 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         if (Certificate != null)
                         {
-                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, Certificate);
+                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, Certificate, AzureEnvironment);
                         }
                         else if (ClientSecret != null)
                         {
-                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret);
+                            token = OfficeManagementApiToken.AcquireApplicationToken(Tenant, ClientId, ClientSecret, AzureEnvironment);
                         }
+                        else if (Scopes != null)
+                        {
+                            var scopes = Enum.GetNames(typeof(OfficeManagementApiPermission)).Select(s => s.Replace("_", ".")).Intersect(Scopes).ToArray();
+                            // Take the remaining scopes and try requesting them from the Microsoft Graph API
+                            if (scopes.Length > 0)
+                            {
+                                token = PSCredential == null ? OfficeManagementApiToken.AcquireApplicationTokenInteractive(PnPManagementShellClientId, scopes, azureEnvironment) : OfficeManagementApiToken.AcquireDelegatedTokenWithCredentials(PnPManagementShellClientId, scopes, PSCredential.UserName, PSCredential.Password, azureEnvironment);
+                            }
+                            else
+                            {
+                                throw new PSSecurityException($"Access to {tokenAudience} failed because you did not connect with any permission scopes related to this service (for instance 'ServiceHealth.Read').");
+                            }
+                        }
+
                     }
                     break;
 
@@ -487,13 +517,15 @@ namespace PnP.PowerShell.Commands.Base
                                                            ClientContext clientContext = null,
                                                            int? minimalHealthScore = null,
                                                            string pnpVersionTag = null,
-                                                           bool disableTelemetry = false)
+                                                           bool disableTelemetry = false,
+                                                           AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var connection = new PnPConnection(host, initializationType, url, clientContext, new Dictionary<TokenAudience, GenericToken>(1) { { tokenAudience, token } }, minimalHealthScore, pnpVersionTag, disableTelemetry)
             {
                 ConnectionMethod = ConnectionMethod.AccessToken,
                 Tenant = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("tid", StringComparison.InvariantCultureIgnoreCase))?.Value,
-                ClientId = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("appid", StringComparison.InvariantCultureIgnoreCase))?.Value
+                ClientId = token.ParsedToken.Claims.FirstOrDefault(c => c.Type.Equals("appid", StringComparison.InvariantCultureIgnoreCase))?.Value,
+                AzureEnvironment = azureEnvironment
             };
             connection.PSCredential = credentials;
             return connection;
@@ -567,7 +599,7 @@ namespace PnP.PowerShell.Commands.Base
             PnPVersionTag = pnpVersionTag;
             Url = (new Uri(url)).AbsoluteUri;
             ConnectionMethod = ConnectionMethod.AccessToken;
-            ClientId = DeviceLoginClientId;
+            ClientId = PnPManagementShellClientId;
             Tenant = tokenResult.ParsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
             context.ExecutingWebRequest += (sender, args) =>
             {
@@ -639,7 +671,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
-#if !ONPREMISES && !NETSTANDARD2_1
+#if !ONPREMISES && !PNPPSCORE
                     if ((ex is WebException || ex is NotSupportedException) && CurrentConnection.PSCredential != null)
                     {
                         // legacy auth?
@@ -653,7 +685,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
 #endif
                         throw;
-#if !ONPREMISES && !NETSTANDARD2_1
+#if !ONPREMISES && !PNPPSCORE
                     }
 #endif
                 }
@@ -734,7 +766,7 @@ namespace PnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Session.Id = Guid.NewGuid().ToString();
                 TelemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
                 TelemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("ServerLibraryVersion", serverLibraryVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ServerVersion", serverVersion);
                 TelemetryClient.Context.GlobalProperties.Add("ConnectionMethod", initializationType.ToString());
@@ -744,7 +776,7 @@ namespace PnP.PowerShell.Commands.Base
                 TelemetryClient.Context.Properties.Add("ConnectionMethod", initializationType.ToString());
 #endif
                 var coreAssembly = Assembly.GetExecutingAssembly();
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
 #else
                 TelemetryClient.Context.Properties.Add("Version", ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString());
@@ -757,7 +789,7 @@ namespace PnP.PowerShell.Commands.Base
 #elif SP2019
             TelemetryClient.Context.GlobalProperties.Add("Platform", "SP2019");
 #else
-#if !NETSTANDARD2_1
+#if !PNPPSCORE
                 TelemetryClient.Context.GlobalProperties.Add("Platform", "SPO");
 #else
                 TelemetryClient.Context.Properties.Add("Platform", "SPO");

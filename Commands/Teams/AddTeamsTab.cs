@@ -1,6 +1,4 @@
 ﻿#if !ONPREMISES
-using Microsoft.BusinessData.MetadataModel;
-using Microsoft.Graph;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -113,7 +111,7 @@ namespace PnP.PowerShell.Commands.Graph
                                     break;
                                 }
                         }
-                        TeamsUtility.AddTab(HttpClient, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl);
+                        TeamsUtility.AddTabAsync(HttpClient, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl).GetAwaiter().GetResult();
                     }
                     catch (GraphException ex)
                     {

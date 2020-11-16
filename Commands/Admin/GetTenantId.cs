@@ -1,14 +1,11 @@
 ﻿#if !ONPREMISES
 using Microsoft.SharePoint.Client;
-using Newtonsoft.Json.Linq;
 using PnP.PowerShell.CmdletHelpAttributes;
 using PnP.PowerShell.Commands.Base;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
+using System.Text.Json;
 using System.Web;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -47,14 +44,21 @@ namespace PnP.PowerShell.Commands.Admin
             }
             catch (Exception ex)
             {
-#if !NETSTANDARD2_1
                 if (ex.InnerException != null)
                 {
+#if !PNPPSCORE
                     if (ex.InnerException is HttpException)
+#else
+                    if (ex.InnerException is HttpRequestException)
+#endif
                     {
                         var message = ex.InnerException.Message;
-                        var obj = JObject.Parse(message);
-                        WriteObject(obj["error_description"].ToString());
+
+                        using (var jdoc = JsonDocument.Parse(message))
+                        {
+                            var errorDescription = jdoc.RootElement.GetProperty("error_description").GetString();
+                            WriteObject(errorDescription);
+                        }
                     }
                     else
                     {
@@ -65,9 +69,6 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw ex;
                 }
-#else
-                throw ex;
-#endif
             }
         }
     }

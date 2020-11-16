@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Teams
                 }
                 else
                 {
-                    WriteObject(TeamsUtility.GetChannels(AccessToken, HttpClient, groupId));
+                    WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, HttpClient, groupId).GetAwaiter().GetResult());
                 }
             } else
             {

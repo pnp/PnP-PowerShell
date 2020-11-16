@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
@@ -14,6 +15,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     {
         private readonly string _id;
         private readonly string _displayName;
+        private readonly TeamTab _tab;
 
         public TeamsTabPipeBind()
         {
@@ -35,15 +37,31 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
+        public TeamsTabPipeBind(TeamTab tab)
+        {
+            _tab = tab;
+        }
+
         public string Id => _id;
 
         public TeamTab GetTab(HttpClient httpClient, string accessToken, string groupId, string channelId)
         {
-            // find the tab by the displayName
-            var tabs = TeamsUtility.GetTabs(accessToken, httpClient, groupId, channelId);
-            if (tabs != null)
+            if (_tab != null)
             {
-                var tab = tabs.FirstOrDefault(t => t.DisplayName.Equals(_displayName, System.StringComparison.OrdinalIgnoreCase));
+                return _tab;
+            }
+            else
+            {
+                var tab = TeamsUtility.GetTabAsync(accessToken, httpClient, groupId, channelId, _id).GetAwaiter().GetResult();
+                if (string.IsNullOrEmpty(tab.Id))
+                {
+                    var tabs = TeamsUtility.GetTabsAsync(accessToken, httpClient, groupId, channelId).GetAwaiter().GetResult();
+                    if (tabs != null)
+                    {
+                        // find the tab by id
+                        tab = tabs.FirstOrDefault(t => t.DisplayName.Equals(_displayName, System.StringComparison.OrdinalIgnoreCase));
+                    }
+                }
                 if (tab != null)
                 {
                     return tab;
@@ -53,12 +71,6 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     throw new PSArgumentException("Cannot find tab");
                 }
             }
-            return null;
-        }
-
-        public TeamTab GetTabById(HttpClient httpClient, string accessToken, string groupId, string channelId)
-        {
-            return TeamsUtility.GetTab(accessToken, httpClient, groupId, channelId, _id);
         }
     }
 }
