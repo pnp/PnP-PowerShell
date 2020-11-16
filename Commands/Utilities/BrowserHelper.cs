@@ -33,7 +33,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 form.ResumeLayout(false);
                 browser.Navigated += (sender, args) =>
                 {
-                    if (browser.Url.AbsoluteUri.Equals("https://login.microsoftonline.com/common/login", StringComparison.InvariantCultureIgnoreCase) || browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/reprocess", StringComparison.InvariantCultureIgnoreCase))
+                    if (browser.Url.AbsoluteUri.Equals("https://login.microsoftonline.com/common/login", StringComparison.InvariantCultureIgnoreCase) || browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/Consent/Set",StringComparison.InvariantCultureIgnoreCase))
+                    //    ||browser.Url.AbsoluteUri.StartsWith("https://login.microsoftonline.com/common/reprocess", StringComparison.InvariantCultureIgnoreCase))
                     {
                         form.Close();
                     }

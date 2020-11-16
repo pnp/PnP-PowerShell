@@ -113,6 +113,9 @@ namespace PnP.PowerShell.Commands.Provisioning
 
             // Load the provisioning template file
             Stream stream = fileConnector.GetFileStream(templateFileName);
+            if (stream == null)
+                throw new FileNotFoundException($"File {templatePath} does not exist.", templatePath);
+
             var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(stream);
 
             XMLTemplateProvider provider;
