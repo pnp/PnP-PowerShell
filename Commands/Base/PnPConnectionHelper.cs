@@ -36,6 +36,7 @@ namespace PnP.PowerShell.Commands.Base
         private static readonly Uri VersionCheckUrl = new Uri("https://raw.githubusercontent.com/pnp/PnP-PowerShell/master/version.txt");
 #endif
         private static bool VersionChecked;
+        internal static bool LegacyMessageShown;
 
 #if !PNPPSCORE
         public static AuthenticationContext AuthContext { get; set; }
