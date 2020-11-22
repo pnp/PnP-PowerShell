@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Small fixes to README.md
 
 ### Contributors
 - David Blaszyk [https://github.com/acornsoft]
