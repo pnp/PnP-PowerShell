@@ -12,7 +12,7 @@ This solution contains a library of PowerShell commands that allows you to perfo
 
 # I've found a bug, where do I need to log an issue or create a PR
 
-Between now and the end of 2020 both [PnP-PowerShell](https://github.com/pnp/pnp-powershell) and [PnP.PowerShell](https://github.com/pnp/powershell) are actively maintained. Once the new PnP PowerShell becomes generally available (GA) we will stop mainting the old repository.
+Between now and the end of 2020 both [PnP-PowerShell](https://github.com/pnp/pnp-powershell) and [PnP.PowerShell](https://github.com/pnp/powershell) are actively maintained. Once the new PnP PowerShell becomes generally available (GA) we will stop maintaining the old repository.
 
 Given that the cross-platform PnP PowerShell is our future going forward we would prefer issues and PRs being created in the new https://github.com/pnp/powershell repository. If you want your PR to apply to both then it is recommend to create the PR in both repositories for the time being.
 
