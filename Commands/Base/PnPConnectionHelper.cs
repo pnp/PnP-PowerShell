@@ -529,7 +529,16 @@ namespace PnP.PowerShell.Commands.Base
         {
             using (var authManager = new OfficeDevPnP.Core.AuthenticationManager())
             {
-                var context = PnPClientContext.ConvertFrom(authManager.GetWebLoginClientContext(url.ToString()), retryCount, retryWait * 1000);
+                // Log in to a specific page on the tenant which is known to be performant
+                var webLoginClientContext = authManager.GetWebLoginClientContext(url.ToString(), loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
+                
+                // Ensure the login process has been completed
+                if(webLoginClientContext == null)
+                {
+                    return null;
+                }
+
+                var context = PnPClientContext.ConvertFrom(webLoginClientContext, retryCount, retryWait * 1000);
 
                 if (context != null)
                 {

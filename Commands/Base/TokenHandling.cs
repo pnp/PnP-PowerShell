@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (scope == null)
                 {
                     // SharePoint or Graph V1 resource
-                    var scopes = new[] { $"https://{resource}//.default" };
+                    var scopes = new[] { $"https://{resource.Replace("https://","").TrimEnd('/')}/.default" };
                     token = GenericToken.AcquireDelegatedTokenWithCredentials(PnPConnection.PnPManagementShellClientId, scopes, "https://login.microsoftonline.com/organizations/", PnPConnection.CurrentConnection.PSCredential.UserName, PnPConnection.CurrentConnection.PSCredential.Password);
                 }
                 else

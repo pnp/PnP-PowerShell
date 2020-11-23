@@ -51,8 +51,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 #if !PNPPSCORE
-[assembly: AssemblyVersion("3.24.2008.1")]
-[assembly: AssemblyFileVersion("3.24.2008.1")]
+[assembly: AssemblyVersion("3.26.2010.0")]
+[assembly: AssemblyFileVersion("3.26.2010.0")]
 #else
 [assembly: AssemblyVersion("4.0.0.0")]
 [assembly: AssemblyFileVersion("4.0.0.0")]

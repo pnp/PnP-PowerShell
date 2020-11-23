@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [3.26.2010.0 - unreleased]
+
+### Added
+- Added `Set-PnPTenant -EnableAutoNewsDigest` option to disable the automatic news digest mails sent to end users [PR #2901](https://github.com/pnp/PnP-PowerShell/pull/2901)
+- Added `Register-PnPManagementShellAccess` cmdlet to register correct access required for the multi-tenant application PnP Management Shell which is used behind the scenes of the Provisioning Engine for certain actions towards SharePoint Online.
+- Added the description being shown of a Site Script when running `Get-PnPSiteScript` [PR #2895](https://github.com/pnp/PnP-PowerShell/pull/2895)
+- Added -Includes to `Get-PnPUser` [PR #2939](https://github.com/pnp/PnP-PowerShell/pull/2939)
+- Added an sample for Azure Automation [PR #2835](https://github.com/pnp/PnP-PowerShell/pull/2835)
+- Added -DisableCustomAppAuthentication to `Set-PnPTenant` [PR #2923](https://github.com/pnp/PnP-PowerShell/pull/2923)
+
+### Changed
+- Fixed example for `Get-PnPTeamsChannel` [PR #2919](https://github.com/pnp/PnP-PowerShell/pull/2919)
+- Fixed possible token acquisition issue when extracting a tenant template. [PR #2874](https://github.com/pnp/PnP-PowerShell/pull/2874)
+- Fixed scenario when no configuration file provided with Get-PnPTenantTemplate throws an undefined error [PR #2873](https://github.com/pnp/PnP-PowerShell/pull/2873)
+- Fixed examples for `New-PnPTeamsTeam` [PR #2870](https://github.com/pnp/PnP-PowerShell/pull/2870)
+- Updated documentation for `Get-PnPField` [PR #2856](https://github.com/pnp/PnP-PowerShell/pull/2856)
+- Updated documentation for `Get-PnPListItem` [PR #2806](https://github.com/pnp/PnP-PowerShell/pull/2806)
+- Improved certificate file handling and errors shown if the file does not exist, is empty or points to a folder [PR #2888](https://github.com/pnp/PnP-PowerShell/pull/2888)
+- Fixed issue with where connecting with Connect-PnPOnline to an URL ending on a slash could cause an exception when using some cmdlets.
+
+### Contributors
+- Koen Zomers [koenzomers]
+- Gautam Sheth [gautamdsheth]
+- Giacomo Pozzoni [jackpoz]
+- James May [fowl2]
+- Aimery Thomas [a1mery]
+- Heinrich Ulbricht [heinrich-ulbricht]
+- Veronique Lengelle [veronicageek] 
+- Todd Klindt [ToddKlindt]
+- Paul Bullock [pkbullock]
+
+## [3.25.2009.1]
+
+### Changed
+- Underlying PnP Sites Core library has been updated to fix an issue with the Provisioning Engine and Teams Provisioning.
+
+## [3.25.2009.0] 
+
+### Added
+- Added ability to set site collection specific expiration on anonymous sharing links through the `-AnonymousLinkExpirationInDays` and `-OverrideTenantAnonymousLinkExpirationPolicy` attributes on `Set-PnPSite` and `Set-PnPTenantSite` [PR #2866](https://github.com/pnp/PnP-PowerShell/pull/2866)
+
+### Changed
+
+
+### Contributors
+- Koen Zomers [koenzomers]
+- Erwin van hunen [erwinvanhunen]
+- Todd Klindt [ToddKlindt]
+
 ## [3.24.2008.1]
 
 ### Added

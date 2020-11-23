@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPStorageEntity", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Get, "PnPStorageEntity")]
     [CmdletHelp(@"Retrieve Storage Entities / Farm Properties from either the Tenant App Catalog or from the current site if it has a site scope app catalog.",
         Category = CmdletHelpCategory.TenantAdmin,
         SupportedPlatform = CmdletSupportedPlatform.Online)]

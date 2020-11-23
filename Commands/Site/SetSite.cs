@@ -128,6 +128,12 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, HelpMessage = @"Disables or enables the Social Bar for Site Collection.", ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? SocialBarOnSitePagesDisabled;
 
+        [Parameter(Mandatory = false, HelpMessage = @"Specifies all anonymous/anyone links that have been created (or will be created) will expire after the set number of days. Only applies if OverrideTenantAnonymousLinkExpirationPolicy is set to true. To remove the expiration requirement, set the value to zero (0).", ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? AnonymousLinkExpirationInDays;
+
+        [Parameter(Mandatory = false, HelpMessage = @"Choose whether to override the anonymous or anyone link expiration policy on this site. False - Respect the organization-level policy for anonymous or anyone link expiration True - Override the organization-level policy for anonymous or anyone link expiration (can be more or less restrictive).", ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter OverrideTenantAnonymousLinkExpirationPolicy;
+
         [Parameter(Mandatory = false, HelpMessage = "Wait for the operation to complete", ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 #endif
@@ -188,12 +194,12 @@ namespace PnP.PowerShell.Commands.Site
                     }
                     else
                     {
-                        throw new System.Exception("Logo file does not exist");
+                        throw new Exception("Logo file does not exist");
                     }
                 }
                 else
                 {
-                    throw new System.Exception("Not an Office365 group enabled site.");
+                    throw new Exception("Not an Office365 group enabled site.");
                 }
             }
 #endif
@@ -229,6 +235,16 @@ namespace PnP.PowerShell.Commands.Site
                 var siteProperties = tenant.GetSitePropertiesByUrl(siteUrl, false);
 
 #if !ONPREMISES
+                if (ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)))
+                {
+                    siteProperties.OverrideTenantAnonymousLinkExpirationPolicy = OverrideTenantAnonymousLinkExpirationPolicy.ToBool();
+                    executeQueryRequired = true;
+                }
+                if (ParameterSpecified(nameof(AnonymousLinkExpirationInDays)) && AnonymousLinkExpirationInDays.HasValue)
+                {
+                    siteProperties.AnonymousLinkExpirationInDays = AnonymousLinkExpirationInDays.Value;
+                    executeQueryRequired = true;
+                }
                 if (LockState.HasValue)
                 {
                     tenant.SetSiteLockState(siteUrl, LockState.Value, Wait, Wait ? timeoutFunction : null);
@@ -396,6 +412,8 @@ namespace PnP.PowerShell.Commands.Site
 #pragma warning restore CS0618 // Type or member is obsolete
                 RestrictedToGeo.HasValue ||
                 SocialBarOnSitePagesDisabled.HasValue ||
+                 AnonymousLinkExpirationInDays.HasValue ||
+                ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)) ||
 #endif
                 LocaleId.HasValue;
     }
