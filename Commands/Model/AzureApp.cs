@@ -130,6 +130,12 @@ namespace PnP.PowerShell.Commands.Model
                 Id = "3db89e36-7fa6-4012-b281-85f3d9d9fd2e",
                 Identifier = "MSGraph.AppCatalog.Submit"
             });
+            scopes.Add(new PermissionScope()
+            {
+                resourceAppId = "00000003-0000-0000-c000-000000000000",
+                Id = "19dbc75e-c2e2-444c-a770-ec69d8559fc7",
+                Identifier = "MSGraph.Directory.ReadWrite.All"
+            });
             #endregion
             #region SPO
             // SPO
