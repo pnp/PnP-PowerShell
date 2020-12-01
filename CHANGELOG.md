@@ -20,8 +20,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Changed
+- Changed fallback scenario for 'Get-PnPFile' where downloading a file created by a user that no longer exists would try a different technique to download the file. This only worked on English environments though. With this fix, it should work for any language. [PR #2852](https://github.com/pnp/PnP-PowerShell/pull/2852)
 
 ### Contributors
+- Heinrich Ulbricht [heinrich-ulbricht]
 
 ## [3.26.2010.0]
 
