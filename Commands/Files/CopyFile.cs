@@ -109,8 +109,9 @@ namespace PnP.PowerShell.Commands.Files
                 TargetUrl = UrlUtility.Combine(webServerRelativeUrl, TargetUrl);
             }
 
+            string sourceFolder = SourceUrl.Substring(0, SourceUrl.LastIndexOf('/'));
             Uri currentContextUri = new Uri(ClientContext.Url);
-            Uri sourceUri = new Uri(currentContextUri, SourceUrl);
+            Uri sourceUri = new Uri(currentContextUri, sourceFolder);
             Uri sourceWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, sourceUri);
             Uri targetUri = new Uri(currentContextUri, TargetUrl);
             Uri targetWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);

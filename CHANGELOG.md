@@ -12,19 +12,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Small fixes to README.md
 - Fixed several issues with `Get-PnPSubwebs` and introduced optional parameter `-IncludeRootWeb` to include the rootweb in the results
+- Change in `Copy-PnPFile` which should resolve some issues you may run into when copying files [PR #2796](https://github.com/pnp/PnP-PowerShell/pull/2796)
+- Changed fallback scenario for 'Get-PnPFile' where downloading a file created by a user that no longer exists would try a different technique to download the file. This only worked on English environments though. With this fix, it should work for any language. [PR #2852](https://github.com/pnp/PnP-PowerShell/pull/2852)
 
 ### Contributors
 - David Blaszyk [acornsoft]
 - Koen Zomers [koenzomers]
-
-## [3.27.2011.0]
-
-### Added
-
-### Changed
-- Changed fallback scenario for 'Get-PnPFile' where downloading a file created by a user that no longer exists would try a different technique to download the file. This only worked on English environments though. With this fix, it should work for any language. [PR #2852](https://github.com/pnp/PnP-PowerShell/pull/2852)
-
-### Contributors
+- Carlos Marins Jr [kadu-jr]
 - Heinrich Ulbricht [heinrich-ulbricht]
 
 ## [3.26.2010.0]
