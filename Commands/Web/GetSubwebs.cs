@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands
     [CmdletHelp("Returns the subwebs of the current web", 
         Category = CmdletHelpCategory.Webs,
         OutputType = typeof(Web),
-        OutputTypeLink = "https://msdn.microsoft.com/en-us/library/microsoft.sharepoint.client.web.aspx")]
+        OutputTypeLink = "https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee537040(v=office.15)")]
     [CmdletExample(
         Code = @"PS:> Get-PnPSubWebs",
         Remarks = "Retrieves all subsites of the current context returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output",
@@ -28,8 +28,12 @@ namespace PnP.PowerShell.Commands
         SortOrder = 3)]
     [CmdletExample(
         Code = @"PS:> Get-PnPSubWebs -Identity Team1 -Recurse",
-        Remarks = "Retrieves all subsites of the subsite Team1 and all of its nested child subsites returning the Id, Url, Title and ServerRelativeUrl of each subsite in the output",
+        Remarks = "Retrieves all subsites of the subsite Team1 and all of its nested child subsites",
         SortOrder = 4)]
+    [CmdletExample(
+        Code = @"PS:> Get-PnPSubWebs -Identity Team1 -Recurse -IncludeRootWeb",
+        Remarks = "Retrieves the rootweb, all subsites of the subsite Team1 and all of its nested child subsites",
+        SortOrder = 5)]
     public class GetSubWebs : PnPWebRetrievalsCmdlet<Web>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, HelpMessage = "If provided, only the subsite with the provided Id, GUID or the Web instance will be returned")]
@@ -38,29 +42,69 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, HelpMessage = "If provided, recursion through all subsites and their children will take place to return them as well")]
         public SwitchParameter Recurse;
 
+        [Parameter(Mandatory = false, HelpMessage = "If provided, the results will also contain the rootweb")]
+        public SwitchParameter IncludeRootWeb;
+
         protected override void ExecuteCmdlet()
         {
             DefaultRetrievalExpressions = new Expression<Func<Web, object>>[] { w => w.Id, w => w.Url, w => w.Title, w => w.ServerRelativeUrl };
 
             Web parentWeb = SelectedWeb;
-            if (Identity != null)
+            List<Web> results = new List<Web>();
+            if(IncludeRootWeb)
             {
-                if (Identity.Id != Guid.Empty)
-                {
-                    parentWeb = parentWeb.GetWebById(Identity.Id);
-                }
-                else if (Identity.Web != null)
-                {
-                    parentWeb = Identity.Web;
-                }
-                else if (Identity.Url != null)
-                {
-                    parentWeb = parentWeb.GetWebByUrl(Identity.Url);
-                }
+                parentWeb.EnsureProperties(RetrievalExpressions);
+                results.Add(parentWeb);
             }
 
-            var allWebs = GetSubWebsInternal(parentWeb.Webs, Recurse);
-            WriteObject(allWebs, true);
+            if (Identity != null)
+            {
+                try
+                {
+                    if (Identity.Id != Guid.Empty)
+                    {
+                        parentWeb = parentWeb.GetWebById(Identity.Id);
+                    }
+                    else if (Identity.Web != null)
+                    {
+                        parentWeb = Identity.Web;
+                    }
+                    else if (Identity.Url != null)
+                    {
+                        parentWeb = parentWeb.GetWebByUrl(Identity.Url);
+                    }
+                }
+                catch(ServerException e) when (e.ServerErrorTypeName.Equals("System.IO.FileNotFoundException"))
+                {
+                    throw new PSArgumentException($"No subweb found with the provided id or url", nameof(Identity));
+                }
+
+                if (parentWeb != null)
+                {
+                    if (Recurse)
+                    {
+                        results.Add(parentWeb);
+                        results.AddRange(GetSubWebsInternal(parentWeb.Webs, Recurse));
+                    }
+                    else
+                    {
+                        results.Add(parentWeb);
+                    }
+                }
+                else
+                {
+                    throw new PSArgumentException($"No subweb found with the provided id or url", nameof(Identity));
+                }
+            }
+            else
+            {
+                ClientContext.Load(parentWeb.Webs);
+                ClientContext.ExecuteQueryRetry();
+
+                results.AddRange(GetSubWebsInternal(parentWeb.Webs, Recurse));
+            }
+
+            WriteObject(results, true);
         }
 
         private List<Web> GetSubWebsInternal(WebCollection subsites, bool recurse)

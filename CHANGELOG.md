@@ -11,9 +11,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Small fixes to README.md
+- Fixed several issues with `Get-PnPSubwebs` and introduced optional parameter `-IncludeRootWeb` to include the rootweb in the results
 
 ### Contributors
-- David Blaszyk [https://github.com/acornsoft]
+- David Blaszyk [acornsoft]
+- Koen Zomers [koenzomers]
 
 ## [3.27.2011.0]
 
