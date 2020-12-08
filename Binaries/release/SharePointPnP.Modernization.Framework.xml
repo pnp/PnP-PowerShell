@@ -1664,14 +1664,14 @@
             <param name="order">Order inside the row/column</param>
             <returns>A web part entity to add to the collection</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ContainsWebPart(AngleSharp.Dom.Html.IHtmlElement)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ContainsWebPart(AngleSharp.Html.Dom.IHtmlElement)">
             <summary>
             Does the tree of nodes somewhere contain a web part?
             </summary>
             <param name="element">Html content to analyze</param>
             <returns>True if it contains a web part</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.StripWebPart(AngleSharp.Dom.Html.IHtmlElement)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.StripWebPart(AngleSharp.Html.Dom.IHtmlElement)">
             <summary>
             Strips the div holding the web part from the html
             </summary>
@@ -1714,7 +1714,7 @@
             </summary>
             <param name="fullUrl"></param>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ExtractWebPartPrefixesFromNamespaces(AngleSharp.Dom.Html.IHtmlDocument)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.BasePage.ExtractWebPartPrefixesFromNamespaces(AngleSharp.Html.Dom.IHtmlDocument)">
             <summary>
             Gets the tag prefixes from the document
             </summary>
@@ -1845,7 +1845,7 @@
             <param name="contentHost">element to check</param>
             <returns>true if embedded in a already processed element</returns>
         </member>
-        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.GetLayout(AngleSharp.Dom.Html.IHtmlDocument)">
+        <member name="M:SharePointPnP.Modernization.Framework.Pages.WikiPage.GetLayout(AngleSharp.Html.Dom.IHtmlDocument)">
             <summary>
             Analyzes the wiki page to determine which layout was used
             </summary>
