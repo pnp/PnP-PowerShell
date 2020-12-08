@@ -6,13 +6,13 @@ This solution contains a library of PowerShell commands that allows you to perfo
 ![SharePoint Patterns and Practices](https://devofficecdn.azureedge.net/media/Default/PnP/sppnp.png)
   
 > **Important:**
-> This repository will be retired by the end of 2020. As of the GA of the Cross-Platform [PnP.PowerShell](https://github.com/pnp/pnp.powershell) we will only maintain that version going forward.
+> This repository will be retired by the end of 2020. As of the GA of the Cross-Platform [PnP.PowerShell](https://github.com/pnp/powershell) we will only maintain that version going forward.
 
 ![PnP PowerShell RoadMap](PnP_PowerShell_Roadmap.png)
 
 # I've found a bug, where do I need to log an issue or create a PR
 
-Between now and the end of 2020 both [PnP-PowerShell](https://github.com/pnp/pnp-powershell) and [PnP.PowerShell](https://github.com/pnp/powershell) are actively maintained. Once the new PnP PowerShell becomes generally available (GA) we will stop mainting the old repository.
+Between now and the end of 2020 both [PnP-PowerShell](https://github.com/pnp/pnp-powershell) and [PnP.PowerShell](https://github.com/pnp/powershell) are actively maintained. Once the new PnP PowerShell becomes generally available (GA) we will stop maintaining the old repository.
 
 Given that the cross-platform PnP PowerShell is our future going forward we would prefer issues and PRs being created in the new https://github.com/pnp/powershell repository. If you want your PR to apply to both then it is recommend to create the PR in both repositories for the time being.
 

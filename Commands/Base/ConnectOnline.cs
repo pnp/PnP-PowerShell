@@ -656,6 +656,14 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
                 Url = Url.Substring(0, Url.Length - 1);
             }
 
+#if !ONPREMISES
+            if (!PnPConnectionHelper.LegacyMessageShown)
+            {
+                WriteUpdateMessage("\nYou are running the legacy version of PnP PowerShell.\nThis version will be archived soon which means that while staying available, no updates or fixes will be released.\nConsider installing the newer prereleased cross-platform version of PnP PowerShell:\n\nUninstall-Module -Name SharePointPnPPowerShellOnline -AllVersions -Force\nInstall-Module -Name PnP.PowerShell -AllowPrerelease\n\nRead more about the new cross-platform version of PnP PowerShell at\n\nhttps://pnp.github.io/powershell\n\nThe new version of PnP PowerShell will be released as 1.0 in January 2021.\n");
+                PnPConnectionHelper.LegacyMessageShown = true;
+            }
+#endif
+
             PnPConnection connection = null;
 
             var latestVersion = PnPConnectionHelper.GetLatestVersion();

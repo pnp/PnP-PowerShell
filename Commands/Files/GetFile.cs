@@ -128,8 +128,9 @@ namespace PnP.PowerShell.Commands.Files
                         ClientContext.Load(file, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                         ClientContext.ExecuteQueryRetry();
                     }                    
-                    catch (ServerException e) when (e.Message == "User cannot be found.")
+                    catch (ServerException)
                     {
+                        // Assume the cause of the exception is that a principal cannot be found and try again without:
                         // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
                         ClientContext.Load(file, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                         ClientContext.ExecuteQueryRetry();

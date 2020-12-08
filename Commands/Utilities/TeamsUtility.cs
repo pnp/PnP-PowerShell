@@ -458,7 +458,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 channel.Type = "#Microsoft.Teams.Core.channel";
                 var user = await GraphHelper.GetAsync<User>(httpClient, $"v1.0/users/{ownerUPN}", accessToken);
                 channel.Members = new List<TeamChannelMember>();
-                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://graph.microsoft.com/beta/users/('{user.Id}')" });
+                channel.Members.Add(new TeamChannelMember() { Roles = new List<string> { "owner" }, UserIdentifier = $"https://graph.microsoft.com/beta/users('{user.Id}')" });
                 return await GraphHelper.PostAsync<TeamChannel>(httpClient, $"beta/teams/{groupId}/channels", channel, accessToken);
             }
             else
