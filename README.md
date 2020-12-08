@@ -1,12 +1,10 @@
 ﻿# PnP PowerShell  #
 
+> **Important:**
+> This repository will be retired by the end of 2020. As of the GA of the Cross-Platform [PnP.PowerShell](https://github.com/pnp/powershell) we will only maintain that version going forward. **We do not accept any Pull Requests anymore on this repository**
+
 ### Summary ###
 This solution contains a library of PowerShell commands that allows you to perform complex provisioning and artifact management actions towards SharePoint. The commands use a combination of CSOM and REST behind the scenes, and can work against both SharePoint Online as SharePoint On-Premises.
-
-![SharePoint Patterns and Practices](https://devofficecdn.azureedge.net/media/Default/PnP/sppnp.png)
-  
-> **Important:**
-> This repository will be retired by the end of 2020. As of the GA of the Cross-Platform [PnP.PowerShell](https://github.com/pnp/powershell) we will only maintain that version going forward.
 
 ![PnP PowerShell RoadMap](PnP_PowerShell_Roadmap.png)
 
