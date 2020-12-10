@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Enums
     public enum SiteWebTemplate
     {
         TeamSite = 64,
-        CommunicationSite = 68
+        CommunicationSite = 68,
+        GrouplessTeamSite = 1
     }
 }
