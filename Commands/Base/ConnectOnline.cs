@@ -657,10 +657,18 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             }
 
 #if !ONPREMISES
-            if (!PnPConnectionHelper.LegacyMessageShown)
+            var showLegacy = true;
+            if (Environment.GetEnvironmentVariable("PNPLEGACYMESSAGE") != null && Environment.GetEnvironmentVariable("PNPLEGACYMESSAGE").ToLower().Equals("false"))
             {
-                WriteUpdateMessage("\nYou are running the legacy version of PnP PowerShell.\nThis version will be archived soon which means that while staying available, no updates or fixes will be released.\nConsider installing the newer prereleased cross-platform version of PnP PowerShell:\n\nUninstall-Module -Name SharePointPnPPowerShellOnline -AllVersions -Force\nInstall-Module -Name PnP.PowerShell -AllowPrerelease\n\nRead more about the new cross-platform version of PnP PowerShell at\n\nhttps://pnp.github.io/powershell\n\nThe new version of PnP PowerShell will be released as 1.0 in January 2021.\n");
-                PnPConnectionHelper.LegacyMessageShown = true;
+                showLegacy = false;
+            }
+            if(showLegacy)
+            { 
+                if (!PnPConnectionHelper.LegacyMessageShown)
+                {
+                    WriteFormattedWarning(this, "\nYou are running the legacy version of PnP PowerShell.\n\nThis version will be archived soon which means that while staying available, no updates or fixes will be released.\nConsider installing the newer prereleased cross-platform version of PnP PowerShell.\nThis version has numerous improvements and many more cmdlets available.\nTo install the new version:\n\nUninstall-Module -Name SharePointPnPPowerShellOnline -AllVersions -Force\nInstall-Module -Name PnP.PowerShell\n\nRead more about the new cross-platform version of PnP PowerShell at\n\nhttps://pnp.github.io/powershell\n\nTo hide this message set the environment variable PNPLEGACYMESSAGE to \"false\"\nIn PowerShell add $env:PNPLEGACYMESSAGE='false' to your profile. Alternatively do 'Connect-PnPOnline -Url [yoururl] -WarningAction Ignore");
+                    PnPConnectionHelper.LegacyMessageShown = true;
+                }
             }
 #endif
 
@@ -1452,6 +1460,56 @@ PS:> Connect-PnPOnline -Url https://yourserver -ClientId <id> -HighTrustCertific
             else
             {
                 WriteWarning(message);
+            }
+        }
+
+        private static List<string> WordWrap(string text, int maxLineLength)
+        {
+            var list = new List<string>();
+
+            int currentIndex;
+            var lastWrap = 0;
+            var whitespace = new[] { ' ', '\r', '\n', '\t' };
+            do
+            {
+                currentIndex = lastWrap + maxLineLength > text.Length ? text.Length : (text.LastIndexOfAny(new[] { ' ', ',', '.', '?', '!', ':', ';', '-', '\n', '\r', '\t' }, Math.Min(text.Length - 1, lastWrap + maxLineLength)) + 1);
+                if (currentIndex <= lastWrap)
+                    currentIndex = Math.Min(lastWrap + maxLineLength, text.Length);
+                list.Add(text.Substring(lastWrap, currentIndex - lastWrap).Trim(whitespace));
+                lastWrap = currentIndex;
+            } while (currentIndex < text.Length);
+
+            return list;
+        }
+
+        private static void WriteFormattedWarning(PSCmdlet cmdlet, string message)
+        {
+            if (cmdlet.Host.Name == "ConsoleHost")
+            {
+                var messageLines = new List<string>();
+                messageLines.AddRange(message.Split(new[] { '\n' }));
+                var wrappedText = new List<string>();
+                foreach (var messageLine in messageLines)
+                {
+                    wrappedText.AddRange(WordWrap(messageLine, cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 5));
+                }
+
+                var notificationColor = "\x1B[7m";
+                var resetColor = "\x1B[0m";
+
+                var outMessage = string.Empty;
+                foreach (var wrappedLine in wrappedText)
+                {
+                    var lineToAdd = wrappedLine.PadRight(cmdlet.Host.UI.RawUI.MaxWindowSize.Width - 5);
+                    outMessage += $"{notificationColor} {lineToAdd} {resetColor}\n";
+                }
+
+                //cmdlet.Host.UI.WriteLine($"{notificationColor}\n{outMessage}{resetColor}\n");
+                cmdlet.WriteWarning($"{notificationColor}\n{outMessage}{resetColor}\n");
+            }
+            else
+            {
+                cmdlet.WriteWarning(message);
             }
         }
         #endregion
