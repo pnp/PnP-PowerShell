@@ -76,6 +76,11 @@ namespace PnP.PowerShell.Commands.ClientSidePages
         [Parameter(Mandatory = false, HelpMessage = "Sets the message for publishing the page.")]
         public string PublishMessage = string.Empty;
 
+#if !ONPREMISES
+        [Parameter(Mandatory = false, HelpMessage = "Type of layout used for the header")]
+        public ClientSidePageHeaderLayoutType HeaderLayoutType = ClientSidePageHeaderLayoutType.FullWidthImage;
+#endif
+
         private CustomHeaderDynamicParameters customHeaderParameters;
 
         public object GetDynamicParameters()
@@ -135,6 +140,12 @@ namespace PnP.PowerShell.Commands.ClientSidePages
                         }
                 }
             }
+#if !ONPREMISES
+            if (ParameterSpecified(nameof(HeaderLayoutType)))
+            {
+                clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
+            }                
+#endif
 
             if (PromoteAs == ClientSidePagePromoteType.Template)
             {
