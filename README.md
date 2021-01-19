@@ -6,8 +6,6 @@
 ### Summary ###
 This solution contains a library of PowerShell commands that allows you to perform complex provisioning and artifact management actions towards SharePoint. The commands use a combination of CSOM and REST behind the scenes, and can work against both SharePoint Online as SharePoint On-Premises.
 
-![SharePoint Patterns and Practices](https://devofficecdn.azureedge.net/media/Default/PnP/sppnp.png)
-
 ![PnP PowerShell RoadMap](PnP_PowerShell_Roadmap.png)
 
 # I've found a bug, where do I need to log an issue or create a PR
